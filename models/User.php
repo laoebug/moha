@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
  * This is the model class for table "user".
  *
@@ -10,17 +12,19 @@ namespace app\models;
  * @property string $password
  * @property string $firstname
  * @property string $lastname
- * @property integer $role_id
- * @property integer $branch_id
  * @property string $status
+ * @property string $tel
+ * @property string $email
  *
  * @property Statistic1[] $statistic1s
  * @property UseSubcordinate[] $useSubcordinates
  * @property UseSubcordinate[] $useSubcordinates0
  * @property User[] $subcordinateUsers
  * @property User[] $users
- * @property Branch $branch
- * @property Role $role
+ * @property UserHasBranch[] $userHasBranches
+ * @property Branch[] $branches
+ * @property UserHasRole[] $userHasRoles
+ * @property Role[] $roles
  */
 
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
@@ -29,35 +33,46 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public $authKey;
     public $accessToken;
 
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'user';
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['username', 'password', 'firstname', 'lastname', 'role_id', 'branch_id', 'status'], 'required'],
-            [['role_id', 'branch_id'], 'integer'],
-            [['username'], 'string', 'max' => 50],
-            [['password'], 'string', 'max' => 100],
+            [['username', 'password', 'firstname', 'lastname', 'status', 'tel'], 'required'],
+            [['username', 'tel'], 'string', 'max' => 50],
+            [['password', 'email'], 'string', 'max' => 100],
             [['firstname', 'lastname'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 1],
             [['username'], 'unique'],
-            [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::className(), 'targetAttribute' => ['branch_id' => 'id']],
-            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
-        return $this->id;
         return [
             'id' => Yii::t('app', 'ID'),
             'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
             'firstname' => Yii::t('app', 'Firstname'),
             'lastname' => Yii::t('app', 'Lastname'),
-            'role_id' => Yii::t('app', 'Role ID'),
-            'branch_id' => Yii::t('app', 'Branch ID'),
             'status' => Yii::t('app', 'Status'),
+            'tel' => Yii::t('app', 'Tel'),
+            'email' => Yii::t('app', 'Email'),
         ];
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -65,6 +80,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(Statistic1::className(), ['user_id' => 'id']);
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -72,6 +88,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(UseSubcordinate::className(), ['user_id' => 'id']);
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -79,6 +96,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(UseSubcordinate::className(), ['subcordinate_user_id' => 'id']);
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -86,6 +104,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(User::className(), ['id' => 'subcordinate_user_id'])->viaTable('use_subcordinate', ['user_id' => 'id']);
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -93,21 +112,43 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('use_subcordinate', ['subcordinate_user_id' => 'id']);
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBranch()
+    public function getUserHasBranches()
     {
-        return $this->hasOne(Branch::className(), ['id' => 'branch_id']);
-    }
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRole()
-    {
-        return $this->hasOne(Role::className(), ['id' => 'role_id']);
+        return $this->hasMany(UserHasBranch::className(), ['user_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBranches()
+    {
+        return $this->hasMany(Branch::className(), ['id' => 'branch_id'])->viaTable('user_has_branch', ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserHasRoles()
+    {
+        return $this->hasMany(UserHasRole::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoles()
+    {
+        return $this->hasMany(Role::className(), ['id' => 'role_id'])->viaTable('user_has_role', ['user_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return UserQuery the active query used by this AR class.
+     */
     public static function find()
     {
         return new UserQuery(get_called_class());
@@ -119,7 +160,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function findIdentity($id)
     {
         return User::find()->where(["id" => $id])->one();
-//        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
     }
 
     /**
@@ -127,12 +167,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-//        foreach (self::$users as $user) {
-//            if ($user['accessToken'] === $token) {
-//                return new static($user);
-//            }
-//        }
-
         return null;
     }
 
@@ -144,13 +178,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-//        foreach (self::$users as $user) {
-//            if (strcasecmp($user['username'], $username) === 0) {
-//                return new static($user);
-//            }
-//        }
-//
-//        return null;
         return User::find()->where(["username" => $username])->one();
     }
 

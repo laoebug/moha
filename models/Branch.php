@@ -8,8 +8,13 @@ use Yii;
  * This is the model class for table "branch".
  *
  * @property integer $id
+ * @property string $code
  * @property string $name
+ * @property string $deleted
+ * @property string $address
+ * @property string $tel
  *
+ * @property UserHasBranch[] $userHasBranches
  * @property User[] $users
  */
 class Branch extends \yii\db\ActiveRecord
@@ -28,9 +33,13 @@ class Branch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 255],
+            [['code', 'name'], 'required'],
+            [['address'], 'string'],
+            [['code'], 'string', 'max' => 10],
+            [['name', 'tel'], 'string', 'max' => 255],
+            [['deleted'], 'string', 'max' => 1],
             [['name'], 'unique'],
+            [['code'], 'unique'],
         ];
     }
 
@@ -41,8 +50,20 @@ class Branch extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'code' => Yii::t('app', 'Code'),
             'name' => Yii::t('app', 'Name'),
+            'deleted' => Yii::t('app', 'Deleted'),
+            'address' => Yii::t('app', 'Address'),
+            'tel' => Yii::t('app', 'Tel'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserHasBranches()
+    {
+        return $this->hasMany(UserHasBranch::className(), ['branch_id' => 'id']);
     }
 
     /**
@@ -50,7 +71,7 @@ class Branch extends \yii\db\ActiveRecord
      */
     public function getUsers()
     {
-        return $this->hasMany(User::className(), ['branch_id' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_has_branch', ['branch_id' => 'id']);
     }
 
     /**

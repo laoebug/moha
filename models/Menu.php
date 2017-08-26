@@ -11,7 +11,9 @@ use Yii;
  * @property string $name
  * @property string $url
  * @property string $deleted
+ * @property integer $menugroup_id
  *
+ * @property Menugroup $menugroup
  * @property RoleHasMenu[] $roleHasMenus
  * @property Role[] $roles
  */
@@ -31,10 +33,12 @@ class Menu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'url', 'deleted'], 'required'],
+            [['name', 'url', 'deleted', 'menugroup_id'], 'required'],
+            [['menugroup_id'], 'integer'],
             [['name'], 'string', 'max' => 45],
             [['url'], 'string', 'max' => 255],
             [['deleted'], 'string', 'max' => 1],
+            [['menugroup_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menugroup::className(), 'targetAttribute' => ['menugroup_id' => 'id']],
         ];
     }
 
@@ -48,7 +52,16 @@ class Menu extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'menugroup_id' => Yii::t('app', 'Menugroup ID'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMenugroup()
+    {
+        return $this->hasOne(Menugroup::className(), ['id' => 'menugroup_id']);
     }
 
     /**
