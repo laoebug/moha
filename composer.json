@@ -16,7 +16,10 @@
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.5",
-        "yiisoft/yii2-bootstrap": "~2.0.0"
+        "yiisoft/yii2-bootstrap": "~2.0.0",
+        "bower-asset/angular": "*",
+        "bower-asset/angular-route": "*",
+        "bower-asset/angular-strap": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
