@@ -52,7 +52,7 @@ class Menu extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
             'deleted' => Yii::t('app', 'Deleted'),
-            'menugroup_id' => Yii::t('app', 'Menugroup ID'),
+            'menugroup_id' => Yii::t('app', 'Menu Group'),
         ];
     }
 
