@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property integer $deleted
  *
  * @property Menu[] $menus
  */
@@ -29,6 +30,7 @@ class Menugroup extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['deleted'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
         ];
@@ -42,6 +44,7 @@ class Menugroup extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
+            'deleted' => Yii::t('app', 'Deleted'),
         ];
     }
 

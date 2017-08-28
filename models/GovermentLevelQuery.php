@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Statistic1]].
+ * This is the ActiveQuery class for [[GovermentLevel]].
  *
- * @see Statistic1
+ * @see GovermentLevel
  */
-class Statistic1Query extends \yii\db\ActiveQuery
+class GovermentLevelQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class Statistic1Query extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Statistic1[]|array
+     * @return GovermentLevel[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class Statistic1Query extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Statistic1|array|null
+     * @return GovermentLevel|array|null
      */
     public function one($db = null)
     {

@@ -13,7 +13,11 @@ use Yii;
  * @property string $deleted
  * @property string $address
  * @property string $tel
+ * @property integer $branch_group_id
  *
+ * @property BranchGroup $branchGroup
+ * @property StatGovermentUnitDetail[] $statGovermentUnitDetails
+ * @property StatSingleGatewayImplementationDetail[] $statSingleGatewayImplementationDetails
  * @property UserHasBranch[] $userHasBranches
  * @property User[] $users
  */
@@ -33,13 +37,15 @@ class Branch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'name'], 'required'],
+            [['code', 'name', 'branch_group_id'], 'required'],
             [['address'], 'string'],
+            [['branch_group_id'], 'integer'],
             [['code'], 'string', 'max' => 10],
             [['name', 'tel'], 'string', 'max' => 255],
             [['deleted'], 'string', 'max' => 1],
             [['name'], 'unique'],
             [['code'], 'unique'],
+            [['branch_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => BranchGroup::className(), 'targetAttribute' => ['branch_group_id' => 'id']],
         ];
     }
 
@@ -55,7 +61,32 @@ class Branch extends \yii\db\ActiveRecord
             'deleted' => Yii::t('app', 'Deleted'),
             'address' => Yii::t('app', 'Address'),
             'tel' => Yii::t('app', 'Tel'),
+            'branch_group_id' => Yii::t('app', 'Branch Group ID'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBranchGroup()
+    {
+        return $this->hasOne(BranchGroup::className(), ['id' => 'branch_group_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatGovermentUnitDetails()
+    {
+        return $this->hasMany(StatGovermentUnitDetail::className(), ['branch_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatSingleGatewayImplementationDetails()
+    {
+        return $this->hasMany(StatSingleGatewayImplementationDetail::className(), ['branch_id' => 'id']);
     }
 
     /**

@@ -9,7 +9,8 @@ use Yii;
  *
  * @property integer $id
  * @property string $code
- * @property string $deleted
+ * @property integer $deleted
+ * @property string $description
  *
  * @property Action[] $actions
  */
@@ -30,8 +31,9 @@ class Controller extends \yii\db\ActiveRecord
     {
         return [
             [['code'], 'required'],
+            [['deleted'], 'integer'],
+            [['description'], 'string'],
             [['code'], 'string', 'max' => 255],
-            [['deleted'], 'string', 'max' => 1],
             [['code'], 'unique'],
         ];
     }
@@ -45,6 +47,7 @@ class Controller extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'code' => Yii::t('app', 'Code'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'description' => Yii::t('app', 'Description'),
         ];
     }
 

@@ -12,5 +12,12 @@ return [
                 . " " . \yii\helpers\Html::a("<i class='fa fa-trash'></i>", ["delete", "id" => $data->id], ["class" => "btn btn-danger"])
                 ;
         }
+    ],
+    'YESNO' => [
+        Yii::t('app', 'NO'),
+        Yii::t('app', 'YES'),
+    ],
+    'YESNOCOLOR' => [
+        ""
     ]
 ];
