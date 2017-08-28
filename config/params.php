@@ -14,10 +14,24 @@ return [
         }
     ],
     'YESNO' => [
-        Yii::t('app', 'NO'),
-        Yii::t('app', 'YES'),
+//        Yii::t('app', 'NO'),
+//        Yii::t('app', 'YES'),
+        'NO',
+        'YES'
     ],
-    'YESNOCOLOR' => [
-        ""
-    ]
+    'YESNOCLASS' => [
+        "success", "danger"
+    ],
+    'YESNOLABEL' => [
+        "<span class='label label-success'>NO</span>",
+        "<span class='label label-danger'>YES</span>"
+    ],
+    'YESNOCOLUMN' => [
+        'attribute' => 'deleted',
+        'format' => 'html',
+        'filter' => ["NO", "YES"],
+        'value' => function($data) {
+            return Yii::$app->params["YESNOLABEL"][$data->deleted];
+        }
+    ],
 ];

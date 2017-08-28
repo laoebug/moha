@@ -17,9 +17,6 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.5",
         "yiisoft/yii2-bootstrap": "~2.0.0",
-        "bower-asset/angular": "*",
-        "bower-asset/angular-route": "~1.6.0",
-        "bower-asset/angular-strap": "~1.6.0",
         "2amigos/yii2-date-picker-widget": "~1.0"
     },
     "require-dev": {
