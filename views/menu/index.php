@@ -24,14 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
             'url:url',
-            [
-                'attribute' => 'deleted',
-                'format' => 'html',
-                'filter' => ['No', 'Yes'],
-                'value' => function($data) {
-                    return $data->deleted == "1"?Yii::t('app', "Yes") : Yii::t('app', 'No');
-                }
-            ],
+            Yii::$app->params['YESNOCOLUMN'],
             [
                 'attribute' => 'menugroup_id',
                 'filter' => \yii\helpers\ArrayHelper::map(\app\models\Menugroup::find()->all(), "id", "name"),

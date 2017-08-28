@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
- * @property string $deleted
+ * @property integer $deleted
  *
  * @property RoleHasAction[] $roleHasActions
  * @property Action[] $actions
@@ -35,8 +35,8 @@ class Role extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['deleted'], 'integer'],
             [['name'], 'string', 'max' => 45],
-            [['deleted'], 'string', 'max' => 1],
             [['name'], 'unique'],
         ];
     }

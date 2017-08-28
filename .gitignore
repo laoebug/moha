@@ -18,3 +18,4 @@ gen
 /tests/
 /runtime/
 /web/assets/
+/config/db.php

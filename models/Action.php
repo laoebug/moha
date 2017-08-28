@@ -9,8 +9,9 @@ use Yii;
  *
  * @property integer $id
  * @property string $code
- * @property string $deleted
+ * @property integer $deleted
  * @property integer $controller_id
+ * @property string $description
  *
  * @property Controller $controller
  * @property RoleHasAction[] $roleHasActions
@@ -33,9 +34,9 @@ class Action extends \yii\db\ActiveRecord
     {
         return [
             [['code', 'controller_id'], 'required'],
-            [['controller_id'], 'integer'],
+            [['deleted', 'controller_id'], 'integer'],
+            [['description'], 'string'],
             [['code'], 'string', 'max' => 255],
-            [['deleted'], 'string', 'max' => 1],
             [['controller_id'], 'exist', 'skipOnError' => true, 'targetClass' => Controller::className(), 'targetAttribute' => ['controller_id' => 'id']],
         ];
     }
@@ -50,6 +51,7 @@ class Action extends \yii\db\ActiveRecord
             'code' => Yii::t('app', 'Code'),
             'deleted' => Yii::t('app', 'Deleted'),
             'controller_id' => Yii::t('app', 'Controller ID'),
+            'description' => Yii::t('app', 'Description'),
         ];
     }
 

@@ -15,8 +15,12 @@ use Yii;
  * @property string $status
  * @property string $tel
  * @property string $email
+ * @property integer $deleted
  *
- * @property Statistic1[] $statistic1s
+ * @property StatAssociationFoundation[] $statAssociationFoundations
+ * @property StatGovermentUnit[] $statGovermentUnits
+ * @property StatLegal[] $statLegals
+ * @property StatSingleGatewayImplementation[] $statSingleGatewayImplementations
  * @property UseSubcordinate[] $useSubcordinates
  * @property UseSubcordinate[] $useSubcordinates0
  * @property User[] $subcordinateUsers
@@ -48,6 +52,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['username', 'password', 'firstname', 'lastname', 'status', 'tel'], 'required'],
+            [['deleted'], 'integer'],
             [['username', 'tel'], 'string', 'max' => 50],
             [['password', 'email'], 'string', 'max' => 100],
             [['firstname', 'lastname'], 'string', 'max' => 255],
@@ -70,15 +75,40 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'status' => Yii::t('app', 'Status'),
             'tel' => Yii::t('app', 'Tel'),
             'email' => Yii::t('app', 'Email'),
+            'deleted' => Yii::t('app', 'Deleted'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStatistic1s()
+    public function getStatAssociationFoundations()
     {
-        return $this->hasMany(Statistic1::className(), ['user_id' => 'id']);
+        return $this->hasMany(StatAssociationFoundation::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatGovermentUnits()
+    {
+        return $this->hasMany(StatGovermentUnit::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatLegals()
+    {
+        return $this->hasMany(StatLegal::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatSingleGatewayImplementations()
+    {
+        return $this->hasMany(StatSingleGatewayImplementation::className(), ['user_id' => 'id']);
     }
 
     /**
