@@ -113,16 +113,17 @@ class MessageController extends Controller
      */
     public function actionUpdate($id, $language = "la-LA") {
         $model = $this->findModel($id, $language);
-        $post = file_get_contents("php://input");
-        $post = Json::decode($post);
+        $post = Yii::$app->request->post();
         if (!$model->load($post))
             return json_encode(['error' => print_r($post, true)]);
+        
         if(!$model->save())
             return json_encode(['error' => $model->errors]);
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return json_encode(["model" => $model->attributes]);
+//        return $this->render('update', [
+//            'model' => $model,
+//        ]);
     }
 
     public function actionTranslate() {

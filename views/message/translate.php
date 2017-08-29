@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="m in messages | orderBy:sort:asc | filter : {message: filtermessage, translation: filtertranslation}">
+                        <tr ng-repeat="m in messages | orderBy:sort:active | filter : {message: filtermessage, translation: filtertranslation}">
                             <td>{{ m.message }}</td>
                             <td>{{ m.translation }}</td>
                             <td>
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-body">
                 <div class="form-group field-message-id required {{message.message.error}}">
                     <label class="control-label" for="message-id"><?= Yii::t('app', 'Message') ?></label>
-                    <input class="form-control readonly" ng-model="message.message" >
+                    <input id="message-message" type="text" class="form-control" name="Message[message]" ng-model="message.message"></input>
                 </div>
                 <div class="form-group field-message-translation">
                     <label class="control-label" for="message-translation">Translation</label>
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <button type="button" ng-click="new()" class="btn btn-default"><?= Yii::t('app', 'New') ?></button>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <button type="button" ng-click="save()" class="btn btn-primary"><?= Yii::t('app', 'Update') ?></button>
+                        <button type="button" ng-click="save()" class="btn btn-primary"><?= Yii::t('app', 'Save') ?></button>
                     </div>
                 </div>
             </div>
@@ -82,32 +82,25 @@ $this->params['breadcrumbs'][] = $this->title;
     app.controller('translateController', function($scope, $http) {
         $scope.message = null;
         $scope.messages = [];
-        $scope.sort = "id";
-        $scope.asc = true;
+        $scope.sort = "message";
+        $scope.active = false;
         $scope.create = true;
 
-//      $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-//      $http.defaults.headers.common['X-CSRF-Token'] = 'ok';
-
-        getAll();
-
-        function getAll() {
-          $http.get("index.php?r=message/getall")
+        $http.get("index.php?r=message/getall")
             .then(function (response) {
-              $scope.messages = response.data;
+                $scope.messages = response.data;
             });
-        }
 
         $scope.getIcon = function(column) {
           if($scope.sort == column) {
-            return $scope.asc ? 'fa fa-sort-alpha-asc':'fa fa-sort-alpha-desc';
+            return $scope.active ? 'fa fa-sort-alpha-asc':'fa fa-sort-alpha-desc';
           }
           return '';
         };
 
         $scope.dosort = function(column) {
           $scope.sort = column;
-          $scope.asc = !$scope.asc;
+          $scope.active = !$scope.active;
         };
 
         $scope.select = function(m) {
@@ -117,69 +110,22 @@ $this->params['breadcrumbs'][] = $this->title;
         };
 
       $scope.new = function() {
-        $scope.create = true;
-        $scope.message = null;
-        $('#message-translation').focus();
-      };
-
-      $scope.create = function() {
-            if($scope.message == null) return;
-            $http({
-              'url': 'index.php?r=message/create',
-              'headers': {
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
-              },
-              'data': {"Message": $scope.message}
-            })
-              .then(function successCallback(response) {
-                $scope.getAll();
-              }, function errorCallback(response) {
-                console.log(response);
-              });
-
-//            $.post("index.php?r=message/create", {"Message": $scope.message}, function(r) {
-//              r = JSON.parse(r);
-//                if(r.error) {
-//                    $scope.error = r.error;
-//                    $scope.success = false;
-//                    return;
-//                }
-//                $scope.success = true;
-//                $scope.error = null;
-//                $scope.messages.push(r.model);
-//                console.log(r);
-//                console.log(r.model);
-//                console.log($scope.messages);
-//                $scope.message = null;
-//            });
+          $scope.message = null;
+          $scope.create = true;
+          $('#message-message').focus();
       };
 
         $scope.save = function()  {
             if($scope.message == null) return;
-//            $.post("index.php?r=message/update&id=" + $scope.message.id, {"Message": $scope.message}, function() {
-//                if(r.error) {
-//                    $scope.error = r.error;
-//                    $scope.success = false;
-//                    return;
-//                }
-//                $scope.success = true;
-//                $scope.message = null;
-//                getAll();
-//            });
-              $http({
-                'method': 'POST',
-                'url': 'index.php?r=message/update&id=' + $scope.message.id,
-                'headers': {
-                  'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                  'X-Requested-With': 'XMLHttpRequest'
-                },
-                'params': {"Message": $scope.message}
-              })
-            .then(function successCallback(response) {
-              getAll();
-            }, function errorCallback(response) {
-              console.log(response);
+            var url = $scope.create ? 'index.php?r=message/create' : 'index.php?r=message/update&id='+$scope.message.id;
+            $http
+                .post(url, {"Message": $scope.message})
+                .then(function(response) {
+                    console.log(response.data.model);
+                    $scope.messages.push(response.data.model);
             });
+
+            $scope.new();
         };
 
         $scope.delete = function(m) {
