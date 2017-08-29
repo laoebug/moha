@@ -13,7 +13,7 @@ use Yii;
  *
  * @property StatGovermentUnitDetail[] $statGovermentUnitDetails
  */
-class GovermentLevel extends \yii\db\ActiveRecord
+class Govermentlevel extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

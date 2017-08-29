@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[GovermentLevel]].
+ * This is the ActiveQuery class for [[Govermentlevel]].
  *
- * @see GovermentLevel
+ * @see Govermentlevel
  */
-class GovermentLevelQuery extends \yii\db\ActiveQuery
+class GovermentlevelQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {

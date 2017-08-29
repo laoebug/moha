@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Govermentlevel;
 
 /**
- * GovermentlevelSearch represents the model behind the search form about `app\models\Govermentlevel`.
+ * GovermentLevelSearch represents the model behind the search form about `app\models\Govermentlevel`.
  */
 class GovermentlevelSearch extends Govermentlevel
 {
