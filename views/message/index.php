@@ -7,7 +7,7 @@
 $this->title = Yii::t('app', 'Messages');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="message-index" ng-app="mohaApp" ng-controller="translateController">
+<div ng-app="mohaApp" ng-controller="translateController">
     <div class="col-sm-12">
         <div class="alert alert-success alert-dismissable" ng-if="success">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -48,13 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     </tbody>
                 </table>
-                <div class="text-center">
-                    <dir-pagination-controls
-                            max-size="5"
-                            direction-links="true"
-                            boundary-links="true" >
-                    </dir-pagination-controls>
-                </div>
             </div>
         </div>
     </div>
@@ -69,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <input id="message-message" type="text" class="form-control" name="Message[message]" ng-model="message.message"></input>
                 </div>
                 <div class="form-group field-message-translation">
-                    <label class="control-label" for="message-translation">Translation</label>
+                    <label class="control-label" for="message-translation"><?= Yii::t('app', 'Translation') ?></label>
                     <input id="message-translation" type="text" class="form-control" name="Message[translation]" ng-model="message.translation"></input>
                     <div class="help-block"></div>
                 </div>
@@ -89,6 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--<script type="text/javascript" src="js/dirPagination.js"></script>-->
 <script type="text/javascript">
     var app = angular.module('mohaApp', []);
+    var baseurl = "index.php?r=message/";
     app.controller('translateController', function($scope, $http, $timeout) {
         $scope.message = null;
         $scope.messages = [];
@@ -98,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $scope.error = false;
         $scope.errormessage = "";
         $scope.success = false;
-        $http.get("index.php?r=message/getall")
+        $http.get(baseurl + "getall")
             .then(function (response) {
                 $scope.messages = response.data;
             });
@@ -129,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         $scope.save = function()  {
             if($scope.message == null) return;
-            var url = $scope.create ? 'index.php?r=message/create' : 'index.php?r=message/update&id='+$scope.message.id;
+            var url = $scope.create ? baseurl + 'create' : baseurl+'update&id=' + $scope.message.id;
             $http
                 .post(url, {"Message": $scope.message})
                 .then(function(response) {
@@ -155,7 +149,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $scope.delete = function(m) {
             if(confirm("Sure?")) {
                 $http
-                    .post('index.php?r=message/delete', {"id": m.id})
+                    .post(baseurl +'delete', {"id": m.id})
                     .then(function(response) {
                         $timeout(function() {
                             $scope.success = false;

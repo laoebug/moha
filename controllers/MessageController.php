@@ -55,7 +55,7 @@ class MessageController extends Controller
         $model = new Message();
         $post = Yii::$app->request->post();
         if (!$model->load($post))
-            return json_encode(["error" => "parse error"]);
+            return json_encode(["error" => Yii::t('app', 'Parse Error') . " " . json_encode($post)]);
 
         $db = Yii::$app->db->beginTransaction();
         try {
