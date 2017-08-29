@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\MyHelper;
 use Yii;
 use app\models\PhiscalYear;
 use app\models\PhiscalYearSearch;
@@ -65,8 +66,14 @@ class PhiscalYearController extends Controller
     {
         $model = new PhiscalYear();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save())
+                Yii::$app->session->setFlash("success", Yii::t('app', 'Operation Success'));
+            else
+                Yii::$app->session->setFlash("danger", json_encode($model->errors));
+
+            return $this->redirect(["index"]);
+//            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -83,14 +90,23 @@ class PhiscalYearController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            $model->start_date = MyHelper::convertdatefordb($model->start_date);
+            $model->end_date = MyHelper::convertdatefordb($model->end_date);
+            if($model->save())
+                Yii::$app->session->setFlash("success", Yii::t('app', 'Operation Success'));
+            else
+                Yii::$app->session->setFlash("danger", json_encode($model->errors));
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            return $this->redirect(['index']);
         }
+
+        $model->start_date = MyHelper::convertdatefordisplay($model->start_date);
+        $model->end_date = MyHelper::convertdatefordisplay($model->end_date);
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**

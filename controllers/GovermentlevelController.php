@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\MyHelper;
 use Yii;
 use app\models\Govermentlevel;
 use app\models\GovermentlevelSearch;
@@ -37,6 +38,27 @@ class GovermentlevelController extends Controller
     {
         $searchModel = new GovermentlevelSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $post = Yii::$app->request->post();
+        if(isset($post))
+            if(isset($post['command']))
+                if($post["command"] == "update" && isset($post['Govermentlevel']['id'])) {
+                    $model = $this->findModel($post['Govermentlevel']['id']);
+                    $model->load($post);
+                    MyHelper::saveFlash($model);
+                    return $this->renderPartial('gridview', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                        ]);
+                } else if ($post['command'] == 'create') {
+                    $model = new GovermentLevel();
+                    $model->load($post);
+                    MyHelper::saveFlash($model);
+                    return $this->renderPartial('gridview', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                    ]);
+                }
 
         return $this->render('index', [
             'searchModel' => $searchModel,

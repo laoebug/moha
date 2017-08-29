@@ -53,4 +53,13 @@ class SourceMessage extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Message::className(), ['id' => 'id']);
     }
+
+    /**
+     * @inheritdoc
+     * @return SourceMessageQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new SourceMessageQuery(get_called_class());
+    }
 }

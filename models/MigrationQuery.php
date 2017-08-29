@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[GovermentLevel]].
+ * This is the ActiveQuery class for [[Migration]].
  *
- * @see GovermentLevel
+ * @see Migration
  */
-class GovermentLevelQuery extends \yii\db\ActiveQuery
+class MigrationQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class GovermentLevelQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return GovermentLevel[]|array
+     * @return Migration[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class GovermentLevelQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return GovermentLevel|array|null
+     * @return Migration|array|null
      */
     public function one($db = null)
     {

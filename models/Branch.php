@@ -16,6 +16,7 @@ use Yii;
  * @property integer $branch_group_id
  *
  * @property BranchGroup $branchGroup
+ * @property GovermentUnit[] $govermentUnits
  * @property StatGovermentUnitDetail[] $statGovermentUnitDetails
  * @property StatSingleGatewayImplementationDetail[] $statSingleGatewayImplementationDetails
  * @property UserHasBranch[] $userHasBranches
@@ -71,6 +72,14 @@ class Branch extends \yii\db\ActiveRecord
     public function getBranchGroup()
     {
         return $this->hasOne(BranchGroup::className(), ['id' => 'branch_group_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGovermentUnits()
+    {
+        return $this->hasMany(GovermentUnit::className(), ['branch_id' => 'id']);
     }
 
     /**

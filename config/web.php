@@ -61,6 +61,12 @@ $config = [
                 ],
             ],
         ],
+//        'request' => [
+//            'cookieValidationKey' => 'ok',
+//            'parsers' => [
+//                'application/json' => 'yii\web\JsonParser', // required for POST input via `php://input`
+//            ]
+//        ],
     ],
     'params' => $params,
 ];

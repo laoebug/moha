@@ -17,19 +17,5 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a("<i class='fa fa-plus'></i> ".Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            [
-                'attribute' => 'id',
-                'value' => function($data) {
-                    return $data->id0->message;
-                }
-            ],
-            'translation:ntext',
-            Yii::$app->params["action"]
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+
+</div>

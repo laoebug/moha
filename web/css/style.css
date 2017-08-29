@@ -1,6 +1,6 @@
 table.table td {
     vertical-align: middle !important;
 }
-table tbody tr td:hover{
-    cursor: pointer !important;
+select {
+    height: 3em !important;
 }

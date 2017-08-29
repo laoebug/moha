@@ -68,54 +68,28 @@
             </div>
             <!-- Sidebar Menu-->
             <ul class="sidebar-menu">
-                <li class="active"><a href="index.php?r=message"><i class="fa fa-dashboard"></i><span><?= Yii::t('app', 'Translation') ?></span></a></li>
-<!--                <li class="active"><a href="index.php"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>-->
-<!--                <li class="treeview"><a href="#"><i class="fa fa-laptop"></i><span>UI Elements</span><i class="fa fa-angle-right"></i></a>-->
-<!--                    <ul class="treeview-menu">-->
-<!--                        <li><a href="bootstrap-components.html"><i class="fa fa-circle-o"></i> Bootstrap Elements</a></li>-->
-<!--                        <li><a href="http://fontawesome.io/icons/" target="_blank"><i class="fa fa-circle-o"></i> Font Icons</a></li>-->
-<!--                        <li><a href="ui-cards.html"><i class="fa fa-circle-o"></i> Cards</a></li>-->
-<!--                        <li><a href="widgets.html"><i class="fa fa-circle-o"></i> Widgets</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--                <li><a href="charts.html"><i class="fa fa-pie-chart"></i><span>Charts</span></a></li>-->
-<!--                <li class="treeview"><a href="#"><i class="fa fa-edit"></i><span>Forms</span><i class="fa fa-angle-right"></i></a>-->
-<!--                    <ul class="treeview-menu">-->
-<!--                        <li><a href="form-components.html"><i class="fa fa-circle-o"></i> Form Components</a></li>-->
-<!--                        <li><a href="form-custom.html"><i class="fa fa-circle-o"></i> Custom Components</a></li>-->
-<!--                        <li><a href="form-samples.html"><i class="fa fa-circle-o"></i> Form Samples</a></li>-->
-<!--                        <li><a href="form-notifications.html"><i class="fa fa-circle-o"></i> Form Notifications</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--                <li class="treeview"><a href="#"><i class="fa fa-th-list"></i><span>Tables</span><i class="fa fa-angle-right"></i></a>-->
-<!--                    <ul class="treeview-menu">-->
-<!--                        <li><a href="table-basic.html"><i class="fa fa-circle-o"></i> Basic Tables</a></li>-->
-<!--                        <li><a href="table-data-table.html"><i class="fa fa-circle-o"></i> Data Tables</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--                <li class="treeview"><a href="#"><i class="fa fa-file-text"></i><span>Pages</span><i class="fa fa-angle-right"></i></a>-->
-<!--                    <ul class="treeview-menu">-->
-<!--                        <li><a href="blank-page.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>-->
-<!--                        <li><a href="page-login.html"><i class="fa fa-circle-o"></i> Login Page</a></li>-->
-<!--                        <li><a href="page-lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen Page</a></li>-->
-<!--                        <li><a href="page-user.html"><i class="fa fa-circle-o"></i> User Page</a></li>-->
-<!--                        <li><a href="page-invoice.html"><i class="fa fa-circle-o"></i> Invoice Page</a></li>-->
-<!--                        <li><a href="page-calendar.html"><i class="fa fa-circle-o"></i> Calendar Page</a></li>-->
-<!--                        <li><a href="page-mailbox.html"><i class="fa fa-circle-o"></i> Mailbox</a></li>-->
-<!--                        <li><a href="page-error.html"><i class="fa fa-circle-o"></i> Error Page</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--                <li class="treeview"><a href="#"><i class="fa fa-share"></i><span>Multilevel Menu</span><i class="fa fa-angle-right"></i></a>-->
-<!--                    <ul class="treeview-menu">-->
-<!--                        <li><a href="blank-page.html"><i class="fa fa-circle-o"></i> Level One</a></li>-->
-<!--                        <li class="treeview"><a href="#"><i class="fa fa-circle-o"></i><span> Level One</span><i class="fa fa-angle-right"></i></a>-->
-<!--                            <ul class="treeview-menu">-->
-<!--                                <li><a href="blank-page.html"><i class="fa fa-circle-o"></i> Level Two</a></li>-->
-<!--                                <li><a href="#"><i class="fa fa-circle-o"></i><span> Level Two</span></a></li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </li>-->
+
+                <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span><?= Yii::t('app','Dashboard') ?></span></a></li>
+                <li class="treeview"><a href="#"><i class="fa fa-laptop"></i><span><?= Yii::t('app','Administration') ?></span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.php?r=phiscal-year"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Phiscal Year') ?></a></li>
+                        <li><a href="index.php?r=message"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Translation') ?></a></li>
+                        <li><a href="index.php?r=branch"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry') ?></a></li>
+                        <li><a href="index.php?r=branch-group"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry Group') ?></a></li>
+                        <li><a href="index.php?r=govermentlevel"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Goverment Level') ?></a></li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-share"></i><span>Multilevel Menu</span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="blank-page.html"><i class="fa fa-circle-o"></i> Level One</a></li>
+                        <li class="treeview"><a href="#"><i class="fa fa-circle-o"></i><span> Level One</span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="blank-page.html"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i><span> Level Two</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </section>
     </aside>
@@ -134,6 +108,12 @@
             </div>
         </div>
         <div class="row">
+            <?php
+            foreach (Yii::$app->session->getAllFlashes() as $key => $flash) : ?>
+                <div class="alert alert-<?= $key ?>"><?= $flash ?></div>
+            <?php
+            endforeach;
+            ?>
             <?= $content ?>
         </div>
     </div>
@@ -142,6 +122,7 @@
 <script src="js/jquery-2.1.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/plugins/pace.min.js"></script>
+<script src="js/main.js"></script>
 <?php $this->endBody() ?>
 </body>
 </html>

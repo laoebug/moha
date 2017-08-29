@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[GovermentLevel]].
+ * This is the ActiveQuery class for [[Message]].
  *
- * @see GovermentLevel
+ * @see Message
  */
-class GovermentLevelQuery extends \yii\db\ActiveQuery
+class MessageQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class GovermentLevelQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return GovermentLevel[]|array
+     * @return Message[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class GovermentLevelQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return GovermentLevel|array|null
+     * @return Message|array|null
      */
     public function one($db = null)
     {

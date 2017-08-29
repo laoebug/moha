@@ -2,12 +2,16 @@
 
 namespace app\controllers;
 
+use app\models\SourceMessage;
 use Yii;
 use app\models\Message;
 use app\models\MessageSearch;
+use yii\db\Exception;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * MessageController implements the CRUD actions for Message model.
@@ -71,11 +75,33 @@ class MessageController extends Controller
     public function actionCreate()
     {
         $model = new Message();
+        $post = Yii::$app->request->post();
+        if (!$model->load($post))
+            return json_encode(["error" => "parse error"]);
 
-        if (!$model->load(Yii::$app->request->post())) return json_encode(["error" => "parse error"]);
-        if(!$model->save()) return json_encode(["error" => $model->errors]);
-            return json_encode(["model" => $model->attributes]);
-//            return $this->redirect(['view', 'id' => $model->id, 'language' => $model->language]);
+        $db = Yii::$app->db->beginTransaction();
+        try {
+            $sourceMessage = new SourceMessage();
+            $sourceMessage->message = $post["Message"]["message"];
+            $sourceMessage->category = 'app';
+            if(!$sourceMessage->save())
+                throw new Exception(json_encode($sourceMessage->errors));
+
+            $model->id = $sourceMessage->id;
+            $model->language = "la-LA";
+            if(!$model->save())
+                return json_encode(["error" => $model->errors]);
+
+            $model->id = "$model->id";
+            $db->commit();
+            return json_encode(["model" => array_merge($model->attributes, [
+                "message" => $sourceMessage->message,
+                "category" => $sourceMessage->category
+            ])]);
+        } catch (Exception $exception) {
+            $db->rollBack();
+            return json_encode(['error' => $exception->getTraceAsString()]);
+        }
     }
 
     /**
@@ -87,13 +113,16 @@ class MessageController extends Controller
      */
     public function actionUpdate($id, $language = "la-LA") {
         $model = $this->findModel($id, $language);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'language' => $model->language]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+        $post = file_get_contents("php://input");
+        $post = Json::decode($post);
+        if (!$model->load($post))
+            return json_encode(['error' => print_r($post, true)]);
+        if(!$model->save())
+            return json_encode(['error' => $model->errors]);
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     public function actionTranslate() {
