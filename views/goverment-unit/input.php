@@ -37,14 +37,18 @@ $this->params['breadcrumbs'][] = $this->title;
                         <tbody>
                         <?php
                         $i = 0;
-                        $details = $model->getStatGovermentUnitDetails()->orderBy('branch.branch_group_id, branch_id, goverment_level_id')->all();
+                        $details = $model->getStatGovermentUnitDetails()
+                            ->with('branch')
+                            ->orderBy('branch.branch_group_id, branch_id, goverment_level_id')
+                            ->all();
                         exit;
                         foreach ($branchgroups as $g): ?>
                             <tr>
-                                <td colspan="2" class="text-center"><strong><?= $g->name ?></strong></td>
+                                <td colspan="2" class="text-center">
+                                    <strong><?= $g->name ?></strong>
+                                </td>
                                 <?php foreach ($govermentlevels as $l):
                                     foreach ($details as $d):
-                                        
                                     ?>
                                     <td></td>
                                 <?php endforeach;
