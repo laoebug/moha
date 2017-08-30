@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Govermentlevel */
+/* @var $model app\models\GovermentUnit */
 
-$this->title = Yii::t('app', 'Create Govermentlevel');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Govermentlevels'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Goverment Unit');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Goverment Units'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="govermentlevel-create">
+<div class="goverment-unit-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

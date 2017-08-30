@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Govermentlevel;
+use app\models\GovermentUnit;
 
 /**
- * GovermentLevelSearch represents the model behind the search form about `app\models\Govermentlevel`.
+ * GovermentUnitSearch represents the model behind the search form about `app\models\GovermentUnit`.
  */
-class GovermentlevelSearch extends Govermentlevel
+class GovermentUnitSearch extends GovermentUnit
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class GovermentlevelSearch extends Govermentlevel
     public function rules()
     {
         return [
-            [['id', 'deleted'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'deleted', 'branch_id'], 'integer'],
+            [['name', 'effective_date'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class GovermentlevelSearch extends Govermentlevel
      */
     public function search($params)
     {
-        $query = Govermentlevel::find();
+        $query = GovermentUnit::find();
 
         // add conditions that should always apply here
 
@@ -61,6 +61,8 @@ class GovermentlevelSearch extends Govermentlevel
         $query->andFilterWhere([
             'id' => $this->id,
             'deleted' => $this->deleted,
+            'branch_id' => $this->branch_id,
+            'effective_date' => $this->effective_date,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

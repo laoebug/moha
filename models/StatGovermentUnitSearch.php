@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Govermentlevel;
+use app\models\StatGovermentUnit;
 
 /**
- * GovermentLevelSearch represents the model behind the search form about `app\models\Govermentlevel`.
+ * StatGovermentUnitSearch represents the model behind the search form about `app\models\StatGovermentUnit`.
  */
-class GovermentlevelSearch extends Govermentlevel
+class StatGovermentUnitSearch extends StatGovermentUnit
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class GovermentlevelSearch extends Govermentlevel
     public function rules()
     {
         return [
-            [['id', 'deleted'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'user_id', 'phiscal_year_id'], 'integer'],
+            [['last_update', 'status'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class GovermentlevelSearch extends Govermentlevel
      */
     public function search($params)
     {
-        $query = Govermentlevel::find();
+        $query = StatGovermentUnit::find();
 
         // add conditions that should always apply here
 
@@ -60,10 +60,12 @@ class GovermentlevelSearch extends Govermentlevel
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'deleted' => $this->deleted,
+            'user_id' => $this->user_id,
+            'last_update' => $this->last_update,
+            'phiscal_year_id' => $this->phiscal_year_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

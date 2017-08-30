@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Branch;
-use app\models\BranchSearch;
+use app\models\StatGovermentUnit;
+use app\models\StatGovermentUnitSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BranchController implements the CRUD actions for Branch model.
+ * StatGovermentUnitController implements the CRUD actions for StatGovermentUnit model.
  */
-class BranchController extends Controller
+class StatGovermentUnitController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class BranchController extends Controller
     }
 
     /**
-     * Lists all Branch models.
+     * Lists all StatGovermentUnit models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new BranchSearch();
+        $searchModel = new StatGovermentUnitSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class BranchController extends Controller
     }
 
     /**
-     * Displays a single Branch model.
+     * Displays a single StatGovermentUnit model.
      * @param integer $id
      * @return mixed
      */
@@ -57,16 +57,16 @@ class BranchController extends Controller
     }
 
     /**
-     * Creates a new Branch model.
+     * Creates a new StatGovermentUnit model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Branch();
+        $model = new StatGovermentUnit();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,7 +75,7 @@ class BranchController extends Controller
     }
 
     /**
-     * Updates an existing Branch model.
+     * Updates an existing StatGovermentUnit model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -84,10 +84,8 @@ class BranchController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if(!$model->save())
-                Yii::$app->session->setFlash('danger', json_encode($model->errors));
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -96,7 +94,7 @@ class BranchController extends Controller
     }
 
     /**
-     * Deletes an existing Branch model.
+     * Deletes an existing StatGovermentUnit model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -109,15 +107,15 @@ class BranchController extends Controller
     }
 
     /**
-     * Finds the Branch model based on its primary key value.
+     * Finds the StatGovermentUnit model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Branch the loaded model
+     * @return StatGovermentUnit the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Branch::findOne($id)) !== null) {
+        if (($model = StatGovermentUnit::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

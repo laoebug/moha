@@ -12,7 +12,10 @@ use Yii;
  * @property string $url
  * @property integer $deleted
  * @property integer $menugroup_id
+ * @property integer $menu_parent_id
  *
+ * @property Menu $menuParent
+ * @property Menu[] $menus
  * @property Menugroup $menugroup
  * @property RoleHasMenu[] $roleHasMenus
  * @property Role[] $roles
@@ -34,9 +37,10 @@ class Menu extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'url', 'menugroup_id'], 'required'],
-            [['deleted', 'menugroup_id'], 'integer'],
+            [['deleted', 'menugroup_id', 'menu_parent_id'], 'integer'],
             [['name'], 'string', 'max' => 45],
             [['url'], 'string', 'max' => 255],
+            [['menu_parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menu::className(), 'targetAttribute' => ['menu_parent_id' => 'id']],
             [['menugroup_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menugroup::className(), 'targetAttribute' => ['menugroup_id' => 'id']],
         ];
     }
@@ -52,7 +56,24 @@ class Menu extends \yii\db\ActiveRecord
             'url' => Yii::t('app', 'Url'),
             'deleted' => Yii::t('app', 'Deleted'),
             'menugroup_id' => Yii::t('app', 'Menugroup ID'),
+            'menu_parent_id' => Yii::t('app', 'Menu Parent ID'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMenuParent()
+    {
+        return $this->hasOne(Menu::className(), ['id' => 'menu_parent_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMenus()
+    {
+        return $this->hasMany(Menu::className(), ['menu_parent_id' => 'id']);
     }
 
     /**
@@ -77,14 +98,5 @@ class Menu extends \yii\db\ActiveRecord
     public function getRoles()
     {
         return $this->hasMany(Role::className(), ['id' => 'role_id'])->viaTable('role_has_menu', ['menu_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return MenuQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new MenuQuery(get_called_class());
     }
 }

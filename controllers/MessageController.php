@@ -5,13 +5,10 @@ namespace app\controllers;
 use app\models\SourceMessage;
 use Yii;
 use app\models\Message;
-use app\models\MessageSearch;
 use yii\db\Exception;
-use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\Response;
 
 /**
  * MessageController implements the CRUD actions for Message model.
@@ -45,26 +42,7 @@ class MessageController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MessageSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Message model.
-     * @param integer $id
-     * @param string $language
-     * @return mixed
-     */
-    public function actionView($id, $language)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id, $language),
-        ]);
+        return $this->render("index");
     }
 
     /**
@@ -77,7 +55,7 @@ class MessageController extends Controller
         $model = new Message();
         $post = Yii::$app->request->post();
         if (!$model->load($post))
-            return json_encode(["error" => "parse error"]);
+            return json_encode(["error" => Yii::t('app', 'Parse Error') . " " . json_encode($post)]);
 
         $db = Yii::$app->db->beginTransaction();
         try {
@@ -113,26 +91,21 @@ class MessageController extends Controller
      */
     public function actionUpdate($id, $language = "la-LA") {
         $model = $this->findModel($id, $language);
-        $post = file_get_contents("php://input");
-        $post = Json::decode($post);
+        $post = Yii::$app->request->post();
         if (!$model->load($post))
             return json_encode(['error' => print_r($post, true)]);
+
         if(!$model->save())
             return json_encode(['error' => $model->errors]);
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
+        return json_encode(["model" => $model->attributes]);
 
-    public function actionTranslate() {
-       return $this->render("translate");
     }
 
     public function actionGetall() {
         return json_encode(
-            Message::find(["deleleted" => 0])
-                ->select("*")
+            Message::find()
+                ->select("s.id, s.message, translation")
                 ->join("join", "source_message s", "s.id = message.id")
             ->asArray()
             ->all());
@@ -145,11 +118,16 @@ class MessageController extends Controller
      * @param string $language
      * @return mixed
      */
-    public function actionDelete($id, $language = "la-LA")
+    public function actionDelete()
     {
-        if(!$this->findModel($id, $language)->delete())
-            return json_encode(["error" => Yii::t('app','Cannot Delete')]);
-        else return json_encode(["message" => "OK"]);
+        $post = Yii::$app->request->post();
+        if(isset($post)) {
+            if(!$this->findModel($post['id'], 'la-LA')->delete())
+                return json_encode(["error" => Yii::t('app','Cannot Delete')]);
+            else
+                return json_encode(["message" => "OK"]);
+        } else
+            return json_encode(["error" => Yii::t('app','Incorrect Requested')]);
     }
 
     /**

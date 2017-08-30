@@ -4,17 +4,21 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Govermentlevel */
+/* @var $model app\models\GovermentUnit */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="govermentlevel-form">
+<div class="goverment-unit-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $model->isNewRecord? "": $form->field($model, 'deleted')->dropDownList(["NO", "YES"]) ?>
+    <?= $form->field($model, 'deleted')->textInput() ?>
+
+    <?= $form->field($model, 'branch_id')->textInput() ?>
+
+    <?= $form->field($model, 'effective_date')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
