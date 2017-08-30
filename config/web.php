@@ -44,15 +44,15 @@ $config = [
         ],
         'db' => $db,
         
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'enableStrictParsing' => true,
-            'showScriptName' => false,
-            'rules' => [
-                  ['class' => 'yii\rest\UrlRule', 'controller' => 'myrole'],
-                  //['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
-            ],
-        ],
+//         'urlManager' => [
+//             'enablePrettyUrl' => true,
+//             'enableStrictParsing' => true,
+//             'showScriptName' => false,
+//             'rules' => [
+//                   ['class' => 'yii\rest\UrlRule', 'controller' => 'myrole'],
+                 
+//             ],
+//         ],
         
         'i18n' => [
             'translations' => [
