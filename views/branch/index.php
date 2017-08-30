@@ -27,13 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'code',
             'name',
-//            'address:ntext',
-//             'tel',
             [
                 'attribute' => 'branch_group_id',
                 'filter' => \yii\helpers\ArrayHelper::map(\app\models\BranchGroup::find()->where(['deleted'=>0])->all(), 'id', 'name'),
                 'value' => function($data) {
-                    return $data->branchGroup->name;
+                    if($data->branchGroup)
+                        return $data->branchGroup->name;
                 }
             ],
             Yii::$app->params["action"]
