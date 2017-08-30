@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\GovermentLevelSearch */
+/* @var $model app\models\StatGovermentUnitSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="govermentlevel-search">
+<div class="stat-goverment-unit-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,9 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'deleted') ?>
+    <?= $form->field($model, 'last_update') ?>
+
+    <?= $form->field($model, 'status') ?>
+
+    <?= $form->field($model, 'phiscal_year_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

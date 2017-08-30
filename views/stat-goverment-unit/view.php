@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Govermentlevel */
+/* @var $model app\models\StatGovermentUnit */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Govermentlevels'), 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Stat Goverment Units'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="govermentlevel-view">
+<div class="stat-goverment-unit-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,8 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'name',
-            'deleted',
+            'user_id',
+            'last_update',
+            'status',
+            'phiscal_year_id',
         ],
     ]) ?>
 

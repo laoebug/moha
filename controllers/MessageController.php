@@ -104,8 +104,8 @@ class MessageController extends Controller
 
     public function actionGetall() {
         return json_encode(
-            Message::find(["deleleted" => 0])
-                ->select("*")
+            Message::find()
+                ->select("id, name, deleted")
                 ->join("join", "source_message s", "s.id = message.id")
             ->asArray()
             ->all());

@@ -34,7 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     <tr>
                         <th><input class="form-control" type="text" ng-model="filtername"></th>
-                        <th><input class="form-control" type="text" ng-model="filterdeleted"></th>
+                        <th><select ng-model="filterdeleted" class="form-control">
+                                <option></option>
+                                <option value="0"><?= Yii::t('app', 'NO') ?></option>
+                                <option value="1"><?= Yii::t('app', 'YES') ?></option>
+                            </select></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -95,10 +99,15 @@ $this->params['breadcrumbs'][] = $this->title;
         $scope.error = false;
         $scope.errormessage = "";
         $scope.success = false;
-        $http.get(baseurl + "getall")
+
+        getall();
+
+        function getall() {
+          $http.get(baseurl + "getall")
             .then(function (response) {
-                $scope.items = response.data;
+              $scope.items = response.data;
             });
+        }
 
         $scope.getIcon = function(column) {
             if($scope.sort == column) {
@@ -143,7 +152,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return;
                     }
                     $scope.success = true;
-                    $scope.items.push(response.data.model);
+                    if($scope.create) getall();
+//                    $scope.items.push(response.data.model);
                 });
 
             $scope.new();
@@ -167,7 +177,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return;
                         }
                         $scope.success = true;
-                        $scope.items.splice($scope.items.indexOf(m), 1);
+                        m.deleted = 1;
                     });
             }
         };
