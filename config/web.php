@@ -10,6 +10,7 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'la-LA',
     'sourceLanguage' => 'en-US',
+//     'controllerNamespace' => 'app\controllers',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -42,14 +43,17 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                  ['class' => 'yii\rest\UrlRule', 'controller' => 'myrole'],
+                  //['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
             ],
         ],
-        */
+        
         'i18n' => [
             'translations' => [
                 'app*' => [

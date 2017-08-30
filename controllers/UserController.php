@@ -2,18 +2,17 @@
 
 namespace app\controllers;
 
-use app\components\MyHelper;
 use Yii;
-use app\models\Govermentlevel;
-use app\models\GovermentlevelSearch;
+use app\models\User;
+use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * GovermentlevelController implements the CRUD actions for Govermentlevel model.
+ * UserController implements the CRUD actions for User model.
  */
-class GovermentlevelController extends Controller
+class UserController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,34 +30,13 @@ class GovermentlevelController extends Controller
     }
 
     /**
-     * Lists all Govermentlevel models.
+     * Lists all User models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new GovermentlevelSearch();
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $post = Yii::$app->request->post();
-        if(isset($post))
-            if(isset($post['command']))
-                if($post["command"] == "update" && isset($post['Govermentlevel']['id'])) {
-                    $model = $this->findModel($post['Govermentlevel']['id']);
-                    $model->load($post);
-                    MyHelper::saveFlash($model);
-                    return $this->renderPartial('gridview', [
-                        'searchModel' => $searchModel,
-                        'dataProvider' => $dataProvider,
-                        ]);
-                } else if ($post['command'] == 'create') {
-                    $model = new GovermentLevel();
-                    $model->load($post);
-                    MyHelper::saveFlash($model);
-                    return $this->renderPartial('gridview', [
-                        'searchModel' => $searchModel,
-                        'dataProvider' => $dataProvider,
-                    ]);
-                }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -67,7 +45,7 @@ class GovermentlevelController extends Controller
     }
 
     /**
-     * Displays a single Govermentlevel model.
+     * Displays a single User model.
      * @param integer $id
      * @return mixed
      */
@@ -79,17 +57,17 @@ class GovermentlevelController extends Controller
     }
 
     /**
-     * Creates a new Govermentlevel model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Govermentlevel();
+        $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(["index"]);
-//            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success',"User has been saved successfully");
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -98,7 +76,7 @@ class GovermentlevelController extends Controller
     }
 
     /**
-     * Updates an existing Govermentlevel model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -108,6 +86,7 @@ class GovermentlevelController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success',"User has been saved successfully");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -116,8 +95,23 @@ class GovermentlevelController extends Controller
         }
     }
 
+    public function actionDeleteUser($id)
+    {
+        $model = $this->findModel($id);
+        $model->status="N";
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            Yii::$app->session->setFlash('success',"User has been delete successfully");
+            return $this->redirect(['index']);
+        } else {
+//             return $this->render('update', [
+//                 'model' => $model,
+//             ]);
+        }
+    }
+    
     /**
-     * Deletes an existing Govermentlevel model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -130,15 +124,15 @@ class GovermentlevelController extends Controller
     }
 
     /**
-     * Finds the Govermentlevel model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Govermentlevel the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Govermentlevel::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
