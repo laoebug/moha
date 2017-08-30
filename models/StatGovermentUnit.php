@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $user_id
  * @property string $last_update
- * @property string $status
+ * @property integer $saved
  * @property integer $phiscal_year_id
  *
  * @property PhiscalYear $phiscalYear
@@ -33,10 +33,9 @@ class StatGovermentUnit extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'last_update', 'status', 'phiscal_year_id'], 'required'],
-            [['user_id', 'phiscal_year_id'], 'integer'],
+            [['user_id', 'saved', 'phiscal_year_id'], 'integer'],
+            [['last_update', 'phiscal_year_id'], 'required'],
             [['last_update'], 'safe'],
-            [['status'], 'string', 'max' => 45],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -51,7 +50,7 @@ class StatGovermentUnit extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'last_update' => Yii::t('app', 'Last Update'),
-            'status' => Yii::t('app', 'Status'),
+            'saved' => Yii::t('app', 'Saved'),
             'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
         ];
     }

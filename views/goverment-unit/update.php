@@ -1,23 +1,77 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
-/* @var $model app\models\GovermentUnit */
+/* @var $searchModel app\models\GovermentlevelSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $model app\models\StatGovermentUnit */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Goverment Unit',
-]) . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Goverment Units'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = Yii::t('app', 'Goverment Unit');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="goverment-unit-update">
+    <style>
+        th {
+            text-align: center;
+        }
+    </style>
+    <div class="row">
+        <div class="col-sm-12">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        </div>
+        <div class="col-sm-12" style="margin-top: 2em" id="result">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="text-center"><?= Yii::t('app','Statistics of Goverment Unit ') ?> (<?= $year->year ?>)</h2>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-responsive table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th style="width: 10px"><?= Yii::t('app', 'No.') ?></th>
+                            <th><?= Yii::t('app', 'Ministry') ?></th>
+                            <?php foreach ($govermentlevels as $l): ?>
+                                <th style="width: 10%"><?= $l->name ?></th>
+                            <?php endforeach;  ?>
+                            <th><?= Yii::t('app', 'Remark') ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $i = 0;
+                        foreach ($branchgroups as $g): ?>
+                            <tr>
+                                <td colspan="2" class="text-center">
+                                    <strong><?= $g->name ?></strong>
+                                </td>
+                            </tr>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
-</div>
+                            <?php foreach ($g->branches as $b): ?>
+                                <tr>
+                                    <td><?= ++$i ?></td>
+                                    <td><?= $b->name ?></td>
+                                    <?php foreach ($govermentlevels as $l): ?>
+                                        <td><input class="form-control" ng-model="values[<?=$b->id?>][<?= $l->id ?>]"> </td>
+                                    <?php endforeach; ?>
+                                    <td></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endforeach; ?>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                            <?php foreach ($govermentlevels as $l): ?>
+                                <td></td>
+                            <?php endforeach;  ?>
+                            <td></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+$this->registerJs(
+    "
+"
+);

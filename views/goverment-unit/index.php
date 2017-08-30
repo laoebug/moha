@@ -22,7 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <select name="phiscalyear" class="form-control" id="phiscalyear">
                         <option value=""><?= Yii::t('app','Select') ?></option>
                         <?php foreach ($phiscalyears as $y): ?>
-                            <option value="<?= $y->id ?>"><?= $y->year ?></option>
+                            <option value="<?= $y->id ?>">
+                                <?= $y->year ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -58,14 +60,14 @@ $('#phiscalyear').change(function() {
             $.get('index.php?r=goverment-unit/report&phiscalyearid='+year, function(r) {
                 $('#result').html(r);
             });
-            $('#btninput').attr('href', 'index.php?r=goverment-unit/input&id='+year);
+            $('#btninput').attr('href', 'index.php?r=goverment-unit/create&id='+year);
             $('#btndownload').attr('href', 'index.php?r=goverment-unit/download&id='+year);
         }
     });
         
     $('#btninput').click(function() {
         if($('#phiscalyear').val() != '')
-            window.location.href = 'index.php?r=goverment-unit/input&id='+$('#phiscalyear').val();
+            window.location.href = 'index.php?r=goverment-unit/create&id='+$('#phiscalyear').val();
     });  
 "
 );

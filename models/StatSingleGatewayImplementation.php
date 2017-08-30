@@ -11,6 +11,7 @@ use Yii;
  * @property integer $user_id
  * @property integer $phiscal_year_id
  * @property string $last_update
+ * @property integer $status
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
@@ -33,7 +34,7 @@ class StatSingleGatewayImplementation extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'phiscal_year_id', 'last_update'], 'required'],
-            [['user_id', 'phiscal_year_id'], 'integer'],
+            [['user_id', 'phiscal_year_id', 'status'], 'integer'],
             [['last_update'], 'safe'],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -50,6 +51,7 @@ class StatSingleGatewayImplementation extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
             'last_update' => Yii::t('app', 'Last Update'),
+            'status' => Yii::t('app', 'Status'),
         ];
     }
 

@@ -13,6 +13,7 @@ use Yii;
  * @property integer $province_id
  * @property integer $approved_by_moha
  * @property string $remark
+ * @property integer $position
  *
  * @property Province $province
  */
@@ -34,7 +35,7 @@ class Accociation extends \yii\db\ActiveRecord
         return [
             [['name', 'approved_date'], 'required'],
             [['approved_date'], 'safe'],
-            [['province_id', 'approved_by_moha'], 'integer'],
+            [['province_id', 'approved_by_moha', 'position'], 'integer'],
             [['remark'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
@@ -54,6 +55,7 @@ class Accociation extends \yii\db\ActiveRecord
             'province_id' => Yii::t('app', 'Province ID'),
             'approved_by_moha' => Yii::t('app', 'Approved By Moha'),
             'remark' => Yii::t('app', 'Remark'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 

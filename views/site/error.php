@@ -9,19 +9,15 @@ use yii\helpers\Html;
 
 $this->title = $name;
 ?>
-<div class="site-error">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<div class="page-error">
+    <h1><i class="fa fa-exclamation-circle"></i> <?= Html::encode($this->title) ?></h1>
     <div class="alert alert-danger">
         <?= nl2br(Html::encode($message)) ?>
     </div>
-
     <p>
-        The above error occurred while the Web server was processing your request.
+        <a href="javascript:window.history.back();" class="btn btn-default">
+            <i class="fa fa-arrow-left"></i> <?= Yii::t('app', 'Go Back') ?>
+        </a>
     </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
-
 </div>

@@ -11,7 +11,7 @@ use Yii;
  * @property string $name
  * @property integer $deleted
  * @property integer $branch_id
- * @property string $effective_date
+ * @property integer $position
  *
  * @property Branch $branch
  */
@@ -31,9 +31,8 @@ class GovermentUnit extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'branch_id', 'effective_date'], 'required'],
-            [['deleted', 'branch_id'], 'integer'],
-            [['effective_date'], 'safe'],
+            [['name', 'branch_id'], 'required'],
+            [['deleted', 'branch_id', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::className(), 'targetAttribute' => ['branch_id' => 'id']],
@@ -50,7 +49,7 @@ class GovermentUnit extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'deleted' => Yii::t('app', 'Deleted'),
             'branch_id' => Yii::t('app', 'Branch ID'),
-            'effective_date' => Yii::t('app', 'Effective Date'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 

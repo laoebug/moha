@@ -5,14 +5,14 @@
     <div class="panel-body">
         <table class="table table-responsive table-bordered table-hover">
             <thead>
-            <tr>
-                <th style="width: 10px"><?= Yii::t('app', 'No.') ?></th>
-                <th><?= Yii::t('app', 'Ministry') ?></th>
-                <?php foreach ($govermentlevels as $l): ?>
-                    <th style="width: 10%"><?= $l->name ?></th>
-                <?php endforeach;  ?>
-                <th><?= Yii::t('app', 'Remark') ?></th>
-            </tr>
+                <tr>
+                    <th style="width: 10px"><?= Yii::t('app', 'No.') ?></th>
+                    <th><?= Yii::t('app', 'Ministry') ?></th>
+                    <?php foreach ($govermentlevels as $l): ?>
+                        <th style="width: 10%"><?= $l->name ?></th>
+                    <?php endforeach;  ?>
+                    <th><?= Yii::t('app', 'Remark') ?></th>
+                </tr>
             </thead>
             <tbody>
             <?php

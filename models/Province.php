@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property integer $deleted
+ * @property integer $position
  *
  * @property Accociation[] $accociations
  * @property District[] $districts
@@ -32,7 +33,7 @@ class Province extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'name'], 'required'],
-            [['id', 'deleted'], 'integer'],
+            [['id', 'deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
         ];
@@ -47,6 +48,7 @@ class Province extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 

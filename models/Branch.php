@@ -14,6 +14,7 @@ use Yii;
  * @property string $address
  * @property string $tel
  * @property integer $branch_group_id
+ * @property integer $position
  *
  * @property BranchGroup $branchGroup
  * @property GovermentUnit[] $govermentUnits
@@ -40,7 +41,7 @@ class Branch extends \yii\db\ActiveRecord
         return [
             [['code', 'name', 'branch_group_id'], 'required'],
             [['address'], 'string'],
-            [['branch_group_id'], 'integer'],
+            [['branch_group_id', 'position'], 'integer'],
             [['code'], 'string', 'max' => 10],
             [['name', 'tel'], 'string', 'max' => 255],
             [['deleted'], 'string', 'max' => 1],
@@ -63,6 +64,7 @@ class Branch extends \yii\db\ActiveRecord
             'address' => Yii::t('app', 'Address'),
             'tel' => Yii::t('app', 'Tel'),
             'branch_group_id' => Yii::t('app', 'Branch Group ID'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 
