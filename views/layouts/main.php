@@ -95,14 +95,10 @@
                         </li>
                     </ul>
                 </li>
-                
-                
-                
             </ul>
         </section>
     </aside>
-	
-                
+
     <div class="content-wrapper">
         <div class="page-title">
             <div>
@@ -132,9 +128,9 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/plugins/pace.min.js"></script>
 <script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="js/plugins/sweetalert.min.js"></script>
-<script src="js/main.js"></script>
-<?php $this->endBody() ?>
+<script type="text/javascript" src="js/main.js"></script>
+<?php
+$this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

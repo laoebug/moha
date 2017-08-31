@@ -70,6 +70,14 @@ class GovermentUnitController extends Controller
             ->orderBy('id')
             ->all();
 
+        if(!isset($model)) {
+            return'
+                <p>'.Yii::t('app', 'No Data').'</p>
+                <p>
+                    <a class="btn btn-success" href="index.php?r=goverment-unit/create&id='.$year->id.'"><i class="fa fa-pencil fa-2x"></i></a>
+                </p>';
+        }
+
         return $this->renderPartial('report', [
             'year' => $year,
             'model' => $model,
@@ -137,6 +145,11 @@ class GovermentUnitController extends Controller
         }
 
         $model = StatGovermentUnit::find()
+            ->with([
+                'statGovermentUnitDetails' => function(ActiveQuery $q) {
+                $q->orderBy('branch_id, stat_goverment_unit_id');
+                }
+            ])
             ->where(['phiscal_year_id' => $year->id])
             ->one();
         if(!isset($model)) {
@@ -207,16 +220,27 @@ class GovermentUnitController extends Controller
                 $model->saved = 1;
                 $model->user_id = isset($model->user_id)?$model->user_id: Yii::$app->user->id;
                 if(!$model->save()) throw new Exception(json_encode($model->errors));
+                $row = 0;
+                try {
+                    $detail = new StatGovermentUnitDetail();
+                    $detail->stat_goverment_unit_id = $model->id;
+                    $detail->goverment_level_id = $post['goverment_level_id'];
+                    $detail->branch_id = $post['branch_id'];
+                    $detail->value = $post['value'];
+                    $detail->save();
+                    $row = 1;
+                } catch (Exception $ex) {
+                    $row = StatGovermentUnitDetail::updateAll(["value" => $post['value']],[
+                        'branch_id' => $post['branch_id'],
+                        'goverment_level_id' => $post['goverment_level_id'],
+                        'stat_goverment_unit_id' => $model->id
+                    ]);
+                }
 
-                $row = StatGovermentUnitDetail::updateAll(["value" => $post['value']],[
-                    'branch_id' => $post['branch_id'],
-                    'goverment_level_id' => $post['goverment_level_id'],
-                    'stat_goverment_unit_id' => $model->id
-                ]);
                 if($row == 0) throw new Exception(Yii::t('app', '0 Row Affected'));
                 $transaction->commit();
                 return json_encode([
-                    'username' => $model->user? $model->user: User::findOne(['id'=>$post['id']]),
+                    'user' => $model->user? $model->user->attributes: User::findOne(['id'=>Yii::$app->user->id])->attributes,
                     'last_update' => MyHelper::converttimefordisplay($model->last_update),
                     'status' => Yii::t('app', 'Saved')
                 ]);

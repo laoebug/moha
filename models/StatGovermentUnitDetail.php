@@ -7,7 +7,6 @@ use Yii;
 /**
  * This is the model class for table "stat_goverment_unit_detail".
  *
- * @property integer $id
  * @property integer $branch_id
  * @property string $remark
  * @property integer $goverment_level_id
@@ -49,7 +48,6 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
             'branch_id' => Yii::t('app', 'Branch ID'),
             'remark' => Yii::t('app', 'Remark'),
             'goverment_level_id' => Yii::t('app', 'Goverment Level ID'),

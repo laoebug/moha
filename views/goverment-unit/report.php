@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-4">
-        <div class="widget-small <?=$model->saved?'warning':'primary'?>"><i class="icon fa fa-star fa-2x"></i>
+        <div class="widget-small <?=$model->saved?'primary':'warning'?>"><i class="icon fa fa-star fa-2x"></i>
             <div class="info">
                 <h4><?=Yii::t('app', 'Status') ?></h4>
                 <p><b><?=Yii::t('app', $model->saved?'Saved':'New')?></b></p>
@@ -19,7 +19,7 @@
         <div class="widget-small danger"><i class="icon fa fa-clock-o fa-2x"></i>
             <div class="info">
                 <h4><?=Yii::t('app', 'Last Update') ?></h4>
-                <p><b><?=$model->saved?\app\components\MyHelper::convertdatefordisplay($model->last_update):"-"?></b></p>
+                <p><b><?=$model->saved?\app\components\MyHelper::converttimefordisplay($model->last_update):"-"?></b></p>
             </div>
         </div>
     </div>
@@ -34,58 +34,63 @@
                 </p>
             </div>
             <div class="card-body">
-                <b>Card with action button </b><br>
                 <table class="table table-responsive table-bordered table-hover">
                     <thead>
                     <tr>
                         <th style="width: 10px"><?= Yii::t('app', 'No.') ?></th>
                         <th><?= Yii::t('app', 'Ministry') ?></th>
-                        <?php foreach ($govermentlevels as $l): ?>
+                        <?php
+                        $sum = [];
+                        foreach ($govermentlevels as $l):
+                            $sum[$l->id] = 0;
+                            ?>
                             <th style="width: 10%"><?= $l->name ?></th>
                         <?php endforeach;  ?>
                         <th><?= Yii::t('app', 'Remark') ?></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    $i = 0;
-                    foreach ($branchgroups as $g): ?>
-                        <tr>
-                            <td colspan="2" class="text-center"><strong><?= $g->name ?></strong></td>
-                            <?php foreach ($govermentlevels as $l): ?>
-                                <td></td>
-                            <?php endforeach;  ?>
-                            <td></td>
-                        </tr>
-
-                        <?php foreach ($g->branches as $b): ?>
+                        <?php
+                        $i = 0;
+                        foreach ($branchgroups as $g): ?>
                             <tr>
-                                <td><?= ++$i ?></td>
-                                <td><?= $b->name ?></td>
+                                <td colspan="2" class="text-center"><strong><?= $g->name ?></strong></td>
                                 <?php foreach ($govermentlevels as $l): ?>
-                                    <td>
-                                        <?php
-                                        if(isset($model))
-                                            foreach ($model->statGovermentUnitDetails as $detail)
-                                                if($detail->branch_id == $b->id && $detail->goverment_level_id == $l->id) {
-                                                    echo $detail->value;
-                                                    break;
-                                                }
-                                        ?>
-                                    </td>
+                                    <td></td>
                                 <?php endforeach;  ?>
                                 <td></td>
                             </tr>
+
+                            <?php foreach ($g->branches as $b): ?>
+                                <tr>
+                                    <td><?= ++$i ?></td>
+                                    <td><?= $b->name ?></td>
+                                    <?php
+                                    foreach ($govermentlevels as $l): ?>
+                                        <td class="text-center">
+                                            <?php
+                                            if(isset($model))
+                                                foreach ($model->statGovermentUnitDetails as $detail)
+                                                    if($detail->branch_id == $b->id && $detail->goverment_level_id == $l->id) {
+                                                        $sum[$l->id] += $detail->value;
+                                                        echo $detail->value;
+                                                        break;
+                                                    }
+                                            ?>
+                                        </td>
+                                    <?php endforeach;  ?>
+                                    <td></td>
+                                </tr>
+                            <?php endforeach; ?>
                         <?php endforeach; ?>
-                    <?php endforeach; ?>
                     </tbody>
                     <tfoot>
                     <tr>
                         <th colspan="2"><?= Yii::t('app', 'Total') ?></th>
                         <?php foreach ($govermentlevels as $l): ?>
-                            <td></td>
+                            <th class="text-center"><?=$sum[$l->id]?></th>
                         <?php endforeach;  ?>
-                        <td></td>
+                        <th></th>
                     </tr>
                     </tfoot>
                 </table>

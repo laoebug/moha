@@ -109,7 +109,7 @@ $(function () {
 	$.pushMenu.activate("[data-toggle='offcanvas']");
 
 	//Activate bootstrip tooltips
-	$("[data-toggle='tooltip']").tooltip();
+	// $("[data-toggle='tooltip']").tooltip();
 
 	// Login Page Flipbox control
 	$('.login-content [data-toggle="flip"]').click(function() {
@@ -118,9 +118,9 @@ $(function () {
 	});
 
 	// Using slimscroll for sidebar
-	$('.sidebar').slimScroll({
-		height: ($(window).height() - $(".main-header").height()) + "px",
-		color: "rgba(0,0,0,0.8)",
-		size: "3px"
-	});
+	// $('.sidebar').slimScroll({
+	// 	height: ($(window).height() - $(".main-header").height()) + "px",
+	// 	color: "rgba(0,0,0,0.8)",
+	// 	size: "3px"
+	// });
 });
