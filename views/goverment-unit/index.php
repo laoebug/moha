@@ -29,14 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     </select>
                 </div>
                 <div class="col-sm-6">
-                    <a id="btninquiry" href="#" class="btn btn-info">
+                    <a id="btninquiry" href="#" class="btn btn-primary">
                         <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                    </a>
-                    <a id="btninput" href="#" class="btn btn-primary">
-                        <i class="fa fa-keyboard-o fa-2x" aria-hidden="true"></i>
-                    </a>
-                    <a id="btndownload" href="#" class="btn btn-success">
-                        <i class="fa fa-download fa-2x" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
@@ -53,15 +47,14 @@ if($('#phiscalyear').val() != '')
 
 $('#btninquiry').click(function() {
     $('#phiscalyear').change();
-});        
+});       
+ 
 $('#phiscalyear').change(function() {
         var year = $(this).val();
         if(year) {
             $.get('index.php?r=goverment-unit/report&phiscalyearid='+year, function(r) {
                 $('#result').html(r);
             });
-            $('#btninput').attr('href', 'index.php?r=goverment-unit/create&id='+year);
-            $('#btndownload').attr('href', 'index.php?r=goverment-unit/download&id='+year);
         }
     });
         
@@ -69,5 +62,4 @@ $('#phiscalyear').change(function() {
         if($('#phiscalyear').val() != '')
             window.location.href = 'index.php?r=goverment-unit/create&id='+$('#phiscalyear').val();
     });  
-"
-);
+");
