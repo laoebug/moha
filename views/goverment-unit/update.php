@@ -103,10 +103,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                     </td>
                                 <?php endforeach;  ?>
                                 <td>
-                                    <input class="form-control remark"
-                                           type="text"
-                                           data-branch="<?=$b->id?>"
-                                           name="GovermentUnit[<?=$b->id?>][remark]" />
+                                    <?php
+                                    foreach ($model->statGovermentUnitDetails as $detail)
+                                        if($detail->branch_id == $b->id) :
+                                            ?>
+                                            <input class="form-control remark"
+                                                   type="text"
+                                                   data-branch="<?=$b->id?>"
+                                                   value="<?= $detail->remark ?>"
+                                                   name="GovermentUnit[<?=$b->id?>][remark]" />
+                                            <?php
+                                            break;
+                                        endif;
+                                    ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -130,9 +139,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $this->registerJs("      	
 $('input[type=text]').blur(function() {
-    var value = $(this).val();
+    var remark = $(this).val();
     var branch_id = $(this).data('branch');
-    $.post('index.php?r=goverment-unit/saveremark', {id:".$model->id.",branch_id:branch_id}, function(r) {        
+    $.post('index.php?r=goverment-unit/saveremark', {id:".$model->id.",branch_id:branch_id,remark:remark}, function(r) {        
         if(r.error) {                    
             return;
         }
@@ -163,6 +172,7 @@ $('input[type=number]').blur(function() {
 });
 
 $('input[type=number]').keyup(function() {
+    $(this).val($(this).val().replace(/[^0-9]/g, ''));
     sum($(this).data('level'));
 });
 

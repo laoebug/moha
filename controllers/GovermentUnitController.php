@@ -254,6 +254,48 @@ class GovermentUnitController extends Controller
         }
     }
 
+    public function actionSaveremark() {
+        $post = Yii::$app->request->post();
+        if(isset($post)) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try{
+                $model = StatGovermentUnit::findOne($post['id']);
+                if(!isset($model)) throw new Exception(Yii::t('app', 'Not Found!'));
+                $model->last_update = date('Y-m-d H:i:s');
+                $model->saved = 1;
+                $model->user_id = isset($model->user_id)?$model->user_id: Yii::$app->user->id;
+                if(!$model->save()) throw new Exception(json_encode($model->errors));
+                try {
+                    $detail = new StatGovermentUnitDetail();
+                    $detail->stat_goverment_unit_id = $model->id;
+                    $detail->branch_id = $post['branch_id'];
+                    $detail->remark = $post['remark'];
+                    $detail->save();
+                    $row = 1;
+                } catch (Exception $ex) {
+                    $row = StatGovermentUnitDetail::updateAll(["remark" => $post['remark']],[
+                        'branch_id' => $post['branch_id'],
+                        'stat_goverment_unit_id' => $model->id
+                    ]);
+                }
+
+                if($row == 0) throw new Exception(Yii::t('app', '0 Row Affected'));
+                $transaction->commit();
+                return json_encode([
+                    'user' => $model->user? $model->user->attributes: User::findOne(['id'=>Yii::$app->user->id])->attributes,
+                    'last_update' => MyHelper::converttimefordisplay($model->last_update),
+                    'status' => Yii::t('app', 'Saved')
+                ]);
+            } catch (Exception $exception) {
+                $transaction->rollBack();
+                return json_encode([
+                    'error' => $exception->getMessage(),
+                    'remark' => $post['remark']
+                ]);
+            }
+        }
+    }
+
     /**
      * Lists all GovermentUnit models.
      * @return mixed
