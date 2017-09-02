@@ -10,8 +10,6 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property integer $deleted
- *
- * @property StatLegalDetail[] $statLegalDetails
  */
 class LegalStatus extends \yii\db\ActiveRecord
 {
@@ -46,14 +44,6 @@ class LegalStatus extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'deleted' => Yii::t('app', 'Deleted'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStatLegalDetails()
-    {
-        return $this->hasMany(StatLegalDetail::className(), ['legal_status_id' => 'id']);
     }
 
     /**

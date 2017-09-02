@@ -147,26 +147,62 @@ $this->params['breadcrumbs'][] = $this->title;
         };
 
         $scope.delete = function(m) {
-            if(confirm("Sure?")) {
-                $http
-                    .post(baseurl +'delete', {"id": m.id})
-                    .then(function(response) {
-                        $timeout(function() {
-                            $scope.success = false;
-                            $scope.error = false;
-                            $scope.errormessage = "";
-                        }, 15000);
+          if(confirm('Sure?')) {
+            $http
+              .post(baseurl +'delete', {"id": m.id})
+              .then(function(response) {
+                $timeout(function() {
+                  $scope.success = false;
+                  $scope.error = false;
+                  $scope.errormessage = "";
+                }, 15000);
 
-                        if(response.data.error) {
-                            $scope.success = false;
-                            $scope.error = true;
-                            $scope.errormessage = response.data.error;
-                            return;
-                        }
-                        $scope.success = true;
-                        $scope.messages.splice($scope.messages.indexOf(m), 1);
-                    });
-            }
+                if(response.data.error) {
+                  $scope.success = false;
+                  $scope.error = true;
+                  $scope.errormessage = response.data.error;
+                  return;
+                }
+                $scope.success = true;
+                $scope.messages.splice($scope.messages.indexOf(m), 1);
+              });
+          }
+//              swal({
+//                title: "Are you sure?",
+//                text: "",
+//                type: "warning",
+//                showCancelButton: true,
+//                confirmButtonText: "Yes",
+//                cancelButtonText: "No",
+//                closeOnConfirm: false,
+//                closeOnCancel: false
+//              }, function(isConfirm) {
+//                if (isConfirm) {
+//                  $http
+//                    .post(baseurl +'delete', {"id": m.id})
+//                    .then(function(response) {
+//                      $timeout(function() {
+//                        $scope.success = false;
+//                        $scope.error = false;
+//                        $scope.errormessage = "";
+//                      }, 15000);
+//
+//                      if(response.data.error) {
+//                        $scope.success = false;
+//                        $scope.error = true;
+//                        $scope.errormessage = response.data.error;
+//                        return;
+//                      }
+//                      $scope.success = true;
+//                      $scope.messages.splice($scope.messages.indexOf(m), 1);
+//
+//                      swal("Deleted!", "Your imaginary file has been deleted.", "success");
+//                    });
+//                }
+//                else {
+//                  swal("Cancelled", "Your imaginary file is safe :)", "error");
+//                }
+//              });
         };
     });
 </script>

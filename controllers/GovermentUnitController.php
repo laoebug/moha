@@ -260,26 +260,42 @@ class GovermentUnitController extends Controller
             $transaction = Yii::$app->db->beginTransaction();
             try{
                 $model = StatGovermentUnit::findOne($post['id']);
-                if(!isset($model)) throw new Exception(Yii::t('app', 'Not Found!'));
+                print_r($model->attributes);
+                if(!isset($model)) {
+                    print_r('!isset');
+                    throw new Exception(Yii::t('app', 'Not Found!'));
+                }
                 $model->last_update = date('Y-m-d H:i:s');
                 $model->saved = 1;
                 $model->user_id = isset($model->user_id)?$model->user_id: Yii::$app->user->id;
-                if(!$model->save()) throw new Exception(json_encode($model->errors));
+                if(!$model->save()) {
+                    print_r($model->errors);
+                    throw new Exception(json_encode($model->errors));
+                }
+
                 try {
                     $detail = new StatGovermentUnitDetail();
                     $detail->stat_goverment_unit_id = $model->id;
                     $detail->branch_id = $post['branch_id'];
                     $detail->remark = $post['remark'];
-                    $detail->save();
+                    if(!$detail->save()) {
+                        print_r($detail->errors);
+                        throw new Exception(json_encode($detail->errors));
+                    }
+                    echo "INSERT";
                     $row = 1;
                 } catch (Exception $ex) {
+                    print_r($ex->getMessage());
                     $row = StatGovermentUnitDetail::updateAll(["remark" => $post['remark']],[
                         'branch_id' => $post['branch_id'],
                         'stat_goverment_unit_id' => $model->id
                     ]);
+                    echo "UPDATE";
                 }
 
                 if($row == 0) throw new Exception(Yii::t('app', '0 Row Affected'));
+                echo $row;
+                exit;
                 $transaction->commit();
                 return json_encode([
                     'user' => $model->user? $model->user->attributes: User::findOne(['id'=>Yii::$app->user->id])->attributes,

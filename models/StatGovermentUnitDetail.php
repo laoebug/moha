@@ -7,14 +7,15 @@ use Yii;
 /**
  * This is the model class for table "stat_goverment_unit_detail".
  *
+ * @property integer $id
+ * @property integer $department
+ * @property integer $insitute
+ * @property integer $center
+ * @property integer $stat_goverment_unit_id
  * @property integer $branch_id
  * @property string $remark
- * @property integer $goverment_level_id
- * @property integer $value
- * @property integer $stat_goverment_unit_id
  *
  * @property Branch $branch
- * @property GovermentLevel $govermentLevel
  * @property StatGovermentUnit $statGovermentUnit
  */
 class StatGovermentUnitDetail extends \yii\db\ActiveRecord
@@ -33,11 +34,10 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['branch_id', 'goverment_level_id', 'stat_goverment_unit_id'], 'required'],
-            [['branch_id', 'goverment_level_id', 'value', 'stat_goverment_unit_id'], 'integer'],
+            [['department', 'insitute', 'center', 'stat_goverment_unit_id', 'branch_id'], 'integer'],
+            [['stat_goverment_unit_id', 'branch_id'], 'required'],
             [['remark'], 'string'],
             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::className(), 'targetAttribute' => ['branch_id' => 'id']],
-            [['goverment_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => GovermentLevel::className(), 'targetAttribute' => ['goverment_level_id' => 'id']],
             [['stat_goverment_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatGovermentUnit::className(), 'targetAttribute' => ['stat_goverment_unit_id' => 'id']],
         ];
     }
@@ -48,11 +48,13 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => Yii::t('app', 'ID'),
+            'department' => Yii::t('app', 'Department'),
+            'insitute' => Yii::t('app', 'Insitute'),
+            'center' => Yii::t('app', 'Center'),
+            'stat_goverment_unit_id' => Yii::t('app', 'Stat Goverment Unit ID'),
             'branch_id' => Yii::t('app', 'Branch ID'),
             'remark' => Yii::t('app', 'Remark'),
-            'goverment_level_id' => Yii::t('app', 'Goverment Level ID'),
-            'value' => Yii::t('app', 'Value'),
-            'stat_goverment_unit_id' => Yii::t('app', 'Stat Goverment Unit ID'),
         ];
     }
 
@@ -62,14 +64,6 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
     public function getBranch()
     {
         return $this->hasOne(Branch::className(), ['id' => 'branch_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGovermentLevel()
-    {
-        return $this->hasOne(GovermentLevel::className(), ['id' => 'goverment_level_id']);
     }
 
     /**

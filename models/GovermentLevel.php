@@ -11,8 +11,6 @@ use Yii;
  * @property string $name
  * @property integer $deleted
  * @property integer $position
- *
- * @property StatGovermentUnitDetail[] $statGovermentUnitDetails
  */
 class GovermentLevel extends \yii\db\ActiveRecord
 {
@@ -48,14 +46,6 @@ class GovermentLevel extends \yii\db\ActiveRecord
             'deleted' => Yii::t('app', 'Deleted'),
             'position' => Yii::t('app', 'Position'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStatGovermentUnitDetails()
-    {
-        return $this->hasMany(StatGovermentUnitDetail::className(), ['goverment_level_id' => 'id']);
     }
 
     /**
