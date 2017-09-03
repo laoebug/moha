@@ -63,20 +63,14 @@ class MinistryController extends Controller
                 $model->deleted = 0;
             } else {
                 $model = Ministry::findOne($post['Ministry']['id']);
-                if(!isset($model)) {
-                    throw new NotFoundHttpException(Yii::t('app', 'The Ministry is Not Found'));
-                }
+                if(!isset($model)) throw new NotFoundHttpException(Yii::t('app', 'The Ministry is Not Found'));
             }
             $model->load($post);
             $model->user_id = Yii::$app->user->id;
             $model->phiscal_year_id = $year->id;
             $model->last_update = date('Y-m-d H:i:s');
-            if(!$model->save()) {
-                throw new ServerErrorHttpException(json_encode([
-                    'errors' => $model->errors,
-                    'attributes' => $model->attributes
-                ]));
-            }
+            if(!$model->save()) throw new ServerErrorHttpException(json_encode($model->errors));
+
         }
     }
 

@@ -128,8 +128,16 @@
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/plugins/pace.min.js"></script>
 <script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="js/plugins/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/plugins/sweetalert.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript">
+    $('.datepicker').datepicker({
+        format: "dd-mm-yyyy",
+        autoclose: true,
+        todayHighlight: true
+    });
+</script>
 <?php
 $this->endBody() ?>
 </body>
