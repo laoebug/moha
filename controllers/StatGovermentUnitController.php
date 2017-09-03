@@ -152,15 +152,21 @@ class StatGovermentUnitController extends Controller
     }
 
     public function actionPrint($year) {
+        $year =PhiscalYear::findOne($year);
+        if(!isset($year)) throw new  NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+
         return $this->renderPartial('print', [
-            'content' => $this->enquiry($year, false)
+            'content' => $this->enquiry($year->id, false)
         ]);
     }
 
     public function actionDownload($year) {
+        $year =PhiscalYear::findOne($year);
+        if(!isset($year)) throw new  NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+
         return $this->renderPartial('excel', [
-            'year' => PhiscalYear::findOne($year), //for file name
-            'content' => $this->enquiry($year, false)
+            'file' => 'stat_goverment_unit_'.$year->year.'.xls',
+            'content' => $this->enquiry($year->id, false)
         ]);
     }
 

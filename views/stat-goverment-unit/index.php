@@ -7,11 +7,6 @@
 $this->title = Yii::t('app', 'Goverment Unit');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<style>
-    th {
-        text-align: center;
-    }
-</style>
 <div class="row" ng-app="mohaApp" ng-controller="statGovermentUnitController">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
@@ -21,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading">-</div>
+            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-2">
                     <label for=""><?= Yii::t('app', 'Group') ?></label>

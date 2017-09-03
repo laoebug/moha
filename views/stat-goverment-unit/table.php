@@ -39,20 +39,20 @@
             <div class="card-title-w-btn ">
                 <h3 class="title"><?= Yii::t('app','Statistics of Goverment Unit ') ?> (<?= $year->year ?>)</h3>
                 <p class="hidden-print">
-                    <a class="btn btn-default" href="index.php?r=stat-goverment-unit/print&year=<?=$year->id?>"><i class="fa fa-print fa-2x"></i></a>
-                    <a class="btn btn-info" href="index.php?r=stat-goverment-unit/download&year=<?=$year->id?>"><i class="fa fa-download fa-2x"></i></a>
+                    <a class="btn btn-default" target="_blank" href="index.php?r=stat-goverment-unit/print&year=<?=$year->id?>"><i class="fa fa-print fa-2x"></i></a>
+                    <a class="btn btn-info" target="_blank" href="index.php?r=stat-goverment-unit/download&year=<?=$year->id?>"><i class="fa fa-download fa-2x"></i></a>
                 </p>
             </div>
             <div class="card-body">
                 <table class="table table-responsive table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th style="width: 10px"><?= Yii::t('app', 'No.') ?></th>
-                        <th><?= Yii::t('app', 'Ministry') ?></th>
+                        <th class="text-center" style="width: 20px"><?= Yii::t('app', 'No.') ?></th>
+                        <th class="text-center"><?= Yii::t('app', 'Ministry') ?></th>
                         <?php foreach (['Office', 'Department', 'Institute', 'Center'] as $item): ?>
-                        <th style="width: 10%"><?= Yii::t('app', $item) ?></th>
+                        <th class="text-center" style="width: 10%"><?= Yii::t('app', $item) ?></th>
                         <?php endforeach; ?>
-                        <th><?= Yii::t('app', 'Remark') ?></th>
+                        <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -60,7 +60,7 @@
                     $i = 0;
                     $sum = ['office'=>0,'department'=>0,'insitute'=>0,'center'=>0];
                     foreach ($groups as $g): ?>
-                        <tr>
+                        <tr class="hidden">
                             <td colspan="2" class="text-center"><strong><?= $g->name ?></strong></td>
                             <td colspan="5"></td>
                         </tr>
@@ -69,15 +69,21 @@
                                 <td><?= ++$i ?></td>
                                 <td><?= $b->name ?></td>
                                     <?php
-                                    foreach ($model->statGovermentUnitDetails as $detail)
+                                    $isnull = true;
+                                    foreach ($model->statGovermentUnitDetails as $detail) {
                                         if ($detail->branch_id == $b->id) {
+                                            $isnull = false;
                                             foreach (['office', 'department', 'insitute', 'center'] as $item) {
                                                 $sum[$item] += isset($detail[$item])?$detail[$item]:0;
-                                                echo '<td class="text-center">' . (isset($detail[$item])?$detail[$item]:"") . '</td>';
+                                                echo '<td class="text-center">';
+                                                echo (isset($detail[$item])?$detail[$item]:"");
+                                                echo '</td>';
                                             }
                                             echo '<td class="text-center">' . (isset($detail['remark'])?$detail['remark']:'') . '</td>';
                                             break;
                                         }
+                                    }
+                                    if($isnull) echo "<td></td><td></td><td></td><td></td><td></td>"
                                     ?>
                                 </td>
                             </tr>

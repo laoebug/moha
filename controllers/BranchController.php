@@ -2,12 +2,16 @@
 
 namespace app\controllers;
 
+use app\models\PhiscalYear;
 use Yii;
 use app\models\Branch;
 use app\models\BranchSearch;
+use yii\db\Exception;
 use yii\web\Controller;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\ServerErrorHttpException;
 
 /**
  * BranchController implements the CRUD actions for Branch model.
@@ -35,79 +39,83 @@ class BranchController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BranchSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('index');
+    }
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+    public function actionGet() {
+        return json_encode([
+            'years' => PhiscalYear::find()->where(['deleted' => 0])->asArray()->all()
         ]);
     }
 
-    /**
-     * Displays a single Branch model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+    public function actionEnquiry($year) {
+        return json_encode([
+            'branches' => Branch::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all()
         ]);
     }
 
-    /**
-     * Creates a new Branch model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Branch();
+    public function actionSave($year) {
+        $post = Yii::$app->request->post();
+        if(isset($post)) {
+            $year = PhiscalYear::findOne($year);
+            if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+            if($year->status != 'O') throw new MethodNotAllowedHttpException(Yii::t('app', 'The Year is not allowed to input'));
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if($post['create'] == 1) {
+                $model = new Branch();
+                $model->deleted = 0;
+            } else {
+                $model = Branch::findOne($post['Branch']['id']);
+                if(!isset($model)) {
+                    throw new NotFoundHttpException(Yii::t('app', 'The Ministry is Not Found'));
+                }
+            }
+            $model->load($post);
+            $model->user_id = Yii::$app->user->id;
+            $model->phiscal_year_id = $year->id;
+            $model->last_update = date('Y-m-d H:i:s');
+            if(!$model->save()) {
+                throw new ServerErrorHttpException(json_encode([
+                    'errors' => $model->errors,
+                    'attributes' => $model->attributes
+                ]));
+            }
         }
     }
 
-    /**
-     * Updates an existing Branch model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-            if(!$model->save())
-                Yii::$app->session->setFlash('danger', json_encode($model->errors));
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+    public function actionDelete() {
+        $post = Yii::$app->request->post();
+        if(isset($post)) {
+            if(isset($post['Branch'])) {
+                $model = $this->findModel($post['Branch']['id']);
+                $model->deleted = 1;
+                $model->last_update = date('Y-m-d H:i:s');
+                $model->user_id = Yii::$app->user->id;
+                if(!$model->save()) throw new Exception(json_encode($model->errors));
+            }
         }
     }
 
-    /**
-     * Deletes an existing Branch model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    public function actionPrint($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
 
-        return $this->redirect(['index']);
+        $branches = Branch::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        return $this->renderPartial('print', [
+            'content' => $this->renderPartial('table', ['branches' => $branches, 'year' => $year])
+        ]);
     }
 
+    public function actionDownload($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+
+        $branches = Branch::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        return $this->renderPartial('excel', [
+            'file' => 'branch_'.$year->year.'.xls',
+            'content' => $this->renderPartial('table', ['branches' => $branches, 'year' => $year->id])
+        ]);
+    }
     /**
      * Finds the Branch model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -120,7 +128,7 @@ class BranchController extends Controller
         if (($model = Branch::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
 }
