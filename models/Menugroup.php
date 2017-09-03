@@ -10,8 +10,11 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property integer $deleted
+ * @property integer $input_id
+ * @property string $input_dt_stamp
  *
  * @property Menu[] $menus
+ * @property User $input
  */
 class Menugroup extends \yii\db\ActiveRecord
 {
@@ -30,9 +33,11 @@ class Menugroup extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['deleted'], 'integer'],
+            [['deleted', 'input_id'], 'integer'],
+            [['input_dt_stamp'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
+            [['input_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['input_id' => 'id']],
         ];
     }
 
@@ -45,6 +50,8 @@ class Menugroup extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'input_id' => Yii::t('app', 'Input ID'),
+            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
         ];
     }
 
@@ -57,11 +64,10 @@ class Menugroup extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
-     * @return MenugroupQuery the active query used by this AR class.
+     * @return \yii\db\ActiveQuery
      */
-    public static function find()
+    public function getInput()
     {
-        return new MenugroupQuery(get_called_class());
+        return $this->hasOne(User::className(), ['id' => 'input_id']);
     }
 }

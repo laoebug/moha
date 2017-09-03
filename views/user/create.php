@@ -11,18 +11,11 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-create">
-   
-    <?php     
-    $this->render('_form', [
-        'model' => $model
-    ]);     
-    ?>
 
-<?php
-// $this->render('_form', [
-//     'model' => $model,
-//     'roles' => $roles,
-//     'menus' => $menus,
-// ]);
-?>
+    <?= $this->render('_form', [
+        'model' => $model,
+        'menus' => $menus,
+        'roles' => $roles
+    ]) ?>
+
 </div>
