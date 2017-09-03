@@ -10,11 +10,12 @@ use Yii;
  * @property integer $id
  * @property string $code
  * @property string $name
- * @property string $deleted
  * @property string $address
  * @property string $tel
+ * @property integer $deleted
  * @property integer $branch_group_id
  * @property integer $position
+ * @property string $remark
  *
  * @property BranchGroup $branchGroup
  * @property GovermentUnit[] $govermentUnits
@@ -40,11 +41,10 @@ class Branch extends \yii\db\ActiveRecord
     {
         return [
             [['code', 'name', 'branch_group_id'], 'required'],
-            [['address'], 'string'],
-            [['branch_group_id', 'position'], 'integer'],
+            [['address', 'remark'], 'string'],
+            [['deleted', 'branch_group_id', 'position'], 'integer'],
             [['code'], 'string', 'max' => 10],
             [['name', 'tel'], 'string', 'max' => 255],
-            [['deleted'], 'string', 'max' => 1],
             [['name'], 'unique'],
             [['code'], 'unique'],
             [['branch_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => BranchGroup::className(), 'targetAttribute' => ['branch_group_id' => 'id']],
@@ -60,11 +60,12 @@ class Branch extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'code' => Yii::t('app', 'Code'),
             'name' => Yii::t('app', 'Name'),
-            'deleted' => Yii::t('app', 'Deleted'),
             'address' => Yii::t('app', 'Address'),
             'tel' => Yii::t('app', 'Tel'),
+            'deleted' => Yii::t('app', 'Deleted'),
             'branch_group_id' => Yii::t('app', 'Branch Group ID'),
             'position' => Yii::t('app', 'Position'),
+            'remark' => Yii::t('app', 'Remark'),
         ];
     }
 

@@ -70,7 +70,7 @@ class StatGovermentUnitController extends Controller
         ]);
     }
 
-    private function enquiry($year) {
+    private function enquiry($year, $showstatus = true) {
         $groups = BranchGroup::find()
             ->with([
                 'branches' => function(ActiveQuery $query) {
@@ -87,7 +87,9 @@ class StatGovermentUnitController extends Controller
             ])
             ->where(['phiscal_year_id' => $year])
             ->one();
+
         return $this->renderPartial('table', [
+            'showstatus' => $showstatus,
             'groups' => $groups,
             'model' => $model,
             'year' => $model->phiscalYear,
@@ -133,6 +135,7 @@ class StatGovermentUnitController extends Controller
                     $detail->branch_id = $post['branch'];
                     $detail->stat_goverment_unit_id = $model->id;
                 }
+                $detail->office = $post['office'];
                 $detail->department = $post['department'];
                 $detail->insitute = $post['insitute'];
                 $detail->center = $post['center'];
@@ -146,6 +149,19 @@ class StatGovermentUnitController extends Controller
                 throw new ServerErrorHttpException(Yii::t($exception->getMessage()));
             }
         }
+    }
+
+    public function actionPrint($year) {
+        return $this->renderPartial('print', [
+            'content' => $this->enquiry($year, false)
+        ]);
+    }
+
+    public function actionDownload($year) {
+        return $this->renderPartial('excel', [
+            'year' => PhiscalYear::findOne($year), //for file name
+            'content' => $this->enquiry($year, false)
+        ]);
     }
 
     /**

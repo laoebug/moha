@@ -14,6 +14,7 @@ use Yii;
  * @property integer $stat_goverment_unit_id
  * @property integer $branch_id
  * @property string $remark
+ * @property integer $office
  *
  * @property Branch $branch
  * @property StatGovermentUnit $statGovermentUnit
@@ -34,7 +35,7 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['department', 'insitute', 'center', 'stat_goverment_unit_id', 'branch_id'], 'integer'],
+            [['department', 'insitute', 'center', 'stat_goverment_unit_id', 'branch_id', 'office'], 'integer'],
             [['stat_goverment_unit_id', 'branch_id'], 'required'],
             [['remark'], 'string'],
             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::className(), 'targetAttribute' => ['branch_id' => 'id']],
@@ -55,6 +56,7 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
             'stat_goverment_unit_id' => Yii::t('app', 'Stat Goverment Unit ID'),
             'branch_id' => Yii::t('app', 'Branch ID'),
             'remark' => Yii::t('app', 'Remark'),
+            'office' => Yii::t('app', 'Office'),
         ];
     }
 

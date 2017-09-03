@@ -23,14 +23,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
             <div class="panel-heading">-</div>
             <div class="panel-body">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label for=""><?= Yii::t('app', 'Group') ?></label>
                     <select class="form-control" ng-model="branchgroup" ng-options="g.name for g in branchgroups"></select>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label for=""><?= Yii::t('app', 'Ministry') ?></label>
                     <select class="form-control" ng-model="branch" ng-options="b.name for b in branchgroup.branches" ng-change="inquiry()">
                     </select>
+                </div>
+                <div class="col-sm-2">
+                    <label for=""><?= Yii::t('app', 'Office') ?></label>
+                    <input type="number" min="0" class="form-control" ng-model="office">
                 </div>
                 <div class="col-sm-2">
                     <label for=""><?= Yii::t('app', 'Department') ?></label>
@@ -65,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript">
     var app = angular.module('mohaApp', []);
     var url = 'index.php?r=stat-goverment-unit/';
-    app.controller('statGovermentUnitController', function($scope, $http, $sce) {
+    app.controller('statGovermentUnitController', function($scope, $http, $sce, $timeout) {
         $http.get(url+ 'get')
           .then(function(r) {
             $scope.years = r.data.years;
@@ -83,12 +87,14 @@ $this->params['breadcrumbs'][] = $this->title;
           if($scope.branch)
               $http.get(url+'inquiry&branch='+$scope.branch.id+'&year='+ $scope.year.id)
                 .then(function(r) {
+                      $scope.office = parseInt(r.status == 200? r.data.office:"");
                       $scope.department = parseInt(r.status == 200? r.data.department:"");
                       $scope.insitute = parseInt(r.status == 200? r.data.insitute:"");
                       $scope.center = parseInt(r.status == 200? r.data.center:"");
                       $scope.remark = parseInt(r.status == 200? r.data.remark:"");
                 });
           else {
+            $scope.office = "";
             $scope.department = "";
             $scope.insitute = "";
             $scope.center = "";
@@ -101,6 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $http.post(url+'save', {
                   'year':$scope.year.id,
                   'branch':$scope.branch.id,
+                  'office':$scope.office,
                   'department':$scope.department,
                   'insitute':$scope.insitute,
                   'center':$scope.center,
