@@ -27,6 +27,7 @@ use Yii;
  * @property User[] $users
  * @property UserHasBranch[] $userHasBranches
  * @property Branch[] $branches
+ * @property Ministry[] $ministries
  * @property UserHasRole[] $userHasRoles
  * @property Role[] $roles
  */
@@ -77,6 +78,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'email' => Yii::t('app', 'Email'),
             'deleted' => Yii::t('app', 'Deleted'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMinistries()
+    {
+        return $this->hasMany(Ministry::className(), ['user_id' => 'id']);
     }
 
     /**

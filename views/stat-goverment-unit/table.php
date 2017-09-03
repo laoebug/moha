@@ -59,19 +59,14 @@
                     <?php
                     $i = 0;
                     $sum = ['office'=>0,'department'=>0,'insitute'=>0,'center'=>0];
-                    foreach ($groups as $g): ?>
-                        <tr class="hidden">
-                            <td colspan="2" class="text-center"><strong><?= $g->name ?></strong></td>
-                            <td colspan="5"></td>
-                        </tr>
-                        <?php foreach ($g->branches as $b): ?>
+                        foreach ($ministries as $b): ?>
                             <tr>
                                 <td><?= ++$i ?></td>
                                 <td><?= $b->name ?></td>
                                     <?php
                                     $isnull = true;
                                     foreach ($model->statGovermentUnitDetails as $detail) {
-                                        if ($detail->branch_id == $b->id) {
+                                        if ($detail->ministry_id == $b->id) {
                                             $isnull = false;
                                             foreach (['office', 'department', 'insitute', 'center'] as $item) {
                                                 $sum[$item] += isset($detail[$item])?$detail[$item]:0;
@@ -88,7 +83,6 @@
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                    <?php endforeach; ?>
                     </tbody>
                     <tfoot>
                     <tr>

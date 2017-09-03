@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
-use app\models\BranchGroup;
+use app\models\Ministry;
+use app\models\MinistryGroup;
 use app\models\PhiscalYear;
 use app\models\StatGovermentUnitDetail;
+use function foo\func;
 use Yii;
 use app\models\StatGovermentUnit;
 use app\models\StatGovermentUnitSearch;
@@ -55,34 +57,26 @@ class StatGovermentUnitController extends Controller
         $years = PhiscalYear::find()
             ->where(['deleted' => 0])->asArray()->all();
 
-        $branchgroups = BranchGroup::find()
-            ->with([
-                'branches' => function(ActiveQuery $query)  {
-                    $query
-                        ->where(['deleted' => 0])
-                        ->orderBy('position');
-                }
-            ])->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $ministries = Ministry::find()
+            ->where(['deleted' => 0])->orderBy('position')->asArray()->all();
 
         return json_encode([
             "years" => $years,
-            "branchgroups" => $branchgroups,
+            "ministries" => $ministries,
         ]);
     }
 
     private function enquiry($year, $showstatus = true) {
-        $groups = BranchGroup::find()
-            ->with([
-                'branches' => function(ActiveQuery $query) {
-                    $query->where(['deleted' => 0])->orderBy('position');
-                }
-            ])
+        $ministries = Ministry::find()
             ->where(['deleted' => 0])->orderBy('position')->all();
 
         $model = StatGovermentUnit::find()
             ->with([
                 'statGovermentUnitDetails' => function(ActiveQuery $query) {
-                    $query->orderBy('branch_id');
+                    $query
+                        ->with(['ministry' => function(ActiveQuery $query) {
+                            $query->orderBy('position');
+                        }]);
                 }
             ])
             ->where(['phiscal_year_id' => $year])
@@ -90,7 +84,7 @@ class StatGovermentUnitController extends Controller
 
         return $this->renderPartial('table', [
             'showstatus' => $showstatus,
-            'groups' => $groups,
+            'ministries' => $ministries,
             'model' => $model,
             'year' => $model->phiscalYear,
         ]);
@@ -100,12 +94,12 @@ class StatGovermentUnitController extends Controller
         return $this->enquiry($year);
     }
 
-    public function actionInquiry($year, $branch) {
+    public function actionInquiry($year, $ministry) {
         $detail = StatGovermentUnitDetail::find()
             ->with(['statGovermentUnit' => function(ActiveQuery $query) use($year) {
                 $query->where(['phiscal_year_id' => $year]);
             }])
-            ->where(['branch_id' => $branch])->asArray()->one();
+            ->where(['ministry_id' => $ministry])->asArray()->one();
         return json_encode($detail);
     }
 
@@ -129,10 +123,10 @@ class StatGovermentUnitController extends Controller
                 if(!$model->save()) throw new Exception(json_encode($model->errors));
 
                 $detail = StatGovermentUnitDetail::find()
-                    ->where(['stat_goverment_unit_id' => $model->id, 'branch_id' => $post['branch']])->one();
+                    ->where(['stat_goverment_unit_id' => $model->id, 'ministry_id' => $post['ministry']])->one();
                 if(!isset($detail)) {
                     $detail = new StatGovermentUnitDetail();
-                    $detail->branch_id = $post['branch'];
+                    $detail->ministry_id = $post['ministry'];
                     $detail->stat_goverment_unit_id = $model->id;
                 }
                 $detail->office = $post['office'];

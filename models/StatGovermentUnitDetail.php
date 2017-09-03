@@ -12,11 +12,11 @@ use Yii;
  * @property integer $insitute
  * @property integer $center
  * @property integer $stat_goverment_unit_id
- * @property integer $branch_id
  * @property string $remark
  * @property integer $office
+ * @property integer $ministry_id
  *
- * @property Branch $branch
+ * @property Ministry $ministry
  * @property StatGovermentUnit $statGovermentUnit
  */
 class StatGovermentUnitDetail extends \yii\db\ActiveRecord
@@ -35,10 +35,10 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['department', 'insitute', 'center', 'stat_goverment_unit_id', 'branch_id', 'office'], 'integer'],
-            [['stat_goverment_unit_id', 'branch_id'], 'required'],
+            [['department', 'insitute', 'center', 'stat_goverment_unit_id', 'office', 'ministry_id'], 'integer'],
+            [['stat_goverment_unit_id', 'ministry_id'], 'required'],
             [['remark'], 'string'],
-            [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::className(), 'targetAttribute' => ['branch_id' => 'id']],
+            [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['stat_goverment_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatGovermentUnit::className(), 'targetAttribute' => ['stat_goverment_unit_id' => 'id']],
         ];
     }
@@ -54,18 +54,18 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
             'insitute' => Yii::t('app', 'Insitute'),
             'center' => Yii::t('app', 'Center'),
             'stat_goverment_unit_id' => Yii::t('app', 'Stat Goverment Unit ID'),
-            'branch_id' => Yii::t('app', 'Branch ID'),
             'remark' => Yii::t('app', 'Remark'),
             'office' => Yii::t('app', 'Office'),
+            'ministry_id' => Yii::t('app', 'Ministry ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBranch()
+    public function getMinistry()
     {
-        return $this->hasOne(Branch::className(), ['id' => 'branch_id']);
+        return $this->hasOne(Ministry::className(), ['id' => 'ministry_id']);
     }
 
     /**

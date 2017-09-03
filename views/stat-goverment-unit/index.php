@@ -18,13 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
-                <div class="col-sm-2">
+                <div class="col-sm-2 hidden">
                     <label for=""><?= Yii::t('app', 'Group') ?></label>
-                    <select class="form-control" ng-model="branchgroup" ng-options="g.name for g in branchgroups"></select>
+                    <select class="form-control" ng-model="ministrygroup" ng-options="g.name for g in ministrygroups"></select>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-4">
                     <label for=""><?= Yii::t('app', 'Ministry') ?></label>
-                    <select class="form-control" ng-model="branch" ng-options="b.name for b in branchgroup.branches" ng-change="inquiry()">
+                    <select class="form-control" ng-model="ministry" ng-options="b.name for b in ministries" ng-change="inquiry()">
                     </select>
                 </div>
                 <div class="col-sm-2">
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $http.get(url+ 'get')
           .then(function(r) {
             $scope.years = r.data.years;
-            $scope.branchgroups = r.data.branchgroups;
+            $scope.ministries = r.data.ministries;
           });
 
         $scope.enquiry = function() {
@@ -79,8 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
         };
 
         $scope.inquiry = function() {
-          if($scope.branch)
-              $http.get(url+'inquiry&branch='+$scope.branch.id+'&year='+ $scope.year.id)
+          if($scope.ministry)
+              $http.get(url+'inquiry&ministry='+$scope.ministry.id+'&year='+ $scope.year.id)
                 .then(function(r) {
                       $scope.office = parseInt(r.status == 200? r.data.office:"");
                       $scope.department = parseInt(r.status == 200? r.data.department:"");
@@ -98,10 +98,10 @@ $this->params['breadcrumbs'][] = $this->title;
         };
 
         $scope.save = function() {
-            if($scope.year && $scope.branch && $scope.branchgroup) {
+            if($scope.year && $scope.ministry) {
                 $http.post(url+'save', {
                   'year':$scope.year.id,
-                  'branch':$scope.branch.id,
+                  'ministry':$scope.ministry.id,
                   'office':$scope.office,
                   'department':$scope.department,
                   'insitute':$scope.insitute,

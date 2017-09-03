@@ -14,7 +14,7 @@ use Yii;
  * @property integer $deleted
  * @property string $status
  *
- * @property Branch[] $branches
+ * @property Ministry[] $ministries
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatGovermentUnit[] $statGovermentUnits
  * @property StatLegal[] $statLegals
@@ -63,9 +63,9 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBranches()
+    public function getMinistries()
     {
-        return $this->hasMany(Branch::className(), ['phiscal_year_id' => 'id']);
+        return $this->hasMany(Ministry::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

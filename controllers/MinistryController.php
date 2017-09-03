@@ -4,19 +4,16 @@ namespace app\controllers;
 
 use app\models\PhiscalYear;
 use Yii;
-use app\models\Branch;
-use app\models\BranchSearch;
-use yii\db\Exception;
+use app\models\Ministry;
+use app\models\MinistrySearch;
 use yii\web\Controller;
-use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\ServerErrorHttpException;
 
 /**
- * BranchController implements the CRUD actions for Branch model.
+ * MinistryController implements the CRUD actions for Ministry model.
  */
-class BranchController extends Controller
+class MinistryController extends Controller
 {
     /**
      * @inheritdoc
@@ -34,7 +31,7 @@ class BranchController extends Controller
     }
 
     /**
-     * Lists all Branch models.
+     * Lists all Ministry models.
      * @return mixed
      */
     public function actionIndex()
@@ -50,7 +47,7 @@ class BranchController extends Controller
 
     public function actionEnquiry($year) {
         return json_encode([
-            'branches' => Branch::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all()
+            'ministries' => Ministry::find()->where(['deleted' => 0, 'phiscal_year_id' => $year])->orderBy('position')->asArray()->all()
         ]);
     }
 
@@ -62,10 +59,10 @@ class BranchController extends Controller
             if($year->status != 'O') throw new MethodNotAllowedHttpException(Yii::t('app', 'The Year is not allowed to input'));
 
             if($post['create'] == 1) {
-                $model = new Branch();
+                $model = new Ministry();
                 $model->deleted = 0;
             } else {
-                $model = Branch::findOne($post['Branch']['id']);
+                $model = Ministry::findOne($post['Ministry']['id']);
                 if(!isset($model)) {
                     throw new NotFoundHttpException(Yii::t('app', 'The Ministry is Not Found'));
                 }
@@ -86,8 +83,8 @@ class BranchController extends Controller
     public function actionDelete() {
         $post = Yii::$app->request->post();
         if(isset($post)) {
-            if(isset($post['Branch'])) {
-                $model = $this->findModel($post['Branch']['id']);
+            if(isset($post['Ministry'])) {
+                $model = $this->findModel($post['Ministry']['id']);
                 $model->deleted = 1;
                 $model->last_update = date('Y-m-d H:i:s');
                 $model->user_id = Yii::$app->user->id;
@@ -100,9 +97,9 @@ class BranchController extends Controller
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
 
-        $branches = Branch::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $ministries = Ministry::find()->where(['deleted' => 0, 'phiscal_year_id' => $year])->orderBy('position')->asArray()->all();
         return $this->renderPartial('print', [
-            'content' => $this->renderPartial('table', ['branches' => $branches, 'year' => $year])
+            'content' => $this->renderPartial('table', ['ministries' => $ministries, 'year' => $year])
         ]);
     }
 
@@ -110,22 +107,22 @@ class BranchController extends Controller
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
 
-        $branches = Branch::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $ministries = Ministry::find()->where(['deleted' => 0, 'phiscal_year_id' => $year])->orderBy('position')->asArray()->all();
         return $this->renderPartial('excel', [
-            'file' => 'branch_'.$year->year.'.xls',
-            'content' => $this->renderPartial('table', ['branches' => $branches, 'year' => $year->id])
+            'file' => 'ministries_'.$year->year.'.xls',
+            'content' => $this->renderPartial('table', ['ministries' => $ministries, 'year' => $year->id])
         ]);
     }
     /**
-     * Finds the Branch model based on its primary key value.
+     * Finds the Ministry model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Branch the loaded model
+     * @return Ministry the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Branch::findOne($id)) !== null) {
+        if (($model = Ministry::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
