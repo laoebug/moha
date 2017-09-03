@@ -23,7 +23,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($branches as $i => $b): ?>
+                    <?php foreach ($ministries as $i => $b): ?>
                         <tr>
                             <td><?= $i+1?></td>
                             <td><?= $b['name'] ?></td>
