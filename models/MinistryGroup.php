@@ -5,20 +5,23 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "legal_status".
+ * This is the model class for table "ministry_group".
  *
  * @property integer $id
  * @property string $name
  * @property integer $deleted
+ * @property integer $position
+ *
+ * @property Ministry[] $ministries
  */
-class LegalStatus extends \yii\db\ActiveRecord
+class MinistryGroup extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'legal_status';
+        return 'ministry_group';
     }
 
     /**
@@ -27,8 +30,8 @@ class LegalStatus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'deleted'], 'required'],
-            [['deleted'], 'integer'],
+            [['name'], 'required'],
+            [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
         ];
@@ -43,15 +46,24 @@ class LegalStatus extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMinistries()
+    {
+        return $this->hasMany(Ministry::className(), ['ministry_group_id' => 'id']);
+    }
+
+    /**
      * @inheritdoc
-     * @return LegalStatusQuery the active query used by this AR class.
+     * @return MinistryGroupQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new LegalStatusQuery(get_called_class());
+        return new MinistryGroupQuery(get_called_class());
     }
 }

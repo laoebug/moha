@@ -8,12 +8,12 @@ use Yii;
  * This is the model class for table "stat_legal_detail".
  *
  * @property integer $id
- * @property integer $stat_legal_id
- * @property integer $legal_status_id
- * @property integer $value
+ * @property integer $new
  * @property string $remark
+ * @property integer $improve
+ * @property integer $publish
+ * @property integer $stat_legal_id
  *
- * @property LegalStatus $legalStatus
  * @property StatLegal $statLegal
  */
 class StatLegalDetail extends \yii\db\ActiveRecord
@@ -32,10 +32,9 @@ class StatLegalDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_legal_id', 'legal_status_id'], 'required'],
-            [['stat_legal_id', 'legal_status_id', 'value'], 'integer'],
+            [['new', 'improve', 'publish', 'stat_legal_id'], 'integer'],
             [['remark'], 'string'],
-            [['legal_status_id'], 'exist', 'skipOnError' => true, 'targetClass' => LegalStatus::className(), 'targetAttribute' => ['legal_status_id' => 'id']],
+            [['stat_legal_id'], 'required'],
             [['stat_legal_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatLegal::className(), 'targetAttribute' => ['stat_legal_id' => 'id']],
         ];
     }
@@ -47,19 +46,12 @@ class StatLegalDetail extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'stat_legal_id' => Yii::t('app', 'Stat Legal ID'),
-            'legal_status_id' => Yii::t('app', 'Legal Status ID'),
-            'value' => Yii::t('app', 'Value'),
+            'new' => Yii::t('app', 'New'),
             'remark' => Yii::t('app', 'Remark'),
+            'improve' => Yii::t('app', 'Improve'),
+            'publish' => Yii::t('app', 'Publish'),
+            'stat_legal_id' => Yii::t('app', 'Stat Legal ID'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getLegalStatus()
-    {
-        return $this->hasOne(LegalStatus::className(), ['id' => 'legal_status_id']);
     }
 
     /**

@@ -14,6 +14,7 @@ use Yii;
  * @property integer $deleted
  * @property string $status
  *
+ * @property Ministry[] $ministries
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatGovermentUnit[] $statGovermentUnits
  * @property StatLegal[] $statLegals
@@ -57,6 +58,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
             'deleted' => Yii::t('app', 'Deleted'),
             'status' => Yii::t('app', 'Status'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMinistries()
+    {
+        return $this->hasMany(Ministry::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

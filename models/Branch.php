@@ -10,16 +10,18 @@ use Yii;
  * @property integer $id
  * @property string $code
  * @property string $name
- * @property string $deleted
  * @property string $address
  * @property string $tel
- * @property integer $branch_group_id
+ * @property integer $deleted
  * @property integer $position
+ * @property string $remark
+ * @property integer $user_id
+ * @property string $last_update
+ * @property integer $ministry_id
  *
- * @property BranchGroup $branchGroup
+ * @property Ministry $ministry
+ * @property User $user
  * @property GovermentUnit[] $govermentUnits
- * @property StatGovermentUnitDetail[] $statGovermentUnitDetails
- * @property StatSingleGatewayImplementationDetail[] $statSingleGatewayImplementationDetails
  * @property UserHasBranch[] $userHasBranches
  * @property User[] $users
  */
@@ -39,15 +41,14 @@ class Branch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'name', 'branch_group_id'], 'required'],
-            [['address'], 'string'],
-            [['branch_group_id', 'position'], 'integer'],
+            [['name', 'user_id', 'ministry_id'], 'required'],
+            [['address', 'remark'], 'string'],
+            [['deleted', 'position', 'user_id', 'ministry_id'], 'integer'],
+            [['last_update'], 'safe'],
             [['code'], 'string', 'max' => 10],
             [['name', 'tel'], 'string', 'max' => 255],
-            [['deleted'], 'string', 'max' => 1],
-            [['name'], 'unique'],
-            [['code'], 'unique'],
-            [['branch_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => BranchGroup::className(), 'targetAttribute' => ['branch_group_id' => 'id']],
+            [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -60,20 +61,31 @@ class Branch extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'code' => Yii::t('app', 'Code'),
             'name' => Yii::t('app', 'Name'),
-            'deleted' => Yii::t('app', 'Deleted'),
             'address' => Yii::t('app', 'Address'),
             'tel' => Yii::t('app', 'Tel'),
-            'branch_group_id' => Yii::t('app', 'Branch Group ID'),
+            'deleted' => Yii::t('app', 'Deleted'),
             'position' => Yii::t('app', 'Position'),
+            'remark' => Yii::t('app', 'Remark'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'last_update' => Yii::t('app', 'Last Update'),
+            'ministry_id' => Yii::t('app', 'Ministry ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBranchGroup()
+    public function getMinistry()
     {
-        return $this->hasOne(BranchGroup::className(), ['id' => 'branch_group_id']);
+        return $this->hasOne(Ministry::className(), ['id' => 'ministry_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -82,22 +94,6 @@ class Branch extends \yii\db\ActiveRecord
     public function getGovermentUnits()
     {
         return $this->hasMany(GovermentUnit::className(), ['branch_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStatGovermentUnitDetails()
-    {
-        return $this->hasMany(StatGovermentUnitDetail::className(), ['branch_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStatSingleGatewayImplementationDetails()
-    {
-        return $this->hasMany(StatSingleGatewayImplementationDetail::className(), ['branch_id' => 'id']);
     }
 
     /**

@@ -9,12 +9,12 @@ use Yii;
  *
  * @property integer $id
  * @property integer $stat_single_gateway_implementation_id
- * @property integer $branch_id
  * @property string $start_date
  * @property string $name
  * @property string $remark
+ * @property integer $ministry_id
  *
- * @property Branch $branch
+ * @property Ministry $ministry
  * @property StatSingleGatewayImplementation $statSingleGatewayImplementation
  */
 class StatSingleGatewayImplementationDetail extends \yii\db\ActiveRecord
@@ -33,12 +33,12 @@ class StatSingleGatewayImplementationDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_single_gateway_implementation_id', 'branch_id'], 'required'],
-            [['stat_single_gateway_implementation_id', 'branch_id'], 'integer'],
+            [['stat_single_gateway_implementation_id', 'ministry_id'], 'required'],
+            [['stat_single_gateway_implementation_id', 'ministry_id'], 'integer'],
             [['start_date'], 'safe'],
             [['remark'], 'string'],
             [['name'], 'string', 'max' => 255],
-            [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::className(), 'targetAttribute' => ['branch_id' => 'id']],
+            [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['stat_single_gateway_implementation_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatSingleGatewayImplementation::className(), 'targetAttribute' => ['stat_single_gateway_implementation_id' => 'id']],
         ];
     }
@@ -51,19 +51,19 @@ class StatSingleGatewayImplementationDetail extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'stat_single_gateway_implementation_id' => Yii::t('app', 'Stat Single Gateway Implementation ID'),
-            'branch_id' => Yii::t('app', 'Branch ID'),
             'start_date' => Yii::t('app', 'Start Date'),
             'name' => Yii::t('app', 'Name'),
             'remark' => Yii::t('app', 'Remark'),
+            'ministry_id' => Yii::t('app', 'Ministry ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBranch()
+    public function getMinistry()
     {
-        return $this->hasOne(Branch::className(), ['id' => 'branch_id']);
+        return $this->hasOne(Ministry::className(), ['id' => 'ministry_id']);
     }
 
     /**
