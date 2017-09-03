@@ -65,20 +65,17 @@
                                 <tr>
                                     <td><?= ++$i ?></td>
                                     <td><?= $b->name ?></td>
-                                    <?php
-                                    foreach ($govermentlevels as $l): ?>
-                                        <td class="text-center">
-                                            <?php
-                                            if(isset($model))
-                                                foreach ($model->statGovermentUnitDetails as $detail)
-                                                    if($detail->branch_id == $b->id && $detail->goverment_level_id == $l->id) {
-                                                        $sum[$l->id] += $detail->value;
-                                                        echo $detail->value;
-                                                        break;
-                                                    }
-                                            ?>
-                                        </td>
-                                    <?php endforeach;  ?>
+                                    <td class="text-center">
+                                        <?php
+                                        if(isset($model))
+                                            foreach ($model->statGovermentUnitDetails as $detail)
+                                                if($detail->branch_id == $b->id) {
+                                                    $sum[$l->id] += $detail->value;
+                                                    echo $detail->value;
+                                                    break;
+                                                }
+                                        ?>
+                                    </td>
                                     <td></td>
                                 </tr>
                             <?php endforeach; ?>

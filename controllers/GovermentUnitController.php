@@ -11,6 +11,7 @@ use app\models\PhiscalYear;
 use app\models\StatGovermentUnit;
 use app\models\StatGovermentUnitDetail;
 use app\models\User;
+use function foo\func;
 use Yii;
 use app\models\GovermentUnit;
 use yii\db\ActiveQuery;
@@ -70,13 +71,13 @@ class GovermentUnitController extends Controller
             ->orderBy('id')
             ->all();
 
-        if(!isset($model)) {
+        if(!isset($model))
             return'
                 <p>'.Yii::t('app', 'No Data').'</p>
                 <p>
                     <a class="btn btn-success" href="index.php?r=goverment-unit/create&id='.$year->id.'"><i class="fa fa-pencil fa-2x"></i></a>
                 </p>';
-        }
+
 
         return $this->renderPartial('report', [
             'year' => $year,
@@ -108,21 +109,18 @@ class GovermentUnitController extends Controller
                 throw new Exception(json_encode($model->errors));
 
             $branches = Branch::find()->where(['deleted' => 0])->orderBy("id")->all();
-            $levels = Govermentlevel::find()->where(['deleted' => 0])->orderBy('id')->all();
             foreach ($branches as $branch)
-                foreach ($levels as $level) {
-                    $detail = new StatGovermentUnitDetail();
-                    $detail->branch_id = $branch->id;
-                    $detail->goverment_level_id = $level->id;
-                    $detail->stat_goverment_unit_id = $model->id;
-                    if(!$detail->save()) {
-                        throw new Exception(json_encode($detail->errors));
-                        $transaction->rollBack();
-                    }
-
+                $detail = new StatGovermentUnitDetail();
+                $detail->branch_id = $branch->id;
+                $detail->stat_goverment_unit_id = $model->id;
+                if(!$detail->save()) {
+                    throw new Exception(json_encode($detail->errors));
+                    $transaction->rollBack();
                 }
+
+
             $transaction->commit();
-            return $this->redirect(['update', 'id' => $id]);
+            return $this->redirect(['update', 'id' => $model->id]);
         } catch (Exception $ex) {
             $transaction->rollBack();
             Yii::$app->session->setFlash('danger', $ex->getMessage());
@@ -131,6 +129,7 @@ class GovermentUnitController extends Controller
     }
 
     public function actionUpdate($id) {
+        $model = StatGovermentUnit::findOne($id);
         $year = PhiscalYear::find()
             ->where(['id' => $id, 'deleted' => 0])
             ->one();
@@ -166,11 +165,6 @@ class GovermentUnitController extends Controller
             ->orderBy('position')
             ->all();
 
-        $govermentlevels = Govermentlevel::find()
-            ->where(['deleted' => 0])
-            ->orderBy('position')
-            ->all();
-
         $post = Yii::$app->request->post();
         if(isset($post['GovermentUnit'])) {
             $model->last_update = date('Y-m-d H:i:s');
@@ -182,23 +176,20 @@ class GovermentUnitController extends Controller
 
             foreach ($branchgroups as $group)
                 foreach ($group->branches as $branch)
-                    foreach ($govermentlevels as $level) {
-                        if(isset($post['GovermentUnit'][$branch->id][$level->id]))
-                            StatGovermentUnitDetail::updateAll([
-                                'value' => $post['GovermentUnit'][$branch->id][$level->id]
-                            ], "stat_goverment_unit_id=:stat_goverment_unit_id AND branch_id=:branch_id AND goverment_level_id=:goverment_level_id", [
-                                ':stat_goverment_unit_id' => $model,
-                                ':branch_id' => $branch->id,
-                                ':goverment_level_id' => $level->id
-                            ]);
-                    }
+                    if(isset($post['GovermentUnit'][$branch->id]))
+                        StatGovermentUnitDetail::updateAll([
+                            'department' => $post['GovermentUnit'][$branch->id]['department'],
+                            'center' => $post['GovermentUnit'][$branch->id]['center'],
+                            'insitute' => $post['GovermentUnit'][$branch->id]['insitute']
+                        ], "stat_goverment_unit_id=:stat_goverment_unit_id AND branch_id=:branch_id", [
+                            ':stat_goverment_unit_id' => $model,
+                            ':branch_id' => $branch->id
+                        ]);
+
         }
 
         return $this->render('update', [
             'year' => $year,
-            'model' => $model,
-            'branchgroups' => $branchgroups,
-            'govermentlevels' => $govermentlevels
         ]);
 
         $post = Yii::$app->request->post();
@@ -224,15 +215,19 @@ class GovermentUnitController extends Controller
                 try {
                     $detail = new StatGovermentUnitDetail();
                     $detail->stat_goverment_unit_id = $model->id;
-                    $detail->goverment_level_id = $post['goverment_level_id'];
                     $detail->branch_id = $post['branch_id'];
-                    $detail->value = $post['value'];
+                    $detail->department = $post['department'];
+                    $detail->insitute = $post['insitute'];
+                    $detail->center = $post['center'];
                     $detail->save();
                     $row = 1;
                 } catch (Exception $ex) {
-                    $row = StatGovermentUnitDetail::updateAll(["value" => $post['value']],[
+                    $row = StatGovermentUnitDetail::updateAll([
+                        'department' => $post['department'],
+                        'center' => $post['center'],
+                        'insitute' => $post['insitute']
+                    ],[
                         'branch_id' => $post['branch_id'],
-                        'goverment_level_id' => $post['goverment_level_id'],
                         'stat_goverment_unit_id' => $model->id
                     ]);
                 }
@@ -254,64 +249,6 @@ class GovermentUnitController extends Controller
         }
     }
 
-    public function actionSaveremark() {
-        $post = Yii::$app->request->post();
-        if(isset($post)) {
-            $transaction = Yii::$app->db->beginTransaction();
-            try{
-                $model = StatGovermentUnit::findOne($post['id']);
-                print_r($model->attributes);
-                if(!isset($model)) {
-                    print_r('!isset');
-                    throw new Exception(Yii::t('app', 'Not Found!'));
-                }
-                $model->last_update = date('Y-m-d H:i:s');
-                $model->saved = 1;
-                $model->user_id = isset($model->user_id)?$model->user_id: Yii::$app->user->id;
-                if(!$model->save()) {
-                    print_r($model->errors);
-                    throw new Exception(json_encode($model->errors));
-                }
-
-                try {
-                    $detail = new StatGovermentUnitDetail();
-                    $detail->stat_goverment_unit_id = $model->id;
-                    $detail->branch_id = $post['branch_id'];
-                    $detail->remark = $post['remark'];
-                    if(!$detail->save()) {
-                        print_r($detail->errors);
-                        throw new Exception(json_encode($detail->errors));
-                    }
-                    echo "INSERT";
-                    $row = 1;
-                } catch (Exception $ex) {
-                    print_r($ex->getMessage());
-                    $row = StatGovermentUnitDetail::updateAll(["remark" => $post['remark']],[
-                        'branch_id' => $post['branch_id'],
-                        'stat_goverment_unit_id' => $model->id
-                    ]);
-                    echo "UPDATE";
-                }
-
-                if($row == 0) throw new Exception(Yii::t('app', '0 Row Affected'));
-                echo $row;
-                exit;
-                $transaction->commit();
-                return json_encode([
-                    'user' => $model->user? $model->user->attributes: User::findOne(['id'=>Yii::$app->user->id])->attributes,
-                    'last_update' => MyHelper::converttimefordisplay($model->last_update),
-                    'status' => Yii::t('app', 'Saved')
-                ]);
-            } catch (Exception $exception) {
-                $transaction->rollBack();
-                return json_encode([
-                    'error' => $exception->getMessage(),
-                    'remark' => $post['remark']
-                ]);
-            }
-        }
-    }
-
     /**
      * Lists all GovermentUnit models.
      * @return mixed
@@ -327,11 +264,41 @@ class GovermentUnitController extends Controller
         ]);
     }
 
-    public function actionGet() {
+    public function actionGet($year) {
+        $year = PhiscalYear::find()
+            ->where(['id' => $year, 'deleted' => 0])
+            ->one();
+        if(!isset($year)) {
+            Yii::$app->session->setFlash('danger', Yii::t('app','Incorrect Phiscal Year'));
+            return $this->redirect(['index']);
+        }
+
+        if($year->status != "O") {
+            Yii::$app->session->setFlash('danger', Yii::t('app','Phiscal Year is not allowed to input data'));
+            return $this->redirect(['index']);
+        }
+
+        $branchgroups = BranchGroup::find()
+            ->with([
+                'branches' => function(ActiveQuery $query) use($year)  {
+                    $query
+                        ->with([
+                            'statGovermentUnitDetails' => function(ActiveQuery $query) use($year)  {
+                                $query->with([
+                                    'statGovermentUnit' => function(ActiveQuery $query) use($year) {
+                                        $query->where(
+                                            ['phiscal_year_id' => $year]
+                                        );
+                                    }
+                                ])->one();
+                            }
+                        ])
+                        ->where(['deleted' => 0])
+                        ->orderBy('position');
+                }
+            ])->where(['deleted' => 0])->orderBy('position')->asArray()->all();
         return json_encode([
-            'branchgroups' => BranchGroup::find()->where(['deleted' => 0])->orderBy('id')->asArray()->all(),
-            'branches' => Branch::find()->where(['deleted' => 0])->orderBy('id')->asArray()->all(),
-            'levels' => Govermentlevel::find()->where(['deleted' => 0])->orderBy('id')->asArray()->all()
+            'branchgroups' => $branchgroups
         ]);
     }
 

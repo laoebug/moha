@@ -68,11 +68,10 @@
             </div>
             <!-- Sidebar Menu-->
             <ul class="sidebar-menu">
-
                 <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span><?= Yii::t('app','Dashboard') ?></span></a></li>
                 <li class="treeview"><a href="#"><i class="fa fa-laptop"></i><span><?= Yii::t('app','Statistics') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="index.php?r=goverment-unit"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Goverment Units') ?></a></li>
+                        <li><a href="index.php?r=stat-goverment-unit"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Goverment Units') ?></a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-laptop"></i><span><?= Yii::t('app','Administration') ?></span><i class="fa fa-angle-right"></i></a>
