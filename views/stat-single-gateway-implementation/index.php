@@ -17,6 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
         </div>
+        <div class="col-sm-8">
+            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">{{response.statusText}}</div>
+        </div>
     </div><div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
@@ -59,7 +62,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
-        <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">{{response.statusText}}</div>
     </div>
     <div class="col-sm-12" style="margin-top: 2em">
         <div class="card" ng-show="model">
@@ -87,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td>{{d.ministry.name}}</td>
                         <td class="text-center">{{d.start_date}}</td>
                         <td class="text-center">{{d.name}}</td>
-                        <td class="text-center">{{selected.remark}}</td>
+                        <td class="text-center">{{d.remark}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -108,10 +110,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 $scope.years = r.data.years;
                 $scope.ministries = r.data.ministries;
             }, function(r) {
-                $scope.response = r;
-                $timeout(function() {
-                    $scope.response = null;
-                });
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              });
+            });
 
         $scope.enquiry = function() {
           $scope.selected = null;
@@ -119,14 +122,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 .then(function(r) {
                     $scope.model = r.data.model;
                 }, function(r) {
-                    $scope.response = r;
-                    $timeout(function() {
-                        $scope.response = null;
-                    });
+                  $scope.response = r;
+                  $timeout(function () {
+                    $scope.response = null;
+                  });
+                });
         };
 
       $scope.inquiry = function() {
-        if($scope.selected.ministry) {
+        if($scope.selected.ministry)
             $http.get(url + 'inquiry&year=' + $scope.year.id + '&ministry=' + $scope.selected.ministry.id)
                 .then(function (r) {
                     if(r.data.model)
@@ -146,11 +150,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         $scope.selected.start_date = null;
                     }
                 }, function(r) {
-                    $scope.response = r;
-                    $timeout(function() {
-                        $scope.response = null;
-                    });
-        }
+                  $scope.response = r;
+                  $timeout(function () {
+                    $scope.response = null;
+                  });
+                });
       };
 
         $scope.select = function(m) {
@@ -158,23 +162,22 @@ $this->params['breadcrumbs'][] = $this->title;
         };
 
         $scope.save = function() {
-            if($scope.selected) {
-                $scope.selected.start_date = $(".datepicker").val();
-                $http.post(url + 'save&year=' + $scope.year.id, {
-                    Model: $scope.selected,
-                    '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function (r) {
-                    $scope.response = r;
-                    $scope.selected = null;
-                    $scope.enquiry();
-                    $timeout(function () {
-                        $scope.response = null;
-                    }, 15000);
-                }, function(r) {
-                    $scope.response = r;
-                    $timeout(function() {
-                        $scope.response = null;
-                    });
+            $scope.selected.start_date = $(".datepicker").val();
+            $http.post(url + 'save&year=' + $scope.year.id, {
+                Model: $scope.selected,
+                '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+                $scope.response = r;
+                $scope.selected = null;
+                $scope.enquiry();
+                $timeout(function () {
+                    $scope.response = null;
+                }, 15000);
+            }, function(r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              });
             });
         };
     });

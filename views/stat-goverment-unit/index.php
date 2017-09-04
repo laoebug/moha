@@ -13,6 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
         </div>
+        <div class="col-sm-8">
+            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
+                {{response.statusText}}
+            </div>
+        </div>
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
@@ -53,9 +58,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     </button>
                 </div>
             </div>
-        </div>
-        <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
-            {{response.statusText}}
         </div>
     </div>
     <div class="col-sm-12" style="margin-top: 2em" ng-bind-html="result"></div>

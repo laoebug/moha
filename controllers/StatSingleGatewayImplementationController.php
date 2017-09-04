@@ -7,6 +7,7 @@ use app\models\Branch;
 use app\models\Ministry;
 use app\models\PhiscalYear;
 use app\models\StatSingleGatewayImplementationDetail;
+use Codeception\Util\HttpCode;
 use Yii;
 use app\models\StatSingleGatewayImplementation;
 use app\models\StatSingleGatewayImplementationSearch;
@@ -104,8 +105,14 @@ class StatSingleGatewayImplementationController extends Controller
         $post = Yii::$app->request->post();
         if(isset($post)) {
             $year = PhiscalYear::findOne($year);
-            if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
-            if($year->status != 'O') throw new MethodNotAllowedHttpException(Yii::t('app', 'The Year is not allowed to input'));
+            if(!isset($year)) {
+                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+                return;
+            }
+            if($year->status != 'O') {
+                MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
+                return;
+            }
 
             $transaction = Yii::$app->db->beginTransaction();
             try {
@@ -140,18 +147,20 @@ class StatSingleGatewayImplementationController extends Controller
                 $transaction->commit();
             }catch (Exception $exception) {
                 $transaction->rollBack();
-                throw new ServerErrorHttpException($exception->getMessage());
+                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
+                return;
             }
         }
     }
 
     public function actionPrint($year) {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
-        if($year->status != 'O') throw new MethodNotAllowedHttpException(Yii::t('app', 'The Year is not allowed to input'));
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
 
         $model = StatSingleGatewayImplementation::find()
-            ->alias('m')
             ->with([
                 'statSingleGatewayImplementationDetails' => function(ActiveQuery $query) {
                     $query->alias('d')
@@ -164,11 +173,12 @@ class StatSingleGatewayImplementationController extends Controller
 
     public function actionDownload($year) {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
-        if($year->status != 'O') throw new MethodNotAllowedHttpException(Yii::t('app', 'The Year is not allowed to input'));
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
 
         $model = StatSingleGatewayImplementation::find()
-            ->alias('m')
             ->with([
                 'statSingleGatewayImplementationDetails' => function(ActiveQuery $query) {
                     $query->alias('d')
@@ -194,7 +204,7 @@ class StatSingleGatewayImplementationController extends Controller
         if (($model = StatSingleGatewayImplementation::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app','The requested page does not exist.'));
         }
     }
 }
