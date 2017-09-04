@@ -49,18 +49,14 @@ use yii\widgets\ActiveForm;
 			
 
     
+     <?php 
+     echo $this->render('_roleAndMenuList', [
+            'model' => $model,
+            'menus' => $menus,
+            'roles' => $roles
+        ]) 
+     ?>
 
-    
-
-    <?php
-//     $this->render('_roleAndMenuList', [
-//         'model' => $model,
-//         'roles' => $roles,
-//         'menus' => $menus,
-//     ]);
-    ?>
-
-    
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>

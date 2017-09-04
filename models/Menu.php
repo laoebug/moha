@@ -10,13 +10,17 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property string $url
+ * @property string $description
  * @property integer $deleted
  * @property integer $menugroup_id
  * @property integer $menu_parent_id
+ * @property integer $input_id
+ * @property string $input_dt_stamp
  *
  * @property Menu $menuParent
  * @property Menu[] $menus
  * @property Menugroup $menugroup
+ * @property User $input
  * @property RoleHasMenu[] $roleHasMenus
  * @property Role[] $roles
  */
@@ -37,11 +41,13 @@ class Menu extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'url', 'menugroup_id'], 'required'],
-            [['deleted', 'menugroup_id', 'menu_parent_id'], 'integer'],
+            [['deleted', 'menugroup_id', 'menu_parent_id', 'input_id'], 'integer'],
+            [['input_dt_stamp'], 'safe'],
             [['name'], 'string', 'max' => 45],
-            [['url'], 'string', 'max' => 255],
+            [['url', 'description'], 'string', 'max' => 255],
             [['menu_parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menu::className(), 'targetAttribute' => ['menu_parent_id' => 'id']],
             [['menugroup_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menugroup::className(), 'targetAttribute' => ['menugroup_id' => 'id']],
+            [['input_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['input_id' => 'id']],
         ];
     }
 
@@ -54,9 +60,12 @@ class Menu extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
+            'description' => Yii::t('app', 'Description'),
             'deleted' => Yii::t('app', 'Deleted'),
             'menugroup_id' => Yii::t('app', 'Menugroup ID'),
             'menu_parent_id' => Yii::t('app', 'Menu Parent ID'),
+            'input_id' => Yii::t('app', 'Input ID'),
+            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
         ];
     }
 
@@ -82,6 +91,14 @@ class Menu extends \yii\db\ActiveRecord
     public function getMenugroup()
     {
         return $this->hasOne(Menugroup::className(), ['id' => 'menugroup_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInput()
+    {
+        return $this->hasOne(User::className(), ['id' => 'input_id']);
     }
 
     /**

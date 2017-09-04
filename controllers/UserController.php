@@ -72,11 +72,13 @@ class UserController extends Controller
     public function actionCreate()
     {
         
-        //userHasRoles
-        //$roles = Role::find()->all();
-        //$menus = Menu::find()->all();
+        // userHasRoles
+        $roles = Role::find()->all();
+        $menus = Menu::find()->all();        
         $model = new User();
         $model->password = "1010";
+
+        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $db = Yii::$app->db->beginTransaction();
             try {
@@ -93,16 +95,17 @@ class UserController extends Controller
                 $db->rollBack();
                 Yii::$app->session->setFlash('error', "User cannot be saved" . $ex);
             }
-        }
-        else{
+        } else {
             
             return $this->render('create', [
                 'model' => $model,
-          //      'roles' => $roles,
-           //     'menus' => $menus,
-            ]);
+                'menus' => $menus,
+                'roles' => $roles
+            ])
+            ;
         }
     }
+   
 
     /**
      * Updates an existing User model.
@@ -127,8 +130,6 @@ class UserController extends Controller
             ]);
         }
     }
-
-
 
     /**
      * Deletes an existing User model.

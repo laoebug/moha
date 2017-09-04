@@ -8,13 +8,17 @@ use Yii;
  * This is the model class for table "province".
  *
  * @property integer $id
- * @property string $name
+ * @property string $province_code
+ * @property string $province_name
+ * @property string $record_status
+ * @property integer $input_id
+ * @property string $input_dt_stamp
  * @property integer $deleted
- * @property integer $position
  *
  * @property Accociation[] $accociations
  * @property District[] $districts
  * @property Foundation[] $foundations
+ * @property User $input
  */
 class Province extends \yii\db\ActiveRecord
 {
@@ -32,10 +36,14 @@ class Province extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name'], 'required'],
-            [['id', 'deleted', 'position'], 'integer'],
-            [['name'], 'string', 'max' => 255],
-            [['name'], 'unique'],
+            [['province_code', 'province_name'], 'required'],
+            [['input_id', 'deleted'], 'integer'],
+            [['input_dt_stamp'], 'safe'],
+            [['province_code'], 'string', 'max' => 20],
+            [['province_name'], 'string', 'max' => 255],
+            [['record_status'], 'string', 'max' => 1],
+            [['province_name'], 'unique'],
+            [['input_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['input_id' => 'id']],
         ];
     }
 
@@ -46,9 +54,12 @@ class Province extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
+            'province_code' => Yii::t('app', 'Province Code'),
+            'province_name' => Yii::t('app', 'Province Name'),
+            'record_status' => Yii::t('app', 'Record Status'),
+            'input_id' => Yii::t('app', 'Input ID'),
+            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
             'deleted' => Yii::t('app', 'Deleted'),
-            'position' => Yii::t('app', 'Position'),
         ];
     }
 
@@ -77,11 +88,10 @@ class Province extends \yii\db\ActiveRecord
     }
 
     /**
-     * @inheritdoc
-     * @return ProvinceQuery the active query used by this AR class.
+     * @return \yii\db\ActiveQuery
      */
-    public static function find()
+    public function getInput()
     {
-        return new ProvinceQuery(get_called_class());
+        return $this->hasOne(User::className(), ['id' => 'input_id']);
     }
 }
