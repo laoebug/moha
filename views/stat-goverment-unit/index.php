@@ -69,12 +69,23 @@ $this->params['breadcrumbs'][] = $this->title;
           .then(function(r) {
             $scope.years = r.data.years;
             $scope.ministries = r.data.ministries;
+          }, function(r) {
+              $scope.response = r;
+              $timeout(function () {
+                  $scope.response = null;
+              });
           });
 
         $scope.enquiry = function() {
           if($scope.year)
             $http.get(url + 'enquiry&year='+$scope.year.id).then(function(r) {
               $scope.result = $sce.trustAsHtml(r.data);
+            }, function(r) {
+                console.log(r);
+                $scope.response = r;
+                $timeout(function () {
+                    $scope.response = null;
+                });
             });
         };
 
@@ -87,6 +98,11 @@ $this->params['breadcrumbs'][] = $this->title;
                       $scope.insitute = parseInt(r.status == 200? r.data.insitute:"");
                       $scope.center = parseInt(r.status == 200? r.data.center:"");
                       $scope.remark = parseInt(r.status == 200? r.data.remark:"");
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    });
                 });
           else {
             $scope.office = "";
@@ -114,8 +130,13 @@ $this->params['breadcrumbs'][] = $this->title;
                   $timeout(function() {
                     $scope.response = null;
                   }, 5000);
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    });
                 });
             }
-        }
+        };
     });
 </script>

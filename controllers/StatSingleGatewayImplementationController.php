@@ -64,7 +64,13 @@ class StatSingleGatewayImplementationController extends Controller
                 ':year' => $year->id
             ])
             ->join('right join', 'ministry m', 'm.id=d.ministry_id')
-            ->with(['statSingleGatewayImplementationDetails'])
+            ->with(['statSingleGatewayImplementationDetails' => function(ActiveQuery $query) {
+                $query
+//                    ->select('d.id, d.name, d.remark, d.ministry_id, d.stat_single_gateway_implementation_id')
+                    ->select(['DATE_FORMAT(`start_date`, "%d-%m-%Y") as `start_date`, `d`.`id`, `d`.`name`, `d`.`remark`, `d`.`ministry_id`, `d`.`stat_single_gateway_implementation_id`'])
+                    ->alias('d')
+                    ->with(['ministry']);
+            }])
             ->orderBy('m.position')
             ->asArray()
             ->one();
@@ -84,6 +90,10 @@ class StatSingleGatewayImplementationController extends Controller
             ])
             ->where(['d.ministry_id' => $ministry])
             ->asArray()->one();
+
+        if(isset($model))
+            if(isset($model['start_date']))
+                $model['start_date'] = MyHelper::convertdatefordisplay($model['start_date']);
 
         return json_encode([
             'model' => $model
@@ -108,23 +118,24 @@ class StatSingleGatewayImplementationController extends Controller
                 }
                 $model->last_update = date('Y-m-d H:i:s');
                 $model->saved = 1;
+                print_r($model->attributes);
                 if (!$model->save())
                     throw new ServerErrorHttpException(json_encode($model->errors));
 
                 $detail = StatSingleGatewayImplementationDetail::find()
-                    ->where(['ministry_id' => $post['Model']['ministry'], 'stat_single_gateway_implementation_id' => $model->id])
+                    ->where(['ministry_id' => $post['Model']['ministry']['id'], 'stat_single_gateway_implementation_id' => $model->id])
                     ->one();
                 if (!isset($detail)) {
                     $detail = new StatSingleGatewayImplementationDetail();
                     $detail->stat_single_gateway_implementation_id = $model->id;
-                    $detail->ministry_id = $post['Model']['ministry'];
+                    $detail->ministry_id = $post['Model']['ministry']['id'];
                 }
                 $detail->remark = $post['Model']['remark'];
-//            $detail->start_date =
                 $detail->start_date = date('Y-m-d', strtotime($post['Model']['start_date']));
-                $detail->name = $post['Model']['servicename'];
+                $detail->name = $post['Model']['name'];
+                print_r($detail->attributes);
                 if (!$detail->save())
-                    throw new ServerErrorHttpException(json_encode($model->errors));
+                    throw new ServerErrorHttpException(json_encode($detail->errors));
 
                 $transaction->commit();
             }catch (Exception $exception) {

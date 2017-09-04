@@ -11,9 +11,11 @@ use Yii;
  * @property integer $new
  * @property string $remark
  * @property integer $improve
- * @property integer $publish
+ * @property string $publish
  * @property integer $stat_legal_id
+ * @property integer $legal_id
  *
+ * @property Legal $legal
  * @property StatLegal $statLegal
  */
 class StatLegalDetail extends \yii\db\ActiveRecord
@@ -32,9 +34,11 @@ class StatLegalDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['new', 'improve', 'publish', 'stat_legal_id'], 'integer'],
+            [['new', 'improve', 'stat_legal_id', 'legal_id'], 'integer'],
             [['remark'], 'string'],
-            [['stat_legal_id'], 'required'],
+            [['stat_legal_id', 'legal_id'], 'required'],
+            [['publish'], 'string', 'max' => 255],
+            [['legal_id'], 'exist', 'skipOnError' => true, 'targetClass' => Legal::className(), 'targetAttribute' => ['legal_id' => 'id']],
             [['stat_legal_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatLegal::className(), 'targetAttribute' => ['stat_legal_id' => 'id']],
         ];
     }
@@ -51,7 +55,16 @@ class StatLegalDetail extends \yii\db\ActiveRecord
             'improve' => Yii::t('app', 'Improve'),
             'publish' => Yii::t('app', 'Publish'),
             'stat_legal_id' => Yii::t('app', 'Stat Legal ID'),
+            'legal_id' => Yii::t('app', 'Legal ID'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLegal()
+    {
+        return $this->hasOne(Legal::className(), ['id' => 'legal_id']);
     }
 
     /**

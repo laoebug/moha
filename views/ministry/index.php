@@ -99,50 +99,71 @@ $this->params['breadcrumbs'][] = $this->title;
         $http.get(url+ 'get')
             .then(function(r) {
                 $scope.years = r.data.years;
+            }, function(r) {
+                $scope.response = r;
+                $timeout(function () {
+                    $scope.response = null;
+                });
             });
 
         $scope.enquiry = function() {
-            $http.get(url+'enquiry&year='+$scope.year.id)
-                .then(function(r) {
+            $http.get(url + 'enquiry&year=' + $scope.year.id)
+                .then(function (r) {
                     $scope.ministries = r.data.ministries;
+                }, function (r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    });
                 });
         };
 
-        $scope.select = function(m) {
+        $scope.select = function (m) {
             $scope.ministry = m;
             $scope.ministry.position = parseInt(m.position);
         };
 
-        $scope.save = function(create) {
-            if($scope.ministry)
-                if($scope.ministry.name)
-                $http.post(url + 'save&year='+$scope.year.id, {
-                    Ministry: $scope.ministry,
-                    create:create,
-                    '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function(r) {
+            $scope.save = function (create) {
+                if ($scope.ministry)
+                    if ($scope.ministry.name)
+                        $http.post(url + 'save&year=' + $scope.year.id, {
+                            Ministry: $scope.ministry,
+                            create: create,
+                            '_csrf': $('meta[name="csrf-token"]').attr("content")
+                        }).then(function (r) {
+                            $scope.response = r;
+                            $scope.ministry = null;
+                            $scope.enquiry();
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        }, function (r) {
+                            $scope.response = r;
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        });
+            };
+
+            $scope.delete = function () {
+                if ($scope.ministry)
+                    $http.post(url + 'delete', {
+                        Ministry: $scope.ministry,
+                        '_csrf': $('meta[name="csrf-token"]').attr("content")
+                    }).then(function (r) {
                         $scope.response = r;
                         $scope.ministry = null;
                         $scope.enquiry();
-                        $timeout(function() {
+                        $timeout(function () {
                             $scope.response = null;
-                        }, 15000);
-                    });
-        };
 
-        $scope.delete = function() {
-            if($scope.ministry)
-                $http.post(url + 'delete', {
-                    Ministry: $scope.ministry,
-                    '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function(r) {
-                    $scope.response = r;
-                    $scope.ministry = null;
-                    $scope.enquiry();
-                    $timeout(function() {
-                        $scope.response = null;
-                    }, 15000);
-                });
-        }
-    });
+                        }, 15000);
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        });
+                    });
+            };
+        });
 </script>
