@@ -14,6 +14,7 @@ use Yii;
  * @property integer $input_id
  * @property string $input_dt_stamp
  * @property integer $deleted
+ * @property integer $position
  *
  * @property Accociation[] $accociations
  * @property Approver[] $approvers
@@ -37,7 +38,7 @@ class Province extends \yii\db\ActiveRecord
     {
         return [
             [['province_code', 'province_name'], 'required'],
-            [['input_id', 'deleted'], 'integer'],
+            [['input_id', 'deleted', 'position'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['province_code'], 'string', 'max' => 20],
             [['province_name'], 'string', 'max' => 255],
@@ -59,6 +60,7 @@ class Province extends \yii\db\ActiveRecord
             'input_id' => Yii::t('app', 'Input ID'),
             'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 

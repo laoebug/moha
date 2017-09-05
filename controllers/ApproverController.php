@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\ApproverLevel;
 use Yii;
 use app\models\Approver;
 use app\models\ApproverSearch;
@@ -65,7 +66,13 @@ class ApproverController extends Controller
     {
         $model = new Approver();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $post = Yii::$app->request->post();
+        if ($model->load($post)) {
+            if(isset($post['Approver']['approver_level'])) {
+                $approverlevel = ApproverLevel::find()->where(['code' => $post['Approver']['approver_level']])->one();
+                if(isset($approverlevel)) $model->approver_level_id = $approverlevel->id;
+            }
+            $model->save();
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -83,6 +90,8 @@ class ApproverController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if(isset($model->approverLevel))
+            $model->approver_level = $model->approverLevel->code;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);

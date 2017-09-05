@@ -8,7 +8,6 @@ use Yii;
  * This is the model class for table "approver".
  *
  * @property integer $id
- * @property string $level
  * @property integer $deleted
  * @property integer $ministry_id
  * @property integer $province_id
@@ -21,6 +20,8 @@ use Yii;
  */
 class Approver extends \yii\db\ActiveRecord
 {
+    public $approver_level;
+
     /**
      * @inheritdoc
      */
@@ -37,7 +38,6 @@ class Approver extends \yii\db\ActiveRecord
         return [
             [['deleted', 'ministry_id', 'province_id', 'approver_level_id'], 'integer'],
             [['approver_level_id'], 'required'],
-            [['level'], 'string', 'max' => 1],
             [['approver_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => ApproverLevel::className(), 'targetAttribute' => ['approver_level_id' => 'id']],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
@@ -51,11 +51,10 @@ class Approver extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'level' => Yii::t('app', 'Level'),
             'deleted' => Yii::t('app', 'Deleted'),
-            'ministry_id' => Yii::t('app', 'Ministry ID'),
-            'province_id' => Yii::t('app', 'Province ID'),
-            'approver_level_id' => Yii::t('app', 'Approver Level ID'),
+            'ministry_id' => Yii::t('app', 'Ministry'),
+            'province_id' => Yii::t('app', 'Province'),
+            'approver_level_id' => Yii::t('app', 'Approver Level'),
         ];
     }
 

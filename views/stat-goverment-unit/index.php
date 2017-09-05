@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
               $scope.response = r;
               $timeout(function () {
                   $scope.response = null;
-              });
+              }, 15000);
           });
 
         $scope.enquiry = function() {
@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $scope.response = r;
                 $timeout(function () {
                     $scope.response = null;
-                });
+                }, 15000);
             });
         };
 
@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $scope.response = r;
                     $timeout(function () {
                         $scope.response = null;
-                    });
+                    }, 15000);
                 });
           else {
             $scope.office = "";
@@ -131,12 +131,12 @@ $this->params['breadcrumbs'][] = $this->title;
                   if(r.data) $scope.result = $sce.trustAsHtml(r.data);
                   $timeout(function() {
                     $scope.response = null;
-                  }, 5000);
+                  }, 15000);
                 }, function(r) {
                     $scope.response = r;
                     $timeout(function () {
                         $scope.response = null;
-                    });
+                    }, 15000);
                 });
             }
         };

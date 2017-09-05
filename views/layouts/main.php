@@ -71,15 +71,16 @@
             <!-- Sidebar Menu-->
             <ul class="sidebar-menu">
                 <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span><?= Yii::t('app','Dashboard') ?></span></a></li>
-                <li class="treeview"><a href="#"><i class="fa fa-laptop"></i><span><?= Yii::t('app','Statistics') ?></span><i class="fa fa-angle-right"></i></a>
+                <li class="treeview"><a href="#"><i class="fa fa-bar-chart"></i><span><?= Yii::t('app','Statistics') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="index.php?r=ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry') ?></a></li>
                         <li><a href="index.php?r=stat-goverment-unit"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Goverment Units') ?></a></li>
                         <li><a href="index.php?r=stat-single-gateway-implementation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Single Gateway Implementations') ?></a></li>
                         <li><a href="index.php?r=stat-legal"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legals') ?></a></li>
+                        <li><a href="index.php?r=stat-association-foundation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Stat Association Foundation') ?></a></li>
                     </ul>
                 </li>
-                <li class="treeview"><a href="#"><i class="fa fa-laptop"></i><span><?= Yii::t('app','Administration') ?></span><i class="fa fa-angle-right"></i></a>
+                <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="index.php?r=phiscal-year"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Phiscal Year') ?></a></li>
                         <li><a href="index.php?r=branch-group"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry Group') ?></a></li>

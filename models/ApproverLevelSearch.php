@@ -19,7 +19,7 @@ class ApproverLevelSearch extends ApproverLevel
     {
         return [
             [['id', 'deleted', 'position'], 'integer'],
-            [['name'], 'safe'],
+            [['name', 'code'], 'safe'],
         ];
     }
 
@@ -64,7 +64,8 @@ class ApproverLevelSearch extends ApproverLevel
             'position' => $this->position,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'code', $this->code]);
 
         return $dataProvider;
     }

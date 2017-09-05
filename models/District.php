@@ -17,6 +17,7 @@ use Yii;
  * @property integer $deleted
  *
  * @property Province $province
+ * @property User $input
  */
 class District extends \yii\db\ActiveRecord
 {
@@ -41,6 +42,7 @@ class District extends \yii\db\ActiveRecord
             [['district_name'], 'string', 'max' => 255],
             [['record_status'], 'string', 'max' => 1],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
+            [['input_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['input_id' => 'id']],
         ];
     }
 
@@ -67,6 +69,14 @@ class District extends \yii\db\ActiveRecord
     public function getProvince()
     {
         return $this->hasOne(Province::className(), ['id' => 'province_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInput()
+    {
+        return $this->hasOne(User::className(), ['id' => 'input_id']);
     }
 
     /**

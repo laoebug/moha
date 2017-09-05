@@ -11,6 +11,7 @@ use Yii;
  * @property string $name
  * @property integer $deleted
  * @property integer $position
+ * @property string $code
  *
  * @property Approver[] $approvers
  */
@@ -33,6 +34,8 @@ class ApproverLevel extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
+            [['code'], 'string', 'max' => 1],
+            [['code'], 'unique'],
         ];
     }
 
@@ -46,6 +49,7 @@ class ApproverLevel extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'deleted' => Yii::t('app', 'Deleted'),
             'position' => Yii::t('app', 'Position'),
+            'code' => Yii::t('app', 'Code'),
         ];
     }
 

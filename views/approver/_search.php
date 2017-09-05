@@ -17,15 +17,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'level') ?>
-
     <?= $form->field($model, 'deleted') ?>
 
     <?= $form->field($model, 'ministry_id') ?>
 
     <?= $form->field($model, 'province_id') ?>
 
-    <?php // echo $form->field($model, 'approver_level_id') ?>
+    <?= $form->field($model, 'approver_level_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

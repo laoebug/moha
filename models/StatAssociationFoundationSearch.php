@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Approver;
+use app\models\StatAssociationFoundation;
 
 /**
- * ApproverSearch represents the model behind the search form about `app\models\Approver`.
+ * StatAssociationFoundationSearch represents the model behind the search form about `app\models\StatAssociationFoundation`.
  */
-class ApproverSearch extends Approver
+class StatAssociationFoundationSearch extends StatAssociationFoundation
 {
     /**
      * @inheritdoc
@@ -18,7 +18,8 @@ class ApproverSearch extends Approver
     public function rules()
     {
         return [
-            [['id', 'deleted', 'ministry_id', 'province_id', 'approver_level_id'], 'integer'],
+            [['id', 'user_id', 'phiscal_year_id', 'saved'], 'integer'],
+            [['last_update'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class ApproverSearch extends Approver
      */
     public function search($params)
     {
-        $query = Approver::find();
+        $query = StatAssociationFoundation::find();
 
         // add conditions that should always apply here
 
@@ -59,10 +60,10 @@ class ApproverSearch extends Approver
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'deleted' => $this->deleted,
-            'ministry_id' => $this->ministry_id,
-            'province_id' => $this->province_id,
-            'approver_level_id' => $this->approver_level_id,
+            'last_update' => $this->last_update,
+            'user_id' => $this->user_id,
+            'phiscal_year_id' => $this->phiscal_year_id,
+            'saved' => $this->saved,
         ]);
 
         return $dataProvider;

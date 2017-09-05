@@ -118,50 +118,53 @@ class StatGovermentUnitController extends Controller
 
     public function actionSave() {
         $post = Yii::$app->request->post();
-        if(isset($post)) {
-            $year = PhiscalYear::findOne($post['year']);
-            if(!isset($year)) {
-                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
-                return;
+        if(!isset($post)) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+            return;
+        }
+
+        $year = PhiscalYear::findOne($post['year']);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        if($year->status != "O")  {
+            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
+            return;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $model = StatGovermentUnit::find()->where(['phiscal_year_id' => $year->id])->one();
+            if(!isset($model)) {
+                $model = new StatGovermentUnit();
+                $model->phiscal_year_id = $year->id;
             }
+            $model->user_id = Yii::$app->user->id;
+            $model->saved = 1;
+            $model->last_update = date('Y-m-d H:i:s');
+            if(!$model->save()) throw new Exception(json_encode($model->errors));
 
-            if($year->status != "O")  {
-                MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
-                return;
+            $detail = StatGovermentUnitDetail::find()
+                ->where(['stat_goverment_unit_id' => $model->id, 'ministry_id' => $post['ministry']])->one();
+            if(!isset($detail)) {
+                $detail = new StatGovermentUnitDetail();
+                $detail->ministry_id = $post['ministry'];
+                $detail->stat_goverment_unit_id = $model->id;
             }
+            $detail->office = $post['office'];
+            $detail->department = $post['department'];
+            $detail->insitute = $post['insitute'];
+            $detail->center = $post['center'];
+            $detail->remark = $post['remark'];
+            if(!$detail->save()) throw new Exception(json_encode($detail->errors));
 
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $model = StatGovermentUnit::find()->where(['phiscal_year_id' => $year->id])->one();
-                if(!isset($model)) {
-                    $model = new StatGovermentUnit();
-                    $model->phiscal_year_id = $year->id;
-                }
-                $model->user_id = Yii::$app->user->id;
-                $model->saved = 1;
-                $model->last_update = date('Y-m-d H:i:s');
-                if(!$model->save()) throw new Exception(json_encode($model->errors));
-
-                $detail = StatGovermentUnitDetail::find()
-                    ->where(['stat_goverment_unit_id' => $model->id, 'ministry_id' => $post['ministry']])->one();
-                if(!isset($detail)) {
-                    $detail = new StatGovermentUnitDetail();
-                    $detail->ministry_id = $post['ministry'];
-                    $detail->stat_goverment_unit_id = $model->id;
-                }
-                $detail->office = $post['office'];
-                $detail->department = $post['department'];
-                $detail->insitute = $post['insitute'];
-                $detail->center = $post['center'];
-                $detail->remark = $post['remark'];
-                if(!$detail->save()) throw new Exception(json_encode($detail->errors));
-
-                $transaction->commit();
-                return $this->enquiry($year);
-            } catch (Exception $exception) {
-                $transaction->rollBack();
-                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
-            }
+            $transaction->commit();
+            return $this->enquiry($year);
+        } catch (Exception $exception) {
+            $transaction->rollBack();
+            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
         }
     }
 

@@ -105,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $scope.response = r;
                 $timeout(function () {
                     $scope.response = null;
-                });
+                }, 15000);
             });
 
         $scope.enquiry = function() {
@@ -116,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $scope.response = r;
                     $timeout(function () {
                         $scope.response = null;
-                    });
+                    }, 15000);
                 });
         };
 
@@ -158,13 +158,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         $scope.enquiry();
                         $timeout(function () {
                             $scope.response = null;
-
                         }, 15000);
                     }, function (r) {
                         $scope.response = r;
                         $timeout(function () {
                             $scope.response = null;
-                        });
+                        }, 15000);
                     });
             };
         });

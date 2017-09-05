@@ -23,15 +23,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'level',
+            [
+                'attribute' => 'approver_level_id',
+                'value' => function($data) {
+                    if($data->approverLevel)
+                        return $data->approverLevel->name;
+                }
+            ],
+            [
+                'attribute' => 'ministry_id',
+                'value' => function($data) {
+                    return isset($data->ministry)? $data->ministry->name : '-';
+                }
+            ],
+            [
+                'attribute' => 'province_id',
+                'value' => function($data) {
+                    return isset($data->province)? $data->province->province_name : '-';
+                }
+            ],
             'deleted',
-            'ministry_id',
-            'province_id',
-            // 'approver_level_id',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            Yii::$app->params['action']
         ],
     ]); ?>
 </div>
