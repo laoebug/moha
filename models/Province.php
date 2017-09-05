@@ -16,9 +16,9 @@ use Yii;
  * @property integer $deleted
  *
  * @property Accociation[] $accociations
+ * @property Approver[] $approvers
  * @property District[] $districts
  * @property Foundation[] $foundations
- * @property User $input
  */
 class Province extends \yii\db\ActiveRecord
 {
@@ -43,7 +43,6 @@ class Province extends \yii\db\ActiveRecord
             [['province_name'], 'string', 'max' => 255],
             [['record_status'], 'string', 'max' => 1],
             [['province_name'], 'unique'],
-            [['input_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['input_id' => 'id']],
         ];
     }
 
@@ -74,6 +73,14 @@ class Province extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getApprovers()
+    {
+        return $this->hasMany(Approver::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getDistricts()
     {
         return $this->hasMany(District::className(), ['province_id' => 'id']);
@@ -88,10 +95,11 @@ class Province extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @inheritdoc
+     * @return ProvinceQuery the active query used by this AR class.
      */
-    public function getInput()
+    public static function find()
     {
-        return $this->hasOne(User::className(), ['id' => 'input_id']);
+        return new ProvinceQuery(get_called_class());
     }
 }

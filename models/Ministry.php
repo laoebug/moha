@@ -18,6 +18,7 @@ use Yii;
  * @property integer $user_id
  * @property string $remark
  *
+ * @property Approver[] $approvers
  * @property Branch[] $branches
  * @property MinistryGroup $ministryGroup
  * @property PhiscalYear $phiscalYear
@@ -70,6 +71,14 @@ class Ministry extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'remark' => Yii::t('app', 'Remark'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getApprovers()
+    {
+        return $this->hasMany(Approver::className(), ['ministry_id' => 'id']);
     }
 
     /**

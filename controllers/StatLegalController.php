@@ -182,6 +182,30 @@ class StatLegalController extends Controller
             'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
         ]);
     }
+
+    public function actionDownload($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
+        $models = LegalType::find()
+            ->with([
+                'legals' => function(ActiveQuery $query) {
+                    $query->alias('l')
+                        ->select('l.*, d.*')
+                        ->join('left join', 'stat_legal_detail d', 'd.legal_id=l.id')
+                        ->asArray()
+                        ->orderBy('position');
+                }
+            ])
+            ->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+
+        return $this->renderPartial('../ministry/excel', [
+            'file' => 'Statistic of Internal Legal '. $year->year.'.xls',
+            'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
+        ]);
+    }
     /**
      * Finds the StatLegal model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
