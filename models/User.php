@@ -16,7 +16,17 @@ use Yii;
  * @property string $tel
  * @property string $email
  * @property integer $deleted
+ * @property integer $role_id
+ * @property integer $user_id
+ * @property string $input_dt_stamp
  *
+ * @property Branch[] $branches
+ * @property District[] $districts
+ * @property Menu[] $menus
+ * @property Menugroup[] $menugroups
+ * @property Ministry[] $ministries
+ * @property Province[] $provinces
+ * @property Role[] $roles
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatGovermentUnit[] $statGovermentUnits
  * @property StatLegal[] $statLegals
@@ -25,19 +35,14 @@ use Yii;
  * @property UseSubcordinate[] $useSubcordinates0
  * @property User[] $subcordinateUsers
  * @property User[] $users
+ * @property User $user
+ * @property User[] $users0
+ * @property Role $role
  * @property UserHasBranch[] $userHasBranches
- * @property Branch[] $branches
- * @property Ministry[] $ministries
- * @property UserHasRole[] $userHasRoles
- * @property Role[] $roles
+ * @property Branch[] $branches0
  */
-
-class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+class User extends \yii\db\ActiveRecord
 {
-
-    public $authKey;
-    public $accessToken;
-
     /**
      * @inheritdoc
      */
@@ -52,13 +57,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'firstname', 'lastname', 'status', 'tel'], 'required'],
-            [['deleted'], 'integer'],
+            [['username', 'password', 'firstname', 'lastname', 'tel'], 'required'],
+            [['deleted', 'role_id', 'user_id'], 'integer'],
+            [['input_dt_stamp'], 'safe'],
             [['username', 'tel'], 'string', 'max' => 50],
             [['password', 'email'], 'string', 'max' => 100],
             [['firstname', 'lastname'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 1],
             [['username'], 'unique'],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
 
@@ -71,13 +79,48 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'id' => Yii::t('app', 'ID'),
             'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
-            'firstname' => Yii::t('app', 'First Name'),
-            'lastname' => Yii::t('app', 'Last Name'),
+            'firstname' => Yii::t('app', 'Firstname'),
+            'lastname' => Yii::t('app', 'Lastname'),
             'status' => Yii::t('app', 'Status'),
             'tel' => Yii::t('app', 'Tel'),
             'email' => Yii::t('app', 'Email'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'role_id' => Yii::t('app', 'Role ID'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBranches()
+    {
+        return $this->hasMany(Branch::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDistricts()
+    {
+        return $this->hasMany(District::className(), ['input_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMenus()
+    {
+        return $this->hasMany(Menu::className(), ['input_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMenugroups()
+    {
+        return $this->hasMany(Menugroup::className(), ['input_id' => 'id']);
     }
 
     /**
@@ -86,6 +129,22 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getMinistries()
     {
         return $this->hasMany(Ministry::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProvinces()
+    {
+        return $this->hasMany(Province::className(), ['input_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRoles()
+    {
+        return $this->hasMany(Role::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -155,6 +214,30 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsers0()
+    {
+        return $this->hasMany(User::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRole()
+    {
+        return $this->hasOne(Role::className(), ['id' => 'role_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getUserHasBranches()
     {
         return $this->hasMany(UserHasBranch::className(), ['user_id' => 'id']);
@@ -163,25 +246,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBranches()
+    public function getBranches0()
     {
         return $this->hasMany(Branch::className(), ['id' => 'branch_id'])->viaTable('user_has_branch', ['user_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserHasRoles()
-    {
-        return $this->hasMany(UserHasRole::className(), ['user_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRoles()
-    {
-        return $this->hasMany(Role::className(), ['id' => 'role_id'])->viaTable('user_has_role', ['user_id' => 'id']);
     }
 
     /**
@@ -191,67 +258,5 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function find()
     {
         return new UserQuery(get_called_class());
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        return User::find()->where(["id" => $id])->one();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        return User::find()->where(["username" => $username])->one();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
     }
 }

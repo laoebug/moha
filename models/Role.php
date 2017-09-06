@@ -10,12 +10,14 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property integer $deleted
+ * @property integer $user_id
+ * @property string $input_dt_stamp
  *
+ * @property User $user
  * @property RoleHasAction[] $roleHasActions
  * @property Action[] $actions
  * @property RoleHasMenu[] $roleHasMenus
  * @property Menu[] $menus
- * @property UserHasRole[] $userHasRoles
  * @property User[] $users
  */
 class Role extends \yii\db\ActiveRecord
@@ -35,9 +37,11 @@ class Role extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['deleted'], 'integer'],
+            [['deleted', 'user_id'], 'integer'],
+            [['input_dt_stamp'], 'safe'],
             [['name'], 'string', 'max' => 45],
             [['name'], 'unique'],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -50,7 +54,17 @@ class Role extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     /**
@@ -88,25 +102,17 @@ class Role extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserHasRoles()
-    {
-        return $this->hasMany(UserHasRole::className(), ['role_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getUsers()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_has_role', ['role_id' => 'id']);
+        return $this->hasMany(User::className(), ['role_id' => 'id']);
     }
 
     /**
      * @inheritdoc
-     * @return RoleQuery the active query used by this AR class.
+     * @return RoleHasActionQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new RoleQuery(get_called_class());
+        return new RoleHasActionQuery(get_called_class());
     }
 }

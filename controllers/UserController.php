@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\db\Exception;
 use app\models\Role;
 use app\models\Menu;
+use app\models\UserHasRole;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -72,19 +73,33 @@ class UserController extends Controller
     public function actionCreate()
     {
         
-        // userHasRoles
-        $roles = Role::find()->all();
-        $menus = Menu::find()->all();        
+       // $roles = Role::find()->all();
+       // $menus = Menu::find()->all();
         $model = new User();
         $model->password = "1010";
-
+        $userRoles = array();
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $db = Yii::$app->db->beginTransaction();
             try {
+                
                 if (! $model->save())
                     throw new Exception("User cannot be saved");
                 
+                if (isset($_POST['role'])) {
+                    $userRoles = $_POST['role'];
+                    echo $_POST['role'];exit;
+                    foreach ($userRoles as $key=>$role_id){
+                        $userHasRole = new UserHasRole();
+                        $userHasRole->user_id=$model->id;
+                        $userHasRole->role_id=$role_id;
+                        $userHasRole->set_date=date('Y-m-d H:i:s');                        
+                        if (! $userHasRole->save())
+                            throw new Exception("User role cannot be saved");
+                    }
+                    
+                    
+                }
                 $db->commit();
                 Yii::$app->session->setFlash('success', "User has been saved successfully");
                 return $this->redirect([
@@ -99,13 +114,10 @@ class UserController extends Controller
             
             return $this->render('create', [
                 'model' => $model,
-                'menus' => $menus,
-                'roles' => $roles
-            ])
-            ;
+                //'roles' => $roles
+            ]);
         }
     }
-   
 
     /**
      * Updates an existing User model.

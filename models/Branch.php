@@ -114,10 +114,10 @@ class Branch extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return BranchQuery the active query used by this AR class.
+     * @return RoleHasActionQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new BranchQuery(get_called_class());
+        return new RoleHasActionQuery(get_called_class());
     }
 }

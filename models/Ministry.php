@@ -17,6 +17,7 @@ use Yii;
  * @property integer $phiscal_year_id
  * @property integer $user_id
  * @property string $remark
+ * @property string $input_dt_stamp
  *
  * @property Branch[] $branches
  * @property MinistryGroup $ministryGroup
@@ -41,9 +42,9 @@ class Ministry extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'last_update', 'phiscal_year_id', 'user_id'], 'required'],
+            [['name', 'last_update'], 'required'],
             [['deleted', 'ministry_group_id', 'position', 'phiscal_year_id', 'user_id'], 'integer'],
-            [['last_update'], 'safe'],
+            [['last_update', 'input_dt_stamp'], 'safe'],
             [['remark'], 'string'],
             [['name'], 'string', 'max' => 255],
             [['code'], 'string', 'max' => 5],
@@ -69,6 +70,7 @@ class Ministry extends \yii\db\ActiveRecord
             'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'remark' => Yii::t('app', 'Remark'),
+            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
         ];
     }
 
