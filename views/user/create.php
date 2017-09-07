@@ -13,8 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-create">
 <div class="card">
     <?= $this->render('_form', [
-        'model' => $model,
-        'roles' => $roles
+        'model' => $model
     ]) ?>
 </div>
 </div>
