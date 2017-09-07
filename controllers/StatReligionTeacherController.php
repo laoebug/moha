@@ -3,24 +3,22 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
-use app\models\LegalType;
 use app\models\PhiscalYear;
 use app\models\Province;
-use app\models\StatLocalAdminDetail;
+use app\models\StatReligionTeacherDetail;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatLocalAdmin;
-use app\models\StatLocalAdminSearch;
-use yii\db\ActiveQuery;
+use app\models\StatReligionTeacher;
+use app\models\StatReligionTeacherSearch;
 use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StatLocalAdminController implements the CRUD actions for StatLocalAdmin model.
+ * StatReligionTeacherController implements the CRUD actions for StatReligionTeacher model.
  */
-class StatLocalAdminController extends Controller
+class StatReligionTeacherController extends Controller
 {
     /**
      * @inheritdoc
@@ -38,7 +36,7 @@ class StatLocalAdminController extends Controller
     }
 
     /**
-     * Lists all StatLocalAdmin models.
+     * Lists all StatReligionTeacher models.
      * @return mixed
      */
     public function actionIndex()
@@ -71,8 +69,8 @@ class StatLocalAdminController extends Controller
         $models = Province::find()
             ->alias('p')
             ->select('p.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_local_admin l', 'l.id=d.stat_local_admin_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id')
+            ->join('join', 'stat_religion_teacher l', 'l.id=d.stat_religion_teacher_id and l.phiscal_year_id=:year', [':year'=> $year->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return json_encode([
@@ -87,10 +85,10 @@ class StatLocalAdminController extends Controller
             return;
         }
 
-        $model = StatLocalAdminDetail::find()
+        $model = StatReligionTeacherDetail::find()
             ->alias('d')
-            ->join('join', 'stat_local_admin l', 'l.id = d.stat_local_admin_id and l.phiscal_year_id=:year', [':year' => $year->id])
-            ->where(['province_id' => $province])
+            ->join('join', 'stat_religion_teacher l', 'l.id = d.stat_religion_teacher_id and l.phiscal_year_id=:year', [':year' => $year->id])
+            ->where(['d.province_id' => $province])
             ->asArray()->one();
 
         return json_encode([
@@ -118,11 +116,11 @@ class StatLocalAdminController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try{
-            $model = StatLocalAdmin::find()
+            $model = StatReligionTeacher::find()
                 ->where(['phiscal_year_id' => $year->id])
                 ->one();
             if(!isset($model)) {
-                $model = new StatLocalAdmin();
+                $model = new StatReligionTeacher();
                 $model->phiscal_year_id = $year->id;
                 $model->user_id = Yii::$app->user->id;
             }
@@ -130,32 +128,30 @@ class StatLocalAdminController extends Controller
             $model->last_update = date('Y-m-d H:i:s');
             if(!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = StatLocalAdminDetail::find()
-                ->where(['stat_local_admin_id' => $model->id, 'province_id' => $post['StatLocalAdminDetail']['province']['id']])
+            $detail = StatReligionTeacherDetail::find()
+                ->where(['stat_religion_teacher_id' => $model->id, 'province_id' => $post['StatReligionTeacherDetail']['province']['id']])
                 ->one();
             if(!isset($detail)) {
-                $detail = new StatLocalAdminDetail();
-                $detail->province_id = $post['StatLocalAdminDetail']['province']['id'];
-                $detail->stat_local_admin_id = $model->id;
+                $detail = new StatReligionTeacherDetail();
+                $detail->province_id = $post['StatReligionTeacherDetail']['province']['id'];
+                $detail->stat_religion_teacher_id = $model->id;
             }
-            $detail->province_head_total = $post['StatLocalAdminDetail']['province_head_total'];
-            $detail->province_head_women = $post['StatLocalAdminDetail']['province_head_women'];
-            $detail->province_vice_total = $post['StatLocalAdminDetail']['province_vice_total'];
-            $detail->province_vice_women = $post['StatLocalAdminDetail']['province_vice_women'];
-            $detail->district_head_total = $post['StatLocalAdminDetail']['district_head_total'];
-            $detail->district_head_women = $post['StatLocalAdminDetail']['district_head_women'];
-            $detail->district_vice_total = $post['StatLocalAdminDetail']['district_vice_total'];
-            $detail->district_vice_women = $post['StatLocalAdminDetail']['district_vice_women'];
-            $detail->village_head_total = $post['StatLocalAdminDetail']['village_head_total'];
-            $detail->village_head_women = $post['StatLocalAdminDetail']['village_head_women'];
-            $detail->village_vice_total = $post['StatLocalAdminDetail']['village_vice_total'];
-            $detail->village_vice_women = $post['StatLocalAdminDetail']['village_vice_women'];
-
-            $detail->population_total = $post['StatLocalAdminDetail']['population_total'];
-            $detail->population_women = $post['StatLocalAdminDetail']['population_women'];
-            $detail->village = $post['StatLocalAdminDetail']['village'];
-            $detail->family_total = $post['StatLocalAdminDetail']['family_total'];
-            $detail->family_poor = $post['StatLocalAdminDetail']['family_poor'];
+            $detail->buddhis_monk = $post['StatReligionTeacherDetail']['buddhis_monk'];
+            $detail->buddhis_novice = $post['StatReligionTeacherDetail']['buddhis_novice'];
+            $detail->buddhis_dad = $post['StatReligionTeacherDetail']['buddhis_dad'];
+            $detail->buddhis_mom = $post['StatReligionTeacherDetail']['buddhis_mom'];
+            $detail->buddhis_boy = $post['StatReligionTeacherDetail']['buddhis_boy'];
+            $detail->christ_news_total = $post['StatReligionTeacherDetail']['christ_news_total'];
+            $detail->christ_news_women = $post['StatReligionTeacherDetail']['christ_news_women'];
+            $detail->christ_sat_total = $post['StatReligionTeacherDetail']['christ_sat_total'];
+            $detail->christ_sat_women = $post['StatReligionTeacherDetail']['christ_sat_women'];
+            $detail->christ_cato_total = $post['StatReligionTeacherDetail']['christ_cato_total'];
+            $detail->christ_cato_women = $post['StatReligionTeacherDetail']['christ_cato_women'];
+            $detail->bahai_total = $post['StatReligionTeacherDetail']['bahai_total'];
+            $detail->bahai_women = $post['StatReligionTeacherDetail']['bahai_women'];
+            $detail->idslam_total = $post['StatReligionTeacherDetail']['idslam_total'];
+            $detail->idslam_women = $post['StatReligionTeacherDetail']['idslam_women'];
+            $detail->remark = $post['StatReligionTeacherDetail']['remark'];
 
             if(!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
@@ -176,12 +172,12 @@ class StatLocalAdminController extends Controller
         $models = Province::find()
             ->alias('p')
             ->select('p.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_local_admin l', 'l.id=d.stat_local_admin_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id')
+            ->join('join', 'stat_religion_teacher l', 'l.id=d.stat_religion_teacher_id and l.phiscal_year_id=:year', [':year'=> $year->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
-            'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
+            'content' => $this->renderPartial('table', ['models' => $models])
         ]);
     }
 
@@ -195,29 +191,29 @@ class StatLocalAdminController extends Controller
         $models = Province::find()
             ->alias('p')
             ->select('p.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_local_admin l', 'l.id=d.stat_local_admin_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id')
+            ->join('join', 'stat_religion_teacher l', 'l.id=d.stat_religion_teacher_id and l.phiscal_year_id=:year', [':year'=> $year->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Local Administration '. $year->year .'.xls',
-            'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
+            'content' => $this->renderPartial('table', ['models' => $models])
         ]);
     }
 
     /**
-     * Finds the StatLocalAdmin model based on its primary key value.
+     * Finds the StatReligionTeacher model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StatLocalAdmin the loaded model
+     * @return StatReligionTeacher the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StatLocalAdmin::findOne($id)) !== null) {
+        if (($model = StatReligionTeacher::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app','The requested page does not exist.'));
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
 }

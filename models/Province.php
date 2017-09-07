@@ -20,6 +20,8 @@ use Yii;
  * @property Approver[] $approvers
  * @property District[] $districts
  * @property Foundation[] $foundations
+ * @property StatLocalAdminDetail[] $statLocalAdminDetails
+ * @property StatReligionTeacherDetail[] $statReligionTeacherDetails
  */
 class Province extends \yii\db\ActiveRecord
 {
@@ -94,6 +96,22 @@ class Province extends \yii\db\ActiveRecord
     public function getFoundations()
     {
         return $this->hasMany(Foundation::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatLocalAdminDetails()
+    {
+        return $this->hasMany(StatLocalAdminDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatReligionTeacherDetails()
+    {
+        return $this->hasMany(StatReligionTeacherDetail::className(), ['province_id' => 'id']);
     }
 
     /**

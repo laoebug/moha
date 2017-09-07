@@ -23,7 +23,7 @@ use Yii;
  * @property integer $village_vice_total
  * @property integer $village_vice_women
  * @property integer $population_total
- * @property integer $population_woman
+ * @property integer $population_women
  * @property integer $village
  * @property integer $family_total
  * @property integer $family_poor
@@ -48,7 +48,7 @@ class StatLocalAdminDetail extends \yii\db\ActiveRecord
     {
         return [
             [['stat_local_admin_id', 'province_id'], 'required'],
-            [['stat_local_admin_id', 'province_id', 'province_head_total', 'province_head_women', 'province_vice_total', 'province_vice_women', 'district_head_total', 'district_head_women', 'district_vice_total', 'district_vice_women', 'village_head_total', 'village_head_women', 'village_vice_total', 'village_vice_women', 'population_total', 'population_woman', 'village', 'family_total', 'family_poor'], 'integer'],
+            [['stat_local_admin_id', 'province_id', 'province_head_total', 'province_head_women', 'province_vice_total', 'province_vice_women', 'district_head_total', 'district_head_women', 'district_vice_total', 'district_vice_women', 'village_head_total', 'village_head_women', 'village_vice_total', 'village_vice_women', 'population_total', 'population_women', 'village', 'family_total', 'family_poor'], 'integer'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_local_admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatLocalAdmin::className(), 'targetAttribute' => ['stat_local_admin_id' => 'id']],
         ];
@@ -76,7 +76,7 @@ class StatLocalAdminDetail extends \yii\db\ActiveRecord
             'village_vice_total' => Yii::t('app', 'Village Vice Total'),
             'village_vice_women' => Yii::t('app', 'Village Vice Women'),
             'population_total' => Yii::t('app', 'Population Total'),
-            'population_woman' => Yii::t('app', 'Population Woman'),
+            'population_women' => Yii::t('app', 'Population Women'),
             'village' => Yii::t('app', 'Village'),
             'family_total' => Yii::t('app', 'Family Total'),
             'family_poor' => Yii::t('app', 'Family Poor'),

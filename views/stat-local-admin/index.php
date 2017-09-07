@@ -59,14 +59,14 @@ $this->title = Yii::t('app', 'Stat Local Admins');
                                         ng-blur="model.province_vice_women=model.province_vice_total < model.province_vice_women? null:model.province_vice_women"
                                         min="0" max="{{model.province_vice_total}}" type="number" class="form-control" ng-model="model.province_vice_women"></td>
 
-                            <td class="text-center"><input min="0" max="1" type="number" class="form-control" ng-model="model.district_head_total"></td>
+                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.district_head_total"></td>
                             <td class="text-center"><input
                                         ng-blur="model.district_head_women=model.district_head_total < model.district_head_women? null:model.district_head_women"
                                         min="0" max="{{model.district_head_total}}" type="number" class="form-control" ng-model="model.district_head_women"></td>
-                            <td class="text-center"><input min="0" max="1" type="number" class="form-control" ng-model="model.district_vice_total"></td>
+                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.district_vice_total"></td>
                             <td class="text-center"><input
                                         ng-blur="model.district_vice_women=model.district_vice_total < model.district_vice_women? null:model.district_vice_women"
-                                        min="0" max="{{model.village_head_total}}" type="number" class="form-control" ng-model="model.district_vice_women"></td>
+                                        min="0" max="{{model.district_vice_total}}" type="number" class="form-control" ng-model="model.district_vice_women"></td>
                         </tr>
                     </table>
                 </div>
@@ -92,21 +92,23 @@ $this->title = Yii::t('app', 'Stat Local Admins');
                         </tr>
                         <tr>
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.village_head_total"></td>
-                            <td class="text-center"><input ng-blur="model.village_head_women=model.village_head_total<model.village_head_women?null:model.village_head_women"
+                            <td class="text-center"><input ng-blur="model.village_head_women = model.village_head_total < model.village_head_women ? null : model.village_head_women"
                                                            min="0" max="{{model.village_head_total}}" type="number" class="form-control" ng-model="model.village_head_women"></td>
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.village_vice_total"></td>
                             <td class="text-center"><input
-                                        ng-blur="model.village_vice_women=model.village_vice_total<model.village_vice_women?null:model.village_vice_women"
+                                        ng-blur="model.village_vice_women = model.village_vice_total < model.village_vice_women ? null : model.village_vice_women"
                                         min="0" max="{{model.village_vice_total}}" type="number" class="form-control" ng-model="model.village_vice_women"></td>
+
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.population_total"></td>
                             <td class="text-center"><input
-                                        ng-blur="model.population_women=model.population_total<model.population_women?null:model.population_women"
-                                        min="0" max="{{model.population_total}}" type="number" class="form-control" ng-model="model.population_women"></td>
-                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.village_total"></td>
-                            <td class="text-center"><input min="0" max="{{model.family_total}}" type="number" class="form-control" ng-model="model.family_total"></td>
+
+                                        type="number" class="form-control" ng-model="model.population_women"></td>
+
+                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.village"></td>
+                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.family_total"></td>
                             <td class="text-center"><input
-                                        ng-blur="model.family_poor=model.family_total<model.family_poor?null:model.family_poor"
-                                        min="0" max="{{model.family_poor}}" type="number" class="form-control" ng-model="model.family_women"></td>
+                                        ng-blur="model.family_poor = model.family_total < model.family_poor ? null : model.family_poor"
+                                        min="0" max="{{model.family_total}}" type="number" class="form-control" ng-model="model.family_poor"></td>
                         </tr>
                     </table>
                 </div>
@@ -162,46 +164,46 @@ $this->title = Yii::t('app', 'Stat Local Admins');
                 </tr>
                 <tr>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center">{{sum('province_head_total')}}</th>
-                    <th class="text-center">{{sum('province_head_women')}}</th>
-                    <th class="text-center">{{sum('province_vice_total')}}</th>
-                    <th class="text-center">{{sum('province_vice_women')}}</th>
-                    <th class="text-center">{{sum('district_head_total')}}</th>
-                    <th class="text-center">{{sum('district_head_women')}}</th>
-                    <th class="text-center">{{sum('district_vice_total')}}</th>
-                    <th class="text-center">{{sum('district_vice_women')}}</th>
-                    <th class="text-center">{{sum('village_head_total')}}</th>
-                    <th class="text-center">{{sum('village_head_women')}}</th>
-                    <th class="text-center">{{sum('village_vice_total')}}</th>
-                    <th class="text-center">{{sum('village_vice_women')}}</th>
-                    <th class="text-center">{{sum('population_total')}}</th>
-                    <th class="text-center">{{sum('population_women')}}</th>
-                    <th class="text-center">{{sum('village_total')}}</th>
-                    <th class="text-center">{{sum('family_total')}}</th>
-                    <th class="text-center">{{sum('family_poor')}}</th>
+                    <th class="text-center">{{sum('province_head_total') | number}}</th>
+                    <th class="text-center">{{sum('province_head_women') | number}}</th>
+                    <th class="text-center">{{sum('province_vice_total') | number}}</th>
+                    <th class="text-center">{{sum('province_vice_women') | number}}</th>
+                    <th class="text-center">{{sum('district_head_total') | number}}</th>
+                    <th class="text-center">{{sum('district_head_women') | number}}</th>
+                    <th class="text-center">{{sum('district_vice_total') | number}}</th>
+                    <th class="text-center">{{sum('district_vice_women') | number}}</th>
+                    <th class="text-center">{{sum('village_head_total') | number}}</th>
+                    <th class="text-center">{{sum('village_head_women') | number}}</th>
+                    <th class="text-center">{{sum('village_vice_total') | number}}</th>
+                    <th class="text-center">{{sum('village_vice_women') | number}}</th>
+                    <th class="text-center">{{sum('population_total') | number}}</th>
+                    <th class="text-center">{{sum('population_women') | number}}</th>
+                    <th class="text-center">{{sum('village') | number}}</th>
+                    <th class="text-center">{{sum('family_total') | number}}</th>
+                    <th class="text-center">{{sum('family_poor') | number}}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="m in models">
                     <td class="text-center">{{$index + 1}}</td>
                     <td>{{m.province_name}}</td>
-                    <td class="text-center">{{m.province_head_total}}</td>
-                    <td class="text-center">{{m.province_head_women}}</td>
-                    <td class="text-center">{{m.province_vice_total}}</td>
-                    <td class="text-center">{{m.province_vice_women}}</td>
-                    <td class="text-center">{{m.district_head_total}}</td>
-                    <td class="text-center">{{m.district_head_women}}</td>
-                    <td class="text-center">{{m.district_vice_total}}</td>
-                    <td class="text-center">{{m.district_vice_women}}</td>
-                    <td class="text-center">{{m.village_head_total}}</td>
-                    <td class="text-center">{{m.village_head_women}}</td>
-                    <td class="text-center">{{m.village_vice_total}}</td>
-                    <td class="text-center">{{m.village_vice_women}}</td>
-                    <td class="text-center">{{m.population_total}}</td>
-                    <td class="text-center">{{m.population_women}}</td>
-                    <td class="text-center">{{m.village_total}}</td>
-                    <td class="text-center">{{m.family_total}}</td>
-                    <td class="text-center">{{m.family_poor}}</td>
+                    <td class="text-center">{{m.province_head_total | number}}</td>
+                    <td class="text-center">{{m.province_head_women | number}}</td>
+                    <td class="text-center">{{m.province_vice_total | number}}</td>
+                    <td class="text-center">{{m.province_vice_women | number}}</td>
+                    <td class="text-center">{{m.district_head_total | number}}</td>
+                    <td class="text-center">{{m.district_head_women | number}}</td>
+                    <td class="text-center">{{m.district_vice_total | number}}</td>
+                    <td class="text-center">{{m.district_vice_women | number}}</td>
+                    <td class="text-center">{{m.village_head_total | number}}</td>
+                    <td class="text-center">{{m.village_head_women | number}}</td>
+                    <td class="text-center">{{m.village_vice_total | number}}</td>
+                    <td class="text-center">{{m.village_vice_women | number}}</td>
+                    <td class="text-center">{{m.population_total | number}}</td>
+                    <td class="text-center">{{m.population_women | number}}</td>
+                    <td class="text-center">{{m.village | number}}</td>
+                    <td class="text-center">{{m.family_total | number}}</td>
+                    <td class="text-center">{{m.family_poor | number}}</td>
                 </tr>
             </tbody>
         </table>
@@ -258,7 +260,7 @@ $this->title = Yii::t('app', 'Stat Local Admins');
               $scope.model.village_vice_women = parseInt(r.data.model.village_vice_women);
               $scope.model.population_total = parseInt(r.data.model.population_total);
               $scope.model.population_women = parseInt(r.data.model.population_women);
-              $scope.model.village_total = parseInt(r.data.model.village_total);
+              $scope.model.village = parseInt(r.data.model.village);
               $scope.model.family_total = parseInt(r.data.model.family_total);
               $scope.model.family_poor = parseInt(r.data.model.family_poor);
             } else {
@@ -277,7 +279,7 @@ $this->title = Yii::t('app', 'Stat Local Admins');
               $scope.model.village_vice_women = null;
               $scope.model.population_total = null;
               $scope.model.population_women = null;
-              $scope.model.village_total = null;
+              $scope.model.village = null;
               $scope.model.family_total = null;
               $scope.model.family_poor = null;
             }

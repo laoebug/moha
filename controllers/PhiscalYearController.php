@@ -67,6 +67,8 @@ class PhiscalYearController extends Controller
         $model = new PhiscalYear();
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->start_date = MyHelper::convertdatefordb($model->start_date);
+            $model->end_date = MyHelper::convertdatefordb($model->end_date);
             if($model->save())
                 Yii::$app->session->setFlash("success", Yii::t('app', 'Operation Success'));
             else
