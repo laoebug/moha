@@ -13,6 +13,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
         </div>
+        <div class="col-sm-8">
+            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
+                {{response.statusText}}
+            </div>
+        </div>
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
@@ -54,9 +59,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
-        <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
-            {{response.statusText}}
-        </div>
     </div>
     <div class="col-sm-12" style="margin-top: 2em" ng-bind-html="result"></div>
 </div>
@@ -69,12 +71,23 @@ $this->params['breadcrumbs'][] = $this->title;
           .then(function(r) {
             $scope.years = r.data.years;
             $scope.ministries = r.data.ministries;
+          }, function(r) {
+              $scope.response = r;
+              $timeout(function () {
+                  $scope.response = null;
+              }, 15000);
           });
 
         $scope.enquiry = function() {
           if($scope.year)
             $http.get(url + 'enquiry&year='+$scope.year.id).then(function(r) {
               $scope.result = $sce.trustAsHtml(r.data);
+            }, function(r) {
+                console.log(r);
+                $scope.response = r;
+                $timeout(function () {
+                    $scope.response = null;
+                }, 15000);
             });
         };
 
@@ -87,6 +100,11 @@ $this->params['breadcrumbs'][] = $this->title;
                       $scope.insitute = parseInt(r.status == 200? r.data.insitute:"");
                       $scope.center = parseInt(r.status == 200? r.data.center:"");
                       $scope.remark = parseInt(r.status == 200? r.data.remark:"");
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
                 });
           else {
             $scope.office = "";
@@ -113,9 +131,14 @@ $this->params['breadcrumbs'][] = $this->title;
                   if(r.data) $scope.result = $sce.trustAsHtml(r.data);
                   $timeout(function() {
                     $scope.response = null;
-                  }, 5000);
+                  }, 15000);
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
                 });
             }
-        }
+        };
     });
 </script>

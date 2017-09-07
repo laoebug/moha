@@ -19,6 +19,7 @@ use Yii;
  * @property string $remark
  * @property string $input_dt_stamp
  *
+ * @property Approver[] $approvers
  * @property Branch[] $branches
  * @property MinistryGroup $ministryGroup
  * @property PhiscalYear $phiscalYear
@@ -72,6 +73,14 @@ class Ministry extends \yii\db\ActiveRecord
             'remark' => Yii::t('app', 'Remark'),
             'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getApprovers()
+    {
+        return $this->hasMany(Approver::className(), ['ministry_id' => 'id']);
     }
 
     /**

@@ -78,4 +78,13 @@ class District extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'input_id']);
     }
+
+    /**
+     * @inheritdoc
+     * @return DistrictQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new DistrictQuery(get_called_class());
+    }
 }

@@ -17,6 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-sm-4">
             <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
         </div>
+        <div class="col-sm-8">
+            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">{{response.statusText}}</div>
+        </div>
     </div><div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
@@ -29,18 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="col-sm-3">
                         <label for=""><?= Yii::t('app', 'Start Date') ?></label>
-                        <input ng-change="changedate()" class="form-control" type="date" placeholder="Select Date" ng-model="selected.start_date">
-<!--                        <p class="input-group">-->
-<!--                            <input type="text" class="form-control"-->
-<!--                                   uib-datepicker-popup ng-model="dt"-->
-<!--                                   is-open="popup2.opened"-->
-<!--                                   datepicker-options="dateOptions"-->
-<!--                                   ng-required="true"-->
-<!--                                   close-text="Close" />-->
-<!--                            <span class="input-group-btn">-->
-<!--                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>-->
-<!--                              </span>-->
-<!--                        </p>-->
+                        <input class="form-control datepicker" data-ng-model="$parent.selected.start_date" type="text" data-ng-change="selectdate()">
+<!--                        <div class="dropdown">-->
+<!--                            <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target=".dropdown" href="#">-->
+<!--                              <div class="input-group">-->
+<!--                                <input type="text" name="date" class="form-control" data-ng-model="data.date">-->
+<!--                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+<!--                              </div>-->
+<!--                            </a>-->
+<!--                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
+<!--                              <datetimepicker data-ng-model="data.date" data-datetimepicker-config="{ dropdownSelector: '#dropdown' }">-->
+<!--                              </datetimepicker>-->
+<!--                            </ul>-->
+<!--                          </div>-->
                     </div>
                     <div class="col-sm-3">
                         <label for=""><?= Yii::t('app', 'Service Unit Name') ?></label>
@@ -58,7 +62,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
-        <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">{{response.statusText}}</div>
     </div>
     <div class="col-sm-12" style="margin-top: 2em">
         <div class="card" ng-show="model">
@@ -84,9 +87,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tr ng-repeat="d in model.statSingleGatewayImplementationDetails | orderBy:d.ministry.position:false" style="cursor:pointer;">
                         <td>{{$index + 1}}</td>
                         <td>{{d.ministry.name}}</td>
-                        <td>{{d.start_date}}</td>
-                        <td>{{d.name}}</td>
-                        <td class="text-center">{{selected.remark}}</td>
+                        <td class="text-center">{{d.start_date}}</td>
+                        <td class="text-center">{{d.name}}</td>
+                        <td class="text-center">{{d.remark}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -95,17 +98,22 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <script type="text/javascript" src="js/angular.js"></script>
-<!--<script type="text/javascript" src="js/angular-animate.js"></script>-->
-<!--<script type="text/javascript" src="js/angular-sanitize.js"></script>-->
-<!--<script type="text/javascript" src="js/ui-bootstrap-tpls-2.5.0.js"></script>-->
+<script type="text/javascript" src="js/moment.js"></script>
+<script type="text/javascript" src="js/datetimepicker.js"></script>
+<script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
-    var app = angular.module('mohaApp', []);
+    var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
     var url = 'index.php?r=stat-single-gateway-implementation/';
     app.controller('singleGatewayController', function($scope, $http, $sce, $timeout) {
         $http.get(url+ 'get')
             .then(function(r) {
                 $scope.years = r.data.years;
                 $scope.ministries = r.data.ministries;
+            }, function(r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
             });
 
         $scope.enquiry = function() {
@@ -113,23 +121,40 @@ $this->params['breadcrumbs'][] = $this->title;
             $http.get(url+'enquiry&year='+$scope.year.id)
                 .then(function(r) {
                     $scope.model = r.data.model;
+                }, function(r) {
+                  $scope.response = r;
+                  $timeout(function () {
+                    $scope.response = null;
+                  }, 15000);
                 });
         };
 
       $scope.inquiry = function() {
         if($scope.selected.ministry)
-        $http.get(url+'inquiry&year='+$scope.year.id+'&ministry='+$scope.select.ministry.id)
-          .then(function(r) {
-//            $scope.selected.start_date = r.data.select.start_date;
-            if(r.data.selected) {
-              $scope.selected.name = r.data.model.name;
-              $scope.selected.remark = r.data.model.remark;
-            } else {
-              $scope.selected.name = null;
-              $scope.selected.remark = null;
-              $scope.selected.start_date = null;
-            }
-          });
+            $http.get(url + 'inquiry&year=' + $scope.year.id + '&ministry=' + $scope.selected.ministry.id)
+                .then(function (r) {
+                    if(r.data.model)
+                        if(r.data.model.start_date)
+                            $(".datepicker").val(r.data.model.start_date);
+                        else
+                            $(".datepicker").val("");
+                    else
+                        $(".datepicker").val("");
+
+                    if (r.data.model) {
+                        $scope.selected.name = r.data.model.name;
+                        $scope.selected.remark = r.data.model.remark;
+                    } else {
+                        $scope.selected.name = null;
+                        $scope.selected.remark = null;
+                        $scope.selected.start_date = null;
+                    }
+                }, function(r) {
+                  $scope.response = r;
+                  $timeout(function () {
+                    $scope.response = null;
+                  }, 15000);
+                });
       };
 
         $scope.select = function(m) {
@@ -137,18 +162,23 @@ $this->params['breadcrumbs'][] = $this->title;
         };
 
         $scope.save = function() {
-            if($scope.selected)
-                $http.post(url + 'save&year='+$scope.year.id, {
-                    Model: $scope.selected,
-                    '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function(r) {
-                    $scope.response = r;
-                    $scope.selected = null;
-                    $scope.enquiry();
-                    $timeout(function() {
-                        $scope.response = null;
-                    }, 15000);
-                });
+            $scope.selected.start_date = $(".datepicker").val();
+            $http.post(url + 'save&year=' + $scope.year.id, {
+                Model: $scope.selected,
+                '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+                $scope.response = r;
+                $scope.selected = null;
+                $scope.enquiry();
+                $timeout(function () {
+                    $scope.response = null;
+                }, 15000);
+            }, function(r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
         };
     });
 </script>

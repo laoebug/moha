@@ -14,6 +14,7 @@
     <?= \yii\helpers\Html::csrfMetaTags() ?>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+    <link rel="stylesheet" href="css/datetimepicker.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <title><?= \yii\helpers\Html::encode($this->title) ?></title>
@@ -30,7 +31,8 @@
             <div class="navbar-custom-menu">
                 <ul class="top-nav">
                     <!--Notification Menu-->
-                    <li class="dropdown notification-menu"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell-o fa-lg"></i></a>
+                    <li class="dropdown notification-menu">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell-o fa-lg"></i></a>
                         <ul class="dropdown-menu">
                             <li class="not-head">You have 4 new notifications.</li>
                             <li><a class="media" href="javascript:;"><span class="media-left media-icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-primary"></i><i class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></span>
@@ -69,19 +71,28 @@
             <!-- Sidebar Menu-->
             <ul class="sidebar-menu">
                 <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span><?= Yii::t('app','Dashboard') ?></span></a></li>
-                <li class="treeview"><a href="#"><i class="fa fa-laptop"></i><span><?= Yii::t('app','Statistics') ?></span><i class="fa fa-angle-right"></i></a>
+                <li class="treeview"><a href="#"><i class="fa fa-bar-chart"></i><span><?= Yii::t('app','Statistics') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="index.php?r=ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry') ?></a></li>
                         <li><a href="index.php?r=stat-goverment-unit"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Goverment Units') ?></a></li>
-                        <li><a href="index.php?r=stat-single-gateway-implementation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Stat Single Gateway Implementations') ?></a></li>
+                        <li><a href="index.php?r=stat-single-gateway-implementation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Single Gateway Implementations') ?></a></li>
+                        <li><a href="index.php?r=stat-legal"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legals') ?></a></li>
+                        <li><a href="index.php?r=stat-association-foundation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Association Foundation') ?></a></li>
+                        <li><a href="index.php?r=stat-local-admin"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Stat Local Administration') ?></a></li>
+                        <li><a href="index.php?r=stat-religion-teacher"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Religion Teacher') ?></a></li>
                     </ul>
                 </li>
-                <li class="treeview"><a href="#"><i class="fa fa-laptop"></i><span><?= Yii::t('app','Administration') ?></span><i class="fa fa-angle-right"></i></a>
+                <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="index.php?r=phiscal-year"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Phiscal Year') ?></a></li>
-                        <li><a href="index.php?r=message"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Translation') ?></a></li>
                         <li><a href="index.php?r=branch-group"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry Group') ?></a></li>
-                        <li><a href="index.php?r=govermentlevel"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Goverment Level') ?></a></li>
+                        <li><a href="index.php?r=legal-type"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legal Type') ?></a></li>
+                        <li><a href="index.php?r=legal"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legal') ?></a></li>
+
+                        <li><a href="index.php?r=approver-level"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Approver Level') ?></a></li>
+                        <li><a href="index.php?r=approver"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Approver') ?></a></li>
+
+                        <li><a href="index.php?r=message"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Translation') ?></a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-share"></i><span>Multilevel Menu</span><i class="fa fa-angle-right"></i></a>
@@ -127,11 +138,76 @@
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/plugins/pace.min.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="js/plugins/sweetalert.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript" src="js/plugins/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="js/plugins/chart.js"></script>
 <script type="text/javascript">
+  var data = {
+    labels: ["January", "February", "March", "April", "May"],
+    datasets: [
+      {
+        label: "My First dataset",
+        fillColor: "rgba(220,220,220,0.2)",
+        strokeColor: "rgba(220,220,220,1)",
+        pointColor: "rgba(220,220,220,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(220,220,220,1)",
+        data: [65, 59, 80, 81, 56]
+      },
+      {
+        label: "My Second dataset",
+        fillColor: "rgba(151,187,205,0.2)",
+        strokeColor: "rgba(151,187,205,1)",
+        pointColor: "rgba(151,187,205,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(151,187,205,1)",
+        data: [28, 48, 40, 19, 86]
+      }
+    ]
+  };
+  var pdata = [
+    {
+      value: 300,
+      color:"#F7464A",
+      highlight: "#FF5A5E",
+      label: "Red"
+    },
+    {
+      value: 50,
+      color: "#46BFBD",
+      highlight: "#5AD3D1",
+      label: "Green"
+    },
+    {
+      value: 100,
+      color: "#FDB45C",
+      highlight: "#FFC870",
+      label: "Yellow"
+    }
+  ]
+
+  var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+  var lineChart = new Chart(ctxl).Line(data);
+
+  var ctxb = $("#barChartDemo").get(0).getContext("2d");
+  var barChart = new Chart(ctxb).Bar(data);
+
+  var ctxr = $("#radarChartDemo").get(0).getContext("2d");
+  var barChart = new Chart(ctxr).Radar(data);
+
+  var ctxpo = $("#polarChartDemo").get(0).getContext("2d");
+  var barChart = new Chart(ctxpo).PolarArea(pdata);
+
+  var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+  var barChart = new Chart(ctxp).Pie(pdata);
+
+  var ctxd = $("#doughnutChartDemo").get(0).getContext("2d");
+  var barChart = new Chart(ctxd).Doughnut(pdata);
+
     $('.datepicker').datepicker({
         format: "dd-mm-yyyy",
         autoclose: true,

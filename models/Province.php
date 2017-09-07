@@ -14,11 +14,14 @@ use Yii;
  * @property integer $input_id
  * @property string $input_dt_stamp
  * @property integer $deleted
+ * @property integer $position
  *
  * @property Accociation[] $accociations
+ * @property Approver[] $approvers
  * @property District[] $districts
  * @property Foundation[] $foundations
- * @property User $input
+ * @property StatLocalAdminDetail[] $statLocalAdminDetails
+ * @property StatReligionTeacherDetail[] $statReligionTeacherDetails
  */
 class Province extends \yii\db\ActiveRecord
 {
@@ -37,13 +40,12 @@ class Province extends \yii\db\ActiveRecord
     {
         return [
             [['province_code', 'province_name'], 'required'],
-            [['input_id', 'deleted'], 'integer'],
+            [['input_id', 'deleted', 'position'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['province_code'], 'string', 'max' => 20],
             [['province_name'], 'string', 'max' => 255],
             [['record_status'], 'string', 'max' => 1],
             [['province_name'], 'unique'],
-            [['input_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['input_id' => 'id']],
         ];
     }
 
@@ -60,6 +62,7 @@ class Province extends \yii\db\ActiveRecord
             'input_id' => Yii::t('app', 'Input ID'),
             'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 
@@ -69,6 +72,14 @@ class Province extends \yii\db\ActiveRecord
     public function getAccociations()
     {
         return $this->hasMany(Accociation::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getApprovers()
+    {
+        return $this->hasMany(Approver::className(), ['province_id' => 'id']);
     }
 
     /**
@@ -90,8 +101,25 @@ class Province extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getInput()
+    public function getStatLocalAdminDetails()
     {
-        return $this->hasOne(User::className(), ['id' => 'input_id']);
+        return $this->hasMany(StatLocalAdminDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatReligionTeacherDetails()
+    {
+        return $this->hasMany(StatReligionTeacherDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return ProvinceQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ProvinceQuery(get_called_class());
     }
 }

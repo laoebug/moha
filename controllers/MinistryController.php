@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use app\components\MyHelper;
 use app\models\PhiscalYear;
+use Codeception\Util\HttpCode;
 use Yii;
 use app\models\Ministry;
 use app\models\MinistrySearch;
 use yii\web\Controller;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -55,21 +58,33 @@ class MinistryController extends Controller
         $post = Yii::$app->request->post();
         if(isset($post)) {
             $year = PhiscalYear::findOne($year);
-            if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
-            if($year->status != 'O') throw new MethodNotAllowedHttpException(Yii::t('app', 'The Year is not allowed to input'));
+            if(!isset($year)) {
+                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+                return;
+            }
+            if($year->status != 'O') {
+                MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
+                return;
+            }
 
             if($post['create'] == 1) {
                 $model = new Ministry();
                 $model->deleted = 0;
             } else {
                 $model = Ministry::findOne($post['Ministry']['id']);
-                if(!isset($model)) throw new NotFoundHttpException(Yii::t('app', 'The Ministry is Not Found'));
+                if(!isset($model)) {
+                    MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'The Ministry is Not Found'));
+                    return;
+                }
             }
             $model->load($post);
             $model->user_id = Yii::$app->user->id;
             $model->phiscal_year_id = $year->id;
             $model->last_update = date('Y-m-d H:i:s');
-            if(!$model->save()) throw new ServerErrorHttpException(json_encode($model->errors));
+            if(!$model->save()) {
+                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
+                return;
+            }
 
         }
     }
@@ -82,14 +97,20 @@ class MinistryController extends Controller
                 $model->deleted = 1;
                 $model->last_update = date('Y-m-d H:i:s');
                 $model->user_id = Yii::$app->user->id;
-                if(!$model->save()) throw new Exception(json_encode($model->errors));
+                if(!$model->save()) {
+                    MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
+                    return;
+                }
             }
         }
     }
 
     public function actionPrint($year) {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
 
         $ministries = Ministry::find()->where(['deleted' => 0, 'phiscal_year_id' => $year])->orderBy('position')->asArray()->all();
         return $this->renderPartial('print', [
@@ -99,7 +120,10 @@ class MinistryController extends Controller
 
     public function actionDownload($year) {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) throw new NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        };
 
         $ministries = Ministry::find()->where(['deleted' => 0, 'phiscal_year_id' => $year])->orderBy('position')->asArray()->all();
         return $this->renderPartial('excel', [
@@ -119,7 +143,8 @@ class MinistryController extends Controller
         if (($model = Ministry::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'The requested page does not exist.'));
+            return;
         }
     }
 }

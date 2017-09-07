@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\components\MyHelper;
 use app\models\Ministry;
 use app\models\MinistryGroup;
 use app\models\PhiscalYear;
 use app\models\StatGovermentUnitDetail;
+use Codeception\Util\HttpCode;
 use function foo\func;
 use Yii;
 use app\models\StatGovermentUnit;
@@ -67,6 +69,12 @@ class StatGovermentUnitController extends Controller
     }
 
     private function enquiry($year, $showstatus = true) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
+
         $ministries = Ministry::find()
             ->where(['deleted' => 0])->orderBy('position')->all();
 
@@ -79,14 +87,19 @@ class StatGovermentUnitController extends Controller
                         }]);
                 }
             ])
-            ->where(['phiscal_year_id' => $year])
+            ->where(['phiscal_year_id' => $year->id])
             ->one();
+
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
 
         return $this->renderPartial('table', [
             'showstatus' => $showstatus,
             'ministries' => $ministries,
             'model' => $model,
-            'year' => $model->phiscalYear,
+            'year' => $year,
         ]);
     }
 
@@ -105,49 +118,62 @@ class StatGovermentUnitController extends Controller
 
     public function actionSave() {
         $post = Yii::$app->request->post();
-        if(isset($post)) {
-            $year = PhiscalYear::findOne($post['year']);
-            if(!isset($year)) throw new BadRequestHttpException(Yii::t('app', 'Incorrect Phiscal Year'));
-            if($year->status != "O") throw new MethodNotAllowedHttpException(Yii::t('app', 'The Year is not allowed to input'));
+        if(!isset($post)) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+            return;
+        }
 
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $model = StatGovermentUnit::find()->where(['phiscal_year_id' => $year->id])->one();
-                if(!isset($model)) {
-                    $model = new StatGovermentUnit();
-                    $model->phiscal_year_id = $year->id;
-                }
-                $model->user_id = Yii::$app->user->id;
-                $model->saved = 1;
-                $model->last_update = date('Y-m-d H:i:s');
-                if(!$model->save()) throw new Exception(json_encode($model->errors));
+        $year = PhiscalYear::findOne($post['year']);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
 
-                $detail = StatGovermentUnitDetail::find()
-                    ->where(['stat_goverment_unit_id' => $model->id, 'ministry_id' => $post['ministry']])->one();
-                if(!isset($detail)) {
-                    $detail = new StatGovermentUnitDetail();
-                    $detail->ministry_id = $post['ministry'];
-                    $detail->stat_goverment_unit_id = $model->id;
-                }
-                $detail->office = $post['office'];
-                $detail->department = $post['department'];
-                $detail->insitute = $post['insitute'];
-                $detail->center = $post['center'];
-                $detail->remark = $post['remark'];
-                if(!$detail->save()) throw new Exception(json_encode($detail->errors));
+        if($year->status != "O")  {
+            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
+            return;
+        }
 
-                $transaction->commit();
-                return $this->enquiry($year);
-            } catch (Exception $exception) {
-                $transaction->rollBack();
-                throw new ServerErrorHttpException(Yii::t($exception->getMessage()));
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $model = StatGovermentUnit::find()->where(['phiscal_year_id' => $year->id])->one();
+            if(!isset($model)) {
+                $model = new StatGovermentUnit();
+                $model->phiscal_year_id = $year->id;
             }
+            $model->user_id = Yii::$app->user->id;
+            $model->saved = 1;
+            $model->last_update = date('Y-m-d H:i:s');
+            if(!$model->save()) throw new Exception(json_encode($model->errors));
+
+            $detail = StatGovermentUnitDetail::find()
+                ->where(['stat_goverment_unit_id' => $model->id, 'ministry_id' => $post['ministry']])->one();
+            if(!isset($detail)) {
+                $detail = new StatGovermentUnitDetail();
+                $detail->ministry_id = $post['ministry'];
+                $detail->stat_goverment_unit_id = $model->id;
+            }
+            $detail->office = $post['office'];
+            $detail->department = $post['department'];
+            $detail->insitute = $post['insitute'];
+            $detail->center = $post['center'];
+            $detail->remark = $post['remark'];
+            if(!$detail->save()) throw new Exception(json_encode($detail->errors));
+
+            $transaction->commit();
+            return $this->enquiry($year);
+        } catch (Exception $exception) {
+            $transaction->rollBack();
+            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
         }
     }
 
     public function actionPrint($year) {
         $year =PhiscalYear::findOne($year);
-        if(!isset($year)) throw new  NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
 
         return $this->renderPartial('print', [
             'content' => $this->enquiry($year->id, false)
@@ -156,7 +182,10 @@ class StatGovermentUnitController extends Controller
 
     public function actionDownload($year) {
         $year =PhiscalYear::findOne($year);
-        if(!isset($year)) throw new  NotFoundHttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
 
         return $this->renderPartial('excel', [
             'file' => 'stat_goverment_unit_'.$year->year.'.xls',
@@ -176,7 +205,7 @@ class StatGovermentUnitController extends Controller
         if (($model = StatGovermentUnit::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app','The requested page does not exist.'));
         }
     }
 }

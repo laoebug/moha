@@ -36,4 +36,9 @@ class MyHelper
         else
             \Yii::$app->session->setFlash('danger', json_encode($model->errors));
     }
+
+    static function response($code, $message) {
+        \Yii::$app->response->statusCode = $code;
+        \Yii::$app->response->statusText = $message;
+    }
 }
