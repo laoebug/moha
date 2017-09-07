@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Approver;
+use app\models\StatPopulationMovement;
 
 /**
- * ApproverSearch represents the model behind the search form about `app\models\Approver`.
+ * StatPopulationMovementSearch represents the model behind the search form about `app\models\StatPopulationMovement`.
  */
-class ApproverSearch extends Approver
+class StatPopulationMovementSearch extends StatPopulationMovement
 {
     /**
      * @inheritdoc
@@ -18,7 +18,8 @@ class ApproverSearch extends Approver
     public function rules()
     {
         return [
-            [['id', 'deleted', 'ministry_id', 'province_id', 'approver_level_id'], 'integer'],
+            [['id', 'saved', 'phiscal_year_id', 'user_id'], 'integer'],
+            [['last_update'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class ApproverSearch extends Approver
      */
     public function search($params)
     {
-        $query = Approver::find();
+        $query = StatPopulationMovement::find();
 
         // add conditions that should always apply here
 
@@ -59,10 +60,10 @@ class ApproverSearch extends Approver
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'deleted' => $this->deleted,
-            'ministry_id' => $this->ministry_id,
-            'province_id' => $this->province_id,
-            'approver_level_id' => $this->approver_level_id,
+            'last_update' => $this->last_update,
+            'saved' => $this->saved,
+            'phiscal_year_id' => $this->phiscal_year_id,
+            'user_id' => $this->user_id,
         ]);
 
         return $dataProvider;

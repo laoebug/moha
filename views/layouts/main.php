@@ -78,8 +78,10 @@
                         <li><a href="index.php?r=stat-single-gateway-implementation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Single Gateway Implementations') ?></a></li>
                         <li><a href="index.php?r=stat-legal"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legals') ?></a></li>
                         <li><a href="index.php?r=stat-association-foundation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Association Foundation') ?></a></li>
-                        <li><a href="index.php?r=stat-local-admin"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Stat Local Administration') ?></a></li>
+                        <li><a href="index.php?r=stat-local-admin"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Local Administration') ?></a></li>
                         <li><a href="index.php?r=stat-religion-teacher"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Religion Teacher') ?></a></li>
+                        <li><a href="index.php?r=stat-population-movement"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Population Movement') ?></a></li>
+                        <li><a href="index.php?r=stat-population-movement-chart"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Population Movement') ?> <i class="fa fa-bar-chart"></i> </a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>

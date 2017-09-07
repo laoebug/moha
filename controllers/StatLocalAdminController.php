@@ -10,8 +10,6 @@ use app\models\StatLocalAdminDetail;
 use Codeception\Util\HttpCode;
 use Yii;
 use app\models\StatLocalAdmin;
-use app\models\StatLocalAdminSearch;
-use yii\db\ActiveQuery;
 use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

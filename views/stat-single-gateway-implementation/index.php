@@ -33,18 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-sm-3">
                         <label for=""><?= Yii::t('app', 'Start Date') ?></label>
                         <input class="form-control datepicker" data-ng-model="$parent.selected.start_date" type="text" data-ng-change="selectdate()">
-<!--                        <div class="dropdown">-->
-<!--                            <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target=".dropdown" href="#">-->
-<!--                              <div class="input-group">-->
-<!--                                <input type="text" name="date" class="form-control" data-ng-model="data.date">-->
-<!--                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
-<!--                              </div>-->
-<!--                            </a>-->
-<!--                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
-<!--                              <datetimepicker data-ng-model="data.date" data-datetimepicker-config="{ dropdownSelector: '#dropdown' }">-->
-<!--                              </datetimepicker>-->
-<!--                            </ul>-->
-<!--                          </div>-->
                     </div>
                     <div class="col-sm-3">
                         <label for=""><?= Yii::t('app', 'Service Unit Name') ?></label>
