@@ -65,8 +65,11 @@ class EthnicController extends Controller
     {
         $model = new Ethnic();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            if(!isset($model->position) || $model->position == "")
+                $model->position = 0;
+            if($model->save())
+                return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -84,8 +87,11 @@ class EthnicController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            if(!isset($model->position) || $model->position == "")
+                $model->position = 0;
+            if($model->save())
+                return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
