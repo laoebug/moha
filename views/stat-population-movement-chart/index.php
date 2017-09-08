@@ -72,34 +72,22 @@ $this->params['breadcrumbs'][] = $this->title;
         </table>
     </div>
 
-    <div class="col-sm-10 col-sm-offset-1 card">
-        <canvas id="stat" class="chart chart-bar"
-                chart-data="stat.data" chart-labels="stat.labels" chart-series="stat.series"
-        </canvas
+    <div class="col-sm-12">
+        <div class="card">
+            <h3><?= Yii::t('app', 'The Chart of Population Movement Yearly') ?></h3>
+            <canvas id="stat" class="chart chart-bar" chart-data="stat.data" chart-labels="stat.labels" chart-series="stat.series" chart-colors="stat.colors"
+            </canvas
+        </div>
     </div>
 </div>
 <script type="text/javascript" src="js/Chart.js"></script>
+<script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/angular-chart.js"></script>
 <script type="text/javascript">
-  (function (ChartJsProvider) {
-    ChartJsProvider.setOptions({ colors : [ '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
-  });
-
-  var app = angular.module('mohaApp', ['chart.js']);
+    var app = angular.module('mohaApp', ['chart.js']);
   app.controller('statPopulationMovementController', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-population-movement-chart/';
-    $scope.move = [];
-    $scope.stat = [];
-//    $http.get($scope.url+ 'get')
-//      .then(function(r) {
-//        $scope.years = r.data.years;
-//      }, function(r) {
-//        $scope.response = r;
-//        $timeout(function () {
-//          $scope.response = null;
-//        }, 15000);
-//      });
 
     $scope.enquiry = function() {
       $scope.model=null;
@@ -107,6 +95,8 @@ $this->params['breadcrumbs'][] = $this->title;
           .then(function(r) {
             $scope.models = r.data.models;
             $scope.stat = r.data.stat;
+              $scope.stat.labels = ["ັຫກຫັກ", "ກເະິຮະີິຮ"];
+              $scope.stat.colors = ['#FF0000', '#00FF00'];
           }, function(r) {
             $scope.response = r;
             $timeout(function () {
@@ -114,8 +104,6 @@ $this->params['breadcrumbs'][] = $this->title;
             }, 15000);
           });
     };
-
-
 
     $scope.enquiry();
   });

@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Province;
+use app\models\Ethnic;
 
 /**
- * ProvinceSearch represents the model behind the search form about `app\models\Province`.
+ * EthnicSearch represents the model behind the search form about `app\models\Ethnic`.
  */
-class ProvinceSearch extends Province
+class EthnicSearch extends Ethnic
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class ProvinceSearch extends Province
     public function rules()
     {
         return [
-            [['id', 'input_id', 'deleted', 'position'], 'integer'],
-            [['province_code', 'province_name', 'record_status', 'input_dt_stamp'], 'safe'],
+            [['id', 'position', 'deleted'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ProvinceSearch extends Province
      */
     public function search($params)
     {
-        $query = Province::find();
+        $query = Ethnic::find();
 
         // add conditions that should always apply here
 
@@ -60,15 +60,11 @@ class ProvinceSearch extends Province
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'input_id' => $this->input_id,
-            'input_dt_stamp' => $this->input_dt_stamp,
-            'deleted' => $this->deleted,
             'position' => $this->position,
+            'deleted' => $this->deleted,
         ]);
 
-        $query->andFilterWhere(['like', 'province_code', $this->province_code])
-            ->andFilterWhere(['like', 'province_name', $this->province_name])
-            ->andFilterWhere(['like', 'record_status', $this->record_status]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

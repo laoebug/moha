@@ -2,18 +2,17 @@
 
 namespace app\controllers;
 
-use app\components\MyHelper;
 use Yii;
-use app\models\PhiscalYear;
-use app\models\PhiscalYearSearch;
+use app\models\Ethnic;
+use app\models\EthnicSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PhiscalYearController implements the CRUD actions for PhiscalYear model.
+ * EthnicController implements the CRUD actions for Ethnic model.
  */
-class PhiscalYearController extends Controller
+class EthnicController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +30,12 @@ class PhiscalYearController extends Controller
     }
 
     /**
-     * Lists all PhiscalYear models.
+     * Lists all Ethnic models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PhiscalYearSearch();
+        $searchModel = new EthnicSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class PhiscalYearController extends Controller
     }
 
     /**
-     * Displays a single PhiscalYear model.
+     * Displays a single Ethnic model.
      * @param integer $id
      * @return mixed
      */
@@ -58,23 +57,16 @@ class PhiscalYearController extends Controller
     }
 
     /**
-     * Creates a new PhiscalYear model.
+     * Creates a new Ethnic model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PhiscalYear();
+        $model = new Ethnic();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->start_date = MyHelper::convertdatefordb($model->start_date);
-            $model->end_date = MyHelper::convertdatefordb($model->end_date);
-            if($model->save())
-                Yii::$app->session->setFlash("success", Yii::t('app', 'Operation Success'));
-            else
-                Yii::$app->session->setFlash("danger", json_encode($model->errors));
-
-            return $this->redirect(["index"]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -83,7 +75,7 @@ class PhiscalYearController extends Controller
     }
 
     /**
-     * Updates an existing PhiscalYear model.
+     * Updates an existing Ethnic model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -91,28 +83,18 @@ class PhiscalYearController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $post = Yii::$app->request->post();
-        if ($model->load($post)) {
-            $model->start_date = MyHelper::convertdatefordb($model->start_date);
-            $model->end_date = MyHelper::convertdatefordb($model->end_date);
 
-            if($model->save())
-                Yii::$app->session->setFlash("success", Yii::t('app', 'Operation Success'));
-            else
-                Yii::$app->session->setFlash("danger", json_encode($model->errors));
-
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        $model->start_date = MyHelper::convertdatefordisplay($model->start_date);
-        $model->end_date = MyHelper::convertdatefordisplay($model->end_date);
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
-     * Deletes an existing PhiscalYear model.
+     * Deletes an existing Ethnic model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -125,15 +107,15 @@ class PhiscalYearController extends Controller
     }
 
     /**
-     * Finds the PhiscalYear model based on its primary key value.
+     * Finds the Ethnic model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return PhiscalYear the loaded model
+     * @return Ethnic the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PhiscalYear::findOne($id)) !== null) {
+        if (($model = Ethnic::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

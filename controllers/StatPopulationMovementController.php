@@ -148,7 +148,7 @@ class StatPopulationMovementController extends Controller
                 $detail->stat_population_movement_id = $model->id;
             }
             foreach ($this->COLUMNS as $col)
-                $detail->$col = $post['StatPopulationMovementDetail'][$col];
+                $detail->$col = isset($post['StatPopulationMovementDetail'][$col])?$post['StatPopulationMovementDetail'][$col]:null;
 
             if(!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
@@ -198,7 +198,7 @@ class StatPopulationMovementController extends Controller
             ->select('p.*, d.*')
             ->join('left join', 'stat_population_movement_detail d', 'd.province_id = p.id')
             ->join('join', 'stat_population_movement l', 'l.id=d.stat_population_movement_id and l.phiscal_year_id=:year', [':year'=> $year->id])
-            ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
+            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
     }
 
     /**

@@ -92,11 +92,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tr>
                         <tr>
                             <td class="text-center" style="width: 10%"><input ng-model="model.movein_total" min="0" type="number" class="form-control" ></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.movein_women" max="{{model.population_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 10%"><input ng-model="model.movein_women" max="{{model.movein_total}}" type="number" class="form-control"></td>
                             <td class="text-center" style="width: 10%"><input ng-model="model.moveout_total" min="0" type="number" class="form-control" ></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.moveout_women" max="{{model.born_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 10%"><input ng-model="model.moveout_women" max="{{model.moveout_total}}" type="number" class="form-control"></td>
                             <td class="text-center" style="width: 10%"><input ng-model="model.real_total" min="0" type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.real_women" max="{{model.die_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 10%"><input ng-model="model.real_women" max="{{model.real_total}}" type="number" class="form-control"></td>
                         </tr>
                     </table>
                 </div>
@@ -247,7 +247,6 @@ $this->params['breadcrumbs'][] = $this->title;
             $scope.response = null;
           }, 15000);
         }, function(r) {
-          console.log(r);
           $scope.response = r;
           $timeout(function () {
             $scope.response = null;

@@ -124,3 +124,18 @@ $(function () {
 	// 	size: "3px"
 	// });
 });
+
+
+function formatNumber(num, dec) {
+    if (dec === undefined) dec = 2;
+    var r = "" + Math.abs(parseFloat(num).toFixed(dec));
+    var decimals = "";
+    if (r.lastIndexOf(".") != -1) {
+        decimals = "." + r.substring(r.lastIndexOf(".") + 1);
+        decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
+        r = r.substring(0, r.lastIndexOf("."));
+    }
+    for (var i = r.length - 3; i > 0; i -= 3)
+        r = r.substr(0, i) + "," + r.substr(i);
+    return (num < 0 ? "-" : "") + r + decimals;
+}
