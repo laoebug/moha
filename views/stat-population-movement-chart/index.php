@@ -75,28 +75,29 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <div class="card">
             <h3><?= Yii::t('app', 'The Chart of Population Movement Yearly') ?></h3>
-            <canvas id="stat" class="chart chart-bar" chart-data="stat.data" chart-labels="stat.labels" chart-series="stat.series" chart-colors="stat.colors"
+            <canvas id="stat" class="chart chart-bar"
+                    chart-data="stat.data"
+                    chart-labels="stat.labels"
+                    chart-series="stat.series"
+                    chart-colors="stat.colors"
             </canvas
         </div>
     </div>
 </div>
 <script type="text/javascript" src="js/Chart.js"></script>
-<script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/angular-chart.js"></script>
 <script type="text/javascript">
     var app = angular.module('mohaApp', ['chart.js']);
   app.controller('statPopulationMovementController', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-population-movement-chart/';
-
     $scope.enquiry = function() {
       $scope.model=null;
         $http.get($scope.url + 'inquiry')
           .then(function(r) {
             $scope.models = r.data.models;
             $scope.stat = r.data.stat;
-              $scope.stat.labels = ["ັຫກຫັກ", "ກເະິຮະີິຮ"];
-              $scope.stat.colors = ['#FF0000', '#00FF00'];
+            $scope.stat.colors = ['#FF0000', '#0000FF'];
           }, function(r) {
             $scope.response = r;
             $timeout(function () {

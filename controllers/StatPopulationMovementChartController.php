@@ -81,7 +81,6 @@ class StatPopulationMovementChartController extends Controller
         }
 
         return json_encode([
-//            'labels' =>
             'models' => $this->getModels($year)
         ]);
     }

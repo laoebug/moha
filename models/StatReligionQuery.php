@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[StatEthnic]].
+ * This is the ActiveQuery class for [[StatReligion]].
  *
- * @see StatEthnic
+ * @see StatReligion
  */
-class StatEthnicQuery extends \yii\db\ActiveQuery
+class StatReligionQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class StatEthnicQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return StatEthnic[]|array
+     * @return StatReligion[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class StatEthnicQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return StatEthnic|array|null
+     * @return StatReligion|array|null
      */
     public function one($db = null)
     {

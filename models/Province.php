@@ -20,8 +20,10 @@ use Yii;
  * @property Approver[] $approvers
  * @property District[] $districts
  * @property Foundation[] $foundations
+ * @property StatEthnicDetail[] $statEthnicDetails
  * @property StatLocalAdminDetail[] $statLocalAdminDetails
  * @property StatPopulationMovementDetail[] $statPopulationMovementDetails
+ * @property StatReligionDetail[] $statReligionDetails
  * @property StatReligionTeacherDetail[] $statReligionTeacherDetails
  */
 class Province extends \yii\db\ActiveRecord
@@ -102,6 +104,14 @@ class Province extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatEthnicDetails()
+    {
+        return $this->hasMany(StatEthnicDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatLocalAdminDetails()
     {
         return $this->hasMany(StatLocalAdminDetail::className(), ['province_id' => 'id']);
@@ -113,6 +123,14 @@ class Province extends \yii\db\ActiveRecord
     public function getStatPopulationMovementDetails()
     {
         return $this->hasMany(StatPopulationMovementDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatReligionDetails()
+    {
+        return $this->hasMany(StatReligionDetail::className(), ['province_id' => 'id']);
     }
 
     /**

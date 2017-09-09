@@ -105,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </td>
                             <td class="text-center">
                                 <input ng-model="model.bahai_women" class="form-control" min="0" max="{{model.bahai_total}}" type="number"
-                                       ng-blur="model.christ_cato_women = model.christ_cato_total < model.christ_cato_women ? null : model.christ_cato_women">
+                                       ng-blur="model.bahai_women = model.bahai_total < model.bahai_women ? null : model.bahai_women">
                             </td>
                             <td class="text-center">
                                 <input ng-model="model.idslam_total" class="form-control" min="0" type="number">
@@ -128,9 +128,10 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-    <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
+    <div ng-show="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
+        <div class="card">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Religion Teacher') ?></h3>
+            <h3><?= Yii::t('app', 'Statistics of Religion Teacher') ?> {{year.year}}</h3>
             <p>
                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -212,11 +213,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
             </tbody>
         </table>
+        </div>
+    </div>
+
+    <div ng-show="stat" class="col-sm-12">
+        <div class="card">
+            <h3><?= Yii::t('app', 'The Chart of Religions Teacher') ?> {{year.year}}</h3>
+            <canvas id="stat" class="chart chart-bar"
+                    chart-data="stat.data"
+                    chart-labels="stat.labels"
+                    chart-series="stat.series"
+                    chart-colors="stat.colors"
+            </canvas
+        </div>
     </div>
 </div>
+<script type="text/javascript" src="js/Chart.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
+<script type="text/javascript" src="js/angular-chart.js"></script>
 <script type="text/javascript">
-    var app = angular.module('mohaApp', []);
+    var app = angular.module('mohaApp', ['chart.js']);
     app.controller('rerigionTeacherController', function($scope, $http, $sce, $timeout) {
         $scope.url = 'index.php?r=stat-religion-teacher/';
         $scope.sum = [];
@@ -237,6 +253,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 $http.get($scope.url + 'enquiry&year='+$scope.year.id)
                     .then(function(r) {
                         $scope.models = r.data.models;
+                        $scope.stat = r.data.stat;
+                        $scope.stat.colors = ['#FF0000', '#0000FF', '#00FF00', '#FFFF00'];
                     }, function(r) {
                         $scope.response = r;
                         $timeout(function () {

@@ -5,26 +5,26 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "stat_ethnic".
+ * This is the model class for table "stat_religion".
  *
  * @property integer $id
  * @property string $last_update
  * @property integer $saved
- * @property integer $user_id
  * @property integer $phiscal_year_id
+ * @property integer $user_id
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
- * @property StatEthnicDetail[] $statEthnicDetails
+ * @property StatReligionDetail[] $statReligionDetails
  */
-class StatEthnic extends \yii\db\ActiveRecord
+class StatReligion extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'stat_ethnic';
+        return 'stat_religion';
     }
 
     /**
@@ -33,9 +33,9 @@ class StatEthnic extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['last_update', 'saved', 'user_id', 'phiscal_year_id'], 'required'],
+            [['last_update', 'phiscal_year_id', 'user_id'], 'required'],
             [['last_update'], 'safe'],
-            [['saved', 'user_id', 'phiscal_year_id'], 'integer'],
+            [['saved', 'phiscal_year_id', 'user_id'], 'integer'],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -50,8 +50,8 @@ class StatEthnic extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'last_update' => Yii::t('app', 'Last Update'),
             'saved' => Yii::t('app', 'Saved'),
-            'user_id' => Yii::t('app', 'User ID'),
             'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
+            'user_id' => Yii::t('app', 'User ID'),
         ];
     }
 
@@ -74,17 +74,17 @@ class StatEthnic extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStatEthnicDetails()
+    public function getStatReligionDetails()
     {
-        return $this->hasMany(StatEthnicDetail::className(), ['stat_ethnic_id' => 'id']);
+        return $this->hasMany(StatReligionDetail::className(), ['stat_religion_id' => 'id']);
     }
 
     /**
      * @inheritdoc
-     * @return StatEthnicQuery the active query used by this AR class.
+     * @return StatReligionQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new StatEthnicQuery(get_called_class());
+        return new StatReligionQuery(get_called_class());
     }
 }

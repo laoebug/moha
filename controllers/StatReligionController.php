@@ -2,23 +2,22 @@
 
 namespace app\controllers;
 
-use app\components\MyHelper;
 use app\models\PhiscalYear;
 use app\models\Province;
-use app\models\StatReligionTeacherDetail;
+use app\models\StatReligionDetail;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatReligionTeacher;
-use app\models\StatReligionTeacherSearch;
-use yii\db\Exception;
+use app\models\StatReligion;
+use app\models\StatReligionSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StatReligionTeacherController implements the CRUD actions for StatReligionTeacher model.
+ * StatReligionController implements the CRUD actions for StatReligion model.
  */
-class StatReligionTeacherController extends Controller
+class StatReligionController extends Controller
 {
     /**
      * @inheritdoc
@@ -36,13 +35,14 @@ class StatReligionTeacherController extends Controller
     }
 
     /**
-     * Lists all StatReligionTeacher models.
+     * Lists all StatReligion models.
      * @return mixed
      */
     public function actionIndex()
     {
         return $this->render('index');
     }
+
 
     public function actionGet() {
         $years = PhiscalYear::find()
@@ -66,22 +66,26 @@ class StatReligionTeacherController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('p')->select('p.*, d.*')
-            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_religion_teacher l', 'l.id=d.stat_religion_teacher_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+        $models = Province::find()
+            ->alias('p')
+            ->select('p.*, d.*')
+            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id')
+            ->join('join', 'stat_religion l', 'l.id=d.stat_religion_id and l.phiscal_year_id=:year', [':year'=> $year->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
-        $stat = StatReligionTeacherDetail::find()
+        $stat = StatReligionDetail::find()
             ->select([
                 'phiscal_year_id' => 'r.phiscal_year_id',
-                'buddhis' => 'sum(d.buddhis_monk + d.buddhis_novice + d.buddhis_dad + d.buddhis_mom + d.buddhis_boy)',
+                'buddhis' => 'sum(d.buddhis_total)',
                 'christ' => 'sum(d.christ_cato_total + d.christ_news_total + d.christ_sat_total)',
                 'bahai' => 'r.phiscal_year_id, sum(d.bahai_total)',
                 'idslam' => 'r.phiscal_year_id, sum(d.idslam_total)',
-            ])->alias('d')
-            ->join('join', 'stat_religion_teacher r', 'r.id = d.stat_religion_teacher_id and r.phiscal_year_id=:year', [':year'=> $year->id])
+                'other' => 'r.phiscal_year_id, sum(d.other_total)',
+            ])
+            ->alias('d')
+            ->join('join', 'stat_religion r', 'r.id = d.stat_religion_id and r.phiscal_year_id=:year', [':year'=> $year->id])
             ->asArray()->one();
-        $data = isset($stat)?[$stat['buddhis'], $stat['christ'], $stat['bahai'], $stat['idslam']]:null;
+        $data = isset($stat)?[$stat['buddhis'], $stat['christ'], $stat['bahai'], $stat['idslam'], $stat['other']]:null;
         return json_encode([
             'models' => $models,
             'stat' => [
@@ -90,6 +94,7 @@ class StatReligionTeacherController extends Controller
                     , Yii::t('app', 'Christ')
                     , Yii::t('app', 'Bahaiy')
                     , Yii::t('app', 'Idslam')
+                    , Yii::t('app', 'Others')
                 ],
                 'data' => $data
             ],
@@ -103,9 +108,9 @@ class StatReligionTeacherController extends Controller
             return;
         }
 
-        $model = StatReligionTeacherDetail::find()
+        $model = StatReligionDetail::find()
             ->alias('d')
-            ->join('join', 'stat_religion_teacher l', 'l.id = d.stat_religion_teacher_id and l.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_religion l', 'l.id = d.stat_religion_id and l.phiscal_year_id=:year', [':year' => $year->id])
             ->where(['d.province_id' => $province])
             ->asArray()->one();
 
@@ -134,11 +139,11 @@ class StatReligionTeacherController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try{
-            $model = StatReligionTeacher::find()
+            $model = StatReligion::find()
                 ->where(['phiscal_year_id' => $year->id])
                 ->one();
             if(!isset($model)) {
-                $model = new StatReligionTeacher();
+                $model = new StatReligion();
                 $model->phiscal_year_id = $year->id;
                 $model->user_id = Yii::$app->user->id;
             }
@@ -146,30 +151,29 @@ class StatReligionTeacherController extends Controller
             $model->last_update = date('Y-m-d H:i:s');
             if(!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = StatReligionTeacherDetail::find()
-                ->where(['stat_religion_teacher_id' => $model->id, 'province_id' => $post['StatReligionTeacherDetail']['province']['id']])
+            $detail = StatReligionDetail::find()
+                ->where(['stat_religion_id' => $model->id, 'province_id' => $post['StatReligionDetail']['province']['id']])
                 ->one();
             if(!isset($detail)) {
-                $detail = new StatReligionTeacherDetail();
-                $detail->province_id = $post['StatReligionTeacherDetail']['province']['id'];
-                $detail->stat_religion_teacher_id = $model->id;
+                $detail = new StatReligionDetail();
+                $detail->province_id = $post['StatReligionDetail']['province']['id'];
+                $detail->stat_religion_id = $model->id;
             }
-            $detail->buddhis_monk = $post['StatReligionTeacherDetail']['buddhis_monk'];
-            $detail->buddhis_novice = $post['StatReligionTeacherDetail']['buddhis_novice'];
-            $detail->buddhis_dad = $post['StatReligionTeacherDetail']['buddhis_dad'];
-            $detail->buddhis_mom = $post['StatReligionTeacherDetail']['buddhis_mom'];
-            $detail->buddhis_boy = $post['StatReligionTeacherDetail']['buddhis_boy'];
-            $detail->christ_news_total = $post['StatReligionTeacherDetail']['christ_news_total'];
-            $detail->christ_news_women = $post['StatReligionTeacherDetail']['christ_news_women'];
-            $detail->christ_sat_total = $post['StatReligionTeacherDetail']['christ_sat_total'];
-            $detail->christ_sat_women = $post['StatReligionTeacherDetail']['christ_sat_women'];
-            $detail->christ_cato_total = $post['StatReligionTeacherDetail']['christ_cato_total'];
-            $detail->christ_cato_women = $post['StatReligionTeacherDetail']['christ_cato_women'];
-            $detail->bahai_total = $post['StatReligionTeacherDetail']['bahai_total'];
-            $detail->bahai_women = $post['StatReligionTeacherDetail']['bahai_women'];
-            $detail->idslam_total = $post['StatReligionTeacherDetail']['idslam_total'];
-            $detail->idslam_women = $post['StatReligionTeacherDetail']['idslam_women'];
-            $detail->remark = $post['StatReligionTeacherDetail']['remark'];
+            $detail->buddhis_total = $post['StatReligionDetail']['buddhis_total'];
+            $detail->buddhis_women = $post['StatReligionDetail']['buddhis_women'];
+            $detail->christ_news_total = $post['StatReligionDetail']['christ_news_total'];
+            $detail->christ_news_women = $post['StatReligionDetail']['christ_news_women'];
+            $detail->christ_sat_total = $post['StatReligionDetail']['christ_sat_total'];
+            $detail->christ_sat_women = $post['StatReligionDetail']['christ_sat_women'];
+            $detail->christ_cato_total = $post['StatReligionDetail']['christ_cato_total'];
+            $detail->christ_cato_women = $post['StatReligionDetail']['christ_cato_women'];
+            $detail->bahai_total = $post['StatReligionDetail']['bahai_total'];
+            $detail->bahai_women = $post['StatReligionDetail']['bahai_women'];
+            $detail->idslam_total = $post['StatReligionDetail']['idslam_total'];
+            $detail->idslam_women = $post['StatReligionDetail']['idslam_women'];
+            $detail->other_total = $post['StatReligionDetail']['other_total'];
+            $detail->other_women = $post['StatReligionDetail']['other_women'];
+            $detail->remark = $post['StatReligionDetail']['remark'];
 
             if(!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
@@ -190,8 +194,8 @@ class StatReligionTeacherController extends Controller
         $models = Province::find()
             ->alias('p')
             ->select('p.*, d.*')
-            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_religion_teacher l', 'l.id=d.stat_religion_teacher_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id')
+            ->join('join', 'stat_religion l', 'l.id=d.stat_religion_id and l.phiscal_year_id=:year', [':year'=> $year->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
@@ -209,8 +213,8 @@ class StatReligionTeacherController extends Controller
         $models = Province::find()
             ->alias('p')
             ->select('p.*, d.*')
-            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_religion_teacher l', 'l.id=d.stat_religion_teacher_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id')
+            ->join('join', 'stat_religion l', 'l.id=d.stat_religion_id and l.phiscal_year_id=:year', [':year'=> $year->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
@@ -220,15 +224,15 @@ class StatReligionTeacherController extends Controller
     }
 
     /**
-     * Finds the StatReligionTeacher model based on its primary key value.
+     * Finds the StatReligion model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StatReligionTeacher the loaded model
+     * @return StatReligion the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StatReligionTeacher::findOne($id)) !== null) {
+        if (($model = StatReligion::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

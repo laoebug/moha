@@ -108,6 +108,12 @@ class StatPopulationMovementController extends Controller
     }
 
     public function actionSave($year) {
+        $post = Yii::$app->request->post();
+        if(!isset($post)) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app','Inccorect Request Mehotd'));
+            return;
+        }
+
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
@@ -116,12 +122,6 @@ class StatPopulationMovementController extends Controller
 
         if($year->status != 'O') {
             MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allow to input'));
-            return;
-        }
-
-        $post = Yii::$app->request->post();
-        if(!isset($post)) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app','Inccorect Request Mehotd'));
             return;
         }
 

@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Ethnic;
+use app\models\StatReligionPlace;
 
 /**
- * EthnicSearch represents the model behind the search form about `app\models\Ethnic`.
+ * StatReligionPlaceSearch represents the model behind the search form about `app\models\StatReligionPlace`.
  */
-class EthnicSearch extends Ethnic
+class StatReligionPlaceSearch extends StatReligionPlace
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class EthnicSearch extends Ethnic
     public function rules()
     {
         return [
-            [['id', 'position', 'deleted'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'saved', 'user_id', 'phiscal_year_id'], 'integer'],
+            [['last_update'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class EthnicSearch extends Ethnic
      */
     public function search($params)
     {
-        $query = Ethnic::find();
+        $query = StatReligionPlace::find();
 
         // add conditions that should always apply here
 
@@ -60,11 +60,11 @@ class EthnicSearch extends Ethnic
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'position' => $this->position,
-            'deleted' => $this->deleted,
+            'last_update' => $this->last_update,
+            'saved' => $this->saved,
+            'user_id' => $this->user_id,
+            'phiscal_year_id' => $this->phiscal_year_id,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

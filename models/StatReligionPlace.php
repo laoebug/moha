@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "stat_ethnic".
+ * This is the model class for table "stat_religion_place".
  *
  * @property integer $id
  * @property string $last_update
@@ -15,16 +15,15 @@ use Yii;
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
- * @property StatEthnicDetail[] $statEthnicDetails
  */
-class StatEthnic extends \yii\db\ActiveRecord
+class StatReligionPlace extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'stat_ethnic';
+        return 'stat_religion_place';
     }
 
     /**
@@ -72,19 +71,11 @@ class StatEthnic extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStatEthnicDetails()
-    {
-        return $this->hasMany(StatEthnicDetail::className(), ['stat_ethnic_id' => 'id']);
-    }
-
-    /**
      * @inheritdoc
-     * @return StatEthnicQuery the active query used by this AR class.
+     * @return StatReligionPlaceQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new StatEthnicQuery(get_called_class());
+        return new StatReligionPlaceQuery(get_called_class());
     }
 }

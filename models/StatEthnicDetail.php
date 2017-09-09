@@ -12,8 +12,10 @@ use Yii;
  * @property integer $ethnic_id
  * @property integer $stat_ethnic_id
  * @property integer $women
+ * @property integer $province_id
  *
  * @property Ethnic $ethnic
+ * @property Province $province
  * @property StatEthnic $statEthnic
  */
 class StatEthnicDetail extends \yii\db\ActiveRecord
@@ -32,9 +34,10 @@ class StatEthnicDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['total', 'ethnic_id', 'stat_ethnic_id', 'women'], 'integer'],
-            [['ethnic_id', 'stat_ethnic_id'], 'required'],
+            [['total', 'ethnic_id', 'stat_ethnic_id', 'women', 'province_id'], 'integer'],
+            [['ethnic_id', 'stat_ethnic_id', 'province_id'], 'required'],
             [['ethnic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ethnic::className(), 'targetAttribute' => ['ethnic_id' => 'id']],
+            [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_ethnic_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatEthnic::className(), 'targetAttribute' => ['stat_ethnic_id' => 'id']],
         ];
     }
@@ -50,6 +53,7 @@ class StatEthnicDetail extends \yii\db\ActiveRecord
             'ethnic_id' => Yii::t('app', 'Ethnic ID'),
             'stat_ethnic_id' => Yii::t('app', 'Stat Ethnic ID'),
             'women' => Yii::t('app', 'Women'),
+            'province_id' => Yii::t('app', 'Province ID'),
         ];
     }
 
@@ -59,6 +63,14 @@ class StatEthnicDetail extends \yii\db\ActiveRecord
     public function getEthnic()
     {
         return $this->hasOne(Ethnic::className(), ['id' => 'ethnic_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProvince()
+    {
+        return $this->hasOne(Province::className(), ['id' => 'province_id']);
     }
 
     /**
