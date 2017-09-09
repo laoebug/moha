@@ -85,6 +85,7 @@
 
                         <li><a href="index.php?r=stat-religion"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Religion & Other Believes') ?></a></li>
                         <li><a href="index.php?r=stat-religion-teacher"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Religion Teacher') ?></a></li>
+                        <li><a href="index.php?r=stat-religion-place"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Religion Place') ?></a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>

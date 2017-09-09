@@ -15,6 +15,7 @@ use Yii;
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
+ * @property StatReligionPlaceDetail[] $statReligionPlaceDetails
  */
 class StatReligionPlace extends \yii\db\ActiveRecord
 {
@@ -68,6 +69,14 @@ class StatReligionPlace extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatReligionPlaceDetails()
+    {
+        return $this->hasMany(StatReligionPlaceDetail::className(), ['stat_religion_place_id' => 'id']);
     }
 
     /**

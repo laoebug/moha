@@ -24,6 +24,7 @@ use Yii;
  * @property StatLocalAdminDetail[] $statLocalAdminDetails
  * @property StatPopulationMovementDetail[] $statPopulationMovementDetails
  * @property StatReligionDetail[] $statReligionDetails
+ * @property StatReligionPlaceDetail[] $statReligionPlaceDetails
  * @property StatReligionTeacherDetail[] $statReligionTeacherDetails
  */
 class Province extends \yii\db\ActiveRecord
@@ -131,6 +132,14 @@ class Province extends \yii\db\ActiveRecord
     public function getStatReligionDetails()
     {
         return $this->hasMany(StatReligionDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatReligionPlaceDetails()
+    {
+        return $this->hasMany(StatReligionPlaceDetail::className(), ['province_id' => 'id']);
     }
 
     /**

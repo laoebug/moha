@@ -85,7 +85,18 @@ class StatReligionController extends Controller
             ->alias('d')
             ->join('join', 'stat_religion r', 'r.id = d.stat_religion_id and r.phiscal_year_id=:year', [':year'=> $year->id])
             ->asArray()->one();
-        $data = isset($stat)?[$stat['buddhis'], $stat['christ'], $stat['bahai'], $stat['idslam'], $stat['other']]:null;
+        $data = null;
+        if(isset($stat))
+        if(isset($stat['phiscal_year_id'])) {
+            $percent = 100 / ($stat['buddhis'] + $stat['christ'] + $stat['idslam'] + $stat['idslam'] + $stat['other']);
+            $data = [
+                number_format($stat['buddhis'] * $percent, 2),
+                number_format($stat['christ'] * $percent, 2),
+                number_format($stat['bahai'] * $percent,2),
+                number_format($stat['idslam'] * $percent, 2),
+                number_format($stat['other'] * $percent, 2)
+            ];
+        }
         return json_encode([
             'models' => $models,
             'stat' => [
