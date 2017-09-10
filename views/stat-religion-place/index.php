@@ -206,9 +206,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div ng-show="stat" class="col-sm-12">
-        <div class="card">
-            <h3><?= Yii::t('app', 'The Chart of Religions Places') ?> {{year.year}}</h3>
+    <div class="row" ng-show="stat">
+        <h3><?= Yii::t('app', 'The Chart of Religions Places') ?> {{year.year}}</h3>
+        <div class="col-sm-8">
             <canvas id="stat" class="chart chart-bar"
                     chart-data="stat.data"
                     chart-labels="stat.labels"
@@ -216,6 +216,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     chart-colors="stat.colors"
             </canvas
         </div>
+    </div>
+    <div class="col-sm-4">
+        <canvas id="stat" class="chart chart-pie"
+                chart-data="stat.data"
+                chart-labels="stat.labels"
+                chart-series="stat.series"
+                chart-colors="stat.colors"
+        </canvas
     </div>
 </div>
 <script type="text/javascript" src="js/Chart.js"></script>

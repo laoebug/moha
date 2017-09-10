@@ -1,0 +1,72 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: adsavin
+ * Date: 09/04/2017
+ * Time: 14:56
+ */
+/* @var $model app\models\StatOfficer */
+?>
+<style type="text/css" media="print">
+    @page { size: landscape; }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-title-w-btn ">
+                <h3 class="title"><?= Yii::t('app','Statistics of Overall Officers') ?> (<?= $year->year ?>)</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
+                        <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Description') ?></th>
+                        <th class="text-center" colspan="3"><?= Yii::t('app', 'No. of officers') ?></th>
+                    </tr>
+                    <tr>
+                        <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                        <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                        <th class="text-center"><?= Yii::t('app', 'Men') ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th rowspan="5">I</th>
+                        <th colspan="2"><?= Yii::t('app', 'Overall Officers') ?></th>
+                        <th class="text-right"><?= number_format($model->center_total+ $model->province_total + $model->district_total) ?></th>
+                        <th class="text-right"><?= number_format($model->center_women + $model->province_women + $model->district_women) ?></th>
+                        <th class="text-right"><?= number_format($model->center_total+ $model->province_total + $model->district_total - ($model->center_women + $model->province_women + $model->district_women)) ?></th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                        <th><?= Yii::t('app', 'Ministry Level') ?></th>
+                        <th class="text-right"><?= number_format($model->center_total) ?></th>
+                        <th class="text-right"><?= number_format($model->center_women) ?></th>
+                        <th class="text-right"><?= number_format($model->center_total- $model->center_women)?></th>
+                    </tr>
+                    <tr>
+                        <th rowspan="3">2</th>
+                        <th><?= Yii::t('app', 'Local Level') ?></th>
+                        <th class="text-right"><?= number_format($model->province_total + $model->district_total)?></th>
+                        <th class="text-right"><?= number_format($model->province_women + $model->district_women)?></th>
+                        <th class="text-right"><?= number_format($model->province_total + $model->district_total - ($model->province_women + $model->district_women))?></th>
+                    </tr>
+                    <tr>
+                        <td><?= Yii::t('app', 'Province Department') ?></td>
+                        <td class="text-right"><?= number_format($model->province_total)?></td>
+                        <td class="text-right"><?= number_format($model->province_women)?></td>
+                        <td class="text-right"><?= number_format($model->province_total - $model->province_women)?></td>
+                    </tr>
+                    <tr>
+                        <td><?= Yii::t('app', 'District Office') ?></td>
+                        <td class="text-right"><?= number_format($model->district_total)?></td>
+                        <td class="text-right"><?= number_format($model->district_women)?></td>
+                        <td class="text-right"><?= number_format($model->district_total - $model->district_women)?></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

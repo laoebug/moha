@@ -20,6 +20,9 @@ use Yii;
  * @property StatGovermentUnit[] $statGovermentUnits
  * @property StatLegal[] $statLegals
  * @property StatLocalAdmin[] $statLocalAdmins
+ * @property StatOfficer[] $statOfficers
+ * @property StatOfficerAge[] $statOfficerAges
+ * @property StatOfficerDegree[] $statOfficerDegrees
  * @property StatPopulationMovement[] $statPopulationMovements
  * @property StatReligion[] $statReligions
  * @property StatReligionPlace[] $statReligionPlaces
@@ -112,6 +115,30 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatLocalAdmins()
     {
         return $this->hasMany(StatLocalAdmin::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficers()
+    {
+        return $this->hasMany(StatOfficer::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerAges()
+    {
+        return $this->hasMany(StatOfficerAge::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerDegrees()
+    {
+        return $this->hasMany(StatOfficerDegree::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
