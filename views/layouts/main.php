@@ -94,6 +94,9 @@
                         <li><a href="index.php?r=stat-officer-degree"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers By Degrees') ?></a></li>
                         <li><a href="index.php?r=stat-officer-resign"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Resignation') ?></a></li>
                         <li><a href="index.php?r=stat-officer-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Add') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-contract"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Contract') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-position"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Positions') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-need"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Needed') ?></a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>

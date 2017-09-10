@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </thead>
                 <tbody>
                     <tr>
-                        <th class="text-center" rowspan="4">VI</th>
+                        <th class="text-center" rowspan="12">VI</th>
                         <th><?= Yii::t('app', 'Officers Addition') ?></th>
                         <th class="text-center">{{formatNumber(model.quota_total + model.army_total + model.soe_total)}}</th>
                         <th class="text-center">{{formatNumber(model.quota_women + model.army_women + model.soe_women)}}</th>

@@ -23,7 +23,10 @@ use Yii;
  * @property StatOfficer[] $statOfficers
  * @property StatOfficerAdd[] $statOfficerAdds
  * @property StatOfficerAge[] $statOfficerAges
+ * @property StatOfficerContract[] $statOfficerContracts
  * @property StatOfficerDegree[] $statOfficerDegrees
+ * @property StatOfficerNeed[] $statOfficerNeeds
+ * @property StatOfficerPosition[] $statOfficerPositions
  * @property StatOfficerResign[] $statOfficerResigns
  * @property StatPopulationMovement[] $statPopulationMovements
  * @property StatReligion[] $statReligions
@@ -146,9 +149,33 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatOfficerContracts()
+    {
+        return $this->hasMany(StatOfficerContract::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatOfficerDegrees()
     {
         return $this->hasMany(StatOfficerDegree::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerNeeds()
+    {
+        return $this->hasMany(StatOfficerNeed::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerPositions()
+    {
+        return $this->hasMany(StatOfficerPosition::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
