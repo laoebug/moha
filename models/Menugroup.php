@@ -70,4 +70,13 @@ class Menugroup extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'input_id']);
     }
+
+    /**
+     * @inheritdoc
+     * @return MenugroupQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new MenugroupQuery(get_called_class());
+    }
 }

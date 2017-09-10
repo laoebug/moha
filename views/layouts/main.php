@@ -93,6 +93,7 @@
                         <li><a href="index.php?r=stat-officer-age"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers By Ages') ?></a></li>
                         <li><a href="index.php?r=stat-officer-degree"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers By Degrees') ?></a></li>
                         <li><a href="index.php?r=stat-officer-resign"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Resignation') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Add') ?></a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>

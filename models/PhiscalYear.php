@@ -21,6 +21,7 @@ use Yii;
  * @property StatLegal[] $statLegals
  * @property StatLocalAdmin[] $statLocalAdmins
  * @property StatOfficer[] $statOfficers
+ * @property StatOfficerAdd[] $statOfficerAdds
  * @property StatOfficerAge[] $statOfficerAges
  * @property StatOfficerDegree[] $statOfficerDegrees
  * @property StatOfficerResign[] $statOfficerResigns
@@ -124,6 +125,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatOfficers()
     {
         return $this->hasMany(StatOfficer::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerAdds()
+    {
+        return $this->hasMany(StatOfficerAdd::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
