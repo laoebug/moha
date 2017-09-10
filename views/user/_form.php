@@ -54,7 +54,7 @@ use yii\helpers\ArrayHelper;
 		<?php //$form->field($model, 'status')->dropDownList([Role::find()->all()],['prompt'=>Yii::t('app','Plase select')]); ?>
 		
 		<?php
-		echo $form->field($model, 'role')->dropDownList(
+		echo $form->field($model, 'role_id')->dropDownList(
              ArrayHelper::map(Role::find()
     
                     ->all(),'id','name'),

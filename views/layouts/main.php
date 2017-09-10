@@ -70,6 +70,8 @@
             </div>
             <!-- Sidebar Menu-->
             <ul class="sidebar-menu">
+            		<?php //$user = Yii::$app->user; ?>
+            		<?php //echo $user->id;exit;?>
                 <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span><?= Yii::t('app','Dashboard') ?></span></a></li>
                 <li class="treeview"><a href="#"><i class="fa fa-bar-chart"></i><span><?= Yii::t('app','Statistics') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
@@ -107,6 +109,7 @@
                     </ul>
                 </li>
             </ul>
+            
         </section>
     </aside>
 

@@ -75,17 +75,23 @@ class UserController extends Controller
         
        // $roles = Role::find()->all();
        // $menus = Menu::find()->all();
+       $menu = new Menu();$menu->getMenus(0,0);
         $model = new User();
         $model->password = "1010";
         $userRoles = array();
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+
             $db = Yii::$app->db->beginTransaction();
             try {
                 
                 if (! $model->save())
                     throw new Exception("User cannot be saved");
-                
+                    if (isset($_POST['User']['role_id'])){
+                        $model->role_id = $_POST['User']['role_id'];
+                    }
+                    
 //                 if (isset($_POST['role'])) {
 //                     $userRoles = $_POST['role'];
 //                     echo $_POST['role'];exit;

@@ -16,6 +16,9 @@ use Yii;
  * @property string $tel
  * @property string $email
  * @property integer $deleted
+ * @property integer $role_id
+ * @property integer $user_id
+ * @property string $input_dt_stamp
  *
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatGovermentUnit[] $statGovermentUnits
@@ -55,7 +58,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'firstname', 'lastname', 'tel'], 'required'],
+            [['username', 'password', 'firstname', 'lastname', 'tel','role_id','status'], 'required'],
             [['deleted', 'role_id', 'user_id'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['username', 'tel'], 'string', 'max' => 50],
@@ -64,7 +67,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['status'], 'string', 'max' => 1],
             [['username'], 'unique'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
+            //[['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
     
@@ -77,15 +80,15 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'id' => Yii::t('app', 'ID'),
             'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
-            'firstname' => Yii::t('app', 'Firstname'),
-            'lastname' => Yii::t('app', 'Lastname'),
+            'firstname' => Yii::t('app', 'First Name'),
+            'lastname' => Yii::t('app', 'Last Name'),
             'status' => Yii::t('app', 'Status'),
             'tel' => Yii::t('app', 'Tel'),
             'email' => Yii::t('app', 'Email'),
             'deleted' => Yii::t('app', 'Deleted'),
-            'role_id' => Yii::t('app', 'Role ID'),
+            'role_id' => Yii::t('app', 'Role'),
             'user_id' => Yii::t('app', 'User ID'),
-            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
+            'input_dt_stamp' => Yii::t('app', 'Input Date Time Stamp'),
         ];
     }
 

@@ -38,6 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'tel',
                 'email:email',
                 'deleted',
+                
+                //'role',
+                [
+                    'name'=>'role',
+                    'label'=>Yii::t("app","Role"),
+                    'value'=>$model->role["name"],
+                    'type'=>'raw'
+                ]
                
             ],
         ]) ?>
@@ -48,17 +56,17 @@ $this->params['breadcrumbs'][] = $this->title;
     
     
 	
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">	
-	<a class="btn btn-info" id="demoNotify">Sample Notification</a>
-    	</div>
-	</div>
-	<br/>
-	<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-	<a class="btn btn-info" id="demoSwal">Sample Alert</a>
-	</div>
-	</div>
+<!-- 	<div class="row"> -->
+<!-- 		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">	 -->
+<!-- 	<a class="btn btn-info" id="demoNotify">Sample Notification</a> -->
+<!--     	</div> -->
+<!-- 	</div> -->
+<!-- 	<br/> -->
+<!-- 	<div class="row"> -->
+<!-- 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"> -->
+<!-- 	<a class="btn btn-info" id="demoSwal">Sample Alert</a> -->
+<!-- 	</div> -->
+<!-- 	</div> -->
 	
 </div>
 

@@ -22,7 +22,7 @@ class m170906_113344_tb_usr_role extends Migration
             `tel` VARCHAR(50) NOT NULL,
             `email` VARCHAR(100) NULL DEFAULT NULL,
             `deleted` INT(11) NOT NULL DEFAULT 0,
-            `role_id` INT(11) NULL DEFAULT NULL,
+            `role_id` INT(11) NOT NULL,
             `user_id` INT(11) NULL DEFAULT NULL,
             `input_dt_stamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`),
@@ -33,7 +33,7 @@ class m170906_113344_tb_usr_role extends Migration
             DEFAULT CHARACTER SET = utf8;
         
             INSERT INTO `user` (`id`, `username`, `password`, `firstname`, `lastname`, `status`, `tel`, `email`, `deleted`,`role_id`) VALUES
-            (1, 'admin', 'admin', 'Administrator', '', 'A', '', NULL, 0,NULL);
+            (1, 'admin', 'admin', 'Administrator', '', 'A', '', NULL, 0,1);
         
             DROP TABLE IF EXISTS `role`;
             
@@ -49,6 +49,8 @@ class m170906_113344_tb_usr_role extends Migration
               UNIQUE INDEX `name_UNIQUE` (`name` ASC))
             ENGINE = InnoDB
             DEFAULT CHARACTER SET = utf8;
+            
+            insert into role(name,deleted,user_id) value ('Super Admin',0,1);
                 
             set foreign_key_checks=1;
             ";
