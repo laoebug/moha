@@ -97,12 +97,13 @@
                         <li><a href="index.php?r=stat-officer-contract"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Contract') ?></a></li>
                         <li><a href="index.php?r=stat-officer-position"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Positions') ?></a></li>
                         <li><a href="index.php?r=stat-officer-need"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Needed') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry') ?></a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="index.php?r=phiscal-year"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Phiscal Year') ?></a></li>
-                        <li><a href="index.php?r=branch-group"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry Group') ?></a></li>
+                        <li><a href="index.php?r=ministry-group"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry Group') ?></a></li>
                         <li><a href="index.php?r=legal-type"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legal Type') ?></a></li>
                         <li><a href="index.php?r=legal"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legal') ?></a></li>
 

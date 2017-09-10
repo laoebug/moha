@@ -12,15 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="ministryController">
     <div class="col-sm-12">
-        <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
-        <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
-        </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">{{response.statusText}}</div>
         </div>
     </div><div class="col-sm-12">
-        <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
+        <div class="panel panel-primary" style="margin-top: 2em">
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-6">
@@ -57,13 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="col-sm-12" style="margin-top: 2em">
-
         <div class="card" ng-show="ministries">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Goverment Structure') ?> ({{year.year}})</h3>
+                <h3 class="title"><?= Yii::t('app','Statistics of Goverment Structure') ?> </h3>
                 <p class="hidden-print">
-                    <a class="btn btn-default" target="_blank" href="index.php?r=ministry/print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                    <a class="btn btn-info" target="_blank" href="index.php?r=ministry/download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
+                    <a class="btn btn-default" target="_blank" href="index.php?r=ministry/print"><i class="fa fa-print fa-2x"></i></a>
+                    <a class="btn btn-info" target="_blank" href="index.php?r=ministry/download"><i class="fa fa-download fa-2x"></i></a>
                 </p>
             </div>
             <div class="card-body">
@@ -98,18 +93,8 @@ $this->params['breadcrumbs'][] = $this->title;
     var app = angular.module('mohaApp', []);
     var url = 'index.php?r=ministry/';
     app.controller('ministryController', function($scope, $http, $sce, $timeout) {
-        $http.get(url+ 'get')
-            .then(function(r) {
-                $scope.years = r.data.years;
-            }, function(r) {
-                $scope.response = r;
-                $timeout(function () {
-                    $scope.response = null;
-                }, 15000);
-            });
-
         $scope.enquiry = function() {
-            $http.get(url + 'enquiry&year=' + $scope.year.id)
+            $http.get(url + 'enquiry')
                 .then(function (r) {
                     $scope.ministries = r.data.ministries;
                 }, function (r) {
@@ -120,6 +105,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 });
         };
 
+      $scope.enquiry();
+
         $scope.select = function (m) {
             $scope.ministry = m;
             $scope.ministry.position = parseInt(m.position);
@@ -128,7 +115,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $scope.save = function (create) {
                 if ($scope.ministry)
                     if ($scope.ministry.name)
-                        $http.post(url + 'save&year=' + $scope.year.id, {
+                        $http.post(url + 'save', {
                             Ministry: $scope.ministry,
                             create: create,
                             '_csrf': $('meta[name="csrf-token"]').attr("content")

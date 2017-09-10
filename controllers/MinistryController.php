@@ -42,31 +42,15 @@ class MinistryController extends Controller
         return $this->render('index');
     }
 
-    public function actionGet() {
+    public function actionEnquiry() {
         return json_encode([
-            'years' => PhiscalYear::find()->where(['deleted' => 0])->asArray()->all()
+            'ministries' => Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all()
         ]);
     }
 
-    public function actionEnquiry($year) {
-        return json_encode([
-            'ministries' => Ministry::find()->where(['deleted' => 0, 'phiscal_year_id' => $year])->orderBy('position')->asArray()->all()
-        ]);
-    }
-
-    public function actionSave($year) {
+    public function actionSave() {
         $post = Yii::$app->request->post();
         if(isset($post)) {
-            $year = PhiscalYear::findOne($year);
-            if(!isset($year)) {
-                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-                return;
-            }
-            if($year->status != 'O') {
-                MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
-                return;
-            }
-
             if($post['create'] == 1) {
                 $model = new Ministry();
                 $model->deleted = 0;
@@ -79,7 +63,6 @@ class MinistryController extends Controller
             }
             $model->load($post);
             $model->user_id = Yii::$app->user->id;
-            $model->phiscal_year_id = $year->id;
             $model->last_update = date('Y-m-d H:i:s');
             if(!$model->save()) {
                 MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
@@ -105,30 +88,18 @@ class MinistryController extends Controller
         }
     }
 
-    public function actionPrint($year) {
-        $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-            return;
-        }
-
-        $ministries = Ministry::find()->where(['deleted' => 0, 'phiscal_year_id' => $year])->orderBy('position')->asArray()->all();
+    public function actionPrint() {
+        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
         return $this->renderPartial('print', [
-            'content' => $this->renderPartial('table', ['ministries' => $ministries, 'year' => $year])
+            'content' => $this->renderPartial('table', ['ministries' => $ministries])
         ]);
     }
 
-    public function actionDownload($year) {
-        $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-            return;
-        };
-
-        $ministries = Ministry::find()->where(['deleted' => 0, 'phiscal_year_id' => $year])->orderBy('position')->asArray()->all();
+    public function actionDownload() {
+        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
         return $this->renderPartial('excel', [
-            'file' => 'ministries_'.$year->year.'.xls',
-            'content' => $this->renderPartial('table', ['ministries' => $ministries, 'year' => $year->id])
+            'file' => 'ministries.xls',
+            'content' => $this->renderPartial('table', ['ministries' => $ministries])
         ]);
     }
     /**

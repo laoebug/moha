@@ -14,7 +14,6 @@ use Yii;
  * @property integer $deleted
  * @property string $status
  *
- * @property Ministry[] $ministries
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatEthnic[] $statEthnics
  * @property StatGovermentUnit[] $statGovermentUnits
@@ -25,6 +24,7 @@ use Yii;
  * @property StatOfficerAge[] $statOfficerAges
  * @property StatOfficerContract[] $statOfficerContracts
  * @property StatOfficerDegree[] $statOfficerDegrees
+ * @property StatOfficerMinistry[] $statOfficerMinistries
  * @property StatOfficerNeed[] $statOfficerNeeds
  * @property StatOfficerPosition[] $statOfficerPositions
  * @property StatOfficerResign[] $statOfficerResigns
@@ -72,14 +72,6 @@ class PhiscalYear extends \yii\db\ActiveRecord
             'deleted' => Yii::t('app', 'Deleted'),
             'status' => Yii::t('app', 'Status'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMinistries()
-    {
-        return $this->hasMany(Ministry::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
@@ -160,6 +152,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatOfficerDegrees()
     {
         return $this->hasMany(StatOfficerDegree::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerMinistries()
+    {
+        return $this->hasMany(StatOfficerMinistry::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
