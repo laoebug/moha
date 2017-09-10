@@ -4,20 +4,20 @@ namespace app\controllers;
 
 use app\components\MyHelper;
 use app\models\PhiscalYear;
-use app\models\StatOfficerDegreeDetail;
+use app\models\StatOfficerResignDetail;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerDegree;
-use app\models\StatOfficerDegreeSearch;
+use app\models\StatOfficerResign;
+use app\models\StatOfficerResignSearch;
 use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StatOfficerDegreeController implements the CRUD actions for StatOfficerDegree model.
+ * StatOfficerResignController implements the CRUD actions for StatOfficerResign model.
  */
-class StatOfficerDegreeController extends Controller
+class StatOfficerResignController extends Controller
 {
     /**
      * @inheritdoc
@@ -35,14 +35,14 @@ class StatOfficerDegreeController extends Controller
     }
 
     /**
-     * Lists all StatOfficerDegree models.
+     * Lists all StatOfficerResign models.
      * @return mixed
      */
     public function actionIndex()
     {
         return $this->render('index');
     }
-    
+
     public function actionGet() {
         $years = PhiscalYear::find()
             ->where(['deleted' => 0])->asArray()->all();
@@ -59,8 +59,8 @@ class StatOfficerDegreeController extends Controller
             return;
         }
 
-        $model = StatOfficerDegreeDetail::find()->alias('d')
-            ->join('join', 'stat_officer_degree o', 'o.id = d.stat_officer_degree_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+        $model = StatOfficerResignDetail::find()->alias('d')
+            ->join('join', 'stat_officer_resign o', 'o.id = d.stat_officer_resign_id and o.phiscal_year_id=:year', [':year'=> $year->id])
             ->asArray()->one();
 
         return json_encode([
@@ -86,9 +86,9 @@ class StatOfficerDegreeController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model = StatOfficerDegree::find()->where(['phiscal_year_id' => $year->id])->one();
+            $model = StatOfficerResign::find()->where(['phiscal_year_id' => $year->id])->one();
             if(!isset($model)) {
-                $model = new StatOfficerDegree();
+                $model = new StatOfficerResign();
                 $model->user_id = Yii::$app->user->id;
                 $model->phiscal_year_id = $year->id;
             }
@@ -96,13 +96,13 @@ class StatOfficerDegreeController extends Controller
             $model->saved = 1;
             if(!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = StatOfficerDegreeDetail::find()->alias('d')
-                ->join('join', 'stat_officer_degree o', 'o.id = d.stat_officer_degree_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+            $detail = StatOfficerResignDetail::find()->alias('d')
+                ->join('join', 'stat_officer_resign o', 'o.id = d.stat_officer_resign_id and o.phiscal_year_id=:year', [':year'=> $year->id])
                 ->one();
 
             if(!isset($detail)) {
-                $detail = new StatOfficerDegreeDetail();
-                $detail->stat_officer_degree_id = $model->id;
+                $detail = new StatOfficerResignDetail();
+                $detail->stat_officer_resign_id = $model->id;
             }
             $detail->attributes = $post['Model'];
             if(!$detail->save()) throw new Exception(json_encode($detail->errors));
@@ -121,8 +121,8 @@ class StatOfficerDegreeController extends Controller
             return;
         }
 
-        $model = StatOfficerDegreeDetail::find()->alias('d')
-            ->join('join', 'stat_officer_degree o', 'o.id = d.stat_officer_degree_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+        $model = StatOfficerResignDetail::find()->alias('d')
+            ->join('join', 'stat_officer_resign o', 'o.id = d.stat_officer_resign_id and o.phiscal_year_id=:year', [':year'=> $year->id])
             ->one();
 
         return $this->renderPartial('../ministry/print', [
@@ -137,26 +137,26 @@ class StatOfficerDegreeController extends Controller
             return;
         }
 
-        $model = StatOfficerDegreeDetail::find()->alias('d')
-            ->join('join', 'stat_officer_degree o', 'o.id = d.stat_officer_degree_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+        $model = StatOfficerResignDetail::find()->alias('d')
+            ->join('join', 'stat_officer_resign o', 'o.id = d.stat_officer_resign_id and o.phiscal_year_id=:year', [':year'=> $year->id])
             ->one();
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Stat Officers By Degree '. $year->year . '.xls',
+            'file' => 'Stat Officers By Resign '. $year->year . '.xls',
             'content' => $this->renderPartial('table', ['model' => $model, 'year' => $year])
         ]);
     }
 
     /**
-     * Finds the StatOfficerDegree model based on its primary key value.
+     * Finds the StatOfficerResign model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StatOfficerDegree the loaded model
+     * @return StatOfficerResign the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StatOfficerDegree::findOne($id)) !== null) {
+        if (($model = StatOfficerResign::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
