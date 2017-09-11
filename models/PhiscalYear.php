@@ -25,10 +25,14 @@ use Yii;
  * @property StatOfficerContract[] $statOfficerContracts
  * @property StatOfficerDegree[] $statOfficerDegrees
  * @property StatOfficerMinistry[] $statOfficerMinistries
+ * @property StatOfficerMinistryAdd[] $statOfficerMinistryAdds
+ * @property StatOfficerMinistryTrain[] $statOfficerMinistryTrains
  * @property StatOfficerNeed[] $statOfficerNeeds
  * @property StatOfficerOrg[] $statOfficerOrgs
+ * @property StatOfficerOrganisationAdd[] $statOfficerOrganisationAdds
  * @property StatOfficerPosition[] $statOfficerPositions
  * @property StatOfficerProvince[] $statOfficerProvinces
+ * @property StatOfficerProvinceAdd[] $statOfficerProvinceAdds
  * @property StatOfficerResign[] $statOfficerResigns
  * @property StatPopulationMovement[] $statPopulationMovements
  * @property StatReligion[] $statReligions
@@ -167,6 +171,22 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatOfficerMinistryAdds()
+    {
+        return $this->hasMany(StatOfficerMinistryAdd::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerMinistryTrains()
+    {
+        return $this->hasMany(StatOfficerMinistryTrain::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatOfficerNeeds()
     {
         return $this->hasMany(StatOfficerNeed::className(), ['phiscal_year_id' => 'id']);
@@ -183,6 +203,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatOfficerOrganisationAdds()
+    {
+        return $this->hasMany(StatOfficerOrganisationAdd::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatOfficerPositions()
     {
         return $this->hasMany(StatOfficerPosition::className(), ['phiscal_year_id' => 'id']);
@@ -194,6 +222,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatOfficerProvinces()
     {
         return $this->hasMany(StatOfficerProvince::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerProvinceAdds()
+    {
+        return $this->hasMany(StatOfficerProvinceAdd::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

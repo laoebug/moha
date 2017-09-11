@@ -100,6 +100,10 @@
                         <li><a href="index.php?r=stat-officer-ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry') ?></a></li>
                         <li><a href="index.php?r=stat-officer-org"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation') ?></a></li>
                         <li><a href="index.php?r=stat-officer-province"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-ministry-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Add') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-organisation-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation Add') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-province-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province Add') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-ministry-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Train') ?></a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>

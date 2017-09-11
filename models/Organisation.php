@@ -13,6 +13,7 @@ use Yii;
  * @property integer $position
  *
  * @property StatOfficerOrgDetail[] $statOfficerOrgDetails
+ * @property StatOfficerOrganisationAddDetail[] $statOfficerOrganisationAddDetails
  */
 class Organisation extends \yii\db\ActiveRecord
 {
@@ -55,6 +56,14 @@ class Organisation extends \yii\db\ActiveRecord
     public function getStatOfficerOrgDetails()
     {
         return $this->hasMany(StatOfficerOrgDetail::className(), ['organisation_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerOrganisationAddDetails()
+    {
+        return $this->hasMany(StatOfficerOrganisationAddDetail::className(), ['organisation_id' => 'id']);
     }
 
     /**

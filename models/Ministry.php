@@ -22,7 +22,9 @@ use Yii;
  * @property MinistryGroup $ministryGroup
  * @property User $user
  * @property StatGovermentUnitDetail[] $statGovermentUnitDetails
+ * @property StatOfficerMinistryAddDetail[] $statOfficerMinistryAddDetails
  * @property StatOfficerMinistryDetail[] $statOfficerMinistryDetails
+ * @property StatOfficerMinistryTrainDetail[] $statOfficerMinistryTrainDetails
  * @property StatSingleGatewayImplementationDetail[] $statSingleGatewayImplementationDetails
  */
 class Ministry extends \yii\db\ActiveRecord
@@ -113,9 +115,25 @@ class Ministry extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatOfficerMinistryAddDetails()
+    {
+        return $this->hasMany(StatOfficerMinistryAddDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatOfficerMinistryDetails()
     {
         return $this->hasMany(StatOfficerMinistryDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerMinistryTrainDetails()
+    {
+        return $this->hasMany(StatOfficerMinistryTrainDetail::className(), ['ministry_id' => 'id']);
     }
 
     /**

@@ -22,6 +22,7 @@ use Yii;
  * @property Foundation[] $foundations
  * @property StatEthnicDetail[] $statEthnicDetails
  * @property StatLocalAdminDetail[] $statLocalAdminDetails
+ * @property StatOfficerProvinceAddDetail[] $statOfficerProvinceAddDetails
  * @property StatOfficerProvinceDetail[] $statOfficerProvinceDetails
  * @property StatPopulationMovementDetail[] $statPopulationMovementDetails
  * @property StatReligionDetail[] $statReligionDetails
@@ -117,6 +118,14 @@ class Province extends \yii\db\ActiveRecord
     public function getStatLocalAdminDetails()
     {
         return $this->hasMany(StatLocalAdminDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerProvinceAddDetails()
+    {
+        return $this->hasMany(StatOfficerProvinceAddDetail::className(), ['province_id' => 'id']);
     }
 
     /**
