@@ -66,11 +66,16 @@ class StatLocalAdminController extends Controller
             return;
         }
 
+        $model = StatLocalAdmin::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
         $models = Province::find()
             ->alias('p')
             ->select('p.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_local_admin l', 'l.id=d.stat_local_admin_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return json_encode([
@@ -171,11 +176,16 @@ class StatLocalAdminController extends Controller
             return;
         }
 
+        $model = StatLocalAdmin::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
         $models = Province::find()
             ->alias('p')
             ->select('p.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_local_admin l', 'l.id=d.stat_local_admin_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
@@ -190,11 +200,16 @@ class StatLocalAdminController extends Controller
             return;
         }
 
+        $model = StatLocalAdmin::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
         $models = Province::find()
             ->alias('p')
             ->select('p.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_local_admin l', 'l.id=d.stat_local_admin_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [

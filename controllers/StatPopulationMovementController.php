@@ -193,11 +193,17 @@ class StatPopulationMovementController extends Controller
     }
 
     private function getModels($year) {
+        $model = StatPopulationMovement::find()
+            ->where(['phiscal_year_id' => $year])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
          return Province::find()
             ->alias('p')
             ->select('p.*, d.*')
-            ->join('left join', 'stat_population_movement_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_population_movement l', 'l.id=d.stat_population_movement_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_population_movement_detail d', 'd.province_id = p.id and d.stat_population_movement_id=:id', [':id' => $model->id])
             ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
     }
 

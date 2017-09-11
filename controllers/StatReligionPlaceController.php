@@ -66,9 +66,14 @@ class StatReligionPlaceController extends Controller
             return;
         }
 
+        $model = StatReligionPlace::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
         $models = Province::find()->alias('p')->select('p.*, d.*')
-            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_religion_place l', 'l.id=d.stat_religion_place_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id and d.stat_religion_place_id=:id', [':id' => $model->id])
             ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
 
         $stat = StatReligionPlaceDetail::find()
@@ -196,12 +201,15 @@ class StatReligionPlaceController extends Controller
             return;
         }
 
-        $models = Province::find()
-            ->alias('p')
-            ->select('p.*, d.*')
-            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_religion_place l', 'l.id=d.stat_religion_place_id and l.phiscal_year_id=:year', [':year'=> $year->id])
-            ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
+        $model = StatReligionPlace::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id and d.stat_religion_place_id=:id', [':id' => $model->id])
+            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', ['models' => $models, "year" => $year])
@@ -215,12 +223,15 @@ class StatReligionPlaceController extends Controller
             return;
         }
 
-        $models = Province::find()
-            ->alias('p')
-            ->select('p.*, d.*')
-            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_religion_place l', 'l.id=d.stat_religion_place_id and l.phiscal_year_id=:year', [':year'=> $year->id])
-            ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
+        $model = StatReligionPlace::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id and d.stat_religion_place_id=:id', [':id' => $model->id])
+            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Local Administration '. $year->year .'.xls',

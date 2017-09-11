@@ -3,13 +3,13 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
-use app\models\Ministry;
+use app\models\Organisation;
 use app\models\PhiscalYear;
-use app\models\StatOfficerMinistryDetail;
+use app\models\StatOfficerOrgDetail;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerMinistry;
-use app\models\StatOfficerMinistrySearch;
+use app\models\StatOfficerOrg;
+use app\models\StatOfficerOrgSearch;
 use yii\db\Exception;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -17,9 +17,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StatOfficerMinistryController implements the CRUD actions for StatOfficerMinistry model.
+ * StatOfficerOrgController implements the CRUD actions for StatOfficerOrg model.
  */
-class StatOfficerMinistryController extends Controller
+class StatOfficerOrgController extends Controller
 {
     /**
      * @inheritdoc
@@ -37,7 +37,7 @@ class StatOfficerMinistryController extends Controller
     }
 
     /**
-     * Lists all StatOfficerMinistry models.
+     * Lists all StatOfficerOrg models.
      * @return mixed
      */
     public function actionIndex()
@@ -47,11 +47,11 @@ class StatOfficerMinistryController extends Controller
 
     public function actionGet() {
         $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
-        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $organisations = Organisation::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
 
         return json_encode([
             'years' => $years,
-            'ministries' => $ministries,
+            'organisations' => $organisations,
         ]);
     }
 
@@ -62,18 +62,17 @@ class StatOfficerMinistryController extends Controller
             return;
         }
 
-        $model = StatOfficerMinistry::find()->where(['phiscal_year_id' => $year->id])->one();
+        $model = StatOfficerOrg::find()->where(['phiscal_year_id' => $year->id])->one();
         if(!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
 
-        $models = Ministry::find()->alias('m')
-            ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_ministry_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_id=:id', [':id' =>$model->id])
+        $models = Organisation::find()->alias('m')->select('m.*, d.*')
+            ->join('left join', 'stat_officer_org_detail d', 'd.organisation_id=m.id and d.stat_officer_org_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
 
-        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $ministries = Organisation::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
 
         return json_encode([
             'models' => $models,
@@ -88,16 +87,16 @@ class StatOfficerMinistryController extends Controller
         ]);
     }
 
-    public function actionInquiry($year, $ministry) {
+    public function actionInquiry($year, $organisation) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
 
-        $model = StatOfficerMinistryDetail::find()->alias('d')
-            ->join('join', 'stat_officer_ministry o', 'o.id = d.stat_officer_ministry_id and o.phiscal_year_id=:year', [':year'=> $year->id])
-            ->where(['ministry_id' => $ministry])
+        $model = StatOfficerOrgDetail::find()->alias('d')
+            ->join('join', 'stat_officer_org o', 'o.id = d.stat_officer_org_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+            ->where(['organisation_id' => $organisation])
             ->asArray()->one();
 
         return json_encode([
@@ -123,9 +122,9 @@ class StatOfficerMinistryController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model = StatOfficerMinistry::find()->where(['phiscal_year_id' => $year->id])->one();
+            $model = StatOfficerOrg::find()->where(['phiscal_year_id' => $year->id])->one();
             if(!isset($model)) {
-                $model = new StatOfficerMinistry();
+                $model = new StatOfficerOrg();
                 $model->user_id = Yii::$app->user->id;
                 $model->phiscal_year_id = $year->id;
             }
@@ -133,15 +132,15 @@ class StatOfficerMinistryController extends Controller
             $model->saved = 1;
             if(!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = StatOfficerMinistryDetail::find()->alias('d')
-                ->join('join', 'stat_officer_ministry o', 'o.id = d.stat_officer_ministry_id and o.phiscal_year_id=:year', [':year'=> $year->id])
-                ->where(['ministry_id' => $post['Model']['ministry']['id']])
+            $detail = StatOfficerOrgDetail::find()->alias('d')
+                ->join('join', 'stat_officer_org o', 'o.id = d.stat_officer_org_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+                ->where(['organisation_id' => $post['Model']['organisation']['id']])
                 ->one();
 
             if(!isset($detail)) {
-                $detail = new StatOfficerMinistryDetail();
-                $detail->stat_officer_ministry_id = $model->id;
-                $detail->ministry_id = $post['Model']['ministry']['id'];
+                $detail = new StatOfficerOrgDetail();
+                $detail->stat_officer_org_id = $model->id;
+                $detail->organisation_id = $post['Model']['organisation']['id'];
             }
             $detail->attributes = $post['Model'];
             if(!$detail->save()) throw new Exception(json_encode($detail->errors));
@@ -153,49 +152,16 @@ class StatOfficerMinistryController extends Controller
         }
     }
 
-//    public function actionPrint($year) {
-//        $year = PhiscalYear::findOne($year);
-//        if(!isset($year)) {
-//            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-//            return;
-//        }
-//
-//        $models = Ministry::find()->alias('m')
-//            ->join('left join', 'stat_officer_ministry_detail d', 'd.ministry_id=m.id')
-//            ->join('join', 'stat_officer_ministry o', 'd.stat_officer_ministry_id = o.id and o.phiscal_year_id=:year', [':year'=>$year->id])
-//            ->all();
-//        return $this->renderPartial('../ministry/print', [
-//            'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
-//        ]);
-//    }
-//
-//    public function actionDownload($year) {
-//        $year = PhiscalYear::findOne($year);
-//        if(!isset($year)) {
-//            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-//            return;
-//        }
-//
-//        $model = StatOfficerMinistryDetail::find()->alias('d')
-//            ->join('join', 'stat_officer_ministry o', 'o.id = d.stat_officer_ministry_id and o.phiscal_year_id=:year', [':year'=> $year->id])
-//            ->one();
-//
-//        return $this->renderPartial('../ministry/excel', [
-//            'file' => 'Stat Officers Needed '. $year->year . '.xls',
-//            'content' => $this->renderPartial('table', ['model' => $model, 'year' => $year])
-//        ]);
-//    }
-
     /**
-     * Finds the StatOfficerMinistry model based on its primary key value.
+     * Finds the StatOfficerOrg model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StatOfficerMinistry the loaded model
+     * @return StatOfficerOrg the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StatOfficerMinistry::findOne($id)) !== null) {
+        if (($model = StatOfficerOrg::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

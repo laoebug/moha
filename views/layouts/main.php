@@ -98,6 +98,8 @@
                         <li><a href="index.php?r=stat-officer-position"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Positions') ?></a></li>
                         <li><a href="index.php?r=stat-officer-need"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Needed') ?></a></li>
                         <li><a href="index.php?r=stat-officer-ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-org"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation') ?></a></li>
+                        <li><a href="index.php?r=stat-officer-province"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province') ?></a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>
@@ -112,6 +114,7 @@
 
                         <li><a href="index.php?r=ethnic"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ethic') ?></a></li>
 
+                        <li><a href="index.php?r=organisation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Organisation') ?></a></li>
                         <li><a href="index.php?r=message"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Translation') ?></a></li>
                     </ul>
                 </li>

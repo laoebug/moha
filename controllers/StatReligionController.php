@@ -66,11 +66,14 @@ class StatReligionController extends Controller
             return;
         }
 
-        $models = Province::find()
-            ->alias('p')
-            ->select('p.*, d.*')
-            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_religion l', 'l.id=d.stat_religion_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+        $model = StatReligion::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id and d.stat_religion_id=:id', [':id' => $model->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         $stat = StatReligionDetail::find()
@@ -202,11 +205,14 @@ class StatReligionController extends Controller
             return;
         }
 
-        $models = Province::find()
-            ->alias('p')
-            ->select('p.*, d.*')
-            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_religion l', 'l.id=d.stat_religion_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+        $model = StatReligion::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id and d.stat_religion_id=:id', [':id' => $model->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
@@ -221,11 +227,14 @@ class StatReligionController extends Controller
             return;
         }
 
-        $models = Province::find()
-            ->alias('p')
-            ->select('p.*, d.*')
-            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id')
-            ->join('join', 'stat_religion l', 'l.id=d.stat_religion_id and l.phiscal_year_id=:year', [':year'=> $year->id])
+        $model = StatReligion::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id and d.stat_religion_id=:id', [':id' => $model->id])
             ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
