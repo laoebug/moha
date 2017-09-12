@@ -73,18 +73,8 @@ class StatOfficerMinistryTrainController extends Controller
             ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_train_id=:id', [':id' =>$model->id])
             ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
 
-        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
-
         return json_encode([
             'models' => $models,
-            'stat' => [
-                'labels' => ArrayHelper::getColumn($ministries, 'name'),
-                'series' => [Yii::t('app', 'Total'), Yii::t('app', 'Women')],
-                'data' => [
-                    ArrayHelper::getColumn($models, 'total'),
-                    ArrayHelper::getColumn($models, 'women')
-                ]
-            ],
         ]);
     }
 
