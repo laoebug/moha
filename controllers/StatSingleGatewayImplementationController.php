@@ -59,24 +59,37 @@ class StatSingleGatewayImplementationController extends Controller
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
 
-        $model = StatSingleGatewayImplementation::find()
-            ->alias('i')
-            ->join('join', 'stat_single_gateway_implementation_detail d', 'i.id=d.ministry_id and i.phiscal_year_id=:year', [
-                ':year' => $year->id
+//        $model = StatSingleGatewayImplementation::find()
+//            ->alias('i')
+//            ->join('join', 'stat_single_gateway_implementation_detail d', 'i.id=d.ministry_id and i.phiscal_year_id=:year', [
+//                ':year' => $year->id
+//            ])
+//            ->join('right join', 'ministry m', 'm.id=d.ministry_id')
+//            ->with(['statSingleGatewayImplementationDetails' => function(ActiveQuery $query) {
+//                $query
+////                    ->select('d.id, d.name, d.remark, d.ministry_id, d.stat_single_gateway_implementation_id')
+//                    ->select(['DATE_FORMAT(`start_date`, "%d-%m-%Y") as `start_date`, `d`.`id`, `d`.`name`, `d`.`remark`, `d`.`ministry_id`, `d`.`stat_single_gateway_implementation_id`'])
+//                    ->alias('d')
+//                    ->with(['ministry']);
+//            }])
+//            ->orderBy('m.position')
+//            ->asArray()
+//            ->one();
+
+        $model = StatSingleGatewayImplementation::find()->where(['phiscal_year_id' => $year])->one();
+        if(!isset($model)) throw new HttpException(Yii::t('app', 'No Data'));
+
+        $models = Ministry::find()->alias('m')
+            ->select('m.*,`d`.`name` as `servicename`, `d`.`remark`')
+            ->addSelect([
+                'start_date'=> 'DATE_FORMAT(`start_date`, "%d-%m-%Y")',
             ])
-            ->join('right join', 'ministry m', 'm.id=d.ministry_id')
-            ->with(['statSingleGatewayImplementationDetails' => function(ActiveQuery $query) {
-                $query
-//                    ->select('d.id, d.name, d.remark, d.ministry_id, d.stat_single_gateway_implementation_id')
-                    ->select(['DATE_FORMAT(`start_date`, "%d-%m-%Y") as `start_date`, `d`.`id`, `d`.`name`, `d`.`remark`, `d`.`ministry_id`, `d`.`stat_single_gateway_implementation_id`'])
-                    ->alias('d')
-                    ->with(['ministry']);
-            }])
-            ->orderBy('m.position')
-            ->asArray()
-            ->one();
+            ->join('left join', 'stat_single_gateway_implementation_detail d', 'd.ministry_id = m.id and d.stat_single_gateway_implementation_id=:id', [':id' => $model->id])
+            ->where(['deleted' => 0])
+            ->orderBy('position')->asArray()->all();
+
         return json_encode([
-            'model' => $model
+            'models' => $models,
         ]);
     }
 

@@ -24,7 +24,7 @@
                 <th><?= Yii::t('app', 'No.') ?></th>
                 <th><?= Yii::t('app', 'Province') ?></th>
                 <th><?= Yii::t('app', 'Ethic') ?></th>
-                <?php foreach ($ethnics as $i => $ethnic): if($i > 25) break; ?>
+                <?php foreach ($ethnics as $i => $ethnic): if($i == 25) break; ?>
                     <th><?= $ethnic->name ?></th>
                 <?php endforeach; ?>
             </tr>
@@ -35,21 +35,23 @@
                     <td rowspan="2"><?= $i + 1 ?></td>
                     <td rowspan="2"><?= $province->province_name ?></td>
                     <td><?= Yii::t('app', 'Total') ?></td>
-                    <?php foreach ($ethnics as $ethnic): if($i > 25) break; ?>
-                    <td>
-                        <?php
-                        foreach ($models as $model)
-                            if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
-                                echo $model->total;
-                                break;
-                            }
-                    ?>
-                    </td>
-                    <?php endforeach; ?>
+                    <?php foreach ($ethnics as $j => $ethnic): ?>
+                        <td>
+                            <?php
+                            foreach ($models as $model)
+                                if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
+                                    echo $model->total;
+                                    break;
+                                }
+                            ?>
+                        </td>
+                    <?php
+                        if($j == 24) break;
+                    endforeach; ?>
                 </tr>
                 <tr>
                     <td><?= Yii::t('app', 'Women') ?></td>
-                    <?php foreach ($ethnics as $ethnic): if($i > 25) break; ?>
+                    <?php foreach ($ethnics as $e => $ethnic): ?>
                         <td>
                             <?php
                             foreach ($models as $model)
@@ -59,7 +61,9 @@
                                 }
                             ?>
                         </td>
-                    <?php endforeach; ?>
+                    <?php
+                        if($e == 24) break;
+                    endforeach; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -72,18 +76,22 @@
             <th><?= Yii::t('app', 'No.') ?></th>
             <th><?= Yii::t('app', 'Province') ?></th>
             <th><?= Yii::t('app', 'Ethic') ?></th>
-            <?php foreach ($ethnics as $i => $ethnic): if($i > 25) break; ?>
+            <?php for ($i = 25; $i < count($ethnics); $i++):
+            $ethnic = $ethnics[$i];
+            ?>
                 <th><?= $ethnic->name ?></th>
-            <?php endforeach; ?>
+            <?php endfor; ?>
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($provinces as $i => $province): ?>
+        <?php foreach ($provinces as $p => $province): ?>
             <tr>
-                <td rowspan="2"><?= $i + 1 ?></td>
+                <td rowspan="2"><?= $p + 1 ?></td>
                 <td rowspan="2"><?= $province->province_name ?></td>
                 <td><?= Yii::t('app', 'Total') ?></td>
-                <?php for ($i = 25; $i < count($ethnics); $i++): ?>
+                <?php for ($i = 25; $i < count($ethnics); $i++):
+                    $ethnic = $ethnics[$i];
+                    ?>
                     <td>
                         <?php
                         foreach ($models as $model)
@@ -97,7 +105,9 @@
             </tr>
             <tr>
                 <td><?= Yii::t('app', 'Women') ?></td>
-                <?php foreach ($ethnics as $ethnic): if($i > 25) break; ?>
+                <?php for ($i = 25; $i < count($ethnics); $i++):
+                    $ethnic = $ethnics[$i];
+                    ?>
                     <td>
                         <?php
                         foreach ($models as $model)
@@ -107,7 +117,7 @@
                             }
                         ?>
                     </td>
-                <?php endforeach; ?>
+                <?php endfor; ?>
             </tr>
         <?php endforeach; ?>
         </tbody>

@@ -202,7 +202,8 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
                 for(var l = 0; l < $scope.models.length; l++) {
                     var level = $scope.models[l];
                     for(var a = 0; a < level.approvers.length; a++)
-                        total += parseInt(level.approvers[a][key]);
+                        if(level.approvers[a][key])
+                          total += parseInt(level.approvers[a][key]);
                 }
             return total;
         };

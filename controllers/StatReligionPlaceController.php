@@ -50,7 +50,7 @@ class StatReligionPlaceController extends Controller
 
         $provinces = Province::find()
             ->where(['deleted' => 0])
-            ->orderBy('position')
+            ->orderBy('province_code')
             ->asArray()->all();
 
         return json_encode([

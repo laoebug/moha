@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="col-sm-12" style="margin-top: 2em">
-        <div class="card" ng-show="model">
+        <div class="card" ng-show="models">
             <div class="card-title-w-btn ">
                 <h3 class="title"><?= Yii::t('app','Statistics of Goverment Structure') ?> ({{year.year}})</h3>
                 <p class="hidden-print">
@@ -72,12 +72,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="d in model.statSingleGatewayImplementationDetails | orderBy:d.ministry.position:false" style="cursor:pointer;">
+                    <tr ng-repeat="m in models" style="cursor:pointer;">
                         <td>{{$index + 1}}</td>
-                        <td>{{d.ministry.name}}</td>
-                        <td class="text-center">{{d.start_date}}</td>
-                        <td class="text-center">{{d.name}}</td>
-                        <td class="text-center">{{d.remark}}</td>
+                        <td>{{m.name}}</td>
+                        <td class="text-center">{{m.start_date}}</td>
+                        <td class="text-center">{{m.servicename}}</td>
+                        <td class="text-center">{{m.remark}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
           $scope.selected = null;
             $http.get(url+'enquiry&year='+$scope.year.id)
                 .then(function(r) {
-                    $scope.model = r.data.model;
+                    $scope.models = r.data.models;
                 }, function(r) {
                   $scope.response = r;
                   $timeout(function () {

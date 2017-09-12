@@ -50,7 +50,7 @@ class StatReligionTeacherController extends Controller
 
         $provinces = Province::find()
             ->where(['deleted' => 0])
-            ->orderBy('position')
+            ->orderBy('province_code')
             ->asArray()->all();
 
         return json_encode([
@@ -74,7 +74,7 @@ class StatReligionTeacherController extends Controller
 
         $models = Province::find()->alias('p')->select('p.*, d.*')
             ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id and d.stat_religion_teacher_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
+            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
 
         $stat = StatReligionTeacherDetail::find()
             ->select([
@@ -211,7 +211,7 @@ class StatReligionTeacherController extends Controller
 
         $models = Province::find()->alias('p')->select('p.*, d.*')
             ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id and d.stat_religion_teacher_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
+            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', ['models' => $models])
@@ -233,7 +233,7 @@ class StatReligionTeacherController extends Controller
 
         $models = Province::find()->alias('p')->select('p.*, d.*')
             ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id and d.stat_religion_teacher_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
+            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Local Administration '. $year->year .'.xls',

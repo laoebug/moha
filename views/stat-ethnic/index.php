@@ -52,9 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-    <div class="row" ng-bind-html="result">
-
-    </div>
+    <div class="row" ng-bind-html="result"></div>
 </div>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">

@@ -50,7 +50,7 @@ class StatLocalAdminController extends Controller
 
         $provinces = Province::find()
             ->where(['deleted' => 0])
-            ->orderBy('position')
+            ->orderBy('province_code')
             ->asArray()->all();
 
         return json_encode([
@@ -76,7 +76,7 @@ class StatLocalAdminController extends Controller
             ->alias('p')
             ->select('p.*, d.*')
             ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
+            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
 
         return json_encode([
             'models' => $models
@@ -186,7 +186,7 @@ class StatLocalAdminController extends Controller
             ->alias('p')
             ->select('p.*, d.*')
             ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
+            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
@@ -210,7 +210,7 @@ class StatLocalAdminController extends Controller
             ->alias('p')
             ->select('p.*, d.*')
             ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.position')->asArray()->all();
+            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Local Administration '. $year->year .'.xls',
