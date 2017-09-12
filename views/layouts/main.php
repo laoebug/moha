@@ -68,6 +68,18 @@
                     <p class="designation"><?= Yii::$app->user->identity->firstname ?></p>
                 </div>
             </div>
+            
+            <ul class="sidebar-menu">
+    		<?php
+            use app\components\MenuWidget;
+            ?>
+            <?php MenuWidget::begin(); ?>
+            
+
+            
+            <?php MenuWidget::end(); ?>
+			</ul>
+
             <!-- Sidebar Menu-->
             <ul class="sidebar-menu">
             		<?php //$user = Yii::$app->user; ?>

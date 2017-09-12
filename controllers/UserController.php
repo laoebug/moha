@@ -11,6 +11,7 @@ use yii\db\Exception;
 use app\models\Role;
 use app\models\Menu;
 use app\models\UserHasRole;
+use app\services\AuthenticationService;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -72,11 +73,16 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
+        $model = new User();
+       
         
        // $roles = Role::find()->all();
        // $menus = Menu::find()->all();
-       $menu = new Menu();$menu->getMenus(0,0);
-        $model = new User();
+        
+//         $authorizeMenus = AuthenticationService::getAuthorizedMenuAndRole();
+        
+        
+        
         $model->password = "1010";
         $userRoles = array();
         

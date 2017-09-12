@@ -26,6 +26,7 @@ use Yii;
 class Menu extends \yii\db\ActiveRecord
 {
 
+    public $child_count;
     /**
      * @inheritdoc
      */
@@ -199,23 +200,33 @@ class Menu extends \yii\db\ActiveRecord
             'menu_id' => 'id'
         ]);
     }
-
-    public function getMenus($parent_id, $level)
+    
+    public static function displayMenu()
     {
         
-//         // retrieve all children of $parent
-//         $result = mysql_query('SELECT title FROM menu ' . 'WHERE $parent_id="' . $parent_id . '";');
+//         $user = User::findOne(Yii::$app->user->id);
         
-//         // display each child
-//         while ($row = mysql_fetch_array($result)) {
-//             // indent and display the title of this child
-//             echo str_repeat('  ', $level) . $row['name'] . "n";
+//         $parent_menu = array();
+//         $sub_menu = array();
+        
+//         try {
             
-//             // call this function again to display this
-//             // child's children
-//             display_children($row['name'], $level + 1);
+            
+//             $sql = " SELECT a.* FROM `menu` a , role_has_menu b ";
+//             $sql .= " where a.id=b.menu_id and b.role_id=:role_id";
+            
+//             $command = Yii::$app->db->createCommand($sql);
+//             $command->bindValue(':role_id', $user->role_id);
+//             $rows = $command->queryAll();
+            
+//             foreach ($rows as $row) {
+            
+//             }
+//         } catch (Exception $e) {
+//             echo "Data could not be retrieved";
+//             exit();
 //         }
-//         exit;
+        
+        // exit();
     }
-    
 }
