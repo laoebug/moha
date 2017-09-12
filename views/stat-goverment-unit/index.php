@@ -80,10 +80,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
         $scope.enquiry = function() {
           if($scope.year)
-            $http.get(url + 'enquiry&year='+$scope.year.id).then(function(r) {
+            $http.get(url + 'enquiry&year='+$scope.year.id)
+              .then(function(r) {
               $scope.result = $sce.trustAsHtml(r.data);
             }, function(r) {
-                console.log(r);
                 $scope.response = r;
                 $timeout(function () {
                     $scope.response = null;

@@ -18,8 +18,8 @@ class ProvinceSearch extends Province
     public function rules()
     {
         return [
-            [['id', 'deleted'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'input_id', 'deleted', 'position'], 'integer'],
+            [['province_code', 'province_name', 'record_status', 'input_dt_stamp'], 'safe'],
         ];
     }
 
@@ -60,10 +60,15 @@ class ProvinceSearch extends Province
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'input_id' => $this->input_id,
+            'input_dt_stamp' => $this->input_dt_stamp,
             'deleted' => $this->deleted,
+            'position' => $this->position,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'province_code', $this->province_code])
+            ->andFilterWhere(['like', 'province_name', $this->province_name])
+            ->andFilterWhere(['like', 'record_status', $this->record_status]);
 
         return $dataProvider;
     }

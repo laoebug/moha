@@ -14,11 +14,29 @@ use Yii;
  * @property integer $deleted
  * @property string $status
  *
- * @property Ministry[] $ministries
  * @property StatAssociationFoundation[] $statAssociationFoundations
+ * @property StatEthnic[] $statEthnics
  * @property StatGovermentUnit[] $statGovermentUnits
  * @property StatLegal[] $statLegals
  * @property StatLocalAdmin[] $statLocalAdmins
+ * @property StatOfficer[] $statOfficers
+ * @property StatOfficerAdd[] $statOfficerAdds
+ * @property StatOfficerAge[] $statOfficerAges
+ * @property StatOfficerContract[] $statOfficerContracts
+ * @property StatOfficerDegree[] $statOfficerDegrees
+ * @property StatOfficerMinistry[] $statOfficerMinistries
+ * @property StatOfficerMinistryAdd[] $statOfficerMinistryAdds
+ * @property StatOfficerMinistryTrain[] $statOfficerMinistryTrains
+ * @property StatOfficerNeed[] $statOfficerNeeds
+ * @property StatOfficerOrg[] $statOfficerOrgs
+ * @property StatOfficerOrganisationAdd[] $statOfficerOrganisationAdds
+ * @property StatOfficerPosition[] $statOfficerPositions
+ * @property StatOfficerProvince[] $statOfficerProvinces
+ * @property StatOfficerProvinceAdd[] $statOfficerProvinceAdds
+ * @property StatOfficerResign[] $statOfficerResigns
+ * @property StatPopulationMovement[] $statPopulationMovements
+ * @property StatReligion[] $statReligions
+ * @property StatReligionPlace[] $statReligionPlaces
  * @property StatReligionTeacher[] $statReligionTeachers
  * @property StatSingleGatewayImplementation[] $statSingleGatewayImplementations
  */
@@ -65,17 +83,17 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMinistries()
+    public function getStatAssociationFoundations()
     {
-        return $this->hasMany(Ministry::className(), ['phiscal_year_id' => 'id']);
+        return $this->hasMany(StatAssociationFoundation::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStatAssociationFoundations()
+    public function getStatEthnics()
     {
-        return $this->hasMany(StatAssociationFoundation::className(), ['phiscal_year_id' => 'id']);
+        return $this->hasMany(StatEthnic::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
@@ -100,6 +118,150 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatLocalAdmins()
     {
         return $this->hasMany(StatLocalAdmin::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficers()
+    {
+        return $this->hasMany(StatOfficer::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerAdds()
+    {
+        return $this->hasMany(StatOfficerAdd::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerAges()
+    {
+        return $this->hasMany(StatOfficerAge::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerContracts()
+    {
+        return $this->hasMany(StatOfficerContract::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerDegrees()
+    {
+        return $this->hasMany(StatOfficerDegree::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerMinistries()
+    {
+        return $this->hasMany(StatOfficerMinistry::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerMinistryAdds()
+    {
+        return $this->hasMany(StatOfficerMinistryAdd::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerMinistryTrains()
+    {
+        return $this->hasMany(StatOfficerMinistryTrain::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerNeeds()
+    {
+        return $this->hasMany(StatOfficerNeed::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerOrgs()
+    {
+        return $this->hasMany(StatOfficerOrg::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerOrganisationAdds()
+    {
+        return $this->hasMany(StatOfficerOrganisationAdd::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerPositions()
+    {
+        return $this->hasMany(StatOfficerPosition::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerProvinces()
+    {
+        return $this->hasMany(StatOfficerProvince::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerProvinceAdds()
+    {
+        return $this->hasMany(StatOfficerProvinceAdd::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerResigns()
+    {
+        return $this->hasMany(StatOfficerResign::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatPopulationMovements()
+    {
+        return $this->hasMany(StatPopulationMovement::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatReligions()
+    {
+        return $this->hasMany(StatReligion::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatReligionPlaces()
+    {
+        return $this->hasMany(StatReligionPlace::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

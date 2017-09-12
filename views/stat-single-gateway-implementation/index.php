@@ -33,18 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-sm-3">
                         <label for=""><?= Yii::t('app', 'Start Date') ?></label>
                         <input class="form-control datepicker" data-ng-model="$parent.selected.start_date" type="text" data-ng-change="selectdate()">
-<!--                        <div class="dropdown">-->
-<!--                            <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" data-target=".dropdown" href="#">-->
-<!--                              <div class="input-group">-->
-<!--                                <input type="text" name="date" class="form-control" data-ng-model="data.date">-->
-<!--                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
-<!--                              </div>-->
-<!--                            </a>-->
-<!--                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">-->
-<!--                              <datetimepicker data-ng-model="data.date" data-datetimepicker-config="{ dropdownSelector: '#dropdown' }">-->
-<!--                              </datetimepicker>-->
-<!--                            </ul>-->
-<!--                          </div>-->
                     </div>
                     <div class="col-sm-3">
                         <label for=""><?= Yii::t('app', 'Service Unit Name') ?></label>
@@ -64,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="col-sm-12" style="margin-top: 2em">
-        <div class="card" ng-show="model">
+        <div class="card" ng-show="models">
             <div class="card-title-w-btn ">
                 <h3 class="title"><?= Yii::t('app','Statistics of Goverment Structure') ?> ({{year.year}})</h3>
                 <p class="hidden-print">
@@ -84,12 +72,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="d in model.statSingleGatewayImplementationDetails | orderBy:d.ministry.position:false" style="cursor:pointer;">
+                    <tr ng-repeat="m in models" style="cursor:pointer;">
                         <td>{{$index + 1}}</td>
-                        <td>{{d.ministry.name}}</td>
-                        <td class="text-center">{{d.start_date}}</td>
-                        <td class="text-center">{{d.name}}</td>
-                        <td class="text-center">{{d.remark}}</td>
+                        <td>{{m.name}}</td>
+                        <td class="text-center">{{m.start_date}}</td>
+                        <td class="text-center">{{m.servicename}}</td>
+                        <td class="text-center">{{m.remark}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -120,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
           $scope.selected = null;
             $http.get(url+'enquiry&year='+$scope.year.id)
                 .then(function(r) {
-                    $scope.model = r.data.model;
+                    $scope.models = r.data.models;
                 }, function(r) {
                   $scope.response = r;
                   $timeout(function () {

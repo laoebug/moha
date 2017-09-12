@@ -11,7 +11,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Goverment Structure ') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title"><?= Yii::t('app','Statistics of Goverment Structure ') ?></h3>
             </div>
             <div class="card-body">
                 <table class="table table-responsive table-bordered table-hover">

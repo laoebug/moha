@@ -17,9 +17,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'province_code') ?>
 
-    <?= $form->field($model, 'deleted') ?>
+    <?= $form->field($model, 'province_name') ?>
+
+    <?= $form->field($model, 'record_status') ?>
+
+    <?= $form->field($model, 'input_id') ?>
+
+    <?php // echo $form->field($model, 'input_dt_stamp') ?>
+
+    <?php // echo $form->field($model, 'deleted') ?>
+
+    <?php // echo $form->field($model, 'position') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

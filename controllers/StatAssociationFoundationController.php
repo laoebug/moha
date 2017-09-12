@@ -83,9 +83,15 @@ class StatAssociationFoundationController extends Controller
             return;
         }
 
+        $model = StatAssociationFoundation::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
         $models = ApproverLevel::find()
             ->with([
-                'approvers' => function(ActiveQuery $query) use($year) {
+                'approvers' => function(ActiveQuery $query) use($year, $model) {
                     $query->where(['deleted' => 0])
                         ->with([
                             'province' => function(ActiveQuery $query)  {
@@ -99,8 +105,7 @@ class StatAssociationFoundationController extends Controller
                         ])
                         ->alias('a')
                         ->select('a.*, d.*')
-                        ->join('left join', 'stat_association_foundation_detail d', 'a.id = d.approver_id')
-                        ->join('join', 'stat_association_foundation f', 'f.id = d.stat_association_foundation_id and f.phiscal_year_id=:year', [':year' => $year->id])
+                        ->join('left join', 'stat_association_foundation_detail d', 'a.id = d.approver_id and d.stat_association_foundation_id=:id', [':id' => $model->id])
                         ;
                 }
             ])->alias('l')
@@ -184,9 +189,16 @@ class StatAssociationFoundationController extends Controller
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
+
+        $model = StatAssociationFoundation::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
         $models = ApproverLevel::find()
             ->with([
-                'approvers' => function(ActiveQuery $query) use($year) {
+                'approvers' => function(ActiveQuery $query) use($year, $model) {
                     $query->where(['deleted' => 0])
                         ->with([
                             'province' => function(ActiveQuery $query)  {
@@ -200,8 +212,7 @@ class StatAssociationFoundationController extends Controller
                         ])
                         ->alias('a')
                         ->select('a.*, d.*')
-                        ->join('left join', 'stat_association_foundation_detail d', 'a.id = d.approver_id')
-                        ->join('join', 'stat_association_foundation f', 'f.id = d.stat_association_foundation_id and f.phiscal_year_id=:year', [':year' => $year->id])
+                        ->join('left join', 'stat_association_foundation_detail d', 'a.id = d.approver_id and d.stat_association_foundation_id=:id', [':id' => $model->id])
                     ;
                 }
             ])->alias('l')
@@ -219,9 +230,16 @@ class StatAssociationFoundationController extends Controller
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
+
+        $model = StatAssociationFoundation::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
         $models = ApproverLevel::find()
             ->with([
-                'approvers' => function(ActiveQuery $query) use($year) {
+                'approvers' => function(ActiveQuery $query) use($year, $model) {
                     $query->where(['deleted' => 0])
                         ->with([
                             'province' => function(ActiveQuery $query)  {
@@ -235,8 +253,7 @@ class StatAssociationFoundationController extends Controller
                         ])
                         ->alias('a')
                         ->select('a.*, d.*')
-                        ->join('left join', 'stat_association_foundation_detail d', 'a.id = d.approver_id')
-                        ->join('join', 'stat_association_foundation f', 'f.id = d.stat_association_foundation_id and f.phiscal_year_id=:year', [':year' => $year->id])
+                        ->join('left join', 'stat_association_foundation_detail d', 'a.id = d.approver_id and d.stat_association_foundation_id=:id', [':id' => $model->id])
                     ;
                 }
             ])->alias('l')

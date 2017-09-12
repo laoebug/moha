@@ -187,8 +187,10 @@ $this->title = Yii::t('app', 'Legal');
 
         $scope.sum = function(t, key) {
           var total = 0;
-          for(var n = 0; n < t.legals.length; n++)
-            total += parseInt(t.legals[n][key]);
+          for(var n = 0; n < t.legals.length; n++) {
+            if(t.legals[n][key])
+              total += parseInt(t.legals[n][key]);
+          }
           return total;
         };
 

@@ -35,7 +35,6 @@ class ApproverLevel extends \yii\db\ActiveRecord
             [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['code'], 'string', 'max' => 1],
-            [['code'], 'unique'],
         ];
     }
 
