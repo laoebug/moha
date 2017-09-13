@@ -3,9 +3,9 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[RoleHasAction]].
+ * This is the ActiveQuery class for [[Role]].
  *
- * @see RoleHasAction
+ * @see Role
  */
 class RoleHasActionQuery extends \yii\db\ActiveQuery
 {
@@ -16,7 +16,7 @@ class RoleHasActionQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return RoleHasAction[]|array
+     * @return Role[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class RoleHasActionQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return RoleHasAction|array|null
+     * @return Role|array|null
      */
     public function one($db = null)
     {

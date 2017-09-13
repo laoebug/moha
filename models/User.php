@@ -16,6 +16,9 @@ use Yii;
  * @property string $tel
  * @property string $email
  * @property integer $deleted
+ * @property integer $role_id
+ * @property integer $user_id
+ * @property string $input_dt_stamp
  *
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatGovermentUnit[] $statGovermentUnits
@@ -30,6 +33,7 @@ use Yii;
  * @property Ministry[] $ministries
  * @property UserHasRole[] $userHasRoles
  * @property Role[] $roles
+ * @property Role $role
  */
 
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
@@ -46,22 +50,27 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return 'user';
     }
 
+   
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['username', 'password', 'firstname', 'lastname', 'status', 'tel'], 'required'],
-            [['deleted'], 'integer'],
+            [['username', 'password', 'firstname', 'lastname', 'tel','role_id','status'], 'required'],
+            [['deleted', 'role_id', 'user_id'], 'integer'],
+            [['input_dt_stamp'], 'safe'],
             [['username', 'tel'], 'string', 'max' => 50],
             [['password', 'email'], 'string', 'max' => 100],
             [['firstname', 'lastname'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 1],
             [['username'], 'unique'],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            //[['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -77,6 +86,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'tel' => Yii::t('app', 'Tel'),
             'email' => Yii::t('app', 'Email'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'role_id' => Yii::t('app', 'Role'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'input_dt_stamp' => Yii::t('app', 'Input Date Time Stamp'),
         ];
     }
 
@@ -253,5 +265,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRole()
+    {
+        return $this->hasOne(Role::className(), ['id' => 'role_id']);
     }
 }

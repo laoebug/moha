@@ -11,6 +11,8 @@ use Yii;
  * @property string $name
  * @property integer $deleted
  * @property integer $position
+ * @property string $input_dt_stamp
+ * @property integer $user_id
  *
  * @property Ministry[] $ministries
  */
@@ -31,7 +33,8 @@ class MinistryGroup extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['deleted', 'position'], 'integer'],
+            [['deleted', 'position', 'user_id'], 'integer'],
+            [['input_dt_stamp'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
         ];
@@ -47,6 +50,8 @@ class MinistryGroup extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'deleted' => Yii::t('app', 'Deleted'),
             'position' => Yii::t('app', 'Position'),
+            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
+            'user_id' => Yii::t('app', 'User ID'),
         ];
     }
 
