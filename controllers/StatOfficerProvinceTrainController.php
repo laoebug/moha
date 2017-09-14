@@ -76,8 +76,41 @@ class StatOfficerProvinceTrainController extends Controller
             ->select('m.*, d.*')
             ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=m.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+
+        $stat = StatOfficerProvinceTrainDetail::find()
+            ->select([
+                'stat_officer_province_train_id' => 'stat_officer_province_train_id',
+                'tech_in_total' => 'sum(d.tech_in_total)',
+                'tech_out_total' => 'sum(d.tech_out_total)',
+                'theo_in_total' => 'sum(d.theo_in_total)',
+                'theo_out_total' => 'sum(d.theo_out_total)',
+            ])->alias('d')
+            ->where(['d.stat_officer_province_train_id' => $model->id])
+            ->asArray()->one();
+        $data = null;
+        if(isset($stat))
+            if(isset($stat['stat_officer_province_train_id'])) {
+                $percent = 100/($stat['tech_in_total']+$stat['tech_out_total']+$stat['theo_in_total']+$stat['theo_out_total']);
+                $data = [
+                    number_format($stat['tech_in_total'] * $percent,2),
+                    number_format($stat['tech_out_total'] * $percent,2),
+                    number_format($stat['theo_in_total'] * $percent,2),
+                    number_format($stat['theo_out_total'] * $percent,2),
+                ];
+            }
+
         return json_encode([
             'models' => $models,
+            'stat' => [
+                'labels' => [
+                    Yii::t('app', 'Technical Local')
+                    , Yii::t('app', 'Technical Oversea')
+                    , Yii::t('app', 'Theory Local')
+                    , Yii::t('app', 'Theory Oversea')
+                ],
+                'series' => Yii::t('app', 'Ministry Officer Upgrading'),
+                'data' => $data
+            ],
         ]);
     }
 
@@ -164,7 +197,7 @@ class StatOfficerProvinceTrainController extends Controller
             ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=m.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
 
-        return $this->renderPartial('../ministry/print', [
+        return $this->renderPartial('../province/print', [
             'content' => $this->renderPartial('table', [
                 'models' => $models, 'year' => $year, 'cols' => $this->columns
             ])
@@ -189,7 +222,7 @@ class StatOfficerProvinceTrainController extends Controller
             ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=m.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
 
-        return $this->renderPartial('../ministry/excel', [
+        return $this->renderPartial('../province/excel', [
             'file' => 'Stat Officers Province Train '. $year->year . '.xls',
             'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year, 'cols' => $this->columns])
         ]);

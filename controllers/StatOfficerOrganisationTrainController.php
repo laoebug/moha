@@ -74,12 +74,43 @@ class StatOfficerOrganisationTrainController extends Controller
             return;
         }
 
+        $stat = StatOfficerOrganisationTrainDetail::find()
+            ->select([
+                'stat_officer_organisation_train_id' => 'stat_officer_organisation_train_id',
+                'tech_in_total' => 'sum(d.tech_in_total)',
+                'tech_out_total' => 'sum(d.tech_out_total)',
+                'theo_in_total' => 'sum(d.theo_in_total)',
+                'theo_out_total' => 'sum(d.theo_out_total)',
+            ])->alias('d')
+            ->where(['d.stat_officer_organisation_train_id' => $model->id])
+            ->asArray()->one();
+        $data = null;
+        if(isset($stat))
+            if(isset($stat['stat_officer_organisation_train_id'])) {
+                $percent = 100/($stat['tech_in_total']+$stat['tech_out_total']+$stat['theo_in_total']+$stat['theo_out_total']);
+                $data = [
+                    number_format($stat['tech_in_total'] * $percent,2),
+                    number_format($stat['tech_out_total'] * $percent,2),
+                    number_format($stat['theo_in_total'] * $percent,2),
+                    number_format($stat['theo_out_total'] * $percent,2),
+                ];
+            }
+
         $models = Organisation::find()->alias('m')
             ->select('m.*, d.*')
             ->join('left join', 'stat_officer_organisation_train_detail d', 'd.organisation_id=m.id and d.stat_officer_organisation_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
         return json_encode([
             'models' => $models,
+            'stat' => [
+                'labels' => [
+                    Yii::t('app', 'Technical Local')
+                    , Yii::t('app', 'Technical Oversea')
+                    , Yii::t('app', 'Theory Local')
+                    , Yii::t('app', 'Theory Oversea')
+                ],
+                'data' => $data
+            ],
         ]);
     }
 
@@ -166,7 +197,7 @@ class StatOfficerOrganisationTrainController extends Controller
             ->join('left join', 'stat_officer_organisation_train_detail d', 'd.organisation_id=m.id and d.stat_officer_organisation_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
 
-        return $this->renderPartial('../ministry/print', [
+        return $this->renderPartial('../orgnisation/print', [
             'content' => $this->renderPartial('table', [
                 'models' => $models, 'year' => $year, 'cols' => $this->columns
             ])
@@ -191,7 +222,7 @@ class StatOfficerOrganisationTrainController extends Controller
             ->join('left join', 'stat_officer_organisation_train_detail d', 'd.organisation_id=m.id and d.stat_officer_organisation_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
 
-        return $this->renderPartial('../ministry/excel', [
+        return $this->renderPartial('../orgnisation/excel', [
             'file' => 'Stat Officers Needed '. $year->year . '.xls',
             'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year, 'cols' => $this->columns])
         ]);

@@ -136,11 +136,33 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tbody>
             </table>
         </div>
+
+        <div class="row card" ng-show="stat">
+            <h3><?= Yii::t('app', 'The Chart of Officers Ministry Training') ?> {{year.year}}</h3>
+            <div class="col-sm-8">
+                <canvas id="stat" class="chart chart-bar"
+                        chart-data="stat.data"
+                        chart-labels="stat.labels"
+                        chart-series="stat.series"
+                        chart-colors="stat.colors"
+                </canvas
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <canvas id="stat" class="chart chart-pie"
+                    chart-data="stat.data"
+                    chart-labels="stat.labels"
+                    chart-series="stat.series"
+                    chart-colors="stat.colors"
+            </canvas
+        </div>
     </div>
 </div>
+<script type="text/javascript" src="js/Chart.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
+<script type="text/javascript" src="js/angular-chart.js"></script>
 <script type="text/javascript">
-  var app = angular.module('mohaApp', []);
+    var app = angular.module('mohaApp', ['chart.js']);
   app.controller('officerMinistryTrainController', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-ministry-train/';
     $http.get($scope.url + 'get')
@@ -160,6 +182,8 @@ $this->params['breadcrumbs'][] = $this->title;
         $http.get($scope.url + 'enquiry&year='+$scope.year.id)
           .then(function(r) {
             $scope.models = r.data.models;
+              $scope.stat = r.data.stat;
+              $scope.stat.colors = ['#FF0000', '#0000FF', '#00FF00', '#FFFF00'];
           }, function(r) {
             $scope.response = r;
             $timeout(function () {

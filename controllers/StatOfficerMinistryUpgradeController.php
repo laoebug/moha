@@ -6,7 +6,9 @@ use app\components\MyHelper;
 use app\models\Ministry;
 use app\models\PhiscalYear;
 use app\models\StatOfficerMinistryUpgradeDetail;
+use app\models\StatOfficerProvinceUpgradeDetail;
 use Codeception\Util\HttpCode;
+use function GuzzleHttp\Psr7\str;
 use Yii;
 use app\models\StatOfficerMinistryUpgrade;
 use app\models\StatOfficerMinistryUpgradeSearch;
@@ -82,8 +84,47 @@ class StatOfficerMinistryUpgradeController extends Controller
             ->select('m.*, d.*')
             ->join('left join', 'stat_officer_ministry_upgrade_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_upgrade_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+
+        $query = StatOfficerProvinceUpgradeDetail::find()
+            ->select(['stat_officer_province_upgrade_id' => 'stat_officer_province_upgrade_id']);
+        foreach ($this->columns as $column)
+            $query->addSelect([$column => "ifnull(sum($column), 0)"]);
+
+        $stat = $query->where(['stat_officer_province_upgrade_id' => $model->id])->asArray()->one();
+        $data = null;
+        if(isset($stat))
+            if(isset($stat['stat_officer_province_upgrade_id'])) {
+                $sum = 0;
+                foreach ($this->columns as $column)
+                    $sum += $stat[$column];
+                $percent = 100/$sum;
+
+                foreach ($this->columns as $column)
+                    if(strpos($column, 'total'))
+                        $data[] = number_format($stat[$column] * $percent,2);
+            }
+
         return json_encode([
             'models' => $models,
+            'stat' => [
+                'series' => [Yii::t('app', 'Ministry Officer Upgrading')],
+                'labels' => [
+                    Yii::t('app', 'Doctor Local')
+                    , Yii::t('app', 'Doctor Oversea')
+                    , Yii::t('app', 'Master Local')
+                    , Yii::t('app', 'Master Oversea')
+                    , Yii::t('app', 'Bachelor Local')
+                    , Yii::t('app', 'Bachelor Oversea')
+
+                    , Yii::t('app', 'High Local')
+                    , Yii::t('app', 'High Oversea')
+                    , Yii::t('app', 'Middle Local')
+                    , Yii::t('app', 'Middle Oversea')
+                    , Yii::t('app', 'Begin Local')
+                    , Yii::t('app', 'Begin Oversea')
+                ],
+                'data' => $data
+            ],
         ]);
     }
 

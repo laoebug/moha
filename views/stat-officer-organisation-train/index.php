@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerOrganisationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Organisations Traning');
+$this->title = Yii::t('app', 'Stat Officer Organisations');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerOrganisationTrainController">
@@ -136,128 +136,152 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tbody>
             </table>
         </div>
+
+        <div class="row card" ng-show="stat">
+            <h3><?= Yii::t('app', 'The Chart of Officers Organisation Training') ?> {{year.year}}</h3>
+            <div class="col-sm-8">
+                <canvas id="stat" class="chart chart-bar"
+                        chart-data="stat.data"
+                        chart-labels="stat.labels"
+                        chart-series="stat.series"
+                        chart-colors="stat.colors"
+                </canvas
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <canvas id="stat" class="chart chart-pie"
+                    chart-data="stat.data"
+                    chart-labels="stat.labels"
+                    chart-series="stat.series"
+                    chart-colors="stat.colors"
+            </canvas
+        </div>
     </div>
 </div>
+<script type="text/javascript" src="js/Chart.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
+<script type="text/javascript" src="js/angular-chart.js"></script>
 <script type="text/javascript">
-  var app = angular.module('mohaApp', []);
-  app.controller('officerOrganisationTrainController', function($scope, $http, $sce, $timeout) {
-    $scope.url = 'index.php?r=stat-officer-organisation-train/';
-    $http.get($scope.url + 'get')
-      .then(function(r) {
-        $scope.years = r.data.years;
-        $scope.organisations = r.data.organisations;
-      }, function(r) {
-        $scope.response = r;
-        $timeout(function () {
-          $scope.response = null;
-        }, 15000);
-      });
+    var app = angular.module('mohaApp', ['chart.js']);
+    app.controller('officerOrganisationTrainController', function($scope, $http, $sce, $timeout) {
+        $scope.url = 'index.php?r=stat-officer-organisation-train/';
+        $http.get($scope.url + 'get')
+            .then(function(r) {
+                $scope.years = r.data.years;
+                $scope.organisations = r.data.organisations;
+            }, function(r) {
+                $scope.response = r;
+                $timeout(function () {
+                    $scope.response = null;
+                }, 15000);
+            });
 
-    $scope.enquiry = function() {
-      $scope.models=null;
-      if($scope.year)
-        $http.get($scope.url + 'enquiry&year='+$scope.year.id)
-          .then(function(r) {
-            $scope.models = r.data.models;
-          }, function(r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-    };
+        $scope.enquiry = function() {
+            $scope.models=null;
+            if($scope.year)
+                $http.get($scope.url + 'enquiry&year='+$scope.year.id)
+                    .then(function(r) {
+                        $scope.models = r.data.models;
+                        $scope.stat = r.data.stat;
+                        $scope.stat.colors = ['#FF0000', '#0000FF', '#00FF00', '#FFFF00'];
+                    }, function(r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+        };
 
-    $scope.inquiry = function() {
-      if($scope.year && $scope.model.organisation)
-        $http.get($scope.url + 'inquiry&year='+$scope.year.id+'&organisation='+$scope.model.organisation.id)
-          .then(function(r) {
-            if(r.data.model) {
-              $scope.model.tech_in_total = parseInt(r.data.model.tech_in_total);
-              $scope.model.tech_in_women = parseInt(r.data.model.tech_in_women);
-              $scope.model.tech_out_total = parseInt(r.data.model.tech_out_total);
-              $scope.model.tech_out_women = parseInt(r.data.model.tech_out_women);
-              $scope.model.theo_in_total = parseInt(r.data.model.theo_in_total);
-              $scope.model.theo_in_women = parseInt(r.data.model.theo_in_women);
-              $scope.model.theo_out_total = parseInt(r.data.model.theo_out_total);
-              $scope.model.theo_out_women = parseInt(r.data.model.theo_out_women);
-            } else {
-              $scope.model.tech_in_total =  null;
-              $scope.model.tech_in_women =  null;
-              $scope.model.tech_out_total = null;
-              $scope.model.tech_out_women = null;
-              $scope.model.theo_in_total =  null;
-              $scope.model.theo_in_women =  null;
-              $scope.model.theo_out_total = null;
-              $scope.model.theo_out_women = null;
+        $scope.inquiry = function() {
+            if($scope.year && $scope.model.organisation)
+                $http.get($scope.url + 'inquiry&year='+$scope.year.id+'&organisation='+$scope.model.organisation.id)
+                    .then(function(r) {
+                        if(r.data.model) {
+                            $scope.model.tech_in_total = parseInt(r.data.model.tech_in_total);
+                            $scope.model.tech_in_women = parseInt(r.data.model.tech_in_women);
+                            $scope.model.tech_out_total = parseInt(r.data.model.tech_out_total);
+                            $scope.model.tech_out_women = parseInt(r.data.model.tech_out_women);
+                            $scope.model.theo_in_total = parseInt(r.data.model.theo_in_total);
+                            $scope.model.theo_in_women = parseInt(r.data.model.theo_in_women);
+                            $scope.model.theo_out_total = parseInt(r.data.model.theo_out_total);
+                            $scope.model.theo_out_women = parseInt(r.data.model.theo_out_women);
+                        } else {
+                            $scope.model.tech_in_total =  null;
+                            $scope.model.tech_in_women =  null;
+                            $scope.model.tech_out_total = null;
+                            $scope.model.tech_out_women = null;
+                            $scope.model.theo_in_total =  null;
+                            $scope.model.theo_in_women =  null;
+                            $scope.model.theo_out_total = null;
+                            $scope.model.theo_out_women = null;
+                        }
+                    }, function(r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+        };
+
+        $scope.save = function() {
+            if($scope.model)
+                $http.post($scope.url + 'save&year='+$scope.year.id, {
+                    'Model': $scope.model,
+                    '_csrf': $('meta[name="csrf-token"]').attr("content")
+                }).then(function(r) {
+                    $scope.enquiry();
+                    $scope.model = null;
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                })
+        };
+
+        $scope.sum = function (key) {
+            var total = 0;
+            if ($scope.models)
+                for (var n = 0; n < $scope.models.length; n++)
+                    if ($scope.models[n][key])
+                        total += parseInt($scope.models[n][key]);
+            return total == 0 ? null : total;
+        };
+
+        $scope.sumtotal = function(m) {
+            var s = 0;
+            if(m.tech_in_total) s += parseInt(m.tech_in_total);
+            if(m.tech_out_total) s += parseInt(m.tech_out_total);
+            if(m.theo_in_total) s += parseInt(m.theo_in_total);
+            if(m.theo_out_total) s += parseInt(m.theo_out_total);
+            return s == 0 ? null : s;
+        };
+
+        $scope.sumwomen = function(m) {
+            var s = 0;
+            if(m.tech_in_women) s += parseInt(m.tech_in_women);
+            if(m.tech_out_women) s += parseInt(m.tech_out_women);
+            if(m.theo_in_women) s += parseInt(m.theo_in_women);
+            if(m.theo_out_women) s += parseInt(m.theo_out_women);
+            return s == 0 ? null : s;
+        };
+
+        $scope.formatNumber = function(num, dec) {
+            if (dec === undefined) dec = 2;
+            var r = "" + Math.abs(parseFloat(num).toFixed(dec));
+            var decimals = "";
+            if (r.lastIndexOf(".") != -1) {
+                decimals = "." + r.substring(r.lastIndexOf(".") + 1);
+                decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
+                r = r.substring(0, r.lastIndexOf("."));
             }
-          }, function(r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-    };
-
-    $scope.save = function() {
-      if($scope.model)
-        $http.post($scope.url + 'save&year='+$scope.year.id, {
-          'Model': $scope.model,
-          '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function(r) {
-          $scope.enquiry();
-          $scope.model = null;
-          $scope.response = r;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        }, function(r) {
-          $scope.response = r;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        })
-    };
-
-    $scope.sum = function (key) {
-      var total = 0;
-      if ($scope.models)
-        for (var n = 0; n < $scope.models.length; n++)
-          if ($scope.models[n][key])
-            total += parseInt($scope.models[n][key]);
-      return total == 0 ? null : total;
-    };
-
-    $scope.sumtotal = function(m) {
-      var s = 0;
-      if(m.tech_in_total) s += parseInt(m.tech_in_total);
-      if(m.tech_out_total) s += parseInt(m.tech_out_total);
-      if(m.theo_in_total) s += parseInt(m.theo_in_total);
-      if(m.theo_out_total) s += parseInt(m.theo_out_total);
-      return s == 0 ? null : s;
-    };
-
-    $scope.sumwomen = function(m) {
-      var s = 0;
-      if(m.tech_in_women) s += parseInt(m.tech_in_women);
-      if(m.tech_out_women) s += parseInt(m.tech_out_women);
-      if(m.theo_in_women) s += parseInt(m.theo_in_women);
-      if(m.theo_out_women) s += parseInt(m.theo_out_women);
-      return s == 0 ? null : s;
-    };
-
-    $scope.formatNumber = function(num, dec) {
-      if (dec === undefined) dec = 2;
-      var r = "" + Math.abs(parseFloat(num).toFixed(dec));
-      var decimals = "";
-      if (r.lastIndexOf(".") != -1) {
-        decimals = "." + r.substring(r.lastIndexOf(".") + 1);
-        decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
-        r = r.substring(0, r.lastIndexOf("."));
-      }
-      for (var i = r.length - 3; i > 0; i -= 3)
-        r = r.substr(0, i) + "," + r.substr(i);
-      return (num < 0 ? "-" : "") + r + decimals;
-    }
-  });
+            for (var i = r.length - 3; i > 0; i -= 3)
+                r = r.substr(0, i) + "," + r.substr(i);
+            return (num < 0 ? "-" : "") + r + decimals;
+        }
+    });
 </script>
