@@ -3,27 +3,32 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
-use app\models\Ministry;
 use app\models\PhiscalYear;
-use app\models\StatOfficerMinistryTrainDetail;
+use app\models\Province;
+use app\models\StatOfficerProvinceUpgradeDetail;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerMinistryTrain;
-use app\models\StatOfficerMinistryTrainSearch;
+use app\models\StatOfficerProvinceUpgrade;
+use app\models\StatOfficerProvinceUpgradeSearch;
 use yii\db\Exception;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StatOfficerMinistryTrainController implements the CRUD actions for StatOfficerMinistryTrain model.
+ * StatOfficerProvinceUpgradeController implements the CRUD actions for StatOfficerProvinceUpgrade model.
  */
-class StatOfficerMinistryTrainController extends Controller
+class StatOfficerProvinceUpgradeController extends Controller
 {
+
     public $columns = [
-        'tech_in_total', 'tech_in_women', 'tech_out_total', 'tech_out_women',
-        'theo_in_total', 'theo_in_women', 'theo_out_total', 'theo_out_women',
+        'doctor_in_total', 'doctor_in_women', 'doctor_out_total', 'doctor_out_women',
+        'master_in_total', 'master_in_women', 'master_out_total', 'master_out_women',
+        'bachelor_in_total', 'bachelor_in_women', 'bachelor_out_total', 'bachelor_out_women',
+
+        'high_in_total', 'high_in_women', 'high_out_total', 'high_out_women',
+        'middle_in_total', 'middle_in_women', 'middle_out_total', 'middle_out_women',
+        'begin_in_total', 'begin_in_women', 'begin_out_total', 'begin_out_women',
     ];
 
     /**
@@ -42,21 +47,21 @@ class StatOfficerMinistryTrainController extends Controller
     }
 
     /**
-     * Lists all StatOfficerMinistry models.
+     * Lists all StatOfficerProvince models.
      * @return mixed
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('index', ['cols' => $this->columns]);
     }
 
     public function actionGet() {
         $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
-        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
 
         return json_encode([
             'years' => $years,
-            'ministries' => $ministries,
+            'provinces' => $provinces,
         ]);
     }
 
@@ -67,31 +72,31 @@ class StatOfficerMinistryTrainController extends Controller
             return;
         }
 
-        $model = StatOfficerMinistryTrain::find()->where(['phiscal_year_id' => $year->id])->one();
+        $model = StatOfficerProvinceUpgrade::find()->where(['phiscal_year_id' => $year->id])->one();
         if(!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
 
-        $models = Ministry::find()->alias('m')
+        $models = Province::find()->alias('m')
             ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_train_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+            ->join('left join', 'stat_officer_province_upgrade_detail d', 'd.province_id=m.id and d.stat_officer_province_upgrade_id=:id', [':id' => $model->id])
+            ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
         return json_encode([
             'models' => $models,
         ]);
     }
 
-    public function actionInquiry($year, $ministry) {
+    public function actionInquiry($year, $province) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
 
-        $model = StatOfficerMinistryTrainDetail::find()->alias('d')
-            ->join('join', 'stat_officer_ministry_train o', 'o.id = d.stat_officer_ministry_train_id and o.phiscal_year_id=:year', [':year'=> $year->id])
-            ->where(['d.ministry_id' => $ministry])
+        $model = StatOfficerProvinceUpgradeDetail::find()->alias('d')
+            ->join('join', 'stat_officer_province_upgrade o', 'o.id = d.stat_officer_province_upgrade_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+            ->where(['d.province_id' => $province])
             ->asArray()->one();
 
         return json_encode([
@@ -117,9 +122,9 @@ class StatOfficerMinistryTrainController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model = StatOfficerMinistryTrain::find()->where(['phiscal_year_id' => $year->id])->one();
+            $model = StatOfficerProvinceUpgrade::find()->where(['phiscal_year_id' => $year->id])->one();
             if(!isset($model)) {
-                $model = new StatOfficerMinistryTrain();
+                $model = new StatOfficerProvinceUpgrade();
                 $model->user_id = Yii::$app->user->id;
                 $model->phiscal_year_id = $year->id;
             }
@@ -127,15 +132,15 @@ class StatOfficerMinistryTrainController extends Controller
             $model->saved = 1;
             if(!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = StatOfficerMinistryTrainDetail::find()->alias('d')
-                ->join('join', 'stat_officer_ministry_train o', 'o.id = d.stat_officer_ministry_train_id and o.phiscal_year_id=:year', [':year'=> $year->id])
-                ->where(['ministry_id' => $post['Model']['ministry']['id']])
+            $detail = StatOfficerProvinceUpgradeDetail::find()->alias('d')
+                ->join('join', 'stat_officer_province_upgrade o', 'o.id = d.stat_officer_province_upgrade_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+                ->where(['province_id' => $post['Model']['province']['id']])
                 ->one();
 
             if(!isset($detail)) {
-                $detail = new StatOfficerMinistryTrainDetail();
-                $detail->stat_officer_ministry_train_id = $model->id;
-                $detail->ministry_id = $post['Model']['ministry']['id'];
+                $detail = new StatOfficerProvinceUpgradeDetail();
+                $detail->stat_officer_province_upgrade_id = $model->id;
+                $detail->province_id = $post['Model']['province']['id'];
             }
             $detail->attributes = $post['Model'];
             if(!$detail->save()) throw new Exception(json_encode($detail->errors));
@@ -154,16 +159,16 @@ class StatOfficerMinistryTrainController extends Controller
             return;
         }
 
-        $model = StatOfficerMinistryTrain::find()->where(['phiscal_year_id' => $year->id])->one();
+        $model = StatOfficerProvinceUpgrade::find()->where(['phiscal_year_id' => $year->id])->one();
         if(!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
 
-        $models = Ministry::find()->alias('m')
+        $models = Province::find()->alias('m')
             ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_train_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+            ->join('left join', 'stat_officer_province_upgrade_detail d', 'd.province_id=m.id and d.stat_officer_province_upgrade_id=:id', [':id' => $model->id])
+            ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -179,33 +184,33 @@ class StatOfficerMinistryTrainController extends Controller
             return;
         }
 
-        $model = StatOfficerMinistryTrain::find()->where(['phiscal_year_id' => $year->id])->one();
+        $model = StatOfficerProvinceUpgrade::find()->where(['phiscal_year_id' => $year->id])->one();
         if(!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
 
-        $models = Ministry::find()->alias('m')
+        $models = Province::find()->alias('m')
             ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_train_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+            ->join('left join', 'stat_officer_province_upgrade_detail d', 'd.province_id=m.id and d.stat_officer_province_upgrade_id=:id', [':id' => $model->id])
+            ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Stat Officers Ministry Train '. $year->year . '.xls',
+            'file' => 'Stat Officers Province Upgrade '. $year->year . '.xls',
             'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year, 'cols' => $this->columns])
         ]);
     }
-
+    
     /**
-     * Finds the StatOfficerMinistryTrain model based on its primary key value.
+     * Finds the StatOfficerProvinceUpgrade model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return StatOfficerMinistryTrain the loaded model
+     * @return StatOfficerProvinceUpgrade the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = StatOfficerMinistryTrain::findOne($id)) !== null) {
+        if (($model = StatOfficerProvinceUpgrade::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

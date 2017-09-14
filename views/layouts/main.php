@@ -2,7 +2,7 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-
+use app\components\MenuWidget;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -68,23 +68,17 @@
                     <p class="designation"><?= Yii::$app->user->identity->firstname ?></p>
                 </div>
             </div>
-            
-            <ul class="sidebar-menu">
-    		<?php
-            use app\components\MenuWidget;
-            ?>
-            <?php MenuWidget::begin(); ?>
-            
-
-            
-            <?php MenuWidget::end(); ?>
-			</ul>
 
             <!-- Sidebar Menu-->
             <ul class="sidebar-menu">
-            		<?php //$user = Yii::$app->user; ?>
-            		<?php //echo $user->id;exit;?>
+
                 <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span><?= Yii::t('app','Dashboard') ?></span></a></li>
+                <?php
+//                if(!Yii::$app->user->isGuest) {
+//                    MenuWidget::begin();
+//                    MenuWidget::end();
+//                }
+                ?>
                 <li class="treeview"><a href="#"><i class="fa fa-bar-chart"></i><span><?= Yii::t('app','Administration') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="index.php?r=ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry') ?></a></li>
@@ -103,21 +97,45 @@
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-group"></i><span><?= Yii::t('app','Officer') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="index.php?r=stat-officer"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Overall Officer') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-age"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers By Ages') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-degree"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers By Degrees') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-resign"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Resignation') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Add') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-contract"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Contract') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-position"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Positions') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-need"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Needed') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-org"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-province"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-ministry-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Add') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-organisation-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation Add') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-province-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province Add') ?></a></li>
-                        <li><a href="index.php?r=stat-officer-ministry-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Train') ?></a></li>
+                        <li class="treeview"><a href="#"><i class="fa fa-plus"></i><span><?= Yii::t('app', 'Overall Officer') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-officer"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Overall Officer') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-age"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers By Ages') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-degree"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers By Degrees') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-resign"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Resignation') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Add') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-contract"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Contract') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-position"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Positions') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-need"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Needed') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-org"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-province"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province') ?></a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview"><a href="#"><i class="fa fa-plus"></i><span><?= Yii::t('app', 'Add/Resign') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-officer-ministry-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Add') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-organisation-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation Add') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-province-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province Add') ?></a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview"><a href="#"><i class="fa fa-circle-o"></i><span><?= Yii::t('app', 'Training') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-officer-ministry-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Train') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-organisation-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation Train') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-province-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province Train') ?></a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview"><a href="#"><i class="fa fa-upload"></i><span><?= Yii::t('app', 'Upgrade') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-officer-ministry-upgrade"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Upgrade') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-organisation-upgrade"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation Upgrade') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-province-upgrade"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province Upgrade') ?></a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>

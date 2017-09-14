@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\StatOfficerMinistrySearch */
+/* @var $searchModel app\models\StatOfficerProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Ministries');
+$this->title = Yii::t('app', 'Stat Officer Provinces');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div ng-app="mohaApp" ng-controller="officerMinistryTrainController">
+<div ng-app="mohaApp" ng-controller="officerProvinceTrainController">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
@@ -27,40 +27,40 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-3">
-                    <label ><?= Yii::t('app', 'Ministry') ?></label>
-                    <select ng-options="m.name for m in ministries" ng-model="model.ministry" ng-change="inquiry()" class="form-control"></select>
+                    <label ><?= Yii::t('app', 'Province') ?></label>
+                    <select ng-options="m.province_name for m in provinces" ng-model="model.province" ng-change="inquiry()" class="form-control"></select>
                 </div>
                 <br />
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <thead>
-                            <tr>
-                                <th class="text-center" colspan="4"><?= Yii::t('app', 'Technical Trainning') ?></th>
-                                <th class="text-center" colspan="4"><?= Yii::t('app', 'Theory Trainning') ?></th>
-                            </tr>
-                            <tr>
-                                <?php for($i=0;$i<4;$i++): ?>
-                                    <th class="text-center" colspan="2"><?= Yii::t('app', $i%2==0?'Local':'Oversea') ?></th>
-                                <?php endfor; ?>
-                            </tr>
-                            <tr>
-                                <?php for($i=0;$i<8;$i++): ?>
-                                    <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></th>
-                                <?php endfor; ?>
-                            </tr>
+                        <tr>
+                            <th class="text-center" colspan="4"><?= Yii::t('app', 'Technical Trainning') ?></th>
+                            <th class="text-center" colspan="4"><?= Yii::t('app', 'Theory Trainning') ?></th>
+                        </tr>
+                        <tr>
+                            <?php for($i=0;$i<4;$i++): ?>
+                                <th class="text-center" colspan="2"><?= Yii::t('app', $i%2==0?'Local':'Oversea') ?></th>
+                            <?php endfor; ?>
+                        </tr>
+                        <tr>
+                            <?php for($i=0;$i<8;$i++): ?>
+                                <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></th>
+                            <?php endfor; ?>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td style="width: 12.5%"><input class="form-control" ng-model="model.tech_in_total" min="0" type="number"></td>
-                                <td style="width: 12.5%"><input class="form-control" ng-model="model.tech_in_women" min="0" max="{{model.tech_in_total}}" type="number"></td>
-                                <td style="width: 12.5%"><input class="form-control" ng-model="model.tech_out_total" min="0" type="number"></td>
-                                <td style="width: 12.5%"><input class="form-control" ng-model="model.tech_out_women" min="0" max="{{model.tech_out_total}}" type="number"></td>
+                        <tr>
+                            <td style="width: 12.5%"><input class="form-control" ng-model="model.tech_in_total" min="0" type="number"></td>
+                            <td style="width: 12.5%"><input class="form-control" ng-model="model.tech_in_women" min="0" max="{{model.tech_in_total}}" type="number"></td>
+                            <td style="width: 12.5%"><input class="form-control" ng-model="model.tech_out_total" min="0" type="number"></td>
+                            <td style="width: 12.5%"><input class="form-control" ng-model="model.tech_out_women" min="0" max="{{model.tech_out_total}}" type="number"></td>
 
-                                <td style="width: 12.5%"><input class="form-control" ng-model="model.theo_in_total" min="0" type="number"></td>
-                                <td style="width: 12.5%"><input class="form-control" ng-model="model.theo_in_women" min="0" max="{{model.theo_in_total}}" type="number"></td>
-                                <td style="width: 12.5%"><input class="form-control" ng-model="model.theo_out_total" min="0" type="number"></td>
-                                <td style="width: 12.5%"><input class="form-control" ng-model="model.theo_out_women" min="0" max="{{model.theo_out_total}}" type="number"></td>
-                            </tr>
+                            <td style="width: 12.5%"><input class="form-control" ng-model="model.theo_in_total" min="0" type="number"></td>
+                            <td style="width: 12.5%"><input class="form-control" ng-model="model.theo_in_women" min="0" max="{{model.theo_in_total}}" type="number"></td>
+                            <td style="width: 12.5%"><input class="form-control" ng-model="model.theo_out_total" min="0" type="number"></td>
+                            <td style="width: 12.5%"><input class="form-control" ng-model="model.theo_out_women" min="0" max="{{model.theo_out_total}}" type="number"></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th class="text-center" rowspan="5"><?= Yii::t('app', 'No.') ?></th>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'Ministry')?></th>
+                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province')?></th>
                     <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Total')?></th>
                     <th class="text-center" colspan="4"><?= Yii::t('app', 'Technical Trainning')?></th>
                     <th class="text-center" colspan="4"><?= Yii::t('app', 'Theory Trainning')?></th>
@@ -119,20 +119,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="m in models">
-                        <td class="text-center">{{$index + 1}}</td>
-                        <td class="text-center">{{m.name}}</td>
-                        <td class="text-center">{{formatNumber(sumtotal(m)) | number}}</td>
-                        <td class="text-center">{{formatNumber(sumwomen(m)) | number}}</td>
-                        <td class="text-center">{{formatNumber(m.tech_in_total )| number}}</td>
-                        <td class="text-center">{{formatNumber(m.tech_in_women )| number}}</td>
-                        <td class="text-center">{{formatNumber(m.tech_out_total) | number}}</td>
-                        <td class="text-center">{{formatNumber(m.tech_out_women) | number}}</td>
-                        <td class="text-center">{{formatNumber(m.theo_in_total )| number}}</td>
-                        <td class="text-center">{{formatNumber(m.theo_in_women )| number}}</td>
-                        <td class="text-center">{{formatNumber(m.theo_out_total) | number}}</td>
-                        <td class="text-center">{{formatNumber(m.theo_out_women) | number}}</td>
-                    </tr>
+                <tr ng-repeat="m in models">
+                    <td style="width: 2%" class="text-center">{{$index + 1}}</td>
+                    <td style="width: 10%" class="text-center">{{m.province_name}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(sumtotal(m)) | number}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(sumwomen(m)) | number}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(m.tech_in_total )| number}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(m.tech_in_women )| number}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(m.tech_out_total) | number}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(m.tech_out_women) | number}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(m.theo_in_total )| number}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(m.theo_in_women )| number}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(m.theo_out_total) | number}}</td>
+                    <td style="width: 7%" class="text-center">{{formatNumber(m.theo_out_women) | number}}</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -141,12 +141,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
-  app.controller('officerMinistryTrainController', function($scope, $http, $sce, $timeout) {
-    $scope.url = 'index.php?r=stat-officer-ministry-train/';
+  app.controller('officerProvinceTrainController', function($scope, $http, $sce, $timeout) {
+    $scope.url = 'index.php?r=stat-officer-province-train/';
     $http.get($scope.url + 'get')
       .then(function(r) {
         $scope.years = r.data.years;
-        $scope.ministries = r.data.ministries;
+        $scope.provinces = r.data.provinces;
       }, function(r) {
         $scope.response = r;
         $timeout(function () {
@@ -169,8 +169,8 @@ $this->params['breadcrumbs'][] = $this->title;
     };
 
     $scope.inquiry = function() {
-      if($scope.year && $scope.model.ministry)
-        $http.get($scope.url + 'inquiry&year='+$scope.year.id+'&ministry='+$scope.model.ministry.id)
+      if($scope.year && $scope.model.province)
+        $http.get($scope.url + 'inquiry&year='+$scope.year.id+'&province='+$scope.model.province.id)
           .then(function(r) {
             if(r.data.model) {
               $scope.model.tech_in_total = parseInt(r.data.model.tech_in_total);

@@ -54,8 +54,9 @@ function displayMenu($menu_parent_id)
             $menuList .= "</li>";
         }
     } catch (Exception $e) {
-        echo "Data could not be retrieved";
-        exit();
+//        echo "Data could not be retrieved";
+        Yii::$app->session->setFlash('danger', "Menu could not be retrieved");
+//        exit();
     }
     return $menuList;
 }

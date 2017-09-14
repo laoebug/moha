@@ -7,15 +7,12 @@
  */
 /* @var $model app\models\StatOfficerAgeDetail */
     $sum = [];
-
     foreach ($models as $model)
         foreach ($cols as $col) {
             if(!isset($sum[$col]))
                 $sum[$col] = 0;
             $sum[$col] += $model[$col];
         }
-
-
 ?>
 <style type="text/css" media="print">
     @page { size: landscape; }
@@ -24,7 +21,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Tranining of Ministry Officers ') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title"><?= Yii::t('app','Statistics of Tranining of Province Officers ') ?> (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
@@ -59,18 +56,18 @@
                     <tbody>
                         <?php foreach ($models as $index => $model): ?>
                         <tr>
-                            <td><?= $index + 1 ?></td>
-                            <td><?= $model['name'] ?></td>
-                            <th class="text-center"><?= number_format($model['tech_in_total'] + $model['tech_out_total'] + $model['theo_in_total'] + $model['theo_out_total']) ?></th>
-                            <th class="text-center"><?= number_format($model['tech_in_women'] + $model['tech_out_women'] + $model['theo_in_women'] + $model['theo_out_women']) ?></th>
-                            <td class="text-center"><?= number_format($model['tech_in_total'] )?></td>
-                            <td class="text-center"><?= number_format($model['tech_in_women'])?></td>
-                            <td class="text-center"><?= number_format($model['tech_out_total']) ?></td>
-                            <td class="text-center"><?= number_format($model['tech_out_women']) ?></td>
-                            <td class="text-center"><?= number_format($model['theo_in_total'])?></td>
-                            <td class="text-center"><?= number_format($model['theo_in_women'])?></td>
-                            <td class="text-center"><?= number_format($model['theo_out_total']) ?></td>
-                            <td class="text-center"><?= number_format($model['theo_out_women']) ?></td>
+                            <td style="2%"><?= $index + 1 ?></td>
+                            <td><?= $model['province_name'] ?></td>
+                            <th style="width: 7%" class="text-center"><?= number_format($model['tech_in_total'] + $model['tech_out_total'] + $model['theo_in_total'] + $model['theo_out_total']) ?></th>
+                            <th style="width: 7%" class="text-center"><?= number_format($model['tech_in_women'] + $model['tech_out_women'] + $model['theo_in_women'] + $model['theo_out_women']) ?></th>
+                            <td style="width: 7%" class="text-center"><?= number_format($model['tech_in_total'] )?></td>
+                            <td style="width: 7%" class="text-center"><?= number_format($model['tech_in_women'])?></td>
+                            <td style="width: 7%" class="text-center"><?= number_format($model['tech_out_total']) ?></td>
+                            <td style="width: 7%" class="text-center"><?= number_format($model['tech_out_women']) ?></td>
+                            <td style="width: 7%" class="text-center"><?= number_format($model['theo_in_total'])?></td>
+                            <td style="width: 7%" class="text-center"><?= number_format($model['theo_in_women'])?></td>
+                            <td style="width: 7%" class="text-center"><?= number_format($model['theo_out_total']) ?></td>
+                            <td style="width: 7%" class="text-center"><?= number_format($model['theo_out_women']) ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
