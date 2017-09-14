@@ -17,6 +17,8 @@ use Yii;
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatEthnic[] $statEthnics
  * @property StatGovermentUnit[] $statGovermentUnits
+ * @property StatInstituteMeeting[] $statInstituteMeetings
+ * @property StatInstituteTrain[] $statInstituteTrains
  * @property StatLegal[] $statLegals
  * @property StatLocalAdmin[] $statLocalAdmins
  * @property StatOfficer[] $statOfficers
@@ -107,6 +109,22 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatGovermentUnits()
     {
         return $this->hasMany(StatGovermentUnit::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatInstituteMeetings()
+    {
+        return $this->hasMany(StatInstituteMeeting::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatInstituteTrains()
+    {
+        return $this->hasMany(StatInstituteTrain::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

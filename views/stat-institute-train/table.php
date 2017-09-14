@@ -6,54 +6,59 @@
  * Time: 14:56
  */
 ?>
-
+<style type="text/css" media="print">
+    @page { size: landscape; }
+</style>
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Internal Legal') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title"><?= Yii::t('app','Statistics of Institution Training') ?> (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
-                        <tr>
-                            <th class="text-center"><?= Yii::t('app', 'No.')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Name')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'New')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Improve')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Publish')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Remark')?></th>
-                        </tr>
+                    <tr>
+                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
+                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Title') ?></th>
+                        <th class="text-center" colspan="2"><?= Yii::t('app', 'Attendance') ?></th>
+                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Date') ?></th>
+                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Cooperator') ?></th>
+                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Times') ?></th>
+                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Place') ?></th>
+                    </tr>
+                    <tr>
+                        <th class="text-center"><?= Yii::t('app', 'T') ?></th>
+                        <th class="text-center"><?= Yii::t('app', 'W') ?></th>
+                    </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($models as $t): ?>
+                    <?php
+                    $sum = ['women'=> 0, 'total' => 0];
+                    foreach ($models as $index => $model):
+                        $sum['total'] += $model['total'];
+                        $sum['women'] += $model['women'];
+                        ?>
                         <tr>
-                            <th class="text-center" colspan="6"><?= $t['name'] ?></th>
-                        </tr>
-                        <?php
-                        $sum = ['new' => 0, 'improve' => 0];
-                        foreach ($t['legals'] as $index => $legal):
-                            $sum['new'] = $legal['new'];
-                            $sum['improve'] = $legal['improve'];
-                            ?>
-                            <tr>
-                                <td><?=$index+1 ?></td>
-                                <td><?=$legal['name']?></td>
-                                <td class="text-center" style="width: 15%"><?=$legal['new'] == 1?1:''?></td>
-                                <td class="text-center" style="width: 15%"><?=$legal['improve'] == 1?1:''?></td>
-                                <td class="text-center"><?=$legal['publish']?></td>
-                                <td class="text-center"><?=$legal['remark']?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                        <tr>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                            <th class="text-center"><?=$sum['new']?></th>
-                            <th class="text-center"><?=$sum['improve']?></th>
-                            <th></th>
-                            <th></th>
+                            <td class="text-center"><?= $index + 1 ?></td>
+                            <td><?= $model['title'] ?></td>
+                            <td class="text-center"><?= number_format($model['total']) ?></td>
+                            <td class="text-center"><?= number_format($model['women']) ?></td>
+                            <td class="text-center"><?= \app\components\MyHelper::convertdatefordisplay($model['start_date']).' ~ '.\app\components\MyHelper::convertdatefordisplay($model['end_date']) ?></td>
+                            <td class="text-center"><?= $model['cooperator'] ?></td>
+                            <td class="text-center"><?= $model['times'] ?></td>
+                            <td class="text-center"><?= $model['place'] ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                            <th class="text-center"><?= number_format($sum['total']) ?></th>
+                            <th class="text-center"><?= number_format($sum['women']) ?></th>
+                            <td colspan="4"></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

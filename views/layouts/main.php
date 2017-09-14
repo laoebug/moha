@@ -136,6 +136,14 @@ use app\components\MenuWidget;
                                 <li><a href="index.php?r=stat-officer-province-upgrade"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province Upgrade') ?></a></li>
                             </ul>
                         </li>
+
+                        <li class="treeview"><a href="#"><i class="fa fa-book"></i><span><?= Yii::t('app', 'Course') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-course"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Course') ?></a></li>
+                                <li><a href="index.php?r=stat-institute-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Insitutution Training') ?></a></li>
+                                <li><a href="index.php?r=stat-institute-meeting"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Insitutution Meeting') ?></a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>
