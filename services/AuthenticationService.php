@@ -22,6 +22,15 @@ class AuthenticationService
             $sql .= " and a.menu_parent_id=0 ) o1 ";
             $sql .= " LEFT OUTER JOIN (SELECT menu_parent_id, COUNT(*) AS count FROM `menu` GROUP BY menu_parent_id) child_count";
             $sql .= " ON o1.id = child_count.menu_parent_id order by o1.name";
+
+//             $sql =" select o1.*,ifnull(child_count.count,0) as child_count from (SELECT a.* FROM menu a ,  role_has_menu b ";
+//             $sql.=" WHERE a.id=b.menu_id ";
+//             $sql.=" and b.role_id=:role_id ";
+//             $sql.=" and b.accessible=:accessible ";
+//             $sql.=" and a.menu_parent_id=:menu_parent_id ) o1 ";
+//             $sql.=" LEFT OUTER JOIN (SELECT menu_parent_id, COUNT(*) AS count FROM `menu` GROUP BY menu_parent_id) child_count";
+//             $sql.=" ON o1.id = child_count.menu_parent_id order by o1.name ";
+//             echo $sql;exit;
             
             $params = [
                 ':role_id' => $user->role_id,
