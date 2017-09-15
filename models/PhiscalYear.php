@@ -17,6 +17,8 @@ use Yii;
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatEthnic[] $statEthnics
  * @property StatGovermentUnit[] $statGovermentUnits
+ * @property StatInstituteMeeting[] $statInstituteMeetings
+ * @property StatInstituteTrain[] $statInstituteTrains
  * @property StatLegal[] $statLegals
  * @property StatLocalAdmin[] $statLocalAdmins
  * @property StatOfficer[] $statOfficers
@@ -27,12 +29,17 @@ use Yii;
  * @property StatOfficerMinistry[] $statOfficerMinistries
  * @property StatOfficerMinistryAdd[] $statOfficerMinistryAdds
  * @property StatOfficerMinistryTrain[] $statOfficerMinistryTrains
+ * @property StatOfficerMinistryUpgrade[] $statOfficerMinistryUpgrades
  * @property StatOfficerNeed[] $statOfficerNeeds
  * @property StatOfficerOrg[] $statOfficerOrgs
  * @property StatOfficerOrganisationAdd[] $statOfficerOrganisationAdds
+ * @property StatOfficerOrganisationTrain[] $statOfficerOrganisationTrains
+ * @property StatOfficerOrganisationUpgrade[] $statOfficerOrganisationUpgrades
  * @property StatOfficerPosition[] $statOfficerPositions
  * @property StatOfficerProvince[] $statOfficerProvinces
  * @property StatOfficerProvinceAdd[] $statOfficerProvinceAdds
+ * @property StatOfficerProvinceTrain[] $statOfficerProvinceTrains
+ * @property StatOfficerProvinceUpgrade[] $statOfficerProvinceUpgrades
  * @property StatOfficerResign[] $statOfficerResigns
  * @property StatPopulationMovement[] $statPopulationMovements
  * @property StatReligion[] $statReligions
@@ -102,6 +109,22 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatGovermentUnits()
     {
         return $this->hasMany(StatGovermentUnit::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatInstituteMeetings()
+    {
+        return $this->hasMany(StatInstituteMeeting::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatInstituteTrains()
+    {
+        return $this->hasMany(StatInstituteTrain::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
@@ -187,6 +210,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatOfficerMinistryUpgrades()
+    {
+        return $this->hasMany(StatOfficerMinistryUpgrade::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatOfficerNeeds()
     {
         return $this->hasMany(StatOfficerNeed::className(), ['phiscal_year_id' => 'id']);
@@ -211,6 +242,22 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatOfficerOrganisationTrains()
+    {
+        return $this->hasMany(StatOfficerOrganisationTrain::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerOrganisationUpgrades()
+    {
+        return $this->hasMany(StatOfficerOrganisationUpgrade::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatOfficerPositions()
     {
         return $this->hasMany(StatOfficerPosition::className(), ['phiscal_year_id' => 'id']);
@@ -230,6 +277,22 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatOfficerProvinceAdds()
     {
         return $this->hasMany(StatOfficerProvinceAdd::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerProvinceTrains()
+    {
+        return $this->hasMany(StatOfficerProvinceTrain::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerProvinceUpgrades()
+    {
+        return $this->hasMany(StatOfficerProvinceUpgrade::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

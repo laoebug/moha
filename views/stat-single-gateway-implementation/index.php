@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="col-sm-3">
                         <label for=""><?= Yii::t('app', 'Start Date') ?></label>
-                        <input class="form-control datepicker" data-ng-model="$parent.selected.start_date" type="text" data-ng-change="selectdate()">
+                        <input class="form-control datepicker" data-ng-model="$parent.selected.start_date" type="text">
                     </div>
                     <div class="col-sm-3">
                         <label for=""><?= Yii::t('app', 'Service Unit Name') ?></label>

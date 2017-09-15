@@ -86,7 +86,7 @@ class StatSingleGatewayImplementationController extends Controller
             ])
             ->join('left join', 'stat_single_gateway_implementation_detail d', 'd.ministry_id = m.id and d.stat_single_gateway_implementation_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])
-            ->orderBy('position')->asArray()->all();
+            ->orderBy('m.position')->asArray()->all();
 
         return json_encode([
             'models' => $models,

@@ -21,6 +21,11 @@ use yii\filters\VerbFilter;
  */
 class StatOfficerMinistryTrainController extends Controller
 {
+    public $columns = [
+        'tech_in_total', 'tech_in_women', 'tech_out_total', 'tech_out_women',
+        'theo_in_total', 'theo_in_women', 'theo_out_total', 'theo_out_women',
+    ];
+
     /**
      * @inheritdoc
      */
@@ -70,20 +75,41 @@ class StatOfficerMinistryTrainController extends Controller
 
         $models = Ministry::find()->alias('m')
             ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_train_id=:id', [':id' =>$model->id])
+            ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
 
-        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $stat = StatOfficerMinistryTrainDetail::find()
+            ->select([
+                'stat_officer_ministry_train_id' => 'stat_officer_ministry_train_id',
+                'tech_in_total' => 'sum(d.tech_in_total)',
+                'tech_out_total' => 'sum(d.tech_out_total)',
+                'theo_in_total' => 'sum(d.theo_in_total)',
+                'theo_out_total' => 'sum(d.theo_out_total)',
+            ])->alias('d')
+            ->where(['d.stat_officer_ministry_train_id' => $model->id])
+            ->asArray()->one();
+        $data = null;
+        if(isset($stat))
+            if(isset($stat['stat_officer_ministry_train_id'])) {
+                $percent = 100/($stat['tech_in_total']+$stat['tech_out_total']+$stat['theo_in_total']+$stat['theo_out_total']);
+                $data = [
+                    number_format($stat['tech_in_total'] * $percent,2),
+                    number_format($stat['tech_out_total'] * $percent,2),
+                    number_format($stat['theo_in_total'] * $percent,2),
+                    number_format($stat['theo_out_total'] * $percent,2),
+                ];
+            }
 
         return json_encode([
             'models' => $models,
             'stat' => [
-                'labels' => ArrayHelper::getColumn($ministries, 'name'),
-                'series' => [Yii::t('app', 'Total'), Yii::t('app', 'Women')],
-                'data' => [
-                    ArrayHelper::getColumn($models, 'total'),
-                    ArrayHelper::getColumn($models, 'women')
-                ]
+                'labels' => [
+                    Yii::t('app', 'Technical Local')
+                    , Yii::t('app', 'Technical Oversea')
+                    , Yii::t('app', 'Theory Local')
+                    , Yii::t('app', 'Theory Oversea')
+                ],
+                'data' => $data
             ],
         ]);
     }
@@ -160,12 +186,21 @@ class StatOfficerMinistryTrainController extends Controller
             return;
         }
 
+        $model = StatOfficerMinistryTrain::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
         $models = Ministry::find()->alias('m')
-            ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id')
-            ->join('join', 'stat_officer_ministry_train o', 'd.stat_officer_ministry_train_id = o.id and o.phiscal_year_id=:year', [':year'=>$year->id])
-            ->all();
+            ->select('m.*, d.*')
+            ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_train_id=:id', [':id' => $model->id])
+            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+
         return $this->renderPartial('../ministry/print', [
-            'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
+            'content' => $this->renderPartial('table', [
+                'models' => $models, 'year' => $year, 'cols' => $this->columns
+            ])
         ]);
     }
 
@@ -176,13 +211,20 @@ class StatOfficerMinistryTrainController extends Controller
             return;
         }
 
-        $model = StatOfficerMinistryTrainDetail::find()->alias('d')
-            ->join('join', 'stat_officer_ministry_train o', 'o.id = d.stat_officer_ministry_train_id and o.phiscal_year_id=:year', [':year'=> $year->id])
-            ->one();
+        $model = StatOfficerMinistryTrain::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Ministry::find()->alias('m')
+            ->select('m.*, d.*')
+            ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_train_id=:id', [':id' => $model->id])
+            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Stat Officers Needed '. $year->year . '.xls',
-            'content' => $this->renderPartial('table', ['model' => $model, 'year' => $year])
+            'file' => 'Stat Officers Ministry Train '. $year->year . '.xls',
+            'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year, 'cols' => $this->columns])
         ]);
     }
 

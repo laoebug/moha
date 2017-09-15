@@ -97,6 +97,7 @@ class StatReligionPlaceController extends Controller
                     number_format($stat['idslam'] * $percent,2),
                 ];
             }
+
         return json_encode([
             'models' => $models,
             'stat' => [
