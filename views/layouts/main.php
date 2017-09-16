@@ -156,6 +156,16 @@ use app\components\MenuWidget;
                         <li><a href="index.php?r=stat-govcoin-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນກາ ໃບຍ້ອງຍໍລັດຖະບານ ພາຍໃນກະຊວງ</a></li>
                         <li><a href="index.php?r=stat-highoversea-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນຊັ້ນສູງ ຕ່າງປະເທດ ບັນດາກະຊວງ</a></li>
                         <li><a href="index.php?r=stat-victoryoversea-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊ ຕ່າງປະເທດ ບັນດາກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-victoryoversea-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊ ຕ່າງປະເທດ ບັນດາແຂວງ</a></li>
+                        <li><a href="index.php?r=stat-govoversea-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນກາ ຕ່າງປະເທດ ບັນດາກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-govcoin-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນກາ ພາຍໃນແຂວງ</a></li>
+                        <li><a href="index.php?r=stat-govoversea-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນກາ ຕ່າງປະເທດ ບັນດາແຂວງ</a></li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-book"></i><span><?= Yii::t('app','Document') ?></span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.php?r=stat-document"><i class="fa fa-circle-o"></i> ການທ້ອນໂຮມເອກະສານ</a></li>
+
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>

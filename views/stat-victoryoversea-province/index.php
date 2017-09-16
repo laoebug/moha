@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\StatVictoryoverseaMinistrySearch */
+/* @var $searchModel app\models\StatVictoryoverseaProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Victoryoversea Ministries');
+$this->title = Yii::t('app', 'Stat Victoryoversea Provinces');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div ng-app="mohaApp" ng-controller="statVictoryoverseaMinistry">
+<div ng-app="mohaApp" ng-controller="statVictoryoverseaProvince">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-3">
-                    <label><?= Yii::t('app', 'Ministry') ?></label>
-                    <select class="form-control" ng-model="model.ministry" ng-change="inquiry()" ng-options="m.name for m in ministries"></select>
+                    <label><?= Yii::t('app', 'Province') ?></label>
+                    <select class="form-control" ng-model="model.province" ng-change="inquiry()" ng-options="m.province_name for m in provinces"></select>
                 </div>
                 <div class="col-sm-3">
                     <label><?= Yii::t('app', 'Award') ?></label>
@@ -45,13 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         <tr>
                             <?php
                             for($i=0;$i<2;$i++)
-                            foreach ($levels as $level): ?>
-                                <th class="text-center" colspan="2"><?= $level ?></th>
-                            <?php endforeach; ?>
+                                foreach ($levels as $level): ?>
+                                    <th class="text-center" colspan="2"><?= $level ?></th>
+                                <?php endforeach; ?>
                         </tr>
                         <tr>
                             <?php for($i=0;$i<12;$i++): ?>
-                            <th class="text-center"><?= $i%2==0?'ບຸກຄົນ':'ກົມກອງ' ?></th>
+                                <th class="text-center"><?= $i%2==0?'ບຸກຄົນ':'ກົມກອງ' ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
@@ -85,9 +85,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         <tr>
                             <?php
                             for($i=0;$i<2;$i++)
-                            foreach ($levels as $level): ?>
-                                <th class="text-center" colspan="2"><?= $level ?></th>
-                            <?php endforeach; ?>
+                                foreach ($levels as $level): ?>
+                                    <th class="text-center" colspan="2"><?= $level ?></th>
+                                <?php endforeach; ?>
                         </tr>
                         <tr>
                             <?php for($i=0;$i<12;$i++): ?>
@@ -117,11 +117,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-4">
                     <table class="table table-bordered">
                         <thead>
-                            <tr><th colspan="2">ຫຼຽນໄຊມິດຕະພາບ</th></tr>
-                            <tr>
-                                <th class="text-center">ບຸກຄົນ</th>
-                                <th class="text-center">ກົມກອງ</th>
-                            </tr>
+                        <tr><th colspan="2">ຫຼຽນໄຊມິດຕະພາບ</th></tr>
+                        <tr>
+                            <th class="text-center">ບຸກຄົນ</th>
+                            <th class="text-center">ກົມກອງ</th>
+                        </tr>
                         </thead>
                         <tbody>
                         <tr>
@@ -156,7 +156,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th class="text-center" rowspan="4"><?= Yii::t('app', 'No.') ?></th>
-                    <th class="text-center" rowspan="4">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</th>
+                    <th class="text-center" rowspan="4">ຊື່ແຂວງ ແລະ ນະຄອນຫຼວງ</th>
                     <th class="text-center" rowspan="4">ຍ້ອງຍໍຜົນງານ</th>
                     <th class="text-center" colspan="26">ປະເພດຫຼຽນໄຊ</th>
                     <th class="text-center" colspan="2" rowspan="3">ລວມ</th>
@@ -172,9 +172,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <?php
                     for ($i=0;$i<count($labels);$i++)
-                    foreach ($levels as $level): ?>
-                        <th class="text-center" colspan="2"><?= $level ?></th>
-                    <?php endforeach; ?>
+                        foreach ($levels as $level): ?>
+                            <th class="text-center" colspan="2"><?= $level ?></th>
+                        <?php endforeach; ?>
                 </tr>
                 <tr>
                     <?php for ($i=0;$i<count($labels)*count($levels)*2 + 4;$i++):?>
@@ -224,7 +224,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
                 <tr ng-repeat="model in models">
                     <td class="text-center">{{$index + 1}}</td>
-                    <td class="text-center">{{model.ministry}}</td>
+                    <td class="text-center">{{model.province}}</td>
                     <td class="text-center">{{model.award}}</td>
                     <td class="text-center">{{model.free1_personal | number }}</td>
                     <td class="text-center">{{model.free1_team | number }}</td>
@@ -270,12 +270,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
-  app.controller('statVictoryoverseaMinistry', function($scope, $http, $sce, $timeout) {
-    $scope.url = 'index.php?r=stat-victoryoversea-ministry/';
+  app.controller('statVictoryoverseaProvince', function($scope, $http, $sce, $timeout) {
+    $scope.url = 'index.php?r=stat-victoryoversea-province/';
     $http.get($scope.url+ 'get')
       .then(function(r) {
         $scope.years = r.data.years;
-        $scope.ministries = r.data.ministries;
+        $scope.provinces = r.data.provinces;
         $scope.awards = r.data.awards;
       }, function(r) {
         $scope.response = r;
@@ -299,8 +299,8 @@ $this->params['breadcrumbs'][] = $this->title;
     };
 
     $scope.inquiry = function() {
-      if($scope.model.ministry && $scope.model.award) {
-        $http.get($scope.url + 'inquiry&year='+$scope.year.id + '&ministry='+$scope.model.ministry.id+'&award='+$scope.model.award.id)
+      if($scope.model.province && $scope.model.award) {
+        $http.get($scope.url + 'inquiry&year='+$scope.year.id + '&province='+$scope.model.province.id+'&award='+$scope.model.award.id)
           .then(function(r) {
             if(r.data.model) {
               $scope.model.free1_personal  = parseInt(r.data.model.free1_personal);

@@ -15,12 +15,16 @@ use Yii;
  *
  * @property User $user
  * @property StatGovcoinMinistryDetail[] $statGovcoinMinistryDetails
+ * @property StatGovcoinProvinceDetail[] $statGovcoinProvinceDetails
+ * @property StatGovoverseaMinistryDetail[] $statGovoverseaMinistryDetails
+ * @property StatGovoverseaProvinceDetail[] $statGovoverseaProvinceDetails
  * @property StatHighcoinMinistryDetail[] $statHighcoinMinistryDetails
  * @property StatHighoverseaMinistryDetail[] $statHighoverseaMinistryDetails
  * @property StatHornorcoinProvinceDetail[] $statHornorcoinProvinceDetails
  * @property StatVictorycoinMinistryDetail[] $statVictorycoinMinistryDetails
  * @property StatVictorycoinProvinceDetail[] $statVictorycoinProvinceDetails
  * @property StatVictoryoverseaMinistryDetail[] $statVictoryoverseaMinistryDetails
+ * @property StatVictoryoverseaProvinceDetail[] $statVictoryoverseaProvinceDetails
  */
 class Award extends \yii\db\ActiveRecord
 {
@@ -78,6 +82,30 @@ class Award extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatGovcoinProvinceDetails()
+    {
+        return $this->hasMany(StatGovcoinProvinceDetail::className(), ['award_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatGovoverseaMinistryDetails()
+    {
+        return $this->hasMany(StatGovoverseaMinistryDetail::className(), ['award_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatGovoverseaProvinceDetails()
+    {
+        return $this->hasMany(StatGovoverseaProvinceDetail::className(), ['award_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatHighcoinMinistryDetails()
     {
         return $this->hasMany(StatHighcoinMinistryDetail::className(), ['award_id' => 'id']);
@@ -121,6 +149,14 @@ class Award extends \yii\db\ActiveRecord
     public function getStatVictoryoverseaMinistryDetails()
     {
         return $this->hasMany(StatVictoryoverseaMinistryDetail::className(), ['award_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictoryoverseaProvinceDetails()
+    {
+        return $this->hasMany(StatVictoryoverseaProvinceDetail::className(), ['award_id' => 'id']);
     }
 
     /**
