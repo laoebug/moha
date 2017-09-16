@@ -4,15 +4,15 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\StatInstituteMeetingSearch */
+/* @var $searchModel app\models\StatResearchSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Institute Meetings');
+$this->title = Yii::t('app', 'Stat Researchs');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 
-<div class="row" ng-app="mohaApp" ng-controller="statInstituteMeetingController">
+<div class="row" ng-app="mohaApp" ng-controller="statResearchController">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
-                <div class="col-sm-12">
+                <div class="col-sm-8">
                     <label for=""><?= Yii::t('app', 'Title') ?></label>
                     <input type="text" class="form-control" ng-model="model.title" >
                 </div>
@@ -40,11 +40,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label for=""><?= Yii::t('app', 'Women') ?></label>
                     <input type="number" min="0" max="{{model.total}}" class="form-control" ng-model="model.women">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
+                    <label for=""><?= Yii::t('app', 'Goverment') ?></label>
+                    <input type="number"class="form-control" ng-model="model.goverment">
+                </div>
+                <div class="col-sm-2">
+                    <label for=""><?= Yii::t('app', 'Dornor') ?></label>
+                    <input type="number" class="form-control" ng-model="model.dornor">
+                </div>
+                <div class="col-sm-4">
+                    <label for=""><?= Yii::t('app', 'Attendance') ?></label>
+                    <input type="text" class="form-control" ng-model="model.attendance">
+                </div>
+                <div class="col-sm-2">
                     <label for=""><?= Yii::t('app', 'Start Date') ?></label>
                     <input id="start_date" class="form-control datepicker" data-ng-model="$parent.model.start_date" type="text" >
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label for=""><?= Yii::t('app', 'End Date') ?></label>
                     <input id="end_date" class="form-control datepicker" data-ng-model="$parent.model.end_date" type="text">
                 </div>
@@ -52,9 +64,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label for=""><?= Yii::t('app', 'Times') ?></label>
                     <input type="number" min="0" class="form-control" ng-model="model.times">
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-5">
                     <label for=""><?= Yii::t('app', 'Place') ?></label>
                     <input type="text" class="form-control" ng-model="model.place">
+                </div>
+                <div class="col-sm-5">
+                    <label for=""><?= Yii::t('app', 'Remark') ?></label>
+                    <input type="text" class="form-control" ng-model="model.remark">
                 </div>
                 <div class="col-sm-2" style="margin-top: 1em">
                     <button type="button" class="btn btn-info col-sm-12" ng-click="create()">
@@ -71,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Institution Meeting') ?></h3>
+            <h3><?= $this->title ?></h3>
             <p>
                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -83,35 +99,44 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Title') ?></th>
                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Attendance') ?></th>
+                <th class="text-center" colspan="2"><?= Yii::t('app', 'Scholarship') ?></th>
+                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Attendee') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Date') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Times') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Place') ?></th>
+                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Remark') ?></th>
             </tr>
             <tr>
                 <th class="text-center"><?= Yii::t('app', 'T') ?></th>
                 <th class="text-center"><?= Yii::t('app', 'W') ?></th>
+                <th class="text-center"><?= Yii::t('app', 'Goverment') ?></th>
+                <th class="text-center"><?= Yii::t('app', 'Dornor') ?></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="m in models" ng-click="select(m)">
-                <td class="text-center">{{$index + 1}}</td>
-                <td>{{m.title}}</td>
-                <td class="text-center">{{m.total | number}}</td>
-                <td class="text-center">{{m.women | number}}</td>
-                <td class="text-center">{{m.start_date}} - {{m.end_date}}</td>
-                <td class="text-center">{{m.times | number}}</td>
-                <td class="text-center">{{m.place}}</td>
-            </tr>
+                <tr ng-repeat="m in models" ng-click="select(m)">
+                    <td class="text-center">{{$index + 1}}</td>
+                    <td>{{m.title}}</td>
+                    <td class="text-center">{{m.total | number}}</td>
+                    <td class="text-center">{{m.women | number}}</td>
+                    <td class="text-center">{{m.goverment | number}}</td>
+                    <td class="text-center">{{m.dornor | number}}</td>
+                    <td class="text-center">{{m.attendance}}</td>
+                    <td class="text-center">{{m.start_date}} - {{m.end_date}}</td>
+                    <td class="text-center">{{m.times | number}}</td>
+                    <td class="text-center">{{m.place}}</td>
+                    <td class="text-center">{{m.remark}}</td>
+                </tr>
             </tbody>
             <tfoot>
-            <tr>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                <th class="text-center">{{sum('total')}}</th>
-                <th class="text-center">{{sum('women')}}</th>
-                <td></td>
-                <td class="text-center">{{sum('times')}}</td>
-                <td></td>
-            </tr>
+                <tr>
+                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center">{{sum('total')}}</th>
+                    <th class="text-center">{{sum('women')}}</th>
+                    <td colspan="4"></td>
+                    <td class="text-center">{{sum('times')}}</td>
+                    <td colspan="2"></td>
+                </tr>
             </tfoot>
         </table>
     </div>
@@ -122,8 +147,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-  app.controller('statInstituteMeetingController', function($scope, $http, $sce, $timeout) {
-    $scope.url = 'index.php?r=stat-institute-meeting/';
+  app.controller('statResearchController', function($scope, $http, $sce, $timeout) {
+    $scope.url = 'index.php?r=stat-research/';
     $http.get($scope.url + 'get')
       .then(function(r) {
         $scope.years = r.data.years;
@@ -163,6 +188,10 @@ $this->params['breadcrumbs'][] = $this->title;
         $scope.model.women = parseInt($scope.model.women);
       if($scope.model.times)
         $scope.model.times = parseInt($scope.model.times);
+      if($scope.model.goverment)
+        $scope.model.goverment = parseInt($scope.model.goverment);
+      if($scope.model.dornor)
+        $scope.model.dornor = parseInt($scope.model.dornor);
 
       $('#start_date').val($scope.model.start_date);
       $('#end_date').val($scope.model.end_date);
@@ -177,6 +206,7 @@ $this->params['breadcrumbs'][] = $this->title;
           '_csrf': $('meta[name="csrf-token"]').attr("content")
         }).then(function(r) {
           $scope.model = null;
+          $('.datepicker').val('');
           $scope.response = r;
           $scope.enquiry();
           $timeout(function() {

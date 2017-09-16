@@ -22,12 +22,17 @@ use Yii;
  * @property Branch[] $branches
  * @property MinistryGroup $ministryGroup
  * @property User $user
+ * @property StatGovcoinMinistryDetail[] $statGovcoinMinistryDetails
  * @property StatGovermentUnitDetail[] $statGovermentUnitDetails
+ * @property StatHighcoinMinistryDetail[] $statHighcoinMinistryDetails
+ * @property StatHighoverseaMinistryDetail[] $statHighoverseaMinistryDetails
  * @property StatOfficerMinistryAddDetail[] $statOfficerMinistryAddDetails
  * @property StatOfficerMinistryDetail[] $statOfficerMinistryDetails
  * @property StatOfficerMinistryTrainDetail[] $statOfficerMinistryTrainDetails
  * @property StatOfficerMinistryUpgradeDetail[] $statOfficerMinistryUpgradeDetails
  * @property StatSingleGatewayImplementationDetail[] $statSingleGatewayImplementationDetails
+ * @property StatVictorycoinMinistryDetail[] $statVictorycoinMinistryDetails
+ * @property StatVictoryoverseaMinistryDetail[] $statVictoryoverseaMinistryDetails
  */
 class Ministry extends \yii\db\ActiveRecord
 {
@@ -110,9 +115,33 @@ class Ministry extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatGovcoinMinistryDetails()
+    {
+        return $this->hasMany(StatGovcoinMinistryDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatGovermentUnitDetails()
     {
         return $this->hasMany(StatGovermentUnitDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatHighcoinMinistryDetails()
+    {
+        return $this->hasMany(StatHighcoinMinistryDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatHighoverseaMinistryDetails()
+    {
+        return $this->hasMany(StatHighoverseaMinistryDetail::className(), ['ministry_id' => 'id']);
     }
 
     /**
@@ -153,6 +182,22 @@ class Ministry extends \yii\db\ActiveRecord
     public function getStatSingleGatewayImplementationDetails()
     {
         return $this->hasMany(StatSingleGatewayImplementationDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictorycoinMinistryDetails()
+    {
+        return $this->hasMany(StatVictorycoinMinistryDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictoryoverseaMinistryDetails()
+    {
+        return $this->hasMany(StatVictoryoverseaMinistryDetail::className(), ['ministry_id' => 'id']);
     }
 
     /**

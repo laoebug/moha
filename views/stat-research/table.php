@@ -13,7 +13,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Institution Meeting') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title"><?= Yii::t('app','Statistics of Research') ?> (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
@@ -22,13 +22,18 @@
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'Title') ?></th>
                         <th class="text-center" colspan="2"><?= Yii::t('app', 'Attendance') ?></th>
+                        <th class="text-center" colspan="2"><?= Yii::t('app', 'Scholarship') ?></th>
+                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Attendee') ?></th>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'Date') ?></th>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'Times') ?></th>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'Place') ?></th>
+                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Remark') ?></th>
                     </tr>
                     <tr>
                         <th class="text-center"><?= Yii::t('app', 'T') ?></th>
                         <th class="text-center"><?= Yii::t('app', 'W') ?></th>
+                        <th class="text-center"><?= Yii::t('app', 'Goverment') ?></th>
+                        <th class="text-center"><?= Yii::t('app', 'Dornor') ?></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,21 +49,25 @@
                             <td><?= $model['title'] ?></td>
                             <td class="text-center"><?= number_format($model['total']) ?></td>
                             <td class="text-center"><?= number_format($model['women']) ?></td>
-                            <td class="text-center"><?= \app\components\MyHelper::convertdatefordisplay($model['start_date']).' ~ '.\app\components\MyHelper::convertdatefordisplay($model['end_date']) ?></td>
-                            <td class="text-center"><?= $model['times'] ?></td>
+                            <td class="text-center"><?= $model['goverment'] ?></td>
+                            <td class="text-center"><?= $model['dornor'] ?></td>
+                            <td class="text-center"><?= $model['attendance'] ?></td>
+                            <td class="text-center"><?= \app\components\MyHelper::convertdatefordisplay($model['start_date']) . ' ~ ' . \app\components\MyHelper::convertdatefordisplay($model['end_date']) ?></td>
+                            <td class="text-center"><?= number_format($model['times']) ?></td>
                             <td class="text-center"><?= $model['place'] ?></td>
+                            <td class="text-center"><?= $model['remark'] ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                            <th class="text-center"><?= number_format($sum['total']) ?></th>
-                            <th class="text-center"><?= number_format($sum['women']) ?></th>
-                            <td></td>
-                            <th class="text-center"><?= number_format($sum['times']) ?></th>
-                            <td></td>
-                        </tr>
+                    <tr>
+                        <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                        <th class="text-center"><?= $sum['total'] ?></th>
+                        <th class="text-center"><?= $sum['women'] ?></th>
+                        <td colspan="4"></td>
+                        <th class="text-center"><?= $sum['times'] ?></th>
+                        <td colspan="2"></td>
+                    </tr>
                     </tfoot>
                 </table>
             </div>

@@ -16,7 +16,11 @@ use Yii;
  *
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatEthnic[] $statEthnics
+ * @property StatGovcoinMinistry[] $statGovcoinMinistries
  * @property StatGovermentUnit[] $statGovermentUnits
+ * @property StatHighcoinMinistry[] $statHighcoinMinistries
+ * @property StatHighoverseaMinistry[] $statHighoverseaMinistries
+ * @property StatHornorcoinProvince[] $statHornorcoinProvinces
  * @property StatInstituteMeeting[] $statInstituteMeetings
  * @property StatInstituteTrain[] $statInstituteTrains
  * @property StatLegal[] $statLegals
@@ -45,7 +49,11 @@ use Yii;
  * @property StatReligion[] $statReligions
  * @property StatReligionPlace[] $statReligionPlaces
  * @property StatReligionTeacher[] $statReligionTeachers
+ * @property StatResearch[] $statResearches
  * @property StatSingleGatewayImplementation[] $statSingleGatewayImplementations
+ * @property StatVictorycoinMinistry[] $statVictorycoinMinistries
+ * @property StatVictorycoinProvince[] $statVictorycoinProvinces
+ * @property StatVictoryoverseaMinistry[] $statVictoryoverseaMinistries
  */
 class PhiscalYear extends \yii\db\ActiveRecord
 {
@@ -106,9 +114,41 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatGovcoinMinistries()
+    {
+        return $this->hasMany(StatGovcoinMinistry::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatGovermentUnits()
     {
         return $this->hasMany(StatGovermentUnit::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatHighcoinMinistries()
+    {
+        return $this->hasMany(StatHighcoinMinistry::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatHighoverseaMinistries()
+    {
+        return $this->hasMany(StatHighoverseaMinistry::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatHornorcoinProvinces()
+    {
+        return $this->hasMany(StatHornorcoinProvince::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
@@ -338,9 +378,41 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatResearches()
+    {
+        return $this->hasMany(StatResearch::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatSingleGatewayImplementations()
     {
         return $this->hasMany(StatSingleGatewayImplementation::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictorycoinMinistries()
+    {
+        return $this->hasMany(StatVictorycoinMinistry::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictorycoinProvinces()
+    {
+        return $this->hasMany(StatVictorycoinProvince::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictoryoverseaMinistries()
+    {
+        return $this->hasMany(StatVictoryoverseaMinistry::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

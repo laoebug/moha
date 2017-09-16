@@ -21,6 +21,7 @@ use Yii;
  * @property District[] $districts
  * @property Foundation[] $foundations
  * @property StatEthnicDetail[] $statEthnicDetails
+ * @property StatHornorcoinProvinceDetail[] $statHornorcoinProvinceDetails
  * @property StatLocalAdminDetail[] $statLocalAdminDetails
  * @property StatOfficerProvinceAddDetail[] $statOfficerProvinceAddDetails
  * @property StatOfficerProvinceDetail[] $statOfficerProvinceDetails
@@ -30,6 +31,7 @@ use Yii;
  * @property StatReligionDetail[] $statReligionDetails
  * @property StatReligionPlaceDetail[] $statReligionPlaceDetails
  * @property StatReligionTeacherDetail[] $statReligionTeacherDetails
+ * @property StatVictorycoinProvinceDetail[] $statVictorycoinProvinceDetails
  */
 class Province extends \yii\db\ActiveRecord
 {
@@ -117,6 +119,14 @@ class Province extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatHornorcoinProvinceDetails()
+    {
+        return $this->hasMany(StatHornorcoinProvinceDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatLocalAdminDetails()
     {
         return $this->hasMany(StatLocalAdminDetail::className(), ['province_id' => 'id']);
@@ -184,6 +194,14 @@ class Province extends \yii\db\ActiveRecord
     public function getStatReligionTeacherDetails()
     {
         return $this->hasMany(StatReligionTeacherDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictorycoinProvinceDetails()
+    {
+        return $this->hasMany(StatVictorycoinProvinceDetail::className(), ['province_id' => 'id']);
     }
 
     /**

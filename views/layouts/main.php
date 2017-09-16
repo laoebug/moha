@@ -142,8 +142,20 @@ use app\components\MenuWidget;
                                 <li><a href="index.php?r=stat-course"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Course') ?></a></li>
                                 <li><a href="index.php?r=stat-institute-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Insitutution Training') ?></a></li>
                                 <li><a href="index.php?r=stat-institute-meeting"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Insitutution Meeting') ?></a></li>
+                                <li><a href="index.php?r=stat-research"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Research') ?></a></li>
                             </ul>
                         </li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-star"></i><span><?= Yii::t('app','Performance') ?></span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.php?r=stat-highcoin-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊຊັ້ນສູງ ພາຍໃນກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-hornorcoin-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນນາມມະຍົດ ພາຍໃນແຂວງ</a></li>
+                        <li><a href="index.php?r=stat-victorycoin-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊ ພາຍໃນກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-victorycoin-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊ ພາຍໃນແຂວງ</a></li>
+                        <li><a href="index.php?r=stat-govcoin-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນກາ ໃບຍ້ອງຍໍລັດຖະບານ ພາຍໃນກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-highoversea-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນຊັ້ນສູງ ຕ່າງປະເທດ ບັນດາກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-victoryoversea-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊ ຕ່າງປະເທດ ບັນດາກະຊວງ</a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>
@@ -159,6 +171,7 @@ use app\components\MenuWidget;
                         <li><a href="index.php?r=ethnic"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ethic') ?></a></li>
 
                         <li><a href="index.php?r=organisation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Organisation') ?></a></li>
+                        <li><a href="index.php?r=award"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Awards') ?></a></li>
                         <li><a href="index.php?r=message"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Translation') ?></a></li>
                     </ul>
                 </li>
