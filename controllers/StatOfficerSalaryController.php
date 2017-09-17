@@ -132,6 +132,7 @@ class StatOfficerSalaryController extends Controller
             ])
         ]);
     }
+
     public function actionDownload($year) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {

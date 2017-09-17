@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = Yii::t('app', 'Stat Officer Salaries');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div ng-app="mohaApp" ng-controller="statMapService">
+<div ng-app="mohaApp" ng-controller="statOfficerSalary">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
@@ -135,7 +135,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
                 <tr>
                     <?php for($i=1;$i<31;$i++): ?>
-                        <th class="text-center"><?= $i%2==0?'ລ':'ຍ'?></th>
+                        <th class="text-center"><?= $i%2==1?'ລ':'ຍ'?></th>
                     <?php endfor; ?>
                 </tr>
                 <tr>
@@ -167,7 +167,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
-  app.controller('statMapService', function($scope, $http, $sce, $timeout) {
+  app.controller('statOfficerSalary', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-salary/';
     $http.get($scope.url+ 'get')
       .then(function(r) {
