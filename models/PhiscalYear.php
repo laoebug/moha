@@ -15,8 +15,10 @@ use Yii;
  * @property string $status
  *
  * @property StatAssociationFoundation[] $statAssociationFoundations
+ * @property StatCopy[] $statCopies
  * @property StatDocument[] $statDocuments
  * @property StatEthnic[] $statEthnics
+ * @property StatExplore[] $statExplores
  * @property StatGovcoinMinistry[] $statGovcoinMinistries
  * @property StatGovcoinProvince[] $statGovcoinProvinces
  * @property StatGovermentUnit[] $statGovermentUnits
@@ -29,6 +31,8 @@ use Yii;
  * @property StatInstituteTrain[] $statInstituteTrains
  * @property StatLegal[] $statLegals
  * @property StatLocalAdmin[] $statLocalAdmins
+ * @property StatMapProduce[] $statMapProduces
+ * @property StatMapService[] $statMapServices
  * @property StatOfficer[] $statOfficers
  * @property StatOfficerAdd[] $statOfficerAdds
  * @property StatOfficerAge[] $statOfficerAges
@@ -49,6 +53,8 @@ use Yii;
  * @property StatOfficerProvinceTrain[] $statOfficerProvinceTrains
  * @property StatOfficerProvinceUpgrade[] $statOfficerProvinceUpgrades
  * @property StatOfficerResign[] $statOfficerResigns
+ * @property StatOfficerSalary[] $statOfficerSalaries
+ * @property StatOfficerTechnical[] $statOfficerTechnicals
  * @property StatPopulationMovement[] $statPopulationMovements
  * @property StatReligion[] $statReligions
  * @property StatReligionPlace[] $statReligionPlaces
@@ -111,6 +117,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatCopies()
+    {
+        return $this->hasMany(StatCopy::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatDocuments()
     {
         return $this->hasMany(StatDocument::className(), ['phiscal_year_id' => 'id']);
@@ -122,6 +136,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatEthnics()
     {
         return $this->hasMany(StatEthnic::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatExplores()
+    {
+        return $this->hasMany(StatExplore::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
@@ -218,6 +240,22 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatLocalAdmins()
     {
         return $this->hasMany(StatLocalAdmin::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatMapProduces()
+    {
+        return $this->hasMany(StatMapProduce::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatMapServices()
+    {
+        return $this->hasMany(StatMapService::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
@@ -378,6 +416,22 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatOfficerResigns()
     {
         return $this->hasMany(StatOfficerResign::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerSalaries()
+    {
+        return $this->hasMany(StatOfficerSalary::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerTechnicals()
+    {
+        return $this->hasMany(StatOfficerTechnical::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

@@ -22,6 +22,7 @@ use Yii;
  * @property Foundation[] $foundations
  * @property StatDocumentDetail[] $statDocumentDetails
  * @property StatEthnicDetail[] $statEthnicDetails
+ * @property StatExploreDetail[] $statExploreDetails
  * @property StatGovcoinProvinceDetail[] $statGovcoinProvinceDetails
  * @property StatGovoverseaProvinceDetail[] $statGovoverseaProvinceDetails
  * @property StatHornorcoinProvinceDetail[] $statHornorcoinProvinceDetails
@@ -126,6 +127,14 @@ class Province extends \yii\db\ActiveRecord
     public function getStatEthnicDetails()
     {
         return $this->hasMany(StatEthnicDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatExploreDetails()
+    {
+        return $this->hasMany(StatExploreDetail::className(), ['province_id' => 'id']);
     }
 
     /**

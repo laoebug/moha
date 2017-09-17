@@ -165,7 +165,19 @@ use app\components\MenuWidget;
                 <li class="treeview"><a href="#"><i class="fa fa-book"></i><span><?= Yii::t('app','Document') ?></span><i class="fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="index.php?r=stat-document"><i class="fa fa-circle-o"></i> ການທ້ອນໂຮມເອກະສານ</a></li>
-
+                        <li><a href="index.php?r=stat-copy"><i class="fa fa-circle-o"></i> ການສຳເນົາ</a></li>
+                        <li><a href="index.php?r=stat-map-service"><i class="fa fa-circle-o"></i> ການບໍລິການແຜນທີ່</a></li>
+                        <li><a href="index.php?r=stat-map-produce"><i class="fa fa-circle-o"></i> ການຜະລິດແຜນທີ່</a></li>
+                        <li><a href="index.php?r=stat-explore"><i class="fa fa-circle-o"></i> ການສຳຫຼວດ</a></li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-heartbeat"></i><span>ວຽກງານຊ່ວຍໜູນ</span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.php?r=stat-officer-salary"><i class="fa fa-circle-o"></i> ລັດຖະກອນຕາມຊັ້ນ-ຂັ້ນເງິນເດືອນ</a></li>
+                        <li><a href="index.php?r=stat-copy"><i class="fa fa-circle-o"></i> ການສຳເນົາ</a></li>
+                        <li><a href="index.php?r=stat-map-service"><i class="fa fa-circle-o"></i> ການບໍລິການແຜນທີ່</a></li>
+                        <li><a href="index.php?r=stat-map-produce"><i class="fa fa-circle-o"></i> ການຜະລິດແຜນທີ່</a></li>
+                        <li><a href="index.php?r=stat-explore"><i class="fa fa-circle-o"></i> ກສຍສຳຫຼວດ</a></li>
                     </ul>
                 </li>
                 <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>
