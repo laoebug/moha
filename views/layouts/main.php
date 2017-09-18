@@ -175,7 +175,7 @@ use app\components\MenuWidget;
                     <ul class="treeview-menu">
                         <li><a href="index.php?r=stat-officer-salary"><i class="fa fa-circle-o"></i> ລັດຖະກອນຕາມຊັ້ນ-ຂັ້ນເງິນເດືອນ</a></li>
                         <li><a href="index.php?r=stat-officer-technical"><i class="fa fa-circle-o"></i> ລັດຖະກອນຕາມວິຊາສະເພາະ</a></li>
-                        <li><a href="index.php?r=stat-map-service"><i class="fa fa-circle-o"></i> ການບໍລິການແຜນທີ່</a></li>
+                        <li><a href="index.php?r=stat-officer-age-level"><i class="fa fa-circle-o"></i> ລັດຖະກອນ ຕາມເກນອາຍຸ</a></li>
                         <li><a href="index.php?r=stat-map-produce"><i class="fa fa-circle-o"></i> ການຜະລິດແຜນທີ່</a></li>
                         <li><a href="index.php?r=stat-explore"><i class="fa fa-circle-o"></i> ກສຍສຳຫຼວດ</a></li>
                     </ul>

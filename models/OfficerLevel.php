@@ -15,6 +15,7 @@ use Yii;
  * @property integer $user_id
  *
  * @property User $user
+ * @property StatOfficerAgelevelDetail[] $statOfficerAgelevelDetails
  * @property StatOfficerSalaryDetail[] $statOfficerSalaryDetails
  * @property StatOfficerTechnicalDetail[] $statOfficerTechnicalDetails
  */
@@ -63,6 +64,14 @@ class OfficerLevel extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerAgelevelDetails()
+    {
+        return $this->hasMany(StatOfficerAgelevelDetail::className(), ['officer_level_id' => 'id']);
     }
 
     /**

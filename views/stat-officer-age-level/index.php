@@ -34,12 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <?php for($i=0;$i<3;$i++) : ?>
-                                <th colspan="2" class="text-center"><?= $labels[$i] ?></th>
-                                <?php endfor; ?>
+                                <?php foreach($labels as $label) : ?>
+                                <th colspan="2" class="text-center"><?= $label ?></th>
+                                <?php endforeach; ?>
                             </tr>
                             <tr>
-                                <?php for($i=0;$i<6;$i++) : ?>
+                                <?php for($i=0;$i< count($labels) * 2;$i++) : ?>
                                     <th class="text-center"><?= $i%2==0 ? 'ລ':'ຍ' ?></th>
                                 <?php endfor; ?>
                             </tr>
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tr>
                         <tr>
                             <?php for($i=0;$i<8;$i++) : ?>
-                                <th class="text-center"><?= $i%2==0?'ລ':'ຍ' ?></th>
+                                <th class="text-center"><?= $i%2==1?'ລ':'ຍ' ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tr>
                         <tr>
                             <?php for($i=0;$i<8;$i++) : ?>
-                                <th class="text-center"><?= $i%2==0?'ລ':'ຍ' ?></th>
+                                <th class="text-center"><?= $i%2==1?'ລ':'ຍ' ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
