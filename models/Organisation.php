@@ -12,6 +12,7 @@ use Yii;
  * @property integer $deleted
  * @property integer $position
  *
+ * @property StatDocumentDetail[] $statDocumentDetails
  * @property StatOfficerOrgDetail[] $statOfficerOrgDetails
  * @property StatOfficerOrganisationAddDetail[] $statOfficerOrganisationAddDetails
  * @property StatOfficerOrganisationTrainDetail[] $statOfficerOrganisationTrainDetails
@@ -50,6 +51,14 @@ class Organisation extends \yii\db\ActiveRecord
             'deleted' => Yii::t('app', 'Deleted'),
             'position' => Yii::t('app', 'Position'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatDocumentDetails()
+    {
+        return $this->hasMany(StatDocumentDetail::className(), ['organisation_id' => 'id']);
     }
 
     /**

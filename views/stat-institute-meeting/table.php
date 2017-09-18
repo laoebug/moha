@@ -33,10 +33,11 @@
                     </thead>
                     <tbody>
                     <?php
-                    $sum = ['women'=> 0, 'total' => 0];
+                    $sum = ['women'=> 0, 'total' => 0, 'times' => 0];
                     foreach ($models as $index => $model):
                         $sum['total'] += $model['total'];
                         $sum['women'] += $model['women'];
+                        $sum['times'] += $model['times'];
                         ?>
                         <tr>
                             <td class="text-center"><?= $index + 1 ?></td>
@@ -54,7 +55,9 @@
                             <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
                             <th class="text-center"><?= number_format($sum['total']) ?></th>
                             <th class="text-center"><?= number_format($sum['women']) ?></th>
-                            <td colspan="4"></td>
+                            <td></td>
+                            <th class="text-center"><?= number_format($sum['times']) ?></th>
+                            <td></td>
                         </tr>
                     </tfoot>
                 </table>

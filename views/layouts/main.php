@@ -74,12 +74,140 @@ use app\components\MenuWidget;
 
                 <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span><?= Yii::t('app','Dashboard') ?></span></a></li>
                 <?php
-               if(!Yii::$app->user->isGuest) {
-                   MenuWidget::begin();
-                   MenuWidget::end();
-               }
+//                if(!Yii::$app->user->isGuest) {
+//                    MenuWidget::begin();
+//                    MenuWidget::end();
+//                }
                 ?>
-                
+                <li class="treeview"><a href="#"><i class="fa fa-bar-chart"></i><span><?= Yii::t('app','Administration') ?></span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.php?r=ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry') ?></a></li>
+                        <li><a href="index.php?r=stat-goverment-unit"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Goverment Units') ?></a></li>
+                        <li><a href="index.php?r=stat-single-gateway-implementation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Single Gateway Implementations') ?></a></li>
+                        <li><a href="index.php?r=stat-legal"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legals') ?></a></li>
+                        <li><a href="index.php?r=stat-association-foundation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Association Foundation') ?></a></li>
+                        <li><a href="index.php?r=stat-local-admin"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Local Administration') ?></a></li>
+                        <li><a href="index.php?r=stat-population-movement"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Population Movement') ?></a></li>
+                        <li><a href="index.php?r=stat-population-movement-chart"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Population Movement') ?> <i class="fa fa-bar-chart"></i> </a></li>
+                        <li><a href="index.php?r=stat-ethnic"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ethnic Statistic') ?> </a></li>
+                        <li><a href="index.php?r=stat-religion"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Religion & Other Believes') ?></a></li>
+                        <li><a href="index.php?r=stat-religion-teacher"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Religion Teacher') ?></a></li>
+                        <li><a href="index.php?r=stat-religion-place"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Religion Place') ?></a></li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-group"></i><span><?= Yii::t('app','Officer') ?></span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li class="treeview"><a href="#"><i class="fa fa-plus"></i><span><?= Yii::t('app', 'Overall Officer') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-officer"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Overall Officer') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-age"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers By Ages') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-degree"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers By Degrees') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-resign"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Resignation') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Add') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-contract"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Contract') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-position"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Positions') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-need"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Needed') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-ministry"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-org"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-province"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province') ?></a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview"><a href="#"><i class="fa fa-plus"></i><span><?= Yii::t('app', 'Add/Resign') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-officer-ministry-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Add') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-organisation-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation Add') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-province-add"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province Add') ?></a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview"><a href="#"><i class="fa fa-circle-o"></i><span><?= Yii::t('app', 'Training') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-officer-ministry-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Train') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-organisation-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation Train') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-province-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province Train') ?></a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview"><a href="#"><i class="fa fa-upload"></i><span><?= Yii::t('app', 'Upgrade') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-officer-ministry-upgrade"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Ministry Upgrade') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-organisation-upgrade"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Organisation Upgrade') ?></a></li>
+                                <li><a href="index.php?r=stat-officer-province-upgrade"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Officers Province Upgrade') ?></a></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview"><a href="#"><i class="fa fa-book"></i><span><?= Yii::t('app', 'Course') ?></span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="index.php?r=stat-course"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Course') ?></a></li>
+                                <li><a href="index.php?r=stat-institute-train"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Insitutution Training') ?></a></li>
+                                <li><a href="index.php?r=stat-institute-meeting"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Insitutution Meeting') ?></a></li>
+                                <li><a href="index.php?r=stat-research"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Research') ?></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-star"></i><span><?= Yii::t('app','Performance') ?></span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.php?r=stat-highcoin-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊຊັ້ນສູງ ພາຍໃນກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-hornorcoin-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນນາມມະຍົດ ພາຍໃນແຂວງ</a></li>
+                        <li><a href="index.php?r=stat-victorycoin-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊ ພາຍໃນກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-victorycoin-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊ ພາຍໃນແຂວງ</a></li>
+                        <li><a href="index.php?r=stat-govcoin-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນກາ ໃບຍ້ອງຍໍລັດຖະບານ ພາຍໃນກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-highoversea-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນຊັ້ນສູງ ຕ່າງປະເທດ ບັນດາກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-victoryoversea-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊ ຕ່າງປະເທດ ບັນດາກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-victoryoversea-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນໄຊ ຕ່າງປະເທດ ບັນດາແຂວງ</a></li>
+                        <li><a href="index.php?r=stat-govoversea-ministry"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນກາ ຕ່າງປະເທດ ບັນດາກະຊວງ</a></li>
+                        <li><a href="index.php?r=stat-govcoin-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນກາ ພາຍໃນແຂວງ</a></li>
+                        <li><a href="index.php?r=stat-govoversea-province"><i class="fa fa-circle-o"></i> ປະເພດຫຼຽນກາ ຕ່າງປະເທດ ບັນດາແຂວງ</a></li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-book"></i><span><?= Yii::t('app','Document') ?></span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.php?r=stat-document"><i class="fa fa-circle-o"></i> ການທ້ອນໂຮມເອກະສານ</a></li>
+                        <li><a href="index.php?r=stat-copy"><i class="fa fa-circle-o"></i> ການສຳເນົາ</a></li>
+                        <li><a href="index.php?r=stat-map-service"><i class="fa fa-circle-o"></i> ການບໍລິການແຜນທີ່</a></li>
+                        <li><a href="index.php?r=stat-map-produce"><i class="fa fa-circle-o"></i> ການຜະລິດແຜນທີ່</a></li>
+                        <li><a href="index.php?r=stat-explore"><i class="fa fa-circle-o"></i> ການສຳຫຼວດ</a></li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-heartbeat"></i><span>ວຽກງານຊ່ວຍໜູນ</span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.php?r=stat-officer-salary"><i class="fa fa-circle-o"></i> ລັດຖະກອນຕາມຊັ້ນ-ຂັ້ນເງິນເດືອນ</a></li>
+                        <li><a href="index.php?r=stat-officer-technical"><i class="fa fa-circle-o"></i> ລັດຖະກອນຕາມວິຊາສະເພາະ</a></li>
+                        <li><a href="index.php?r=stat-officer-age-level"><i class="fa fa-circle-o"></i> ລັດຖະກອນ ຕາມເກນອາຍຸ</a></li>
+                        <li><a href="index.php?r=stat-map-produce"><i class="fa fa-circle-o"></i> ການຜະລິດແຜນທີ່</a></li>
+                        <li><a href="index.php?r=stat-explore"><i class="fa fa-circle-o"></i> ກສຍສຳຫຼວດ</a></li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-gear"></i><span><?= Yii::t('app','Settings') ?></span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="index.php?r=phiscal-year"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Phiscal Year') ?></a></li>
+                        <li><a href="index.php?r=ministry-group"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ministry Group') ?></a></li>
+                        <li><a href="index.php?r=legal-type"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legal Type') ?></a></li>
+                        <li><a href="index.php?r=legal"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Legal') ?></a></li>
+
+                        <li><a href="index.php?r=approver-level"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Approver Level') ?></a></li>
+                        <li><a href="index.php?r=approver"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Approver') ?></a></li>
+
+                        <li><a href="index.php?r=ethnic"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Ethic') ?></a></li>
+
+                        <li><a href="index.php?r=organisation"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Organisation') ?></a></li>
+                        <li><a href="index.php?r=award"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Awards') ?></a></li>
+                        <li><a href="index.php?r=message"><i class="fa fa-circle-o"></i> <?= Yii::t('app', 'Translation') ?></a></li>
+                    </ul>
+                </li>
+                <li class="treeview"><a href="#"><i class="fa fa-share"></i><span>Multilevel Menu</span><i class="fa fa-angle-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="blank-page.html"><i class="fa fa-circle-o"></i> Level One</a></li>
+                        <li class="treeview"><a href="#"><i class="fa fa-circle-o"></i><span> Level One</span><i class="fa fa-angle-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="blank-page.html"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o"></i><span> Level Two</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             </ul>
             
         </section>

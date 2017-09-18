@@ -17,17 +17,25 @@ use Yii;
  * @property integer $user_id
  * @property string $remark
  * @property string $input_dt_stamp
+ * @property integer $equal
  *
  * @property Approver[] $approvers
  * @property Branch[] $branches
  * @property MinistryGroup $ministryGroup
  * @property User $user
+ * @property StatDocumentDetail[] $statDocumentDetails
+ * @property StatGovcoinMinistryDetail[] $statGovcoinMinistryDetails
  * @property StatGovermentUnitDetail[] $statGovermentUnitDetails
+ * @property StatGovoverseaMinistryDetail[] $statGovoverseaMinistryDetails
+ * @property StatHighcoinMinistryDetail[] $statHighcoinMinistryDetails
+ * @property StatHighoverseaMinistryDetail[] $statHighoverseaMinistryDetails
  * @property StatOfficerMinistryAddDetail[] $statOfficerMinistryAddDetails
  * @property StatOfficerMinistryDetail[] $statOfficerMinistryDetails
  * @property StatOfficerMinistryTrainDetail[] $statOfficerMinistryTrainDetails
  * @property StatOfficerMinistryUpgradeDetail[] $statOfficerMinistryUpgradeDetails
  * @property StatSingleGatewayImplementationDetail[] $statSingleGatewayImplementationDetails
+ * @property StatVictorycoinMinistryDetail[] $statVictorycoinMinistryDetails
+ * @property StatVictoryoverseaMinistryDetail[] $statVictoryoverseaMinistryDetails
  */
 class Ministry extends \yii\db\ActiveRecord
 {
@@ -46,7 +54,7 @@ class Ministry extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'last_update'], 'required'],
-            [['deleted', 'ministry_group_id', 'position', 'user_id'], 'integer'],
+            [['deleted', 'ministry_group_id', 'position', 'user_id', 'equal'], 'integer'],
             [['last_update', 'input_dt_stamp'], 'safe'],
             [['remark'], 'string'],
             [['name'], 'string', 'max' => 255],
@@ -72,6 +80,7 @@ class Ministry extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'remark' => Yii::t('app', 'Remark'),
             'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
+            'equal' => Yii::t('app', 'Equal'),
         ];
     }
 
@@ -110,9 +119,49 @@ class Ministry extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatDocumentDetails()
+    {
+        return $this->hasMany(StatDocumentDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatGovcoinMinistryDetails()
+    {
+        return $this->hasMany(StatGovcoinMinistryDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatGovermentUnitDetails()
     {
         return $this->hasMany(StatGovermentUnitDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatGovoverseaMinistryDetails()
+    {
+        return $this->hasMany(StatGovoverseaMinistryDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatHighcoinMinistryDetails()
+    {
+        return $this->hasMany(StatHighcoinMinistryDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatHighoverseaMinistryDetails()
+    {
+        return $this->hasMany(StatHighoverseaMinistryDetail::className(), ['ministry_id' => 'id']);
     }
 
     /**
@@ -153,6 +202,22 @@ class Ministry extends \yii\db\ActiveRecord
     public function getStatSingleGatewayImplementationDetails()
     {
         return $this->hasMany(StatSingleGatewayImplementationDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictorycoinMinistryDetails()
+    {
+        return $this->hasMany(StatVictorycoinMinistryDetail::className(), ['ministry_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictoryoverseaMinistryDetails()
+    {
+        return $this->hasMany(StatVictoryoverseaMinistryDetail::className(), ['ministry_id' => 'id']);
     }
 
     /**

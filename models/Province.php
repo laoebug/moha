@@ -20,7 +20,12 @@ use Yii;
  * @property Approver[] $approvers
  * @property District[] $districts
  * @property Foundation[] $foundations
+ * @property StatDocumentDetail[] $statDocumentDetails
  * @property StatEthnicDetail[] $statEthnicDetails
+ * @property StatExploreDetail[] $statExploreDetails
+ * @property StatGovcoinProvinceDetail[] $statGovcoinProvinceDetails
+ * @property StatGovoverseaProvinceDetail[] $statGovoverseaProvinceDetails
+ * @property StatHornorcoinProvinceDetail[] $statHornorcoinProvinceDetails
  * @property StatLocalAdminDetail[] $statLocalAdminDetails
  * @property StatOfficerProvinceAddDetail[] $statOfficerProvinceAddDetails
  * @property StatOfficerProvinceDetail[] $statOfficerProvinceDetails
@@ -30,6 +35,8 @@ use Yii;
  * @property StatReligionDetail[] $statReligionDetails
  * @property StatReligionPlaceDetail[] $statReligionPlaceDetails
  * @property StatReligionTeacherDetail[] $statReligionTeacherDetails
+ * @property StatVictorycoinProvinceDetail[] $statVictorycoinProvinceDetails
+ * @property StatVictoryoverseaProvinceDetail[] $statVictoryoverseaProvinceDetails
  */
 class Province extends \yii\db\ActiveRecord
 {
@@ -109,9 +116,49 @@ class Province extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatDocumentDetails()
+    {
+        return $this->hasMany(StatDocumentDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatEthnicDetails()
     {
         return $this->hasMany(StatEthnicDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatExploreDetails()
+    {
+        return $this->hasMany(StatExploreDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatGovcoinProvinceDetails()
+    {
+        return $this->hasMany(StatGovcoinProvinceDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatGovoverseaProvinceDetails()
+    {
+        return $this->hasMany(StatGovoverseaProvinceDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatHornorcoinProvinceDetails()
+    {
+        return $this->hasMany(StatHornorcoinProvinceDetail::className(), ['province_id' => 'id']);
     }
 
     /**
@@ -184,6 +231,22 @@ class Province extends \yii\db\ActiveRecord
     public function getStatReligionTeacherDetails()
     {
         return $this->hasMany(StatReligionTeacherDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictorycoinProvinceDetails()
+    {
+        return $this->hasMany(StatVictorycoinProvinceDetail::className(), ['province_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatVictoryoverseaProvinceDetails()
+    {
+        return $this->hasMany(StatVictoryoverseaProvinceDetail::className(), ['province_id' => 'id']);
     }
 
     /**

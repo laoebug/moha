@@ -4,3 +4,8 @@ table.table td {
 select {
     height: 3em !important;
 }
+
+/*.treeview-menu.menu-open*/
+.sidebar-menu .treeview-menu > li > a {
+    overflow-x: scroll !important;
+}

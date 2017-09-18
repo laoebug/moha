@@ -84,7 +84,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Title') ?></th>
                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Attendance') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Date') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Cooperator') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Times') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Place') ?></th>
             </tr>
@@ -109,7 +108,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
                 <th class="text-center">{{sum('total')}}</th>
                 <th class="text-center">{{sum('women')}}</th>
-                <td colspan="4"></td>
+                <td></td>
+                <td class="text-center">{{sum('times')}}</td>
+                <td></td>
             </tr>
             </tfoot>
         </table>
