@@ -33,16 +33,7 @@ class MenuController extends Controller
      * Lists all Menu models.
      * @return mixed
      */
-    public function actionIndex()
-    {
-        $searchModel = new MenuSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+      
 
     /**
      * Displays a single Menu model.

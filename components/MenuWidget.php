@@ -17,10 +17,10 @@ class MenuWidget extends Widget
 
     public function run()
     {
-        $this->authorizeMenus = AuthenticationService::getAuthorizedMenuAndRole();
+        //$this->authorizeMenus = AuthenticationService::getAuthorizedMenuAndRole();
         
         return $this->render("_menuList", array(
-           'authorizeMenus' => $this->authorizeMenus
+//            'authorizeMenus' => $this->authorizeMenus
         ));
     }
 }

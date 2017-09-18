@@ -26,7 +26,7 @@ function displayMenu($menu_parent_id)
            $sql.= " and rm.accessible=:accessible ";
            $sql.= " and rm.role_id=:role_id ";
            $sql.= " GROUP BY menu_parent_id ) child_count";                
-           $sql.= " ON o1.id = child_count.menu_parent_id order by o1.name";
+           $sql.= " ON o1.id = child_count.menu_parent_id order by o1.position ASC";
                 
         
                 
