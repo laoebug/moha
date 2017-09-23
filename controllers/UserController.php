@@ -52,6 +52,94 @@ class UserController extends Controller
         ]);
     }
 
+    public function actionManageuser()
+    {
+        $model = new User();
+        $model->password = "1010";
+        $id = "";
+        if (isset($_POST['User']['id']) && ! empty($_POST['User']['id'])) {
+            $id = $_POST['User']['id'];
+            $model = User::findOne($id);
+        }
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            $db = Yii::$app->db->beginTransaction();
+            try {
+                
+                if (! $model->save())
+                    throw new Exception("User cannot be saved");
+                if (isset($_POST['User']['role_id'])) {
+                    $model->role_id = $_POST['User']['role_id'];
+                }
+                
+                $db->commit();
+                Yii::$app->session->setFlash('success', "User has been saved successfully");
+            } catch (Exception $ex) {
+                $db->rollBack();
+                Yii::$app->session->setFlash('error', "User cannot be saved" . $ex);
+            }
+        }
+        
+        $models = User::find()->all();
+        return $this->render('manageUser', [
+            'models' => $models,
+            'model' => $model
+        ]);
+    }
+
+    public function actionManagerole()
+    {
+        $model = new Role();
+        
+        if (isset($_POST['menu_list'])) {
+            // print_r($_POST['menu_list']);exit;
+        }
+        // $model->password = "1010";
+        // $id="";
+        // if(isset($_POST['User']['id']) && !empty($_POST['User']['id'])){
+        // $id = $_POST['User']['id'];
+        // $model=User::findOne($id);
+        
+        // }
+        // if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        
+        // $db = Yii::$app->db->beginTransaction();
+        // try {
+        
+        // if (! $model->save())
+        // throw new Exception("User cannot be saved");
+        // if (isset($_POST['User']['role_id'])) {
+        // $model->role_id = $_POST['User']['role_id'];
+        // }
+        
+        // $db->commit();
+        // Yii::$app->session->setFlash('success', "User has been saved successfully");
+        // } catch (Exception $ex) {
+        // $db->rollBack();
+        // Yii::$app->session->setFlash('error', "User cannot be saved" . $ex);
+        // }
+        // }
+        // $sql = "select * from role";
+        // $models = Role::findBySql($sql)->all();
+        $models = Role::find()->all();
+        $sql = "select * from role";
+        $connection = Yii::$app->getDb();
+        $command = $connection->createCommand($sql);
+        
+        $results = $command->queryAll();
+        
+//         foreach ($results as $row) {
+//             //echo count($role->menus) . "<br/>";
+//             echo $row["id"]."<br/>";
+//         }
+//         exit();
+        
+        return $this->render('manageRole', [
+            'models' => $models,
+            'model' => $model
+        ]);
+    }
+
     /**
      * Displays a single User model.
      *
@@ -74,44 +162,39 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-       
         
-       // $roles = Role::find()->all();
-       // $menus = Menu::find()->all();
+        // $roles = Role::find()->all();
+        // $menus = Menu::find()->all();
         
-//         $authorizeMenus = AuthenticationService::getAuthorizedMenuAndRole();
-        
-        
+        // $authorizeMenus = AuthenticationService::getAuthorizedMenuAndRole();
         
         $model->password = "1010";
         $userRoles = array();
         
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
-
             $db = Yii::$app->db->beginTransaction();
             try {
                 
                 if (! $model->save())
                     throw new Exception("User cannot be saved");
-                    if (isset($_POST['User']['role_id'])){
-                        $model->role_id = $_POST['User']['role_id'];
-                    }
-                    
-//                 if (isset($_POST['role'])) {
-//                     $userRoles = $_POST['role'];
-//                     echo $_POST['role'];exit;
-//                     foreach ($userRoles as $key=>$role_id){
-//                         $userHasRole = new UserHasRole();
-//                         $userHasRole->user_id=$model->id;
-//                         $userHasRole->role_id=$role_id;
-//                         $userHasRole->set_date=date('Y-m-d H:i:s');                        
-//                         if (! $userHasRole->save())
-//                             throw new Exception("User role cannot be saved");
-//                     }
-                    
-                    
-//                 }
+                if (isset($_POST['User']['role_id'])) {
+                    $model->role_id = $_POST['User']['role_id'];
+                }
+                
+                // if (isset($_POST['role'])) {
+                // $userRoles = $_POST['role'];
+                // echo $_POST['role'];exit;
+                // foreach ($userRoles as $key=>$role_id){
+                // $userHasRole = new UserHasRole();
+                // $userHasRole->user_id=$model->id;
+                // $userHasRole->role_id=$role_id;
+                // $userHasRole->set_date=date('Y-m-d H:i:s');
+                // if (! $userHasRole->save())
+                // throw new Exception("User role cannot be saved");
+                // }
+                
+                // }
                 $db->commit();
                 Yii::$app->session->setFlash('success', "User has been saved successfully");
                 return $this->redirect([
@@ -125,8 +208,7 @@ class UserController extends Controller
         } else {
             
             return $this->render('create', [
-                'model' => $model,
-
+                'model' => $model
             ]);
         }
     }
