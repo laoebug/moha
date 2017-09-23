@@ -1,4 +1,9 @@
 <?php
+	if(Yii::$app->user->isGuest){
+		return Yii::$app->getResponse()->redirect('index.php?r=site/login');
+	}
+?>
+<?php
 
 /* @var $this \yii\web\View */
 /* @var $content string */
