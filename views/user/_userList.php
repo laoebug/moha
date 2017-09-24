@@ -1,5 +1,6 @@
 
 <!-- <div class="card"> -->
+<div class="table-responsive">
 	<div class="card-body">
 		<table class="table table-hover table-bordered" id="_user_table">
 			<thead>
@@ -42,6 +43,7 @@
 			</tbody>
 		</table>
 	</div>
+</div>	
 <!-- </div> -->
 
 

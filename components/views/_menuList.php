@@ -70,13 +70,13 @@ function displayMenu($menu_parent_id)
             }
             
             //top root link
-            $menuList.='<a href="'. $url. '">';
+            $menuList.='<a href="'. trim($url). '">';
             
             $menuList.='<i class="'. $left_icon .' "></i>';
             
             $menuList.'<span>';
             
-            $menuList.=Yii::t("app",$menu->name);
+            $menuList.=$menu->id. Yii::t("app",$menu->name);
             
             $menuList.='</span>';
             

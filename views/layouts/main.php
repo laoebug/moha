@@ -21,8 +21,13 @@ use app\components\MenuWidget;
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
     <link rel="stylesheet" href="css/datetimepicker.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
+    
     <title><?= \yii\helpers\Html::encode($this->title) ?></title>
+    <style type="text/css">
+    .table-responsive {
+    max-height:600px;
+	}
+	</style>
 </head>
 <body class="sidebar-mini fixed">
 
@@ -75,9 +80,9 @@ use app\components\MenuWidget;
             </div>
 
             <!-- Sidebar Menu-->
-            
+            <div class="table-responsive" style="width: 220px">	
             <ul class="sidebar-menu">
-<!-- 			<div class="table-responsive">	 -->
+			
                 <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span><?= Yii::t('app','Dashboard') ?></span></a></li>
                 <?php
                if(!Yii::$app->user->isGuest) {
@@ -85,10 +90,10 @@ use app\components\MenuWidget;
                    MenuWidget::end();
                }
                 ?>
-<!--             </div>     -->
+            
                 
             </ul>
-            
+            </div>    
             
         </section>
     </aside>
