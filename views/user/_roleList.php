@@ -5,6 +5,8 @@
 				<th><?php echo Yii::t("app","No")?></th>
 				<th><?php echo Yii::t("app","Role Name")?></th>
 				<th><?php echo Yii::t("app","Created Date Time")?></th>
+				<th></th>
+				
 			</tr>
 		</thead>
 		<tbody>
@@ -19,7 +21,21 @@
 					</td>
 				<td><?php echo isset($model["name"])? $model["name"]: ""; ?></td>
 				<td><?php echo isset($model["input_dt_stamp"])? $model["input_dt_stamp"]: ""; ?></td>
+				<td>
+				
+				<select id="menu_list" name="menu_list[]" multiple="multiple">
 
+	<?php if(count($models)>0): ?>
+		<?php foreach ($models as $menu): ?>
+		<option value="one" data-section="top" selected="selected" data-index="3">
+		<?php echo $menu["name"];?>
+		</option>
+		<?php endforeach;?>
+	<?php endif;?>
+	
+</select>
+
+				</td>
 			</tr>
 				<?php endforeach;?>
 				<?php else:?>

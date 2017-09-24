@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 			<div id="menuItemInfo" class="tab-pane fade in active">
 				<?php 
                 echo Yii::$app->controller->renderPartial('_menuItemList', [
-
+                		'models'=>$models
                 ]) 
                 ?>
             	
