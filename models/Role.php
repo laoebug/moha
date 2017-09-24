@@ -25,6 +25,7 @@ class Role extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+	public $theMenus=[];
     public static function tableName()
     {
         return 'role';

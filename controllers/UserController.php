@@ -121,19 +121,21 @@ class UserController extends Controller
         // }
         // $sql = "select * from role";
         // $models = Role::findBySql($sql)->all();
+        
+        
+		
+			
+        
         $models = Role::find()->all();
-        $sql = "select * from role";
-        $connection = Yii::$app->getDb();
-        $command = $connection->createCommand($sql);
         
-        $results = $command->queryAll();
-        
-//         foreach ($results as $row) {
-//             //echo count($role->menus) . "<br/>";
-//             echo $row["id"]."<br/>";
-//         }
-//         exit();
-        
+        foreach ($models as $role){
+        	$sql = "select getRoleId(:role_id,a.id) as role_id,getMenuId(:role_id,a.id) as menu_id, a.* from menu a";
+        	$params = [
+        			':role_id' => $role["id"],
+        			':role_id' => $role["id"]
+        	];        	
+        	$role->theMenus=Menu::findBySql($sql, $params)->all();
+        }        
         return $this->render('manageRole', [
             'models' => $models,
             'model' => $model
