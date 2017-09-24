@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = Yii::t('app', 'Stat Officer Salaries');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div ng-app="mohaApp" ng-controller="statOfficerTechnical">
+<div ng-app="mohaApp" ng-controller="statOfficerAgeLevel">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
@@ -34,21 +34,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <?php foreach($labels as $label) : ?>
-                                <th colspan="2" class="text-center"><?= $label ?></th>
-                                <?php endforeach; ?>
+                                <?php for($i=0;$i<3;$i++) : ?>
+                                    <th colspan="2" class="text-center"><?= $labels[$i] ?></th>
+                                <?php endfor; ?>
                             </tr>
                             <tr>
-                                <?php for($i=0;$i< count($labels) * 2;$i++) : ?>
+                                <?php for($i=0;$i< 3 * 2;$i++) : ?>
                                     <th class="text-center"><?= $i%2==0 ? 'ລ':'ຍ' ?></th>
                                 <?php endfor; ?>
                             </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for($i=0;$i<3;$i++) : ?>
-                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>_total" type="number" min="0"></td>
-                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>_women" type="number" max="{{model.<?=$columns[$i]?>_total}}"></td>
+                            <?php for($i=0;$i<6;$i++) : ?>
+                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>" type="number" min="0"></td>
                             <?php endfor; ?>
                         </tr>
                         </tbody>
@@ -70,9 +69,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for($i=3;$i<7;$i++) : ?>
-                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>_total" type="number" min="0"></td>
-                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>_women" type="number" max="{{model.<?=$columns[$i]?>_total}}"></td>
+                            <?php for($i=6;$i<14;$i++) : ?>
+                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>" type="number" min="0"></td>
                             <?php endfor; ?>
                         </tr>
                         </tbody>
@@ -94,9 +92,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for($i=7;$i<11;$i++) : ?>
-                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>_total" type="number" min="0"></td>
-                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>_women" type="number" max="{{model.<?=$columns[$i]?>_total}}"></td>
+                            <?php for($i=13;$i<21;$i++) : ?>
+                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>" type="number" min="0"></td>
                             <?php endfor; ?>
                         </tr>
                         </tbody>
@@ -144,8 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th class="text-center">{{sumtotal('women') | number}}</th>
 
                     <?php foreach($columns as $c): ?>
-                        <th class="text-center">{{sumcolumn('<?=$c?>_total') | number}}</th>
-                        <th class="text-center">{{sumcolumn('<?=$c?>_women') | number}}</th>
+                        <th class="text-center">{{sumcolumn('<?=$c?>') | number}}</th>
                     <?php endforeach; ?>
                 </tr>
                 </thead>
@@ -155,8 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td class="text-center">{{sumrow(m, 'total') | number}}</td>
                     <td class="text-center">{{sumrow(m, 'women') | number}}</td>
                     <?php foreach($columns as $c): ?>
-                        <td class="text-center">{{m.<?=$c?>_total | number}}</td>
-                        <td class="text-center">{{m.<?=$c?>_women | number}}</td>
+                        <td class="text-center">{{m.<?=$c?> | number}}</td>
                     <?php endforeach; ?>
                 </tr>
                 </tbody>
@@ -167,8 +162,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
-  app.controller('statOfficerTechnical', function($scope, $http, $sce, $timeout) {
-    $scope.url = 'index.php?r=stat-officer-technical/';
+  app.controller('statOfficerAgeLevel', function($scope, $http, $sce, $timeout) {
+    $scope.url = 'index.php?r=stat-officer-age-level/';
     $http.get($scope.url+ 'get')
       .then(function(r) {
         $scope.years = r.data.years;
@@ -186,14 +181,11 @@ $this->params['breadcrumbs'][] = $this->title;
           .then(function(r) {
             if(r.data.model) {
                 <?php foreach($columns as $i): ?>
-              $scope.model.<?=$i?>_total = parseInt(r.data.model.<?=$i?>_total);
-              $scope.model.<?=$i?>_women = parseInt(r.data.model.<?=$i?>_women);
+              $scope.model.<?=$i?> = parseInt(r.data.model.<?=$i?>);
               <?php endforeach; ?>
-
             } else {
                 <?php foreach($columns as $i): ?>
-              $scope.model.<?=$i?>_total = null;
-              $scope.model.<?=$i?>_women = null;
+              $scope.model.<?=$i?> = null;
                 <?php endforeach; ?>
             }
           }, function(r) {
@@ -250,12 +242,12 @@ $this->params['breadcrumbs'][] = $this->title;
     $scope.sumrow = function(m, key) {
         var s = 0;
         if(key == 'total') {
-            <?php foreach($columns as $i): ?>
-          if(m.<?=$i?>_total)
-            s += parseInt(m.<?=$i?>_total);
+            <?php foreach($columns as $i): if(strpos($i, 'total')) ?>
+          if(m.<?=$i?>)
+            s += parseInt(m.<?=$i?>);
             <?php endforeach; ?>
         } else if(key == 'women') {
-            <?php foreach($columns as $i): ?>
+            <?php foreach($columns as $i): if(strpos($i, 'women')) ?>
           if(m.<?=$i?>_women)
             s += parseInt(m.<?=$i?>_women);
             <?php endforeach; ?>

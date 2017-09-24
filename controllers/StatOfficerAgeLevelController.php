@@ -68,7 +68,7 @@ class StatOfficerAgeLevelController extends Controller
 
         $models = StatOfficerAgelevelDetail::find()->alias('d')
             ->select('d.*')->addSelect(['name' => 'l.name'])
-            ->join('join', 'stat_officerage_level s', 's.id = d.stat_officerage_level_id and s.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_officer_agelevel s', 's.id = d.stat_officer_agelevel_id and s.phiscal_year_id=:year', [':year' => $year->id])
             ->join('join', 'officer_level l', 'l.id=d.officer_level_id')
             ->asArray()->all();
 
@@ -83,7 +83,7 @@ class StatOfficerAgeLevelController extends Controller
         }
 
         $model = StatOfficerAgeLevelDetail::find()->alias('d')
-            ->join('join', 'stat_officerage_level s', 's.id = d.stat_officerage_level_id and s.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_officer_agelevel s', 's.id = d.stat_officer_agelevel_id and s.phiscal_year_id=:year', [':year' => $year->id])
             ->where(['officer_level_id' => $level])
             ->asArray()->one();
 
@@ -141,7 +141,7 @@ class StatOfficerAgeLevelController extends Controller
 
         $models = StatOfficerAgeLevelDetail::find()->alias('d')
             ->select('d.*')->addSelect(['name' => 'l.name'])
-            ->join('join', 'stat_officerage_level s', 's.id = d.stat_officerage_level_id and s.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_officer_agelevel s', 's.id = d.stat_officer_agelevel_id and s.phiscal_year_id=:year', [':year' => $year->id])
             ->join('join', 'officer_level l', 'l.id=d.officer_level_id')
             ->asArray()->all();
 
@@ -164,7 +164,7 @@ class StatOfficerAgeLevelController extends Controller
 
         $models = StatOfficerAgeLevelDetail::find()->alias('d')
             ->select('d.*')->addSelect(['name' => 'l.name'])
-            ->join('join', 'stat_officerage_level s', 's.id = d.stat_officerage_level_id and s.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_officer_agelevel s', 's.id = d.stat_officer_agelevel_id and s.phiscal_year_id=:year', [':year' => $year->id])
             ->join('join', 'officer_level l', 'l.id=d.officer_level_id')
             ->asArray()->all();
 

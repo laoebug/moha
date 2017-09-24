@@ -6,6 +6,29 @@
  * Time: 14:56
  */
 ?>
+
+<?php
+print_r($columns);
+$total = ['women' => 0, 'total' => 0];
+$sum = [];
+
+//print_r($models);
+foreach ($models as $model)
+    print_r($model);
+exit;
+//    foreach ($columns as $m)
+//        print_r($model[$m]);
+//        if(!isset($sum[$m])) $sum[$m] = 0;
+//$sum[$m] += $model[$m];
+//print_r($sum);
+
+//foreach ($sum as $key => $s) {
+//    if(strpos($key, 'total')) $total['total'] += $s;
+//    if(strpos($key, 'women')) $total['women'] += $s;
+//}
+//print_r($total);
+?>
+
 <style type="text/css" media="print">
     @page { size: landscape; }
 </style>
@@ -36,28 +59,10 @@
                     </tr>
                     <tr>
                         <th class="text-center">1. ກະຊວງພາຍໃນ ລວມທັງໝົດ</th>
-                        <?php
-                        $sum = [];
-                        $total = ['total' => 0, 'women'=>0];
-                        foreach($models as $model)
-                            foreach ($columns as $column) {
-                                if(!isset($sum[$column.'_total'])) $sum[$column.'_total'] = 0;
-                                if(!isset($sum[$column.'_women'])) $sum[$column.'_women'] = 0;
-                                $sum[$column.'_total'] += $model[$column.'_total'];
-                                $sum[$column.'_women'] += $model[$column.'_women'];
-                            }
-
-                        foreach ($sum as $k => $s) {
-                            if(strpos($k, 'total')) $total['total'] += $s;
-                            else if(strpos($k, 'women')) $total['women'] += $s;
-                        }
-
-                        ?>
                         <th class="text-center"><?= number_format($total['total']) ?></th>
                         <th class="text-center"><?= number_format($total['women']) ?></th>
-
-                        <?php foreach($sum as $s): ?>
-                            <th class="text-center"><?= number_format($s) ?></th>
+                        <?php foreach($columns as $c): ?>
+                            <th class="text-center"><?= number_format($sum[$c]) ?></th>
                         <?php endforeach; ?>
                     </tr>
                     </thead>
@@ -67,22 +72,15 @@
                             <td><?= $model['name'] ?></td>
                             <?php
                             $row = ['total' => 0, 'women' => 0];
-                            foreach ($model as $k => $m) {
-                                if(strpos($k, 'total')) $row['total'] += $m;
-                                if(strpos($k, 'women')) $row['women'] += $m;
+                            foreach ($columns as $m) {
+                                if(strpos($m, 'total')) $row['total'] += $model[$m];
+                                if(strpos($m, 'women')) $row['women'] += $model[$m];
                             }
                             ?>
-                            <?php foreach ($row as $r) : ?>
-                                <td class="text-center"><?= number_format($r) ?></td>
-                            <?php endforeach; ?>
-
+                            <td class="text-center"><?= number_format($row['total']) ?></td>
+                            <td class="text-center"><?= number_format($row['women']) ?></td>
                             <?php foreach($columns as $c): ?>
-                                <td class="text-center">
-                                    <?= number_format($model[$c.'_total']) ?>
-                                </td>
-                                <td class="text-center">
-                                    <?= number_format($model[$c.'_women']) ?>
-                                </td>
+                                <td class="text-center"><?= number_format($model[$c])?></td>
                             <?php endforeach; ?>
                         </tr>
                     <?php endforeach; ?>
