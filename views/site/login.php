@@ -33,43 +33,43 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
             <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
             <div class="form-group">
-                <label class="control-label"><?= Yii::t("app", "USERNAME") ?></label>
+                <label class="control-label">ຊື່ຜູ້ໃຊ້</label>
                 <?= $form->field($model, 'username')->textInput([
                         'autofocus' => true,
-                    'placeholder' => Yii::t("app", "USERNAME")
+                    'placeholder' => ຊື່ຜູ້ໃຊ້
                 ])->label(false) ?>
             </div>
             <div class="form-group">
-                <label class="control-label"><?= Yii::t("app", "PASSWORD") ?></label>
+                <label class="control-label">ລະຫັດຜ່ານ</label>
                 <?= $form->field($model, 'password')->label(false)->passwordInput([
-                    'placeholder' => Yii::t("app", "PASSWORD")
+                    'placeholder' => ລະຫັດຜ່ານ
                 ]) ?>
             </div>
             <div class="form-group">
                 <div class="utility">
                     <div class="animated-checkbox">
                         <label class="semibold-text">
-                            <input type="checkbox"><span class="label-text">Stay Signed in</span>
+                            <input type="checkbox"><span class="label-text">ຈື່ຂ້ອຍໄວ້</span>
                         </label>
                     </div>
-                    <p class="semibold-text mb-0"><a data-toggle="flip">Forgot Password ?</a></p>
+                    <p class="semibold-text mb-0"><a data-toggle="flip">ລືມລະຫັດຜ່ານ ?</a></p>
                 </div>
             </div>
             <div class="form-group btn-container">
-                <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>SIGN IN</button>
+                <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>ເຂົ້າສູ່ລະບົບ</button>
             </div>
         <?php ActiveForm::end(); ?>
         <form class="forget-form" action="index.html">
-            <h3 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>Forgot Password ?</h3>
+            <h3 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>ລືມລະຫັດຜ່ານ ?</h3>
             <div class="form-group">
-                <label class="control-label">EMAIL</label>
-                <input class="form-control" type="text" placeholder="Email">
+                <label class="control-label">ອີເມວ</label>
+                <input class="form-control" type="text" placeholder="ອີເມວ">
             </div>
             <div class="form-group btn-container">
-                <button class="btn btn-primary btn-block"><i class="fa fa-unlock fa-lg fa-fw"></i>RESET</button>
+                <button class="btn btn-primary btn-block"><i class="fa fa-unlock fa-lg fa-fw"></i>ຣີເຊັດ</button>
             </div>
             <div class="form-group mt-20">
-                <p class="semibold-text mb-0"><a data-toggle="flip"><i class="fa fa-angle-left fa-fw"></i> Back to Login</a></p>
+                <p class="semibold-text mb-0"><a data-toggle="flip"><i class="fa fa-angle-left fa-fw"></i> ກັບຄືນ</a></p>
             </div>
         </form>
     </div>

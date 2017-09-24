@@ -14,15 +14,15 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Overall Officers') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">ຕາຕະລາງສັງລວມສະຖິຕິ ລັດຖະກອນ ສົກປີ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                        <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Description') ?></th>
-                        <th class="text-center" colspan="3"><?= Yii::t('app', 'No. of officers') ?></th>
+                        <th class="text-center" colspan="2" rowspan="2">ລາຍການ</th>
+                        <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
                     </tr>
                     <tr>
                         <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
@@ -33,33 +33,33 @@
                     <tbody>
                     <tr>
                         <th rowspan="5">I</th>
-                        <th colspan="2"><?= Yii::t('app', 'Overall Officers') ?></th>
+                        <th colspan="2">ຈຳນວນລັດຖະກອນທົ່ວປະເທດ (1+2)</th>
                         <th class="text-right"><?= number_format($model->center_total+ $model->province_total + $model->district_total) ?></th>
                         <th class="text-right"><?= number_format($model->center_women + $model->province_women + $model->district_women) ?></th>
                         <th class="text-right"><?= number_format($model->center_total+ $model->province_total + $model->district_total - ($model->center_women + $model->province_women + $model->district_women)) ?></th>
                     </tr>
                     <tr>
                         <th>1</th>
-                        <th><?= Yii::t('app', 'Ministry Level') ?></th>
+                        <th>ຂັ້ນກະຊວງ</th>
                         <th class="text-right"><?= number_format($model->center_total) ?></th>
                         <th class="text-right"><?= number_format($model->center_women) ?></th>
                         <th class="text-right"><?= number_format($model->center_total- $model->center_women)?></th>
                     </tr>
                     <tr>
                         <th rowspan="3">2</th>
-                        <th><?= Yii::t('app', 'Local Level') ?></th>
+                        <th>ຂັ້ນທ້ອງຖິ່ນ</th>
                         <th class="text-right"><?= number_format($model->province_total + $model->district_total)?></th>
                         <th class="text-right"><?= number_format($model->province_women + $model->district_women)?></th>
                         <th class="text-right"><?= number_format($model->province_total + $model->district_total - ($model->province_women + $model->district_women))?></th>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'Province Department') ?></td>
+                        <td>ພະແນກການຂັ້ນແຂວງ</td>
                         <td class="text-right"><?= number_format($model->province_total)?></td>
                         <td class="text-right"><?= number_format($model->province_women)?></td>
                         <td class="text-right"><?= number_format($model->province_total - $model->province_women)?></td>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'District Office') ?></td>
+                        <td>ຫ້ອງການຂັ້ນເມືອງ</td>
                         <td class="text-right"><?= number_format($model->district_total)?></td>
                         <td class="text-right"><?= number_format($model->district_women)?></td>
                         <td class="text-right"><?= number_format($model->district_total - $model->district_women)?></td>

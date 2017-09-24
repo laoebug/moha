@@ -82,8 +82,7 @@ use app\components\MenuWidget;
             <!-- Sidebar Menu-->
             <div class="table-responsive" style="width: 220px">	
             <ul class="sidebar-menu">
-			
-                <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span><?= Yii::t('app','Dashboard') ?></span></a></li>
+<!--                <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span>--><?//= Yii::t('app','Dashboard') ?><!--</span></a></li>-->
                 <?php
                if(!Yii::$app->user->isGuest) {
                    MenuWidget::begin();
