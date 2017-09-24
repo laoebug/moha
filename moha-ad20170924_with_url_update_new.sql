@@ -969,7 +969,7 @@ CREATE TABLE `stat_association_foundation` (
 
 LOCK TABLES `stat_association_foundation` WRITE;
 /*!40000 ALTER TABLE `stat_association_foundation` DISABLE KEYS */;
-INSERT INTO `stat_association_foundation` VALUES (1,'2017-09-05 16:57:13',2,1,1);
+INSERT INTO `stat_association_foundation` VALUES (1,'2017-09-05 16:57:13',1,1,1);
 /*!40000 ALTER TABLE `stat_association_foundation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1032,7 +1032,7 @@ CREATE TABLE `stat_copy` (
 
 LOCK TABLES `stat_copy` WRITE;
 /*!40000 ALTER TABLE `stat_copy` DISABLE KEYS */;
-INSERT INTO `stat_copy` VALUES (1,'2017-09-16 20:14:35',1,1,2);
+INSERT INTO `stat_copy` VALUES (1,'2017-09-16 20:14:35',1,1,1);
 /*!40000 ALTER TABLE `stat_copy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1096,7 +1096,7 @@ CREATE TABLE `stat_course` (
 
 LOCK TABLES `stat_course` WRITE;
 /*!40000 ALTER TABLE `stat_course` DISABLE KEYS */;
-INSERT INTO `stat_course` VALUES (1,'ຫຼັກສູດຝຶກອົບຮົມລັດຖະກອນ (ທີ່ຮັບຮອງ ແລະ ຈັດພິມ)',0,1,'2017-09-14 15:00:58',2,NULL),(2,'ຫຼັກສູດຝຶກອົບຮົມລັດຖະກອນ (ທີ່ຮັບຮອງ ແລະ ຈັດພິມ)',0,1,'2017-09-14 15:01:06',2,NULL),(3,'ຫຼັກສູດຝຶກອົບຮົມລັດຖະກອນ (ທີ່ຮັບຮອງ ແລະ ຈັດພິມ)',0,1,'2017-09-14 15:01:33',2,NULL);
+INSERT INTO `stat_course` VALUES (1,'ຫຼັກສູດຝຶກອົບຮົມລັດຖະກອນ (ທີ່ຮັບຮອງ ແລະ ຈັດພິມ)',0,1,'2017-09-14 15:00:58',1,NULL),(2,'ຫຼັກສູດຝຶກອົບຮົມລັດຖະກອນ (ທີ່ຮັບຮອງ ແລະ ຈັດພິມ)',0,1,'2017-09-14 15:01:06',1,NULL),(3,'ຫຼັກສູດຝຶກອົບຮົມລັດຖະກອນ (ທີ່ຮັບຮອງ ແລະ ຈັດພິມ)',0,1,'2017-09-14 15:01:33',1,NULL);
 /*!40000 ALTER TABLE `stat_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1127,7 +1127,7 @@ CREATE TABLE `stat_document` (
 
 LOCK TABLES `stat_document` WRITE;
 /*!40000 ALTER TABLE `stat_document` DISABLE KEYS */;
-INSERT INTO `stat_document` VALUES (2,'2017-09-16 19:15:29',1,2,1);
+INSERT INTO `stat_document` VALUES (2,'2017-09-16 19:15:29',1,1,1);
 /*!40000 ALTER TABLE `stat_document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1200,7 +1200,7 @@ CREATE TABLE `stat_ethnic` (
 
 LOCK TABLES `stat_ethnic` WRITE;
 /*!40000 ALTER TABLE `stat_ethnic` DISABLE KEYS */;
-INSERT INTO `stat_ethnic` VALUES (1,'2017-09-09',1,2,1);
+INSERT INTO `stat_ethnic` VALUES (1,'2017-09-09',1,1,1);
 /*!40000 ALTER TABLE `stat_ethnic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1265,7 +1265,7 @@ CREATE TABLE `stat_explore` (
 
 LOCK TABLES `stat_explore` WRITE;
 /*!40000 ALTER TABLE `stat_explore` DISABLE KEYS */;
-INSERT INTO `stat_explore` VALUES (2,'2017-09-16 21:44:06',1,1,2);
+INSERT INTO `stat_explore` VALUES (2,'2017-09-16 21:44:06',1,1,1);
 /*!40000 ALTER TABLE `stat_explore` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1330,7 +1330,7 @@ CREATE TABLE `stat_govcoin_ministry` (
 
 LOCK TABLES `stat_govcoin_ministry` WRITE;
 /*!40000 ALTER TABLE `stat_govcoin_ministry` DISABLE KEYS */;
-INSERT INTO `stat_govcoin_ministry` VALUES (1,'2017-09-16 11:26:57',1,2,1);
+INSERT INTO `stat_govcoin_ministry` VALUES (1,'2017-09-16 11:26:57',1,1,1);
 /*!40000 ALTER TABLE `stat_govcoin_ministry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1406,7 +1406,7 @@ CREATE TABLE `stat_govcoin_province` (
 
 LOCK TABLES `stat_govcoin_province` WRITE;
 /*!40000 ALTER TABLE `stat_govcoin_province` DISABLE KEYS */;
-INSERT INTO `stat_govcoin_province` VALUES (1,'2017-09-16 15:47:14',1,2,1);
+INSERT INTO `stat_govcoin_province` VALUES (1,'2017-09-16 15:47:14',1,1,1);
 /*!40000 ALTER TABLE `stat_govcoin_province` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1482,7 +1482,7 @@ CREATE TABLE `stat_goverment_unit` (
 
 LOCK TABLES `stat_goverment_unit` WRITE;
 /*!40000 ALTER TABLE `stat_goverment_unit` DISABLE KEYS */;
-INSERT INTO `stat_goverment_unit` VALUES (2,2,'2017-09-04 14:58:36',1,1),(3,NULL,'2017-09-02 08:55:24',0,2);
+INSERT INTO `stat_goverment_unit` VALUES (2,1,'2017-09-24 18:49:30',1,1),(3,1,'2017-09-02 08:55:24',0,2);
 /*!40000 ALTER TABLE `stat_goverment_unit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1516,7 +1516,7 @@ CREATE TABLE `stat_goverment_unit_detail` (
 
 LOCK TABLES `stat_goverment_unit_detail` WRITE;
 /*!40000 ALTER TABLE `stat_goverment_unit_detail` DISABLE KEYS */;
-INSERT INTO `stat_goverment_unit_detail` VALUES (1,11,22,33,2,'sss',NULL,0),(2,NULL,NULL,NULL,3,NULL,NULL,0),(3,32,2,3,2,'sags',NULL,0),(4,2,22,4,2,NULL,1,0),(5,1,2,3,2,NULL,3,0),(6,1,3,1,2,'ເຫັກເັຫເັຫ',2,1),(7,2,1,3,2,'xx',1,2);
+INSERT INTO `stat_goverment_unit_detail` VALUES (1,11,22,33,2,'sss',NULL,0),(2,NULL,NULL,NULL,3,NULL,NULL,0),(3,32,2,3,2,'sags',NULL,0),(4,2,22,4,2,NULL,1,0),(5,1,2,3,2,NULL,3,0),(6,12,32,12,2,'q',22,1),(7,2,1,3,2,'xx',1,2);
 /*!40000 ALTER TABLE `stat_goverment_unit_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1547,7 +1547,7 @@ CREATE TABLE `stat_govoversea_ministry` (
 
 LOCK TABLES `stat_govoversea_ministry` WRITE;
 /*!40000 ALTER TABLE `stat_govoversea_ministry` DISABLE KEYS */;
-INSERT INTO `stat_govoversea_ministry` VALUES (1,'2017-09-16 15:13:00',1,2,1);
+INSERT INTO `stat_govoversea_ministry` VALUES (1,'2017-09-16 15:13:00',1,1,1);
 /*!40000 ALTER TABLE `stat_govoversea_ministry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1623,7 +1623,7 @@ CREATE TABLE `stat_govoversea_province` (
 
 LOCK TABLES `stat_govoversea_province` WRITE;
 /*!40000 ALTER TABLE `stat_govoversea_province` DISABLE KEYS */;
-INSERT INTO `stat_govoversea_province` VALUES (1,'2017-09-16 15:56:38',1,1,2);
+INSERT INTO `stat_govoversea_province` VALUES (1,'2017-09-16 15:56:38',1,1,1);
 /*!40000 ALTER TABLE `stat_govoversea_province` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1699,7 +1699,7 @@ CREATE TABLE `stat_highcoin_ministry` (
 
 LOCK TABLES `stat_highcoin_ministry` WRITE;
 /*!40000 ALTER TABLE `stat_highcoin_ministry` DISABLE KEYS */;
-INSERT INTO `stat_highcoin_ministry` VALUES (5,'2017-09-15 20:18:39',1,1,2);
+INSERT INTO `stat_highcoin_ministry` VALUES (5,'2017-09-15 20:18:39',1,1,1);
 /*!40000 ALTER TABLE `stat_highcoin_ministry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1773,7 +1773,7 @@ CREATE TABLE `stat_highoversea_ministry` (
 
 LOCK TABLES `stat_highoversea_ministry` WRITE;
 /*!40000 ALTER TABLE `stat_highoversea_ministry` DISABLE KEYS */;
-INSERT INTO `stat_highoversea_ministry` VALUES (1,'2017-09-16 11:54:37',1,1,2);
+INSERT INTO `stat_highoversea_ministry` VALUES (1,'2017-09-16 11:54:37',1,1,1);
 /*!40000 ALTER TABLE `stat_highoversea_ministry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1843,7 +1843,7 @@ CREATE TABLE `stat_hornorcoin_province` (
 
 LOCK TABLES `stat_hornorcoin_province` WRITE;
 /*!40000 ALTER TABLE `stat_hornorcoin_province` DISABLE KEYS */;
-INSERT INTO `stat_hornorcoin_province` VALUES (1,2,1,'2017-09-16 07:23:53',1);
+INSERT INTO `stat_hornorcoin_province` VALUES (1,1,1,'2017-09-16 07:23:53',1);
 /*!40000 ALTER TABLE `stat_hornorcoin_province` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1915,7 +1915,7 @@ CREATE TABLE `stat_institute_meeting` (
 
 LOCK TABLES `stat_institute_meeting` WRITE;
 /*!40000 ALTER TABLE `stat_institute_meeting` DISABLE KEYS */;
-INSERT INTO `stat_institute_meeting` VALUES (1,'2017-09-14 17:51:28',1,2,1);
+INSERT INTO `stat_institute_meeting` VALUES (1,'2017-09-14 17:51:28',1,1,1);
 /*!40000 ALTER TABLE `stat_institute_meeting` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1979,7 +1979,7 @@ CREATE TABLE `stat_institute_train` (
 
 LOCK TABLES `stat_institute_train` WRITE;
 /*!40000 ALTER TABLE `stat_institute_train` DISABLE KEYS */;
-INSERT INTO `stat_institute_train` VALUES (2,'2017-09-14 17:24:35',1,2,1);
+INSERT INTO `stat_institute_train` VALUES (2,'2017-09-14 17:24:35',1,1,1);
 /*!40000 ALTER TABLE `stat_institute_train` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2044,7 +2044,7 @@ CREATE TABLE `stat_legal` (
 
 LOCK TABLES `stat_legal` WRITE;
 /*!40000 ALTER TABLE `stat_legal` DISABLE KEYS */;
-INSERT INTO `stat_legal` VALUES (20,'2017-09-04 18:12:12',2,1,1);
+INSERT INTO `stat_legal` VALUES (20,'2017-09-04 18:12:12',1,1,1);
 /*!40000 ALTER TABLE `stat_legal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2108,7 +2108,7 @@ CREATE TABLE `stat_local_admin` (
 
 LOCK TABLES `stat_local_admin` WRITE;
 /*!40000 ALTER TABLE `stat_local_admin` DISABLE KEYS */;
-INSERT INTO `stat_local_admin` VALUES (8,'2017-09-18 13:09:18',2,1,1),(9,'2017-09-05 19:42:37',2,1,2);
+INSERT INTO `stat_local_admin` VALUES (8,'2017-09-18 13:09:18',1,1,1),(9,'2017-09-05 19:42:37',1,1,2);
 /*!40000 ALTER TABLE `stat_local_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2185,7 +2185,7 @@ CREATE TABLE `stat_map_produce` (
 
 LOCK TABLES `stat_map_produce` WRITE;
 /*!40000 ALTER TABLE `stat_map_produce` DISABLE KEYS */;
-INSERT INTO `stat_map_produce` VALUES (1,'2017-09-16 20:58:17',1,1,2);
+INSERT INTO `stat_map_produce` VALUES (1,'2017-09-16 20:58:17',1,1,1);
 /*!40000 ALTER TABLE `stat_map_produce` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2245,7 +2245,7 @@ CREATE TABLE `stat_map_service` (
 
 LOCK TABLES `stat_map_service` WRITE;
 /*!40000 ALTER TABLE `stat_map_service` DISABLE KEYS */;
-INSERT INTO `stat_map_service` VALUES (1,'2017-09-16 20:48:51',1,2,1);
+INSERT INTO `stat_map_service` VALUES (1,'2017-09-16 20:48:51',1,1,1);
 /*!40000 ALTER TABLE `stat_map_service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2307,7 +2307,7 @@ CREATE TABLE `stat_officer` (
 
 LOCK TABLES `stat_officer` WRITE;
 /*!40000 ALTER TABLE `stat_officer` DISABLE KEYS */;
-INSERT INTO `stat_officer` VALUES (1,'2017-09-09 22:29:51',1,1,2);
+INSERT INTO `stat_officer` VALUES (1,'2017-09-24 19:05:07',1,1,1);
 /*!40000 ALTER TABLE `stat_officer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2338,7 +2338,7 @@ CREATE TABLE `stat_officer_add` (
 
 LOCK TABLES `stat_officer_add` WRITE;
 /*!40000 ALTER TABLE `stat_officer_add` DISABLE KEYS */;
-INSERT INTO `stat_officer_add` VALUES (1,'2017-09-10 10:42:23',1,1,2);
+INSERT INTO `stat_officer_add` VALUES (1,'2017-09-10 10:42:23',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_add` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2401,7 +2401,7 @@ CREATE TABLE `stat_officer_age` (
 
 LOCK TABLES `stat_officer_age` WRITE;
 /*!40000 ALTER TABLE `stat_officer_age` DISABLE KEYS */;
-INSERT INTO `stat_officer_age` VALUES (1,'2017-09-09 22:44:00',1,2,2),(2,'2017-09-09 22:44:11',1,2,1);
+INSERT INTO `stat_officer_age` VALUES (1,'2017-09-09 22:44:00',1,1,2),(2,'2017-09-09 22:44:11',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_age` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2476,7 +2476,7 @@ CREATE TABLE `stat_officer_agelevel` (
 
 LOCK TABLES `stat_officer_agelevel` WRITE;
 /*!40000 ALTER TABLE `stat_officer_agelevel` DISABLE KEYS */;
-INSERT INTO `stat_officer_agelevel` VALUES (3,'2017-09-18 16:23:21',1,1,2);
+INSERT INTO `stat_officer_agelevel` VALUES (3,'2017-09-18 16:23:21',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_agelevel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2558,7 +2558,7 @@ CREATE TABLE `stat_officer_contract` (
 
 LOCK TABLES `stat_officer_contract` WRITE;
 /*!40000 ALTER TABLE `stat_officer_contract` DISABLE KEYS */;
-INSERT INTO `stat_officer_contract` VALUES (1,'2017-09-10 11:19:55',1,2,1);
+INSERT INTO `stat_officer_contract` VALUES (1,'2017-09-10 11:19:55',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_contract` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2623,7 +2623,7 @@ CREATE TABLE `stat_officer_degree` (
 
 LOCK TABLES `stat_officer_degree` WRITE;
 /*!40000 ALTER TABLE `stat_officer_degree` DISABLE KEYS */;
-INSERT INTO `stat_officer_degree` VALUES (1,'2017-09-10 06:07:37',1,1,2);
+INSERT INTO `stat_officer_degree` VALUES (1,'2017-09-10 06:07:37',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_degree` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2699,7 +2699,7 @@ CREATE TABLE `stat_officer_detail` (
 
 LOCK TABLES `stat_officer_detail` WRITE;
 /*!40000 ALTER TABLE `stat_officer_detail` DISABLE KEYS */;
-INSERT INTO `stat_officer_detail` VALUES (1,1,9999,77,55,88,66,40);
+INSERT INTO `stat_officer_detail` VALUES (1,1,888,77,55,88,66,40);
 /*!40000 ALTER TABLE `stat_officer_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2730,7 +2730,7 @@ CREATE TABLE `stat_officer_ministry` (
 
 LOCK TABLES `stat_officer_ministry` WRITE;
 /*!40000 ALTER TABLE `stat_officer_ministry` DISABLE KEYS */;
-INSERT INTO `stat_officer_ministry` VALUES (3,'2017-09-10 18:08:54',1,1,2);
+INSERT INTO `stat_officer_ministry` VALUES (3,'2017-09-10 18:08:54',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_ministry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2761,7 +2761,7 @@ CREATE TABLE `stat_officer_ministry_add` (
 
 LOCK TABLES `stat_officer_ministry_add` WRITE;
 /*!40000 ALTER TABLE `stat_officer_ministry_add` DISABLE KEYS */;
-INSERT INTO `stat_officer_ministry_add` VALUES (1,'2017-09-18 13:47:55',1,2,1);
+INSERT INTO `stat_officer_ministry_add` VALUES (1,'2017-09-18 13:47:55',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_ministry_add` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2854,7 +2854,7 @@ CREATE TABLE `stat_officer_ministry_train` (
 
 LOCK TABLES `stat_officer_ministry_train` WRITE;
 /*!40000 ALTER TABLE `stat_officer_ministry_train` DISABLE KEYS */;
-INSERT INTO `stat_officer_ministry_train` VALUES (2,'2017-09-13 11:36:01',1,1,2);
+INSERT INTO `stat_officer_ministry_train` VALUES (2,'2017-09-13 11:36:01',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_ministry_train` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2922,7 +2922,7 @@ CREATE TABLE `stat_officer_ministry_upgrade` (
 
 LOCK TABLES `stat_officer_ministry_upgrade` WRITE;
 /*!40000 ALTER TABLE `stat_officer_ministry_upgrade` DISABLE KEYS */;
-INSERT INTO `stat_officer_ministry_upgrade` VALUES (1,'2017-09-13 19:40:15',1,1,2);
+INSERT INTO `stat_officer_ministry_upgrade` VALUES (1,'2017-09-13 19:40:15',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_ministry_upgrade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3006,7 +3006,7 @@ CREATE TABLE `stat_officer_need` (
 
 LOCK TABLES `stat_officer_need` WRITE;
 /*!40000 ALTER TABLE `stat_officer_need` DISABLE KEYS */;
-INSERT INTO `stat_officer_need` VALUES (1,'2017-09-10 12:35:21',1,1,2);
+INSERT INTO `stat_officer_need` VALUES (1,'2017-09-10 12:35:21',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_need` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3066,7 +3066,7 @@ CREATE TABLE `stat_officer_org` (
 
 LOCK TABLES `stat_officer_org` WRITE;
 /*!40000 ALTER TABLE `stat_officer_org` DISABLE KEYS */;
-INSERT INTO `stat_officer_org` VALUES (1,'2017-09-10 18:31:41',1,1,2),(2,'2017-09-10 20:26:23',1,2,2);
+INSERT INTO `stat_officer_org` VALUES (1,'2017-09-10 18:31:41',1,1,1),(2,'2017-09-10 20:26:23',1,2,1);
 /*!40000 ALTER TABLE `stat_officer_org` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3128,7 +3128,7 @@ CREATE TABLE `stat_officer_organisation_add` (
 
 LOCK TABLES `stat_officer_organisation_add` WRITE;
 /*!40000 ALTER TABLE `stat_officer_organisation_add` DISABLE KEYS */;
-INSERT INTO `stat_officer_organisation_add` VALUES (3,'2017-09-11 18:18:39',1,1,2);
+INSERT INTO `stat_officer_organisation_add` VALUES (3,'2017-09-11 18:18:39',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_organisation_add` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3190,7 +3190,7 @@ CREATE TABLE `stat_officer_organisation_train` (
 
 LOCK TABLES `stat_officer_organisation_train` WRITE;
 /*!40000 ALTER TABLE `stat_officer_organisation_train` DISABLE KEYS */;
-INSERT INTO `stat_officer_organisation_train` VALUES (1,'2017-09-13 18:30:00',1,1,2);
+INSERT INTO `stat_officer_organisation_train` VALUES (1,'2017-09-13 18:30:00',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_organisation_train` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3258,7 +3258,7 @@ CREATE TABLE `stat_officer_organisation_upgrade` (
 
 LOCK TABLES `stat_officer_organisation_upgrade` WRITE;
 /*!40000 ALTER TABLE `stat_officer_organisation_upgrade` DISABLE KEYS */;
-INSERT INTO `stat_officer_organisation_upgrade` VALUES (1,'2017-09-13 20:08:43',1,2,1);
+INSERT INTO `stat_officer_organisation_upgrade` VALUES (1,'2017-09-13 20:08:43',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_organisation_upgrade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3342,7 +3342,7 @@ CREATE TABLE `stat_officer_position` (
 
 LOCK TABLES `stat_officer_position` WRITE;
 /*!40000 ALTER TABLE `stat_officer_position` DISABLE KEYS */;
-INSERT INTO `stat_officer_position` VALUES (1,'2017-09-10 12:06:51',1,1,2);
+INSERT INTO `stat_officer_position` VALUES (1,'2017-09-10 12:06:51',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_position` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3415,7 +3415,7 @@ CREATE TABLE `stat_officer_province` (
 
 LOCK TABLES `stat_officer_province` WRITE;
 /*!40000 ALTER TABLE `stat_officer_province` DISABLE KEYS */;
-INSERT INTO `stat_officer_province` VALUES (1,'2017-09-10 19:00:32',1,1,2),(2,'2017-09-10 20:24:10',1,2,2);
+INSERT INTO `stat_officer_province` VALUES (1,'2017-09-10 19:00:32',1,1,1),(2,'2017-09-10 20:24:10',1,2,1);
 /*!40000 ALTER TABLE `stat_officer_province` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3446,7 +3446,7 @@ CREATE TABLE `stat_officer_province_add` (
 
 LOCK TABLES `stat_officer_province_add` WRITE;
 /*!40000 ALTER TABLE `stat_officer_province_add` DISABLE KEYS */;
-INSERT INTO `stat_officer_province_add` VALUES (1,'2017-09-11 18:48:06',1,2,1);
+INSERT INTO `stat_officer_province_add` VALUES (1,'2017-09-11 18:48:06',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_province_add` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3539,7 +3539,7 @@ CREATE TABLE `stat_officer_province_train` (
 
 LOCK TABLES `stat_officer_province_train` WRITE;
 /*!40000 ALTER TABLE `stat_officer_province_train` DISABLE KEYS */;
-INSERT INTO `stat_officer_province_train` VALUES (2,'2017-09-13 17:50:26',1,1,2);
+INSERT INTO `stat_officer_province_train` VALUES (2,'2017-09-13 17:50:26',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_province_train` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3607,7 +3607,7 @@ CREATE TABLE `stat_officer_province_upgrade` (
 
 LOCK TABLES `stat_officer_province_upgrade` WRITE;
 /*!40000 ALTER TABLE `stat_officer_province_upgrade` DISABLE KEYS */;
-INSERT INTO `stat_officer_province_upgrade` VALUES (1,'2017-09-13 20:30:12',1,1,2);
+INSERT INTO `stat_officer_province_upgrade` VALUES (1,'2017-09-13 20:30:12',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_province_upgrade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3691,7 +3691,7 @@ CREATE TABLE `stat_officer_resign` (
 
 LOCK TABLES `stat_officer_resign` WRITE;
 /*!40000 ALTER TABLE `stat_officer_resign` DISABLE KEYS */;
-INSERT INTO `stat_officer_resign` VALUES (1,'2017-09-10 07:34:57',1,1,2),(2,'2017-09-10 07:58:15',1,2,2);
+INSERT INTO `stat_officer_resign` VALUES (1,'2017-09-10 07:34:57',1,1,1),(2,'2017-09-10 07:58:15',1,2,1);
 /*!40000 ALTER TABLE `stat_officer_resign` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3768,7 +3768,7 @@ CREATE TABLE `stat_officer_salary` (
 
 LOCK TABLES `stat_officer_salary` WRITE;
 /*!40000 ALTER TABLE `stat_officer_salary` DISABLE KEYS */;
-INSERT INTO `stat_officer_salary` VALUES (4,'2017-09-17 06:04:21',1,1,2);
+INSERT INTO `stat_officer_salary` VALUES (4,'2017-09-17 06:04:21',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_salary` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3858,7 +3858,7 @@ CREATE TABLE `stat_officer_technical` (
 
 LOCK TABLES `stat_officer_technical` WRITE;
 /*!40000 ALTER TABLE `stat_officer_technical` DISABLE KEYS */;
-INSERT INTO `stat_officer_technical` VALUES (1,'2017-09-18 15:44:08',1,2,1);
+INSERT INTO `stat_officer_technical` VALUES (1,'2017-09-18 15:44:08',1,1,1);
 /*!40000 ALTER TABLE `stat_officer_technical` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3940,7 +3940,7 @@ CREATE TABLE `stat_population_movement` (
 
 LOCK TABLES `stat_population_movement` WRITE;
 /*!40000 ALTER TABLE `stat_population_movement` DISABLE KEYS */;
-INSERT INTO `stat_population_movement` VALUES (5,'2017-09-07 16:47:52',1,1,2),(6,'2017-09-07 19:08:17',1,2,2);
+INSERT INTO `stat_population_movement` VALUES (5,'2017-09-07 16:47:52',1,1,1),(6,'2017-09-07 19:08:17',1,2,1);
 /*!40000 ALTER TABLE `stat_population_movement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4016,7 +4016,7 @@ CREATE TABLE `stat_religion` (
 
 LOCK TABLES `stat_religion` WRITE;
 /*!40000 ALTER TABLE `stat_religion` DISABLE KEYS */;
-INSERT INTO `stat_religion` VALUES (3,'2017-09-09 17:43:41',1,1,2);
+INSERT INTO `stat_religion` VALUES (3,'2017-09-24 19:05:44',1,1,1);
 /*!40000 ALTER TABLE `stat_religion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4051,7 +4051,7 @@ CREATE TABLE `stat_religion_detail` (
   KEY `fk_stat_religion_detail_province1_idx` (`province_id`),
   CONSTRAINT `fk_stat_religion_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_stat_religion_detail_stat_religion1` FOREIGN KEY (`stat_religion_id`) REFERENCES `stat_religion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -4060,7 +4060,7 @@ CREATE TABLE `stat_religion_detail` (
 
 LOCK TABLES `stat_religion_detail` WRITE;
 /*!40000 ALTER TABLE `stat_religion_detail` DISABLE KEYS */;
-INSERT INTO `stat_religion_detail` VALUES (1,8,7,6,5,4,3,2,1,99,88,77,66,55,44,'kkk',3,1),(2,99,9,88,8,77,7,66,6,55,5,44,4,33,3,'aaaa',3,17);
+INSERT INTO `stat_religion_detail` VALUES (1,8,7,6,5,4,3,2,1,99,88,77,66,55,44,'kkk',3,1),(2,99,9,88,8,77,7,66,6,55,5,44,4,33,3,'aaaa',3,17),(3,55,4,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,13);
 /*!40000 ALTER TABLE `stat_religion_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4091,7 +4091,7 @@ CREATE TABLE `stat_religion_place` (
 
 LOCK TABLES `stat_religion_place` WRITE;
 /*!40000 ALTER TABLE `stat_religion_place` DISABLE KEYS */;
-INSERT INTO `stat_religion_place` VALUES (1,'2017-09-09 19:21:20',1,2,1);
+INSERT INTO `stat_religion_place` VALUES (1,'2017-09-09 19:21:20',1,1,1);
 /*!40000 ALTER TABLE `stat_religion_place` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4166,7 +4166,7 @@ CREATE TABLE `stat_religion_teacher` (
 
 LOCK TABLES `stat_religion_teacher` WRITE;
 /*!40000 ALTER TABLE `stat_religion_teacher` DISABLE KEYS */;
-INSERT INTO `stat_religion_teacher` VALUES (1,'2017-09-09',1,2,1);
+INSERT INTO `stat_religion_teacher` VALUES (1,'2017-09-09',1,1,1);
 /*!40000 ALTER TABLE `stat_religion_teacher` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4242,7 +4242,7 @@ CREATE TABLE `stat_research` (
 
 LOCK TABLES `stat_research` WRITE;
 /*!40000 ALTER TABLE `stat_research` DISABLE KEYS */;
-INSERT INTO `stat_research` VALUES (1,'2017-09-15 17:19:17',1,1,2);
+INSERT INTO `stat_research` VALUES (1,'2017-09-15 17:19:17',1,1,1);
 /*!40000 ALTER TABLE `stat_research` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4310,7 +4310,7 @@ CREATE TABLE `stat_single_gateway_implementation` (
 
 LOCK TABLES `stat_single_gateway_implementation` WRITE;
 /*!40000 ALTER TABLE `stat_single_gateway_implementation` DISABLE KEYS */;
-INSERT INTO `stat_single_gateway_implementation` VALUES (1,2,1,'2017-09-18 14:01:19',1),(2,2,2,'2017-09-04 15:37:29',1);
+INSERT INTO `stat_single_gateway_implementation` VALUES (1,1,1,'2017-09-18 14:01:19',1),(2,1,2,'2017-09-04 15:37:29',1);
 /*!40000 ALTER TABLE `stat_single_gateway_implementation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4373,7 +4373,7 @@ CREATE TABLE `stat_victorycoin_ministry` (
 
 LOCK TABLES `stat_victorycoin_ministry` WRITE;
 /*!40000 ALTER TABLE `stat_victorycoin_ministry` DISABLE KEYS */;
-INSERT INTO `stat_victorycoin_ministry` VALUES (1,'2017-09-16 09:16:41',1,2,1);
+INSERT INTO `stat_victorycoin_ministry` VALUES (1,'2017-09-16 09:16:41',1,1,1);
 /*!40000 ALTER TABLE `stat_victorycoin_ministry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4461,7 +4461,7 @@ CREATE TABLE `stat_victorycoin_province` (
 
 LOCK TABLES `stat_victorycoin_province` WRITE;
 /*!40000 ALTER TABLE `stat_victorycoin_province` DISABLE KEYS */;
-INSERT INTO `stat_victorycoin_province` VALUES (1,'2017-09-16 10:15:49',1,1,2);
+INSERT INTO `stat_victorycoin_province` VALUES (1,'2017-09-16 10:15:49',1,1,1);
 /*!40000 ALTER TABLE `stat_victorycoin_province` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4549,7 +4549,7 @@ CREATE TABLE `stat_victoryoversea_ministry` (
 
 LOCK TABLES `stat_victoryoversea_ministry` WRITE;
 /*!40000 ALTER TABLE `stat_victoryoversea_ministry` DISABLE KEYS */;
-INSERT INTO `stat_victoryoversea_ministry` VALUES (2,'2017-09-16 12:41:18',1,2,1);
+INSERT INTO `stat_victoryoversea_ministry` VALUES (2,'2017-09-16 12:41:18',1,1,1);
 /*!40000 ALTER TABLE `stat_victoryoversea_ministry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4639,7 +4639,7 @@ CREATE TABLE `stat_victoryoversea_province` (
 
 LOCK TABLES `stat_victoryoversea_province` WRITE;
 /*!40000 ALTER TABLE `stat_victoryoversea_province` DISABLE KEYS */;
-INSERT INTO `stat_victoryoversea_province` VALUES (1,'2017-09-16 14:56:23',1,1,2);
+INSERT INTO `stat_victoryoversea_province` VALUES (1,'2017-09-16 14:56:23',1,1,1);
 /*!40000 ALTER TABLE `stat_victoryoversea_province` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -4861,4 +4861,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-09-24 23:42:48
+-- Dump completed on 2017-09-25  0:06:10

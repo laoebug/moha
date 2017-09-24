@@ -9,6 +9,7 @@ use Codeception\Util\HttpCode;
 use Yii;
 use app\models\StatOfficer;
 use app\models\StatOfficerSearch;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -93,6 +94,7 @@ class StatOfficerController extends Controller
             }
             $model->last_update = date('Y-m-d H:i:s');
             $model->saved = 1;
+            print_r($model->attributes);
             if(!$model->save()) throw new Exception(json_encode($model->errors));
 
             $detail = StatOfficerDetail::find()->alias('d')

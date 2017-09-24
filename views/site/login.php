@@ -31,18 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]);
             ?>
-            <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
+            <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>ເຂົ້າສູ່ລະບົບ</h3>
             <div class="form-group">
                 <label class="control-label">ຊື່ຜູ້ໃຊ້</label>
                 <?= $form->field($model, 'username')->textInput([
                         'autofocus' => true,
-                    'placeholder' => ຊື່ຜູ້ໃຊ້
+                    'placeholder' => 'ຊື່ຜູ້ໃຊ້'
                 ])->label(false) ?>
             </div>
             <div class="form-group">
                 <label class="control-label">ລະຫັດຜ່ານ</label>
                 <?= $form->field($model, 'password')->label(false)->passwordInput([
-                    'placeholder' => ລະຫັດຜ່ານ
+                    'placeholder' => 'ລະຫັດຜ່ານ'
                 ]) ?>
             </div>
             <div class="form-group">
