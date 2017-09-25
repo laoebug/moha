@@ -134,7 +134,7 @@ class UserController extends Controller
         			':role_id' => $role["id"],
         			':role_id' => $role["id"]
         	];        	
-        	$role->theMenus=Menu::findBySql($sql, $params)->all();
+        	$role->theMenus[$role["id"]]=Menu::findBySql($sql, $params)->all();
         }        
         return $this->render('manageRole', [
             'models' => $models,
