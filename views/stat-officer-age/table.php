@@ -15,15 +15,15 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Officers By Ages') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">ຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ ສົກປີ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                        <th class="text-center" colspan="18" rowspan="2"><?= Yii::t('app', 'Description') ?></th>
-                        <th class="text-center" colspan="3"><?= Yii::t('app', 'No. of officers') ?></th>
+                        <th class="text-center" colspan="18" rowspan="2">ລາຍການ</th>
+                        <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
                     </tr>
                     <tr>
                         <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
@@ -34,7 +34,7 @@
                     <tbody>
                         <tr>
                             <th rowspan="4">III</th>
-                            <th class="text-center" colspan="18"><?= Yii::t('app', 'Officers By Ages') ?></th>
+                            <th class="text-center" colspan="18">ຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ</th>
                             <th class="text-center">
                                 <?php
                                 $total = $model->total_u25 + $model->total_25_30 + $model->total_31_35 + $model->total_36_40 +

@@ -11,6 +11,7 @@ use Codeception\Util\HttpCode;
 use Yii;
 use app\models\StatEthnic;
 use yii\data\ActiveDataProvider;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

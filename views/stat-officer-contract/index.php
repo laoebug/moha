@@ -7,8 +7,8 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerContractSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Contracts');
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = "ຈຳນວນພະນັກງານຕາມສັນຍາ";
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerContractController">
     <div class="col-sm-12">
@@ -37,16 +37,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         </thead>
                         <tbody>
                         <tr>
-                            <td><?= Yii::t('app', 'Admin Approve') ?></td><td><input type="number" min="0" ng-model="model.admin_approve_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.admin_approve_women" max="{{model.admin_approve_total}}" class="form-control"></td>
+                            <td>ຮັບເຂົ້າ</td>
+                            <td><input type="number" min="0" ng-model="model.admin_approve_total" class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.admin_approve_women" max="{{model.admin_approve_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Admin Non Approve') ?></td><td><input type="number" min="0" ng-model="model.admin_non_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.admin_non_women" max="{{model.admin_non_total}}" class="form-control"></td>
+                            <td><?= Yii::t('app', 'Admin Non Approve') ?></td>
+                            <td><input type="number" min="0" ng-model="model.admin_non_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.admin_non_women" max="{{model.admin_non_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Officer Approve') ?></td><td><input type="number" min="0" ng-model="model.officer_approve_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.officer_approve_women" max="{{model.officer_approve_total}}" class="form-control"></td>
+                            <td><?= Yii::t('app', 'Officer Approve') ?></td>
+                            <td><input type="number" min="0" ng-model="model.officer_approve_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.officer_approve_women" max="{{model.officer_approve_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Officer Non Approve') ?></td><td><input type="number" min="0" ng-model="model.officer_non_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.officer_non_women" max="{{model.officer_non_total}}" class="form-control"></td>
+                            <td><?= Yii::t('app', 'Officer Non Approve') ?></td>
+                            <td><input type="number" min="0" ng-model="model.officer_non_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.officer_non_women" max="{{model.officer_non_total}}" class="form-control"></td>
                         </tr>
                         </tbody>
                     </table>

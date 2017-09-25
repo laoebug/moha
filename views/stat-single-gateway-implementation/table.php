@@ -11,7 +11,9 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Single Gateway Implementations ') ?> (<?= $model->phiscalYear->year ?>)</h3>
+                <h3 class="title">
+                    ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ (2017)
+                    (<?= $model->phiscalYear->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-responsive table-bordered table-hover">

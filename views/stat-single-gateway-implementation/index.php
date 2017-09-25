@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Statistics of Single Gateway Implementations');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="singleGatewayController">
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12" style="margin-top: 2em">
         <div class="card" ng-show="models">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Goverment Structure') ?> ({{year.year}})</h3>
+                <h3 class="title"><?= $this->title ?> ({{year.year}})</h3>
                 <p class="hidden-print">
                     <a class="btn btn-default" target="_blank" href="index.php?r=stat-single-gateway-implementation/print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                     <a class="btn btn-info" target="_blank" href="index.php?r=stat-single-gateway-implementation/download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th style="width: 10px"><?= Yii::t('app', 'No.') ?></th>
                         <th class="text-center"><?= Yii::t('app', 'Ministry') ?></th>
                         <th class="text-center"><?= Yii::t('app', 'Start Date') ?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Name') ?></th>
+                        <th class="text-center">ຊື່ໜ່ວຍງານ</th>
                         <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
                     </tr>
                     </thead>

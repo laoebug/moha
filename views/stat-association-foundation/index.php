@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Stat Association Foundations');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="stat-association-foundation-index">
 
@@ -81,7 +81,7 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
     </div>
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Internal Legal') ?></h3>
+            <h3><?= $this->title ?></h3>
             <p>
                 <a class="btn btn-default" target="_blank" href="index.php?r=stat-association-foundation/print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="index.php?r=stat-association-foundation/download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -92,8 +92,8 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
             <tr>
                 <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
                 <th class="text-center"><?= Yii::t('app', 'Ministry')."/".Yii::t('app', 'Province') ?></th>
-                <th class="text-center" style="width: 10%"><?= Yii::t('app', 'New') ?></th>
-                <th class="text-center" style="width: 10%"><?= Yii::t('app', 'Improve') ?></th>
+                <th class="text-center" style="width: 10%"><?= Yii::t('app', 'Association') ?></th>
+                <th class="text-center" style="width: 10%"><?= Yii::t('app', 'Foundations') ?></th>
                 <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
             </tr>
             </thead>

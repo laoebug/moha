@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'role',
                 [
                     'name'=>'role',
-                    'label'=>Yii::t("app","Role"),
+                    'label'=> "ສິດໜ້າທີ່",
                     'value'=>$model->role["name"],
                     'type'=>'raw'
                 ]
