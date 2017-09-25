@@ -61,7 +61,8 @@ function displayMenu($menu_parent_id)
             $menuList .= '<a href=index.php?r=' . trim($url) . '>';
             $menuList .= '<i class="' . $left_icon . ' "></i>';
             $menuList . '<span>';
-            $menuList .= $menu->id . Yii::t("app", $menu->name);
+            //$menuList .= $menu->id . Yii::t("app", $menu->name);
+            $menuList .= Yii::t("app", $menu->name);
             $menuList .= '</span>';
             $menuList .= '<i class="' . $right_icon . ' "></i> ';
             $menuList .= '</a>';
