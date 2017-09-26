@@ -27,7 +27,12 @@ use app\components\MenuWidget;
     .table-responsive {
     max-height:600px;
 	}
+	.selected {
+        background-color: #85C1E9;
+    }
+    
 	</style>
+	
 </head>
 <body class="sidebar-mini fixed">
 

@@ -1,4 +1,14 @@
+<select id="menu_list" name="menu_list[]" multiple="multiple">
 
+	<?php if(count($models)>0): ?>
+		<?php foreach ($models as $menu): ?>
+		<option value="one" data-section="top" selected="selected" data-index="3">
+		<?php echo $menu["name"];?>
+		</option>
+		<?php endforeach;?>
+	<?php endif;?>
+	
+</select>
 
 
 
@@ -9,7 +19,7 @@
   <option value="two" data-section="top" selected="selected" data-index="1">Python</option>
   <option value="three" data-section="top" selected="selected" data-index="2">Ruby</option>
   <option value="four" data-section="top">Swift</option>
-  <option value="wow" data-section="JavaScript/Library/Popular">jQuery</option>
+<!--   <option value="wow" data-section="JavaScript/Library/Popular">jQuery</option> -->
 </select>
 
 
