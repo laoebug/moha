@@ -103,12 +103,12 @@ class StatOfficerProvinceTrainController extends Controller
             'models' => $models,
             'stat' => [
                 'labels' => [
-                    Yii::t('app', 'Technical Local')
-                    , Yii::t('app', 'Technical Oversea')
-                    , Yii::t('app', 'Theory Local')
-                    , Yii::t('app', 'Theory Oversea')
+                    'ວິຊາສະເພາະ ພາຍໃນ'
+                    ,'ວິຊາສະເພາະ ຕາງປະເທດ'
+                    ,'ທິດສະດີ ພາຍໃນ'
+                    ,'ທິດສະດີ ຕາງປະເທດ'
                 ],
-                'series' => Yii::t('app', 'Ministry Officer Upgrading'),
+                'series' => "ສະຖິຕິພະນັກງານລັດຖະກອນຂັ້ນອົງການທຽບເທົ່າ ທີ່ໄປຝຶກອົບຮັມຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ",
                 'data' => $data
             ],
         ]);
@@ -197,7 +197,7 @@ class StatOfficerProvinceTrainController extends Controller
             ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=m.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
 
-        return $this->renderPartial('../province/print', [
+        return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
                 'models' => $models, 'year' => $year, 'cols' => $this->columns
             ])
@@ -222,7 +222,7 @@ class StatOfficerProvinceTrainController extends Controller
             ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=m.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
 
-        return $this->renderPartial('../province/excel', [
+        return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Officers Province Train '. $year->year . '.xls',
             'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year, 'cols' => $this->columns])
         ]);

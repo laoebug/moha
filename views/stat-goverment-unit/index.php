@@ -4,7 +4,7 @@
 /* @var $searchModel app\models\GovermentlevelSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Goverment Unit');
+$this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການຈັດຕັ້ງ (ກົມ ແລະ ອົງການລັດທຽບເທົ່າກົມ)";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="statGovermentUnitController">
@@ -41,7 +41,7 @@ $this->title = Yii::t('app', 'Goverment Unit');
                     <input type="number" min="0" class="form-control" ng-model="department">
                 </div>
                 <div class="col-sm-2">
-                    <label for=""><?= Yii::t('app', 'Insitute') ?></label>
+                    <label for="">ສະຖາບັນ</label>
                     <input type="number" min="0" class="form-control" ng-model="insitute">
                 </div>
                 <div class="col-sm-2">

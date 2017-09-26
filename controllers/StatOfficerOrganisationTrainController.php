@@ -104,10 +104,10 @@ class StatOfficerOrganisationTrainController extends Controller
             'models' => $models,
             'stat' => [
                 'labels' => [
-                    Yii::t('app', 'Technical Local')
-                    , Yii::t('app', 'Technical Oversea')
-                    , Yii::t('app', 'Theory Local')
-                    , Yii::t('app', 'Theory Oversea')
+                    'ວິຊາສະເພາະ ພາຍໃນ'
+                    ,'ວິຊາສະເພາະ ຕາງປະເທດ'
+                    ,'ທິດສະດີ ພາຍໃນ'
+                    ,'ທິດສະດີ ຕາງປະເທດ'
                 ],
                 'data' => $data
             ],

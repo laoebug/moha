@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerResignSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Resigns');
+$this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນຮູບການຕ່າງໆ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerResignController">
@@ -37,34 +37,34 @@ $this->title = Yii::t('app', 'Stat Officer Resigns');
                         </thead>
                         <tbody>
                         <tr>
-                            <td><?= Yii::t('app', 'Retire') ?></td><td><input type="number" min="0" ng-model="model.retire_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.retire_women" max="{{model.retire_total}}" class="form-control"></td>
+                            <td>ຮັບເບ້ຍບຳນານ</td><td><input type="number" min="0" ng-model="model.retire_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.retire_women" max="{{model.retire_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Bumnet') ?></td><td><input type="number" min="0" ng-model="model.bumnet_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.bumnet_women" max="{{model.bumnet_total}}" class="form-control"></td>
+                            <td>ອຸດໜູນເທື່ອດຽວ (ບໍາເນັດ)</td><td><input type="number" min="0" ng-model="model.bumnet_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.bumnet_women" max="{{model.bumnet_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Die') ?></td><td><input type="number" min="0" ng-model="model.die_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.die_women" max="{{model.die_total}}" class="form-control"></td>
+                            <td>ເສຍຊີວິດ</td><td><input type="number" min="0" ng-model="model.die_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.die_women" max="{{model.die_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Leave') ?></td><td><input type="number" min="0" ng-model="model.leave_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.leave_women" max="{{model.leave_total}}" class="form-control"></td>
+                            <td>ປະລະໜ້າທີ່</td><td><input type="number" min="0" ng-model="model.leave_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.leave_women" max="{{model.leave_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Fire') ?></td><td><input type="number" min="0" ng-model="model.fire_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.fire_women" max="{{model.fire_total}}" class="form-control"></td>
+                            <td>ຖືກປະຕິບັດວິໄນ (ໄລ່ອອກຈາກການເປັນລັດຖະກອນ)</td><td><input type="number" min="0" ng-model="model.fire_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.fire_women" max="{{model.fire_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Resign') ?></td><td><input type="number" min="0" ng-model="model.resign_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.resign_women" max="{{model.resign_total}}" class="form-control"></td>
+                            <td>ລາອອກ (ບໍ່ເອົາບຳເນັດ)</td><td><input type="number" min="0" ng-model="model.resign_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.resign_women" max="{{model.resign_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Lose') ?></td><td><input type="number" min="0" ng-model="model.lose_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.lose_women" max="{{model.lose_total}}" class="form-control"></td>
+                            <td>ເສຍກຳລັງແຮງງານ</td><td><input type="number" min="0" ng-model="model.lose_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.lose_women" max="{{model.lose_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Move to SOE') ?></td><td><input type="number" min="0" ng-model="model.move_soe_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.move_soe_women" max="{{model.move_ministry_total}}" class="form-control"></td>
+                            <td>ຍົກຍ້າຍໄປຢູ່ລັດວິສາຫະກິດ, ກຳລັງປະກອບອາວຸດ (ທະຫານ, ຕຳຫຼວດ)</td><td><input type="number" min="0" ng-model="model.move_soe_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.move_soe_women" max="{{model.move_ministry_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Moveto Ministry') ?></td><td><input type="number" min="0" ng-model="model.moveto_ministry_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.moveto_ministry_women" max="{{model.moveto_ministry_total}}" class="form-control"></td>
+                            <td>ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td><td><input type="number" min="0" ng-model="model.moveto_ministry_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.moveto_ministry_women" max="{{model.moveto_ministry_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Move-In Ministry') ?></td><td><input type="number" min="0" ng-model="model.movein_ministry_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.movein_ministry_women" max="{{model.movein_ministry_total}}" class="form-control"></td>
+                            <td>ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td><td><input type="number" min="0" ng-model="model.movein_ministry_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.movein_ministry_women" max="{{model.movein_ministry_total}}" class="form-control"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -94,7 +94,7 @@ $this->title = Yii::t('app', 'Stat Officer Resigns');
                     <tr>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.')?></th>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'Description')?></th>
-                        <th class="text-center" colspan="3"><?= Yii::t('app', 'Officer')?></th>
+                        <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
                     </tr>
                     <tr>
                         <th class="text-center"><?= Yii::t('app', 'Total')?></th>
@@ -105,46 +105,46 @@ $this->title = Yii::t('app', 'Stat Officer Resigns');
                 <tbody>
                 <tr>
                     <th class="text-center" rowspan="12">V</th>
-                    <th><?= Yii::t('app', 'Officers Resignation') ?></th>
+                    <th>ຈຳນວນລັດຖະກອນທີ່ອອກໃນຮູບການຕ່າງໆ</th>
                     <th class="text-center">{{formatNumber(model.retire_total + model.bumnet_total + model.die_total + model.leave_total + model.fire_total + model.resign_total + model.lose_total)}}</th>
                     <th class="text-center">{{formatNumber(model.retire_women + model.bumnet_women + model.die_women + model.leave_women + model.fire_women + model.resign_women + model.lose_women)}}</th>
                     <th class="text-center">{{formatNumber(model.retire_total + model.bumnet_total + model.die_total + model.leave_total + model.fire_total + model.resign_total + model.lose_total - (model.retire_women + model.bumnet_women + model.die_women + model.leave_women + model.fire_women + model.resign_women + model.lose_women))}}</th>
                 </tr>
                 <tr>
-                    <td>1. <?= Yii::t('app', 'Retire') ?></td><td class='text-center'>{{formatNumber(model.retire_total)}}</td><td class='text-center'>{{formatNumber(model.retire_women)}}</td><td class='text-center'>{{formatNumber(model.retire_total - model.retire_women)}}</td>
+                    <td>1. ຮັບເບ້ຍບຳນານ</td><td class='text-center'>{{formatNumber(model.retire_total)}}</td><td class='text-center'>{{formatNumber(model.retire_women)}}</td><td class='text-center'>{{formatNumber(model.retire_total - model.retire_women)}}</td>
                 </tr>
                 <tr>
-                    <td>2. <?= Yii::t('app', 'Bumnet') ?></td><td class='text-center'>{{formatNumber(model.bumnet_total)}}</td><td class='text-center'>{{formatNumber(model.bumnet_women)}}</td><td class='text-center'>{{formatNumber(model.bumnet_total - model.bumnet_women)}}</td>
+                    <td>2. ອຸດໜຸນເທື່ອດຽວ (ບຳເນັດ)</td><td class='text-center'>{{formatNumber(model.bumnet_total)}}</td><td class='text-center'>{{formatNumber(model.bumnet_women)}}</td><td class='text-center'>{{formatNumber(model.bumnet_total - model.bumnet_women)}}</td>
                 </tr>
                 <tr>
-                    <td>3. <?= Yii::t('app', 'Die') ?></td><td class='text-center'>{{formatNumber(model.die_total)}}</td><td class='text-center'>{{formatNumber(model.die_women)}}</td><td class='text-center'>{{formatNumber(model.die_total - model.die_women)}}</td>
+                    <td>3. ເສຍຊີວິດ</td><td class='text-center'>{{formatNumber(model.die_total)}}</td><td class='text-center'>{{formatNumber(model.die_women)}}</td><td class='text-center'>{{formatNumber(model.die_total - model.die_women)}}</td>
                 </tr>
                 <tr>
-                    <td>4. <?= Yii::t('app', 'Leave') ?></td><td class='text-center'>{{formatNumber(model.leave_total)}}</td><td class='text-center'>{{formatNumber(model.leave_women)}}</td><td class='text-center'>{{formatNumber(model.leave_total - model.leave_women)}}</td>
+                    <td>4. ປະລະໜ້າທີ່</td><td class='text-center'>{{formatNumber(model.leave_total)}}</td><td class='text-center'>{{formatNumber(model.leave_women)}}</td><td class='text-center'>{{formatNumber(model.leave_total - model.leave_women)}}</td>
                 </tr>
                 <tr>
-                    <td>5. <?= Yii::t('app', 'Fire') ?></td><td class='text-center'>{{formatNumber(model.fire_total)}}</td><td class='text-center'>{{formatNumber(model.fire_women)}}</td><td class='text-center'>{{formatNumber(model.fire_total - model.fire_women)}}</td>
+                    <td>5. ຖືກປະຕິບັດວິໄນ (ໄລ່ອອກຈາກການເປັນລັດຖະກອນ)</td><td class='text-center'>{{formatNumber(model.fire_total)}}</td><td class='text-center'>{{formatNumber(model.fire_women)}}</td><td class='text-center'>{{formatNumber(model.fire_total - model.fire_women)}}</td>
                 </tr>
                 <tr>
-                    <td>6. <?= Yii::t('app', 'Resign') ?></td><td class='text-center'>{{formatNumber(model.resign_total)}}</td><td class='text-center'>{{formatNumber(model.resign_women)}}</td><td class='text-center'>{{formatNumber(model.resign_total - model.resign_women)}}</td>
+                    <td>6. ລາອອກ (ບໍ່ເອົາບຳເນັດ)</td><td class='text-center'>{{formatNumber(model.resign_total)}}</td><td class='text-center'>{{formatNumber(model.resign_women)}}</td><td class='text-center'>{{formatNumber(model.resign_total - model.resign_women)}}</td>
                 </tr>
                 <tr>
-                    <td>7. <?= Yii::t('app', 'Lose') ?></td><td class='text-center'>{{formatNumber(model.lose_total)}}</td><td class='text-center'>{{formatNumber(model.lose_women)}}</td><td class='text-center'>{{formatNumber(model.lose_total - model.lose_women)}}</td>
+                    <td>7. ເສຍກຳລັງງານ</td><td class='text-center'>{{formatNumber(model.lose_total)}}</td><td class='text-center'>{{formatNumber(model.lose_women)}}</td><td class='text-center'>{{formatNumber(model.lose_total - model.lose_women)}}</td>
                 </tr>
                 <tr>
-                    <td>8. <?= Yii::t('app', 'Move to SOE') ?></td><td class='text-center'>{{formatNumber(model.move_soe_total)}}</td><td class='text-center'>{{formatNumber(model.move_soe_women)}}</td><td class='text-center'>{{formatNumber(model.move_soe_total - model.move_soe_women)}}</td>
+                    <td>8. ຍົກຍ້າຍໄປຢູ່ລັດວິສາຫະກິດ, ກຳລັງປະກອບອາວຸດ (ທະຫານ, ຕຳຫຼວດ)</td><td class='text-center'>{{formatNumber(model.move_soe_total)}}</td><td class='text-center'>{{formatNumber(model.move_soe_women)}}</td><td class='text-center'>{{formatNumber(model.move_soe_total - model.move_soe_women)}}</td>
                 </tr>
                 <tr>
-                    <th><?= Yii::t('app', 'Moveto Ministry') ?></th>
+                    <th>ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</th>
                     <th class="text-center">{{formatNumber(model.moveto_ministry_total + model.movein_ministry_total)}}</th>
                     <th class="text-center">{{formatNumber(model.moveto_ministry_women + model.movein_ministry_women)}}</th>
                     <th class="text-center">{{formatNumber(model.moveto_ministry_total + model.movein_ministry_total - (model.moveto_ministry_women + model.movein_ministry_women))}}</th>
                 </tr>
                 <tr>
-                    <td>1. <?= Yii::t('app', 'Moveto Ministry') ?></td><td class='text-center'>{{formatNumber(model.moveto_ministry_total)}}</td><td class='text-center'>{{formatNumber(model.moveto_ministry_women)}}</td><td class='text-center'>{{formatNumber(model.moveto_ministry_total - model.moveto_ministry_women)}}</td>
+                    <td>1. ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td><td class='text-center'>{{formatNumber(model.moveto_ministry_total)}}</td><td class='text-center'>{{formatNumber(model.moveto_ministry_women)}}</td><td class='text-center'>{{formatNumber(model.moveto_ministry_total - model.moveto_ministry_women)}}</td>
                 </tr>
                 <tr>
-                    <td>2. <?= Yii::t('app', 'Move-In Ministry') ?></td><td class='text-center'>{{formatNumber(model.movein_ministry_total)}}</td><td class='text-center'>{{formatNumber(model.movein_ministry_women)}}</td><td class='text-center'>{{formatNumber(model.movein_ministry_total - model.movein_ministry_women)}}</td>
+                    <td>2. ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td><td class='text-center'>{{formatNumber(model.movein_ministry_total)}}</td><td class='text-center'>{{formatNumber(model.movein_ministry_women)}}</td><td class='text-center'>{{formatNumber(model.movein_ministry_total - model.movein_ministry_women)}}</td>
                 </tr>
                 </tbody>
             </table>

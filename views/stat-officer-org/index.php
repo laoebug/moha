@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerOrgSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Organisations');
+$this->title = "ສະຖິຕິລວມອົງການຈັດຕັ້ງຂັ້ນສູນການ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerOrganisationController">
@@ -28,7 +28,7 @@ $this->title = Yii::t('app', 'Stat Officer Organisations');
             <div class="panel-body">
                 <div class="col-sm-12">
                     <div class="col-sm-3">
-                        <label ><?= Yii::t('app', 'Organisation') ?></label>
+                        <label >ອົງການຈັດຕັ້ງ</label>
                         <select ng-options="m.name for m in organisations" ng-model="model.organisation" ng-change="inquiry()" class="form-control"></select>
                     </div>
                     <div class="col-sm-3">

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\MyHelper;
 use app\models\PhiscalYear;
 use app\models\Province;
 use app\models\StatReligionDetail;
@@ -9,6 +10,7 @@ use Codeception\Util\HttpCode;
 use Yii;
 use app\models\StatReligion;
 use app\models\StatReligionSearch;
+use yii\db\Exception;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -104,11 +106,11 @@ class StatReligionController extends Controller
             'models' => $models,
             'stat' => [
                 'labels' => [
-                    Yii::t('app', 'Buddhism')
-                    , Yii::t('app', 'Christ')
-                    , Yii::t('app', 'Bahaiy')
-                    , Yii::t('app', 'Idslam')
-                    , Yii::t('app', 'Others')
+                    "ສາສະໜາພຸດ"
+                    , "ສາສະໜາເຍຊູຄຣິດ"
+                    , "ສາສະໜາບາຮາຍ"
+                    , "ສາສະໜາອິດສະລາມ"
+                    , "ອື່ນໆ"
                 ],
                 'data' => $data
             ],

@@ -32,27 +32,27 @@ foreach ($models as $model)
                 <tr>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Buddhism') ?></th>
-                    <th class="text-center" colspan="6"><?= Yii::t('app', 'Christian') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Bahaiy') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Idslam') ?></th>
+                    <th class="text-center" colspan="4">ສາສະໜາພຸດ</th>
+                    <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
+                    <th class="text-center" colspan="2">ສາສະໜາບາຮາຍ</th>
+                    <th class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
                 </tr>
                 <tr>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Temple') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'News') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Saturday') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Catolic') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Bahai') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Idslam') ?></th>
+                    <th class="text-center" colspan="4">ວັດ</th>
+                    <th class="text-center" colspan="2">ຂ່າວປະເສີດ (ໂບດ)</th>
+                    <th class="text-center" colspan="2">ວັນເສົາ (ໂບດ)</th>
+                    <th class="text-center" colspan="2">ກາໂຕລິກ (ວັດ)</th>
+                    <th class="text-center" colspan="2">ສາສະໜາບາຮາຍ (ທຳມະສະພາ)</th>
+                    <th class="text-center" colspan="2">ສາສະໜາອິດສະລາມ (ສຸເຫຼົ່າຫຼື ມັດສະຍິດ)</th>
                 </tr>
                 <tr>
                     <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'No Monk') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Sim') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'No Sim') ?></th>
+                    <th class="text-center">ບໍ່ມີພະສົງ</th>
+                    <th class="text-center">ສິມ</th>
+                    <th class="text-center">ບໍ່ມີສິມ</th>
                     <?php for ($i=0;$i<10;$i++): ?>
-                        <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'N') ?></th>
+                        <th class="text-center"><?= Yii::t('app', $i%2==0?'ທັງໝົດ':'ບໍ່ອະນຸຍາດ') ?></th>
                     <?php endfor; ?>
                 </tr>
                 <tr>

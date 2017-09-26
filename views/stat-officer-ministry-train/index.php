@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Ministries');
+$this->title = "ຕາຕະລາງສັງລວມສະຖິຕິພະນັກງານລັດຖະກອນຂັ້ນກະຊວງ ທີ່ໄປຝຶກອົບຮົມ ຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerMinistryTrainController">
@@ -138,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="row card" ng-show="stat">
-            <h3><?= Yii::t('app', 'The Chart of Officers Ministry Training') ?> {{year.year}}</h3>
+            <h3><?= $this->title ?> {{year.year}}</h3>
             <div class="col-sm-8">
                 <canvas id="stat" class="chart chart-bar"
                         chart-data="stat.data"

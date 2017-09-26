@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatInstituteMeetingSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Institute Meetings');
+$this->title = "ສະຖິຕິສັງລວມສະຖາບັນຈັດກອງປະຊຸມ ແລະ ຝຶກອົບຮົມໃຫ້ບັນດາກະຊວງ ອົງການຂັ້ນສູນກາງ ແລະ ທ້ອງຖິ່ນ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -29,7 +29,7 @@ $this->title = Yii::t('app', 'Stat Institute Meetings');
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-12">
-                    <label for=""><?= Yii::t('app', 'Title') ?></label>
+                    <label for="">ຫົວຂໍ້ຈັດຝຶກອົບຮົມ</label>
                     <input type="text" class="form-control" ng-model="model.title" >
                 </div>
                 <div class="col-sm-2">
@@ -49,11 +49,11 @@ $this->title = Yii::t('app', 'Stat Institute Meetings');
                     <input id="end_date" class="form-control datepicker" data-ng-model="$parent.model.end_date" type="text">
                 </div>
                 <div class="col-sm-2">
-                    <label for=""><?= Yii::t('app', 'Times') ?></label>
+                    <label for="">ຈຳນວນຄັ້ງ</label>
                     <input type="number" min="0" class="form-control" ng-model="model.times">
                 </div>
                 <div class="col-sm-12">
-                    <label for=""><?= Yii::t('app', 'Place') ?></label>
+                    <label for="">ສະຖານທີ່</label>
                     <input type="text" class="form-control" ng-model="model.place">
                 </div>
                 <div class="col-sm-2" style="margin-top: 1em">
@@ -71,7 +71,7 @@ $this->title = Yii::t('app', 'Stat Institute Meetings');
     </div>
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Institution Meeting') ?></h3>
+            <h3><?= $this->title ?></h3>
             <p>
                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -81,11 +81,11 @@ $this->title = Yii::t('app', 'Stat Institute Meetings');
             <thead>
             <tr>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Title') ?></th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Attendance') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Date') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Times') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Place') ?></th>
+                <th class="text-center" rowspan="2">ຫົວຂໍ້ຈັດເຝຶກອົບຮົມ</th>
+                <th class="text-center" colspan="2">ຈຳນວນ ຜູ້ເຂົ້າຮວມ</th>
+                <th class="text-center" rowspan="2">ວັນ ເດືອນ ປີ</th>
+                <th class="text-center" rowspan="2">ຈຳນວນຄັ້ງ</th>
+                <th class="text-center" rowspan="2">ສະຖານທີ່</th>
             </tr>
             <tr>
                 <th class="text-center"><?= Yii::t('app', 'T') ?></th>

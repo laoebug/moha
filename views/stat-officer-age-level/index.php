@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerSalarySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Salaries');
+$this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statOfficerAgeLevel">

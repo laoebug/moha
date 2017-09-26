@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatReligionTeacherSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Religion Teachers');
+$this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສາສະໜາ ໃນທົ່ວປະເທດ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="rerigionTeacherController">
@@ -35,14 +35,14 @@ $this->title = Yii::t('app', 'Stat Religion Teachers');
                 <div class="col-sm-9">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="5"><?=Yii::t('app', 'Buddhism') ?></td>
+                            <td class="text-center" colspan="5">ສາສະໜາພຸດ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Monk') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Novice') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Buddhis Dad') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Buddhis Mom') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Buddhis Boy') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ພະ') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ຈົວ') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ພໍ່ຂາວ') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ແມ່ຂາວ') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ສັງກະລີ') ?></td>
                         </tr>
                         <tr>
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.buddhis_monk"></td>
@@ -56,27 +56,27 @@ $this->title = Yii::t('app', 'Stat Religion Teachers');
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="6"><?=Yii::t('app', 'Christian') ?></td>
-                            <td class="text-center" colspan="2" rowspan="2"><?=Yii::t('app', 'Bahaiy') ?></td>
-                            <td class="text-center" colspan="2" rowspan="2"><?=Yii::t('app', 'Idslam') ?></td>
+                            <td class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</td>
+                            <td class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</td>
+                            <td class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</td>
                             <td class="text-center" rowspan="3"><?=Yii::t('app', 'Remark') ?></td>
                         </tr>
                         <tr>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'News') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Saturday') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Catolic') ?></td>
+                            <td class="text-center" colspan="2">ຂ່າວປະເສີດ</td>
+                            <td class="text-center" colspan="2">ວັນເສົາ</td>
+                            <td class="text-center" colspan="2">ກາໂຕລິກ</td>
                         </tr>
                         <tr>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'T') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'W') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'T') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'W') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'T') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'W') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'T') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'W') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'T') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'W') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
                         </tr>
                         <tr>
                             <td class="text-center">
@@ -131,7 +131,7 @@ $this->title = Yii::t('app', 'Stat Religion Teachers');
     <div ng-show="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
         <div class="card">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Religion Teacher') ?> {{year.year}}</h3>
+            <h3><?= $this->title ?> {{year.year}}</h3>
             <p>
                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -142,33 +142,33 @@ $this->title = Yii::t('app', 'Stat Religion Teachers');
                 <tr>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
-                    <th class="text-center" colspan="5"><?= Yii::t('app', 'Buddhism') ?></th>
-                    <th class="text-center" colspan="6"><?= Yii::t('app', 'Christian') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Bahaiy') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Idslam') ?></th>
+                    <th class="text-center" colspan="5">ສາສະໜາພຸດ</th>
+                    <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
                 </tr>
                 <tr>
-                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'Monk') ?></th>
-                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'Novice') ?></th>
-                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'Buddhis Dad') ?></th>
-                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'Buddhis Mom') ?></th>
-                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'Buddhis Boy') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'News') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Saturday') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Catolic') ?></th>
+                    <th class="text-center" rowspan="2">ພະ</th>
+                    <th class="text-center" rowspan="2">ຈົວ</th>
+                    <th class="text-center" rowspan="2">ພໍ່ຂາວ</th>
+                    <th class="text-center" rowspan="2">ແມ່ຂາວ</th>
+                    <th class="text-center" rowspan="2">ສັງກະລີ</th>
+                    <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
+                    <th class="text-center" colspan="2">ວັນເສົາ</th>
+                    <th class="text-center" colspan="2">ກາໂຕລິກ</th>
                 </tr>
                 <tr>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
                 </tr>
                 <tr>
                     <th style="width: 10%" class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
@@ -218,7 +218,7 @@ $this->title = Yii::t('app', 'Stat Religion Teachers');
 
     <div ng-show="stat" class="col-sm-12">
         <div class="card">
-            <h3><?= Yii::t('app', 'The Chart of Religions Teacher') ?> {{year.year}}</h3>
+            <h3><?= $this->title ?> {{year.year}}</h3>
             <canvas id="stat" class="chart chart-bar"
                     chart-data="stat.data"
                     chart-labels="stat.labels"

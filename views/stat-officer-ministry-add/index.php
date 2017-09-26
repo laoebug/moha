@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Ministries Add/Resign');
+$this->title = "ສະຖິຕິລັດຖະກອນທີ່ເພີ່ມເຂົ້າ ແລະ ອອກທຸກຮູບການ ຂອງກະຊວງ ແລະ ອົງການທຽບເທົ່າ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerMinistryAddController">
@@ -31,11 +31,11 @@ $this->title = Yii::t('app', 'Stat Officer Ministries Add/Resign');
                         <select ng-options="m.name for m in ministries" ng-model="model.ministry" ng-change="inquiry()" class="form-control"></select>
                     </div>
                     <div class="col-sm-3">
-                        <label ><?= Yii::t('app', 'Add') ?></label>
+                        <label >ເພີ່ມເຂົ້າ</label>
                         <input class="form-control" ng-model="model.add" min="0" type="number">
                     </div>
                     <div class="col-sm-3">
-                        <label ><?= Yii::t('app', 'Resign') ?></label>
+                        <label >ລາອອກ (ບໍ່ເອົາບຳເນັດ)</label>
                         <input class="form-control" ng-model="model.resign" min="0" max="model.add" type="number">
                     </div>
                     <div class="col-sm-3">

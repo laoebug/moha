@@ -31,7 +31,7 @@ foreach ($models as $model)
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'Village') ?></th>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Population') ?></th>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Born') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Die') ?></th>
+                    <th class="text-center" colspan="2">ເສຍຊີວິດ</th>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'Married') ?></th>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'Divorced') ?></th>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-Out') ?></th>

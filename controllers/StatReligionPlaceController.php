@@ -102,10 +102,10 @@ class StatReligionPlaceController extends Controller
             'models' => $models,
             'stat' => [
                 'labels' => [
-                    Yii::t('app', 'Buddhism')
-                    , Yii::t('app', 'Christ')
-                    , Yii::t('app', 'Bahaiy')
-                    , Yii::t('app', 'Idslam')
+                    "ສາສະໜາພຸດ"
+                    , "ສາສະໜາເຍຊູຄຣິດ"
+                    , "ສາສະໜາບາຮາຍ"
+                    , "ສາສະໜາອິດສະລາມ"
                 ],
                 'data' => $data
             ],

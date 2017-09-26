@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerAgeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Ages');
+$this->title = "ຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerAgeController">
@@ -100,7 +100,7 @@ $this->title = Yii::t('app', 'Stat Officer Ages');
                 <tr>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
                     <th class="text-center" colspan="18" rowspan="2"><?= Yii::t('app', 'Description') ?></th>
-                    <th class="text-center" colspan="3"><?= Yii::t('app', 'No. of officers') ?></th>
+                    <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
                 </tr>
                 <tr>
                     <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
@@ -111,7 +111,7 @@ $this->title = Yii::t('app', 'Stat Officer Ages');
                 <tbody>
                 <tr>
                     <th rowspan="4">III</th>
-                    <th class="text-center" colspan="18"><?= Yii::t('app', 'Officers By Ages') ?></th>
+                    <th class="text-center" colspan="18"><?= $this->title ?></th>
                     <th class="text-center">
                         {{model.total_u25+ model.total_25_30+ model.total_31_35+ model.total_36_40+ model.total_41_45+ model.total_46_50+ model.total_51_55+ model.total_56_60+ model.total_61u}}
                     </th>

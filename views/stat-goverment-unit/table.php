@@ -12,7 +12,7 @@
     <div class="col-sm-4 hidden-print">
         <div class="widget-small <?=$model->saved?'primary':'warning'?>"><i class="icon fa fa-star fa-2x"></i>
             <div class="info">
-                <h4><?=Yii::t('app', 'Status') ?></h4>
+                <h4>ສະຖານະ</h4>
                 <p><b><?=Yii::t('app', $model->saved?'Saved':'-')?></b></p>
             </div>
         </div>
@@ -20,7 +20,7 @@
     <div class="col-sm-4 hidden-print">
         <div class="widget-small info"><i class="icon fa fa-user fa-2x"></i>
             <div class="info">
-                <h4><?=Yii::t('app', 'Owner') ?></h4>
+                <h4>ເຈົ້າຂອງ</h4>
                 <p><b><?=$model->saved && $model->user? $model->user->username:'-'?></b></p>
             </div>
         </div>
@@ -28,7 +28,7 @@
     <div class="col-sm-4 hidden-print">
         <div class="widget-small danger"><i class="icon fa fa-clock-o fa-2x"></i>
             <div class="info">
-                <h4><?=Yii::t('app', 'Last Update') ?></h4>
+                <h4>ອັບເດດລ່າສຸດ</h4>
                 <p><b><?=$model->saved?\app\components\MyHelper::converttimefordisplay($model->last_update):"-"?></b></p>
             </div>
         </div>
@@ -37,7 +37,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Goverment Unit ') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">ສະຖິຕິບັນດາຫົວໜ່ວຍການຈັດຕັ້ງ (ກົມ ແລະ ອົງການລັດທຽບເທົ່າກົມ) (<?= $year->year ?>)</h3>
                 <p class="hidden-print">
                     <a class="btn btn-default" target="_blank" href="index.php?r=stat-goverment-unit/print&year=<?=$year->id?>"><i class="fa fa-print fa-2x"></i></a>
                     <a class="btn btn-info" target="_blank" href="index.php?r=stat-goverment-unit/download&year=<?=$year->id?>"><i class="fa fa-download fa-2x"></i></a>

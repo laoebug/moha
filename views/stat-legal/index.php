@@ -4,7 +4,7 @@
 /* @var $searchModel app\models\GovermentlevelSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Legal');
+$this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜງພາຍໃນທີ່ກຳລັງປັບປຸງ ແລະ ຮ່າງຂຶ້ນໃໝ່";
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="statLegalController">
     <div class="col-sm-12">
@@ -23,12 +23,12 @@ $this->title = Yii::t('app', 'Legal');
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-4">
-                    <label for=""><?= Yii::t('app', 'Legal Type') ?></label>
+                    <label for="">ປະເພດນິິຕິກຳ</label>
                     <select class="form-control" ng-model="model.legalType" ng-options="b.name for b in legalTypes">
                     </select>
                 </div>
                 <div class="col-sm-4">
-                    <label for=""><?= Yii::t('app', 'Legal') ?></label>
+                    <label for="">ຊື່ນິຕິກຳ</label>
                     <select class="form-control" ng-model="model.legal" ng-options="b.name for b in model.legalType.legals"
                             ng-change="inquiry()">
                     </select>
@@ -37,7 +37,9 @@ $this->title = Yii::t('app', 'Legal');
                     <label for="">&nbsp;</label>
                     <div class="animated-checkbox">
                         <label>
-                            <input ng-model="model.new" type="checkbox"><span class="label-text"><?= Yii::t('app','New') ?></span>
+                            <input ng-model="model.new" type="checkbox"><span class="label-text">
+                                ຮ່າງຂຶ້ນໃໝ່
+                            </span>
                         </label>
                     </div>
                 </div>
@@ -45,12 +47,14 @@ $this->title = Yii::t('app', 'Legal');
                     <label for="">&nbsp;</label>
                     <div class="animated-checkbox">
                         <label>
-                            <input ng-model="model.improve" type="checkbox"><span class="label-text"><?=Yii::t('app','Improve') ?></span>
+                            <input ng-model="model.improve" type="checkbox"><span class="label-text">
+                                ປັບປຸງ
+                            </span>
                         </label>
                     </div>
                 </div>
                 <div class="col-sm-5">
-                    <label for=""><?= Yii::t('app', 'Publish') ?></label>
+                    <label for="">ປະກາດໃຊ້</label>
                     <input type="text" class="form-control" ng-model="model.publish">
                 </div>
                 <div class="col-sm-7">
@@ -67,7 +71,7 @@ $this->title = Yii::t('app', 'Legal');
     </div>
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Internal Legal') ?></h3>
+            <h3><?= $this->title ?></h3>
             <p>
                 <a class="btn btn-default" target="_blank" href="index.php?r=stat-legal/print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="index.php?r=stat-legal/download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -77,10 +81,10 @@ $this->title = Yii::t('app', 'Legal');
             <thead>
                 <tr>
                     <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Name') ?></th>
-                    <th class="text-center" style="width: 10%"><?= Yii::t('app', 'New') ?></th>
-                    <th class="text-center" style="width: 10%"><?= Yii::t('app', 'Improve') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Publish') ?></th>
+                    <th class="text-center">ຊື່ນິຕິກຳ</th>
+                    <th class="text-center" style="width: 10%">ຮ່າງຂຶ້ນໃໝ່</th>
+                    <th class="text-center" style="width: 10%">ປັບປຸງ</th>
+                    <th class="text-center">ປະກາດໃຊ້</th>
                     <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
                 </tr>
             </thead>

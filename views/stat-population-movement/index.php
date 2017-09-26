@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatPopulationMovementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Population Movements');
+$this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງຂອງກະຊວງພາຍໃນ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <style>
@@ -37,13 +37,13 @@ $this->title = Yii::t('app', 'Stat Population Movements');
                 <div class="col-sm-9">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" rowspan="2"><?=Yii::t('app', 'District') ?></td>
-                            <td class="text-center" rowspan="2"><?=Yii::t('app', 'Village') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Population') ?></td>
+                            <td class="text-center" rowspan="2">ຈຳນວນເມືອງ</td>
+                            <td class="text-center" rowspan="2">ຈຳນວນບ້ານ</td>
+                            <td class="text-center" colspan="2">ຂຳນວນ ພົນລະເມືອງ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'W') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
                         </tr>
                         <tr>
                             <td class="text-center" style="width: 12%"><input ng-model="model.district" min="0" type="number" class="form-control"></td>
@@ -56,15 +56,15 @@ $this->title = Yii::t('app', 'Stat Population Movements');
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Born') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Die') ?></td>
-                            <td class="text-center" rowspan="2"><?=Yii::t('app', 'Married') ?></td>
-                            <td class="text-center" rowspan="2"><?=Yii::t('app', 'Divorced') ?></td>
+                            <td class="text-center" colspan="2">ຈຳນວນເກີດ</td>
+                            <td class="text-center" colspan="2">ຈຳນວນເສຍຊີວິດ</td>
+                            <td class="text-center" rowspan="2">ແຕ່ງດອງ</td>
+                            <td class="text-center" rowspan="2">ຢ່າຮ້າງ</td>
                         </tr>
                         <tr>
                             <?php for ($i=0;$i<2;$i++): ?>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'W') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
                             <?php endfor; ?>
                         </tr>
                         <tr>
@@ -80,14 +80,14 @@ $this->title = Yii::t('app', 'Stat Population Movements');
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Move-In') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Move-Out') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Real') ?></td>
+                            <td class="text-center" colspan="2">ຍ້າຍມາ</td>
+                            <td class="text-center" colspan="2">ຍ້າຍອອກໄປ</td>
+                            <td class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ ທີ່ມີໜ້າຕົວຈິງ</td>
                         </tr>
                         <tr>
                             <?php for ($i=0;$i<3;$i++): ?>
-                                <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'T') ?></td>
-                                <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'W') ?></td>
+                                <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                                <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
                             <?php endfor; ?>
                         </tr>
                         <tr>
@@ -110,7 +110,7 @@ $this->title = Yii::t('app', 'Stat Population Movements');
     </div>
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Population Movement') ?></h3>
+            <h3><?= $this->title ?></h3>
             <p>
                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -123,13 +123,13 @@ $this->title = Yii::t('app', 'Stat Population Movements');
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'District') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Village') ?></th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Population') ?></th>
+                <th class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ</th>
                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Born') ?></th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Die') ?></th>
+                <th class="text-center" colspan="2">ເສຍຊີວິດ</th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Married') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Divorced') ?></th>
                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-In') ?></th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-Out') ?></th>
+                <th class="text-center" colspan="2">ຍ້າຍອອກໄປ</th>
                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Real') ?></th>
             </tr>
             <tr>

@@ -20,7 +20,8 @@ foreach ($models as $model)
 <div class="row">
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Population Movement'). ' ('. $year->year.')' ?></h3>
+            <h3>ການເກັບກຳສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງຂອງກະຊວງພາຍໃນ
+                <?= ' ('. $year->year.')' ?></h3>
         </div>
         <table class="table table-bordered table-hover">
             <thead>
@@ -29,13 +30,13 @@ foreach ($models as $model)
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'District') ?></th>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'Village') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Population') ?></th>
+                    <th class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ</th>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Born') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Die') ?></th>
+                    <th class="text-center" colspan="2">ເສຍຊີວິດ</th>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'Married') ?></th>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'Divorced') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-Out') ?></th>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-In') ?></th>
+                    <th class="text-center" colspan="2">ຍ້າຍອອກໄປ</th>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Real') ?></th>
                 </tr>
                 <tr>

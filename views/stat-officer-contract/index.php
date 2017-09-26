@@ -37,20 +37,20 @@ $this->title = "ຈຳນວນພະນັກງານຕາມສັນຍາ"
                         </thead>
                         <tbody>
                         <tr>
-                            <td>ຮັບເຂົ້າ</td>
+                            <td>ຮັບເຂົ້າຕາມຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ</td>
                             <td><input type="number" min="0" ng-model="model.admin_approve_total" class="form-control"></td>
                             <td><input type="number" min="0" ng-model="model.admin_approve_women" max="{{model.admin_approve_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Admin Non Approve') ?></td>
+                            <td>ຮັບເຂົ້າໂດຍບໍ່ນອນໃນຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ (ຈ້າງເອງ)</td>
                             <td><input type="number" min="0" ng-model="model.admin_non_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.admin_non_women" max="{{model.admin_non_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Officer Approve') ?></td>
+                            <td>ຮັບເຂົ້າຕາມຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ</td>
                             <td><input type="number" min="0" ng-model="model.officer_approve_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.officer_approve_women" max="{{model.officer_approve_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'Officer Non Approve') ?></td>
+                            <td>ຮັບເຂົ້າໂດຍບໍ່ນອນໃນຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ (ຈ້າງເອງ)</td>
                             <td><input type="number" min="0" ng-model="model.officer_non_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.officer_non_women" max="{{model.officer_non_total}}" class="form-control"></td>
                         </tr>
                         </tbody>
@@ -78,7 +78,7 @@ $this->title = "ຈຳນວນພະນັກງານຕາມສັນຍາ"
                 <tr>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.')?></th>
                     <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Description')?></th>
-                    <th class="text-center" colspan="3"><?= Yii::t('app', 'Officer')?></th>
+                    <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
                 </tr>
                 <tr>
                     <th class="text-center"><?= Yii::t('app', 'Total')?></th>
@@ -89,48 +89,48 @@ $this->title = "ຈຳນວນພະນັກງານຕາມສັນຍາ"
                 <tbody>
                 <tr>
                     <th class="text-center" rowspan="7">VII</th>
-                    <th colspan="2"><?= Yii::t('app', 'Officers Contract') ?></th>
+                    <th colspan="2">ຈຳນວນລັດຖະກອນຕາມສັນຍາ</th>
                     <th class="text-center">{{formatNumber(model.admin_approve_total + model.admin_non_total + model.officer_approve_total + model.officer_non_total)}}</th>
                     <th class="text-center">{{formatNumber(model.admin_approve_women + model.admin_non_women + model.officer_approve_women + model.officer_non_women)}}</th>
                     <th class="text-center">{{formatNumber(model.admin_approve_total + model.admin_non_total + model.officer_approve_total + model.officer_non_total - (model.admin_approve_women + model.admin_non_women + model.officer_approve_women + model.officer_non_women))}}</th>
                 </tr>
                 <tr>
-                    <td colspan="2">1. <?= Yii::t('app', 'Administration By Contract') ?></td>
+                    <td colspan="2">1. ຈຳນວນພະນັກງານຕາມສັນຍາ (ບໍລິຫານຮັບໃຊ້)</td>
                     <td class='text-center'>{{formatNumber(model.admin_approve_total + model.admin_non_total)}}</td>
                     <td class='text-center'>{{formatNumber(model.admin_approve_women + model.admin_non_women)}}</td>
                     <td class='text-center'>{{formatNumber(model.admin_approve_total+model.admin_non_total - (model.admin_approve_women + model.admin_non_women))}}</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><?= Yii::t('app', 'Admin Approve') ?></td>
+                    <td>ຮັບເຂົ້າຕາມຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ</td>
                     <td class="text-center">{{formatNumber(model.admin_approve_total)}}</td>
                     <td class="text-center">{{formatNumber(model.admin_approve_women)}}</td>
                     <td class="text-center">{{formatNumber(model.admin_approve_total - model.admin_approve_women)}}</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><?= Yii::t('app', 'Admin Non Approve') ?></td>
+                    <td>ຮັບເຂົ້າໂດຍບໍ່ນອນໃນຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ (ຈ້າງເອງ)</td>
                     <td class="text-center">{{formatNumber(model.admin_non_total)}}</td>
                     <td class="text-center">{{formatNumber(model.admin_non_women)}}</td>
                     <td class="text-center">{{formatNumber(model.admin_non_total - model.admin_non_women)}}</td>
                 </tr>
 
                 <tr>
-                    <td colspan="2">2. <?= Yii::t('app', 'Officers By Contract') ?></td>
+                    <td colspan="2">2. ຈຳນວນພະນັກງານຕາມສັນຍາ (ວິຊາການ)</td>
                     <td class='text-center'>{{formatNumber(model.officer_approve_total + model.officer_non_total)}}</td>
                     <td class='text-center'>{{formatNumber(model.officer_approve_women + model.officer_non_women)}}</td>
                     <td class='text-center'>{{formatNumber(model.officer_approve_total + model.officer_non_total - (model.officer_approve_women + model.officer_non_women))}}</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><?= Yii::t('app', 'Officers Approve') ?></td>
+                    <td>ຮັບເຂົ້າຕາມຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ</td>
                     <td class="text-center">{{formatNumber(model.officer_approve_total)}}</td>
                     <td class="text-center">{{formatNumber(model.officer_approve_women)}}</td>
                     <td class="text-center">{{formatNumber(model.officer_approve_total - model.officer_approve_women)}}</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><?= Yii::t('app', 'Officers Non Approve') ?></td>
+                    <td>ຮັບເຂົ້າໂດຍບໍ່ນອນໃນຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ (ຈ້າງເອງ)</td>
                     <td class="text-center">{{formatNumber(model.officer_non_total)}}</td>
                     <td class="text-center">{{formatNumber(model.officer_non_women)}}</td>
                     <td class="text-center">{{formatNumber(model.officer_non_total - model.officer_non_women)}}</td>

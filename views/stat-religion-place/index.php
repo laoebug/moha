@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatReligionPlaceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Religion Places');
+$this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ່ວປະເທດ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="rerigionPlaceController">
@@ -35,20 +35,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-9">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="4"><?=Yii::t('app', 'Buddhism') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Christ') ?></td>
+                            <td class="text-center" colspan="4">ສາສະໜາພຸດ</td>
+                            <td class="text-center" colspan="2">ສາສະໜາເຍຊູຄຣິດ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" colspan="4"><?=Yii::t('app', 'Temple') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'News') ?></td>
+                            <td class="text-center" colspan="4">ວັດ</td>
+                            <td class="text-center" colspan="2">ຂ່າວປະເສີດ</td>
                         </tr>
                         <tr>
                             <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'No Monk') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Sim')?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'No Sim') ?></td>
+                            <td class="text-center" style="width: 12.5%">ບໍ່ມີພະສົງ</td>
+                            <td class="text-center" style="width: 12.5%">ສິມ</td>
+                            <td class="text-center" style="width: 12.5%">ບໍ່ມີສິມ</td>
                             <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Not') ?></td>
+                            <td class="text-center" style="width: 12.5%">ບໍ່ອະນຸຍາດ</td>
                         </tr>
                         <tr>
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.buddhis_total"></td>
@@ -66,14 +66,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="4"><?=Yii::t('app', 'Christian') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Bahaiy') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Idslam') ?></td>
+                            <td class="text-center" colspan="4">ສາສະໜາເຍຊູຄຣິດ</td>
+                            <td class="text-center" colspan="2">ສາສະໜາບາຮາຍ</td>
+                            <td class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</td>
                             <td class="text-center" rowspan="3"><?=Yii::t('app', 'Remark') ?></td>
                         </tr>
                         <tr>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Saturday') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Catolic') ?></td>
+                            <td class="text-center" colspan="2">ວັນເສົາ</td>
+                            <td class="text-center" colspan="2">ກາໂທລິກ</td>
                             <td class="text-center" colspan="2">ທຳມະສະພາ</td>
                             <td class="text-center" colspan="2">ສຸເຫຼົ່າ ຫຼື ມັດສະຍິດ</td>
                         </tr>
@@ -139,25 +139,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Buddhism') ?></th>
-                    <th class="text-center" colspan="6"><?= Yii::t('app', 'Christian') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Bahaiy') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Idslam') ?></th>
+                    <th class="text-center" colspan="4">ສາສະໜາພຸດ</th>
+                    <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
+                    <th class="text-center" colspan="2">ສາສະໜາບາຮາຍ</th>
+                    <th class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
                 </tr>
                 <tr>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Temple') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'News') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Saturday') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Catolic') ?></th>
+                    <th class="text-center" colspan="4">ວັດ</th>
+                    <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
+                    <th class="text-center" colspan="2">ວັນເສົາ</th>
+                    <th class="text-center" colspan="2">ກາໂທລິກ</th>
                     <th class="text-center" colspan="2">ທຳມະສະພາ</th>
                     <th class="text-center" colspan="2">ສຸເຫຼົ່າ ຫຼື ມັດສະຍິດ</th>
                 </tr>
                 <tr>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'No Monk') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Sim') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'No Sim') ?></th>
+                    <th class="text-center">ລວມ</th>
+                    <th class="text-center">ບໍ່ມີພະສົງ</th>
+                    <th class="text-center">ສິມ</th>
+                    <th class="text-center">ບໍ່ມີສິມ</th>
                     <?php for ($i=0; $i<10; $i++): ?>
                     <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'N') ?></th>
                     <?php endfor; ?>
@@ -207,7 +207,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row" ng-show="stat">
-        <h3><?= Yii::t('app', 'The Chart of Religions Places') ?> {{year.year}}</h3>
+        <h3><?= $this->title ?> {{year.year}}</h3>
         <div class="col-sm-8">
             <canvas id="stat" class="chart chart-bar"
                     chart-data="stat.data"

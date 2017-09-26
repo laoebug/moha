@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatPopulationMovementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Population Movements');
+$this->title = "ການສົມທຽບສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style>
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Comparations of Population Movement') ?></h3>
+            <h3><?= $this->title ?></h3>
             <p>
                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -42,17 +42,17 @@ $this->params['breadcrumbs'][] = $this->title;
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Year') ?></th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Population') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'District') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Village') ?></th>
+                <th class="text-center" rowspan="2">ປີ</th>
+                <th class="text-center" colspan="2">ຈຳນວນພົນລວມທົ່ວປະເທດ</th>
+                <th class="text-center" rowspan="2">ຈຳນວນແຂວງ</th>
+                <th class="text-center" rowspan="2">ຈຳນວນເມືອງ</th>
+                <th class="text-center" rowspan="2">ຈຳນວນບ້ານ</th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Married') ?></th>
                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Divorced') ?></th>
                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Born') ?></th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Die') ?></th>
+                <th class="text-center" colspan="2">ເສຍຊີວິດ</th>
                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-In') ?></th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-Out') ?></th>
+                <th class="text-center" colspan="2">ຍ້າຍອອກໄປ</th>
                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Real') ?></th>
             </tr>
             <tr>
@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-sm-12">
         <div class="card">
-            <h3><?= Yii::t('app', 'The Chart of Population Movement Yearly') ?></h3>
+            <h3>ເສັ້ນສະແດງສົມທຽບການເພີ່ມຂຶ້ນ-ຫຼຸດລົງ ຂອງພົນລະເມືອງ</h3>
             <canvas id="stat" class="chart chart-bar"
                     chart-data="stat.data"
                     chart-labels="stat.labels"

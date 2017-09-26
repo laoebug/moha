@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatCopySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Copies');
+$this->title = "ສະຖິຕິການສັງລວມການສຳເນົາ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statCopy">
@@ -27,7 +27,7 @@ $this->title = Yii::t('app', 'Stat Copies');
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-6">
-                    <label><?= Yii::t('app', 'Activity') ?></label>
+                    <label>ເນື້ອໃນກິດຈະກຳ</label>
                     <input class="form-control" ng-model="model.activity" type="text">
                 </div>
                 <div class="col-sm-6 text-center">
@@ -41,7 +41,7 @@ $this->title = Yii::t('app', 'Stat Copies');
                     </div>
 
                 <div class="col-sm-6">
-                    <label><?= Yii::t('app', 'Summary') ?></label>
+                    <label>ສັງລວມ</label>
                     <input type="text" class="form-control" ng-model="model.summary">
                 </div>
                 <div class="col-sm-6">
@@ -50,7 +50,7 @@ $this->title = Yii::t('app', 'Stat Copies');
                 </div>
                 <div class="col-sm-3" style="margin-top: 1em">
                     <button type="button" class="btn btn-info col-sm-12" ng-click="add()">
-                        <i class="fa fa-plus"></i> <?= Yii::t('app', 'Add') ?>
+                        <i class="fa fa-plus"></i> ເພີ່ມ
                     </button>
                 </div>
                 <div class="col-sm-3" style="margin-top: 1em">
@@ -60,7 +60,7 @@ $this->title = Yii::t('app', 'Stat Copies');
                 </div>
                 <div class="col-sm-3" style="margin-top: 1em">
                     <button type="button" class="btn btn-danger col-sm-12" ng-click="delete()">
-                        <i class="fa fa-trash"></i> <?= Yii::t('app', 'Delete') ?>
+                        <i class="fa fa-trash"></i> ລຶບ
                     </button>
                 </div>
             </div>

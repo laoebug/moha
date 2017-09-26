@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerPositionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Statistics Officer Positions');
+$this->title = "ຈຳນວນລັດຖະກອນ ແຍກຕາມຕຳແໜ່ງບໍລິຫານປະເພດຕ່າງໆ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerPositionController">
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <thead>
                         <tr>
                             <?php for ($i = 1; $i< 5;$i++): ?>
-                                <th colspan="2" class="text-center"><?= Yii::t('app', 'Position') ." $i" ?></th>
+                                <th colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') ." $i" ?></th>
                             <?php endfor; ?>
                         </tr>
                         <tr>
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <thead>
                         <tr>
                             <?php for ($i = 5; $i< 9;$i++): ?>
-                                <th colspan="2" class="text-center"><?= Yii::t('app', 'Position') ." $i" ?></th>
+                                <th colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') ." $i" ?></th>
                             <?php endfor; ?>
                         </tr>
                         <tr>
@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.')?></th>
                     <th class="text-center" rowspan="2" colspan="16"><?= Yii::t('app', 'Description')?></th>
-                    <th class="text-center" colspan="3"><?= Yii::t('app', 'Officer')?></th>
+                    <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
                 </tr>
                 <tr>
                     <th class="text-center"><?= Yii::t('app', 'Total')?></th>
@@ -109,14 +109,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tbody>
                 <tr>
                     <th class="text-center" rowspan="4">VIII</th>
-                    <th class="text-center" colspan="16"><?= Yii::t('app', 'Officers Positions') ?></th>
+                    <th class="text-center" colspan="16"><?= $this->title ?></th>
                     <th class="text-center">{{formatNumber(model.p1_total + model.p2_total + model.p3_total + model.p4_total + model.p5_total + model.p6_total + model.p7_total + model.p8_total)}}</th>
                     <th class="text-center">{{formatNumber(model.p1_women + model.p2_women + model.p3_women + model.p4_women + model.p5_women + model.p6_women + model.p7_women + model.p8_women)}}</th>
                     <th class="text-center">{{formatNumber(model.p1_total + model.p2_total + model.p3_total + model.p4_total + model.p5_total + model.p6_total + model.p7_total + model.p8_total - (model.p1_women + model.p2_women + model.p3_women + model.p4_women + model.p5_women + model.p6_women + model.p7_women + model.p8_women))}}</th>
                 </tr>
                 <tr>
                     <?php for ($i = 1; $i<9; $i++): ?>
-                    <td colspan="2" class="text-center"><?= Yii::t('app', 'Position'). " $i" ?></td>
+                    <td colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ'). " $i" ?></td>
                     <?php endfor; ?>
                 </tr>
                 <tr>

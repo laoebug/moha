@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerOrganisationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Provinces');
+$this->title = "ສະຖິຕິພະນັກງານລັດຖະກອນຂັ້ນທ້ອງຖິ່ນທີ່ໄປຝຶກອົບຮົມຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerOrganisationTrainController">
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-3">
-                    <label ><?= Yii::t('app', 'Organisation') ?></label>
+                    <label >ອົງການຈັດຕັ້ງ</label>
                     <select ng-options="m.name for m in provinces" ng-model="model.province" ng-change="inquiry()" class="form-control"></select>
                 </div>
                 <br />
@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <thead>
                 <tr>
                     <th class="text-center" rowspan="5"><?= Yii::t('app', 'No.') ?></th>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'Organisation')?></th>
+                    <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນ</th>
                     <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Total')?></th>
                     <th class="text-center" colspan="4"><?= Yii::t('app', 'Technical Trainning')?></th>
                     <th class="text-center" colspan="4"><?= Yii::t('app', 'Theory Trainning')?></th>
@@ -138,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="row card" ng-show="stat">
-            <h3><?= Yii::t('app', 'The Chart of Officers Organisation Training') ?> {{year.year}}</h3>
+            <h3><?= $this->title ?> {{year.year}}</h3>
             <div class="col-sm-8">
                 <canvas id="stat" class="chart chart-bar"
                         chart-data="stat.data"

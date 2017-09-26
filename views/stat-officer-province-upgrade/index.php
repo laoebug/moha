@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Provinces Upgrade');
+$this->title = "ສະຖິຕິສັງລວມພະນັກງານ ລັດຖະກອນ ຂັ້ນທ້ອງຖິ່ນທີ່ໄປຍົກລະດັບຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerProvinceUpgradeController">
@@ -35,8 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th class="text-center" colspan="4"><?= Yii::t('app', 'Doctor') ?></th>
-                            <th class="text-center" colspan="4"><?= Yii::t('app', 'Master') ?></th>
+                            <th class="text-center" colspan="4">ປະລິນຍາເອກ</th>
+                            <th class="text-center" colspan="4">ປະລິນຍາໂທ</th>
                         </tr>
                         <tr>
                             <?php for($i=0;$i<4;$i++): ?>
@@ -68,8 +68,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th class="text-center" colspan="4"><?= Yii::t('app', 'Bachelor') ?></th>
-                            <th class="text-center" colspan="4"><?= Yii::t('app', 'High') ?></th>
+                            <th class="text-center" colspan="4">ປະລິນຍາຕີ</th>
+                            <th class="text-center" colspan="4">ຊັ້ນສູງ</th>
                         </tr>
                         <tr>
                             <?php for($i=0;$i<4;$i++): ?>
@@ -101,8 +101,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th class="text-center" colspan="4"><?= Yii::t('app', 'Middle') ?></th>
-                            <th class="text-center" colspan="4"><?= Yii::t('app', 'Begin') ?></th>
+                            <th class="text-center" colspan="4">ຊັ້ນກາງ</th>
+                            <th class="text-center" colspan="4">ຊັ້ນຕົ້ນ</th>
                         </tr>
                         <tr>
                             <?php for($i=0;$i<4;$i++): ?>
@@ -157,12 +157,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province')?></th>
                     <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Total')?></th>
 
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Doctor')?></th>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Master')?></th>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Bachelor')?></th>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'High')?></th>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Middle')?></th>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Begin')?></th>
+                    <th class="text-center" colspan="4">ປະລິນຍາເອກ</th>
+                    <th class="text-center" colspan="4">ປະລິນຍາໂທ</th>
+                    <th class="text-center" colspan="4">ປະລິນຍາຕີ</th>
+                    <th class="text-center" colspan="4">ຊັ້ນສູງ</th>
+                    <th class="text-center" colspan="4">ຊັ້ນກາງ</th>
+                    <th class="text-center" colspan="4">ຊັ້ນຕົ້ນ</th>
                 </tr>
                 <tr>
                     <?php for($i=0;$i<12;$i++): ?>
@@ -203,7 +203,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
 
         <div class="row card" ng-show="stat">
-            <h3><?= Yii::t('app', 'The Chart of Officers Province Training') ?> {{year.year}}</h3>
+            <h3><?= $this->title ?> {{year.year}}</h3>
             <div class="col-sm-8">
                 <canvas id="statbar" class="chart chart-bar"
                         chart-data="stat.data"

@@ -44,7 +44,8 @@ class MinistryController extends Controller
 
     public function actionEnquiry() {
         return json_encode([
-            'ministries' => Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all()
+            'ministries' => Ministry::find()->where('deleted=0 and ministry_group_id in(1,2)')
+                ->orderBy('position')->asArray()->all()
         ]);
     }
 
