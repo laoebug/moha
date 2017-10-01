@@ -39,6 +39,7 @@ use Yii;
  * @property StatOfficerAgelevel[] $statOfficerAgelevels
  * @property StatOfficerContract[] $statOfficerContracts
  * @property StatOfficerDegree[] $statOfficerDegrees
+ * @property StatOfficerEthnic[] $statOfficerEthnics
  * @property StatOfficerMinistry[] $statOfficerMinistries
  * @property StatOfficerMinistryAdd[] $statOfficerMinistryAdds
  * @property StatOfficerMinistryTrain[] $statOfficerMinistryTrains
@@ -57,6 +58,7 @@ use Yii;
  * @property StatOfficerSalary[] $statOfficerSalaries
  * @property StatOfficerTechnical[] $statOfficerTechnicals
  * @property StatPopulationMovement[] $statPopulationMovements
+ * @property StatPosition[] $statPositions
  * @property StatReligion[] $statReligions
  * @property StatReligionPlace[] $statReligionPlaces
  * @property StatReligionTeacher[] $statReligionTeachers
@@ -310,6 +312,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatOfficerEthnics()
+    {
+        return $this->hasMany(StatOfficerEthnic::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatOfficerMinistries()
     {
         return $this->hasMany(StatOfficerMinistry::className(), ['phiscal_year_id' => 'id']);
@@ -449,6 +459,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatPopulationMovements()
     {
         return $this->hasMany(StatPopulationMovement::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatPositions()
+    {
+        return $this->hasMany(StatPosition::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

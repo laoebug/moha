@@ -85,7 +85,7 @@ use app\components\MenuWidget;
             </div>
 
             <!-- Sidebar Menu-->
-            <div class="table-responsive" style="width: 220px">	
+            <div class="table-responsive" style="width: 220px">
             <ul class="sidebar-menu">
 <!--                <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span>--><?//= Yii::t('app','Dashboard') ?><!--</span></a></li>-->
                 <?php
@@ -97,7 +97,7 @@ use app\components\MenuWidget;
             
                 
             </ul>
-            </div>    
+            </div>
             
         </section>
     </aside>

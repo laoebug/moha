@@ -8,25 +8,19 @@
 ?>
 
 <?php
-print_r($columns);
 $total = ['women' => 0, 'total' => 0];
 $sum = [];
 
-//print_r($models);
 foreach ($models as $model)
-    print_r($model);
-exit;
-//    foreach ($columns as $m)
-//        print_r($model[$m]);
-//        if(!isset($sum[$m])) $sum[$m] = 0;
-//$sum[$m] += $model[$m];
-//print_r($sum);
+    foreach ($columns as $m) {
+        if(!isset($sum[$m])) $sum[$m] = 0;
+        $sum[$m] += $model[$m];
+    }
 
-//foreach ($sum as $key => $s) {
-//    if(strpos($key, 'total')) $total['total'] += $s;
-//    if(strpos($key, 'women')) $total['women'] += $s;
-//}
-//print_r($total);
+foreach ($sum as $key => $s) {
+    if(strpos($key, 'total') > -1) $total['total'] += $s;
+    if(strpos($key, 'women') > -1) $total['women'] += $s;
+}
 ?>
 
 <style type="text/css" media="print">
@@ -36,7 +30,7 @@ exit;
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Officers by Degree') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">ສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
@@ -73,8 +67,8 @@ exit;
                             <?php
                             $row = ['total' => 0, 'women' => 0];
                             foreach ($columns as $m) {
-                                if(strpos($m, 'total')) $row['total'] += $model[$m];
-                                if(strpos($m, 'women')) $row['women'] += $model[$m];
+                                if(strpos($m, 'total') > -1) $row['total'] += $model[$m];
+                                if(strpos($m, 'women') > -1) $row['women'] += $model[$m];
                             }
                             ?>
                             <td class="text-center"><?= number_format($row['total']) ?></td>

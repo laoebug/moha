@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\StatOfficerSalarySearch */
+/* @var $searchModel app\models\StatPositionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ";
-//$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'ສະຖິຕິຜູູ້ທີ່ໄດ້ຮັບຕຳແໜ່ງບໍລິຫານປະເພດຕ່າງໆ';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statOfficerAgeLevel">
     <div class="col-sm-12">
@@ -24,7 +24,7 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
+            <div class="panel-heading"><i class="fa fa-pencil"></i></div>
             <div class="panel-body">
                 <div class="col-sm-4">
                     <label>ພາກສ່ວນ</label>
@@ -33,21 +33,26 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
                 <div class="col-sm-8">
                     <table class="table table-bordered table-hover">
                         <thead>
-                            <tr>
-                                <?php for($i=0;$i<3;$i++) : ?>
-                                    <th colspan="2" class="text-center"><?= $labels[$i] ?></th>
-                                <?php endfor; ?>
-                            </tr>
-                            <tr>
-                                <?php for($i=0;$i< 3 * 2;$i++) : ?>
-                                    <th class="text-center"><?= $i%2==0 ? 'ລ':'ຍ' ?></th>
-                                <?php endfor; ?>
-                            </tr>
+                        <tr>
+                            <?php for ($i=1;$i<=3;$i++): ?>
+                            <th colspan="2" class="text-center">ປະເພດ <?= $i ?></th>
+                            <?php endfor; ?>
+                        </tr>
+                        <tr>
+                            <?php for ($i=0;$i<6;$i++): ?>
+                                <th class="text-center"><?= $i%2==0?'ລ':'ຍ' ?></th>
+                            <?php endfor; ?>
+                        </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for($i=0;$i<6;$i++) : ?>
-                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>" type="number" min="0"></td>
+                            <?php for ($i=1;$i<=3;$i++): ?>
+                                <td>
+                                    <input type="number" class="form-control" ng-model="model.position<?=$i?>_total">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" ng-model="model.position<?=$i?>_women">
+                                </td>
                             <?php endfor; ?>
                         </tr>
                         </tbody>
@@ -57,43 +62,25 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <?php for($i=3;$i<7;$i++) : ?>
-                                <th colspan="2" class="text-center"><?= $labels[$i] ?></th>
+                            <?php for ($i=4;$i<=8;$i++): ?>
+                                <th colspan="2" class="text-center">ປະເພດ <?= $i ?></th>
                             <?php endfor; ?>
                         </tr>
                         <tr>
-                            <?php for($i=0;$i<8;$i++) : ?>
-                                <th class="text-center"><?= $i%2==1?'ລ':'ຍ' ?></th>
-                            <?php endfor; ?>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <?php for($i=6;$i<14;$i++) : ?>
-                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>" type="number" min="0"></td>
-                            <?php endfor; ?>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-sm-12">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <?php for($i=7;$i<11;$i++) : ?>
-                                <th colspan="2" class="text-center"><?= $labels[$i] ?></th>
-                            <?php endfor; ?>
-                        </tr>
-                        <tr>
-                            <?php for($i=0;$i<8;$i++) : ?>
-                                <th class="text-center"><?= $i%2==1?'ລ':'ຍ' ?></th>
+                            <?php for ($i=0;$i<10;$i++): ?>
+                                <th class="text-center"><?= $i%2==0?'ລ':'ຍ' ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for($i=13;$i<21;$i++) : ?>
-                                <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>" type="number" min="0"></td>
+                            <?php for ($i=4;$i<=8;$i++): ?>
+                                <td>
+                                    <input type="number" class="form-control" ng-model="model.position<?=$i?>_total">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" ng-model="model.position<?=$i?>_women">
+                                </td>
                             <?php endfor; ?>
                         </tr>
                         </tbody>
@@ -121,28 +108,25 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
                 <thead>
                 <tr>
                     <th class="text-center" rowspan="3">ພາກສ່ວນຕ່າງໆ</th>
-                    <th class="text-center" rowspan="2" colspan="2">ຈ/ນ ລັດຖະກອນ ທັງໝົດ</th>
-                    <th class="text-center" colspan="16">ຊັ້ນວິຊາສະເພາະ</th>
-                    <th class="text-center" colspan="6">ບໍ່ມີວິຊາສະເພາະ</th>
+                    <th class="text-center" rowspan="2" colspan="2">ລວມທັງໝົດ</th>
+                    <th class="text-center" colspan="16">ຕຳແໜ່ງບໍລິຫານ</th>
                 </tr>
+                <?php for($c = 1; $c <= 8; $c++): ?>
+                    <th colspan="2" class="text-center">ປະເພດ <?=$c ?></th>
+                <?php endfor; ?>
                 <tr>
-                    <?php foreach($labels as $label): ?>
-                    <th class="text-center" colspan="2"><?= $label ?></th>
-                    <?php endforeach; ?>
-                </tr>
-                <tr>
-                    <?php for($i=0;$i<24;$i++): ?>
+                    <?php for($i=0;$i<18;$i++): ?>
                         <th class="text-center"><?= $i%2==0?'ລ':'ຍ'?></th>
                     <?php endfor; ?>
                 </tr>
                 <tr>
-                    <th class="text-center">1. ກະຊວງພາຍໃນ ລວມທັງໝົດ</th>
+                    <th class="text-center">ກະຊວງພາຍໃນ</th>
                     <th class="text-center">{{sumtotal('total') | number}}</th>
                     <th class="text-center">{{sumtotal('women') | number}}</th>
-
-                    <?php foreach($columns as $c): ?>
-                        <th class="text-center">{{sumcolumn('<?=$c?>') | number}}</th>
-                    <?php endforeach; ?>
+                    <?php for($c = 1; $c <= 8; $c++): ?>
+                        <th class="text-center">{{sumcolumn('position<?=$c?>_total') | number}}</th>
+                        <th class="text-center">{{sumcolumn('position<?=$c?>_women') | number}}</th>
+                    <?php endfor; ?>
                 </tr>
                 </thead>
                 <tbody>
@@ -150,9 +134,10 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
                     <td>{{m.name}}</td>
                     <td class="text-center">{{sumrow(m, 'total') | number}}</td>
                     <td class="text-center">{{sumrow(m, 'women') | number}}</td>
-                    <?php foreach($columns as $c): ?>
-                        <td class="text-center">{{m.<?=$c?> | number}}</td>
-                    <?php endforeach; ?>
+                    <?php for($c = 1; $c <= 8; $c++): ?>
+                        <td class="text-center">{{m.position<?=$c?>_total | number}}</td>
+                        <td class="text-center">{{m.position<?=$c?>_women | number}}</td>
+                    <?php endfor; ?>
                 </tr>
                 </tbody>
             </table>
@@ -163,7 +148,7 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
   app.controller('statOfficerAgeLevel', function($scope, $http, $sce, $timeout) {
-    $scope.url = 'index.php?r=stat-officer-age-level/';
+    $scope.url = 'index.php?r=stat-position/';
     $http.get($scope.url+ 'get')
       .then(function(r) {
         $scope.years = r.data.years;
@@ -180,13 +165,15 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
         $http.get($scope.url + 'inquiry&year='+$scope.year.id + '&level='+$scope.model.level.id)
           .then(function(r) {
             if(r.data.model) {
-                <?php foreach($columns as $i): ?>
-              $scope.model.<?=$i?> = parseInt(r.data.model.<?=$i?>);
-              <?php endforeach; ?>
+                <?php for($i = 1;$i <= 8; $i++): ?>
+              $scope.model.position<?=$i?>_total = parseInt(r.data.model.position<?=$i?>_total);
+              $scope.model.position<?=$i?>_women = parseInt(r.data.model.position<?=$i?>_women);
+                <?php endfor; ?>
             } else {
-                <?php foreach($columns as $i): ?>
-              $scope.model.<?=$i?> = null;
-                <?php endforeach; ?>
+                <?php for($i = 1;$i <= 8; $i++): ?>
+              $scope.model.position<?=$i?>_total = null;
+              $scope.model.position<?=$i?>_women = null;
+                <?php endfor; ?>
             }
           }, function(r) {
             $scope.response = r;
@@ -242,63 +229,48 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
     $scope.sumrow = function(m, key) {
       var s = 0;
       if(key == "total") {
-        if(m.total_18) s += parseInt(m.total_18);
-        if(m.total_20) s += parseInt(m.total_20);
-        if(m.total_25) s += parseInt(m.total_25);
-        if(m.total_30) s += parseInt(m.total_30);
-        if(m.total_35) s += parseInt(m.total_35);
-        if(m.total_40) s += parseInt(m.total_40);
-        if(m.total_45) s += parseInt(m.total_45);
-        if(m.total_50) s += parseInt(m.total_50);
-        if(m.total_55) s += parseInt(m.total_55);
-        if(m.total_60) s += parseInt(m.total_60);
-        if(m.total_60p) s += parseInt(m.total_60p);
+        if(m.position1_total) s += parseInt(m.position1_total);
+        if(m.position2_total) s += parseInt(m.position2_total);
+        if(m.position3_total) s += parseInt(m.position3_total);
+        if(m.position4_total) s += parseInt(m.position4_total);
+        if(m.position5_total) s += parseInt(m.position5_total);
+        if(m.position6_total) s += parseInt(m.position6_total);
+        if(m.position7_total) s += parseInt(m.position7_total);
+        if(m.position8_total) s += parseInt(m.position8_total);
+      } else if(key == "women") {
+        if(m.position1_women) s += parseInt(m.position1_women);
+        if(m.position2_women) s += parseInt(m.position2_women);
+        if(m.position3_women) s += parseInt(m.position3_women);
+        if(m.position4_women) s += parseInt(m.position4_women);
+        if(m.position5_women) s += parseInt(m.position5_women);
+        if(m.position6_women) s += parseInt(m.position6_women);
+        if(m.position7_women) s += parseInt(m.position7_women);
+        if(m.position8_women) s += parseInt(m.position8_women);
       }
 
-      if(key == "women") {
-        if(m.women_18) s += parseInt(m.women_18);
-        if(m.women_20) s += parseInt(m.women_20);
-        if(m.women_25) s += parseInt(m.women_25);
-        if(m.women_30) s += parseInt(m.women_30);
-        if(m.women_35) s += parseInt(m.women_35);
-        if(m.women_40) s += parseInt(m.women_40);
-        if(m.women_45) s += parseInt(m.women_45);
-        if(m.women_50) s += parseInt(m.women_50);
-        if(m.women_55) s += parseInt(m.women_55);
-        if(m.women_60) s += parseInt(m.women_60);
-        if(m.women_60p) s += parseInt(m.women_60p);
-      }
-      
       return s;
     };
 
     $scope.sumtotal = function(key) {
       var s = 0;
       if(key == 'total') {
-          s = $scope.sumcolumn('total_18')
-            + $scope.sumcolumn('total_20')
-            + $scope.sumcolumn('total_25')
-            + $scope.sumcolumn('total_30')
-            + $scope.sumcolumn('total_35')
-            + $scope.sumcolumn('total_40')
-            + $scope.sumcolumn('total_45')
-            + $scope.sumcolumn('total_50')
-            + $scope.sumcolumn('total_55')
-            + $scope.sumcolumn('total_60')
-            + $scope.sumcolumn('total_60p');
-
+        s = $scope.sumcolumn('position1_total')
+          + $scope.sumcolumn('position1_total')
+          + $scope.sumcolumn('position1_total')
+          + $scope.sumcolumn('position1_total')
+          + $scope.sumcolumn('position1_total')
+          + $scope.sumcolumn('position1_total')
+          + $scope.sumcolumn('position1_total')
+          + $scope.sumcolumn('position1_total');
       } else if(key == 'women') {
-        s = $scope.sumcolumn('women_18')
-          + $scope.sumcolumn('women_20')
-          + $scope.sumcolumn('women_25')
-          + $scope.sumcolumn('women_30')
-          + $scope.sumcolumn('women_35')
-          + $scope.sumcolumn('women_40')
-          + $scope.sumcolumn('women_45')
-          + $scope.sumcolumn('women_50')
-          + $scope.sumcolumn('women_55')
-          + $scope.sumcolumn('women_60')
-          + $scope.sumcolumn('women_60p');
+        s = $scope.sumcolumn('position1_women')
+          + $scope.sumcolumn('position1_women')
+          + $scope.sumcolumn('position1_women')
+          + $scope.sumcolumn('position1_women')
+          + $scope.sumcolumn('position1_women')
+          + $scope.sumcolumn('position1_women')
+          + $scope.sumcolumn('position1_women')
+          + $scope.sumcolumn('position1_women');
       }
       return s;
     };
