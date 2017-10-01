@@ -8,12 +8,13 @@ use Yii;
  * This is the model class for table "action".
  *
  * @property integer $id
- * @property string $code
+ * @property string $class_name
+ * @property string $method
  * @property integer $deleted
  * @property integer $controller_id
  * @property string $description
+ * @property integer $parent_id
  *
- * @property Controller $controller
  * @property RoleHasAction[] $roleHasActions
  * @property Role[] $roles
  */
@@ -22,6 +23,8 @@ class Action extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+	public $role_id;
+	public $action_id;
     public static function tableName()
     {
         return 'action';
@@ -33,11 +36,10 @@ class Action extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'controller_id'], 'required'],
-            [['deleted', 'controller_id'], 'integer'],
+            [['class_name', 'method'], 'required'],
+            [['deleted', 'controller_id', 'parent_id'], 'integer'],
             [['description'], 'string'],
-            [['code'], 'string', 'max' => 255],
-            [['controller_id'], 'exist', 'skipOnError' => true, 'targetClass' => Controller::className(), 'targetAttribute' => ['controller_id' => 'id']],
+            [['class_name', 'method'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,19 +50,13 @@ class Action extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'code' => Yii::t('app', 'Code'),
+            'class_name' => Yii::t('app', 'Class Name'),
+            'method' => Yii::t('app', 'Method'),
             'deleted' => Yii::t('app', 'Deleted'),
             'controller_id' => Yii::t('app', 'Controller ID'),
             'description' => Yii::t('app', 'Description'),
+            'parent_id' => Yii::t('app', 'Parent ID'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getController()
-    {
-        return $this->hasOne(Controller::className(), ['id' => 'controller_id']);
     }
 
     /**
@@ -77,14 +73,5 @@ class Action extends \yii\db\ActiveRecord
     public function getRoles()
     {
         return $this->hasMany(Role::className(), ['id' => 'role_id'])->viaTable('role_has_action', ['action_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return ActionQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new ActionQuery(get_called_class());
     }
 }

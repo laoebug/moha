@@ -10,11 +10,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 
-</div>
 <div class="card">
     <div class="row">
     		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">		
-    		
+
+			    		
             <?php Pjax::begin(); ?>   
             <?php 
             echo $this->render('_roleList', [
@@ -22,16 +22,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) 
             ?>
             
-            <?php Pjax::end(); ?>        
+            <?php Pjax::end(); ?>   
+			<?php 
+                echo $this->render('_formRole', [
+                        'model' => $model
+                    ]) 
+			?>            
+                     
             </div>
             
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             	
             	<?php 
-                echo $this->render('_formRole', [
-                        'model' => $model
-                    ]) 
-                ?>
+            echo Yii::$app->controller->renderPartial('_formManageMenuRole', [
+            'models'=>$models,
+            'menuList'=>$menuList
+        ]) 
+        ?>
             	
             </div>
     </div>	
@@ -40,9 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<?php 
-            echo Yii::$app->controller->renderPartial('_formManageMenuRole', [
-            'models'=>$models		
-        ]) 
+//             echo Yii::$app->controller->renderPartial('_formManageMenuRole', [
+//             'models'=>$models,
+//             'menuList'=>$menuList
+//         ]) 
         ?>
             	
 	</div>
@@ -61,65 +69,135 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/plugins/dataTables.min.js"></script>
 <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
 
+<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+
+
+
 <script type="text/javascript">
 
 var table = $('#role_table').DataTable(
 				
 );
 
-// $('#role_table tbody').on( 'click', 'tr', function () {
+$('#role_table tbody').on( 'click', 'tr', function () {
 
 	
+      
 	
-// 	var data = table.row( this ).data() ;
-// 	//console.log(data[0]);
-// 	//console.log(data);
-
-// 	 if ( $(this).hasClass('selected') ) {
-//          $(this).removeClass('selected');
-//      }
-//      else {
-//          table.$('tr.selected').removeClass('selected');
-//          $(this).addClass('selected');
-//      }
-		 
+	var urlMenu =  "index.php?r=user/listmenu";
 	
-// 	 $('#the_user_id').val($(this).data('value'));
-// 	 $('#username').val(data[1]);
-// 	 $('#firstname').val(data[2]);
-// 	 $('#lastname').val(data[3]);
-// 	 $('#status').val(data[4]);
-// 	 $('#tel').val(data[5]);
-// 	 $('#email').val(data[6]);
-// 	 var currentRow = $(this).closest("tr");
-// 	 var role_id=currentRow.find("td:eq(7)").attr('data-role_id');	  		
-// 	$('#role').val(role_id).attr("selected", "selected");
+	$.post(
+		urlMenu,
+		{ 
+		"role_id":$(this).data('value')
+ 		}, 
+ 		function(data,status,xhr){ //jQuery Ajax post	
+			$("#menu_list").empty();	
+			$("#menu_list").append(data);		
+ 		}).done(function() {
+ 		  }).fail(function() {
+ 			   
+ 		  })
+ 		  .always(function() {
+ 		    //alert( "finished" );		
+				 			     	 			
+ 		  });
 
-// } );
+	var urlAction =  "index.php?r=user/listaction";
+	
+	$.post(
+			urlAction,
+		{ 
+		"role_id":$(this).data('value')
+ 		}, 
+ 		function(data,status,xhr){ //jQuery Ajax post	
+			$("#action_list").empty();	
+			$("#action_list").append(data);		
+ 		}).done(function() {
+ 		  }).fail(function() {
+ 			   
+ 		  })
+ 		  .always(function() {
+ 		    //alert( "finished" );		
+				 			     	 			
+ 		  });
+} );
 
 
+
+$("#btnAddRole").click(function(){
+	
+	var url =  "index.php?r=user/addrole";
+	
+	$.post(
+		url,
+		{ 
+		 "role_name":$("#role_name").val()
+ 		}, 
+ 		function(data,status,xhr){ //jQuery Ajax post		
+ 			if(status=='success'){
+				 location.reload();
+			 } 	 					
+ 		}).done(function() {
+ 		  }).fail(function() { 			   
+ 		  }).always(function() {	 			     	 			
+ 		});
+    
+});
+$("#btnSaveMenuAndAction").click(function(){
+	
+	var url =  "index.php?r=user/savemenuandaction";
+
+	var myActionList = new Array();
+
+	$("input[id^=actionList]:checked").each(function() {
+		myActionList.push($(this).val());
+	});
+
+	var myMenuList = new Array();
+
+	$("input[id^=menuList]:checked").each(function() {
+		myMenuList.push($(this).val());
+	});
+	
+
+	
+	$.post(
+		url,
+		{ 
+		"theActionIdList":myActionList,
+		"theMenuIdList":myMenuList,
+		"role_id":$("#the_role_id").val()
+		/*
+		data: $('#menu_action_form').serialize()
+		data: $('#menu_action_form').serializeArray()
+		*/			
+ 		}, 
+ 		function(data,status,xhr){ //jQuery Ajax post		
+ 			//location.reload();
+ 			 //console.log(data);
+			 if(status=='success'){
+				 location.reload();
+			 } 	
+ 			 			
+ 		}).done(function() {
+ 		  }).fail(function() { 			   
+ 		  }).always(function() {	 			     	 			
+ 		});
+    
+});
 
 function clearInpuData() {
-// 	$("#the_user_id").val("");	
-// // 	$("#ptclean" ).prop( "checked", false );
-// // 	$("#ptdirty" ).prop( "checked", false );
-// 	$("#username").val("");
-// 	$("#password").val("");	
-// 	$("#firstname").val("");
-// 	$("#lastname").val("");
-// 	$("#status").val("");
-// 	$("#status").removeClass('selected');
-// 	$("#tel").val("");
-// 	$("#email").val("");
-// 	$("#role").val("");
-// 	$("#role").removeClass('selected');	
-	
+ 	$("#role_name").val("");	
 }
 
-// $("#btnNew").click(function(){				
-// 	clearInpuData();		
-// });
+$("#btnNew").click(function(){				
+	clearInpuData();		
+});
 
+
+	
+	
 
 
 </script>

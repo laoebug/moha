@@ -20,7 +20,7 @@
 				<?php if(count($models)>0): ?>
 				<?php $sq=1; ?>
 				<?php foreach ($models as $model): ?>
-					<tr id="user_id" name="user_id" data-value="<?php echo isset($model["id"])? $model["id"]: ""; ?>">
+					<tr id="user_id"  data-value="<?php echo isset($model["id"])? $model["id"]: ""; ?>">
 					
 					<td>
 					<?php echo $sq++; ?>					
@@ -36,7 +36,7 @@
 				<?php endforeach;?>
 				<?php else:?>
 				<tr>
-					<td colspans="8"><?php echo Yii::t("app","No data available")?></td>
+					<td colspan="8"><?php echo Yii::t("app","No data available")?></td>
 					
 				</tr>
 				<?php endif;?>

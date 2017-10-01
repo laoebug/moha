@@ -1,3 +1,4 @@
+<!-- <div id="role_list"> -->
 <div class="card-body">
 	<table class="table table-hover table-bordered" id="role_table">
 		<thead>
@@ -14,8 +15,7 @@
 				<?php $sq=1; ?>
 				<?php foreach ($models as $model): ?>
 				
-				<tr id="role_id" name="role_id"
-				data-value="<?php echo isset($model["id"])? $model["id"]: ""; ?> ">
+				<tr id="role_id"  data-value="<?php echo isset($model['id'])? $model['id']: ''; ?> ">
 				
 				<td>
 					<?php echo $sq++; ?>					
@@ -26,10 +26,12 @@
 				<?php endforeach;?>
 				<?php else:?>
 				<tr>
-				<td colspans="3"><?php echo Yii::t("app","No data available")?></td>
+				<td colspan="3"><?php echo Yii::t("app","No data available")?></td>
 
 			</tr>
 				<?php endif;?>
 			</tbody>
 	</table>
 </div>
+<!-- </div> -->
+
