@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatGovcoinMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Goverment Coin Ministries');
+$this->title = "ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃບຍ້ອງຍໍລັດຖະບານ ສຳລັບຍ້ອງຍໍພາຍໃນຂອງບັນດາກະຊວງ, ອົງການ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statGovcoinMinistry">

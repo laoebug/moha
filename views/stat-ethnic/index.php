@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Ethnics');
+$this->title = "ສະຖິຕິຊົນເຜົ່າໃນທົ່ວປະເທດ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="statEthnicController">
@@ -26,7 +26,7 @@ $this->title = Yii::t('app', 'Stat Ethnics');
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-3">
-                    <label for=""><?= Yii::t('app', 'Province') ?></label>
+                    <label for=""><?= $this->title ?></label>
                     <select class="form-control" ng-model="model.province" ng-options="b.province_name for b in provinces">
                     </select>
                 </div>
@@ -52,7 +52,7 @@ $this->title = Yii::t('app', 'Stat Ethnics');
             </div>
         </div>
     </div>
-    <div class="row" ng-bind-html="result"></div>
+    <div class="col-sm-12" ng-bind-html="result"></div>
 </div>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">

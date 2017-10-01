@@ -15,7 +15,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Officers By Ages') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">ຈຳນວນລັດຖະກອນແຍກຕາມຊັ້ນວິຊາສະເພາະ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
@@ -28,18 +28,18 @@
                     <tbody>
                     <tr>
                         <th class="text-center" rowspan="4">IV</th>
-                        <th class="" colspan="18"><?= Yii::t('app', 'Officers By Degrees') ?></th>
+                        <th class="" colspan="18">ຈຳນວນລັດຖະກອນແຍກຕາມຊັ້ນວິຊາສະເພາະ</th>
                     </tr>
                     <tr>
-                        <td class="text-center" colspan="2"><?=  Yii::t('app', 'Doctor')?></td>
-                        <td class="text-center" colspan="2"><?=  Yii::t('app', 'Post Master')?></td>
-                        <td class="text-center" colspan="2"><?=  Yii::t('app', 'Master')?></td>
-                        <td class="text-center" colspan="2"><?=  Yii::t('app', 'Post Bachelor')?></td>
-                        <td class="text-center" colspan="2"><?=  Yii::t('app', 'Bachelor')?></td>
-                        <td class="text-center" colspan="2"><?=  Yii::t('app', 'High')?></td>
-                        <td class="text-center" colspan="2"><?=  Yii::t('app', 'Middle')?></td>
-                        <td class="text-center" colspan="2"><?=  Yii::t('app', 'Begin')?></td>
-                        <td class="text-center" colspan="2"><?=  Yii::t('app', 'No Degree')?></td>
+                        <td class="text-center" colspan="2">ປະລິນຍາເອກ</td>
+                        <td class="text-center" colspan="2">ເໜືອປະລິນຍາໂທ</td>
+                        <td class="text-center" colspan="2">ປະລິນຍາໂທ</td>
+                        <td class="text-center" colspan="2">ເໜືອປະລິນຍາຕີ</td>
+                        <td class="text-center" colspan="2">ປະລິນຍາຕີ</td>
+                        <td class="text-center" colspan="2">ຊັ້ນສູງ</td>
+                        <td class="text-center" colspan="2">ຊັ້ນກາງ</td>
+                        <td class="text-center" colspan="2">ຊັ້ນຕົ້ນ</td>
+                        <td class="text-center" colspan="2">ບໍ່ມີຊັ້ນ ວິຊາສະເພາະ</td>
                     </tr>
                     <tr>
                         <?php for ($i = 0; $i< 18; $i++): ?>

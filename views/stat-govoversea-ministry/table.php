@@ -11,7 +11,8 @@
 </style>
 <div class="row">
     <div class="col-sm-12">
-        <h3 class="title"><?= Yii::t('app','Statistics of Govoversea Ministry') ?> (<?= $year->year ?>)</h3>
+        <h3 class="title">ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃບຍ້ອງຍໍລັດຖະບານ ສຳລັບຍ້ອງຍໍຕ່າງປະເທດຂອງບັນດາກະຊວງ, ອົງການ
+            (<?= $year->year ?>)</h3>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>

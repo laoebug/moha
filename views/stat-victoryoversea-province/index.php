@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatVictoryoverseaProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Victoryoversea Provinces');
+$this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບຍ້ອງຍໍຕ່າງປະເທດຂອງບັນດາແຂວງ, ນະຄອຍຫຼວງ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statVictoryoverseaProvince">
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <select class="form-control" ng-model="model.province" ng-change="inquiry()" ng-options="m.province_name for m in provinces"></select>
                 </div>
                 <div class="col-sm-3">
-                    <label><?= Yii::t('app', 'Award') ?></label>
+                    <label>ຍ້ອງຍໍຜົນງານ</label>
                     <select class="form-control" ng-model="model.award" ng-change="inquiry()" ng-options="a.name for a in awards"></select>
                 </div>
                 <div class="col-sm-12" style="margin-top: 1em">

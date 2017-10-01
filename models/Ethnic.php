@@ -13,6 +13,7 @@ use Yii;
  * @property integer $deleted
  *
  * @property StatEthnicDetail[] $statEthnicDetails
+ * @property StatOfficerEthnicDetail[] $statOfficerEthnicDetails
  */
 class Ethnic extends \yii\db\ActiveRecord
 {
@@ -56,6 +57,14 @@ class Ethnic extends \yii\db\ActiveRecord
     public function getStatEthnicDetails()
     {
         return $this->hasMany(StatEthnicDetail::className(), ['ethnic_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerEthnicDetails()
+    {
+        return $this->hasMany(StatOfficerEthnicDetail::className(), ['ethnic_id' => 'id']);
     }
 
     /**

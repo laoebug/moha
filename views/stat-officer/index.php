@@ -5,7 +5,7 @@ use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 
-$this->title = Yii::t('app', 'Statistics of Officers');
+$this->title = "ຈຳນວນລັດຖະກອນທົ່ວປະເທດ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerController">
@@ -28,7 +28,7 @@ $this->title = Yii::t('app', 'Statistics of Officers');
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th><?= Yii::t('app', 'Level') ?></th>
+                                <th>ຂັ້ນ</th>
                                 <th><?= Yii::t('app', 'Total') ?></th>
                                 <th><?= Yii::t('app', 'Women') ?></th>
                             </tr>
@@ -77,7 +77,7 @@ $this->title = Yii::t('app', 'Statistics of Officers');
                     <tr>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
                         <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Description') ?></th>
-                        <th class="text-center" colspan="3"><?= Yii::t('app', 'No. of officers') ?></th>
+                        <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
                     </tr>
                     <tr>
                         <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
@@ -88,33 +88,33 @@ $this->title = Yii::t('app', 'Statistics of Officers');
                 <tbody>
                     <tr>
                         <th rowspan="5">I</th>
-                        <th colspan="2"><?= Yii::t('app', 'Overall Officers') ?></th>
+                        <th colspan="2"><?= $this->title ?></th>
                         <th class="text-right">{{formatNumber(model.center_total + model.province_total + model.district_total)}}</th>
                         <th class="text-right">{{formatNumber(model.center_women + model.province_women + model.district_women)}}</th>
                         <th class="text-right">{{formatNumber(model.center_total + model.province_total + model.district_total -(model.center_women + model.province_women + model.district_women))}}</th>
                     </tr>
                     <tr>
                         <th>1</th>
-                        <th><?= Yii::t('app', 'Ministry Level') ?></th>
+                        <th>ຂັ້ນກະຊວງ (ສູນກາງ)</th>
                         <th class="text-right">{{formatNumber(model.center_total)}}</th>
                         <th class="text-right">{{formatNumber(model.center_women)}}</th>
                         <th class="text-right">{{formatNumber(model.center_total- model.center_women)}}</th>
                     </tr>
                     <tr>
                         <th rowspan="3">2</th>
-                        <th><?= Yii::t('app', 'Local Level') ?></th>
+                        <th>ຂັ້ນທ້ອງຖິ່ນ</th>
                         <th class="text-right">{{formatNumber(model.province_total + model.district_total)}}</th>
                         <th class="text-right">{{formatNumber(model.province_women + model.district_women)}}</th>
                         <th class="text-right">{{formatNumber(model.province_total + model.district_total - (model.province_women + model.district_women))}}</th>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'Province Department') ?></td>
+                        <td>ພະແນກການແຂວງ</td>
                         <td class="text-right">{{formatNumber(model.province_total)}}</td>
                         <td class="text-right">{{formatNumber(model.province_women)}}</td>
                         <td class="text-right">{{formatNumber(model.province_total - model.province_women)}}</td>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'District Office') ?></td>
+                        <td>ຫ້ອງການຂັ້ນເມືອງ</td>
                         <td class="text-right">{{formatNumber(model.district_total)}}</td>
                         <td class="text-right">{{formatNumber(model.district_women)}}</td>
                         <td class="text-right">{{formatNumber(model.district_total - model.district_women)}}</td>

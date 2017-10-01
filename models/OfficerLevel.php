@@ -16,8 +16,10 @@ use Yii;
  *
  * @property User $user
  * @property StatOfficerAgelevelDetail[] $statOfficerAgelevelDetails
+ * @property StatOfficerEthnicDetail[] $statOfficerEthnicDetails
  * @property StatOfficerSalaryDetail[] $statOfficerSalaryDetails
  * @property StatOfficerTechnicalDetail[] $statOfficerTechnicalDetails
+ * @property StatPositionDetail[] $statPositionDetails
  */
 class OfficerLevel extends \yii\db\ActiveRecord
 {
@@ -77,6 +79,14 @@ class OfficerLevel extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatOfficerEthnicDetails()
+    {
+        return $this->hasMany(StatOfficerEthnicDetail::className(), ['officer_level_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatOfficerSalaryDetails()
     {
         return $this->hasMany(StatOfficerSalaryDetail::className(), ['officer_level_id' => 'id']);
@@ -88,6 +98,14 @@ class OfficerLevel extends \yii\db\ActiveRecord
     public function getStatOfficerTechnicalDetails()
     {
         return $this->hasMany(StatOfficerTechnicalDetail::className(), ['officer_level_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatPositionDetails()
+    {
+        return $this->hasMany(StatPositionDetail::className(), ['officer_level_id' => 'id']);
     }
 
     /**

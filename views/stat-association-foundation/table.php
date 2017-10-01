@@ -11,16 +11,18 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Associations/Foundations') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">
+                    <?= Yii::t('app','Statistics of Associations/Foundations') ?>
+                    (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-center"><?= Yii::t('app', 'No.')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Ministry'). '/'.Yii::t('app', 'Province')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Accociations')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Foundations')?></th>
+                            <th class="text-center">ກະຊວງ, ແຂວງ ຜູ້ອະນຸມັດ</th>
+                            <th class="text-center">ຈຳນວນສະມາຄົມ</th>
+                            <th class="text-center">ຈຳນວນມູນນິທິ</th>
                             <th class="text-center"><?= Yii::t('app', 'Remark')?></th>
                         </tr>
                     </thead>

@@ -13,18 +13,19 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Institution Meeting') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">
+                    ສະຖິຕິສັງລວມສະຖາບັນຈັດກອງປະຊຸມ ແລະ ຝຶກອົບຮົມໃຫ້ບັນດາກະຊວງ ອົງການຂັ້ນສູນກາງ ແລະ ທ້ອງຖິ່ນ(<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Title') ?></th>
-                        <th class="text-center" colspan="2"><?= Yii::t('app', 'Attendance') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Date') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Times') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Place') ?></th>
+                        <th class="text-center" rowspan="2">ຫົວຂໍ້ຈັດເຝິກອົບຮົມ</th>
+                        <th class="text-center" colspan="2">ຈຳນວນຜູ້ເຂົ້າຮ່ວມ</th>
+                        <th class="text-center" rowspan="2">ວັນເດືອນປີ</th>
+                        <th class="text-center" rowspan="2">ຈຳນວນຄັ້ງ</th>
+                        <th class="text-center" rowspan="2">ສະຖານທີ່</th>
                     </tr>
                     <tr>
                         <th class="text-center"><?= Yii::t('app', 'T') ?></th>

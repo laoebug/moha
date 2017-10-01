@@ -14,7 +14,9 @@
 </style>
 <div class="row">
     <div class="col-sm-12">
-        <h3 class="title"><?= Yii::t('app','Statistics of Highcoin Province') ?> (<?= $year->year ?>)</h3>
+        <h3 class="title">
+            ປະເພດຫຼຽນໄຊຕ່າງໆ ສຳລັບການຍ້ອງຍໍພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນຫຼວງວຽງຈັນ
+            (<?= $year->year ?>)</h3>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>

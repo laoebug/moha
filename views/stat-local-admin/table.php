@@ -25,7 +25,9 @@ foreach ($models as $model)
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Local Administration') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">
+                    ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ
+                    (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
@@ -33,24 +35,24 @@ foreach ($models as $model)
                         <tr>
                             <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
                             <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Province Head') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Province Vice') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'District Head') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'District Vice') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Village Head') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Village Vice') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Population') ?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Village') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Family') ?></th>
+                            <th class="text-center" colspan="2">ເຈົ້າແຂວງ</th>
+                            <th class="text-center" colspan="2">ຮອງເຈົ້າແຂວງ</th>
+                            <th class="text-center" colspan="2">ເຈົ້າເມືອງ</th>
+                            <th class="text-center" colspan="2">ຮອງເຈົ້າເມືອງ</th>
+                            <th class="text-center" colspan="2">ນາຍບ້ານ</th>
+                            <th class="text-center" colspan="2">ຮອງນາຍບ້ານ</th>
+                            <th class="text-center" colspan="2">ພົນລະເມືອງ</th>
+                            <th class="text-center">ບ້ານ</th>
+                            <th class="text-center" colspan="2">ຄອບຄົວ</th>
                         </tr>
                         <tr>
                             <?php for ($i = 0; $i < 7; $i++): ?>
-                            <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'W') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
                             <?php endfor; ?>
-                            <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                            <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                            <th class="text-center"><?= Yii::t('app', 'P') ?></th>
+                            <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                            <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                            <th class="text-center">ທຸກຍາກ</th>
                         </tr>
                         <tr>
                             <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>

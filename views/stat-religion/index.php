@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatReligionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Statistics of Religions & Other Believes');
+$this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສາສະໜາ ແລະ ຄວາມເຊື່ອອື່ນ ໃນທົ່ວປະເທດ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="statReligionController">
@@ -37,18 +37,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-9">
                     <table class="table table-bordered">
                         <tr>
-                            <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Buddhism') ?></th>
-                            <th class="text-center" colspan="6"><?= Yii::t('app', 'Christian') ?></th>
+                            <th class="text-center" colspan="2" rowspan="2">ສາສະໜາພຸດ</th>
+                            <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
                         </tr>
                         <tr>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'News') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Saturday') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Catolic') ?></th>
+                            <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
+                            <th class="text-center" colspan="2">ວັນເສົາ</th>
+                            <th class="text-center" colspan="2">ກາໂທລິກ</th>
                         </tr>
                         <tr>
                             <?php for ($i = 0; $i < 8; $i++): ?>
                                 <th class="text-center" style="width: 12.5%">
-                                    <?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?>
+                                    <?= Yii::t('app', $i % 2 == 0 ? 'Total' : 'Women') ?>
                                 </th>
                             <?php endfor; ?>
                         </tr>
@@ -82,14 +82,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Bahaiy') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Idslam') ?></th>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Others') ?></th>
+                            <th class="text-center" colspan="2">ສາສະໜາບາຮາຍ</th>
+                            <th class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</th>
+                            <th class="text-center" colspan="2">ຄວາມເຊື່ອອື່ນ</th>
                             <th class="text-center" rowspan="2" style="width: 12.5%"><?= Yii::t('app', 'Remark') ?></th>
                         </tr>
                         <tr>
                             <?php for ($i = 0; $i < 6; $i++): ?>
-                                <th class="text-center" style="width: 12.5%"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></th>
+                                <th class="text-center" style="width: 12.5%"><?= Yii::t('app', $i % 2 == 0 ? 'Total' : 'Women') ?></th>
                             <?php endfor; ?>
                         </tr>
                         <tr>
@@ -134,7 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div ng-show="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3><?= Yii::t('app', 'Statistics of Religions & Other Believes') ?></h3>
+                <h3><?= $this->title ?></h3>
                 <p>
                     <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
                                 class="fa fa-print fa-2x"></i></a>
@@ -147,21 +147,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Buddhism') ?></th>
-                    <th class="text-center" colspan="6"><?= Yii::t('app', 'Christian') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Bahaiy') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Idslam') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Other') ?></th>
+                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາພຸດ</th>
+                    <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ຄວາມເຊື່ອອື່ນ</th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
                 </tr>
                 <tr>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'News') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Saturday') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Catolic') ?></th>
+                    <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
+                    <th class="text-center" colspan="2">ວັນເສົາ</th>
+                    <th class="text-center" colspan="2">ກາໂທລິກ</th>
                 </tr>
                 <tr>
                     <?php for ($i = 0; $i < 14; $i++): ?>
-                        <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
+                        <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'Total' : 'Women') ?></td>
                     <?php endfor; ?>
                 </tr>
                 <tr>
@@ -210,7 +210,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div ng-show="stat" class="col-sm-12">
         <div class="card">
-            <h3><?= Yii::t('app', 'The Chart of Religions & Other Believes') ?></h3>
+            <h3><?= $this->title ?></h3>
             <canvas id="stat" class="chart chart-bar"
                     chart-data="stat.data"
                     chart-labels="stat.labels"

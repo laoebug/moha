@@ -45,7 +45,7 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
 
                 <div class="col-sm-4">
                     <div class="col-sm-12">
-                        <label for=""><?= Yii::t('app', 'Approver') ?></label>
+                        <label for="">ຜູ້ອະນຸມັດ<?= Yii::t('app', 'Approver') ?></label>
                         <select class="form-control" ng-model="model.approver"
                                 ng-show="model.approverLevel.code == 'M'"
                                 ng-options="a.ministry.name for a in model.approverLevel.approvers"

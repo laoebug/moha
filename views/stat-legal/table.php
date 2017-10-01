@@ -11,17 +11,19 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Internal Legal') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">
+                    ສະຖິຕິບັນດານິຕິກຳ ຂະແໜງພາຍໃນທີ່ກຳລັງປັບປຸງ ແລະ ຮ່າງຂຶ້ນໃໝ່
+                    (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-center"><?= Yii::t('app', 'No.')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Name')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'New')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Improve')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Publish')?></th>
+                            <th class="text-center">ຊື່ນິຕິກຳ</th>
+                            <th class="text-center">ຮ່າງຂຶ້ນໃໝ່</th>
+                            <th class="text-center">ປັງປຸງ</th>
+                            <th class="text-center">ປະກາດໃຊ້</th>
                             <th class="text-center"><?= Yii::t('app', 'Remark')?></th>
                         </tr>
                     </thead>

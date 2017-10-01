@@ -25,27 +25,27 @@ foreach ($models as $model)
 <div class="row">
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Religion Teacher') ?></h3>
+            <h3>ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສາສະໜາ ແລະ ຄວາມເຊື່ອອື່ນ ໃນທົ່ວປະເທດ</h3>
         </div>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Buddhism') ?></th>
-                    <th class="text-center" colspan="6"><?= Yii::t('app', 'Christian') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Bahaiy') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Idslam') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2"><?= Yii::t('app', 'Others') ?></th>
+                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາພຸດ</th>
+                    <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ຄວາມເຊື່ອອື່ນ</th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
                 </tr>
                 <tr>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'News') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Saturday') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Catolic') ?></th>
+                    <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
+                    <th class="text-center" colspan="2">ວັນເສົາ</th>
+                    <th class="text-center" colspan="2">ກາໂທລິກ</th>
                 </tr>
                 <tr><?php for ($i=0; $i<14;$i++): ?>
-                    <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></th>
+                    <th class="text-center"><?= Yii::t('app', $i%2==0?'Total':'Women') ?></th>
                     <?php endfor; ?>
                 </tr>
                 <tr>

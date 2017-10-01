@@ -23,7 +23,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Tranining of Ministry Officers ') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">ສະຖິຕິສັງລວມພະນັກງານຂັ້ນກະຊວງທີ່ໄປຍົກລະດັບຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -33,12 +33,12 @@
                         <th class="text-center" rowspan="3"><?= Yii::t('app', 'Ministry')?></th>
                         <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Total')?></th>
 
-                        <th class="text-center" colspan="4"><?= Yii::t('app', 'Doctor')?></th>
-                        <th class="text-center" colspan="4"><?= Yii::t('app', 'Master')?></th>
-                        <th class="text-center" colspan="4"><?= Yii::t('app', 'Bachelor')?></th>
-                        <th class="text-center" colspan="4"><?= Yii::t('app', 'High')?></th>
-                        <th class="text-center" colspan="4"><?= Yii::t('app', 'Middle')?></th>
-                        <th class="text-center" colspan="4"><?= Yii::t('app', 'Begin')?></th>
+                        <th class="text-center" colspan="4">ປະລິນຍາເອກ</th>
+                        <th class="text-center" colspan="4">ປະລິນຍາໂທ</th>
+                        <th class="text-center" colspan="4">ປະລິນຍາຕີ</th>
+                        <th class="text-center" colspan="4">ຊັ້ນສູງ</th>
+                        <th class="text-center" colspan="4">ຊັ້ນກາງ</th>
+                        <th class="text-center" colspan="4">ຊັ້ນຕົ້ນ</th>
                     </tr>
                     <tr>
                         <?php for($i=0;$i<12;$i++): ?>

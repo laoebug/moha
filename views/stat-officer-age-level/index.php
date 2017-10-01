@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerSalarySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Salaries');
+$this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statOfficerAgeLevel">
@@ -240,31 +240,65 @@ $this->title = Yii::t('app', 'Stat Officer Salaries');
     };
 
     $scope.sumrow = function(m, key) {
-        var s = 0;
-        if(key == 'total') {
-            <?php foreach($columns as $i): if(strpos($i, 'total')) ?>
-          if(m.<?=$i?>)
-            s += parseInt(m.<?=$i?>);
-            <?php endforeach; ?>
-        } else if(key == 'women') {
-            <?php foreach($columns as $i): if(strpos($i, 'women')) ?>
-          if(m.<?=$i?>_women)
-            s += parseInt(m.<?=$i?>_women);
-            <?php endforeach; ?>
-        }
-        return s;
+      var s = 0;
+      if(key == "total") {
+        if(m.total_18) s += parseInt(m.total_18);
+        if(m.total_20) s += parseInt(m.total_20);
+        if(m.total_25) s += parseInt(m.total_25);
+        if(m.total_30) s += parseInt(m.total_30);
+        if(m.total_35) s += parseInt(m.total_35);
+        if(m.total_40) s += parseInt(m.total_40);
+        if(m.total_45) s += parseInt(m.total_45);
+        if(m.total_50) s += parseInt(m.total_50);
+        if(m.total_55) s += parseInt(m.total_55);
+        if(m.total_60) s += parseInt(m.total_60);
+        if(m.total_60p) s += parseInt(m.total_60p);
+      }
+
+      if(key == "women") {
+        if(m.women_18) s += parseInt(m.women_18);
+        if(m.women_20) s += parseInt(m.women_20);
+        if(m.women_25) s += parseInt(m.women_25);
+        if(m.women_30) s += parseInt(m.women_30);
+        if(m.women_35) s += parseInt(m.women_35);
+        if(m.women_40) s += parseInt(m.women_40);
+        if(m.women_45) s += parseInt(m.women_45);
+        if(m.women_50) s += parseInt(m.women_50);
+        if(m.women_55) s += parseInt(m.women_55);
+        if(m.women_60) s += parseInt(m.women_60);
+        if(m.women_60p) s += parseInt(m.women_60p);
+      }
+      
+      return s;
     };
 
     $scope.sumtotal = function(key) {
       var s = 0;
       if(key == 'total') {
-          <?php foreach($columns as $i): ?>
-          s += $scope.sumcolumn('<?=$i?>_total');
-          <?php endforeach; ?>
+          s = $scope.sumcolumn('total_18')
+            + $scope.sumcolumn('total_20')
+            + $scope.sumcolumn('total_25')
+            + $scope.sumcolumn('total_30')
+            + $scope.sumcolumn('total_35')
+            + $scope.sumcolumn('total_40')
+            + $scope.sumcolumn('total_45')
+            + $scope.sumcolumn('total_50')
+            + $scope.sumcolumn('total_55')
+            + $scope.sumcolumn('total_60')
+            + $scope.sumcolumn('total_60p');
+
       } else if(key == 'women') {
-          <?php foreach($columns as $i): ?>
-            s += $scope.sumcolumn('<?=$i?>_women');
-          <?php endforeach; ?>
+        s = $scope.sumcolumn('women_18')
+          + $scope.sumcolumn('women_20')
+          + $scope.sumcolumn('women_25')
+          + $scope.sumcolumn('women_30')
+          + $scope.sumcolumn('women_35')
+          + $scope.sumcolumn('women_40')
+          + $scope.sumcolumn('women_45')
+          + $scope.sumcolumn('women_50')
+          + $scope.sumcolumn('women_55')
+          + $scope.sumcolumn('women_60')
+          + $scope.sumcolumn('women_60p');
       }
       return s;
     };

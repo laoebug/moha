@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatDocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Documents');
+$this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສານທີ່ມີຄວາມສຳຄັນແຫ່ງຊາດ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statDocument">
@@ -27,7 +27,7 @@ $this->title = Yii::t('app', 'Stat Documents');
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-3">
-                    <label><?= Yii::t('app', 'Section') ?></label>
+                    <label>ກະຊວງ, ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ</label>
                     <select class="form-control" ng-model="model.section" ng-change="inquiry()" ng-options="m.name for m in sections"></select>
                 </div>
                 <div class="col-sm-3" ng-if="model.section.code=='m'">
@@ -35,7 +35,7 @@ $this->title = Yii::t('app', 'Stat Documents');
                     <select class="form-control" ng-model="model.ministry" ng-change="inquiry()" ng-options="m.name for m in ministries"></select>
                 </div>
                 <div class="col-sm-3" ng-if="model.section.code=='o'">
-                    <label><?= Yii::t('app', 'Organisation') ?></label>
+                    <label>ອົງການຈັດຕັ້ງ</label>
                     <select class="form-control" ng-model="model.organisation" ng-change="inquiry()" ng-options="m.name for m in organisations"></select>
                 </div>
                 <div class="col-sm-3" ng-if="model.section.code=='p'">

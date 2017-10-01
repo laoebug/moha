@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerAddSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Statistics of Officers Addition');
+$this->title = "ຈຳນວນລັດຖະກອນທີ່ເພີ່ມເຂົ້າໃນຮູບການຕ່າງໆ";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerAddController">
@@ -37,13 +37,13 @@ $this->title = Yii::t('app', 'Statistics of Officers Addition');
                         </thead>
                         <tbody>
                         <tr>
-                            <td><?= Yii::t('app', 'By Quota') ?></td><td><input type="number" min="0" ng-model="model.quota_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.quota_women" max="{{model.quota_total}}" class="form-control"></td>
+                            <td>ຮັບເຂົ້າໃໝ່ຕາມການແບ່ງປັນ (ໂກຕ້າ)</td><td><input type="number" min="0" ng-model="model.quota_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.quota_women" max="{{model.quota_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'From Army') ?></td><td><input type="number" min="0" ng-model="model.army_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.army_women" max="{{model.army_total}}" class="form-control"></td>
+                            <td>ຍົກຍ້າຍມາຈາກຝ່າຍກຳລັງປະກອບອາວຸດ (ທະຫານ, ຕຳຫຼວດ)</td><td><input type="number" min="0" ng-model="model.army_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.army_women" max="{{model.army_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td><?= Yii::t('app', 'From SOE') ?></td><td><input type="number" min="0" ng-model="model.soe_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.soe_women" max="{{model.soe_total}}" class="form-control"></td>
+                            <td>ຍົກຍ້າຍມາຈາກລັດວິສາຫະກິດ</td><td><input type="number" min="0" ng-model="model.soe_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.soe_women" max="{{model.soe_total}}" class="form-control"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -70,7 +70,7 @@ $this->title = Yii::t('app', 'Statistics of Officers Addition');
                 <tr>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.')?></th>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'Description')?></th>
-                    <th class="text-center" colspan="3"><?= Yii::t('app', 'Officer')?></th>
+                    <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
                 </tr>
                 <tr>
                     <th class="text-center"><?= Yii::t('app', 'Total')?></th>
@@ -81,19 +81,19 @@ $this->title = Yii::t('app', 'Statistics of Officers Addition');
                 <tbody>
                     <tr>
                         <th class="text-center" rowspan="12">VI</th>
-                        <th><?= Yii::t('app', 'Officers Addition') ?></th>
+                        <th>ຈຳນວນລັດຖະກອນທີ່ເພີ່ມເຂົ້າໃນຮູບການຕ່າງໆ</th>
                         <th class="text-center">{{formatNumber(model.quota_total + model.army_total + model.soe_total)}}</th>
                         <th class="text-center">{{formatNumber(model.quota_women + model.army_women + model.soe_women)}}</th>
                         <th class="text-center">{{formatNumber(model.quota_total + model.army_total + model.soe_total - (model.quota_women + model.army_women + model.soe_women))}}</th>
                     </tr>
                     <tr>
-                        <td>1. <?= Yii::t('app', 'By Quota') ?></td><td class='text-center'>{{formatNumber(model.quota_total)}}</td><td class='text-center'>{{formatNumber(model.quota_women)}}</td><td class='text-center'>{{formatNumber(model.quota_total - model.quota_women)}}</td>
+                        <td>1. ຮັບເຂົ້າໃໝ່ຕາມການແບ່ງປັນ (ໂກຕ້າ)</td><td class='text-center'>{{formatNumber(model.quota_total)}}</td><td class='text-center'>{{formatNumber(model.quota_women)}}</td><td class='text-center'>{{formatNumber(model.quota_total - model.quota_women)}}</td>
                     </tr>
                     <tr>
-                        <td>2. <?= Yii::t('app', 'From Army') ?></td><td class='text-center'>{{formatNumber(model.army_total)}}</td><td class='text-center'>{{formatNumber(model.army_women)}}</td><td class='text-center'>{{formatNumber(model.army_total - model.army_women)}}</td>
+                        <td>2. ຍົກຍ້າຍມາຈາກຝ່າຍກຳລັງປະກອບອາວຸດ (ທະຫານ, ຕຳຫຼວດ)</td><td class='text-center'>{{formatNumber(model.army_total)}}</td><td class='text-center'>{{formatNumber(model.army_women)}}</td><td class='text-center'>{{formatNumber(model.army_total - model.army_women)}}</td>
                     </tr>
                     <tr>
-                        <td>3. <?= Yii::t('app', 'From SOE') ?></td><td class='text-center'>{{formatNumber(model.soe_total)}}</td><td class='text-center'>{{formatNumber(model.soe_women)}}</td><td class='text-center'>{{formatNumber(model.soe_total - model.soe_women)}}</td>
+                        <td>3. ຍົກຍ້າຍມາຈາກລັດວິສາຫະກິດ</td><td class='text-center'>{{formatNumber(model.soe_total)}}</td><td class='text-center'>{{formatNumber(model.soe_women)}}</td><td class='text-center'>{{formatNumber(model.soe_total - model.soe_women)}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerNeedSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Officer Needs');
+$this->title = "ແຜນຄວາມຕ້ອງການລັດຖະກອນໃໝ່";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerNeedController">
@@ -69,19 +69,19 @@ $this->title = Yii::t('app', 'Stat Officer Needs');
                 <tbody>
                     <tr>
                         <td class="text-center" rowspan="4">IX</td>
-                        <td><?= Yii::t('app', 'Needed Plan') ?></td>
+                        <td>ແຜນຄວາມຕ້ອງການລັດຖະກອນໃໝ່</td>
                         <td class="text-center">{{formatNumber(model.center + model.province+ model.district)}}</td>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'Center') ?></td>
+                        <td>ຂັ້ນສູນກາງ</td>
                         <td class="text-center">{{formatNumber(model.center)}}</td>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'Province') ?></td>
+                        <td>ຂັ້ນແຂວງ</td>
                         <td class="text-center">{{formatNumber(model.province)}}</td>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'District') ?></td>
+                        <td>ຂັ້ນເມືອງ</td>
                         <td class="text-center">{{formatNumber(model.district)}}</td>
                     </tr>
                 </tbody>

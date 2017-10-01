@@ -12,7 +12,7 @@ use yii\grid\GridView;
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Officers By Positions') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">ແຜນຄວາມຕ້ອງການລັດຖະກອນໃໝ່ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
@@ -26,19 +26,19 @@ use yii\grid\GridView;
                     <tbody>
                     <tr>
                         <td class="text-center" rowspan="4">IX</td>
-                        <td><?= Yii::t('app', 'Needed Plan') ?></td>
+                        <td>ແຜນຄວາມຕ້ອງການລັດຖະກອນໃໝ່</td>
                         <td class="text-center"><?= number_format($model->center + $model->province+ $model->district)?></td>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'Center') ?></td>
+                        <td>ຂັ້ນສູນກາງ</td>
                         <td class="text-center"><?= number_format($model->center)?></td>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'Province') ?></td>
+                        <td>ຂັ້ແຂວງ</td>
                         <td class="text-center"><?= number_format($model->province)?></td>
                     </tr>
                     <tr>
-                        <td><?= Yii::t('app', 'District') ?></td>
+                        <td>ຂັ້ນເມືອງ</td>
                         <td class="text-center"><?= number_format($model->district)?></td>
                     </tr>
                     </tbody>

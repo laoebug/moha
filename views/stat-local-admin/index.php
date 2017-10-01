@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatLocalAdminSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Local Admins');
+$this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ";
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="statLocalAdminController">
     <div class="col-sm-12">
@@ -32,22 +32,22 @@ $this->title = Yii::t('app', 'Stat Local Admins');
                     </select>
                 </div>
                 <div class="col-sm-9">
-                    <table class="table">
+                    <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Province Head') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Province Vice') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'District Head') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'District Vice') ?></td>
+                            <td class="text-center" colspan="2">ເຈົ້າແຂວງ</td>
+                            <td class="text-center" colspan="2">ຮອງເຈົ້າແຂວງ</td>
+                            <td class="text-center" colspan="2">ເຈົ້າເມືອງ</td>
+                            <td class="text-center" colspan="2">ຮອງເຈົ້າເມືອງ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'W') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'W') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'W') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'W') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
                         </tr>
                         <tr>
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.province_head_total"></td>
@@ -71,24 +71,24 @@ $this->title = Yii::t('app', 'Stat Local Admins');
                     </table>
                 </div>
                 <div class="col-sm-12">
-                    <table class="table">
+                    <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Village Head') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Village Vice') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Population') ?></td>
-                            <td class="text-center" ><?=Yii::t('app', 'Village') ?></td>
-                            <td class="text-center" colspan="2"><?=Yii::t('app', 'Family') ?></td>
+                            <td class="text-center" colspan="2">ນາຍບ້ານ</td>
+                            <td class="text-center" colspan="2">ຮອງນາຍບ້ານ</td>
+                            <td class="text-center" colspan="2">ພົນລະເມືອງ</td>
+                            <td class="text-center" >ບ້ານ</td>
+                            <td class="text-center" colspan="2">ຄອບຄົວ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 9%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 9%"><?=Yii::t('app', 'W') ?></td>
-                            <td class="text-center" style="width: 9%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 9%"><?=Yii::t('app', 'W') ?></td>
-                            <td class="text-center" style="width: 11%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 11%"><?=Yii::t('app', 'W') ?></td>
-                            <td class="text-center" style="width: 9%"><?=Yii::t('app', 'T') ?></td>
-                            <td class="text-center" style="width: 11%"><?=Yii::t('app', 'W') ?></td>
-                            <td class="text-center" style="width: 11%"><?=Yii::t('app', 'P') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%">ທຸກຍາກ</td>
                         </tr>
                         <tr>
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.village_head_total"></td>
@@ -122,7 +122,7 @@ $this->title = Yii::t('app', 'Stat Local Admins');
     </div>
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Local Administration') ?></h3>
+            <h3><?= $this->title ?></h3>
             <p>
                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
@@ -133,34 +133,35 @@ $this->title = Yii::t('app', 'Stat Local Admins');
                 <tr>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
                     <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Province Head') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Province Vice') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'District Head') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'District Vice') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Village Head') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Village Vice') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Population') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Village') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Family') ?></th>
+                    <th class="text-center" colspan="2">ເຈົ້າແຂວງ</th>
+                    <th class="text-center" colspan="2">ຮອງເຈົ້າແຂວງ</th>
+                    <th class="text-center" colspan="2">ເຈົ້າເມືອງ</th>
+                    <th class="text-center" colspan="2">ຮອງເຈົ້າເມືອງ</th>
+                    <th class="text-center" colspan="2">ນາຍບ້ານ</th>
+                    <th class="text-center" colspan="2">ຮອງນາຍບ້ານ</th>
+                    <th class="text-center" colspan="2">ພົນລະເມືອງ</th>
+                    <th class="text-center">ບ້ານ</th>
+                    <th class="text-center" colspan="2">ຄອບຄົວ</th>
                 </tr>
                 <tr>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'P') ?></th>
+
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center">ທຸກຍາກ</th>
                 </tr>
                 <tr>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>

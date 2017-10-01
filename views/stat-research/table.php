@@ -13,27 +13,27 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Research') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">ສະຖິຕິສູນຄົ້ນຄວ້າວຽກງານການປົກຄອງ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Title') ?></th>
-                        <th class="text-center" colspan="2"><?= Yii::t('app', 'Attendance') ?></th>
-                        <th class="text-center" colspan="2"><?= Yii::t('app', 'Scholarship') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Attendee') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Date') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Times') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Place') ?></th>
+                        <th class="text-center" rowspan="2">ຫົວຂໍ້ກິດຈະກຳ</th>
+                        <th class="text-center" colspan="2">ຈຳນວນຜູ້ເຂົ້າຮ່ວມທັງໝົດ</th>
+                        <th class="text-center" colspan="2">ທຶນສະໜັບສະໜູນ</th>
+                        <th class="text-center" rowspan="2">ພາກສ່ວນເຂົ້າຮ່ວມ</th>
+                        <th class="text-center" rowspan="2">ວັນ ເດືອນ ປີ</th>
+                        <th class="text-center" rowspan="2">ຈຳນວນຄັ້ງ</th>
+                        <th class="text-center" rowspan="2">ສະຖານທີ່</th>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'Remark') ?></th>
                     </tr>
                     <tr>
                         <th class="text-center"><?= Yii::t('app', 'T') ?></th>
                         <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Goverment') ?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Dornor') ?></th>
+                        <th class="text-center">ລັດຖະບານ</th>
+                        <th class="text-center">ທຶນຊ່ວຍເຫຼືອ</th>
                     </tr>
                     </thead>
                     <tbody>

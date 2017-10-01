@@ -21,14 +21,14 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title"><?= Yii::t('app','Statistics of Tranining of Province Officers ') ?> (<?= $year->year ?>)</h3>
+                <h3 class="title">ສະຖິຕິພະນັກງານລັດຖະກອນຂັ້ນທ້ອງຖິ່ນທີ່ໄປຝຶກອົບຮົມຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th class="text-center" rowspan="5"><?= Yii::t('app', 'No.')?></th>
-                            <th class="text-center" rowspan="3"><?= Yii::t('app', 'Name')?></th>
+                            <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນຕ່າງໆ</th>
                             <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Total')?></th>
                             <th class="text-center" colspan="4"><?= Yii::t('app', 'Technical Trainning') ?></th>
                             <th class="text-center" colspan="4"><?= Yii::t('app', 'Theory Trainning') ?></th>

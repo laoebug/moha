@@ -12,7 +12,7 @@
 </style>
 <div class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
     <div class="card-title-w-btn hidden-print">
-        <h3><?= Yii::t('app', 'Statistics of Ehtnics') ?></h3>
+        <h3>ສະຖິຕິຊົນເຜົ່າໃນທົ່ວປະເທດ</h3>
         <p>
             <a class="btn btn-default" target="_blank" href="index.php?r=stat-ethnic/print&year=<?= $year->id ?>"><i class="fa fa-print fa-2x"></i></a>
             <a class="btn btn-info" target="_blank" href="index.php?r=stat-ethnic/download&year=<?= $year->id ?>"><i class="fa fa-download fa-2x"></i></a>
@@ -23,7 +23,7 @@
             <tr>
                 <th><?= Yii::t('app', 'No.') ?></th>
                 <th><?= Yii::t('app', 'Province') ?></th>
-                <th><?= Yii::t('app', 'Ethic') ?></th>
+                <th>ຊົນເຜົ່າ</th>
                 <?php foreach ($ethnics as $i => $ethnic): if($i == 25) break; ?>
                     <th><?= $ethnic->name ?></th>
                 <?php endforeach; ?>
@@ -75,7 +75,7 @@
         <tr>
             <th><?= Yii::t('app', 'No.') ?></th>
             <th><?= Yii::t('app', 'Province') ?></th>
-            <th><?= Yii::t('app', 'Ethic') ?></th>
+            <th><?= Yii::t('app', 'Ethnic') ?></th>
             <?php for ($i = 25; $i < count($ethnics); $i++):
             $ethnic = $ethnics[$i];
             ?>

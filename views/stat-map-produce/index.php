@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatMapProduceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Stat Map Produces');
+$this->title = "ສະຖິຕິຜະລິດແຜນທີ່";
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statMapProduce">
@@ -27,7 +27,7 @@ $this->title = Yii::t('app', 'Stat Map Produces');
             <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
             <div class="panel-body">
                 <div class="col-sm-6">
-                    <label><?= Yii::t('app', 'Activity') ?></label>
+                    <label>ກິດຈະກຳ</label>
                     <input class="form-control" ng-model="model.activity" type="text">
                 </div>
                 <div class="col-sm-2">
@@ -40,7 +40,7 @@ $this->title = Yii::t('app', 'Stat Map Produces');
                 </div>
                 <div class="col-sm-3" style="margin-top: 1em">
                     <button type="button" class="btn btn-info col-sm-12" ng-click="add()">
-                        <i class="fa fa-plus"></i> <?= Yii::t('app', 'Add') ?>
+                        <i class="fa fa-plus"></i> ເພີ່ມໃໝ່
                     </button>
                 </div>
                 <div class="col-sm-3" style="margin-top: 1em">
@@ -50,7 +50,7 @@ $this->title = Yii::t('app', 'Stat Map Produces');
                 </div>
                 <div class="col-sm-3" style="margin-top: 1em">
                     <button type="button" class="btn btn-danger col-sm-12" ng-click="delete()">
-                        <i class="fa fa-trash"></i> <?= Yii::t('app', 'Delete') ?>
+                        <i class="fa fa-trash"></i> ລຶບ
                     </button>
                 </div>
             </div>
