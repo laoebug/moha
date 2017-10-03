@@ -6,60 +6,12 @@ $this->title = Yii::t('app', 'Dashboad');
 ?>
 <div class="site-index">
     <div class="body-content">
-        <div class="row">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <h3 class="card-title">Line Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h3 class="card-title">Bar Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h3 class="card-title">Radar Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="radarChartDemo"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h3 class="card-title">Polar Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="polarChartDemo"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h3 class="card-title">Pie Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h3 class="card-title">Doughnut Chart</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <canvas class="embed-responsive-item" id="doughnutChartDemo"></canvas>
-                        </div>
-                    </div>
-                </div>
+        <div class="row user">
+            <div class="col-md-4 col-sm-offset-4 text-center" style="">
+                <b class="fa fa-user fa-5x"></b>
+                <h4><?= Yii::$app->user->identity->username ?></h4>
+                <p><?= Yii::$app->user->identity->firstname ?></p>
             </div>
         </div>
-
     </div>
 </div>

@@ -3546,7 +3546,7 @@ tbody.collapse.in {
 
 .nav > li > a:hover, .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eeeeee;
+  /*background-color: #eeeeee;*/
 }
 
 .nav > li.disabled > a {
@@ -3563,6 +3563,7 @@ tbody.collapse.in {
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
   background-color: #eeeeee;
   border-color: #009688;
+    color: #000000 !important;
 }
 
 .nav .nav-divider {
@@ -13724,7 +13725,7 @@ be a descendant of the grid when it is being dragged.
   height: 100%;
   z-index: 800;
   background-color: #E5E5E5;
-  margin-left: 230px;
+  /*margin-left: 230px;*/
   z-index: 820;
   padding: 30px;
   -webkit-transition: all 0.3s ease-in-out;
@@ -14393,7 +14394,7 @@ be a descendant of the grid when it is being dragged.
 }
 
 .dropdown-menu {
-  right: 0;
+  /*right: 0;*/
   left: auto;
   margin-top: 0;
   border-radius: 0;
