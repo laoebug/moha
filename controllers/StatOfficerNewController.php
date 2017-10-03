@@ -5,24 +5,20 @@ namespace app\controllers;
 use app\components\MyHelper;
 use app\models\OfficerLevel;
 use app\models\PhiscalYear;
-use app\models\StatPositionDetail;
+use app\models\StatOfficerNewDetail;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatPosition;
-use app\models\StatPositionSearch;
-use yii\db\Exception;
+use app\models\StatOfficerNew;
+use yii\base\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
- * StatPositionController implements the CRUD actions for StatPosition model.
+ * StatOfficerNewController implements the CRUD actions for StatOfficerNew model.
  */
-class StatPositionController extends Controller
+class StatOfficerNewController extends Controller
 {
-
     /**
-     * Lists all StatPosition models.
+     * Lists all StatOfficerNew models.
      * @return mixed
      */
     public function actionIndex()
@@ -47,11 +43,11 @@ class StatPositionController extends Controller
             return;
         }
 
-        $models = StatPositionDetail::find()->alias('d')
+        $models = StatOfficerNewDetail::find()->alias('d')
             ->select('d.*')
             ->addSelect('l.name')
             ->join('join', 'officer_level l', 'l.id = d.officer_level_id')
-            ->join('join', 'stat_position e', 'e.id = d.stat_position_id and e.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_officer_new e', 'e.id = d.stat_officer_new_id and e.phiscal_year_id=:year', [':year' => $year->id])
             ->asArray()->all();
 
         return json_encode(['models' => $models]);
@@ -64,8 +60,8 @@ class StatPositionController extends Controller
             return;
         }
 
-        $model = StatPositionDetail::find()->alias('d')
-            ->join('join', 'stat_position e', 'e.id = d.stat_position_id and e.phiscal_year_id=:year', [':year' => $year->id])
+        $model = StatOfficerNewDetail::find()->alias('d')
+            ->join('join', 'stat_officer_new e', 'e.id = d.stat_officer_new_id and e.phiscal_year_id=:year', [':year' => $year->id])
             ->where(['d.officer_level_id' => $level])
             ->asArray()->one();
         return json_encode([
@@ -88,25 +84,25 @@ class StatPositionController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model = StatPosition::find()->where(['phiscal_year_id'=> $year->id])
+            $model = StatOfficerNew::find()->where(['phiscal_year_id'=> $year->id])
                 ->one();
             if(!isset($model)) {
-                $model = new StatPosition();
+                $model = new StatOfficerNew();
                 $model->user_id = Yii::$app->user->id;
                 $model->phiscal_year_id = $year->id;
             }
             $model->saved = 1;
             $model->last_update = date('Y-m-d H:i:s');
-            if(!$model->save()) throw new \yii\db\Exception(json_encode($model->errors));
+            if(!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = StatPositionDetail::find()->where([
-                'stat_position_id' => $model->id,
+            $detail = StatOfficerNewDetail::find()->where([
+                'stat_officer_new_id' => $model->id,
                 'officer_level_id' => $post['Model']['level']['id'],
             ])->one();
 
             if(!isset($detail)) {
-                $detail = new StatPositionDetail();
-                $detail->stat_position_id = $model->id;
+                $detail = new StatOfficerNewDetail();
+                $detail->stat_officer_new_id = $model->id;
                 $detail->officer_level_id = $post['Model']['level']['id'];
             }
             $detail->attributes = $post['Model'];
@@ -130,10 +126,10 @@ class StatPositionController extends Controller
             return;
         }
 
-        $models = StatPositionDetail::find()->alias('d')
+        $models = StatOfficerNewDetail::find()->alias('d')
             ->select('d.*,l.name')
             ->join('join', 'officer_level l', 'l.id = d.officer_level_id')
-            ->join('join', 'stat_position e', 'e.id = d.stat_position_id and e.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_officer_new e', 'e.id = d.stat_officer_new_id and e.phiscal_year_id=:year', [':year' => $year->id])
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
@@ -151,10 +147,10 @@ class StatPositionController extends Controller
             return;
         }
 
-        $models = StatPositionDetail::find()->alias('d')
+        $models = StatOfficerNewDetail::find()->alias('d')
             ->select('d.*,l.name')
             ->join('join', 'officer_level l', 'l.id = d.officer_level_id')
-            ->join('join', 'stat_position e', 'e.id = d.stat_position_id and e.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_officer_new e', 'e.id = d.stat_officer_new_id and e.phiscal_year_id=:year', [':year' => $year->id])
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
