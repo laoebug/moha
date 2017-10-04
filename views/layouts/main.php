@@ -43,7 +43,6 @@ use app\components\TopMenuWidget;
         -webkit-border-radius: 0 6px 6px 6px;
         -moz-border-radius: 0 6px 6px;
         border-radius: 0 6px 6px 6px;
-
         overflow-y: scroll;
         max-height: 200px;
     }

@@ -64,6 +64,7 @@ use Yii;
  * @property StatReligionPlace[] $statReligionPlaces
  * @property StatReligionTeacher[] $statReligionTeachers
  * @property StatResearch[] $statResearches
+ * @property StatResign[] $statResigns
  * @property StatSingleGatewayImplementation[] $statSingleGatewayImplementations
  * @property StatVictorycoinMinistry[] $statVictorycoinMinistries
  * @property StatVictorycoinProvince[] $statVictorycoinProvinces
@@ -508,6 +509,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatResearches()
     {
         return $this->hasMany(StatResearch::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatResigns()
+    {
+        return $this->hasMany(StatResign::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
