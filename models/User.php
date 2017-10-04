@@ -41,7 +41,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public $authKey;
     public $accessToken;
-
+    public $subordinate_usr_id; // subordinate_usr_id  is user_id in user_subordinate table
+    public $subordinate_user_id; // subordinate_user_id is subordinate_user_id in user_subordinate table
+	public $theBraches=[];
+	public $theSubcordinateUsers=[];
     /**
      * @inheritdoc
      */

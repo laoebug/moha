@@ -1,4 +1,4 @@
-
+<?php use yii\helpers\Html;?>
 <!-- <div class="card"> -->
 <div class="table-responsive">
 	<div class="card-body">
@@ -13,7 +13,7 @@
 					<th><?php echo Yii::t("app","Telephone")?></th>
 					<th><?php echo Yii::t("app","Email")?></th>
 					<th><?php echo Yii::t("app","Role")?></th>
-					
+					<th><?php echo Yii::t("app","Action")?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,6 +32,13 @@
 					<td><?php echo isset($model["tel"])? $model["tel"]: ""; ?></td>
 					<td><?php echo isset($model["email"])? $model["email"]: ""; ?></td>
 					<td id="role_id" data-role_id="<?php echo isset($model["role_id"])? $model["role_id"]: ""; ?>"><?php echo isset($model->role["name"])? $model->role["name"]: ""; ?></td>
+					<td>
+					
+					<a class="btn btn-danger"  href="index.php?r=user/subordinateandbranch&id=<?php echo $model["id"]; ?>">
+					<i class="fa fa-user"></i>
+					<?php echo Yii::t("app","Subordinate"); ?>
+					</a>
+					</td>
 				</tr>
 				<?php endforeach;?>
 				<?php else:?>
