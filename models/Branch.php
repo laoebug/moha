@@ -30,6 +30,8 @@ class Branch extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+	public $branch_id;
+	public $branch_user_id;
     public static function tableName()
     {
         return 'branch';

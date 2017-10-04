@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'models' => $models
                 ]) 
             ?>
-            
+                        
             <?php Pjax::end(); ?>   
 			<?php 
                 echo $this->render('_formRole', [
@@ -80,10 +80,14 @@ var table = $('#role_table').DataTable(
 );
 
 $('#role_table tbody').on( 'click', 'tr', function () {
-
-	
-      
-	
+	 if ( $(this).hasClass('selected') ) {
+         $(this).removeClass('selected');
+     }
+     else {
+         table.$('tr.selected').removeClass('selected');
+         $(this).addClass('selected');
+     }
+		   
 	var urlMenu =  "index.php?r=user/listmenu";
 	
 	$.post(
@@ -194,13 +198,10 @@ function clearInpuData() {
 $("#btnNew").click(function(){				
 	clearInpuData();		
 });
-
-
-	
-	
-
-
 </script>
+
+
+
 
 
 

@@ -16,6 +16,9 @@ use app\models\UserHasRole;
 use app\services\AuthenticationService;
 use app\models\RoleHasMenu;
 use app\models\RoleHasAction;
+use app\models\Branch;
+use app\models\UserHasBranch;
+use app\models\UserSubordinate;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -317,9 +320,102 @@ class UserController extends Controller {
 			] );
 		}
 	}
-	
-	public function actionNot(){
-		return $this->render('not',[]);
+	public function actionSs() {
+		if (Yii::$app->request->isAjax) {
+			$data = Yii::$app->request->post ();
+			echo "DSFDSF";
+		}
+	}
+	public function actionSubordinateandbranch($id) {
+		$model = $this->findModel ( $id );
+		
+		if (Yii::$app->request->isAjax) {
+			// $data = Yii::$app->request->post ();
+			$db = Yii::$app->db->beginTransaction ();
+			try {
+				$user_id="";
+				if (isset ( $_POST ["user_id"] ) && $_POST ["user_id"] != null) {
+					
+					$user_id =  $_POST ["user_id"];
+					
+					UserSubordinate::deleteAll ( 'user_id = :user_id', [
+							':user_id' => $user_id
+					] );
+					
+					UserHasBranch::deleteAll ( 'user_id = :user_id', [
+							':user_id' => $user_id
+					] );
+					
+				
+					
+				}
+				
+				if (isset ( $_POST ["myUser_idList"] ) && count ( $_POST ["myUser_idList"] ) > 0) {
+					foreach ($_POST ["myUser_idList"] as $the_user_id){
+						$userSubordinate = new UserSubordinate();
+						$userSubordinate->user_id = $user_id;
+						$userSubordinate->subordinate_user_id=$the_user_id;
+						if (! $userSubordinate->save ())
+							throw new Exception ( "UserSubordinate cannot be saved" );
+						
+					}
+				}
+				
+				if (isset ( $_POST ["myBranch_idList"] ) && count ( $_POST ["myBranch_idList"] ) > 0) {
+						foreach ($_POST ["myBranch_idList"] as $the_branch_id){
+							$userHasBranch = new UserHasBranch();
+							$userHasBranch->user_id=$user_id;
+							$userHasBranch->branch_id=$the_branch_id;
+							if (! $userHasBranch->save ())
+								throw new Exception ( "UserHasBranch cannot be saved" );
+							
+						}
+				}
+				
+				
+				$db->commit ();
+				Yii::$app->session->setFlash ( 'success', "Subordinate(s) and Department(s) have been saved successfully" );
+				exit();
+			} catch ( Exception $ex ) {
+				$db->rollBack ();
+				Yii::$app->session->setFlash ( 'danger', "Subordinate(s) and Department(s) cannot saved" . $ex );
+				exit();
+			}
+		}
+		
+		// Start loading Branch
+		
+		$sql_branch = " select ";
+		$sql_branch .= " ifnull(b.user_id,0) as branch_user_id,ifnull(b.branch_id,0) as branch_id,a.* from branch a ";
+		$sql_branch .= "  left outer join ";
+		$sql_branch .= "  user_has_branch b ";
+		$sql_branch .= " on a.id=b.branch_id  ";
+		$sql_branch .= "  and a.user_id=:user_id ";
+		$params_branch = [ 
+				':user_id' => $id 
+		];
+		
+		$model->theBraches = Branch::findBySql ( $sql_branch, $params_branch )->all ();
+		
+		// Start loading Branch
+		$sql_subordinate = " select ";
+		$sql_subordinate .= " ifnull(b.user_id,0) as subordinate_usr_id , ";
+		$sql_subordinate .= " ifnull(b.subordinate_user_id,0) as subordinate_user_id ,  ";
+		$sql_subordinate .= " a.* from user a ";
+		$sql_subordinate .= " left outer join ";
+		$sql_subordinate .= " user_subordinate b";
+		$sql_subordinate .= " on a.id= b.subordinate_user_id ";
+		$sql_subordinate .= " where a.id<>:id ";
+		
+		$params_subordinate = [ 
+				':id' => $id 
+		];
+		
+		$model->theSubcordinateUsers = User::findBySql ( $sql_subordinate, $params_subordinate )->all ();
+		return $this->render ( 'subordinate', [ 
+				"model" => $model 
+		]
+		 );
 	}
 	/**
 	 * Deletes an existing User model.
@@ -350,5 +446,9 @@ class UserController extends Controller {
 		} else {
 			throw new NotFoundHttpException ( 'The requested page does not exist.' );
 		}
+	}
+	public function beforeAction($action) {
+		$this->enableCsrfValidation = false;
+		return parent::beforeAction ( $action );
 	}
 }

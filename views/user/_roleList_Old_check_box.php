@@ -29,10 +29,10 @@
                     					<?php $checked="checked";?>
                                                                         				<?php //endif;?>
             							<div class="animated-checkbox">
-            						<input class="checkbox" type="checkbox"
+            							<input class="checkbox" type="checkbox"
             							value="<?php echo $key; ?>" name="role[]" id="role[]"
             							<?php //echo $checked; ?>> <span class="label-text"><?php echo $role->name; ?></span>
-            					</div>
+            							</div>
             				</label>
             			</div>
                                                             				

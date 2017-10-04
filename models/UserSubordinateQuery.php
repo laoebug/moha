@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[UseSubcordinate]].
+ * This is the ActiveQuery class for [[UserSubordinate]].
  *
- * @see UseSubcordinate
+ * @see UserSubordinate
  */
-class UseSubcordinateQuery extends \yii\db\ActiveQuery
+class UserSubordinateQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class UseSubcordinateQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return UseSubcordinate[]|array
+     * @return UserSubordinate[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class UseSubcordinateQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return UseSubcordinate|array|null
+     * @return UserSubordinate|array|null
      */
     public function one($db = null)
     {
