@@ -8,6 +8,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 use app\components\MenuWidget;
+use app\components\TopMenuWidget;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -30,9 +31,61 @@ use app\components\MenuWidget;
 	.selected {
         background-color: #85C1E9;
     }
-    
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu>.dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+
+        overflow-y: scroll;
+        max-height: 200px;
+    }
+
+    .dropdown-submenu:hover>.dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu>a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #ccc;
+        margin-top: 5px;
+        margin-right: -10px;
+
+    }
+
+    .dropdown-submenu:hover>a:after {
+        border-left-color: #fff;
+    }
+
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+    .dropdown-submenu.pull-left>.dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+    .navbar-custom-menu>.nav.navbar-nav>li>a {
+        color: #ffffff;
+    }
 	</style>
-	
 </head>
 <body class="sidebar-mini fixed">
 
@@ -41,9 +94,16 @@ use app\components\MenuWidget;
     <!-- Navbar-->
     <header class="main-header hidden-print"><a class="logo" href="index.php"><?= Yii::$app->name ?></a>
         <nav class="navbar navbar-static-top">
-            <!-- Sidebar toggle button--><a class="sidebar-toggle" href="#" data-toggle="offcanvas"></a>
-            <!-- Navbar Right Menu-->
             <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <?php
+                    if(!Yii::$app->user->isGuest) {
+                        TopMenuWidget::begin();
+                        TopMenuWidget::end();
+                    }
+                    ?>
+                </ul>
+
                 <ul class="top-nav">
                     <!--Notification Menu-->
                     <li class="dropdown notification-menu">
@@ -60,7 +120,10 @@ use app\components\MenuWidget;
                         </ul>
                     </li>
                     <!-- User Menu-->
-                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></a>
+                    <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user fa-lg"></i>
+                            <?= Yii::$app->user->identity->username ?>
+                        </a>
                         <ul class="dropdown-menu settings-menu">
                             <li><a href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li>
                             <li><a href="page-user.html"><i class="fa fa-user fa-lg"></i> Profile</a></li>
@@ -71,40 +134,9 @@ use app\components\MenuWidget;
             </div>
         </nav>
     </header>
-    <!-- Side-Nav-->
-    <aside class="main-sidebar hidden-print">
-        <section class="sidebar">
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img class="img-circle" src="images/user.png" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p><?= Yii::$app->user->identity->username ?></p>
-                    <p class="designation"><?= Yii::$app->user->identity->firstname ?></p>
-                </div>
-            </div>
-
-            <!-- Sidebar Menu-->
-            <div class="table-responsive" style="width: 220px">
-            <ul class="sidebar-menu">
-<!--                <li class=""><a href="index.php"><i class="fa fa-dashboard"></i><span>--><?//= Yii::t('app','Dashboard') ?><!--</span></a></li>-->
-                <?php
-               if(!Yii::$app->user->isGuest) {
-                   MenuWidget::begin();
-                   MenuWidget::end();
-               }
-                ?>
-            
-                
-            </ul>
-            </div>
-            
-        </section>
-    </aside>
-
     <div class="content-wrapper">
         <div class="page-title">
-            <div>
+            <div class="hidden">
                 <h1><i class="fa fa-dashboard"></i> <?= $this->title ?></h1>
                 <p><?= isset($this->subtitle)?$this->subtitle:"" ?></p>
             </div>
