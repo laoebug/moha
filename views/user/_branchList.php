@@ -37,7 +37,7 @@
 				<?php endforeach;?>
 				<?php else:?>
 				<tr>
-					<td colspan="2"><?php echo Yii::t("app","No data available")?></td>
+					<td colspan="3"><?php echo Yii::t("app","No data available")?></td>
 					
 				</tr>
 				<?php endif;?>
