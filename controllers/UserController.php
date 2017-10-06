@@ -192,6 +192,7 @@ class UserController extends Controller {
 			$model->deleted = 0;
 			if ($model->save ()) {
 				Yii::$app->session->setFlash ( "success", "Role has been added successfully" );
+				
 			} else {
 				Yii::$app->session->setFlash ( "danger", "Role cannot be added" );
 			}
@@ -374,7 +375,7 @@ class UserController extends Controller {
 				
 				
 				$db->commit ();
-				Yii::$app->session->setFlash ( 'success', "Subordinate(s) and Department(s) have been saved successfully" );
+				//Yii::$app->session->setFlash ( 'success', "Subordinate(s) and Department(s) have been saved successfully" );
 				exit();
 			} catch ( Exception $ex ) {
 				$db->rollBack ();

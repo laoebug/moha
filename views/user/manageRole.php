@@ -68,6 +68,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
     
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+
 
 <script type="text/javascript">
 
@@ -137,6 +139,7 @@ $("#btnAddRole").click(function(){
  		function(data,status,xhr){ //jQuery Ajax post		
  			if(status=='success'){
 				 location.reload();
+
 			 } 	 					
  		}).done(function() {
  		  }).fail(function() { 			   
@@ -178,6 +181,7 @@ $("#btnSaveMenuAndAction").click(function(){
  			 //console.log(data);
 			 if(status=='success'){
 				 location.reload();
+				// notifySuccess();
 			 } 	
  			 			
  		}).done(function() {
@@ -186,6 +190,7 @@ $("#btnSaveMenuAndAction").click(function(){
  		});
     
 });
+
 
 function clearInpuData() {
  	$("#role_name").val("");	
