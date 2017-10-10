@@ -79,51 +79,49 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-<!-- Javascripts-->
 <script src="js/jquery-2.1.4.min.js"></script>
-<!-- <script type="text/javascript" src="js/jquery/jquery-3.2.1.js"></script> -->
 <script src="js/bootstrap.min.js"></script>
 <script src="js/plugins/pace.min.js"></script>
+<script src="js/main.js"></script>
 <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="js/plugins/dataTables.min.js"></script>
 <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
-
-
-
+    
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
 <script type="text/javascript">
 
-var table = $('#_branch_table').DataTable({'paging': false});
+var table_branch = $('#_branch_table').DataTable({'paging': false});
 
 $('#_branch_table tbody').on( 'click', 'tr', function () {
 
-		var data = table.row( this ).data() ;
+		var data = table_branch.row( this ).data() ;
 
 	 if ( $(this).hasClass('selected') ) {
          $(this).removeClass('selected');
      }
      else {
-         table.$('tr.selected').removeClass('selected');
+    	 table_branch.$('tr.selected').removeClass('selected');
          $(this).addClass('selected');
      }
 
 } );
 
-var table = $('#_user_table').DataTable({'paging': false});
 
-$('#_user_table tbody').on( 'click', 'tr', function () {
+// var table_user = $('#_user_table').DataTable({'paging': false});
 
-		var data = table.row( this ).data() ;
+// $('#_branch_table tbody').on( 'click', 'tr', function () {
 
-	 if ( $(this).hasClass('selected') ) {
-         $(this).removeClass('selected');
-     }
-     else {
-         table.$('tr.selected').removeClass('selected');
-         $(this).addClass('selected');
-     }
-		 
+// 		var data = table_user.row( this ).data() ;
 
-} );
+// 	 if ( $(this).hasClass('selected') ) {
+//          $(this).removeClass('selected');
+//      }
+//      else {
+//     	 table_user.$('tr.selected').removeClass('selected');
+//          $(this).addClass('selected');
+//      }
+
+// } );
 
 
 
@@ -148,7 +146,6 @@ $('#check-all-branch').click(function () {
         $(".branch_id").prop('checked',false);  
     }  
 });
-
 
 $("#btnSave").click(function(){
 	
@@ -175,7 +172,10 @@ $("#btnSave").click(function(){
  		}, 
  		function(data,status,xhr){ //jQuery Ajax post					
 			 if(status=='success'){
-				 location.reload();
+				
+				 notifySuccess();
+				 //location.reload();
+									
 			 } 	
  			 			
  		}).done(function() {
@@ -186,13 +186,16 @@ $("#btnSave").click(function(){
 });
 
 
+function notifySuccess() {
+  	$.notify({
+  		title: "Success : ",
+  		message: "<?php echo Yii::t('app','Data has been save success fully!'); ?>",
+  		icon: 'fa fa-check' 
+  	},{
+  		type: "info"
+  	});
+}
 
 
-</script>
-
-
-
-
-
-          
+</script>       
           

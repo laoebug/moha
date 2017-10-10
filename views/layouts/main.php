@@ -167,6 +167,9 @@ use app\components\TopMenuWidget;
 <script type="text/javascript" src="js/plugins/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/plugins/chart.js"></script>
 <script type="text/javascript" src="js/plugins/select2.min.js"></script>
+
+
+
 <script type="text/javascript">
     $('.datepicker').datepicker({
         format: "dd-mm-yyyy",
