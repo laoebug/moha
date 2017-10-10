@@ -9,13 +9,14 @@
 $sum = [];
 $total = ['total' => 0, 'women' => 0];
 foreach ($models as $model)
-    for($i = 0; $i < 9; $i++) {
+    for($i = 1; $i < 9; $i++) {
         if(!isset($sum['position'.$i.'_total'])) $sum['position'.$i.'_total'] = 0;
+        if(!isset($sum['position'.$i.'_women'])) $sum['position'.$i.'_women'] = 0;
         $sum['position'.$i.'_total'] += $model['position'.$i.'_total'];
         $sum['position'.$i.'_women'] += $model['position'.$i.'_women'];
 
         $total['total'] += $model['position'.$i.'_total'];
-        $women['women'] += $model['position'.$i.'_women'];
+        $total['women'] += $model['position'.$i.'_women'];
     }
 ?>
 
@@ -65,8 +66,8 @@ foreach ($models as $model)
                         <td class="text-center"><?= number_format($row['total']) ?>/td>
                         <td class="text-center"><?= number_format($row['women']) ?>/td>
                         <?php for($c = 1; $c <= 8; $c++): ?>
-                            <td class="text-center"><?= $model['position'.$i.'_total'] ?></td>
-                            <td class="text-center"><?= $model['position'.$i.'_women'] ?></td>
+                            <td class="text-center"><?= $model['position'.$c.'_total'] ?></td>
+                            <td class="text-center"><?= $model['position'.$c.'_women'] ?></td>
                         <?php endfor; ?>
                     </tr>
                     <?php endforeach; ?>

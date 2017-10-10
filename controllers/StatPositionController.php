@@ -144,7 +144,7 @@ class StatPositionController extends Controller
             )]);
     }
 
-    public function actionExcel($year) {
+    public function actionDownload($year) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
@@ -158,7 +158,7 @@ class StatPositionController extends Controller
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'stat officer ethnic '. $year['year'].'.xls',
+            'file' => 'stat position '. $year['year'].'.xls',
             'content' => $this->renderPartial('table', [
                     'models' => $models,
                     'year' => $year
