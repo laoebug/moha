@@ -22,10 +22,10 @@
 					<td style="width:110px" data-row-id="<?php echo $model["id"]?>">
 					<?php $checked = "" ; ?>
 					<?php if($model->branch_id == $model->id): ?>					
-					<?php $checked="checked"; ?>
+					<?php $checked="checked"; ?>					
 					<?php endif;?>
 					<input type="checkbox" name="branch_id[]" id="branch_id[]" class="branch_id" value="<?php echo $model["id"]; ?>"
-										data-id="<?php echo $model["id"]; ?>" <?php echo $checked; ?>>										
+										data-id="<?php echo $model["id"]; ?>" <?php echo $checked; ?> >										
 					</td>
 					
 					<td>

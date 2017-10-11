@@ -45,4 +45,13 @@ class AuthenticationService
         
         return $authorizeMenus;
     }
+    
+    public static function isAccessibleAction($controller_id,$action_id){
+    	$isAccessisbleAction = false;
+    	echo $action_id;exit;
+    	echo $controller_id;exit;
+    	
+    	return $isAccessisbleAction;
+    }
+    
 }

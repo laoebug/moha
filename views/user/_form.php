@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Role;
+use app\models\Province;
 use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -10,7 +11,10 @@ use yii\helpers\ArrayHelper;
 
 <div class="user-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+    				'enableAjaxValidation' => false,
+    				'enableClientValidation' => false,
+    		] ); ?>
 	<div class="row">
 		<?= $form->field($model, 'id',['inputOptions' => ['value' => $model["id"]]])->hiddenInput(['id'=>'the_user_id'])->label(false) ?>
 		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -66,7 +70,22 @@ use yii\helpers\ArrayHelper;
 		</div>
 						
 	</div>
-			
+
+	<div class="row">	
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">			
+		<?php
+		echo $form->field($model, 'province_id')->dropDownList(
+             ArrayHelper::map(Province::find()
+    
+                    ->all(),'id','province_name'),
+            ['prompt'=>Yii::t('app','Plase select'),'id'=>'province']
+        ) 
+		?>
+		
+		</div>
+						
+	</div>
+				
 
     
 
