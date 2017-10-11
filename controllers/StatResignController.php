@@ -2,9 +2,15 @@
 
 namespace app\controllers;
 
+use app\components\MyHelper;
+use app\models\OfficerLevel;
+use app\models\PhiscalYear;
+use app\models\StatResignDetail;
+use Codeception\Util\HttpCode;
 use Yii;
 use app\models\StatResign;
 use app\models\StatResignSearch;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,20 +20,6 @@ use yii\filters\VerbFilter;
  */
 class StatResignController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Lists all StatResign models.
@@ -35,90 +27,143 @@ class StatResignController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new StatResignSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('index');
+    }
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+    public function actionGet() {
+        $years = PhiscalYear::find()->asArray()->all();
+        $levels = OfficerLevel::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+
+        return json_encode([
+            'years' => $years,
+            'levels' => $levels
         ]);
     }
 
-    /**
-     * Displays a single StatResign model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+    public function actionEnquiry($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        $models = StatResignDetail::find()->alias('d')
+            ->select('d.*')
+            ->addSelect('l.name')
+            ->join('join', 'officer_level l', 'l.id = d.officer_level_id')
+            ->join('join', 'stat_resign e', 'e.id = d.stat_resign_id and e.phiscal_year_id=:year', [':year' => $year->id])
+            ->asArray()->all();
+
+        return json_encode(['models' => $models]);
+    }
+
+    public function actionInquiry($year, $level) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        $model = StatResignDetail::find()->alias('d')
+            ->join('join', 'stat_resign e', 'e.id = d.stat_resign_id and e.phiscal_year_id=:year', [':year' => $year->id])
+            ->where(['d.officer_level_id' => $level])
+            ->asArray()->one();
+        return json_encode([
+            'model' => $model
         ]);
     }
 
-    /**
-     * Creates a new StatResign model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new StatResign();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+    public function actionSave($year) {
+        $post = Yii::$app->request->post();
+        if(!isset($post['Model'])) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+            return;
         }
-    }
 
-    /**
-     * Updates an existing StatResign model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
         }
-    }
 
-    /**
-     * Deletes an existing StatResign model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $model = StatResign::find()->where(['phiscal_year_id'=> $year->id])
+                ->one();
+            if(!isset($model)) {
+                $model = new StatResign();
+                $model->user_id = Yii::$app->user->id;
+                $model->phiscal_year_id = $year->id;
+            }
+            $model->saved = 1;
+            $model->last_update = date('Y-m-d H:i:s');
+            if(!$model->save()) throw new \yii\db\Exception(json_encode($model->errors));
 
-        return $this->redirect(['index']);
-    }
+            $detail = StatResignDetail::find()->where([
+                'stat_resign_id' => $model->id,
+                'officer_level_id' => $post['Model']['level']['id'],
+            ])->one();
 
-    /**
-     * Finds the StatResign model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return StatResign the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = StatResign::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            if(!isset($detail)) {
+                $detail = new StatResignDetail();
+                $detail->stat_resign_id = $model->id;
+                $detail->officer_level_id = $post['Model']['level']['id'];
+            }
+            $detail->attributes = $post['Model'];
+            if(!$detail->save()) throw new Exception(json_encode($detail->errors));
+            $transaction->commit();
+        } catch (Exception $exception) {
+            $transaction->rollBack();
+            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
+            return;
         }
+
+        return json_encode([
+            'model' => $model
+        ]);
     }
+
+    public function actionPrint($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        $models = StatResignDetail::find()->alias('d')
+            ->select('d.*,l.name')
+            ->join('join', 'officer_level l', 'l.id = d.officer_level_id')
+            ->join('join', 'stat_resign e', 'e.id = d.stat_resign_id and e.phiscal_year_id=:year', [':year' => $year->id])
+            ->asArray()->all();
+
+        return $this->renderPartial('../ministry/print', [
+            'content' => $this->renderPartial('table', [
+                    'models' => $models,
+                    'year' => $year,
+                ]
+            )]);
+    }
+
+    public function actionDownload($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        $models = StatResignDetail::find()->alias('d')
+            ->select('d.*,l.name')
+            ->join('join', 'officer_level l', 'l.id = d.officer_level_id')
+            ->join('join', 'stat_resign e', 'e.id = d.stat_resign_id and e.phiscal_year_id=:year', [':year' => $year->id])
+            ->asArray()->all();
+
+        return $this->renderPartial('../ministry/excel', [
+            'file' => 'stat resign '. $year['year'].'.xls',
+            'content' => $this->renderPartial('table', [
+                    'models' => $models,
+                    'year' => $year
+                ]
+            )]);
+    }
+
 }

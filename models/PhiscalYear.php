@@ -15,6 +15,7 @@ use Yii;
  * @property string $status
  *
  * @property StatAssociationFoundation[] $statAssociationFoundations
+ * @property StatContract[] $statContracts
  * @property StatCopy[] $statCopies
  * @property StatDocument[] $statDocuments
  * @property StatEthnic[] $statEthnics
@@ -117,6 +118,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatAssociationFoundations()
     {
         return $this->hasMany(StatAssociationFoundation::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatContracts()
+    {
+        return $this->hasMany(StatContract::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
