@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = "";
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-6">
                     <label for=""><?= Yii::t('app', 'Course') ?></label>
                     <input type="text" class="form-control" ng-model="model.name">

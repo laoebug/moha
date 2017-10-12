@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
                     <label><?= Yii::t('app', 'Province') ?></label>
                     <select class="form-control" ng-model="model.province" ng-change="inquiry()" ng-options="m.province_name for m in provinces"></select>
@@ -246,6 +246,10 @@ $this->params['breadcrumbs'][] = $this->title;
   var app = angular.module('mohaApp', []);
   app.controller('statVictorycoinProvince', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-victorycoin-province/';
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read'?'input':'read';
+    };
     $http.get($scope.url+ 'get')
       .then(function(r) {
         $scope.years = r.data.years;

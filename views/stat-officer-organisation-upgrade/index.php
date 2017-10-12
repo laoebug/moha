@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
                     <label >ອົງການຈັດຕັ້ງ</label>
                     <select ng-options="m.name for m in organisations" ng-model="model.organisation" ng-change="inquiry()" class="form-control"></select>
@@ -232,6 +232,10 @@ $this->params['breadcrumbs'][] = $this->title;
     var app = angular.module('mohaApp', ['chart.js']);
     app.controller('officerOrganisationUpgradeController', function($scope, $http, $sce, $timeout) {
         $scope.url = 'index.php?r=stat-officer-organisation-upgrade/';
+      $scope.mode = 'read';
+      $scope.changemode = function() {
+        $scope.mode = $scope.mode == 'read'?'input':'read';
+      };
         $scope.options = {
             legend: {
                 display: false,

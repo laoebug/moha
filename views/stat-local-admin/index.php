@@ -24,8 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
                     <label for=""><?= Yii::t('app', 'Province') ?></label>
                     <select class="form-control" ng-model="model.province" ng-options="b.province_name for b in provinces"
@@ -216,6 +216,10 @@ $this->params['breadcrumbs'][] = $this->title;
   var app = angular.module('mohaApp', []);
   app.controller('statLocalAdminController', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-local-admin/';
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read'?'insert':'read';
+    };
     $scope.sum = [];
     $http.get($scope.url+ 'get')
       .then(function(r) {
