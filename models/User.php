@@ -45,6 +45,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public $subordinate_user_id; // subordinate_user_id is subordinate_user_id in user_subordinate table
 	public $theBraches=[];
 	public $theSubcordinateUsers=[];
+	public $theProvinces=[];
     /**
      * @inheritdoc
      */
@@ -277,4 +278,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasOne(Role::className(), ['id' => 'role_id']);
     }
+    
+    public function getProvince()
+    {
+    	return $this->hasOne(Province::className(), ['id' => 'province_id']);
+    }
+    
+    
 }

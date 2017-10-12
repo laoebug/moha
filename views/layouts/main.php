@@ -26,7 +26,7 @@ use app\components\TopMenuWidget;
     <title><?= \yii\helpers\Html::encode($this->title) ?></title>
     <style type="text/css">
     .table-responsive {
-    max-height:600px;
+    max-height:800px;
 	}
 	.selected {
         background-color: #85C1E9;

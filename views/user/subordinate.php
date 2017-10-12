@@ -25,6 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'status',
                 'tel',
                 'email:email',
+            	[
+            	'name'=>'province_id',
+            	'label'=>Yii::t("app","Province"),
+            	'value'=>!empty($model->province_id)?$model->province["province_name"]:" ",
+            	'type'=>'raw'		
+            	],	
               //  'deleted',               
                 [
                     'name'=>'role',
@@ -49,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<ul class="nav nav-tabs">
 		<li class="active"><a data-toggle="pill" href="#subordinateList"><strong><?php echo Yii::t('app', 'Subordinate(s)') ?></strong></a></li>
 		<li><a data-toggle="pill" href="#branchList"><?php echo Yii::t('app', 'Department(s)') ?></a></li>
-
+		<li><a data-toggle="pill" href="#provinceList"><?php echo Yii::t('app', 'Province(s)') ?></a></li>
 	</ul>
 
 	<br/>
@@ -71,6 +77,15 @@ $this->params['breadcrumbs'][] = $this->title;
 				    ]) 
 				?>								               
 			</div>
+			
+			<div id="provinceList" class="tab-pane fade">
+				<?php
+				echo Yii::$app->controller->renderPartial('_provinceList', [
+				        'model' => $model
+				    ]) 
+				?>								               
+			</div>
+			
 		
 		</div>
 
@@ -84,6 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <script src="js/plugins/pace.min.js"></script>
 <script src="js/main.js"></script>
 <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+
 <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
     
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -107,21 +123,39 @@ $('#_branch_table tbody').on( 'click', 'tr', function () {
 } );
 
 
-// var table_user = $('#_user_table').DataTable({'paging': false});
+var table_user = $('#_user_table').DataTable({'paging': false});
 
-// $('#_branch_table tbody').on( 'click', 'tr', function () {
+$('#_user_table tbody').on( 'click', 'tr', function () {
 
-// 		var data = table_user.row( this ).data() ;
+		var data = table_user.row( this ).data() ;
 
-// 	 if ( $(this).hasClass('selected') ) {
-//          $(this).removeClass('selected');
-//      }
-//      else {
-//     	 table_user.$('tr.selected').removeClass('selected');
-//          $(this).addClass('selected');
-//      }
+	 if ( $(this).hasClass('selected') ) {
+         $(this).removeClass('selected');
+     }
+     else {
+    	 table_user.$('tr.selected').removeClass('selected');
+         $(this).addClass('selected');
+     }
 
-// } );
+} );
+
+
+var table_user_province = $('#_province_table').DataTable({'paging': false});
+
+$('#_province_table tbody').on( 'click', 'tr', function () {
+
+		var data = table_user_province.row( this ).data() ;
+
+	 if ( $(this).hasClass('selected') ) {
+         $(this).removeClass('selected');
+     }
+     else {
+    	 table_user_province.$('tr.selected').removeClass('selected');
+         $(this).addClass('selected');
+     }
+
+} );
+
 
 
 
@@ -147,6 +181,57 @@ $('#check-all-branch').click(function () {
     }  
 });
 
+$('#check-all-province').click(function () {
+	if($(this).is(':checked',true))  
+    {	  
+        $(".province_id").prop('checked', true);  
+    }  
+    else  
+    { 
+        $(".province_id").prop('checked',false);  
+    }  
+});
+
+checkAll();
+function checkAll(){
+	var numberOfUserCheckBoxes = $('.user_id').length;
+	var userChildCheckBox = $('.user_id:checked').length;
+	if (userChildCheckBox == numberOfUserCheckBoxes)
+	     $("#check-all-user").prop('checked', true);
+	  else
+	     $("#check-all-user").prop('checked', false);
+
+	var numberOfBranchCheckBoxes = $('.branch_id').length;
+	var branchChildCheckBox = $('.branch_id:checked').length;
+	if (branchChildCheckBox == numberOfBranchCheckBoxes)
+	     $("#check-all-branch").prop('checked', true);
+	  else
+	     $("#check-all-branch").prop('checked', false);
+
+
+	var numberOfProvinceCheckBoxes = $('.province_id').length;
+	var provinceChildCheckBox = $('.province_id:checked').length;
+	if (provinceChildCheckBox == numberOfProvinceCheckBoxes)
+	     $("#check-all-province").prop('checked', true);
+	  else
+	     $("#check-all-province").prop('checked', false);
+    
+}
+
+
+$('.user_id').change(function () {
+	checkAll();
+});
+
+$('.branch_id').change(function () {
+	checkAll();
+});
+
+$('.province_id').change(function () {
+	checkAll();
+});
+
+
 $("#btnSave").click(function(){
 	
 	var url =  "index.php?r=user/subordinateandbranch&id=<?php echo isset($_GET["id"])?$_GET["id"]:""; ?>";
@@ -163,11 +248,19 @@ $("#btnSave").click(function(){
 		myBranch_idList.push($(this).val());
 	});
 
+	var myProvince_idList = new Array();
+
+	$("input[id^=province_id]:checked").each(function() {
+		myProvince_idList.push($(this).val());
+	});
+
+	
 	$.post(
 		url,
 		{ 
 		"myBranch_idList":myBranch_idList,
 		"myUser_idList":myUser_idList,
+		"myProvince_idList":myProvince_idList,
 		"user_id":user_id		 
  		}, 
  		function(data,status,xhr){ //jQuery Ajax post					

@@ -43,6 +43,8 @@ class Province extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+	public $user_id;
+	public $province_id;
     public static function tableName()
     {
         return 'province';

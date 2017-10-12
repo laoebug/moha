@@ -12,13 +12,14 @@ use yii\db\Exception;
 use app\models\Role;
 use app\models\Menu;
 use app\models\Action;
-use app\models\UserHasRole;
+use app\models\Province;
 use app\services\AuthenticationService;
 use app\models\RoleHasMenu;
 use app\models\RoleHasAction;
 use app\models\Branch;
 use app\models\UserHasBranch;
 use app\models\UserSubordinate;
+use app\models\UserHasProvince;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -354,28 +355,44 @@ class UserController extends Controller {
 					UserHasBranch::deleteAll ( 'user_id = :user_id', [ 
 							':user_id' => $user_id 
 					] );
+					
+					UserHasProvince::deleteAll ( 'user_id = :user_id', [ 
+							':user_id' => $user_id 
+					] );
 				}
-				
-				if (isset ( $_POST ["myUser_idList"] ) && count ( $_POST ["myUser_idList"] ) > 0) {
-					foreach ( $_POST ["myUser_idList"] as $the_user_id ) {
-						$userSubordinate = new UserSubordinate ();
-						$userSubordinate->user_id = $user_id;
-						$userSubordinate->subordinate_user_id = $the_user_id;
-						if (! $userSubordinate->save ())
-							throw new Exception ( "UserSubordinate cannot be saved" );
+				if (! empty ( $model->province_id )) {
+					
+					if (isset ( $_POST ["myProvince_idList"] ) && count ( $_POST ["myProvince_idList"] ) > 0) {
+						foreach ( $_POST ["myProvince_idList"] as $the_province_id ) {
+							$userHasProvince = new UserHasProvince ();
+							$userHasProvince->user_id = $user_id;
+							$userHasProvince->province_id = $the_province_id;
+							if (! $userHasProvince->save ())
+								throw new Exception ( "UserHasProvince cannot be saved" );
+						}
+					}
+				} else {
+					
+					if (isset ( $_POST ["myUser_idList"] ) && count ( $_POST ["myUser_idList"] ) > 0) {
+						foreach ( $_POST ["myUser_idList"] as $the_user_id ) {
+							$userSubordinate = new UserSubordinate ();
+							$userSubordinate->user_id = $user_id;
+							$userSubordinate->subordinate_user_id = $the_user_id;
+							if (! $userSubordinate->save ())
+								throw new Exception ( "UserSubordinate cannot be saved" );
+						}
+					}
+					
+					if (isset ( $_POST ["myBranch_idList"] ) && count ( $_POST ["myBranch_idList"] ) > 0) {
+						foreach ( $_POST ["myBranch_idList"] as $the_branch_id ) {
+							$userHasBranch = new UserHasBranch ();
+							$userHasBranch->user_id = $user_id;
+							$userHasBranch->branch_id = $the_branch_id;
+							if (! $userHasBranch->save ())
+								throw new Exception ( "UserHasBranch cannot be saved" );
+						}
 					}
 				}
-				
-				if (isset ( $_POST ["myBranch_idList"] ) && count ( $_POST ["myBranch_idList"] ) > 0) {
-					foreach ( $_POST ["myBranch_idList"] as $the_branch_id ) {
-						$userHasBranch = new UserHasBranch ();
-						$userHasBranch->user_id = $user_id;
-						$userHasBranch->branch_id = $the_branch_id;
-						if (! $userHasBranch->save ())
-							throw new Exception ( "UserHasBranch cannot be saved" );
-					}
-				}
-				
 				$db->commit ();
 				// Yii::$app->session->setFlash ( 'success', "Subordinate(s) and Department(s) have been saved successfully" );
 				exit ();
@@ -402,20 +419,37 @@ class UserController extends Controller {
 		$model->theBraches = Branch::findBySql ( $sql_branch, $params_branch )->all ();
 		
 		// Start loading Branch
+		
 		$sql_subordinate = " select ";
 		$sql_subordinate .= " ifnull(b.user_id,0) as subordinate_usr_id , ";
-		$sql_subordinate .= " ifnull(b.subordinate_user_id,0) as subordinate_user_id ,  ";
-		$sql_subordinate .= " a.* from user a ";
-		$sql_subordinate .= " left outer join ";
-		$sql_subordinate .= " user_subordinate b";
-		$sql_subordinate .= " on a.id= b.subordinate_user_id ";
-		$sql_subordinate .= " where a.id<>:id ";
-		
+		$sql_subordinate .= " ifnull(b.subordinate_user_id,0) as subordinate_user_id,  ";
+		$sql_subordinate .= " o.* from (select a.* from user a ";
+		$sql_subordinate .= " where a.id<>:id  ";
+		$sql_subordinate .= " order by a.id) o ";
+		$sql_subordinate .= " left outer join   user_subordinate b ";
+		$sql_subordinate .= " on o.id=b.subordinate_user_id ";
+		$sql_subordinate .= " and b.user_id=:user_id ";
+	
 		$params_subordinate = [ 
-				':id' => $id 
+				':id' => $id,
+				':user_id' => $id
 		];
 		
 		$model->theSubcordinateUsers = User::findBySql ( $sql_subordinate, $params_subordinate )->all ();
+		
+		// Start loading Province
+		
+		$sql_province = " select ";
+		$sql_province .= " ifnull(b.user_id,0) as user_id,ifnull(b.province_id,0) as province_id,a.* from province a ";
+		$sql_province .= "  left outer join ";
+		$sql_province .= "  user_has_province b ";
+		$sql_province .= " on a.id=b.province_id  ";
+		$sql_province .= "  and b.user_id=:user_id ";
+		
+		$params_province = [ 
+				':user_id' => $id 
+		];
+		$model->theProvinces = Province::findBySql ( $sql_province, $params_province )->all ();
 		return $this->render ( 'subordinate', [ 
 				"model" => $model 
 		] );
