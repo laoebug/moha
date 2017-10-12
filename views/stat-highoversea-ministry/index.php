@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບຍ້ອງຍໍຕ່າງປະເທດຂອງບັນດາ ກະຊວງ, ອົງການ";
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statHighoverseaMinistry">
     <div class="col-sm-12">

@@ -5,7 +5,7 @@
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Statistics of Officer Training Course Development');
-//$this->params['breadcrumbs'][] = "";
+$this->params['breadcrumbs'][] = "";
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="statCourseController">
     <div class="col-sm-12">

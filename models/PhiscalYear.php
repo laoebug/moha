@@ -34,6 +34,7 @@ use Yii;
  * @property StatLocalAdmin[] $statLocalAdmins
  * @property StatMapProduce[] $statMapProduces
  * @property StatMapService[] $statMapServices
+ * @property StatOda[] $statOdas
  * @property StatOfficer[] $statOfficers
  * @property StatOfficerAdd[] $statOfficerAdds
  * @property StatOfficerAge[] $statOfficerAges
@@ -270,6 +271,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatMapServices()
     {
         return $this->hasMany(StatMapService::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOdas()
+    {
+        return $this->hasMany(StatOda::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**
