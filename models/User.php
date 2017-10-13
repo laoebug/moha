@@ -90,6 +90,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'email' => Yii::t('app', 'Email'),
             'deleted' => Yii::t('app', 'Deleted'),
             'role_id' => Yii::t('app', 'Role'),
+        	'province_id' => Yii::t('app', 'Province'),
             'user_id' => Yii::t('app', 'User ID'),
             'input_dt_stamp' => Yii::t('app', 'Input Date Time Stamp'),
         ];

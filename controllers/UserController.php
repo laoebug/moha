@@ -56,32 +56,46 @@ class UserController extends Controller {
 		] );
 	}
 	public function actionManageuser() {
+		$user = Yii::$app->user;
 		$model = new User ();
-		$model->password = "1010";
 		$id = "";
-		if (isset ( $_POST ['User'] ['id'] ) && ! empty ( $_POST ['User'] ['id'] )) {
+		$pasword = "";
+		if (! empty ( $_POST ['User'] ['id'] )) {
 			$id = $_POST ['User'] ['id'];
 			$model = User::findOne ( $id );
+			$pasword = $model->password;
 		}
-		if ($model->load ( Yii::$app->request->post () ) && $model->validate ()) {
+		$model->user_id = $user->id;
+		if (! empty ( $_POST ['User'] ['province_id'] )) {
+			$model->province_id = $_POST ['User'] ['province_id'];
+		} else {
+			$model->province_id = "";
+		}
+		if ($model->load ( Yii::$app->request->post () )) {
 			
-			$db = Yii::$app->db->beginTransaction ();
-			try {
+			if (! empty ( $_POST ['User'] ['password'] )) {
+				$model->password = $_POST ['User'] ['password'];
+			} else {
+				$model->password = $pasword;
+			}
+			if ($model->validate ()) {
 				
-				if (! $model->save ())
-					throw new Exception ( "User cannot be saved" );
-				if (isset ( $_POST ['User'] ['role_id'] )) {
-					$model->role_id = $_POST ['User'] ['role_id'];
+				try {
+					$db = Yii::$app->db->beginTransaction ();
+					if (! $model->save ())
+						throw new Exception ( "User cannot be saved" );
+						// if (isset ( $_POST ['User'] ['role_id'] )) {
+						// $model->role_id = $_POST ['User'] ['role_id'];
+						// }
+					
+					$db->commit ();
+					Yii::$app->session->setFlash ( 'success', "User has been saved successfully" );
+				} catch ( Exception $ex ) {
+					$db->rollBack ();
+					Yii::$app->session->setFlash ( 'error', "User cannot be saved" . $ex );
 				}
-				
-				$db->commit ();
-				Yii::$app->session->setFlash ( 'success', "User has been saved successfully" );
-			} catch ( Exception $ex ) {
-				$db->rollBack ();
-				Yii::$app->session->setFlash ( 'error', "User cannot be saved" . $ex );
 			}
 		}
-		
 		$models = User::find ()->all ();
 		return $this->render ( 'manageUser', [ 
 				'models' => $models,
@@ -192,7 +206,6 @@ class UserController extends Controller {
 			$model->deleted = 0;
 			if ($model->save ()) {
 				Yii::$app->session->setFlash ( "success", "Role has been added successfully" );
-				
 			} else {
 				Yii::$app->session->setFlash ( "danger", "Role cannot be added" );
 			}
@@ -202,6 +215,7 @@ class UserController extends Controller {
 		$user = Yii::$app->user;
 		
 		if (Yii::$app->request->isAjax) {
+			
 			// $data = Yii::$app->request->post ();
 			$db = Yii::$app->db->beginTransaction ();
 			try {
@@ -321,12 +335,6 @@ class UserController extends Controller {
 			] );
 		}
 	}
-	public function actionSs() {
-		if (Yii::$app->request->isAjax) {
-			$data = Yii::$app->request->post ();
-			echo "DSFDSF";
-		}
-	}
 	public function actionSubordinateandbranch($id) {
 		$model = $this->findModel ( $id );
 		
@@ -334,53 +342,47 @@ class UserController extends Controller {
 			// $data = Yii::$app->request->post ();
 			$db = Yii::$app->db->beginTransaction ();
 			try {
-				$user_id="";
+				$user_id = "";
 				if (isset ( $_POST ["user_id"] ) && $_POST ["user_id"] != null) {
 					
-					$user_id =  $_POST ["user_id"];
+					$user_id = $_POST ["user_id"];
 					
-					UserSubordinate::deleteAll ( 'user_id = :user_id', [
-							':user_id' => $user_id
+					UserSubordinate::deleteAll ( 'user_id = :user_id', [ 
+							':user_id' => $user_id 
 					] );
 					
-					UserHasBranch::deleteAll ( 'user_id = :user_id', [
-							':user_id' => $user_id
+					UserHasBranch::deleteAll ( 'user_id = :user_id', [ 
+							':user_id' => $user_id 
 					] );
-					
-				
-					
 				}
 				
 				if (isset ( $_POST ["myUser_idList"] ) && count ( $_POST ["myUser_idList"] ) > 0) {
-					foreach ($_POST ["myUser_idList"] as $the_user_id){
-						$userSubordinate = new UserSubordinate();
+					foreach ( $_POST ["myUser_idList"] as $the_user_id ) {
+						$userSubordinate = new UserSubordinate ();
 						$userSubordinate->user_id = $user_id;
-						$userSubordinate->subordinate_user_id=$the_user_id;
+						$userSubordinate->subordinate_user_id = $the_user_id;
 						if (! $userSubordinate->save ())
 							throw new Exception ( "UserSubordinate cannot be saved" );
-						
 					}
 				}
 				
 				if (isset ( $_POST ["myBranch_idList"] ) && count ( $_POST ["myBranch_idList"] ) > 0) {
-						foreach ($_POST ["myBranch_idList"] as $the_branch_id){
-							$userHasBranch = new UserHasBranch();
-							$userHasBranch->user_id=$user_id;
-							$userHasBranch->branch_id=$the_branch_id;
-							if (! $userHasBranch->save ())
-								throw new Exception ( "UserHasBranch cannot be saved" );
-							
-						}
+					foreach ( $_POST ["myBranch_idList"] as $the_branch_id ) {
+						$userHasBranch = new UserHasBranch ();
+						$userHasBranch->user_id = $user_id;
+						$userHasBranch->branch_id = $the_branch_id;
+						if (! $userHasBranch->save ())
+							throw new Exception ( "UserHasBranch cannot be saved" );
+					}
 				}
 				
-				
 				$db->commit ();
-				//Yii::$app->session->setFlash ( 'success', "Subordinate(s) and Department(s) have been saved successfully" );
-				exit();
+				// Yii::$app->session->setFlash ( 'success', "Subordinate(s) and Department(s) have been saved successfully" );
+				exit ();
 			} catch ( Exception $ex ) {
 				$db->rollBack ();
 				Yii::$app->session->setFlash ( 'danger', "Subordinate(s) and Department(s) cannot saved" . $ex );
-				exit();
+				exit ();
 			}
 		}
 		
@@ -391,7 +393,8 @@ class UserController extends Controller {
 		$sql_branch .= "  left outer join ";
 		$sql_branch .= "  user_has_branch b ";
 		$sql_branch .= " on a.id=b.branch_id  ";
-		$sql_branch .= "  and a.user_id=:user_id ";
+		$sql_branch .= "  and b.user_id=:user_id ";
+		
 		$params_branch = [ 
 				':user_id' => $id 
 		];
@@ -415,8 +418,7 @@ class UserController extends Controller {
 		$model->theSubcordinateUsers = User::findBySql ( $sql_subordinate, $params_subordinate )->all ();
 		return $this->render ( 'subordinate', [ 
 				"model" => $model 
-		]
-		 );
+		] );
 	}
 	/**
 	 * Deletes an existing User model.
@@ -450,6 +452,30 @@ class UserController extends Controller {
 	}
 	public function beforeAction($action) {
 		$this->enableCsrfValidation = false;
+		// echo Yii::$app->controller->id."<br/>";
+		// echo Yii::$app->controller->action->id;
+		// exit;
+		// if (Yii::$app->request->isAjax) {
+		// echo Yii::$app->controller->id."<br/>";
+		// echo Yii::$app->controller->action->id;
+		// exit;
+		// return $this->redirect ( [
+		// 'site/index'
+		// ] );
+		// }
+		
+		// echo Yii::$app->controller->id."<br/>";
+		// echo Yii::$app->controller->action->id;
+		// exit;
+		// $controller_id =Yii::$app->controller->id;
+		// $acton_id =Yii::$app->controller->action->id;
+		// if(AuthenticationService::isAccessibleAction($controller_id,$acton_id)==true){
+		// return $this->redirect ( [
+		// 'site/login'
+		// ] );
+		// }else {
+		// echo "KOK";
+		// }
 		return parent::beforeAction ( $action );
 	}
 }

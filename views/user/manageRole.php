@@ -178,7 +178,7 @@ $("#btnSaveMenuAndAction").click(function(){
  		}, 
  		function(data,status,xhr){ //jQuery Ajax post		
  			//location.reload();
- 			 //console.log(data);
+//  			 console.log(data);
 			 if(status=='success'){
 				 location.reload();
 				// notifySuccess();
