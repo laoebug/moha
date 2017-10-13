@@ -34,4 +34,5 @@ return [
             return Yii::$app->params["YESNOLABEL"][$data->deleted];
         }
     ],
+    "DEFAULT_ADMIN_ROLE"=>"Super Admin"
 ];

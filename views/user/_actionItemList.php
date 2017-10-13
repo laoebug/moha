@@ -78,6 +78,22 @@ $(document).ready(function(){
 	    }
 	});
 
+	checkAllAction();
+	function checkAllAction(){
+
+		var numberOfActionCheckBoxes = $('.action').length;
+		var numberOfActionChildCheckBox = $('.action:checked').length;
+		if (numberOfActionChildCheckBox == numberOfActionCheckBoxes)
+		     $("#select_all_action").prop('checked', true);
+		  else
+		     $("#select_all_action").prop('checked', false);
+
+
+	}
+
+	$('.action').change(function () {
+		checkAllAction();
+	});
 	   
 });
 

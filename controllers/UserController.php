@@ -429,10 +429,10 @@ class UserController extends Controller {
 		$sql_subordinate .= " left outer join   user_subordinate b ";
 		$sql_subordinate .= " on o.id=b.subordinate_user_id ";
 		$sql_subordinate .= " and b.user_id=:user_id ";
-	
+		
 		$params_subordinate = [ 
 				':id' => $id,
-				':user_id' => $id
+				':user_id' => $id 
 		];
 		
 		$model->theSubcordinateUsers = User::findBySql ( $sql_subordinate, $params_subordinate )->all ();
@@ -486,30 +486,19 @@ class UserController extends Controller {
 	}
 	public function beforeAction($action) {
 		$this->enableCsrfValidation = false;
-		// echo Yii::$app->controller->id."<br/>";
-		// echo Yii::$app->controller->action->id;
-		// exit;
-		// if (Yii::$app->request->isAjax) {
-		// echo Yii::$app->controller->id."<br/>";
-		// echo Yii::$app->controller->action->id;
-		// exit;
-		// return $this->redirect ( [
-		// 'site/index'
-		// ] );
-		// }
-		
-		// echo Yii::$app->controller->id."<br/>";
-		// echo Yii::$app->controller->action->id;
-		// exit;
-		// $controller_id =Yii::$app->controller->id;
-		// $acton_id =Yii::$app->controller->action->id;
-		// if(AuthenticationService::isAccessibleAction($controller_id,$acton_id)==true){
-		// return $this->redirect ( [
-		// 'site/login'
-		// ] );
-		// }else {
-		// echo "KOK";
-		// }
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			
+			if (Yii::$app->request->isAjax || ! Yii::$app->request->isAjax) {
+				if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+					return $this->redirect ( [ 
+							'authentication/notallowed' 
+					] );
+				}
+			}
+		}
 		return parent::beforeAction ( $action );
 	}
 }

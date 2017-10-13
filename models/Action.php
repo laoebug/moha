@@ -25,6 +25,7 @@ class Action extends \yii\db\ActiveRecord
      */
 	public $role_id;
 	public $action_id;
+	public $allowed;
     public static function tableName()
     {
         return 'action';

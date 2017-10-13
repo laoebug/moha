@@ -192,6 +192,8 @@ $("#btnSaveMenuAndAction").click(function(){
 });
 
 
+
+
 function clearInpuData() {
  	$("#role_name").val("");	
 }

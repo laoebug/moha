@@ -79,6 +79,23 @@ $(document).ready(function(){
 	    }
 	});
 
+
+	checkAllMenu();
+	function checkAllMenu(){
+		var numberOfMenuCheckBoxes = $('.menu').length;
+		var numberOfMenuChildCheckBox = $('.menu:checked').length;
+		if (numberOfMenuChildCheckBox == numberOfMenuCheckBoxes)
+		     $("#select_all_menu").prop('checked', true);
+		  else
+		     $("#select_all_menu").prop('checked', false);
+
+
+	}
+
+	$('.menu').change(function () {
+		checkAllMenu();
+	});
+	
 	   
 });
 
