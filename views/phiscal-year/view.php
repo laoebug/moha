@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 
 $this->title = $model->year;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Phiscal Years'), 'url' => ['index']];
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="phiscal-year-view">
     <p>

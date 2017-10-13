@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆ ສຳລັບການຍ້ອງຍໍພາຍໃນຂອງບັນດາກະຊວງ, ອົງການ";
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statVictorycoinMinistry">
     <div class="col-sm-12">
@@ -24,8 +24,8 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆ ສຳລັບ
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
                     <label><?= Yii::t('app', 'Ministry') ?></label>
                     <select class="form-control" ng-model="model.ministry" ng-change="inquiry()" ng-options="m.name for m in ministries"></select>
@@ -246,6 +246,10 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆ ສຳລັບ
   var app = angular.module('mohaApp', []);
   app.controller('statVictorycoinMinistry', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-victorycoin-ministry/';
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read'?'input':'read';
+    };
     $http.get($scope.url+ 'get')
       .then(function(r) {
         $scope.years = r.data.years;

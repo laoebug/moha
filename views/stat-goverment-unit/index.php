@@ -5,7 +5,7 @@
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການຈັດຕັ້ງ (ກົມ ແລະ ອົງການລັດທຽບເທົ່າກົມ)";
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="statGovermentUnitController">
     <div class="col-sm-12">
@@ -21,8 +21,8 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-2 hidden">
                     <label for=""><?= Yii::t('app', 'Group') ?></label>
                     <select class="form-control" ng-model="ministrygroup" ng-options="g.name for g in ministrygroups"></select>
@@ -67,6 +67,10 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
     var app = angular.module('mohaApp', []);
     var url = 'index.php?r=stat-goverment-unit/';
     app.controller('statGovermentUnitController', function($scope, $http, $sce, $timeout) {
+      $scope.mode = 'read';
+      $scope.changemode = function() {
+        $scope.mode = $scope.mode == 'read'?'input':'read';
+      };
         $http.get(url+ 'get')
           .then(function(r) {
             $scope.years = r.data.years;

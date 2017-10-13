@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "ແຜນຄວາມຕ້ອງການລັດຖະກອນໃໝ່";
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerNeedController">
     <div class="col-sm-12">
@@ -24,8 +24,8 @@ $this->title = "ແຜນຄວາມຕ້ອງການລັດຖະກອ�
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-12">
                     <div class="col-sm-3">
                         <label ><?= Yii::t('app', 'Center') ?></label>
@@ -95,6 +95,10 @@ $this->title = "ແຜນຄວາມຕ້ອງການລັດຖະກອ�
   var app = angular.module('mohaApp', []);
   app.controller('officerNeedController', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-need/';
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read'?'input':'read';
+    };
     $http.get($scope.url+ 'get')
       .then(function(r) {
         $scope.years = r.data.years;

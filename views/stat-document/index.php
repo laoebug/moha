@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສານທີ່ມີຄວາມສຳຄັນແຫ່ງຊາດ";
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statDocument">
     <div class="col-sm-12">
@@ -24,8 +24,8 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
                     <label>ກະຊວງ, ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ</label>
                     <select class="form-control" ng-model="model.section" ng-change="inquiry()" ng-options="m.name for m in sections"></select>
@@ -130,6 +130,10 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
   var app = angular.module('mohaApp', []);
   app.controller('statDocument', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-document/';
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read'?'input':'read';
+    };
     $scope.sections = [
       {'code':'m','name': 'ກະຊວງ ອົງການທຽນເທົ່າ'},
       {'code':'o','name': 'ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ'},

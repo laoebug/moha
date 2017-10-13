@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "ສະຖິຕິລັດຖະກອນທີ່ເພີ່ມເຂົ້າ ແລະ ອອກທຸກຮູບການ ຂອງກະຊວງ ແລະ ອົງການທຽບເທົ່າ";
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerOrganisationAddController">
     <div class="col-sm-12">
@@ -23,8 +23,8 @@ $this->title = "ສະຖິຕິລັດຖະກອນທີ່ເພີ່�
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-12">
                     <div class="col-sm-3">
                         <label >ອົງການຈັດຕັ້ງ</label>
@@ -70,6 +70,10 @@ $this->title = "ສະຖິຕິລັດຖະກອນທີ່ເພີ່�
   var app = angular.module('mohaApp', ['chart.js']);
   app.controller('officerOrganisationAddController', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-organisation-add/';
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read'?'input':'read';
+    };
     $scope.options = {
       legend: {
         display: true,

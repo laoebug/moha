@@ -1,26 +1,11 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\StatAssociationFoundationSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = Yii::t('app', 'Stat Association Foundations');
-//$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="stat-association-foundation-index">
-
-</div>
-
-<?php
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\GovermentlevelSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="statAssoController">
     <div class="col-sm-12">
@@ -36,8 +21,8 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-4">
                     <label for=""><?= Yii::t('app', 'Approver Level') ?></label>
                     <select class="form-control" ng-model="model.approverLevel" ng-options="b.name for b in approverLevels"></select>
@@ -126,6 +111,11 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
     var url = 'index.php?r=stat-association-foundation/';
     app.controller('statAssoController', function($scope, $http, $sce, $timeout) {
         $scope.sum = [];
+        $scope.mode = 'read';
+        $scope.changemode = function() {
+          $scope.mode = $scope.mode == 'read'?'input':'read';
+        };
+
         $http.get(url+ 'get')
             .then(function(r) {
                 $scope.years = r.data.years;

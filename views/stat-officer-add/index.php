@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "ຈຳນວນລັດຖະກອນທີ່ເພີ່ມເຂົ້າໃນຮູບການຕ່າງໆ";
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerAddController">
     <div class="col-sm-12">
@@ -24,8 +24,8 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ເພີ່ມ�
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-12">
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -105,6 +105,10 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ເພີ່ມ�
   var app = angular.module('mohaApp', []);
   app.controller('officerAddController', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-add/';
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read'?'input':'read';
+    };
     $http.get($scope.url+ 'get')
       .then(function(r) {
         $scope.years = r.data.years;

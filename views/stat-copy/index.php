@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "ສະຖິຕິການສັງລວມການສຳເນົາ";
-//$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statCopy">
     <div class="col-sm-12">
@@ -24,8 +24,8 @@ $this->title = "ສະຖິຕິການສັງລວມການສຳເ�
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-6">
                     <label>ເນື້ອໃນກິດຈະກຳ</label>
                     <input class="form-control" ng-model="model.activity" type="text">
@@ -112,6 +112,10 @@ $this->title = "ສະຖິຕິການສັງລວມການສຳເ�
           $scope.response = null;
         }, 15000);
       });
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read'?'input':'read';
+    };
 
     $scope.enquiry = function() {
       $scope.model = null;

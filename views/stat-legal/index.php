@@ -5,6 +5,7 @@
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜງພາຍໃນທີ່ກຳລັງປັບປຸງ ແລະ ຮ່າງຂຶ້ນໃໝ່";
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="statLegalController">
     <div class="col-sm-12">
@@ -20,8 +21,8 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading"><i class="fa fa-pencil"></i> </div>
-            <div class="panel-body">
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-4">
                     <label for="">ປະເພດນິິຕິກຳ</label>
                     <select class="form-control" ng-model="model.legalType" ng-options="b.name for b in legalTypes">
@@ -117,6 +118,10 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
     var url = 'index.php?r=stat-legal/';
     app.controller('statLegalController', function($scope, $http, $sce, $timeout) {
       $scope.sum = [];
+      $scope.mode = 'read';
+      $scope.changemode = function() {
+        $scope.mode = $scope.mode == 'read'?'insert':'read';
+      };
         $http.get(url+ 'get')
             .then(function(r) {
                 $scope.years = r.data.years;
