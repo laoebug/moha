@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+            <select class="form-control" ng-model="year" ng-change="enquiry()"
+                    ng-options="y.year for y in years"></select>
         </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -24,11 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+            </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
                     <label for=""><?= Yii::t('app', 'Province') ?></label>
-                    <select class="form-control" ng-model="model.province" ng-options="b.province_name for b in provinces"
+                    <select class="form-control" ng-model="model.province"
+                            ng-options="b.province_name for b in provinces"
                             ng-change="inquiry()">
                     </select>
                 </div>
@@ -38,18 +41,23 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td class="text-center" colspan="5">ສາສະໜາພຸດ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ພະ') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ຈົວ') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ພໍ່ຂາວ') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ແມ່ຂາວ') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?=Yii::t('app', 'ສັງກະລີ') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'ພະ') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'ຈົວ') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'ພໍ່ຂາວ') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'ແມ່ຂາວ') ?></td>
+                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'ສັງກະລີ') ?></td>
                         </tr>
                         <tr>
-                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.buddhis_monk"></td>
-                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.buddhis_novice"></td>
-                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.buddhis_dad"></td>
-                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.buddhis_mom"></td>
-                            <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.buddhis_boy"></td>
+                            <td class="text-center"><input min="0" type="number" class="form-control"
+                                                           ng-model="model.buddhis_monk"></td>
+                            <td class="text-center"><input min="0" type="number" class="form-control"
+                                                           ng-model="model.buddhis_novice"></td>
+                            <td class="text-center"><input min="0" type="number" class="form-control"
+                                                           ng-model="model.buddhis_dad"></td>
+                            <td class="text-center"><input min="0" type="number" class="form-control"
+                                                           ng-model="model.buddhis_mom"></td>
+                            <td class="text-center"><input min="0" type="number" class="form-control"
+                                                           ng-model="model.buddhis_boy"></td>
                         </tr>
                     </table>
                 </div>
@@ -59,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</td>
                             <td class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</td>
                             <td class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</td>
-                            <td class="text-center" rowspan="3"><?=Yii::t('app', 'Remark') ?></td>
+                            <td class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></td>
                         </tr>
                         <tr>
                             <td class="text-center" colspan="2">ຂ່າວປະເສີດ</td>
@@ -67,51 +75,56 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td class="text-center" colspan="2">ກາໂຕລິກ</td>
                         </tr>
                         <tr>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Total') ?></td>
-                            <td style="width: 10%" class="text-center"><?=Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Women') ?></td>
                         </tr>
                         <tr>
                             <td class="text-center">
                                 <input ng-model="model.christ_news_total" class="form-control" min="0" type="number">
                             </td>
                             <td class="text-center">
-                                <input ng-model="model.christ_news_women" class="form-control" min="0" max="{{model.christ_news_total}}" type="number"
-                                        ng-blur="model.christ_news_women = model.christ_news_total < model.christ_news_women ? null : model.christ_news_women">
+                                <input ng-model="model.christ_news_women" class="form-control" min="0"
+                                       max="{{model.christ_news_total}}" type="number"
+                                       ng-blur="model.christ_news_women = model.christ_news_total < model.christ_news_women ? null : model.christ_news_women">
                             </td>
                             <td class="text-center">
                                 <input ng-model="model.christ_sat_total" class="form-control" min="0" type="number">
                             </td>
                             <td class="text-center">
-                                <input ng-model="model.christ_sat_women" class="form-control" min="0" max="{{model.christ_sat_total}}" type="number"
+                                <input ng-model="model.christ_sat_women" class="form-control" min="0"
+                                       max="{{model.christ_sat_total}}" type="number"
                                        ng-blur="model.christ_sat_women = model.christ_sat_total < model.christ_sat_women ? null : model.christ_sat_women">
                             </td>
                             <td class="text-center">
                                 <input ng-model="model.christ_cato_total" class="form-control" min="0" type="number">
                             </td>
                             <td class="text-center">
-                                <input ng-model="model.christ_cato_women" class="form-control" min="0" max="{{model.christ_cato_total}}" type="number"
+                                <input ng-model="model.christ_cato_women" class="form-control" min="0"
+                                       max="{{model.christ_cato_total}}" type="number"
                                        ng-blur="model.christ_cato_women = model.christ_cato_total < model.christ_cato_women ? null : model.christ_cato_women">
                             </td>
                             <td class="text-center">
                                 <input ng-model="model.bahai_total" class="form-control" min="0" type="number">
                             </td>
                             <td class="text-center">
-                                <input ng-model="model.bahai_women" class="form-control" min="0" max="{{model.bahai_total}}" type="number"
+                                <input ng-model="model.bahai_women" class="form-control" min="0"
+                                       max="{{model.bahai_total}}" type="number"
                                        ng-blur="model.bahai_women = model.bahai_total < model.bahai_women ? null : model.bahai_women">
                             </td>
                             <td class="text-center">
                                 <input ng-model="model.idslam_total" class="form-control" min="0" type="number">
                             </td>
                             <td class="text-center">
-                                <input ng-model="model.idslam_women" class="form-control" min="0" max="{{model.idslam_total}}" type="number"
+                                <input ng-model="model.idslam_women" class="form-control" min="0"
+                                       max="{{model.idslam_total}}" type="number"
                                        ng-blur="model.idslam_women = model.idslam_total < model.idslam_women ? null : model.idslam_women">
                             </td>
                             <td class="text-center">
@@ -129,102 +142,120 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div ng-show="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
-        <div class="card">
-        <div class="card-title-w-btn ">
-            <h3><?= $this->title ?> {{year.year}}</h3>
-            <p>
-                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
-            </p>
-        </div>
-        <table class="table table-bordered table-hover" ng-show="models">
-            <thead>
-                <tr>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
-                    <th class="text-center" colspan="5">ສາສະໜາພຸດ</th>
-                    <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
-                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
-                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
-                </tr>
-                <tr>
-                    <th class="text-center" rowspan="2">ພະ</th>
-                    <th class="text-center" rowspan="2">ຈົວ</th>
-                    <th class="text-center" rowspan="2">ພໍ່ຂາວ</th>
-                    <th class="text-center" rowspan="2">ແມ່ຂາວ</th>
-                    <th class="text-center" rowspan="2">ສັງກະລີ</th>
-                    <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
-                    <th class="text-center" colspan="2">ວັນເສົາ</th>
-                    <th class="text-center" colspan="2">ກາໂຕລິກ</th>
-                </tr>
-                <tr>
-                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                </tr>
-                <tr>
-                    <th style="width: 10%" class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                    <th style="width: 10%" class="text-center">{{sum('buddhis_monk') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('buddhis_novice') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('buddhis_dad') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('buddhis_mom') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('buddhis_boy') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_news_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_sat_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_sat_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_cato_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('bahai_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('bahai_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('idslam_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('idslam_women') | number}}</th>
-                    <th style="width: 10%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="m in models">
-                    <td class="text-center">{{$index + 1}}</td>
-                    <td>{{m.province_name}}</td>
-                    <td class="text-center">{{m.buddhis_monk | number}}</td>
-                    <td class="text-center">{{m.buddhis_novice | number}}</td>
-                    <td class="text-center">{{m.buddhis_dad | number}}</td>
-                    <td class="text-center">{{m.buddhis_mom | number}}</td>
-                    <td class="text-center">{{m.buddhis_boy | number}}</td>
-                    <td class="text-center">{{m.christ_news_total | number}}</td>
-                    <td class="text-center">{{m.christ_news_women | number}}</td>
-                    <td class="text-center">{{m.christ_sat_total | number}}</td>
-                    <td class="text-center">{{m.christ_sat_women | number}}</td>
-                    <td class="text-center">{{m.christ_cato_total | number}}</td>
-                    <td class="text-center">{{m.christ_cato_women | number}}</td>
-                    <td class="text-center">{{m.bahai_total | number}}</td>
-                    <td class="text-center">{{m.bahai_women | number}}</td>
-                    <td class="text-center">{{m.idslam_total | number}}</td>
-                    <td class="text-center">{{m.idslam_women | number}}</td>
-                    <td class="text-center">{{m.remark}}</td>
-                </tr>
-            </tbody>
-        </table>
-        </div>
-    </div>
-
-    <div ng-show="stat" class="col-sm-12">
-        <div class="card">
-            <h3><?= $this->title ?> {{year.year}}</h3>
-            <canvas id="stat" class="chart chart-bar"
-                    chart-data="stat.data"
-                    chart-labels="stat.labels"
-                    chart-series="stat.series"
-                    chart-colors="stat.colors"
-            </canvas
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#chart" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?> {{year.year}}</h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered table-hover" ng-show="models">
+                            <thead>
+                            <tr>
+                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
+                                <th class="text-center" colspan="5">ສາສະໜາພຸດ</th>
+                                <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
+                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
+                            </tr>
+                            <tr>
+                                <th class="text-center" rowspan="2">ພະ</th>
+                                <th class="text-center" rowspan="2">ຈົວ</th>
+                                <th class="text-center" rowspan="2">ພໍ່ຂາວ</th>
+                                <th class="text-center" rowspan="2">ແມ່ຂາວ</th>
+                                <th class="text-center" rowspan="2">ສັງກະລີ</th>
+                                <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
+                                <th class="text-center" colspan="2">ວັນເສົາ</th>
+                                <th class="text-center" colspan="2">ກາໂຕລິກ</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10%" class="text-center"
+                                    colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_monk') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_novice') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_dad') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_mom') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_boy') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_news_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_sat_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_sat_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_cato_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('bahai_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('bahai_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('idslam_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('idslam_women') | number}}</th>
+                                <th style="width: 10%"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="m in models">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td>{{m.province_name}}</td>
+                                <td class="text-center">{{m.buddhis_monk | number}}</td>
+                                <td class="text-center">{{m.buddhis_novice | number}}</td>
+                                <td class="text-center">{{m.buddhis_dad | number}}</td>
+                                <td class="text-center">{{m.buddhis_mom | number}}</td>
+                                <td class="text-center">{{m.buddhis_boy | number}}</td>
+                                <td class="text-center">{{m.christ_news_total | number}}</td>
+                                <td class="text-center">{{m.christ_news_women | number}}</td>
+                                <td class="text-center">{{m.christ_sat_total | number}}</td>
+                                <td class="text-center">{{m.christ_sat_women | number}}</td>
+                                <td class="text-center">{{m.christ_cato_total | number}}</td>
+                                <td class="text-center">{{m.christ_cato_women | number}}</td>
+                                <td class="text-center">{{m.bahai_total | number}}</td>
+                                <td class="text-center">{{m.bahai_women | number}}</td>
+                                <td class="text-center">{{m.idslam_total | number}}</td>
+                                <td class="text-center">{{m.idslam_women | number}}</td>
+                                <td class="text-center">{{m.remark}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="chart">
+                    <div ng-show="stat" class="card">
+                        <div class="row">
+                            <h3><?= $this->title ?> {{year.year}}</h3>
+                            <div class="col-sm-12">
+                                <canvas id="stat" class="chart chart-bar"
+                                        chart-data="stat.data"
+                                        chart-labels="stat.labels"
+                                        chart-series="stat.series"
+                                        chart-colors="stat.colors"
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -232,118 +263,118 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/angular-chart.js"></script>
 <script type="text/javascript">
-    var app = angular.module('mohaApp', ['chart.js']);
-    app.controller('rerigionTeacherController', function($scope, $http, $sce, $timeout) {
-        $scope.url = 'index.php?r=stat-religion-teacher/';
-      $scope.mode = 'read';
-      $scope.changemode = function() {
-        $scope.mode = $scope.mode == 'read'?'input':'read';
-      };
-        $scope.sum = [];
-        $http.get($scope.url+ 'get')
-            .then(function(r) {
-                $scope.years = r.data.years;
-                $scope.provinces = r.data.provinces;
-            }, function(r) {
-                $scope.response = r;
-                $timeout(function () {
-                    $scope.response = null;
-                }, 15000);
-            });
+  var app = angular.module('mohaApp', ['chart.js']);
+  app.controller('rerigionTeacherController', function ($scope, $http, $sce, $timeout) {
+    $scope.url = 'index.php?r=stat-religion-teacher/';
+    $scope.mode = 'read';
+    $scope.changemode = function () {
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
+    };
+    $scope.sum = [];
+    $http.get($scope.url + 'get')
+      .then(function (r) {
+        $scope.years = r.data.years;
+        $scope.provinces = r.data.provinces;
+      }, function (r) {
+        $scope.response = r;
+        $timeout(function () {
+          $scope.response = null;
+        }, 15000);
+      });
 
-        $scope.enquiry = function() {
-            $scope.model=null;
-            if($scope.year)
-                $http.get($scope.url + 'enquiry&year='+$scope.year.id)
-                    .then(function(r) {
-                        $scope.models = r.data.models;
-                        $scope.stat = r.data.stat;
-                        $scope.stat.colors = ['#FF0000', '#0000FF', '#00FF00', '#FFFF00'];
-                    }, function(r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
-        };
+    $scope.enquiry = function () {
+      $scope.model = null;
+      if ($scope.year)
+        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+          .then(function (r) {
+            $scope.models = r.data.models;
+            $scope.stat = r.data.stat;
+            $scope.stat.colors = ['#FF0000', '#0000FF', '#00FF00', '#FFFF00'];
+          }, function (r) {
+            $scope.response = r;
+            $timeout(function () {
+              $scope.response = null;
+            }, 15000);
+          });
+    };
 
-        $scope.inquiry = function() {
-            if($scope.year && $scope.model.province)
-                $http.get($scope.url+'inquiry&province='+$scope.model.province.id+'&year='+ $scope.year.id)
-                    .then(function(r) {
-                        var p = $scope.model.province;
-                        if(r.data.model) {
-                            $scope.model.buddhis_monk           = parseInt(r.data.model.buddhis_monk);
-                            $scope.model.buddhis_novice         = parseInt(r.data.model.buddhis_novice);
-                            $scope.model.buddhis_dad            = parseInt(r.data.model.buddhis_dad);
-                            $scope.model.buddhis_mom            = parseInt(r.data.model.buddhis_mom);
-                            $scope.model.buddhis_boy            = parseInt(r.data.model.buddhis_boy);
-                            $scope.model.christ_news_total      = parseInt(r.data.model.christ_news_total);
-                            $scope.model.christ_news_women      = parseInt(r.data.model.christ_news_women);
-                            $scope.model.christ_sat_total       = parseInt(r.data.model.christ_sat_total);
-                            $scope.model.christ_sat_women       = parseInt(r.data.model.christ_sat_women);
-                            $scope.model.christ_cato_total      = parseInt(r.data.model.christ_cato_total);
-                            $scope.model.christ_cato_women      = parseInt(r.data.model.christ_cato_women);
-                            $scope.model.bahai_total            = parseInt(r.data.model.bahai_total);
-                            $scope.model.bahai_women            = parseInt(r.data.model.bahai_women);
-                            $scope.model.idslam_total           = parseInt(r.data.model.idslam_total);
-                            $scope.model.idslam_women           = parseInt(r.data.model.idslam_women);
-                            $scope.model.remark                 = r.data.model.remark;
-                        } else {
-                            $scope.model.buddhis_monk           = null;
-                            $scope.model.buddhis_novice         = null;
-                            $scope.model.buddhis_dad            = null;
-                            $scope.model.buddhis_mom            = null;
-                            $scope.model.buddhis_boy            = null;
-                            $scope.model.christ_news_total      = null;
-                            $scope.model.christ_news_women      = null;
-                            $scope.model.christ_sat_total       = null;
-                            $scope.model.christ_sat_women       = null;
-                            $scope.model.christ_cato_total      = null;
-                            $scope.model.christ_cato_women      = null;
-                            $scope.model.bahai_total            = null;
-                            $scope.model.bahai_women            = null;
-                            $scope.model.idslam_total           = null;
-                            $scope.model.idslam_women           = null;
-                            $scope.model.remark                 = null;
-                        }
-                    }, function(r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
-        };
-
-        $scope.save = function() {
-            if($scope.year && $scope.model) {
-                console.log($scope.model);
-                $http.post($scope.url+'save&year='+$scope.year.id, {
-                    'StatReligionTeacherDetail': $scope.model,
-                    '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function(r) {
-                    $scope.model = null;
-                    $scope.response = r;
-                    $scope.enquiry();
-                    $timeout(function() {
-                        $scope.response = null;
-                    }, 15000);
-                }, function(r) {
-                    $scope.response = r;
-                    $timeout(function () {
-                        $scope.response = null;
-                    }, 15000);
-                });
+    $scope.inquiry = function () {
+      if ($scope.year && $scope.model.province)
+        $http.get($scope.url + 'inquiry&province=' + $scope.model.province.id + '&year=' + $scope.year.id)
+          .then(function (r) {
+            var p = $scope.model.province;
+            if (r.data.model) {
+              $scope.model.buddhis_monk = parseInt(r.data.model.buddhis_monk);
+              $scope.model.buddhis_novice = parseInt(r.data.model.buddhis_novice);
+              $scope.model.buddhis_dad = parseInt(r.data.model.buddhis_dad);
+              $scope.model.buddhis_mom = parseInt(r.data.model.buddhis_mom);
+              $scope.model.buddhis_boy = parseInt(r.data.model.buddhis_boy);
+              $scope.model.christ_news_total = parseInt(r.data.model.christ_news_total);
+              $scope.model.christ_news_women = parseInt(r.data.model.christ_news_women);
+              $scope.model.christ_sat_total = parseInt(r.data.model.christ_sat_total);
+              $scope.model.christ_sat_women = parseInt(r.data.model.christ_sat_women);
+              $scope.model.christ_cato_total = parseInt(r.data.model.christ_cato_total);
+              $scope.model.christ_cato_women = parseInt(r.data.model.christ_cato_women);
+              $scope.model.bahai_total = parseInt(r.data.model.bahai_total);
+              $scope.model.bahai_women = parseInt(r.data.model.bahai_women);
+              $scope.model.idslam_total = parseInt(r.data.model.idslam_total);
+              $scope.model.idslam_women = parseInt(r.data.model.idslam_women);
+              $scope.model.remark = r.data.model.remark;
+            } else {
+              $scope.model.buddhis_monk = null;
+              $scope.model.buddhis_novice = null;
+              $scope.model.buddhis_dad = null;
+              $scope.model.buddhis_mom = null;
+              $scope.model.buddhis_boy = null;
+              $scope.model.christ_news_total = null;
+              $scope.model.christ_news_women = null;
+              $scope.model.christ_sat_total = null;
+              $scope.model.christ_sat_women = null;
+              $scope.model.christ_cato_total = null;
+              $scope.model.christ_cato_women = null;
+              $scope.model.bahai_total = null;
+              $scope.model.bahai_women = null;
+              $scope.model.idslam_total = null;
+              $scope.model.idslam_women = null;
+              $scope.model.remark = null;
             }
-        };
+          }, function (r) {
+            $scope.response = r;
+            $timeout(function () {
+              $scope.response = null;
+            }, 15000);
+          });
+    };
 
-        $scope.sum = function(key) {
-            var total = 0;
-            if($scope.models)
-                for(var n = 0; n < $scope.models.length; n++)
-                    if($scope.models[n][key])
-                        total += parseInt($scope.models[n][key]);
-            return total == 0 ? null:total;
-        };
-    });
+    $scope.save = function () {
+      if ($scope.year && $scope.model) {
+        console.log($scope.model);
+        $http.post($scope.url + 'save&year=' + $scope.year.id, {
+          'StatReligionTeacherDetail': $scope.model,
+          '_csrf': $('meta[name="csrf-token"]').attr("content")
+        }).then(function (r) {
+          $scope.model = null;
+          $scope.response = r;
+          $scope.enquiry();
+          $timeout(function () {
+            $scope.response = null;
+          }, 15000);
+        }, function (r) {
+          $scope.response = r;
+          $timeout(function () {
+            $scope.response = null;
+          }, 15000);
+        });
+      }
+    };
+
+    $scope.sum = function (key) {
+      var total = 0;
+      if ($scope.models)
+        for (var n = 0; n < $scope.models.length; n++)
+          if ($scope.models[n][key])
+            total += parseInt($scope.models[n][key]);
+      return total == 0 ? null : total;
+    };
+  });
 </script>

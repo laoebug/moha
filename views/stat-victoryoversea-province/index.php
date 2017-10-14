@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+            <select class="form-control" ng-model="year" ng-change="enquiry()"
+                    ng-options="y.year for y in years"></select>
         </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -24,52 +25,55 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+            </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
                     <label><?= Yii::t('app', 'Province') ?></label>
-                    <select class="form-control" ng-model="model.province" ng-change="inquiry()" ng-options="m.province_name for m in provinces"></select>
+                    <select class="form-control" ng-model="model.province" ng-change="inquiry()"
+                            ng-options="m.province_name for m in provinces"></select>
                 </div>
                 <div class="col-sm-3">
                     <label>ຍ້ອງຍໍຜົນງານ</label>
-                    <select class="form-control" ng-model="model.award" ng-change="inquiry()" ng-options="a.name for a in awards"></select>
+                    <select class="form-control" ng-model="model.award" ng-change="inquiry()"
+                            ng-options="a.name for a in awards"></select>
                 </div>
                 <div class="col-sm-12" style="margin-top: 1em">
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <?php for($i=0;$i<2;$i++): ?>
+                            <?php for ($i = 0; $i < 2; $i++): ?>
                                 <th class="text-center" colspan="6"><?= $labels[$i] ?></th>
                             <?php endfor; ?>
                         </tr>
                         <tr>
                             <?php
-                            for($i=0;$i<2;$i++)
+                            for ($i = 0; $i < 2; $i++)
                                 foreach ($levels as $level): ?>
                                     <th class="text-center" colspan="2"><?= $level ?></th>
                                 <?php endforeach; ?>
                         </tr>
                         <tr>
-                            <?php for($i=0;$i<12;$i++): ?>
-                                <th class="text-center"><?= $i%2==0?'ບຸກຄົນ':'ກົມກອງ' ?></th>
+                            <?php for ($i = 0; $i < 12; $i++): ?>
+                                <th class="text-center"><?= $i % 2 == 0 ? 'ບຸກຄົນ' : 'ກົມກອງ' ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td><input type="number" class="form-control" ng-model="model.free1_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.free1_team"        min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.free2_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.free2_team"        min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.free3_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.free3_team"        min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.free1_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.free1_team" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.free2_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.free2_team" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.free3_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.free3_team" min="0"></td>
 
-                            <td><input type="number" class="form-control" ng-model="model.revo1_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.revo1_team"        min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.revo2_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.revo2_team"        min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.revo3_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.revo3_team"        min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.revo1_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.revo1_team" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.revo2_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.revo2_team" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.revo3_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.revo3_team" min="0"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -78,38 +82,38 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <?php for($i=2;$i<4;$i++): ?>
+                            <?php for ($i = 2; $i < 4; $i++): ?>
                                 <th class="text-center" colspan="6"><?= $labels[$i] ?></th>
                             <?php endfor; ?>
                         </tr>
                         <tr>
                             <?php
-                            for($i=0;$i<2;$i++)
+                            for ($i = 0; $i < 2; $i++)
                                 foreach ($levels as $level): ?>
                                     <th class="text-center" colspan="2"><?= $level ?></th>
                                 <?php endforeach; ?>
                         </tr>
                         <tr>
-                            <?php for($i=0;$i<12;$i++): ?>
-                                <th class="text-center"><?= $i%2==0?'ບຸກຄົນ':'ກົມກອງ' ?></th>
+                            <?php for ($i = 0; $i < 12; $i++): ?>
+                                <th class="text-center"><?= $i % 2 == 0 ? 'ບຸກຄົນ' : 'ກົມກອງ' ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td><input type="number" class="form-control" ng-model="model.labo1_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.labo1_team"        min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.labo2_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.labo2_team"        min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.labo3_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.labo3_team"        min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.labo1_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.labo1_team" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.labo2_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.labo2_team" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.labo3_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.labo3_team" min="0"></td>
 
-                            <td><input type="number" class="form-control" ng-model="model.deve1_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.deve1_team"        min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.deve2_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.deve2_team"        min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.deve3_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.deve3_team"        min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.deve1_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.deve1_team" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.deve2_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.deve2_team" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.deve3_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.deve3_team" min="0"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -117,7 +121,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-4">
                     <table class="table table-bordered">
                         <thead>
-                        <tr><th colspan="2">ຫຼຽນໄຊມິດຕະພາບ</th></tr>
+                        <tr>
+                            <th colspan="2">ຫຼຽນໄຊມິດຕະພາບ</th>
+                        </tr>
                         <tr>
                             <th class="text-center">ບຸກຄົນ</th>
                             <th class="text-center">ກົມກອງ</th>
@@ -125,8 +131,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         </thead>
                         <tbody>
                         <tr>
-                            <td><input type="number" class="form-control" ng-model="model.frien_personal"    min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.frien_team"        min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.frien_personal" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.frien_team" min="0"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -144,157 +150,172 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div ng-if="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
-        <div class="card" style="overflow-x: scroll">
-            <div class="card-title-w-btn ">
-                <h3><?= $this->title ?> {{year.year}}</h3>
-                <p>
-                    <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                    <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
-                </p>
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card" style="overflow-x: scroll">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?> {{year.year}}</h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center" rowspan="4"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center" rowspan="4">ຊື່ແຂວງ ແລະ ນະຄອນຫຼວງ</th>
+                                <th class="text-center" rowspan="4">ຍ້ອງຍໍຜົນງານ</th>
+                                <th class="text-center" colspan="26">ປະເພດຫຼຽນໄຊ</th>
+                                <th class="text-center" colspan="2" rowspan="3">ລວມ</th>
+                                <th class="text-center" rowspan="3">ໝາຍເຫດ</th>
+                            </tr>
+                            <tr>
+                                <?php foreach ($labels as $label): ?>
+                                    <th class="text-center" colspan="6"><?= $label ?></th>
+                                <?php endforeach; ?>
+
+                                <th class="text-center" colspan="2" rowspan="2">ຫຼຽນໄຊມິດຕະພາບ</th>
+                            </tr>
+                            <tr>
+                                <?php
+                                for ($i = 0; $i < count($labels); $i++)
+                                    foreach ($levels as $level): ?>
+                                        <th class="text-center" colspan="2"><?= $level ?></th>
+                                    <?php endforeach; ?>
+                            </tr>
+                            <tr>
+                                <?php for ($i = 0; $i < count($labels) * count($levels) * 2 + 4; $i++): ?>
+                                    <th class="text-center"><?= $i % 2 == 0 ? 'ບຸກຄົນ' : 'ກົມກອງ' ?></th>
+                                <?php endfor; ?>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th class="text-center" colspan="3">ລວມ</th>
+                                <td class="text-center">{{sumcolumn('free1_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('free1_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('free2_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('free2_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('free3_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('free3_team') | number }}</td>
+
+                                <td class="text-center">{{sumcolumn('revo1_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('revo1_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('revo2_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('revo2_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('revo3_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('revo3_team') | number }}</td>
+
+                                <td class="text-center">{{sumcolumn('labo1_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('labo1_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('labo2_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('labo2_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('labo3_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('labo3_team') | number }}</td>
+
+                                <td class="text-center">{{sumcolumn('deve1_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('deve1_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('deve2_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('deve2_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('deve3_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('deve3_team') | number }}</td>
+
+                                <td class="text-center">{{sumcolumn('frien_personal') | number }}</td>
+                                <td class="text-center">{{sumcolumn('frien_team') | number }}</td>
+
+                                <td class="text-center">{{sumtotal('personal') | number }}</td>
+                                <td class="text-center">{{sumtotal('team') | number }}</td>
+
+                                <td class="text-center"></td>
+                            </tr>
+                            <tr ng-repeat="model in models">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td class="text-center">{{model.province}}</td>
+                                <td class="text-center">{{model.award}}</td>
+                                <td class="text-center">{{model.free1_personal | number }}</td>
+                                <td class="text-center">{{model.free1_team | number }}</td>
+                                <td class="text-center">{{model.free2_personal | number }}</td>
+                                <td class="text-center">{{model.free2_team | number }}</td>
+                                <td class="text-center">{{model.free3_personal | number }}</td>
+                                <td class="text-center">{{model.free3_team | number }}</td>
+
+                                <td class="text-center">{{model.revo1_personal | number }}</td>
+                                <td class="text-center">{{model.revo1_team | number }}</td>
+                                <td class="text-center">{{model.revo2_personal | number }}</td>
+                                <td class="text-center">{{model.revo2_team | number }}</td>
+                                <td class="text-center">{{model.revo3_personal | number }}</td>
+                                <td class="text-center">{{model.revo3_team | number }}</td>
+
+                                <td class="text-center">{{model.labo1_personal | number }}</td>
+                                <td class="text-center">{{model.labo1_team | number }}</td>
+                                <td class="text-center">{{model.labo2_personal | number }}</td>
+                                <td class="text-center">{{model.labo2_team | number }}</td>
+                                <td class="text-center">{{model.labo3_personal | number }}</td>
+                                <td class="text-center">{{model.labo3_team | number }}</td>
+
+                                <td class="text-center">{{model.deve1_personal | number }}</td>
+                                <td class="text-center">{{model.deve1_team | number }}</td>
+                                <td class="text-center">{{model.deve2_personal | number }}</td>
+                                <td class="text-center">{{model.deve2_team | number }}</td>
+                                <td class="text-center">{{model.deve3_personal | number }}</td>
+                                <td class="text-center">{{model.deve3_team | number }}</td>
+
+                                <td class="text-center">{{model.frien_personal | number }}</td>
+                                <td class="text-center">{{model.frien_team | number }}</td>
+
+                                <td class="text-center">{{sumrow(model, 'personal') | number }}</td>
+                                <td class="text-center">{{sumrow(model, 'team') | number }}</td>
+
+                                <td class="text-center">{{model.remark}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference">
+
+                </div>
             </div>
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th class="text-center" rowspan="4"><?= Yii::t('app', 'No.') ?></th>
-                    <th class="text-center" rowspan="4">ຊື່ແຂວງ ແລະ ນະຄອນຫຼວງ</th>
-                    <th class="text-center" rowspan="4">ຍ້ອງຍໍຜົນງານ</th>
-                    <th class="text-center" colspan="26">ປະເພດຫຼຽນໄຊ</th>
-                    <th class="text-center" colspan="2" rowspan="3">ລວມ</th>
-                    <th class="text-center" rowspan="3">ໝາຍເຫດ</th>
-                </tr>
-                <tr>
-                    <?php foreach ($labels as $label): ?>
-                        <th class="text-center" colspan="6"><?= $label ?></th>
-                    <?php endforeach; ?>
-
-                    <th class="text-center" colspan="2" rowspan="2">ຫຼຽນໄຊມິດຕະພາບ</th>
-                </tr>
-                <tr>
-                    <?php
-                    for ($i=0;$i<count($labels);$i++)
-                        foreach ($levels as $level): ?>
-                            <th class="text-center" colspan="2"><?= $level ?></th>
-                        <?php endforeach; ?>
-                </tr>
-                <tr>
-                    <?php for ($i=0;$i<count($labels)*count($levels)*2 + 4;$i++):?>
-                        <th class="text-center"><?= $i%2 == 0?'ບຸກຄົນ':'ກົມກອງ' ?></th>
-                    <?php endfor; ?>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th class="text-center" colspan="3">ລວມ</th>
-                    <td class="text-center">{{sumcolumn('free1_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('free1_team')     | number }} </td>
-                    <td class="text-center">{{sumcolumn('free2_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('free2_team')     | number }} </td>
-                    <td class="text-center">{{sumcolumn('free3_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('free3_team')     | number }} </td>
-
-                    <td class="text-center">{{sumcolumn('revo1_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('revo1_team')     | number }} </td>
-                    <td class="text-center">{{sumcolumn('revo2_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('revo2_team')     | number }} </td>
-                    <td class="text-center">{{sumcolumn('revo3_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('revo3_team')     | number }} </td>
-
-                    <td class="text-center">{{sumcolumn('labo1_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('labo1_team')     | number }} </td>
-                    <td class="text-center">{{sumcolumn('labo2_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('labo2_team')     | number }} </td>
-                    <td class="text-center">{{sumcolumn('labo3_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('labo3_team')     | number }} </td>
-
-                    <td class="text-center">{{sumcolumn('deve1_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('deve1_team')     | number }} </td>
-                    <td class="text-center">{{sumcolumn('deve2_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('deve2_team')     | number }} </td>
-                    <td class="text-center">{{sumcolumn('deve3_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('deve3_team')     | number }} </td>
-
-                    <td class="text-center">{{sumcolumn('frien_personal') | number }} </td>
-                    <td class="text-center">{{sumcolumn('frien_team')     | number }} </td>
-
-                    <td class="text-center">{{sumtotal('personal')         | number }}</td>
-                    <td class="text-center">{{sumtotal('team')             | number }}</td>
-
-                    <td class="text-center"></td>
-                </tr>
-                <tr ng-repeat="model in models">
-                    <td class="text-center">{{$index + 1}}</td>
-                    <td class="text-center">{{model.province}}</td>
-                    <td class="text-center">{{model.award}}</td>
-                    <td class="text-center">{{model.free1_personal | number }}</td>
-                    <td class="text-center">{{model.free1_team | number }}</td>
-                    <td class="text-center">{{model.free2_personal | number }}</td>
-                    <td class="text-center">{{model.free2_team | number }}</td>
-                    <td class="text-center">{{model.free3_personal | number }}</td>
-                    <td class="text-center">{{model.free3_team | number }}</td>
-
-                    <td class="text-center">{{model.revo1_personal | number }}</td>
-                    <td class="text-center">{{model.revo1_team | number }}</td>
-                    <td class="text-center">{{model.revo2_personal | number }}</td>
-                    <td class="text-center">{{model.revo2_team | number }}</td>
-                    <td class="text-center">{{model.revo3_personal | number }}</td>
-                    <td class="text-center">{{model.revo3_team | number }}</td>
-
-                    <td class="text-center">{{model.labo1_personal | number }}</td>
-                    <td class="text-center">{{model.labo1_team | number }}</td>
-                    <td class="text-center">{{model.labo2_personal | number }}</td>
-                    <td class="text-center">{{model.labo2_team | number }}</td>
-                    <td class="text-center">{{model.labo3_personal | number }}</td>
-                    <td class="text-center">{{model.labo3_team | number }}</td>
-
-                    <td class="text-center">{{model.deve1_personal | number }}</td>
-                    <td class="text-center">{{model.deve1_team | number }}</td>
-                    <td class="text-center">{{model.deve2_personal | number }}</td>
-                    <td class="text-center">{{model.deve2_team | number }}</td>
-                    <td class="text-center">{{model.deve3_personal | number }}</td>
-                    <td class="text-center">{{model.deve3_team | number }}</td>
-
-                    <td class="text-center">{{model.frien_personal | number }}</td>
-                    <td class="text-center">{{model.frien_team | number }}</td>
-
-                    <td class="text-center">{{sumrow(model, 'personal')  | number       }}</td>
-                    <td class="text-center">{{sumrow(model, 'team')      | number      }}</td>
-
-                    <td class="text-center">{{model.remark}}</td>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
-  app.controller('statVictoryoverseaProvince', function($scope, $http, $sce, $timeout) {
+  app.controller('statVictoryoverseaProvince', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-victoryoversea-province/';
     $scope.mode = 'read';
-    $scope.changemode = function() {
-      $scope.mode = $scope.mode == 'read'?'input':'read';
+    $scope.changemode = function () {
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
-    $http.get($scope.url+ 'get')
-      .then(function(r) {
+    $http.get($scope.url + 'get')
+      .then(function (r) {
         $scope.years = r.data.years;
         $scope.provinces = r.data.provinces;
         $scope.awards = r.data.awards;
-      }, function(r) {
+      }, function (r) {
         $scope.response = r;
         $timeout(function () {
           $scope.response = null;
         }, 15000);
       });
 
-    $scope.enquiry = function() {
+    $scope.enquiry = function () {
       $scope.models = null;
-      if($scope.year)
-        $http.get($scope.url + 'enquiry&year='+$scope.year.id)
-          .then(function(r) {
+      if ($scope.year)
+        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+          .then(function (r) {
             $scope.models = r.data.models;
-          }, function(r) {
+          }, function (r) {
             $scope.response = r;
             $timeout(function () {
               $scope.response = null;
@@ -302,72 +323,72 @@ $this->params['breadcrumbs'][] = $this->title;
           });
     };
 
-    $scope.inquiry = function() {
-      if($scope.model.province && $scope.model.award) {
-        $http.get($scope.url + 'inquiry&year='+$scope.year.id + '&province='+$scope.model.province.id+'&award='+$scope.model.award.id)
-          .then(function(r) {
-            if(r.data.model) {
-              $scope.model.free1_personal  = parseInt(r.data.model.free1_personal);
-              $scope.model.free1_team      = parseInt(r.data.model.free1_team);
-              $scope.model.free2_personal  = parseInt(r.data.model.free2_personal);
-              $scope.model.free2_team      = parseInt(r.data.model.free2_team);
-              $scope.model.free3_personal  = parseInt(r.data.model.free3_personal);
-              $scope.model.free3_team      = parseInt(r.data.model.free3_team);
+    $scope.inquiry = function () {
+      if ($scope.model.province && $scope.model.award) {
+        $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&province=' + $scope.model.province.id + '&award=' + $scope.model.award.id)
+          .then(function (r) {
+            if (r.data.model) {
+              $scope.model.free1_personal = parseInt(r.data.model.free1_personal);
+              $scope.model.free1_team = parseInt(r.data.model.free1_team);
+              $scope.model.free2_personal = parseInt(r.data.model.free2_personal);
+              $scope.model.free2_team = parseInt(r.data.model.free2_team);
+              $scope.model.free3_personal = parseInt(r.data.model.free3_personal);
+              $scope.model.free3_team = parseInt(r.data.model.free3_team);
 
-              $scope.model.revo1_personal  = parseInt(r.data.model.revo1_personal);
-              $scope.model.revo1_team      = parseInt(r.data.model.revo1_team);
-              $scope.model.revo2_personal  = parseInt(r.data.model.revo2_personal);
-              $scope.model.revo2_team      = parseInt(r.data.model.revo2_team);
-              $scope.model.revo3_personal  = parseInt(r.data.model.revo3_personal);
-              $scope.model.revo3_team      = parseInt(r.data.model.revo3_team);
+              $scope.model.revo1_personal = parseInt(r.data.model.revo1_personal);
+              $scope.model.revo1_team = parseInt(r.data.model.revo1_team);
+              $scope.model.revo2_personal = parseInt(r.data.model.revo2_personal);
+              $scope.model.revo2_team = parseInt(r.data.model.revo2_team);
+              $scope.model.revo3_personal = parseInt(r.data.model.revo3_personal);
+              $scope.model.revo3_team = parseInt(r.data.model.revo3_team);
 
-              $scope.model.labo1_personal  = parseInt(r.data.model.labo1_personal);
-              $scope.model.labo1_team      = parseInt(r.data.model.labo1_team);
-              $scope.model.labo2_personal  = parseInt(r.data.model.labo2_personal);
-              $scope.model.labo2_team      = parseInt(r.data.model.labo2_team);
-              $scope.model.labo3_personal  = parseInt(r.data.model.labo3_personal);
-              $scope.model.labo3_team      = parseInt(r.data.model.labo3_team);
+              $scope.model.labo1_personal = parseInt(r.data.model.labo1_personal);
+              $scope.model.labo1_team = parseInt(r.data.model.labo1_team);
+              $scope.model.labo2_personal = parseInt(r.data.model.labo2_personal);
+              $scope.model.labo2_team = parseInt(r.data.model.labo2_team);
+              $scope.model.labo3_personal = parseInt(r.data.model.labo3_personal);
+              $scope.model.labo3_team = parseInt(r.data.model.labo3_team);
 
-              $scope.model.deve1_personal  = parseInt(r.data.model.deve1_personal);
-              $scope.model.deve1_team      = parseInt(r.data.model.deve1_team);
-              $scope.model.deve2_personal  = parseInt(r.data.model.deve2_personal);
-              $scope.model.deve2_team      = parseInt(r.data.model.deve2_team);
-              $scope.model.deve3_personal  = parseInt(r.data.model.deve3_personal);
-              $scope.model.deve3_team      = parseInt(r.data.model.deve3_team);
-              $scope.model.frien_personal  = parseInt(r.data.model.frien_personal);
-              $scope.model.frien_team      = parseInt(r.data.model.frien_team);
+              $scope.model.deve1_personal = parseInt(r.data.model.deve1_personal);
+              $scope.model.deve1_team = parseInt(r.data.model.deve1_team);
+              $scope.model.deve2_personal = parseInt(r.data.model.deve2_personal);
+              $scope.model.deve2_team = parseInt(r.data.model.deve2_team);
+              $scope.model.deve3_personal = parseInt(r.data.model.deve3_personal);
+              $scope.model.deve3_team = parseInt(r.data.model.deve3_team);
+              $scope.model.frien_personal = parseInt(r.data.model.frien_personal);
+              $scope.model.frien_team = parseInt(r.data.model.frien_team);
 
-              $scope.model.remark         = r.data.model.remark;
+              $scope.model.remark = r.data.model.remark;
             } else {
-              $scope.model.free1_personal  = null;
-              $scope.model.free1_team      = null;
-              $scope.model.free2_personal  = null;
-              $scope.model.free2_team      = null;
-              $scope.model.free3_personal  = null;
-              $scope.model.free3_team      = null;
-              $scope.model.revo1_personal  = null;
-              $scope.model.revo1_team      = null;
-              $scope.model.revo2_personal  = null;
-              $scope.model.revo2_team      = null;
-              $scope.model.revo3_personal  = null;
-              $scope.model.revo3_team      = null;
-              $scope.model.labo1_personal  = null;
-              $scope.model.labo1_team      = null;
-              $scope.model.labo2_personal  = null;
-              $scope.model.labo2_team      = null;
-              $scope.model.labo3_personal  = null;
-              $scope.model.labo3_team      = null;
-              $scope.model.deve1_personal  = null;
-              $scope.model.deve1_team      = null;
-              $scope.model.deve2_personal  = null;
-              $scope.model.deve2_team      = null;
-              $scope.model.deve3_personal  = null;
-              $scope.model.deve3_team      = null;
-              $scope.model.frien_personal  = null;
-              $scope.model.frien_team      = null;
-              $scope.model.remark         = null;
+              $scope.model.free1_personal = null;
+              $scope.model.free1_team = null;
+              $scope.model.free2_personal = null;
+              $scope.model.free2_team = null;
+              $scope.model.free3_personal = null;
+              $scope.model.free3_team = null;
+              $scope.model.revo1_personal = null;
+              $scope.model.revo1_team = null;
+              $scope.model.revo2_personal = null;
+              $scope.model.revo2_team = null;
+              $scope.model.revo3_personal = null;
+              $scope.model.revo3_team = null;
+              $scope.model.labo1_personal = null;
+              $scope.model.labo1_team = null;
+              $scope.model.labo2_personal = null;
+              $scope.model.labo2_team = null;
+              $scope.model.labo3_personal = null;
+              $scope.model.labo3_team = null;
+              $scope.model.deve1_personal = null;
+              $scope.model.deve1_team = null;
+              $scope.model.deve2_personal = null;
+              $scope.model.deve2_team = null;
+              $scope.model.deve3_personal = null;
+              $scope.model.deve3_team = null;
+              $scope.model.frien_personal = null;
+              $scope.model.frien_team = null;
+              $scope.model.remark = null;
             }
-          }, function(r) {
+          }, function (r) {
             $scope.response = r;
             $timeout(function () {
               $scope.response = null;
@@ -376,19 +397,19 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.save = function() {
-      if($scope.year && $scope.model) {
-        $http.post($scope.url+'save&year='+$scope.year.id, {
+    $scope.save = function () {
+      if ($scope.year && $scope.model) {
+        $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'Model': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function(r) {
+        }).then(function (r) {
           $scope.model = null;
           $scope.response = r;
           $scope.enquiry();
-          $timeout(function() {
+          $timeout(function () {
             $scope.response = null;
           }, 15000);
-        }, function(r) {
+        }, function (r) {
           $scope.response = r;
           $timeout(function () {
             $scope.response = null;
@@ -397,52 +418,52 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.sumcolumn = function(key) {
+    $scope.sumcolumn = function (key) {
       var s = 0;
-      for(var i = 0;i < $scope.models.length; i++) {
-        if($scope.models[i][key])
+      for (var i = 0; i < $scope.models.length; i++) {
+        if ($scope.models[i][key])
           s += parseInt($scope.models[i][key]);
       }
       return s;
     };
 
-    $scope.sumrow = function(model, key) {
+    $scope.sumrow = function (model, key) {
       var s = 0;
-      if(key == 'personal') {
-        if(model.free1_personal) s += parseInt(model.free1_personal);
-        if(model.free2_personal) s += parseInt(model.free2_personal);
-        if(model.free3_personal) s += parseInt(model.free3_personal);
-        if(model.revo1_personal) s += parseInt(model.revo1_personal);
-        if(model.revo2_personal) s += parseInt(model.revo2_personal);
-        if(model.revo3_personal) s += parseInt(model.revo3_personal);
-        if(model.labo1_personal) s += parseInt(model.labo1_personal);
-        if(model.labo2_personal) s += parseInt(model.labo2_personal);
-        if(model.labo3_personal) s += parseInt(model.labo3_personal);
-        if(model.deve1_personal) s += parseInt(model.deve1_personal);
-        if(model.deve2_personal) s += parseInt(model.deve2_personal);
-        if(model.deve3_personal) s += parseInt(model.deve3_personal);
-        if(model.frien_personal) s += parseInt(model.frien_personal);
-      } else if(key == 'team') {
-        if(model.free1_team) s += parseInt(model.free1_team);
-        if(model.free2_team) s += parseInt(model.free2_team);
-        if(model.free3_team) s += parseInt(model.free3_team);
-        if(model.revo1_team) s += parseInt(model.revo1_team);
-        if(model.revo2_team) s += parseInt(model.revo2_team);
-        if(model.revo3_team) s += parseInt(model.revo3_team);
-        if(model.labo1_team) s += parseInt(model.labo1_team);
-        if(model.labo2_team) s += parseInt(model.labo2_team);
-        if(model.labo3_team) s += parseInt(model.labo3_team);
-        if(model.deve1_team) s += parseInt(model.deve1_team);
-        if(model.deve2_team) s += parseInt(model.deve2_team);
-        if(model.deve3_team) s += parseInt(model.deve3_team);
-        if(model.frien_team) s += parseInt(model.frien_team);
+      if (key == 'personal') {
+        if (model.free1_personal) s += parseInt(model.free1_personal);
+        if (model.free2_personal) s += parseInt(model.free2_personal);
+        if (model.free3_personal) s += parseInt(model.free3_personal);
+        if (model.revo1_personal) s += parseInt(model.revo1_personal);
+        if (model.revo2_personal) s += parseInt(model.revo2_personal);
+        if (model.revo3_personal) s += parseInt(model.revo3_personal);
+        if (model.labo1_personal) s += parseInt(model.labo1_personal);
+        if (model.labo2_personal) s += parseInt(model.labo2_personal);
+        if (model.labo3_personal) s += parseInt(model.labo3_personal);
+        if (model.deve1_personal) s += parseInt(model.deve1_personal);
+        if (model.deve2_personal) s += parseInt(model.deve2_personal);
+        if (model.deve3_personal) s += parseInt(model.deve3_personal);
+        if (model.frien_personal) s += parseInt(model.frien_personal);
+      } else if (key == 'team') {
+        if (model.free1_team) s += parseInt(model.free1_team);
+        if (model.free2_team) s += parseInt(model.free2_team);
+        if (model.free3_team) s += parseInt(model.free3_team);
+        if (model.revo1_team) s += parseInt(model.revo1_team);
+        if (model.revo2_team) s += parseInt(model.revo2_team);
+        if (model.revo3_team) s += parseInt(model.revo3_team);
+        if (model.labo1_team) s += parseInt(model.labo1_team);
+        if (model.labo2_team) s += parseInt(model.labo2_team);
+        if (model.labo3_team) s += parseInt(model.labo3_team);
+        if (model.deve1_team) s += parseInt(model.deve1_team);
+        if (model.deve2_team) s += parseInt(model.deve2_team);
+        if (model.deve3_team) s += parseInt(model.deve3_team);
+        if (model.frien_team) s += parseInt(model.frien_team);
       }
       return s;
     };
 
-    $scope.sumtotal = function(key) {
+    $scope.sumtotal = function (key) {
       var s = 0;
-      if(key == 'personal') {
+      if (key == 'personal') {
         s += $scope.sumcolumn('free1_personal') + $scope.sumcolumn('free2_personal') + $scope.sumcolumn('free3_personal');
         s += $scope.sumcolumn('revo1_personal') + $scope.sumcolumn('revo2_personal') + $scope.sumcolumn('revo3_personal');
         s += $scope.sumcolumn('labo1_personal') + $scope.sumcolumn('labo2_personal') + $scope.sumcolumn('labo3_personal');
@@ -450,7 +471,7 @@ $this->params['breadcrumbs'][] = $this->title;
         s += $scope.sumcolumn('frien_personal');
       }
 
-      if(key == 'team') {
+      if (key == 'team') {
         s += $scope.sumcolumn('free1_team') + $scope.sumcolumn('free2_team') + $scope.sumcolumn('free3_team');
         s += $scope.sumcolumn('revo1_team') + $scope.sumcolumn('revo2_team') + $scope.sumcolumn('revo3_team');
         s += $scope.sumcolumn('labo1_team') + $scope.sumcolumn('labo2_team') + $scope.sumcolumn('labo3_team');
@@ -460,7 +481,7 @@ $this->params['breadcrumbs'][] = $this->title;
       return s;
     };
 
-    $scope.formatNumber = function(num, dec) {
+    $scope.formatNumber = function (num, dec) {
       if (dec === undefined) dec = 2;
       var r = "" + Math.abs(parseFloat(num).toFixed(dec));
       var decimals = "";

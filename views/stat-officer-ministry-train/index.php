@@ -171,7 +171,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
                 <div class="tab-pane fade" id="reference">
-                    າາາ
+
                 </div>
             </div>
         </div>

@@ -11,7 +11,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+            <select class="form-control" ng-model="year" ng-change="enquiry()"
+                    ng-options="y.year for y in years"></select>
         </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -21,7 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+            </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-4">
                     <label for="">ປະເພດນິິຕິກຳ</label>
@@ -30,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="col-sm-4">
                     <label for="">ຊື່ນິຕິກຳ</label>
-                    <select class="form-control" ng-model="model.legal" ng-options="b.name for b in model.legalType.legals"
+                    <select class="form-control" ng-model="model.legal"
+                            ng-options="b.name for b in model.legalType.legals"
                             ng-change="inquiry()">
                     </select>
                 </div>
@@ -70,142 +73,161 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-    <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em">
-        <div class="card-title-w-btn ">
-            <h3><?= $this->title ?></h3>
-            <p>
-                <a class="btn btn-default" target="_blank" href="index.php?r=stat-legal/print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                <a class="btn btn-info" target="_blank" href="index.php?r=stat-legal/download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
-            </p>
+    <div ng-show="models" class="col-sm-12" style="margin-top: 2em">
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?></h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank"
+                                   href="index.php?r=stat-legal/print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank"
+                                   href="index.php?r=stat-legal/download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center">ຊື່ນິຕິກຳ</th>
+                                <th class="text-center" style="width: 10%">ຮ່າງຂຶ້ນໃໝ່</th>
+                                <th class="text-center" style="width: 10%">ປັບປຸງ</th>
+                                <th class="text-center">ປະກາດໃຊ້</th>
+                                <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
+                            </tr>
+                            </thead>
+                            <tbody ng-repeat="t in models" ng-show="t.legals.length > 0">
+                            <tr>
+                                <th colspan="6" class="text-center">{{t.name}}</th>
+                            </tr>
+                            <tr ng-repeat="l in t.legals">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td>{{l.name}}</td>
+                                <td class="text-center">{{l.new == '1' ? '1':''}}</td>
+                                <td class="text-center">{{l.improve == '1' ? '1':''}}</td>
+                                <td class="text-center">{{l.publish}}</td>
+                                <td class="text-center">{{l.remark}}</td>
+                            </tr>
+                            <tr ng-show="t.legals.length > 0">
+                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center">{{sum(t, 'new')}}</th>
+                                <th class="text-center">{{sum(t, 'improve')}}</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference">
+
+                </div>
+            </div>
         </div>
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
-                    <th class="text-center">ຊື່ນິຕິກຳ</th>
-                    <th class="text-center" style="width: 10%">ຮ່າງຂຶ້ນໃໝ່</th>
-                    <th class="text-center" style="width: 10%">ປັບປຸງ</th>
-                    <th class="text-center">ປະກາດໃຊ້</th>
-                    <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
-                </tr>
-            </thead>
-            <tbody ng-repeat="t in models" ng-show="t.legals.length > 0">
-                <tr>
-                    <th colspan="6" class="text-center">{{t.name}}</th>
-                </tr>
-                <tr ng-repeat="l in t.legals">
-                    <td class="text-center">{{$index + 1}}</td>
-                    <td>{{l.name}}</td>
-                    <td class="text-center">{{l.new == '1' ? '1':''}}</td>
-                    <td class="text-center">{{l.improve == '1' ? '1':''}}</td>
-                    <td class="text-center">{{l.publish}}</td>
-                    <td class="text-center">{{l.remark}}</td>
-                </tr>
-                <tr ng-show="t.legals.length > 0">
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center">{{sum(t, 'new')}}</th>
-                    <th class="text-center">{{sum(t, 'improve')}}</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
-    var app = angular.module('mohaApp', []);
-    var url = 'index.php?r=stat-legal/';
-    app.controller('statLegalController', function($scope, $http, $sce, $timeout) {
-      $scope.sum = [];
-      $scope.mode = 'read';
-      $scope.changemode = function() {
-        $scope.mode = $scope.mode == 'read'?'insert':'read';
-      };
-        $http.get(url+ 'get')
-            .then(function(r) {
-                $scope.years = r.data.years;
-                $scope.legalTypes = r.data.legalTypes;
-            }, function(r) {
-              $scope.response = r;
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
-            });
+  var app = angular.module('mohaApp', []);
+  var url = 'index.php?r=stat-legal/';
+  app.controller('statLegalController', function ($scope, $http, $sce, $timeout) {
+    $scope.sum = [];
+    $scope.mode = 'read';
+    $scope.changemode = function () {
+      $scope.mode = $scope.mode == 'read' ? 'insert' : 'read';
+    };
+    $http.get(url + 'get')
+      .then(function (r) {
+        $scope.years = r.data.years;
+        $scope.legalTypes = r.data.legalTypes;
+      }, function (r) {
+        $scope.response = r;
+        $timeout(function () {
+          $scope.response = null;
+        }, 15000);
+      });
 
-        $scope.enquiry = function() {
-          $scope.model=null;
-            if($scope.year)
-                $http.get(url + 'enquiry&year='+$scope.year.id)
-                  .then(function(r) {
-                    $scope.models = r.data.models;
-                }, function(r) {
-                  $scope.response = r;
-                  $timeout(function () {
-                    $scope.response = null;
-                  }, 15000);
-                });
-        };
+    $scope.enquiry = function () {
+      $scope.model = null;
+      if ($scope.year)
+        $http.get(url + 'enquiry&year=' + $scope.year.id)
+          .then(function (r) {
+            $scope.models = r.data.models;
+          }, function (r) {
+            $scope.response = r;
+            $timeout(function () {
+              $scope.response = null;
+            }, 15000);
+          });
+    };
 
-        $scope.inquiry = function() {
-            if($scope.year && $scope.model.legal)
-                $http.get(url+'inquiry&legal='+$scope.model.legal.id+'&year='+ $scope.year.id)
-                    .then(function(r) {
-                      if(r.data.model) {
-                        $scope.model.new = r.data.model.new=="1"?true:false;
-                        $scope.model.improve = r.data.model.improve=="1"?true:false;
-                        $scope.model.publish = r.data.model.publish;
-                        $scope.model.remark = r.data.model.remark;
-                      } else {
-                        $scope.model.new = null;
-                        $scope.model.improve = null;
-                        $scope.model.publish = null;
-                        $scope.model.remark = null;
-                      }
-                    }, function(r) {
-                      $scope.response = r;
-                      $timeout(function () {
-                        $scope.response = null;
-                      }, 15000);
-                    });
-        };
-
-        $scope.save = function() {
-            if($scope.year && $scope.model) {
-              $scope.model.new = $scope.model.new?1:0;
-              $scope.model.improve = $scope.model.improve?1:0;
-              $http.post(url+'save&year='+$scope.year.id, {
-                'StatLegalDetail': $scope.model,
-                '_csrf': $('meta[name="csrf-token"]').attr("content")
-              }).then(function(r) {
-                $scope.model = null;
-                $scope.response = r;
-                $scope.enquiry();
-                $timeout(function() {
-                  $scope.response = null;
-                }, 15000);
-              }, function(r) {
-                $scope.response = r;
-                console.log($scope.response);
-                $timeout(function () {
-                  $scope.response = null;
-                }, 15000);
-              });
+    $scope.inquiry = function () {
+      if ($scope.year && $scope.model.legal)
+        $http.get(url + 'inquiry&legal=' + $scope.model.legal.id + '&year=' + $scope.year.id)
+          .then(function (r) {
+            if (r.data.model) {
+              $scope.model.new = r.data.model.new == "1" ? true : false;
+              $scope.model.improve = r.data.model.improve == "1" ? true : false;
+              $scope.model.publish = r.data.model.publish;
+              $scope.model.remark = r.data.model.remark;
+            } else {
+              $scope.model.new = null;
+              $scope.model.improve = null;
+              $scope.model.publish = null;
+              $scope.model.remark = null;
             }
-        };
+          }, function (r) {
+            $scope.response = r;
+            $timeout(function () {
+              $scope.response = null;
+            }, 15000);
+          });
+    };
 
-        $scope.sum = function(t, key) {
-          var total = 0;
-          for(var n = 0; n < t.legals.length; n++) {
-            if(t.legals[n][key])
-              total += parseInt(t.legals[n][key]);
-          }
-          return total;
-        };
+    $scope.save = function () {
+      if ($scope.year && $scope.model) {
+        $scope.model.new = $scope.model.new ? 1 : 0;
+        $scope.model.improve = $scope.model.improve ? 1 : 0;
+        $http.post(url + 'save&year=' + $scope.year.id, {
+          'StatLegalDetail': $scope.model,
+          '_csrf': $('meta[name="csrf-token"]').attr("content")
+        }).then(function (r) {
+          $scope.model = null;
+          $scope.response = r;
+          $scope.enquiry();
+          $timeout(function () {
+            $scope.response = null;
+          }, 15000);
+        }, function (r) {
+          $scope.response = r;
+          console.log($scope.response);
+          $timeout(function () {
+            $scope.response = null;
+          }, 15000);
+        });
+      }
+    };
 
-        $scope.getIcon = function(value) {
-          if(value == '1') return '<i class="fa fa-check"></i>';
-          return '';
-        }
-    });
+    $scope.sum = function (t, key) {
+      var total = 0;
+      for (var n = 0; n < t.legals.length; n++) {
+        if (t.legals[n][key])
+          total += parseInt(t.legals[n][key]);
+      }
+      return total;
+    };
+
+    $scope.getIcon = function (value) {
+      if (value == '1') return '<i class="fa fa-check"></i>';
+      return '';
+    }
+  });
 </script>

@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+            <select class="form-control" ng-model="year" ng-change="enquiry()"
+                    ng-options="y.year for y in years"></select>
         </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -24,27 +25,31 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+            </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-12">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <?php for ($i = 1; $i< 5;$i++): ?>
-                                <th colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') ." $i" ?></th>
+                            <?php for ($i = 1; $i < 5; $i++): ?>
+                                <th colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') . " $i" ?></th>
                             <?php endfor; ?>
                         </tr>
                         <tr>
-                            <?php for ($i = 1; $i<9;$i++): ?>
-                                <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></th>
+                            <?php for ($i = 1; $i < 9; $i++): ?>
+                                <th class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for($i=1; $i<5; $i++) :  ?>
-                            <td style="width: 12.5%"><input type="number" min="0" ng-model="model.p<?=$i?>_total" class="form-control"></td>
-                            <td style="width: 12.5%"><input type="number" min="0" max="{{model.p<?=$i?>_total}}" ng-model="model.p<?=$i?>_women" class="form-control"></td>
+                            <?php for ($i = 1; $i < 5; $i++) : ?>
+                                <td style="width: 12.5%"><input type="number" min="0" ng-model="model.p<?= $i ?>_total"
+                                                                class="form-control"></td>
+                                <td style="width: 12.5%"><input type="number" min="0" max="{{model.p<?= $i ?>_total}}"
+                                                                ng-model="model.p<?= $i ?>_women" class="form-control">
+                                </td>
                             <?php endfor; ?>
                         </tr>
                         </tbody>
@@ -55,21 +60,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <?php for ($i = 5; $i< 9;$i++): ?>
-                                <th colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') ." $i" ?></th>
+                            <?php for ($i = 5; $i < 9; $i++): ?>
+                                <th colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') . " $i" ?></th>
                             <?php endfor; ?>
                         </tr>
                         <tr>
-                            <?php for ($i = 9; $i<17;$i++): ?>
-                                <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></th>
+                            <?php for ($i = 9; $i < 17; $i++): ?>
+                                <th class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for($i=5; $i<9; $i++) :  ?>
-                                <td style="width: 12.5%"><input type="number" min="0" ng-model="model.p<?=$i?>_total" class="form-control"></td>
-                                <td style="width: 12.5%"><input type="number" min="0" max="{{model.p<?=$i?>_total}}" ng-model="model.p<?=$i?>_women" class="form-control"></td>
+                            <?php for ($i = 5; $i < 9; $i++) : ?>
+                                <td style="width: 12.5%"><input type="number" min="0" ng-model="model.p<?= $i ?>_total"
+                                                                class="form-control"></td>
+                                <td style="width: 12.5%"><input type="number" min="0" max="{{model.p<?= $i ?>_total}}"
+                                                                ng-model="model.p<?= $i ?>_women" class="form-control">
+                                </td>
                             <?php endfor; ?>
                         </tr>
                         </tbody>
@@ -85,53 +93,79 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div ng-show="model" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
-        <div class="card">
-            <div class="card-title-w-btn ">
-                <h3><?= $this->title ?> {{year.year}}</h3>
-                <p>
-                    <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                    <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
-                </p>
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?> {{year.year}}</h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center" rowspan="2"
+                                    colspan="16"><?= Yii::t('app', 'Description') ?></th>
+                                <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Men') ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th class="text-center" rowspan="4">VIII</th>
+                                <th class="text-center" colspan="16"><?= $this->title ?></th>
+                                <th class="text-center">{{formatNumber(model.p1_total + model.p2_total + model.p3_total
+                                    + model.p4_total + model.p5_total + model.p6_total + model.p7_total +
+                                    model.p8_total)}}
+                                </th>
+                                <th class="text-center">{{formatNumber(model.p1_women + model.p2_women + model.p3_women
+                                    + model.p4_women + model.p5_women + model.p6_women + model.p7_women +
+                                    model.p8_women)}}
+                                </th>
+                                <th class="text-center">{{formatNumber(model.p1_total + model.p2_total + model.p3_total
+                                    + model.p4_total + model.p5_total + model.p6_total + model.p7_total + model.p8_total
+                                    - (model.p1_women + model.p2_women + model.p3_women + model.p4_women +
+                                    model.p5_women + model.p6_women + model.p7_women + model.p8_women))}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <?php for ($i = 1; $i < 9; $i++): ?>
+                                    <td colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') . " $i" ?></td>
+                                <?php endfor; ?>
+                            </tr>
+                            <tr>
+                                <?php for ($i = 1; $i < 17; $i++): ?>
+                                    <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
+                                <?php endfor; ?>
+                            </tr>
+                            <tr>
+                                <?php for ($i = 1; $i < 9; $i++): ?>
+                                    <td class="text-center">{{formatNumber(model.p<?= $i ?>_total)}}</td>
+                                    <td class="text-center">{{formatNumber(model.p<?= $i ?>_women)}}</td>
+                                <?php endfor; ?>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference">
+
+                </div>
             </div>
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.')?></th>
-                    <th class="text-center" rowspan="2" colspan="16"><?= Yii::t('app', 'Description')?></th>
-                    <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
-                </tr>
-                <tr>
-                    <th class="text-center"><?= Yii::t('app', 'Total')?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Women')?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Men')?></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th class="text-center" rowspan="4">VIII</th>
-                    <th class="text-center" colspan="16"><?= $this->title ?></th>
-                    <th class="text-center">{{formatNumber(model.p1_total + model.p2_total + model.p3_total + model.p4_total + model.p5_total + model.p6_total + model.p7_total + model.p8_total)}}</th>
-                    <th class="text-center">{{formatNumber(model.p1_women + model.p2_women + model.p3_women + model.p4_women + model.p5_women + model.p6_women + model.p7_women + model.p8_women)}}</th>
-                    <th class="text-center">{{formatNumber(model.p1_total + model.p2_total + model.p3_total + model.p4_total + model.p5_total + model.p6_total + model.p7_total + model.p8_total - (model.p1_women + model.p2_women + model.p3_women + model.p4_women + model.p5_women + model.p6_women + model.p7_women + model.p8_women))}}</th>
-                </tr>
-                <tr>
-                    <?php for ($i = 1; $i<9; $i++): ?>
-                    <td colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ'). " $i" ?></td>
-                    <?php endfor; ?>
-                </tr>
-                <tr>
-                    <?php for ($i = 1; $i < 17; $i++): ?>
-                        <td class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></td>
-                    <?php endfor; ?>
-                </tr>
-                <tr>
-                    <?php for ($i = 1; $i<9; $i++): ?>
-                        <td class="text-center">{{formatNumber(model.p<?=$i?>_total)}}</td>
-                        <td class="text-center">{{formatNumber(model.p<?=$i?>_women)}}</td>
-                    <?php endfor; ?>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
@@ -139,29 +173,29 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
-  app.controller('officerPositionController', function($scope, $http, $sce, $timeout) {
+  app.controller('officerPositionController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-position/';
     $scope.mode = 'read';
-    $scope.changemode = function() {
-      $scope.mode = $scope.mode == 'read'?'input':'read';
+    $scope.changemode = function () {
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
-    $http.get($scope.url+ 'get')
-      .then(function(r) {
+    $http.get($scope.url + 'get')
+      .then(function (r) {
         $scope.years = r.data.years;
-      }, function(r) {
+      }, function (r) {
         $scope.response = r;
         $timeout(function () {
           $scope.response = null;
         }, 15000);
       });
 
-    $scope.enquiry = function() {
+    $scope.enquiry = function () {
       $scope.model = null;
-      if($scope.year)
-        $http.get($scope.url + 'enquiry&year='+$scope.year.id)
-          .then(function(r) {
+      if ($scope.year)
+        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+          .then(function (r) {
             $scope.model = r.data.model;
-            if(r.data.model) {
+            if (r.data.model) {
               $scope.model.p1_total = parseInt($scope.model.p1_total);
               $scope.model.p2_total = parseInt($scope.model.p2_total);
               $scope.model.p3_total = parseInt($scope.model.p3_total);
@@ -180,7 +214,7 @@ $this->params['breadcrumbs'][] = $this->title;
               $scope.model.p7_women = parseInt($scope.model.p7_women);
               $scope.model.p8_women = parseInt($scope.model.p8_women);
             }
-          }, function(r) {
+          }, function (r) {
             $scope.response = r;
             $timeout(function () {
               $scope.response = null;
@@ -188,18 +222,18 @@ $this->params['breadcrumbs'][] = $this->title;
           });
     };
 
-    $scope.save = function() {
-      if($scope.year && $scope.model) {
-        $http.post($scope.url+'save&year='+$scope.year.id, {
+    $scope.save = function () {
+      if ($scope.year && $scope.model) {
+        $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'Model': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function(r) {
+        }).then(function (r) {
           $scope.response = r;
           $scope.enquiry();
-          $timeout(function() {
+          $timeout(function () {
             $scope.response = null;
           }, 15000);
-        }, function(r) {
+        }, function (r) {
           $scope.response = r;
           $timeout(function () {
             $scope.response = null;
@@ -208,7 +242,7 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.formatNumber = function(num, dec) {
+    $scope.formatNumber = function (num, dec) {
       if (dec === undefined) dec = 2;
       var r = "" + Math.abs(parseFloat(num).toFixed(dec));
       var decimals = "";

@@ -31,56 +31,75 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
-        <div class="card-title-w-btn ">
-            <h3><?= $this->title ?></h3>
-            <p>
-                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
-            </p>
-        </div>
-        <table class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th class="text-center" rowspan="2">ປີ</th>
-                <th class="text-center" colspan="2">ຈຳນວນພົນລວມທົ່ວປະເທດ</th>
-                <th class="text-center" rowspan="2">ຈຳນວນແຂວງ</th>
-                <th class="text-center" rowspan="2">ຈຳນວນເມືອງ</th>
-                <th class="text-center" rowspan="2">ຈຳນວນບ້ານ</th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Married') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Divorced') ?></th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Born') ?></th>
-                <th class="text-center" colspan="2">ເສຍຊີວິດ</th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-In') ?></th>
-                <th class="text-center" colspan="2">ຍ້າຍອອກໄປ</th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Real') ?></th>
-            </tr>
-            <tr>
-                <?php for($i = 0; $i < 12; $i++): ?>
-                <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></th>
-                <?php endfor; ?>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="m in models">
-                <td>{{m.year}}</td>
-                <?php foreach ($columns as $c): ?>
-                    <td class="text-center">{{m.<?= $c ?> | number}}</td>
-                <?php endforeach; ?>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <div ng-show="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#chart" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?></h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center" rowspan="2">ປີ</th>
+                                <th class="text-center" colspan="2">ຈຳນວນພົນລວມທົ່ວປະເທດ</th>
+                                <th class="text-center" rowspan="2">ຈຳນວນແຂວງ</th>
+                                <th class="text-center" rowspan="2">ຈຳນວນເມືອງ</th>
+                                <th class="text-center" rowspan="2">ຈຳນວນບ້ານ</th>
+                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Married') ?></th>
+                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Divorced') ?></th>
+                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Born') ?></th>
+                                <th class="text-center" colspan="2">ເສຍຊີວິດ</th>
+                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-In') ?></th>
+                                <th class="text-center" colspan="2">ຍ້າຍອອກໄປ</th>
+                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Real') ?></th>
+                            </tr>
+                            <tr>
+                                <?php for ($i = 0; $i < 12; $i++): ?>
+                                    <th class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></th>
+                                <?php endfor; ?>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="m in models">
+                                <td>{{m.year}}</td>
+                                <?php foreach ($columns as $c): ?>
+                                    <td class="text-center">{{m.<?= $c ?> | number}}</td>
+                                <?php endforeach; ?>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="chart">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <h3>ເສັ້ນສະແດງສົມທຽບການເພີ່ມຂຶ້ນ-ຫຼຸດລົງ ຂອງພົນລະເມືອງ</h3>
+                            <canvas id="stat" class="chart chart-bar"
+                                    chart-data="stat.data"
+                                    chart-labels="stat.labels"
+                                    chart-series="stat.series"
+                                    chart-colors="stat.colors"
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference">
 
-    <div class="col-sm-12">
-        <div class="card">
-            <h3>ເສັ້ນສະແດງສົມທຽບການເພີ່ມຂຶ້ນ-ຫຼຸດລົງ ຂອງພົນລະເມືອງ</h3>
-            <canvas id="stat" class="chart chart-bar"
-                    chart-data="stat.data"
-                    chart-labels="stat.labels"
-                    chart-series="stat.series"
-                    chart-colors="stat.colors"
-            </canvas
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -88,22 +107,22 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/angular-chart.js"></script>
 <script type="text/javascript">
-    var app = angular.module('mohaApp', ['chart.js']);
-  app.controller('statPopulationMovementController', function($scope, $http, $sce, $timeout) {
+  var app = angular.module('mohaApp', ['chart.js']);
+  app.controller('statPopulationMovementController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-population-movement-chart/';
-    $scope.enquiry = function() {
-      $scope.model=null;
-        $http.get($scope.url + 'inquiry')
-          .then(function(r) {
-            $scope.models = r.data.models;
-            $scope.stat = r.data.stat;
-            $scope.stat.colors = ['#FF0000', '#0000FF'];
-          }, function(r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+    $scope.enquiry = function () {
+      $scope.model = null;
+      $http.get($scope.url + 'inquiry')
+        .then(function (r) {
+          $scope.models = r.data.models;
+          $scope.stat = r.data.stat;
+          $scope.stat.colors = ['#FF0000', '#0000FF'];
+        }, function (r) {
+          $scope.response = r;
+          $timeout(function () {
+            $scope.response = null;
+          }, 15000);
+        });
     };
 
     $scope.enquiry();

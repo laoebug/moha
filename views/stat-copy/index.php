@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+            <select class="form-control" ng-model="year" ng-change="enquiry()"
+                    ng-options="y.year for y in years"></select>
         </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -24,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+            </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-6">
                     <label>ເນື້ອໃນກິດຈະກຳ</label>
@@ -33,12 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-sm-6 text-center">
                     <label><?= Yii::t('app', 'ໄລຍະເວລາຈັດຕັ້ງປະຕິບັດ') ?></label>
                 </div>
-                    <div class="col-sm-3">
-                        <input class="form-control" ng-model="model.start_year" type="number" min="1900" max="{{model.end_year}}">
-                    </div>
-                    <div class="col-sm-3">
-                        <input class="form-control" ng-model="model.end_year" type="number" min="{{model.start_year}}" max="2999">
-                    </div>
+                <div class="col-sm-3">
+                    <input class="form-control" ng-model="model.start_year" type="number" min="1900"
+                           max="{{model.end_year}}">
+                </div>
+                <div class="col-sm-3">
+                    <input class="form-control" ng-model="model.end_year" type="number" min="{{model.start_year}}"
+                           max="2999">
+                </div>
 
                 <div class="col-sm-6">
                     <label>ສັງລວມ</label>
@@ -67,63 +71,78 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div ng-if="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
-        <div class="card" style="overflow-x: scroll">
-            <div class="card-title-w-btn ">
-                <h3><?= $this->title ?> {{year.year}}</h3>
-                <p>
-                    <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                    <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
-                </p>
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card" style="overflow-x: scroll">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?> {{year.year}}</h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center">ລ/ດ</th>
+                                <th class="text-center">ເນື້ອໃນກິດຈະກຳ</th>
+                                <th class="text-center">ໄລຍະເວລາ ຈັດຕັ້ງປະຕິບັດ</th>
+                                <th class="text-center">ສັງລວມ</th>
+                                <th class="text-center">ໝາຍເຫດ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="m in models" ng-click="select(m)" style="cursor: pointer">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td>{{m.activity}}</td>
+                                <td class="text-center">{{m.start_year}} - {{m.end_year}}</td>
+                                <td class="text-center">{{m.summary}}</td>
+                                <td>{{m.remark}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference">
+
+                </div>
             </div>
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th class="text-center">ລ/ດ</th>
-                    <th class="text-center">ເນື້ອໃນກິດຈະກຳ</th>
-                    <th class="text-center">ໄລຍະເວລາ ຈັດຕັ້ງປະຕິບັດ</th>
-                    <th class="text-center">ສັງລວມ</th>
-                    <th class="text-center">ໝາຍເຫດ</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="m in models" ng-click="select(m)" style="cursor: pointer">
-                        <td class="text-center">{{$index + 1}}</td>
-                        <td>{{m.activity}}</td>
-                        <td class="text-center">{{m.start_year}} - {{m.end_year}}</td>
-                        <td class="text-center">{{m.summary}}</td>
-                        <td>{{m.remark}}</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
-  app.controller('statCopy', function($scope, $http, $sce, $timeout) {
+  app.controller('statCopy', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-copy/';
-    $http.get($scope.url+ 'get')
-      .then(function(r) {
+    $http.get($scope.url + 'get')
+      .then(function (r) {
         $scope.years = r.data.years;
-      }, function(r) {
+      }, function (r) {
         $scope.response = r;
         $timeout(function () {
           $scope.response = null;
         }, 15000);
       });
     $scope.mode = 'read';
-    $scope.changemode = function() {
-      $scope.mode = $scope.mode == 'read'?'input':'read';
+    $scope.changemode = function () {
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
 
-    $scope.enquiry = function() {
+    $scope.enquiry = function () {
       $scope.model = null;
-      if($scope.year)
-        $http.get($scope.url + 'enquiry&year='+$scope.year.id)
-          .then(function(r) {
+      if ($scope.year)
+        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+          .then(function (r) {
             $scope.models = r.data.models;
-          }, function(r) {
+          }, function (r) {
             $scope.response = r;
             $timeout(function () {
               $scope.response = null;
@@ -131,19 +150,19 @@ $this->params['breadcrumbs'][] = $this->title;
           });
     };
 
-    $scope.save = function() {
-      if($scope.year && $scope.model) {
-        $http.post($scope.url+'save&year='+$scope.year.id, {
+    $scope.save = function () {
+      if ($scope.year && $scope.model) {
+        $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'Model': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function(r) {
+        }).then(function (r) {
           $scope.model = null;
           $scope.response = r;
           $scope.enquiry();
-          $timeout(function() {
+          $timeout(function () {
             $scope.response = null;
           }, 15000);
-        }, function(r) {
+        }, function (r) {
           $scope.response = r;
           $timeout(function () {
             $scope.response = null;
@@ -152,20 +171,20 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.select = function(m) {
-        $scope.model = m;
-        $scope.model.start_year = parseInt(m.start_year);
-        $scope.model.end_year = parseInt(m.end_year);
+    $scope.select = function (m) {
+      $scope.model = m;
+      $scope.model.start_year = parseInt(m.start_year);
+      $scope.model.end_year = parseInt(m.end_year);
     };
 
-    $scope.add = function() {
-        $scope.model.id = null;
-        $scope.save();
+    $scope.add = function () {
+      $scope.model.id = null;
+      $scope.save();
     };
 
-    $scope.delete = function() {
-      if($scope.model)
-        if($scope.model.id)
+    $scope.delete = function () {
+      if ($scope.model)
+        if ($scope.model.id)
           swal({
             title: "ໝັ້ນໃຈບໍ່?",
             text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
@@ -175,19 +194,19 @@ $this->params['breadcrumbs'][] = $this->title;
             cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
             closeOnConfirm: true,
             closeOnCancel: true
-          }, function(isConfirm) {
+          }, function (isConfirm) {
             if (isConfirm) {
               $http.post($scope.url + 'delete', {
                 'Model': $scope.model,
                 '_csrf': $('meta[name="csrf-token"]').attr("content")
-              }).then(function(r){
+              }).then(function (r) {
                 $scope.model = null;
                 $scope.response = r;
                 $scope.enquiry();
-                $timeout(function() {
+                $timeout(function () {
                   $scope.response = null;
                 }, 15000);
-              }, function(r) {
+              }, function (r) {
                 $scope.response = r;
                 $timeout(function () {
                   $scope.response = null;
