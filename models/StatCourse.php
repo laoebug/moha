@@ -8,16 +8,14 @@ use Yii;
  * This is the model class for table "stat_course".
  *
  * @property integer $id
- * @property string $name
- * @property integer $deleted
- * @property integer $position
+ * @property integer $saved
  * @property string $last_update
  * @property integer $user_id
- * @property integer $stat_course_id
+ * @property integer $phiscal_year_id
  *
- * @property StatCourse $statCourse
- * @property StatCourse[] $statCourses
+ * @property PhiscalYear $phiscalYear
  * @property User $user
+ * @property StatCourseDetail[] $statCourseDetails
  */
 class StatCourse extends \yii\db\ActiveRecord
 {
@@ -35,11 +33,10 @@ class StatCourse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'last_update', 'user_id'], 'required'],
-            [['deleted', 'position', 'user_id', 'stat_course_id'], 'integer'],
+            [['saved', 'user_id', 'phiscal_year_id'], 'integer'],
+            [['last_update', 'user_id', 'phiscal_year_id'], 'required'],
             [['last_update'], 'safe'],
-            [['name'], 'string', 'max' => 255],
-            [['stat_course_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatCourse::className(), 'targetAttribute' => ['stat_course_id' => 'id']],
+            [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -51,29 +48,19 @@ class StatCourse extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'deleted' => Yii::t('app', 'Deleted'),
-            'position' => Yii::t('app', 'Position'),
+            'saved' => Yii::t('app', 'Saved'),
             'last_update' => Yii::t('app', 'Last Update'),
             'user_id' => Yii::t('app', 'User ID'),
-            'stat_course_id' => Yii::t('app', 'Stat Course ID'),
+            'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStatCourse()
+    public function getPhiscalYear()
     {
-        return $this->hasOne(StatCourse::className(), ['id' => 'stat_course_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStatCourses()
-    {
-        return $this->hasMany(StatCourse::className(), ['stat_course_id' => 'id']);
+        return $this->hasOne(PhiscalYear::className(), ['id' => 'phiscal_year_id']);
     }
 
     /**
@@ -82,6 +69,14 @@ class StatCourse extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatCourseDetails()
+    {
+        return $this->hasMany(StatCourseDetail::className(), ['stat_course_id' => 'id']);
     }
 
     /**

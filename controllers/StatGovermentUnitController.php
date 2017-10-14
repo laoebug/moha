@@ -193,19 +193,15 @@ class StatGovermentUnitController extends Controller
         ]);
     }
 
-    /**
-     * Finds the StatGovermentUnit model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return StatGovermentUnit the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = StatGovermentUnit::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException(Yii::t('app','The requested page does not exist.'));
-        }
+    public function actionUpload() {
+        $this->enableCsrfValidation = false;
+        $post = Yii::$app->request->post();
+        if(isset($post))
+            print_r($post);
+
+        if(isset($_FILES))
+            print_r($_FILES);
+
+//        $this->enableCsrfValidation = true;
     }
 }

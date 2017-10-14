@@ -15,11 +15,14 @@ use Yii;
  * @property integer $user_id
  *
  * @property User $user
+ * @property StatContractDetail[] $statContractDetails
  * @property StatOfficerAgelevelDetail[] $statOfficerAgelevelDetails
  * @property StatOfficerEthnicDetail[] $statOfficerEthnicDetails
+ * @property StatOfficerNewDetail[] $statOfficerNewDetails
  * @property StatOfficerSalaryDetail[] $statOfficerSalaryDetails
  * @property StatOfficerTechnicalDetail[] $statOfficerTechnicalDetails
  * @property StatPositionDetail[] $statPositionDetails
+ * @property StatResignDetail[] $statResignDetails
  */
 class OfficerLevel extends \yii\db\ActiveRecord
 {
@@ -71,6 +74,14 @@ class OfficerLevel extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getStatContractDetails()
+    {
+        return $this->hasMany(StatContractDetail::className(), ['officer_level_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getStatOfficerAgelevelDetails()
     {
         return $this->hasMany(StatOfficerAgelevelDetail::className(), ['officer_level_id' => 'id']);
@@ -82,6 +93,14 @@ class OfficerLevel extends \yii\db\ActiveRecord
     public function getStatOfficerEthnicDetails()
     {
         return $this->hasMany(StatOfficerEthnicDetail::className(), ['officer_level_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatOfficerNewDetails()
+    {
+        return $this->hasMany(StatOfficerNewDetail::className(), ['officer_level_id' => 'id']);
     }
 
     /**
@@ -106,6 +125,14 @@ class OfficerLevel extends \yii\db\ActiveRecord
     public function getStatPositionDetails()
     {
         return $this->hasMany(StatPositionDetail::className(), ['officer_level_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatResignDetails()
+    {
+        return $this->hasMany(StatResignDetail::className(), ['officer_level_id' => 'id']);
     }
 
     /**

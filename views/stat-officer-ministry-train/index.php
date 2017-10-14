@@ -76,85 +76,104 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div class="col-sm-12" ng-if="models">
-        <div class="card">
-            <div class="card-title-w-btn ">
-                <h3><?= $this->title ?> {{year.year}}</h3>
-                <p>
-                    <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                    <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
-                </p>
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#chart" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?> {{year.year}}</h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="text-center" rowspan="5"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Ministry')?></th>
+                                <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Total')?></th>
+                                <th class="text-center" colspan="4"><?= Yii::t('app', 'Technical Trainning')?></th>
+                                <th class="text-center" colspan="4"><?= Yii::t('app', 'Theory Trainning')?></th>
+                            </tr>
+                            <tr>
+                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Local') ?></th>
+                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Oversea') ?></th>
+                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Local') ?></th>
+                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Oversea') ?></th>
+                            </tr>
+                            <tr>
+                                <?php for($i=0;$i<10;$i++): ?>
+                                    <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></th>
+                                <?php endfor; ?>
+                            </tr>
+                            <tr>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center">{{formatNumber(sum('tech_in_total') + sum('tech_out_total') + sum('theo_in_total') + sum('theo_out_total'))}}</th>
+                                <th class="text-center">{{formatNumber(sum('tech_in_women') + sum('tech_out_women') + sum('theo_in_women') + sum('theo_out_women'))}}</th>
+                                <th class="text-center">{{formatNumber(sum('tech_in_total'))}}</th>
+                                <th class="text-center">{{formatNumber(sum('tech_in_women'))}}</th>
+                                <th class="text-center">{{formatNumber(sum('tech_out_total'))}}</th>
+                                <th class="text-center">{{formatNumber(sum('tech_out_women'))}}</th>
+                                <th class="text-center">{{formatNumber(sum('theo_in_total'))}}</th>
+                                <th class="text-center">{{formatNumber(sum('theo_in_women'))}}</th>
+                                <th class="text-center">{{formatNumber(sum('theo_out_total'))}}</th>
+                                <th class="text-center">{{formatNumber(sum('theo_out_women'))}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="m in models">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td class="text-center">{{m.name}}</td>
+                                <td class="text-center">{{formatNumber(sumtotal(m)) | number}}</td>
+                                <td class="text-center">{{formatNumber(sumwomen(m)) | number}}</td>
+                                <td class="text-center">{{formatNumber(m.tech_in_total )| number}}</td>
+                                <td class="text-center">{{formatNumber(m.tech_in_women )| number}}</td>
+                                <td class="text-center">{{formatNumber(m.tech_out_total) | number}}</td>
+                                <td class="text-center">{{formatNumber(m.tech_out_women) | number}}</td>
+                                <td class="text-center">{{formatNumber(m.theo_in_total )| number}}</td>
+                                <td class="text-center">{{formatNumber(m.theo_in_women )| number}}</td>
+                                <td class="text-center">{{formatNumber(m.theo_out_total) | number}}</td>
+                                <td class="text-center">{{formatNumber(m.theo_out_women) | number}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="chart">
+                    <div class="card" ng-show="stat">
+                        <h3><?= $this->title ?> {{year.year}}</h3>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <canvas id="stat" class="chart chart-bar"
+                                        chart-data="stat.data"
+                                        chart-labels="stat.labels"
+                                        chart-series="stat.series"
+                                        chart-colors="stat.colors"
+                                </canvas>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <canvas id="stat" class="chart chart-pie"
+                                        chart-data="stat.data"
+                                        chart-labels="stat.labels"
+                                        chart-series="stat.series"
+                                        chart-colors="stat.colors"
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference">
+                    າາາ
+                </div>
             </div>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th class="text-center" rowspan="5"><?= Yii::t('app', 'No.') ?></th>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'Ministry')?></th>
-                    <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Total')?></th>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Technical Trainning')?></th>
-                    <th class="text-center" colspan="4"><?= Yii::t('app', 'Theory Trainning')?></th>
-                </tr>
-                <tr>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Local') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Oversea') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Local') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Oversea') ?></th>
-                </tr>
-                <tr>
-                    <?php for($i=0;$i<10;$i++): ?>
-                        <th class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></th>
-                    <?php endfor; ?>
-                </tr>
-                <tr>
-                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center">{{formatNumber(sum('tech_in_total') + sum('tech_out_total') + sum('theo_in_total') + sum('theo_out_total'))}}</th>
-                    <th class="text-center">{{formatNumber(sum('tech_in_women') + sum('tech_out_women') + sum('theo_in_women') + sum('theo_out_women'))}}</th>
-                    <th class="text-center">{{formatNumber(sum('tech_in_total'))}}</th>
-                    <th class="text-center">{{formatNumber(sum('tech_in_women'))}}</th>
-                    <th class="text-center">{{formatNumber(sum('tech_out_total'))}}</th>
-                    <th class="text-center">{{formatNumber(sum('tech_out_women'))}}</th>
-                    <th class="text-center">{{formatNumber(sum('theo_in_total'))}}</th>
-                    <th class="text-center">{{formatNumber(sum('theo_in_women'))}}</th>
-                    <th class="text-center">{{formatNumber(sum('theo_out_total'))}}</th>
-                    <th class="text-center">{{formatNumber(sum('theo_out_women'))}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="m in models">
-                        <td class="text-center">{{$index + 1}}</td>
-                        <td class="text-center">{{m.name}}</td>
-                        <td class="text-center">{{formatNumber(sumtotal(m)) | number}}</td>
-                        <td class="text-center">{{formatNumber(sumwomen(m)) | number}}</td>
-                        <td class="text-center">{{formatNumber(m.tech_in_total )| number}}</td>
-                        <td class="text-center">{{formatNumber(m.tech_in_women )| number}}</td>
-                        <td class="text-center">{{formatNumber(m.tech_out_total) | number}}</td>
-                        <td class="text-center">{{formatNumber(m.tech_out_women) | number}}</td>
-                        <td class="text-center">{{formatNumber(m.theo_in_total )| number}}</td>
-                        <td class="text-center">{{formatNumber(m.theo_in_women )| number}}</td>
-                        <td class="text-center">{{formatNumber(m.theo_out_total) | number}}</td>
-                        <td class="text-center">{{formatNumber(m.theo_out_women) | number}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="row card" ng-show="stat">
-            <h3><?= $this->title ?> {{year.year}}</h3>
-            <div class="col-sm-8">
-                <canvas id="stat" class="chart chart-bar"
-                        chart-data="stat.data"
-                        chart-labels="stat.labels"
-                        chart-series="stat.series"
-                        chart-colors="stat.colors"
-                </canvas
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <canvas id="stat" class="chart chart-pie"
-                    chart-data="stat.data"
-                    chart-labels="stat.labels"
-                    chart-series="stat.series"
-                    chart-colors="stat.colors"
-            </canvas
         </div>
     </div>
 </div>
