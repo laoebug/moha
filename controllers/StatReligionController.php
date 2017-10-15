@@ -64,7 +64,7 @@ class StatReligionController extends Controller
     public function actionEnquiry($year) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -120,7 +120,7 @@ class StatReligionController extends Controller
     public function actionInquiry($year, $province) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -138,7 +138,7 @@ class StatReligionController extends Controller
     public function actionSave($year) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -149,7 +149,7 @@ class StatReligionController extends Controller
 
         $post = Yii::$app->request->post();
         if(!isset($post)) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app','Inccorect Request Mehotd'));
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app','Incorrect Request Mehotd'));
             return;
         }
 
@@ -203,7 +203,7 @@ class StatReligionController extends Controller
     public function actionPrint($year) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -225,7 +225,7 @@ class StatReligionController extends Controller
     public function actionDownload($year) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 

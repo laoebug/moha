@@ -130,7 +130,7 @@ class StatCourseController extends Controller
             ->where(['d.id' => $post['id']])
             ->one();
         if(!isset($model)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Mode'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Mode'));
             return;
         }
         $model->deleted = 1;

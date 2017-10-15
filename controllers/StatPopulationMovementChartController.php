@@ -77,7 +77,7 @@ class StatPopulationMovementChartController extends Controller
     public function actionEnquiry($year) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -108,7 +108,7 @@ class StatPopulationMovementChartController extends Controller
     public function actionPrint($year) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -124,7 +124,7 @@ class StatPopulationMovementChartController extends Controller
     public function actionDownload($year) {
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 

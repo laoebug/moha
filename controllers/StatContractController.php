@@ -75,7 +75,7 @@ class StatContractController extends Controller
     public function actionSave($year) {
         $post = Yii::$app->request->post();
         if(!isset($post['Model'])) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Incorrect Request Method'));
             return;
         }
 

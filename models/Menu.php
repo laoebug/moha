@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use Yii;
@@ -9,13 +10,17 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property string $url
+ * @property string $icon
  * @property string $description
  * @property integer $deleted
  * @property integer $menugroup_id
  * @property integer $menu_parent_id
  * @property integer $input_id
  * @property string $input_dt_stamp
+ * @property integer $position
+ * @property string $table_name
  *
+ * @property Attachment[] $attachments
  * @property Menu $menuParent
  * @property Menu[] $menus
  * @property Menugroup $menugroup
@@ -126,13 +131,24 @@ class Menu extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
             'url' => Yii::t('app', 'Url'),
+            'icon' => Yii::t('app', 'Icon'),
             'description' => Yii::t('app', 'Description'),
             'deleted' => Yii::t('app', 'Deleted'),
             'menugroup_id' => Yii::t('app', 'Menugroup ID'),
             'menu_parent_id' => Yii::t('app', 'Menu Parent ID'),
             'input_id' => Yii::t('app', 'Input ID'),
-            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp')
+            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
+            'position' => Yii::t('app', 'Position'),
+            'table_name' => Yii::t('app', 'Table Name'),
         ];
+    }
+
+    /**
+     * * @return \yii\db\ActiveQuery
+     */
+    public function getAttachments()
+    {
+        return $this->hasMany(Attachment::className(), ['menu_id' => 'id']);
     }
 
     /**
