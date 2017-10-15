@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+            <select class="form-control" ng-model="year" ng-change="enquiry()"
+                    ng-options="y.year for y in years"></select>
         </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -24,47 +25,80 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+            </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-12">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th class="text-center"><?= Yii::t('app', 'Description')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Total')?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Women')?></th>
+                            <th class="text-center"><?= Yii::t('app', 'Description') ?></th>
+                            <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                            <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>ຮັບເບ້ຍບຳນານ</td><td><input type="number" min="0" ng-model="model.retire_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.retire_women" max="{{model.retire_total}}" class="form-control"></td>
+                            <td>ຮັບເບ້ຍບຳນານ</td>
+                            <td><input type="number" min="0" ng-model="model.retire_total" class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.retire_women" max="{{model.retire_total}}"
+                                       class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>ອຸດໜູນເທື່ອດຽວ (ບໍາເນັດ)</td><td><input type="number" min="0" ng-model="model.bumnet_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.bumnet_women" max="{{model.bumnet_total}}" class="form-control"></td>
+                            <td>ອຸດໜູນເທື່ອດຽວ (ບໍາເນັດ)</td>
+                            <td><input type="number" min="0" ng-model="model.bumnet_total" class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.bumnet_women" max="{{model.bumnet_total}}"
+                                       class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>ເສຍຊີວິດ</td><td><input type="number" min="0" ng-model="model.die_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.die_women" max="{{model.die_total}}" class="form-control"></td>
+                            <td>ເສຍຊີວິດ</td>
+                            <td><input type="number" min="0" ng-model="model.die_total" class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.die_women" max="{{model.die_total}}"
+                                       class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>ປະລະໜ້າທີ່</td><td><input type="number" min="0" ng-model="model.leave_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.leave_women" max="{{model.leave_total}}" class="form-control"></td>
+                            <td>ປະລະໜ້າທີ່</td>
+                            <td><input type="number" min="0" ng-model="model.leave_total" class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.leave_women" max="{{model.leave_total}}"
+                                       class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>ຖືກປະຕິບັດວິໄນ (ໄລ່ອອກຈາກການເປັນລັດຖະກອນ)</td><td><input type="number" min="0" ng-model="model.fire_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.fire_women" max="{{model.fire_total}}" class="form-control"></td>
+                            <td>ຖືກປະຕິບັດວິໄນ (ໄລ່ອອກຈາກການເປັນລັດຖະກອນ)</td>
+                            <td><input type="number" min="0" ng-model="model.fire_total" class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.fire_women" max="{{model.fire_total}}"
+                                       class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>ລາອອກ (ບໍ່ເອົາບຳເນັດ)</td><td><input type="number" min="0" ng-model="model.resign_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.resign_women" max="{{model.resign_total}}" class="form-control"></td>
+                            <td>ລາອອກ (ບໍ່ເອົາບຳເນັດ)</td>
+                            <td><input type="number" min="0" ng-model="model.resign_total" class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.resign_women" max="{{model.resign_total}}"
+                                       class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>ເສຍກຳລັງແຮງງານ</td><td><input type="number" min="0" ng-model="model.lose_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.lose_women" max="{{model.lose_total}}" class="form-control"></td>
+                            <td>ເສຍກຳລັງແຮງງານ</td>
+                            <td><input type="number" min="0" ng-model="model.lose_total" class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.lose_women" max="{{model.lose_total}}"
+                                       class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>ຍົກຍ້າຍໄປຢູ່ລັດວິສາຫະກິດ, ກຳລັງປະກອບອາວຸດ (ທະຫານ, ຕຳຫຼວດ)</td><td><input type="number" min="0" ng-model="model.move_soe_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.move_soe_women" max="{{model.move_ministry_total}}" class="form-control"></td>
+                            <td>ຍົກຍ້າຍໄປຢູ່ລັດວິສາຫະກິດ, ກຳລັງປະກອບອາວຸດ (ທະຫານ, ຕຳຫຼວດ)</td>
+                            <td><input type="number" min="0" ng-model="model.move_soe_total" class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.move_soe_women"
+                                       max="{{model.move_ministry_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td><td><input type="number" min="0" ng-model="model.moveto_ministry_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.moveto_ministry_women" max="{{model.moveto_ministry_total}}" class="form-control"></td>
+                            <td>ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td>
+                            <td><input type="number" min="0" ng-model="model.moveto_ministry_total"
+                                       class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.moveto_ministry_women"
+                                       max="{{model.moveto_ministry_total}}" class="form-control"></td>
                         </tr>
                         <tr>
-                            <td>ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td><td><input type="number" min="0" ng-model="model.movein_ministry_total" class="form-control"></td><td><input type="number" min="0" ng-model="model.movein_ministry_women" max="{{model.movein_ministry_total}}" class="form-control"></td>
+                            <td>ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td>
+                            <td><input type="number" min="0" ng-model="model.movein_ministry_total"
+                                       class="form-control"></td>
+                            <td><input type="number" min="0" ng-model="model.movein_ministry_women"
+                                       max="{{model.movein_ministry_total}}" class="form-control"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -81,102 +115,167 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div ng-show="model" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
-        <div class="card">
-            <div class="card-title-w-btn ">
-                <h3><?= $this->title ?> {{year.year}}</h3>
-                <p>
-                    <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                    <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
-                </p>
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?> {{year.year}}</h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Description') ?></th>
+                                <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Men') ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th class="text-center" rowspan="12">V</th>
+                                <th>ຈຳນວນລັດຖະກອນທີ່ອອກໃນຮູບການຕ່າງໆ</th>
+                                <th class="text-center">{{formatNumber(model.retire_total + model.bumnet_total +
+                                    model.die_total + model.leave_total + model.fire_total + model.resign_total +
+                                    model.lose_total)}}
+                                </th>
+                                <th class="text-center">{{formatNumber(model.retire_women + model.bumnet_women +
+                                    model.die_women + model.leave_women + model.fire_women + model.resign_women +
+                                    model.lose_women)}}
+                                </th>
+                                <th class="text-center">{{formatNumber(model.retire_total + model.bumnet_total +
+                                    model.die_total + model.leave_total + model.fire_total + model.resign_total +
+                                    model.lose_total - (model.retire_women + model.bumnet_women + model.die_women +
+                                    model.leave_women + model.fire_women + model.resign_women + model.lose_women))}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>1. ຮັບເບ້ຍບຳນານ</td>
+                                <td class='text-center'>{{formatNumber(model.retire_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.retire_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.retire_total - model.retire_women)}}</td>
+                            </tr>
+                            <tr>
+                                <td>2. ອຸດໜຸນເທື່ອດຽວ (ບຳເນັດ)</td>
+                                <td class='text-center'>{{formatNumber(model.bumnet_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.bumnet_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.bumnet_total - model.bumnet_women)}}</td>
+                            </tr>
+                            <tr>
+                                <td>3. ເສຍຊີວິດ</td>
+                                <td class='text-center'>{{formatNumber(model.die_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.die_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.die_total - model.die_women)}}</td>
+                            </tr>
+                            <tr>
+                                <td>4. ປະລະໜ້າທີ່</td>
+                                <td class='text-center'>{{formatNumber(model.leave_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.leave_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.leave_total - model.leave_women)}}</td>
+                            </tr>
+                            <tr>
+                                <td>5. ຖືກປະຕິບັດວິໄນ (ໄລ່ອອກຈາກການເປັນລັດຖະກອນ)</td>
+                                <td class='text-center'>{{formatNumber(model.fire_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.fire_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.fire_total - model.fire_women)}}</td>
+                            </tr>
+                            <tr>
+                                <td>6. ລາອອກ (ບໍ່ເອົາບຳເນັດ)</td>
+                                <td class='text-center'>{{formatNumber(model.resign_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.resign_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.resign_total - model.resign_women)}}</td>
+                            </tr>
+                            <tr>
+                                <td>7. ເສຍກຳລັງງານ</td>
+                                <td class='text-center'>{{formatNumber(model.lose_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.lose_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.lose_total - model.lose_women)}}</td>
+                            </tr>
+                            <tr>
+                                <td>8. ຍົກຍ້າຍໄປຢູ່ລັດວິສາຫະກິດ, ກຳລັງປະກອບອາວຸດ (ທະຫານ, ຕຳຫຼວດ)</td>
+                                <td class='text-center'>{{formatNumber(model.move_soe_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.move_soe_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.move_soe_total - model.move_soe_women)}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</th>
+                                <th class="text-center">{{formatNumber(model.moveto_ministry_total +
+                                    model.movein_ministry_total)}}
+                                </th>
+                                <th class="text-center">{{formatNumber(model.moveto_ministry_women +
+                                    model.movein_ministry_women)}}
+                                </th>
+                                <th class="text-center">{{formatNumber(model.moveto_ministry_total +
+                                    model.movein_ministry_total - (model.moveto_ministry_women +
+                                    model.movein_ministry_women))}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>1. ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td>
+                                <td class='text-center'>{{formatNumber(model.moveto_ministry_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.moveto_ministry_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.moveto_ministry_total -
+                                    model.moveto_ministry_women)}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2. ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td>
+                                <td class='text-center'>{{formatNumber(model.movein_ministry_total)}}</td>
+                                <td class='text-center'>{{formatNumber(model.movein_ministry_women)}}</td>
+                                <td class='text-center'>{{formatNumber(model.movein_ministry_total -
+                                    model.movein_ministry_women)}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference"></div>
             </div>
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.')?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Description')?></th>
-                        <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
-                    </tr>
-                    <tr>
-                        <th class="text-center"><?= Yii::t('app', 'Total')?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Women')?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Men')?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th class="text-center" rowspan="12">V</th>
-                    <th>ຈຳນວນລັດຖະກອນທີ່ອອກໃນຮູບການຕ່າງໆ</th>
-                    <th class="text-center">{{formatNumber(model.retire_total + model.bumnet_total + model.die_total + model.leave_total + model.fire_total + model.resign_total + model.lose_total)}}</th>
-                    <th class="text-center">{{formatNumber(model.retire_women + model.bumnet_women + model.die_women + model.leave_women + model.fire_women + model.resign_women + model.lose_women)}}</th>
-                    <th class="text-center">{{formatNumber(model.retire_total + model.bumnet_total + model.die_total + model.leave_total + model.fire_total + model.resign_total + model.lose_total - (model.retire_women + model.bumnet_women + model.die_women + model.leave_women + model.fire_women + model.resign_women + model.lose_women))}}</th>
-                </tr>
-                <tr>
-                    <td>1. ຮັບເບ້ຍບຳນານ</td><td class='text-center'>{{formatNumber(model.retire_total)}}</td><td class='text-center'>{{formatNumber(model.retire_women)}}</td><td class='text-center'>{{formatNumber(model.retire_total - model.retire_women)}}</td>
-                </tr>
-                <tr>
-                    <td>2. ອຸດໜຸນເທື່ອດຽວ (ບຳເນັດ)</td><td class='text-center'>{{formatNumber(model.bumnet_total)}}</td><td class='text-center'>{{formatNumber(model.bumnet_women)}}</td><td class='text-center'>{{formatNumber(model.bumnet_total - model.bumnet_women)}}</td>
-                </tr>
-                <tr>
-                    <td>3. ເສຍຊີວິດ</td><td class='text-center'>{{formatNumber(model.die_total)}}</td><td class='text-center'>{{formatNumber(model.die_women)}}</td><td class='text-center'>{{formatNumber(model.die_total - model.die_women)}}</td>
-                </tr>
-                <tr>
-                    <td>4. ປະລະໜ້າທີ່</td><td class='text-center'>{{formatNumber(model.leave_total)}}</td><td class='text-center'>{{formatNumber(model.leave_women)}}</td><td class='text-center'>{{formatNumber(model.leave_total - model.leave_women)}}</td>
-                </tr>
-                <tr>
-                    <td>5. ຖືກປະຕິບັດວິໄນ (ໄລ່ອອກຈາກການເປັນລັດຖະກອນ)</td><td class='text-center'>{{formatNumber(model.fire_total)}}</td><td class='text-center'>{{formatNumber(model.fire_women)}}</td><td class='text-center'>{{formatNumber(model.fire_total - model.fire_women)}}</td>
-                </tr>
-                <tr>
-                    <td>6. ລາອອກ (ບໍ່ເອົາບຳເນັດ)</td><td class='text-center'>{{formatNumber(model.resign_total)}}</td><td class='text-center'>{{formatNumber(model.resign_women)}}</td><td class='text-center'>{{formatNumber(model.resign_total - model.resign_women)}}</td>
-                </tr>
-                <tr>
-                    <td>7. ເສຍກຳລັງງານ</td><td class='text-center'>{{formatNumber(model.lose_total)}}</td><td class='text-center'>{{formatNumber(model.lose_women)}}</td><td class='text-center'>{{formatNumber(model.lose_total - model.lose_women)}}</td>
-                </tr>
-                <tr>
-                    <td>8. ຍົກຍ້າຍໄປຢູ່ລັດວິສາຫະກິດ, ກຳລັງປະກອບອາວຸດ (ທະຫານ, ຕຳຫຼວດ)</td><td class='text-center'>{{formatNumber(model.move_soe_total)}}</td><td class='text-center'>{{formatNumber(model.move_soe_women)}}</td><td class='text-center'>{{formatNumber(model.move_soe_total - model.move_soe_women)}}</td>
-                </tr>
-                <tr>
-                    <th>ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</th>
-                    <th class="text-center">{{formatNumber(model.moveto_ministry_total + model.movein_ministry_total)}}</th>
-                    <th class="text-center">{{formatNumber(model.moveto_ministry_women + model.movein_ministry_women)}}</th>
-                    <th class="text-center">{{formatNumber(model.moveto_ministry_total + model.movein_ministry_total - (model.moveto_ministry_women + model.movein_ministry_women))}}</th>
-                </tr>
-                <tr>
-                    <td>1. ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td><td class='text-center'>{{formatNumber(model.moveto_ministry_total)}}</td><td class='text-center'>{{formatNumber(model.moveto_ministry_women)}}</td><td class='text-center'>{{formatNumber(model.moveto_ministry_total - model.moveto_ministry_women)}}</td>
-                </tr>
-                <tr>
-                    <td>2. ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td><td class='text-center'>{{formatNumber(model.movein_ministry_total)}}</td><td class='text-center'>{{formatNumber(model.movein_ministry_women)}}</td><td class='text-center'>{{formatNumber(model.movein_ministry_total - model.movein_ministry_women)}}</td>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
-  app.controller('officerResignController', function($scope, $http, $sce, $timeout) {
+  app.controller('officerResignController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-resign/';
     $scope.mode = 'read';
-    $scope.changemode = function() {
-      $scope.mode = $scope.mode == 'read'?'input':'read';
+    $scope.changemode = function () {
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
-    $http.get($scope.url+ 'get')
-      .then(function(r) {
+    $http.get($scope.url + 'get')
+      .then(function (r) {
         $scope.years = r.data.years;
-      }, function(r) {
+      }, function (r) {
         $scope.response = r;
         $timeout(function () {
           $scope.response = null;
         }, 15000);
       });
 
-    $scope.enquiry = function() {
+    $scope.enquiry = function () {
       $scope.model = null;
-      if($scope.year)
-        $http.get($scope.url + 'enquiry&year='+$scope.year.id)
-          .then(function(r) {
+      if ($scope.year)
+        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+          .then(function (r) {
             $scope.model = r.data.model;
-            if(r.data.model) {
+            if (r.data.model) {
               $scope.model.retire_total = parseInt($scope.model.retire_total);
               $scope.model.bumnet_total = parseInt($scope.model.bumnet_total);
               $scope.model.die_total = parseInt($scope.model.die_total);
@@ -201,7 +300,7 @@ $this->params['breadcrumbs'][] = $this->title;
               $scope.model.moveto_ministry_women = parseInt($scope.model.moveto_ministry_women);
               $scope.model.movein_ministry_women = parseInt($scope.model.movein_ministry_women);
             }
-          }, function(r) {
+          }, function (r) {
             $scope.response = r;
             $timeout(function () {
               $scope.response = null;
@@ -209,18 +308,18 @@ $this->params['breadcrumbs'][] = $this->title;
           });
     };
 
-    $scope.save = function() {
-      if($scope.year && $scope.model) {
-        $http.post($scope.url+'save&year='+$scope.year.id, {
+    $scope.save = function () {
+      if ($scope.year && $scope.model) {
+        $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'Model': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function(r) {
+        }).then(function (r) {
           $scope.response = r;
           $scope.enquiry();
-          $timeout(function() {
+          $timeout(function () {
             $scope.response = null;
           }, 15000);
-        }, function(r) {
+        }, function (r) {
           $scope.response = r;
           $timeout(function () {
             $scope.response = null;
@@ -229,7 +328,7 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.formatNumber = function(num, dec) {
+    $scope.formatNumber = function (num, dec) {
       if (dec === undefined) dec = 2;
       var r = "" + Math.abs(parseFloat(num).toFixed(dec));
       var decimals = "";

@@ -3,11 +3,15 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
+use app\models\PhiscalYear;
+use app\models\StatContractDetail;
+use app\models\StatCourseDetail;
 use Codeception\Util\HttpCode;
 use function foo\func;
 use Yii;
 use app\models\StatCourse;
 use app\models\StatCourseSearch;
+use yii\base\Exception;
 use yii\db\ActiveQuery;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -27,52 +31,157 @@ class StatCourseController extends Controller
         return $this->render('index');
     }
 
-    public function actionEnquiry() {
-        $models = StatCourse::find()->alias('s')
-            ->select('s.*')
-            ->addSelect([
-                'parent' => 'c.name'
-            ])
-            ->join('on','stat_course c', 'c.stat_course_id=s.id')
-            ->with([
-                'statCourses' => function(ActiveQuery $query) {
-                    $query->orderBy('position');
-                }
-            ])
-            ->where(['s.deleted' => 0])->orderBy('s.position')->asArray()->all();
-        return json_encode(['models' => $models]);
+    public function actionGet() {
+        $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
+        return json_encode([
+            'years' => $years
+        ]);
     }
 
-    public function actionSave() {
+    public function actionEnquiry($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        $models = $this->getChilds($year, 0);
+        foreach ($models as $k => $model) {
+            $models[$k]['childs'] = $this->getChilds($year, $model['id']);
+            $models[$k]['parent'] = StatCourseDetail::find()->where(['id' => $model['parent_id']])->asArray()->one();
+        }
+        $parents = StatCourseDetail::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        return json_encode(['models' => $models, 'parents' => $parents]);
+    }
+
+    function getChilds($year, $parent) {
+        return StatCourseDetail::find()->alias('d')
+            ->join('join', 'stat_course c', 'c.id = d.stat_course_id and c.phiscal_year_id=:year', [':year'=> $year->id])
+            ->where(['parent_id' => $parent, 'deleted' => 0])->orderBy('position')
+            ->asArray()->all();
+    }
+
+    public function actionSave($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
         $post = Yii::$app->request->post();
         $model = null;
-        if(isset($post))
-            if(isset($post['Model'])) {
-                $model = isset($post['Model']['id']) ? StatCourse::findOne($post['Model']['id']) : new StatCourse();
-                $model->attributes = $post['Model'];
-                $model->last_update = date('Y-m-d H:i:s');
-                $model->user_id = Yii::$app->user->id;
-                if(!$model->save()) {
-                    MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
-                    return;
+        if(isset($post['Model'])) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $model = StatCourse::find()->where(['phiscal_year_id' => $year->id])->one();
+                if(!isset($model)) {
+                    $model = new StatCourse();
+                    $model->phiscal_year_id = $year->id;
+                    $model->user_id = Yii::$app->user->id;
                 }
-                return json_encode(['message' => 'OK']);
+                $model->saved = 1;
+                $model->last_update = date('Y-m-d H:i:s');
+                if(!$model->save())
+                    throw new Exception(json_encode($model->errors));
+
+                if(isset($post['Model']['id'])) {
+                    $detail = StatCourseDetail::findOne($post['Model']['id']);
+                    if(!isset($detail)) {
+                        $detail = new StatCourseDetail();
+                        $detail->stat_course_id = $model->id;
+                        $detail->deleted = 0;
+                    }
+                } else {
+                    $detail = new StatCourseDetail();
+                    $detail->stat_course_id = $model->id;
+                    $detail->deleted = 0;
+                }
+                $detail->stat_course_id = $model->id;
+                $detail->attributes = $post['Model'];
+                $detail->parent_id = isset($post['Model']['parent']) ? $post['Model']['parent']['id'] : 0;
+                $detail->deleted = 0;
+                if(!$detail->save())
+                    throw new Exception(json_encode($detail->errors));
+
+                $transaction->commit();
+            } catch (Exception $ex) {
+                $transaction->rollBack();
+                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $ex->getMessage());
+                return;
             }
+        }
     }
 
-    /**
-     * Finds the StatCourse model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return StatCourse the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = StatCourse::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+    public function actionDelete($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
         }
+
+        $post = Yii::$app->request->post();
+        if(!isset($post)) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Incorrect Requested'));
+            return;
+        }
+
+        $model = StatCourseDetail::find()->alias('d')
+            ->join('join', 'stat_course c', 'c.id=d.stat_course_id and c.phiscal_year_id=:year', [':year' => $year->id])
+            ->where(['d.id' => $post['id']])
+            ->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Mode'));
+            return;
+        }
+        $model->deleted = 1;
+        if(!$model->save()) {
+            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
+            return;
+        }
+    }
+
+    public function actionPrint($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        $models = $this->getChilds($year, 0);
+        foreach ($models as $k => $model) {
+            $models[$k]['childs'] = $this->getChilds($year, $model['id']);
+            $models[$k]['parent'] = StatCourseDetail::find()->where(['id' => $model['parent_id']])->asArray()->one();
+        }
+
+        return $this->renderPartial('../ministry/print', [
+            'content' => $this->renderPartial('table', [
+                'romans' => ['I', 'II', 'III', 'IV', 'V','VI','VII','VIII', 'IX', 'X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'],
+                'year' => $year,
+                'models' => $models
+            ])
+        ]);
+    }
+
+    public function actionDownload($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        $models = $this->getChilds($year, 0);
+        foreach ($models as $k => $model) {
+            $models[$k]['childs'] = $this->getChilds($year, $model['id']);
+            $models[$k]['parent'] = StatCourseDetail::find()->where(['id' => $model['parent_id']])->asArray()->one();
+        }
+
+        return $this->renderPartial('../ministry/excel', [
+            'file' => 'stat course '. $year->year.'.xls',
+            'content' => $this->renderPartial('table', [
+                'romans' => ['I', 'II', 'III', 'IV', 'V','VI','VII','VIII', 'IX', 'X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX'],
+                'year' => $year,
+                'models' => $models
+            ])
+        ]);
     }
 }

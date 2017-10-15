@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+            <select class="form-control" ng-model="year" ng-change="enquiry()"
+                    ng-options="y.year for y in years"></select>
         </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -24,23 +25,24 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+            </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-12">
                     <div class="col-sm-3">
-                        <label ><?= Yii::t('app', 'Center') ?></label>
+                        <label><?= Yii::t('app', 'Center') ?></label>
                         <input class="form-control" ng-model="model.center" min="0" type="number">
                     </div>
                     <div class="col-sm-3">
-                        <label ><?= Yii::t('app', 'Province') ?></label>
+                        <label><?= Yii::t('app', 'Province') ?></label>
                         <input class="form-control" ng-model="model.province" min="0" type="number">
                     </div>
                     <div class="col-sm-3">
-                        <label ><?= Yii::t('app', 'District') ?></label>
+                        <label><?= Yii::t('app', 'District') ?></label>
                         <input class="form-control" ng-model="model.district" min="0" type="number">
                     </div>
                     <div class="col-sm-3">
-                        <label >&nbsp;</label>
+                        <label>&nbsp;</label>
                         <button type="button" class="btn btn-primary col-sm-12" ng-click="save()">
                             <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
                         </button>
@@ -50,42 +52,59 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div ng-show="model" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
-        <div class="card">
-            <div class="card-title-w-btn ">
-                <h3><?= $this->title ?> {{year.year}}</h3>
-                <p>
-                    <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
-                    <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
-                </p>
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?> {{year.year}}</h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Description') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="text-center" rowspan="4">IX</td>
+                                <td>ແຜນຄວາມຕ້ອງການລັດຖະກອນໃໝ່</td>
+                                <td class="text-center">{{formatNumber(model.center + model.province+
+                                    model.district)}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ຂັ້ນສູນກາງ</td>
+                                <td class="text-center">{{formatNumber(model.center)}}</td>
+                            </tr>
+                            <tr>
+                                <td>ຂັ້ນແຂວງ</td>
+                                <td class="text-center">{{formatNumber(model.province)}}</td>
+                            </tr>
+                            <tr>
+                                <td>ຂັ້ນເມືອງ</td>
+                                <td class="text-center">{{formatNumber(model.district)}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference">
+
+                </div>
             </div>
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Description') ?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-center" rowspan="4">IX</td>
-                        <td>ແຜນຄວາມຕ້ອງການລັດຖະກອນໃໝ່</td>
-                        <td class="text-center">{{formatNumber(model.center + model.province+ model.district)}}</td>
-                    </tr>
-                    <tr>
-                        <td>ຂັ້ນສູນກາງ</td>
-                        <td class="text-center">{{formatNumber(model.center)}}</td>
-                    </tr>
-                    <tr>
-                        <td>ຂັ້ນແຂວງ</td>
-                        <td class="text-center">{{formatNumber(model.province)}}</td>
-                    </tr>
-                    <tr>
-                        <td>ຂັ້ນເມືອງ</td>
-                        <td class="text-center">{{formatNumber(model.district)}}</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
@@ -93,34 +112,34 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
-  app.controller('officerNeedController', function($scope, $http, $sce, $timeout) {
+  app.controller('officerNeedController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-need/';
     $scope.mode = 'read';
-    $scope.changemode = function() {
-      $scope.mode = $scope.mode == 'read'?'input':'read';
+    $scope.changemode = function () {
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
-    $http.get($scope.url+ 'get')
-      .then(function(r) {
+    $http.get($scope.url + 'get')
+      .then(function (r) {
         $scope.years = r.data.years;
-      }, function(r) {
+      }, function (r) {
         $scope.response = r;
         $timeout(function () {
           $scope.response = null;
         }, 15000);
       });
 
-    $scope.enquiry = function() {
+    $scope.enquiry = function () {
       $scope.model = null;
-      if($scope.year)
-        $http.get($scope.url + 'enquiry&year='+$scope.year.id)
-          .then(function(r) {
+      if ($scope.year)
+        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+          .then(function (r) {
             $scope.model = r.data.model;
-            if(r.data.model) {
+            if (r.data.model) {
               $scope.model.center = parseInt($scope.model.center);
               $scope.model.province = parseInt($scope.model.province);
               $scope.model.district = parseInt($scope.model.district);
             }
-          }, function(r) {
+          }, function (r) {
             $scope.response = r;
             $timeout(function () {
               $scope.response = null;
@@ -128,18 +147,18 @@ $this->params['breadcrumbs'][] = $this->title;
           });
     };
 
-    $scope.save = function() {
-      if($scope.year && $scope.model) {
-        $http.post($scope.url+'save&year='+$scope.year.id, {
+    $scope.save = function () {
+      if ($scope.year && $scope.model) {
+        $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'Model': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function(r) {
+        }).then(function (r) {
           $scope.response = r;
           $scope.enquiry();
-          $timeout(function() {
+          $timeout(function () {
             $scope.response = null;
           }, 15000);
-        }, function(r) {
+        }, function (r) {
           $scope.response = r;
           $timeout(function () {
             $scope.response = null;
@@ -148,7 +167,7 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.formatNumber = function(num, dec) {
+    $scope.formatNumber = function (num, dec) {
       if (dec === undefined) dec = 2;
       var r = "" + Math.abs(parseFloat(num).toFixed(dec));
       var decimals = "";

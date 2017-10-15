@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     chart-series="stat.series"
                     chart-colors="stat.colors"
                     chart-options="options"
-            </canvas
+            </canvas>
         </div>
     </div>
 </div>

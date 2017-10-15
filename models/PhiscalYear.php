@@ -17,6 +17,7 @@ use Yii;
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatContract[] $statContracts
  * @property StatCopy[] $statCopies
+ * @property StatCourse[] $statCourses
  * @property StatDocument[] $statDocuments
  * @property StatEthnic[] $statEthnics
  * @property StatExplore[] $statExplores
@@ -135,6 +136,14 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function getStatCopies()
     {
         return $this->hasMany(StatCopy::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatCourses()
+    {
+        return $this->hasMany(StatCourse::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

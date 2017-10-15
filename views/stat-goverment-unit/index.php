@@ -52,6 +52,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label for=""><?= Yii::t('app', 'Remark') ?></label>
                     <input type="text" class="form-control" ng-model="remark">
                 </div>
+                <div class="col-sm-4">
+                    <label class="control-label col-sm-12">ເອກສານອ້າງອີງ</label>
+                    <input class="form-control" type="file" file-model="myFile">
+                </div>
                 <div class="col-sm-2 col-sm-offset-5" style="margin-top: 1em">
                     <button type="button" class="btn btn-primary col-sm-12" ng-click="save()">
                         <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
@@ -66,11 +70,61 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript">
     var app = angular.module('mohaApp', []);
     var url = 'index.php?r=stat-goverment-unit/';
-    app.controller('statGovermentUnitController', function($scope, $http, $sce, $timeout) {
+
+    app.directive('fileModel', ['$parse', function ($parse) {
+      return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+          var model = $parse(attrs.fileModel);
+          var modelSetter = model.assign;
+
+          element.bind('change', function(){
+            scope.$apply(function(){
+              modelSetter(scope, element[0].files[0]);
+            });
+          });
+        }
+      };
+    }]);
+
+
+
+    app.service('fileUpload', ['$http', function ($http) {
+      this.uploadFileToUrl = function(file, uploadUrl){
+        var fd = new FormData();
+        fd.append('file', file);
+
+        $http.post(uploadUrl, fd, {
+          body: {'_csrf': $('meta[name="csrf-token"]').attr("content")},
+          transformRequest: angular.identity,
+          headers: {'Content-Type': undefined}
+        })
+          .success(function(){
+          })
+          .error(function(){
+          });
+      }
+    }]);
+
+//    app.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
+//
+//    }]);
+
+    app.controller('statGovermentUnitController', function($scope, $http, $sce, $timeout, fileUpload) {
       $scope.mode = 'read';
       $scope.changemode = function() {
         $scope.mode = $scope.mode == 'read'?'input':'read';
       };
+
+      $scope.uploadFile = function(){
+        var file = $scope.myFile;
+
+        console.log('file is ' );
+        console.dir(file);
+
+        fileUpload.uploadFileToUrl(file, url + "upload");
+      };
+
         $http.get(url+ 'get')
           .then(function(r) {
             $scope.years = r.data.years;
@@ -131,6 +185,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   'remark':$scope.remark,
                   '_csrf': $('meta[name="csrf-token"]').attr("content")
                 }).then(function(r) {
+                  $scope.uploadFile();
                   $scope.response = r;
                   if(r.data) $scope.result = $sce.trustAsHtml(r.data);
                   $timeout(function() {

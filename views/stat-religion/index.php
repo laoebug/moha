@@ -25,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> </div>
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+            </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
                     <label for=""><?= Yii::t('app', 'Province') ?></label>
@@ -58,8 +59,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             </td>
                             <td class="text-center">
                                 <input max="{{model.buddhis_total}}" type="number"
-                                                           ng-blur="model.buddhis_women = model.buddhis_total < model.buddhis_women ? null: model.buddhis_women"
-                                                           class="form-control" ng-model="model.buddhis_women">
+                                       ng-blur="model.buddhis_women = model.buddhis_total < model.buddhis_women ? null: model.buddhis_women"
+                                       class="form-control" ng-model="model.buddhis_women">
                             </td>
                             <td class="text-center"><input min="0" type="number" class="form-control"
                                                            ng-model="model.christ_news_total"></td>
@@ -89,7 +90,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         </tr>
                         <tr>
                             <?php for ($i = 0; $i < 6; $i++): ?>
-                                <th class="text-center" style="width: 12.5%"><?= Yii::t('app', $i % 2 == 0 ? 'Total' : 'Women') ?></th>
+                                <th class="text-center"
+                                    style="width: 12.5%"><?= Yii::t('app', $i % 2 == 0 ? 'Total' : 'Women') ?></th>
                             <?php endfor; ?>
                         </tr>
                         <tr>
@@ -132,91 +134,107 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
     <div ng-show="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
-        <div class="card">
-            <div class="card-title-w-btn ">
-                <h3><?= $this->title ?></h3>
-                <p>
-                    <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                class="fa fa-print fa-2x"></i></a>
-                    <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                class="fa fa-download fa-2x"></i></a>
-                </p>
+        <div class="bs-component card">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#chart" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
+                <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active in" id="table">
+                    <div class="card">
+                        <div class="card-title-w-btn ">
+                            <h3><?= $this->title ?></h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered table-hover" ng-show="models">
+                            <thead>
+                            <tr>
+                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
+                                <th class="text-center" colspan="2" rowspan="2">ສາສະໜາພຸດ</th>
+                                <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ຄວາມເຊື່ອອື່ນ</th>
+                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
+                            </tr>
+                            <tr>
+                                <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
+                                <th class="text-center" colspan="2">ວັນເສົາ</th>
+                                <th class="text-center" colspan="2">ກາໂທລິກ</th>
+                            </tr>
+                            <tr>
+                                <?php for ($i = 0; $i < 14; $i++): ?>
+                                    <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'Total' : 'Women') ?></td>
+                                <?php endfor; ?>
+                            </tr>
+                            <tr>
+                                <th style="width: 10%" class="text-center"
+                                    colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_news_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_sat_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_sat_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_cato_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('bahai_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('bahai_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('idslam_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('idslam_women') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('other_total') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('other_women') | number}}</th>
+                                <th style="width: 10%"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="m in models">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td>{{m.province_name}}</td>
+                                <td class="text-center">{{m.buddhis_total | number}}</td>
+                                <td class="text-center">{{m.buddhis_women | number}}</td>
+                                <td class="text-center">{{m.christ_news_total | number}}</td>
+                                <td class="text-center">{{m.christ_news_women | number}}</td>
+                                <td class="text-center">{{m.christ_sat_total | number}}</td>
+                                <td class="text-center">{{m.christ_sat_women | number}}</td>
+                                <td class="text-center">{{m.christ_cato_total | number}}</td>
+                                <td class="text-center">{{m.christ_cato_women | number}}</td>
+                                <td class="text-center">{{m.bahai_total | number}}</td>
+                                <td class="text-center">{{m.bahai_women | number}}</td>
+                                <td class="text-center">{{m.idslam_total | number}}</td>
+                                <td class="text-center">{{m.idslam_women | number}}</td>
+                                <td class="text-center">{{m.other_total | number}}</td>
+                                <td class="text-center">{{m.other_women | number}}</td>
+                                <td class="text-center">{{m.remark}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="chart">
+                    <div ng-show="stat" class="card">
+                        <h3><?= $this->title ?></h3>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <canvas id="stat" class="chart chart-bar"
+                                        chart-data="stat.data"
+                                        chart-labels="stat.labels"
+                                        chart-series="stat.series"
+                                        chart-colors="stat.colors"
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="reference"></div>
             </div>
-            <table class="table table-bordered table-hover" ng-show="models">
-                <thead>
-                <tr>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
-                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາພຸດ</th>
-                    <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
-                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
-                    <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
-                    <th class="text-center" colspan="2" rowspan="2">ຄວາມເຊື່ອອື່ນ</th>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
-                </tr>
-                <tr>
-                    <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
-                    <th class="text-center" colspan="2">ວັນເສົາ</th>
-                    <th class="text-center" colspan="2">ກາໂທລິກ</th>
-                </tr>
-                <tr>
-                    <?php for ($i = 0; $i < 14; $i++): ?>
-                        <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'Total' : 'Women') ?></td>
-                    <?php endfor; ?>
-                </tr>
-                <tr>
-                    <th style="width: 10%" class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                    <th style="width: 10%" class="text-center">{{sum('buddhis_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('buddhis_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_news_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_sat_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_sat_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('christ_cato_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('bahai_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('bahai_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('idslam_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('idslam_women') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('other_total') | number}}</th>
-                    <th style="width: 10%" class="text-center">{{sum('other_women') | number}}</th>
-                    <th style="width: 10%"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="m in models">
-                    <td class="text-center">{{$index + 1}}</td>
-                    <td>{{m.province_name}}</td>
-                    <td class="text-center">{{m.buddhis_total | number}}</td>
-                    <td class="text-center">{{m.buddhis_women | number}}</td>
-                    <td class="text-center">{{m.christ_news_total | number}}</td>
-                    <td class="text-center">{{m.christ_news_women | number}}</td>
-                    <td class="text-center">{{m.christ_sat_total | number}}</td>
-                    <td class="text-center">{{m.christ_sat_women | number}}</td>
-                    <td class="text-center">{{m.christ_cato_total | number}}</td>
-                    <td class="text-center">{{m.christ_cato_women | number}}</td>
-                    <td class="text-center">{{m.bahai_total | number}}</td>
-                    <td class="text-center">{{m.bahai_women | number}}</td>
-                    <td class="text-center">{{m.idslam_total | number}}</td>
-                    <td class="text-center">{{m.idslam_women | number}}</td>
-                    <td class="text-center">{{m.other_total | number}}</td>
-                    <td class="text-center">{{m.other_women | number}}</td>
-                    <td class="text-center">{{m.remark}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div ng-show="stat" class="col-sm-12">
-        <div class="card">
-            <h3><?= $this->title ?></h3>
-            <canvas id="stat" class="chart chart-bar"
-                    chart-data="stat.data"
-                    chart-labels="stat.labels"
-                    chart-series="stat.series"
-                    chart-colors="stat.colors"
-            </canvas
         </div>
     </div>
 </div>
@@ -228,8 +246,8 @@ $this->params['breadcrumbs'][] = $this->title;
   app.controller('statReligionController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-religion/';
     $scope.mode = 'read';
-    $scope.changemode = function() {
-      $scope.mode = $scope.mode == 'read'?'input':'read';
+    $scope.changemode = function () {
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
     $http.get($scope.url + 'get')
       .then(function (r) {
