@@ -15,29 +15,53 @@ use yii\widgets\ActiveForm;
     		"id"=>"role_form"		
     		]
     ); ?>
-
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true,'id'=>'role_name']) ?>
-
+    <div class="row">
+	    <?= $form->field($model, 'id',['inputOptions' => ['value' => $model["id"]]])->hiddenInput(['id'=>'the_role_id'])->label(false) ?>
+	    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+		
+	    <?= $form->field($model, 'name')->textInput(['maxlength' => true,'id'=>'role_name']) ?>
+	    </div>
+	    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-top: 2em">
+	   
+	    <?= $form->field($model, 'is_province')->checkbox(['id'=>'is_province']) ?>
+		</div>
+	</div>
    
 
     <div class="form-group">
         <?php 
         //Html::submitButton('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])
         ?>
-        
-        <?= Html::button('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Add Role'), [
-            'class' => 'btn btn-md btn-success',            
-             'title'=>Yii::t('app', 'Add Record'),
-            'id'=>'btnAddRole','name'=>'btnAddRole'
-        ]);
-        ?>
-        
         <?= Html::button('<i class="fa fa-fw fa-user"></i>'. Yii::t('app', 'New'), [
             'class' => 'btn btn-md btn-info',            
              'title'=>Yii::t('app', 'New Record'),
             'id'=>'btnNew','name'=>'btnNew'
         ]);
         ?>
+        
+        <?= Html::button('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save Role'), [
+            'class' => 'btn btn-md btn-success',            
+             'title'=>Yii::t('app', 'Save Role'),
+            'id'=>'btnAddRole','name'=>'btnAddRole'
+        ]);
+        ?>
+		
+		<?= Html::button('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Update Role'), [
+            'class' => 'btn btn-md btn-primary',            
+             'title'=>Yii::t('app', 'Update Role'),
+            'id'=>'btnUpdateRole','name'=>'btnUpdateRole'
+        ]);
+        ?>
+        
+        <?= Html::button('<i class="fa fa-fw fa-trash"></i>'. Yii::t('app', 'Delete Role'), [
+            'class' => 'btn btn-md btn-danger',            
+             'title'=>Yii::t('app', 'Delete Role'),
+            'id'=>'btnDeleteRole','name'=>'btnDeleteRole'
+        ]);
+        ?>
+        
+                
+        
         
         
     </div>

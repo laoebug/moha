@@ -26,9 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'tel',
                 'email:email',
             	[
-            	'name'=>'province_id',
-            	'label'=>Yii::t("app","Province"),
-            	'value'=>!empty($model->province_id)?$model->province["province_name"]:" ",
+            	'name'=>'role',
+            	'label'=>Yii::t("app","Is Province Role"),
+            	'value'=>(!empty($model->role["is_province"]) && $model->role["is_province"]==1) ?"Yes":"No",
             	'type'=>'raw'		
             	],	
               //  'deleted',               

@@ -6,6 +6,7 @@
 				<th><?php echo Yii::t("app","No")?></th>
 				<th><?php echo Yii::t("app","Role Name")?></th>
 				<th><?php echo Yii::t("app","Created Date Time")?></th>
+				<th style="text-align:center"><?php echo Yii::t("app","Is Province")?></th>
 				
 			</tr>
 		</thead>
@@ -21,7 +22,10 @@
 					<?php echo $sq++; ?>					
 					</td>
 				<td><?php echo isset($model["name"])? $model["name"]: ""; ?></td>
-				<td><?php echo isset($model["input_dt_stamp"])? $model["input_dt_stamp"]: ""; ?></td>
+				<td><?php echo isset($model["input_dt_stamp"])? $model["input_dt_stamp"]: ""; ?></td>	
+				<td style="text-align:center" id="is_the_province" data-is_the_province="<?php echo isset($model["is_province"])? $model["is_province"]: ""; ?>">
+				<?php echo (isset($model["is_province"]) && $model["is_province"] ==1)? "Yes": "No"; ?>
+				</td>
 				</tr>
 				<?php endforeach;?>
 				<?php else:?>

@@ -48,6 +48,16 @@ class UserController extends Controller {
 	 * @return mixed
 	 */
 	public function actionIndex() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
 		$searchModel = new UserSearch ();
 		$dataProvider = $searchModel->search ( Yii::$app->request->queryParams );
 		
@@ -57,7 +67,17 @@ class UserController extends Controller {
 		] );
 	}
 	public function actionManageuser() {
-		$user = Yii::$app->user;
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
+		
 		$model = new User ();
 		$id = "";
 		$pasword = "";
@@ -104,6 +124,17 @@ class UserController extends Controller {
 		] );
 	}
 	public function actionListmenu() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
+		
 		$menuList = array ();
 		if (Yii::$app->request->isAjax) {
 			$data = Yii::$app->request->post ();
@@ -113,10 +144,12 @@ class UserController extends Controller {
 				$sql_menu .= " ifnull((select menu_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as menu_id, ";
 				$sql_menu .= " ifnull((select role_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as role_id, ";
 				$sql_menu .= " a.* from menu a";
+				$sql_menu .= " where a.deleted=:deleted ";
 				$sql_menu .= " order by a.position ";
 				$params = [ 
 						':role_id' => $data ["role_id"],
-						':role_id' => $data ["role_id"] 
+						':role_id' => $data ["role_id"],
+						':deleted' => 0 
 				];
 				
 				$menus = Menu::findBySql ( $sql_menu, $params )->all ();
@@ -144,6 +177,17 @@ class UserController extends Controller {
 		}
 	}
 	public function actionListaction() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
+		
 		$actionList = array ();
 		if (Yii::$app->request->isAjax) {
 			$data = Yii::$app->request->post ();
@@ -153,9 +197,12 @@ class UserController extends Controller {
 				$sql_action .= " ifnull((select role_id from role_has_action where role_id=:role_id and action_id=a.id),0) as role_id, ";
 				$sql_action .= "  ifnull((select action_id from role_has_action where role_id=:role_id and action_id=a.id),0) as action_id,";
 				$sql_action .= "  a.* from action a ";
+				$sql_action .= " where a.deleted=:deleted ";
+				
 				$params = [ 
 						':role_id' => $data ["role_id"],
-						':role_id' => $data ["role_id"] 
+						':role_id' => $data ["role_id"],
+						':deleted' => 0 
 				];
 				
 				$actions = Action::findBySql ( $sql_action, $params )->all ();
@@ -185,10 +232,24 @@ class UserController extends Controller {
 		}
 	}
 	public function actionManagerole() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
+		
 		$model = new Role ();
 		$menuList = [ ];
-		
-		$models = Role::find ()->all ();
+		// $models = Role::findAll(['deleted'=>0]);
+		$models = Role::find ()->where ( 'deleted=:deleted' )->addParams ( [ 
+				':deleted' => 0 
+		] )->all ();
 		
 		return $this->render ( 'manageRole', [ 
 				'models' => $models,
@@ -197,12 +258,23 @@ class UserController extends Controller {
 		] );
 	}
 	public function actionAddrole() {
-		$user = Yii::$app->user;
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
+		
 		$model = new Role ();
 		
 		if (Yii::$app->request->isAjax) {
 			$data = Yii::$app->request->post ();
 			$model->name = $data ["role_name"];
+			$model->is_province = $data ["is_province"];
 			$model->user_id = $user->id;
 			$model->deleted = 0;
 			if ($model->save ()) {
@@ -212,9 +284,66 @@ class UserController extends Controller {
 			}
 		}
 	}
-	public function actionSavemenuandaction() {
-		$user = Yii::$app->user;
+	public function actionUpdaterole() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
 		
+		if (Yii::$app->request->isAjax) {
+			$id = $_POST ["id"];
+			$model = Role::findOne ( $id );
+			$model->name = $_POST ["role_name"];
+			$model->user_id = $user->id;
+			$model->is_province = $_POST ["is_province"];
+			if ($model->save ()) {
+				Yii::$app->session->setFlash ( "success", "Role has been update successfully" );
+			} else {
+				Yii::$app->session->setFlash ( "danger", "Role cannot be updated" );
+			}
+		}
+	}
+	public function actionDeleterole() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
+		
+		if (Yii::$app->request->isAjax) {
+			$id = $_POST ["id"];
+			$model = Role::findOne ( $id );
+			$model->user_id = $user->id;
+			$model->deleted = 1;
+			if ($model->save ()) {
+				Yii::$app->session->setFlash ( "success", "Role has been deleted successfully" );
+			} else {
+				Yii::$app->session->setFlash ( "danger", "Role cannot be deleted" );
+			}
+		}
+	}
+	public function actionSavemenuandaction() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
 		if (Yii::$app->request->isAjax) {
 			
 			// $data = Yii::$app->request->post ();
@@ -269,6 +398,17 @@ class UserController extends Controller {
 	 * @return mixed
 	 */
 	public function actionView($id) {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
+		
 		return $this->render ( 'view', [ 
 				'model' => $this->findModel ( $id ) 
 		] );
@@ -281,6 +421,16 @@ class UserController extends Controller {
 	 * @return mixed
 	 */
 	public function actionCreate() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
 		$model = new User ();
 		$model->password = "1010";
 		$userRoles = array ();
@@ -322,6 +472,17 @@ class UserController extends Controller {
 	 * @return mixed
 	 */
 	public function actionUpdate($id) {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
+		
 		$model = $this->findModel ( $id );
 		
 		if ($model->load ( Yii::$app->request->post () ) && $model->save ()) {
@@ -336,7 +497,29 @@ class UserController extends Controller {
 			] );
 		}
 	}
+	private function saveUserHasProvince($arrayProvinceIds, $user_id) {
+		if (count ( $arrayProvinceIds ) > 0) {
+			foreach ( $arrayProvinceIds as $the_province_id ) {
+				$userHasProvince = new UserHasProvince ();
+				$userHasProvince->user_id = $user_id;
+				$userHasProvince->province_id = $the_province_id;
+				if (! $userHasProvince->save ())
+					throw new Exception ( "UserHasProvince cannot be saved" );
+			}
+		}
+	}
 	public function actionSubordinateandbranch($id) {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
+		
 		$model = $this->findModel ( $id );
 		
 		if (Yii::$app->request->isAjax) {
@@ -360,39 +543,45 @@ class UserController extends Controller {
 							':user_id' => $user_id 
 					] );
 				}
-				if (! empty ( $model->province_id )) {
-					
-					if (isset ( $_POST ["myProvince_idList"] ) && count ( $_POST ["myProvince_idList"] ) > 0) {
-						foreach ( $_POST ["myProvince_idList"] as $the_province_id ) {
-							$userHasProvince = new UserHasProvince ();
-							$userHasProvince->user_id = $user_id;
-							$userHasProvince->province_id = $the_province_id;
-							if (! $userHasProvince->save ())
-								throw new Exception ( "UserHasProvince cannot be saved" );
-						}
-					}
-				} else {
-					
-					if (isset ( $_POST ["myUser_idList"] ) && count ( $_POST ["myUser_idList"] ) > 0) {
-						foreach ( $_POST ["myUser_idList"] as $the_user_id ) {
-							$userSubordinate = new UserSubordinate ();
-							$userSubordinate->user_id = $user_id;
-							$userSubordinate->subordinate_user_id = $the_user_id;
-							if (! $userSubordinate->save ())
-								throw new Exception ( "UserSubordinate cannot be saved" );
-						}
-					}
-					
-					if (isset ( $_POST ["myBranch_idList"] ) && count ( $_POST ["myBranch_idList"] ) > 0) {
-						foreach ( $_POST ["myBranch_idList"] as $the_branch_id ) {
-							$userHasBranch = new UserHasBranch ();
-							$userHasBranch->user_id = $user_id;
-							$userHasBranch->branch_id = $the_branch_id;
-							if (! $userHasBranch->save ())
-								throw new Exception ( "UserHasBranch cannot be saved" );
-						}
+				//
+				// if ((! empty ( $model->role->is_province) && ($model->role->is_province==1))) {
+				// // echo $model->role->is_province;exit;
+				// if (isset ( $_POST ["myProvince_idList"] ) && count ( $_POST ["myProvince_idList"] ) > 0) {
+				// // foreach ( $_POST ["myProvince_idList"] as $the_province_id ) {
+				// // $userHasProvince = new UserHasProvince ();
+				// // $userHasProvince->user_id = $user_id;
+				// // $userHasProvince->province_id = $the_province_id;
+				// // if (! $userHasProvince->save ())
+				// // throw new Exception ( "UserHasProvince cannot be saved" );
+				// // }
+				// $this->saveUserHasProvince($_POST ["myProvince_idList"],$user_id);
+				// }
+				// } else {
+				
+				if (isset ( $_POST ["myProvince_idList"] ) && count ( $_POST ["myProvince_idList"] ) > 0) {
+					$this->saveUserHasProvince ( $_POST ["myProvince_idList"], $user_id );
+				}
+				
+				if (isset ( $_POST ["myUser_idList"] ) && count ( $_POST ["myUser_idList"] ) > 0) {
+					foreach ( $_POST ["myUser_idList"] as $the_user_id ) {
+						$userSubordinate = new UserSubordinate ();
+						$userSubordinate->user_id = $user_id;
+						$userSubordinate->subordinate_user_id = $the_user_id;
+						if (! $userSubordinate->save ())
+							throw new Exception ( "UserSubordinate cannot be saved" );
 					}
 				}
+				
+				if (isset ( $_POST ["myBranch_idList"] ) && count ( $_POST ["myBranch_idList"] ) > 0) {
+					foreach ( $_POST ["myBranch_idList"] as $the_branch_id ) {
+						$userHasBranch = new UserHasBranch ();
+						$userHasBranch->user_id = $user_id;
+						$userHasBranch->branch_id = $the_branch_id;
+						if (! $userHasBranch->save ())
+							throw new Exception ( "UserHasBranch cannot be saved" );
+					}
+				}
+				// }
 				$db->commit ();
 				// Yii::$app->session->setFlash ( 'success', "Subordinate(s) and Department(s) have been saved successfully" );
 				exit ();
@@ -462,6 +651,16 @@ class UserController extends Controller {
 	 * @return mixed
 	 */
 	public function actionDelete($id) {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [ 
+						'authentication/notallowed' 
+				] );
+			}
+		}
 		$this->findModel ( $id )->delete ();
 		
 		return $this->redirect ( [ 
@@ -486,19 +685,7 @@ class UserController extends Controller {
 	}
 	public function beforeAction($action) {
 		$this->enableCsrfValidation = false;
-		$user = Yii::$app->user->identity;
-		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-			$controller_id = Yii::$app->controller->id;
-			$acton_id = Yii::$app->controller->action->id;
-			
-			if (Yii::$app->request->isAjax || ! Yii::$app->request->isAjax) {
-				if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-					return $this->redirect ( [ 
-							'authentication/notallowed' 
-					] );
-				}
-			}
-		}
+		
 		return parent::beforeAction ( $action );
 	}
 }

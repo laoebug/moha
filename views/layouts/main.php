@@ -7,7 +7,7 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-use app\components\MenuWidget;
+
 use app\components\TopMenuWidget;
 ?>
 <?php $this->beginPage() ?>

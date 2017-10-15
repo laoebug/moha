@@ -85,7 +85,17 @@ $('#role_table tbody').on( 'click', 'tr', function () {
          table.$('tr.selected').removeClass('selected');
          $(this).addClass('selected');
      }
-		   
+     	 
+	 var data = table.row( this ).data() ;
+	 $('#the_role_id').val($(this).data('value'));	
+	 $('#role_name').val(data[1]);
+	 var currentRow = $(this).closest("tr");
+	 $('#is_province').val(currentRow.find("td:eq(3)").attr('data-is_the_province'));
+	 if($('#is_province').val()==1){
+	 	$('#is_province').prop('checked', true);
+	 }else{
+		 $('#is_province').prop('checked', false); 
+	 }
 	var urlMenu =  "index.php?r=user/listmenu";
 	
 	$.post(
@@ -126,17 +136,50 @@ $('#role_table tbody').on( 'click', 'tr', function () {
 } );
 
 
-
-$("#btnAddRole").click(function(){
+$("#is_province").change(function(){
+	isCheckorNot();	
+});
+isCheckorNot();
+function isCheckorNot() {
+	if($('#is_province').is(":checked")) {
+		$('#is_province').val(1);
+	}else{
+		$('#is_province').val(0);
+	}
 	
+}
+
+$("#btnAddRole").click(function(){	
 	var url =  "index.php?r=user/addrole";
 	
 	$.post(
 		url,
 		{ 
-		 "role_name":$("#role_name").val()
+		 "role_name":$("#role_name").val(),
+		"is_province":$("#is_province").val()
  		}, 
- 		function(data,status,xhr){ //jQuery Ajax post		
+ 		function(data,status,xhr){ //jQuery Ajax post	 	 			
+ 			if(status=='success'){
+				location.reload();
+			 } 	 					
+ 		}).done(function() {
+ 		  }).fail(function() { 			   
+ 		  }).always(function() {	 			     	 			
+ 		});
+    
+});
+$("#btnUpdateRole").click(function(){	
+	var url =  "index.php?r=user/updaterole";
+	$.post(
+		url,
+		{ 
+		 "role_name":$("#role_name").val(),
+		 "id":$("#the_role_id").val(),
+		 "is_province":$("#is_province").val()
+		 
+ 		}, 
+ 		function(data,status,xhr){ //jQuery Ajax post
+ 	 		console.log(data);		
  			if(status=='success'){
 				 location.reload();
 
@@ -147,6 +190,29 @@ $("#btnAddRole").click(function(){
  		});
     
 });
+
+$("#btnDeleteRole").click(function(){	
+	var url =  "index.php?r=user/deleterole";
+	$.post(
+		url,
+		{ 		 
+		 "id":$("#the_role_id").val()		 
+ 		}, 
+ 		function(data,status,xhr){ //jQuery Ajax post
+ 	 		console.log(data);		
+ 			if(status=='success'){
+				 location.reload();
+
+			 } 	 					
+ 		}).done(function() {
+ 		  }).fail(function() { 			   
+ 		  }).always(function() {	 			     	 			
+ 		});
+    
+});
+
+
+
 $("#btnSaveMenuAndAction").click(function(){
 	
 	var url =  "index.php?r=user/savemenuandaction";
@@ -195,7 +261,9 @@ $("#btnSaveMenuAndAction").click(function(){
 
 
 function clearInpuData() {
- 	$("#role_name").val("");	
+	$("#the_role_id").val("");
+ 	$("#role_name").val("");
+	$("#is_province").val("");	
 }
 
 $("#btnNew").click(function(){				

@@ -40,6 +40,17 @@ class MinistryController extends Controller {
 	 * @return mixed
 	 */
 	public function actionIndex() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [
+						'authentication/notallowed'
+				] );
+			}
+		}
+		
 		return $this->render ( 'index' );
 	}
 	public function actionEnquiry() {
@@ -48,6 +59,17 @@ class MinistryController extends Controller {
 		] );
 	}
 	public function actionSave() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [
+						'authentication/notallowed'
+				] );
+			}
+		}
+		
 		$post = Yii::$app->request->post ();
 		if (isset ( $post )) {
 			if ($post ['create'] == 1) {
@@ -70,6 +92,17 @@ class MinistryController extends Controller {
 		}
 	}
 	public function actionDelete() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [
+						'authentication/notallowed'
+				] );
+			}
+		}
+		
 		$post = Yii::$app->request->post ();
 		if (isset ( $post )) {
 			if (isset ( $post ['Ministry'] )) {
@@ -85,6 +118,17 @@ class MinistryController extends Controller {
 		}
 	}
 	public function actionPrint() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [
+						'authentication/notallowed'
+				] );
+			}
+		}
+		
 		$ministries = Ministry::find ()->where ( [ 
 				'deleted' => 0 
 		] )->orderBy ( 'position' )->asArray ()->all ();
@@ -95,6 +139,17 @@ class MinistryController extends Controller {
 		] );
 	}
 	public function actionDownload() {
+		$user = Yii::$app->user->identity;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				return $this->redirect ( [
+						'authentication/notallowed'
+				] );
+			}
+		}
+		
 		$ministries = Ministry::find ()->where ( [ 
 				'deleted' => 0 
 		] )->orderBy ( 'position' )->asArray ()->all ();
@@ -120,25 +175,5 @@ class MinistryController extends Controller {
 			MyHelper::response ( HttpCode::NOT_FOUND, Yii::t ( 'app', 'The requested page does not exist.' ) );
 			return;
 		}
-	}
-// 	public function beforeAction($action) {
-// 		$this->enableCsrfValidation = false;
-// 		$user = Yii::$app->user->identity;
-// 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-// 			$controller_id = Yii::$app->controller->id;
-// 			$acton_id = Yii::$app->controller->action->id;
-			
-// 			if (Yii::$app->request->isAjax || ! Yii::$app->request->isAjax) {
-// 				if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-// 					return $this->redirect ( [ 
-// 							'authentication/notallowed' 
-// 					] );
-// 				}
-// 			}
-// 		}
-// 		return parent::beforeAction ( $action );
-// 	}
-	public function beforeAction($action) {
-		return parent::beforeAction ( $action );
 	}
 }

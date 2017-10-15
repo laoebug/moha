@@ -12,6 +12,7 @@ use Yii;
  * @property integer $deleted
  * @property integer $user_id
  * @property string $input_dt_stamp
+ * @property integer $is_province
  *
  * @property User $user
  * @property RoleHasAction[] $roleHasActions
@@ -19,13 +20,14 @@ use Yii;
  * @property RoleHasMenu[] $roleHasMenus
  * @property Menu[] $menus
  * @property User[] $users
+ * @property UserHasRole[] $userHasRoles
  */
 class Role extends \yii\db\ActiveRecord
 {
+	public $theMenus=[];
     /**
      * @inheritdoc
      */
-	public $theMenus=[];
     public static function tableName()
     {
         return 'role';
@@ -38,7 +40,7 @@ class Role extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['deleted', 'user_id'], 'integer'],
+            [['deleted', 'user_id', 'is_province'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['name'], 'string', 'max' => 45],
             [['name'], 'unique'],
@@ -57,6 +59,7 @@ class Role extends \yii\db\ActiveRecord
             'deleted' => Yii::t('app', 'Deleted'),
             'user_id' => Yii::t('app', 'User ID'),
             'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
+            'is_province' => Yii::t('app', 'Is Province Role'),
         ];
     }
 
@@ -109,11 +112,19 @@ class Role extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserHasRoles()
+    {
+        return $this->hasMany(UserHasRole::className(), ['role_id' => 'id']);
+    }
+
+    /**
      * @inheritdoc
-     * @return RoleHasActionQuery the active query used by this AR class.
+     * @return RoleQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new RoleHasActionQuery(get_called_class());
+        return new RoleQuery(get_called_class());
     }
 }

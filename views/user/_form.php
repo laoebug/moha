@@ -71,25 +71,7 @@ use yii\helpers\ArrayHelper;
 						
 	</div>
 
-	<div class="row">	
-		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">			
-		<?php
-		echo $form->field($model, 'province_id')->dropDownList(
-             ArrayHelper::map(Province::find()
-    
-                    ->all(),'id','province_name'),
-            ['prompt'=>Yii::t('app','Plase select'),'id'=>'province']
-        ) 
-		?>
-		
-		</div>
-						
-	</div>
-				
-
-    
-
-	<br/>
+	
     <div class="form-group">
         <?= Html::submitButton('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>
         <?= Html::button('<i class="fa fa-fw fa-user"></i>'. Yii::t('app', 'New'), [
