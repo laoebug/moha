@@ -2,13 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\Message;
 use app\models\SourceMessage;
 use Yii;
-use app\models\Message;
 use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MessageController implements the CRUD actions for Message model.
@@ -62,12 +62,12 @@ class MessageController extends Controller
             $sourceMessage = new SourceMessage();
             $sourceMessage->message = $post["Message"]["message"];
             $sourceMessage->category = 'app';
-            if(!$sourceMessage->save())
+            if (!$sourceMessage->save())
                 throw new Exception(json_encode($sourceMessage->errors));
 
             $model->id = $sourceMessage->id;
             $model->language = "la-LA";
-            if(!$model->save())
+            if (!$model->save())
                 return json_encode(["error" => $model->errors]);
 
             $model->id = "$model->id";
@@ -89,45 +89,18 @@ class MessageController extends Controller
      * @param string $language
      * @return mixed
      */
-    public function actionUpdate($id, $language = "la-LA") {
+    public function actionUpdate($id, $language = "la-LA")
+    {
         $model = $this->findModel($id, $language);
         $post = Yii::$app->request->post();
         if (!$model->load($post))
             return json_encode(['error' => print_r($post, true)]);
 
-        if(!$model->save())
+        if (!$model->save())
             return json_encode(['error' => $model->errors]);
 
         return json_encode(["model" => $model->attributes]);
 
-    }
-
-    public function actionGetall() {
-        return json_encode(
-            Message::find()
-                ->select("s.id, s.message, translation")
-                ->join("join", "source_message s", "s.id = message.id")
-            ->asArray()
-            ->all());
-    }
-
-    /**
-     * Deletes an existing Message model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @param string $language
-     * @return mixed
-     */
-    public function actionDelete()
-    {
-        $post = Yii::$app->request->post();
-        if(isset($post)) {
-            if(!$this->findModel($post['id'], 'la-LA')->delete())
-                return json_encode(["error" => Yii::t('app','Cannot Delete')]);
-            else
-                return json_encode(["message" => "OK"]);
-        } else
-            return json_encode(["error" => Yii::t('app','Incorrect Requested')]);
     }
 
     /**
@@ -145,5 +118,34 @@ class MessageController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionGetall()
+    {
+        return json_encode(
+            Message::find()
+                ->select("s.id, s.message, translation")
+                ->join("join", "source_message s", "s.id = message.id")
+                ->asArray()
+                ->all());
+    }
+
+    /**
+     * Deletes an existing Message model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @param string $language
+     * @return mixed
+     */
+    public function actionDelete()
+    {
+        $post = Yii::$app->request->post();
+        if (isset($post)) {
+            if (!$this->findModel($post['id'], 'la-LA')->delete())
+                return json_encode(["error" => Yii::t('app', 'Cannot Delete')]);
+            else
+                return json_encode(["message" => "OK"]);
+        } else
+            return json_encode(["error" => Yii::t('app', 'Incorrect Requested')]);
     }
 }

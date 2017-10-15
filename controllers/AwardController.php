@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\Award;
 use app\models\AwardSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * AwardController implements the CRUD actions for Award model.
@@ -57,6 +57,22 @@ class AwardController extends Controller
     }
 
     /**
+     * Finds the Award model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Award the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Award::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
      * Creates a new Award model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -67,7 +83,7 @@ class AwardController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = Yii::$app->user->id;
-            if($model->save())
+            if ($model->save())
                 return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -88,8 +104,8 @@ class AwardController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = Yii::$app->user->id;
-        if($model->save())
-            return $this->redirect(['index']);
+            if ($model->save())
+                return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -108,21 +124,5 @@ class AwardController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Award model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Award the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Award::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

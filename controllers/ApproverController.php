@@ -2,13 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\ApproverLevel;
-use Yii;
 use app\models\Approver;
+use app\models\ApproverLevel;
 use app\models\ApproverSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ApproverController implements the CRUD actions for Approver model.
@@ -58,6 +58,22 @@ class ApproverController extends Controller
     }
 
     /**
+     * Finds the Approver model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Approver the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Approver::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
      * Creates a new Approver model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -68,9 +84,9 @@ class ApproverController extends Controller
 
         $post = Yii::$app->request->post();
         if ($model->load($post)) {
-            if(isset($post['Approver']['approver_level'])) {
+            if (isset($post['Approver']['approver_level'])) {
                 $approverlevel = ApproverLevel::find()->where(['code' => $post['Approver']['approver_level']])->one();
-                if(isset($approverlevel)) $model->approver_level_id = $approverlevel->id;
+                if (isset($approverlevel)) $model->approver_level_id = $approverlevel->id;
             }
             $model->save();
             return $this->redirect(['index']);
@@ -90,7 +106,7 @@ class ApproverController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if(isset($model->approverLevel))
+        if (isset($model->approverLevel))
             $model->approver_level = $model->approverLevel->code;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -113,21 +129,5 @@ class ApproverController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Approver model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Approver the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Approver::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }
