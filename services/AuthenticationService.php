@@ -45,7 +45,7 @@ class AuthenticationService {
 		return $authorizeMenus;
 	}
 	public static function isAccessibleAction($controller_id, $action_id) {
-		$user = Yii::$app->user;
+		$user = Yii::$app->user->identity;		
 		$isAccessisbleAction = false;
 // 		$connection = Yii::$app->db;
 		try {
@@ -58,6 +58,7 @@ class AuthenticationService {
 			$params = [ 
 					':user_id' => $user->id 
 			];
+			
 			
 // 			$command = $connection->createCommand($sql_action);
 // 			$command->bindValue(':user_id',$user->id);
@@ -79,4 +80,9 @@ class AuthenticationService {
 		return $isAccessisbleAction;
 // 		return $actions;
 	}
+	
+	
+	
+	
+	
 }

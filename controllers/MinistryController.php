@@ -40,38 +40,37 @@ class MinistryController extends Controller {
 	 * @return mixed
 	 */
 	public function actionIndex() {
-		$user = Yii::$app->user->identity;
-		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-			$controller_id = Yii::$app->controller->id;
-			$acton_id = Yii::$app->controller->action->id;
-			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-				return $this->redirect ( [
-						'authentication/notallowed'
-				] );
-			}
-		}
-		
 		return $this->render ( 'index' );
 	}
 	public function actionEnquiry() {
+		$user = Yii::$app->user->identity;
+		$controller_id = Yii::$app->controller->id;
+		$acton_id = Yii::$app->controller->action->id;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+				return;
+			}
+		}
+		
 		return json_encode ( [ 
 				'ministries' => Ministry::find ()->where ( 'deleted=0 and ministry_group_id in(1,2)' )->orderBy ( 'position' )->asArray ()->all () 
 		] );
 	}
 	public function actionSave() {
 		$user = Yii::$app->user->identity;
+		$controller_id = Yii::$app->controller->id;
+		$acton_id = Yii::$app->controller->action->id;
 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-			$controller_id = Yii::$app->controller->id;
-			$acton_id = Yii::$app->controller->action->id;
 			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-				return $this->redirect ( [
-						'authentication/notallowed'
-				] );
+				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+				return;
 			}
 		}
 		
 		$post = Yii::$app->request->post ();
 		if (isset ( $post )) {
+			
 			if ($post ['create'] == 1) {
 				$model = new Ministry ();
 				$model->deleted = 0;
@@ -93,13 +92,12 @@ class MinistryController extends Controller {
 	}
 	public function actionDelete() {
 		$user = Yii::$app->user->identity;
+		$controller_id = Yii::$app->controller->id;
+		$acton_id = Yii::$app->controller->action->id;
 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-			$controller_id = Yii::$app->controller->id;
-			$acton_id = Yii::$app->controller->action->id;
 			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-				return $this->redirect ( [
-						'authentication/notallowed'
-				] );
+				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+				return;
 			}
 		}
 		
@@ -118,17 +116,6 @@ class MinistryController extends Controller {
 		}
 	}
 	public function actionPrint() {
-		$user = Yii::$app->user->identity;
-		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-			$controller_id = Yii::$app->controller->id;
-			$acton_id = Yii::$app->controller->action->id;
-			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-				return $this->redirect ( [
-						'authentication/notallowed'
-				] );
-			}
-		}
-		
 		$ministries = Ministry::find ()->where ( [ 
 				'deleted' => 0 
 		] )->orderBy ( 'position' )->asArray ()->all ();
@@ -139,17 +126,6 @@ class MinistryController extends Controller {
 		] );
 	}
 	public function actionDownload() {
-		$user = Yii::$app->user->identity;
-		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-			$controller_id = Yii::$app->controller->id;
-			$acton_id = Yii::$app->controller->action->id;
-			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-				return $this->redirect ( [
-						'authentication/notallowed'
-				] );
-			}
-		}
-		
 		$ministries = Ministry::find ()->where ( [ 
 				'deleted' => 0 
 		] )->orderBy ( 'position' )->asArray ()->all ();
@@ -175,5 +151,25 @@ class MinistryController extends Controller {
 			MyHelper::response ( HttpCode::NOT_FOUND, Yii::t ( 'app', 'The requested page does not exist.' ) );
 			return;
 		}
+	}
+	public function beforeAction($action) {
+		$user = Yii::$app->user->identity;
+		$this->enableCsrfValidation = true;
+		$controller_id = Yii::$app->controller->id;
+		$acton_id = Yii::$app->controller->action->id;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				if (Yii::$app->request->isAjax) {
+					MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+					return;
+				} else {
+					return $this->redirect ( [ 
+							'authentication/notallowed' 
+					] );
+				}
+			}
+		}
+		
+		return parent::beforeAction ( $action );
 	}
 }

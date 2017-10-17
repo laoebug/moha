@@ -199,6 +199,7 @@ class UserController extends Controller {
 				$sql_action .= "  a.* from action a ";
 				$sql_action .= " where a.deleted=:deleted ";
 				
+				
 				$params = [ 
 						':role_id' => $data ["role_id"],
 						':role_id' => $data ["role_id"],
@@ -217,7 +218,9 @@ class UserController extends Controller {
 								"id" => $action ['id'],
 								"role_id" => $action ['role_id'],
 								"action_id" => $action ['action_id'],
-								"name" => $action ['description'] 
+								"name" => $action ['description'],
+								"method" => $action ['method']
+								
 						];
 					}
 					
@@ -683,9 +686,23 @@ class UserController extends Controller {
 			throw new NotFoundHttpException ( 'The requested page does not exist.' );
 		}
 	}
-	public function beforeAction($action) {
-		$this->enableCsrfValidation = false;
+// 	public function beforeAction($action) {
+// 		$this->enableCsrfValidation = false;
 		
-		return parent::beforeAction ( $action );
+// 		return parent::beforeAction ( $action );
+// 	}
+
+	public function beforeAction($action)
+	{
+		$this->enableCsrfValidation = false;
+		parent::beforeAction($action);
+	
+		if (Yii::$app->getRequest()->getMethod() === 'OPTIONS') {
+			// End it, otherwise a 401 will be shown.
+			Yii::$app->end();
+		}
+	
+		return true;
 	}
+	
 }

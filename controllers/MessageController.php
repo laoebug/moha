@@ -52,6 +52,17 @@ class MessageController extends Controller
      */
     public function actionCreate()
     {
+    	
+    	$user = Yii::$app->user->identity;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    			return;
+    		}
+    	}
+    	
         $model = new Message();
         $post = Yii::$app->request->post();
         if (!$model->load($post))
@@ -90,6 +101,17 @@ class MessageController extends Controller
      * @return mixed
      */
     public function actionUpdate($id, $language = "la-LA") {
+    	
+    	$user = Yii::$app->user->identity;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    			return;
+    		}
+    	}
+    	
         $model = $this->findModel($id, $language);
         $post = Yii::$app->request->post();
         if (!$model->load($post))
@@ -103,6 +125,17 @@ class MessageController extends Controller
     }
 
     public function actionGetall() {
+    	
+    	$user = Yii::$app->user->identity;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    			return;
+    		}
+    	}
+    	
         return json_encode(
             Message::find()
                 ->select("s.id, s.message, translation")
@@ -120,6 +153,16 @@ class MessageController extends Controller
      */
     public function actionDelete()
     {
+    	$user = Yii::$app->user->identity;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    			return;
+    		}
+    	}
+    	
         $post = Yii::$app->request->post();
         if(isset($post)) {
             if(!$this->findModel($post['id'], 'la-LA')->delete())
@@ -145,5 +188,26 @@ class MessageController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    public function beforeAction($action) {
+    	$user = Yii::$app->user->identity;
+    	$this->enableCsrfValidation = true;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			if (Yii::$app->request->isAjax) {
+    				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    				return;
+    			} else {
+    				return $this->redirect ( [
+    						'authentication/notallowed'
+    				] );
+    			}
+    		}
+    	}
+    
+    	return parent::beforeAction ( $action );
     }
 }

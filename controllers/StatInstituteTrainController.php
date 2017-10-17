@@ -26,6 +26,16 @@ class StatInstituteTrainController extends Controller
     }
 
     public function actionGet() {
+    	$user = Yii::$app->user->identity;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    			return;
+    		}
+    	}
+    	
         $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
         return json_encode([
             'years' => $years
@@ -33,6 +43,16 @@ class StatInstituteTrainController extends Controller
     }
 
     public function actionEnquiry($year) {
+    	$user = Yii::$app->user->identity;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    			return;
+    		}
+    	}
+    	
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
@@ -60,6 +80,18 @@ class StatInstituteTrainController extends Controller
     }
 
     public function actionSave($year) {
+    	
+    	$user = Yii::$app->user->identity;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    			return;
+    		}
+    	}
+    	
+    	
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
@@ -98,6 +130,17 @@ class StatInstituteTrainController extends Controller
     }
 
     public function actionPrint($year) {
+    	
+    	$user = Yii::$app->user->identity;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    			return;
+    		}
+    	}
+    	
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
@@ -112,6 +155,17 @@ class StatInstituteTrainController extends Controller
     }
 
     public function actionDownload($year) {
+    	
+    	$user = Yii::$app->user->identity;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    			return;
+    		}
+    	}
+    	
         $year = PhiscalYear::findOne($year);
         if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
@@ -143,4 +197,26 @@ class StatInstituteTrainController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function beforeAction($action) {
+    	$user = Yii::$app->user->identity;
+    	$this->enableCsrfValidation = true;
+    	$controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+    			if (Yii::$app->request->isAjax) {
+    				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+    				return;
+    			} else {
+    				return $this->redirect ( [
+    						'authentication/notallowed'
+    				] );
+    			}
+    		}
+    	}
+    
+    	return parent::beforeAction ( $action );
+    }
+    
 }

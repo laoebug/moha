@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="ministryController">
     <div class="col-sm-12">
-        <div class="col-sm-8">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">{{response.statusText}}</div>
         </div>
     </div><div class="col-sm-12">

@@ -14,7 +14,7 @@
 <!-- </div>     -->
 
 <?php
-function createActionTreeView($array, $currentParent, $currLevel = 0, $prevLevel = -1) {
+function createActionTreeView($array, $currentParent, $currLevel = 0, $prevLevel = -1) {	
 	foreach ( $array as $actionId => $action ) {
 		
 		if ($currentParent == $action ['parent_id']) {
@@ -31,7 +31,7 @@ function createActionTreeView($array, $currentParent, $currLevel = 0, $prevLevel
 			$output.='<li>';
 			$output.='<input class="action" type="checkbox" value="' . $action ['id'] . '"   '.$checked .' name="actionList[]" id="actionList[]"/>';
 			//$output.='<label> &nbsp; ' . $action ['name'] . '</label>';
-			$output.='<span class="label-text"> ' . $action ['name'] . '</span>';
+			$output.='<span class="label-text"> ' . $action ['name'].$action['method'] . '</span>';
 			$output.='</li>';
 
 			

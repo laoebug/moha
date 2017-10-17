@@ -29,6 +29,7 @@ class Menu extends \yii\db\ActiveRecord
     public $child_count;
     public $menu_id;
     public $role_id;
+    public $has_province;
     /**
      * @inheritdoc
      */
