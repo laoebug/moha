@@ -3,41 +3,23 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
+use app\models\Attachment;
 use app\models\LegalType;
+use app\models\Menu;
 use app\models\PhiscalYear;
+use app\models\StatLegal;
 use app\models\StatLegalDetail;
 use Codeception\Util\HttpCode;
-use function foo\func;
 use Yii;
-use app\models\StatLegal;
-use app\models\StatLegalSearch;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\MethodNotAllowedHttpException;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * StatLegalController implements the CRUD actions for StatLegal model.
  */
 class StatLegalController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all StatLegal models.
      * @return mixed
@@ -47,6 +29,7 @@ class StatLegalController extends Controller
         return $this->render('index');
     }
 
+<<<<<<< HEAD
     public function actionGet() {
     	
     	$user = Yii::$app->user->identity;
@@ -59,12 +42,16 @@ class StatLegalController extends Controller
     		}
     	}
     	
+=======
+    public function actionGet()
+    {
+>>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $years = PhiscalYear::find()
             ->where(['deleted' => 0])->asArray()->all();
 
         $legalTypes = LegalType::find()
             ->with([
-                'legals' => function(ActiveQuery $query) {
+                'legals' => function (ActiveQuery $query) {
                     $query->where(['deleted' => 0])->orderBy('position');
                 }
             ])
@@ -76,6 +63,7 @@ class StatLegalController extends Controller
         ]);
     }
 
+<<<<<<< HEAD
     public function actionEnquiry($year) {
     	
     	$user = Yii::$app->user->identity;
@@ -88,14 +76,18 @@ class StatLegalController extends Controller
     		}
     	}
     	
+=======
+    public function actionEnquiry($year)
+    {
+>>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatLegal::find()->where(['phiscal_year_id' => $year->id])->one();
-        if(!isset($model)) {
+        if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
@@ -103,7 +95,7 @@ class StatLegalController extends Controller
         $models = LegalType::find()
             ->alias('t')
             ->with([
-                'legals' => function(ActiveQuery $query) use($year) {
+                'legals' => function (ActiveQuery $query) use ($year) {
                     $query->where(['deleted' => 0])
                         ->select('d.*, l.*')
                         ->alias('l')
@@ -119,6 +111,7 @@ class StatLegalController extends Controller
         ]);
     }
 
+<<<<<<< HEAD
     public function actionInquiry($year, $legal) {
     	$user = Yii::$app->user->identity;
     	$controller_id = Yii::$app->controller->id;
@@ -130,9 +123,13 @@ class StatLegalController extends Controller
     		}
     	}
     	
+=======
+    public function actionInquiry($year, $legal)
+    {
+>>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -147,6 +144,7 @@ class StatLegalController extends Controller
         ]);
     }
 
+<<<<<<< HEAD
     public function actionSave($year) {
     	
     	$user = Yii::$app->user->identity;
@@ -160,17 +158,21 @@ class StatLegalController extends Controller
     	}
     	
     	
+=======
+    public function actionSave($year)
+    {
+>>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $post = Yii::$app->request->post();
-        if(!isset($post['StatLegalDetail'])) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+        if (!isset($post['StatLegalDetail'])) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Incorrect Request Method'));
             return;
         }
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
-        if($year->status != 'O') {
+        if ($year->status != 'O') {
             MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
             return;
         }
@@ -178,14 +180,14 @@ class StatLegalController extends Controller
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model = StatLegal::find()->where(['phiscal_year_id' => $year->id])->one();
-            if(!isset($model)) {
+            if (!isset($model)) {
                 $model = new StatLegal();
                 $model->user_id = Yii::$app->user->id;
                 $model->phiscal_year_id = $year->id;
             }
             $model->last_update = date('Y-m-d H:i:s');
             $model->saved = 1;
-            if(!$model->save()) throw new Exception(json_encode($model->errors));
+            if (!$model->save()) throw new Exception(json_encode($model->errors));
 
             $detail = StatLegalDetail::find()->alias('d')
                 ->join('join', 'stat_legal l', 'd.stat_legal_id=l.id and l.phiscal_year_id=:year', [':year' => $year->id])
@@ -193,14 +195,14 @@ class StatLegalController extends Controller
                 ->one();
 //            return json_encode(['detail' => $detail]);exit;
 
-            if(!isset($detail)) {
+            if (!isset($detail)) {
                 $detail = new StatLegalDetail();
                 $detail->legal_id = $post['StatLegalDetail']['legal']['id'];
                 $detail->stat_legal_id = $model->id;
             }
             $detail->load($post);
 
-            if(!$detail->save()) throw new Exception(json_encode($detail->errors));
+            if (!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
         } catch (Exception $exception) {
             $transaction->rollBack();
@@ -209,15 +211,16 @@ class StatLegalController extends Controller
         }
     }
 
-    public function actionPrint($year) {
+    public function actionPrint($year)
+    {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatLegal::find()->where(['phiscal_year_id' => $year->id])->one();
-        if(!isset($model)) {
+        if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
@@ -225,7 +228,7 @@ class StatLegalController extends Controller
         $models = LegalType::find()
             ->alias('t')
             ->with([
-                'legals' => function(ActiveQuery $query) use($year) {
+                'legals' => function (ActiveQuery $query) use ($year) {
                     $query->where(['deleted' => 0])
                         ->select('d.*, l.*')
                         ->alias('l')
@@ -241,15 +244,16 @@ class StatLegalController extends Controller
         ]);
     }
 
-    public function actionDownload($year) {
+    public function actionDownload($year)
+    {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatLegal::find()->where(['phiscal_year_id' => $year->id])->one();
-        if(!isset($model)) {
+        if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
@@ -257,7 +261,7 @@ class StatLegalController extends Controller
         $models = LegalType::find()
             ->alias('t')
             ->with([
-                'legals' => function(ActiveQuery $query) use($year) {
+                'legals' => function (ActiveQuery $query) use ($year) {
                     $query->where(['deleted' => 0])
                         ->select('d.*, l.*')
                         ->alias('l')
@@ -269,24 +273,130 @@ class StatLegalController extends Controller
             ->orderBy('position')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Statistic of Internal Legal '. $year->year.'.xls',
+            'file' => 'Statistic of Internal Legal ' . $year->year . '.xls',
             'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
         ]);
     }
-    /**
-     * Finds the StatLegal model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return StatLegal the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
+
+
+    public function actionUpload($year)
     {
-        if (($model = StatLegal::findOne($id)) !== null) {
-            return $model;
-        } else {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'The requested page does not exist.'));
+        $year = PhiscalYear::findOne($year);
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
+        }
+
+        $post = Yii::$app->request->post();
+        if (!isset($post)) {
+            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'Incorrect Request'));
+            return;
+        }
+
+        if (!isset($_FILES['file_upload'])) {
+            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'Incorrect Request'));
+            return;
+        }
+
+        $menu = Menu::find()->where(['table_name' => 'stat_legal'])->one();
+        if (!isset($menu)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
+            return;
+        }
+
+
+        $dir = 'upload/';
+        if (!is_dir($dir)) mkdir($dir);
+        $dir .= date('Y');
+        if (!is_dir($dir)) mkdir($dir);
+
+        $tmp_name = $_FILES['file_upload']['tmp_name'];
+        $name = $_FILES['file_upload']['name'];
+        $names = explode(".", $name);
+        $ext = end($names);
+        $filename = $menu->table_name . "_" . date('Y_m_d_His') . '.' . $ext;
+
+        if (!move_uploaded_file($tmp_name, $dir . "/" . $filename)) {
+            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, "ພົບບັນຫາໃນການອັບໂຫຼດຟາຍ");
+            return;
+        }
+
+        $model = new Attachment();
+        $model->phiscal_year_id = $year->id;
+        $model->menu_id = $menu->id;
+        $model->user_id = Yii::$app->user->id;
+        $model->deleted = 0;
+        $model->name = $filename;
+        $model->issued_no = $post['issued_no'];
+        $model->issued_date = MyHelper::convertdatefordb($post['issued_date']);
+        $model->issued_by = $post['issued_by'];
+        $model->upload_date = date('Y-m-d H:i:s');
+        $model->original_name = $name;
+        $model->dir = date('Y');
+        if (!$model->save()) {
+            unlink($dir . "/" . $filename);
+            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
+            return;
+        }
+    }
+
+    public function actionGetreferences($year)
+    {
+        $year = PhiscalYear::findOne($year);
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        $files = Attachment::find()->alias('a')
+            ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
+                ':table' => 'stat_legal'
+            ])
+            ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
+            ->orderBy('upload_date desc')
+            ->asArray()->all();
+
+        return json_encode([
+            'files' => $files
+        ]);
+    }
+
+    public function actionDeletefile($year)
+    {
+        $year = PhiscalYear::findOne($year);
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+        if ($year->status != 'O') {
+            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, "The year is not allow to input");
+            return;
+        }
+        $post = Yii::$app->request->post();
+        if (isset($post)) {
+            $model = Attachment::findOne($post['id']);
+            if (!isset($model)) {
+                MyHelper::response(HttpCode::NOT_FOUND, "Data not found");
+                return;
+            }
+            $model->deleted = 1;
+            echo 'upload/' . $model->dir . '/' . $model->name;
+            if (!is_dir('upload/' . $model->dir . '/backup')) mkdir('upload/' . $model->dir . '/backup');
+
+            if (!copy('upload/' . $model->dir . '/' . $model->name, 'upload/' . $model->dir . '/backup/' . $model->name)) {
+                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, "Cannot move file");
+                return;
+            }
+
+            if (!unlink('upload/' . $model->dir . '/' . $model->name)) {
+                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, "Cannot delete file");
+                return;
+            }
+
+            if (!$model->save()) {
+                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
+                return;
+            }
         }
     }
     

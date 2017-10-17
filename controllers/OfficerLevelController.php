@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\OfficerLevel;
 use app\models\OfficerLevelSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * OfficerLevelController implements the CRUD actions for OfficerLevel model.
@@ -57,6 +57,22 @@ class OfficerLevelController extends Controller
     }
 
     /**
+     * Finds the OfficerLevel model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return OfficerLevel the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = OfficerLevel::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
      * Creates a new OfficerLevel model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -68,7 +84,7 @@ class OfficerLevelController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id = Yii::$app->user->id;
             $model->last_update = date('Y-m-d H:i:s');
-            if($model->save())
+            if ($model->save())
                 return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -108,6 +124,7 @@ class OfficerLevelController extends Controller
 
         return $this->redirect(['index']);
     }
+<<<<<<< HEAD
 
     /**
      * Finds the OfficerLevel model based on its primary key value.
@@ -145,4 +162,6 @@ class OfficerLevelController extends Controller
     
     	return parent::beforeAction ( $action );
     }
+=======
+>>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
 }

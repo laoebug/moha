@@ -2,12 +2,11 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\Menu;
-use app\models\MenuSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MenuController implements the CRUD actions for Menu model.
@@ -33,7 +32,7 @@ class MenuController extends Controller
      * Lists all Menu models.
      * @return mixed
      */
-      
+
 
     /**
      * Displays a single Menu model.
@@ -45,6 +44,22 @@ class MenuController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    /**
+     * Finds the Menu model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Menu the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Menu::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**
@@ -76,7 +91,7 @@ class MenuController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($model->save())
+            if ($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -97,6 +112,7 @@ class MenuController extends Controller
 
         return $this->redirect(['index']);
     }
+<<<<<<< HEAD
 
     /**
      * Finds the Menu model based on its primary key value.
@@ -135,4 +151,6 @@ class MenuController extends Controller
     	return parent::beforeAction ( $action );
     }
     
+=======
+>>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
 }

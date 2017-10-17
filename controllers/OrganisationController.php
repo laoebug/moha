@@ -2,12 +2,12 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\Organisation;
 use app\models\OrganisationSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * OrganisationController implements the CRUD actions for Organisation model.
@@ -57,6 +57,22 @@ class OrganisationController extends Controller
     }
 
     /**
+     * Finds the Organisation model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Organisation the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Organisation::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
      * Creates a new Organisation model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -66,8 +82,8 @@ class OrganisationController extends Controller
         $model = new Organisation();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->position = isset($model->position)?$model->position:0;
-            if($model->save())
+            $model->position = isset($model->position) ? $model->position : 0;
+            if ($model->save())
                 return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -86,9 +102,9 @@ class OrganisationController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())){
-            $model->position = isset($model->position)?$model->position:0;
-            if($model->save())
+        if ($model->load(Yii::$app->request->post())) {
+            $model->position = isset($model->position) ? $model->position : 0;
+            if ($model->save())
                 return $this->redirect(['index']);
         } else {
             return $this->render('update', [
@@ -109,6 +125,7 @@ class OrganisationController extends Controller
 
         return $this->redirect(['index']);
     }
+<<<<<<< HEAD
 
     /**
      * Finds the Organisation model based on its primary key value.
@@ -146,4 +163,6 @@ class OrganisationController extends Controller
     
     	return parent::beforeAction ( $action );
     }
+=======
+>>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
 }
