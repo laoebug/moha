@@ -2,13 +2,13 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Role;
 use app\models\RoleSearch;
-use Yii;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
+use yii\filters\VerbFilter;
+use app\services\AuthenticationService;
 /**
  * RoleController implements the CRUD actions for Role model.
  */
@@ -54,22 +54,6 @@ class RoleController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
-    }
-
-    /**
-     * Finds the Role model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Role the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Role::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 
     /**
@@ -121,7 +105,6 @@ class RoleController extends Controller
 
         return $this->redirect(['index']);
     }
-<<<<<<< HEAD
 
     /**
      * Finds the Role model based on its primary key value.
@@ -159,6 +142,4 @@ class RoleController extends Controller
     
     	return parent::beforeAction ( $action );
     }
-=======
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
 }

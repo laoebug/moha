@@ -2,11 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\ContactForm;
-use app\models\LoginForm;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use yii\filters\VerbFilter;
+use app\models\LoginForm;
+use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -61,7 +63,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest)
+        if(Yii::$app->user->isGuest)
             return $this->redirect(["site/login"]);
         else
             return $this->render('index');
