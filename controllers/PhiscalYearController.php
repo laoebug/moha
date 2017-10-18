@@ -3,13 +3,13 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
+use Yii;
 use app\models\PhiscalYear;
 use app\models\PhiscalYearSearch;
-use Yii;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
+use yii\filters\VerbFilter;
+use app\services\AuthenticationService;
 /**
  * PhiscalYearController implements the CRUD actions for PhiscalYear model.
  */
@@ -58,22 +58,6 @@ class PhiscalYearController extends Controller
     }
 
     /**
-     * Finds the PhiscalYear model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return PhiscalYear the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = PhiscalYear::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
-    /**
      * Creates a new PhiscalYear model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -85,7 +69,7 @@ class PhiscalYearController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->start_date = MyHelper::convertdatefordb($model->start_date);
             $model->end_date = MyHelper::convertdatefordb($model->end_date);
-            if ($model->save())
+            if($model->save())
                 Yii::$app->session->setFlash("success", Yii::t('app', 'Operation Success'));
             else
                 Yii::$app->session->setFlash("danger", json_encode($model->errors));
@@ -112,7 +96,7 @@ class PhiscalYearController extends Controller
             $model->start_date = MyHelper::convertdatefordb($model->start_date);
             $model->end_date = MyHelper::convertdatefordb($model->end_date);
 
-            if ($model->save())
+            if($model->save())
                 Yii::$app->session->setFlash("success", Yii::t('app', 'Operation Success'));
             else
                 Yii::$app->session->setFlash("danger", json_encode($model->errors));
@@ -139,7 +123,6 @@ class PhiscalYearController extends Controller
 
         return $this->redirect(['index']);
     }
-<<<<<<< HEAD
 
     /**
      * Finds the PhiscalYear model based on its primary key value.
@@ -177,6 +160,4 @@ class PhiscalYearController extends Controller
     
     	return parent::beforeAction ( $action );
     }
-=======
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
 }

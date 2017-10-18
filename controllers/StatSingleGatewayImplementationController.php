@@ -3,25 +3,42 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
-use app\models\Attachment;
-use app\models\Menu;
+use app\models\Branch;
 use app\models\Ministry;
 use app\models\PhiscalYear;
-use app\models\StatSingleGatewayImplementation;
 use app\models\StatSingleGatewayImplementationDetail;
 use Codeception\Util\HttpCode;
 use Yii;
+use app\models\StatSingleGatewayImplementation;
+use app\models\StatSingleGatewayImplementationSearch;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 use yii\web\ServerErrorHttpException;
-
+use app\services\AuthenticationService;
 /**
  * StatSingleGatewayImplementationController implements the CRUD actions for StatSingleGatewayImplementation model.
  */
 class StatSingleGatewayImplementationController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Lists all StatSingleGatewayImplementation models.
      * @return mixed
@@ -31,7 +48,6 @@ class StatSingleGatewayImplementationController extends Controller
         return $this->render('index');
     }
 
-<<<<<<< HEAD
     public function actionGet() {
     	
     	$user = Yii::$app->user->identity;
@@ -44,17 +60,12 @@ class StatSingleGatewayImplementationController extends Controller
     		}
     	}
     	
-=======
-    public function actionGet()
-    {
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         return json_encode([
             'years' => PhiscalYear::find()->where(['deleted' => 0])->asArray()->all(),
             'ministries' => Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all()
         ]);
     }
 
-<<<<<<< HEAD
     public function actionEnquiry($year) {
     	
     	$user = Yii::$app->user->identity;
@@ -68,12 +79,8 @@ class StatSingleGatewayImplementationController extends Controller
     	}
     	
     	
-=======
-    public function actionEnquiry($year)
-    {
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) throw new HttpException(Yii::t('app', 'Incorrect Phiscal Year'));
+        if(!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
 
 //        $model = StatSingleGatewayImplementation::find()
 //            ->alias('i')
@@ -93,12 +100,12 @@ class StatSingleGatewayImplementationController extends Controller
 //            ->one();
 
         $model = StatSingleGatewayImplementation::find()->where(['phiscal_year_id' => $year])->one();
-        if (!isset($model)) throw new HttpException(Yii::t('app', 'No Data'));
+        if(!isset($model)) throw new HttpException(Yii::t('app', 'No Data'));
 
         $models = Ministry::find()->alias('m')
             ->select('m.*,`d`.`name` as `servicename`, `d`.`remark`')
             ->addSelect([
-                'start_date' => 'DATE_FORMAT(`start_date`, "%d-%m-%Y")',
+                'start_date'=> 'DATE_FORMAT(`start_date`, "%d-%m-%Y")',
             ])
             ->join('left join', 'stat_single_gateway_implementation_detail d', 'd.ministry_id = m.id and d.stat_single_gateway_implementation_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])
@@ -109,7 +116,6 @@ class StatSingleGatewayImplementationController extends Controller
         ]);
     }
 
-<<<<<<< HEAD
     public function actionInquiry($year, $ministry) {
     	
     	$user = Yii::$app->user->identity;
@@ -123,23 +129,19 @@ class StatSingleGatewayImplementationController extends Controller
     	}
     	
     	
-=======
-    public function actionInquiry($year, $ministry)
-    {
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) throw new HttpException(Yii::t('app', 'Incorrect Phiscal Year'));
+        if(!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
 
         $model = StatSingleGatewayImplementationDetail::find()
             ->alias('d')
-            ->join('join', 'stat_single_gateway_implementation i', 'd.stat_single_gateway_implementation_id=i.id and i.phiscal_year_id=:year', [
+            ->join('join','stat_single_gateway_implementation i', 'd.stat_single_gateway_implementation_id=i.id and i.phiscal_year_id=:year', [
                 ':year' => $year->id
             ])
             ->where(['d.ministry_id' => $ministry])
             ->asArray()->one();
 
-        if (isset($model))
-            if (isset($model['start_date']))
+        if(isset($model))
+            if(isset($model['start_date']))
                 $model['start_date'] = MyHelper::convertdatefordisplay($model['start_date']);
 
         return json_encode([
@@ -147,7 +149,6 @@ class StatSingleGatewayImplementationController extends Controller
         ]);
     }
 
-<<<<<<< HEAD
     public function actionSave($year) {
     	
     	$user = Yii::$app->user->identity;
@@ -160,18 +161,14 @@ class StatSingleGatewayImplementationController extends Controller
     		}
     	}
     	
-=======
-    public function actionSave($year)
-    {
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $post = Yii::$app->request->post();
-        if (isset($post)) {
+        if(isset($post)) {
             $year = PhiscalYear::findOne($year);
-            if (!isset($year)) {
-                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            if(!isset($year)) {
+                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
                 return;
             }
-            if ($year->status != 'O') {
+            if($year->status != 'O') {
                 MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
                 return;
             }
@@ -207,7 +204,7 @@ class StatSingleGatewayImplementationController extends Controller
                     throw new ServerErrorHttpException(json_encode($detail->errors));
 
                 $transaction->commit();
-            } catch (Exception $exception) {
+            }catch (Exception $exception) {
                 $transaction->rollBack();
                 MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
                 return;
@@ -215,7 +212,6 @@ class StatSingleGatewayImplementationController extends Controller
         }
     }
 
-<<<<<<< HEAD
     public function actionPrint($year) {
     	
     	$user = Yii::$app->user->identity;
@@ -228,19 +224,15 @@ class StatSingleGatewayImplementationController extends Controller
     		}
     	}
     	
-=======
-    public function actionPrint($year)
-    {
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
 
         $model = StatSingleGatewayImplementation::find()
             ->with([
-                'statSingleGatewayImplementationDetails' => function (ActiveQuery $query) {
+                'statSingleGatewayImplementationDetails' => function(ActiveQuery $query) {
                     $query->alias('d')
                         ->join('right join', 'ministry m', 'm.id=d.ministry_id')
                         ->orderBy('m.position');
@@ -249,7 +241,6 @@ class StatSingleGatewayImplementationController extends Controller
         return $this->renderPartial('print', ['content' => $this->renderPartial('table', ['model' => $model])]);
     }
 
-<<<<<<< HEAD
     public function actionDownload($year) {
     	
     	$user = Yii::$app->user->identity;
@@ -262,149 +253,39 @@ class StatSingleGatewayImplementationController extends Controller
     		}
     	}
     	
-=======
-    public function actionDownload($year)
-    {
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
 
         $model = StatSingleGatewayImplementation::find()
             ->with([
-                'statSingleGatewayImplementationDetails' => function (ActiveQuery $query) {
+                'statSingleGatewayImplementationDetails' => function(ActiveQuery $query) {
                     $query->alias('d')
                         ->join('right join', 'ministry m', 'm.id=d.ministry_id')
                         ->orderBy('m.position');
                 }
             ])->where(['phiscal_year_id' => $year->id])->one();
         return $this->renderPartial('excel', [
-            'file' => 'Single Gateway Implementation ' . $year->year . '.xls',
+            'file' => 'Single Gateway Implementation '.$year->year.'.xls',
             'content' => $this->renderPartial('table', ['model' => $model])
         ]);
     }
 
-
-    public function actionUpload($year)
+    /**
+     * Finds the StatSingleGatewayImplementation model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return StatSingleGatewayImplementation the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
     {
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
-            return;
-        }
-
-        $post = Yii::$app->request->post();
-        if (!isset($post)) {
-            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'Incorrect Request'));
-            return;
-        }
-
-        if (!isset($_FILES['file_upload'])) {
-            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'Incorrect Request'));
-            return;
-        }
-
-        $menu = Menu::find()->where(['table_name' => 'stat_single_gateway_implementation'])->one();
-        if (!isset($menu)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
-            return;
-        }
-
-
-        $dir = 'upload/';
-        if (!is_dir($dir)) mkdir($dir);
-        $dir .= date('Y');
-        if (!is_dir($dir)) mkdir($dir);
-
-        $tmp_name = $_FILES['file_upload']['tmp_name'];
-        $name = $_FILES['file_upload']['name'];
-        $names = explode(".", $name);
-        $ext = end($names);
-        $filename = $menu->table_name . "_" . date('Y_m_d_His') . '.' . $ext;
-
-        if (!move_uploaded_file($tmp_name, $dir . "/" . $filename)) {
-            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, "ພົບບັນຫາໃນການອັບໂຫຼດຟາຍ");
-            return;
-        }
-
-        $model = new Attachment();
-        $model->phiscal_year_id = $year->id;
-        $model->menu_id = $menu->id;
-        $model->user_id = Yii::$app->user->id;
-        $model->deleted = 0;
-        $model->name = $filename;
-        $model->issued_no = $post['issued_no'];
-        $model->issued_date = MyHelper::convertdatefordb($post['issued_date']);
-        $model->issued_by = $post['issued_by'];
-        $model->upload_date = date('Y-m-d H:i:s');
-        $model->original_name = $name;
-        $model->dir = date('Y');
-        if (!$model->save()) {
-            unlink($dir . "/" . $filename);
-            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
-            return;
-        }
-    }
-
-    public function actionGetreferences($year)
-    {
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
-            return;
-        }
-
-        $files = Attachment::find()->alias('a')
-            ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
-                ':table' => 'stat_single_gateway_implementation'
-            ])
-            ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
-            ->orderBy('upload_date desc')
-            ->asArray()->all();
-
-        return json_encode([
-            'files' => $files
-        ]);
-    }
-
-    public function actionDeletefile($year)
-    {
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
-            return;
-        }
-        if ($year->status != 'O') {
-            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, "The year is not allow to input");
-            return;
-        }
-        $post = Yii::$app->request->post();
-        if (isset($post)) {
-            $model = Attachment::findOne($post['id']);
-            if (!isset($model)) {
-                MyHelper::response(HttpCode::NOT_FOUND, "Data not found");
-                return;
-            }
-            $model->deleted = 1;
-            echo 'upload/' . $model->dir . '/' . $model->name;
-            if (!is_dir('upload/' . $model->dir . '/backup')) mkdir('upload/' . $model->dir . '/backup');
-
-            if (!copy('upload/' . $model->dir . '/' . $model->name, 'upload/' . $model->dir . '/backup/' . $model->name)) {
-                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, "Cannot move file");
-                return;
-            }
-
-            if (!unlink('upload/' . $model->dir . '/' . $model->name)) {
-                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, "Cannot delete file");
-                return;
-            }
-
-            if (!$model->save()) {
-                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
-                return;
-            }
+        if (($model = StatSingleGatewayImplementation::findOne($id)) !== null) {
+            return $model;
+        } else {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app','The requested page does not exist.'));
         }
     }
     

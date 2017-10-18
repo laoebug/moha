@@ -3,23 +3,45 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
-use app\models\Attachment;
-use app\models\Menu;
 use app\models\Ministry;
+use app\models\MinistryGroup;
 use app\models\PhiscalYear;
-use app\models\StatGovermentUnit;
 use app\models\StatGovermentUnitDetail;
 use Codeception\Util\HttpCode;
+use function foo\func;
 use Yii;
+use app\models\StatGovermentUnit;
+use app\models\StatGovermentUnitSearch;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-
+use yii\web\MethodNotAllowedHttpException;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\web\ServerErrorHttpException;
+use app\services\AuthenticationService;
 /**
  * StatGovermentUnitController implements the CRUD actions for StatGovermentUnit model.
  */
 class StatGovermentUnitController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Lists all StatGovermentUnit models.
      * @return mixed
@@ -27,13 +49,12 @@ class StatGovermentUnitController extends Controller
     public function actionIndex($year = null)
     {
         $table = null;
-        if (isset($year)) {
+        if(isset($year)) {
             $table = $this->enquiry($year);
         }
         return $this->render('index');
     }
 
-<<<<<<< HEAD
     public function actionGet() {
     	
     	$user = Yii::$app->user->identity;
@@ -59,13 +80,9 @@ class StatGovermentUnitController extends Controller
     }
 
     private function enquiry($year, $showstatus = true) {
-=======
-    private function enquiry($year, $showstatus = true)
-    {
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
 
@@ -74,9 +91,9 @@ class StatGovermentUnitController extends Controller
 
         $model = StatGovermentUnit::find()
             ->with([
-                'statGovermentUnitDetails' => function (ActiveQuery $query) {
+                'statGovermentUnitDetails' => function(ActiveQuery $query) {
                     $query
-                        ->with(['ministry' => function (ActiveQuery $query) {
+                        ->with(['ministry' => function(ActiveQuery $query) {
                             $query->orderBy('position');
                         }]);
                 }
@@ -84,7 +101,7 @@ class StatGovermentUnitController extends Controller
             ->where(['phiscal_year_id' => $year->id])
             ->one();
 
-        if (!isset($model)) {
+        if(!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
@@ -97,26 +114,10 @@ class StatGovermentUnitController extends Controller
         ]);
     }
 
-    public function actionGet()
-    {
-        $years = PhiscalYear::find()
-            ->where(['deleted' => 0])->asArray()->all();
-
-        $ministries = Ministry::find()
-            ->where("deleted=0 and ministry_group_id in (1,2)")->orderBy('position')->asArray()->all();
-
-        return json_encode([
-            "years" => $years,
-            "ministries" => $ministries,
-        ]);
-    }
-
-    public function actionEnquiry($year)
-    {
+    public function actionEnquiry($year) {
         return $this->enquiry($year);
     }
 
-<<<<<<< HEAD
     public function actionInquiry($year, $ministry) {
     	
     	$user = Yii::$app->user->identity;
@@ -129,19 +130,14 @@ class StatGovermentUnitController extends Controller
     		}
     	}
     	
-=======
-    public function actionInquiry($year, $ministry)
-    {
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $detail = StatGovermentUnitDetail::find()
-            ->with(['statGovermentUnit' => function (ActiveQuery $query) use ($year) {
+            ->with(['statGovermentUnit' => function(ActiveQuery $query) use($year) {
                 $query->where(['phiscal_year_id' => $year]);
             }])
             ->where(['ministry_id' => $ministry])->asArray()->one();
         return json_encode($detail);
     }
 
-<<<<<<< HEAD
     public function actionSave() {
     	
     	$user = Yii::$app->user->identity;
@@ -154,23 +150,19 @@ class StatGovermentUnitController extends Controller
     		}
     	}
     	
-=======
-    public function actionSave()
-    {
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
         $post = Yii::$app->request->post();
-        if (!isset($post)) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Incorrect Request Method'));
+        if(!isset($post)) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
             return;
         }
 
         $year = PhiscalYear::findOne($post['year']);
-        if (!isset($year)) {
+        if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
-        if ($year->status != "O") {
+        if($year->status != "O")  {
             MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
             return;
         }
@@ -178,18 +170,18 @@ class StatGovermentUnitController extends Controller
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model = StatGovermentUnit::find()->where(['phiscal_year_id' => $year->id])->one();
-            if (!isset($model)) {
+            if(!isset($model)) {
                 $model = new StatGovermentUnit();
                 $model->phiscal_year_id = $year->id;
             }
             $model->user_id = Yii::$app->user->id;
             $model->saved = 1;
             $model->last_update = date('Y-m-d H:i:s');
-            if (!$model->save()) throw new Exception(json_encode($model->errors));
+            if(!$model->save()) throw new Exception(json_encode($model->errors));
 
             $detail = StatGovermentUnitDetail::find()
                 ->where(['stat_goverment_unit_id' => $model->id, 'ministry_id' => $post['ministry']])->one();
-            if (!isset($detail)) {
+            if(!isset($detail)) {
                 $detail = new StatGovermentUnitDetail();
                 $detail->ministry_id = $post['ministry'];
                 $detail->stat_goverment_unit_id = $model->id;
@@ -199,7 +191,7 @@ class StatGovermentUnitController extends Controller
             $detail->insitute = $post['insitute'];
             $detail->center = $post['center'];
             $detail->remark = $post['remark'];
-            if (!$detail->save()) throw new Exception(json_encode($detail->errors));
+            if(!$detail->save()) throw new Exception(json_encode($detail->errors));
 
             $transaction->commit();
             return $this->enquiry($year);
@@ -209,11 +201,10 @@ class StatGovermentUnitController extends Controller
         }
     }
 
-    public function actionPrint($year)
-    {
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+    public function actionPrint($year) {
+        $year =PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
 
@@ -222,81 +213,30 @@ class StatGovermentUnitController extends Controller
         ]);
     }
 
-    public function actionDownload($year)
-    {
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+    public function actionDownload($year) {
+        $year =PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
 
         return $this->renderPartial('excel', [
-            'file' => 'stat_goverment_unit_' . $year->year . '.xls',
+            'file' => 'stat_goverment_unit_'.$year->year.'.xls',
             'content' => $this->enquiry($year->id, false)
         ]);
     }
 
-    public function actionUpload($year)
-    {
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
-            return;
-        }
-
+    public function actionUpload() {
+        $this->enableCsrfValidation = false;
         $post = Yii::$app->request->post();
-        if (!isset($post)) {
-            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'Incorrect Request'));
-            return;
-        }
+        if(isset($post))
+            print_r($post);
 
-        if (!isset($_FILES['file_upload'])) {
-            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'Incorrect Request'));
-            return;
-        }
+        if(isset($_FILES))
+            print_r($_FILES);
 
-        $menu = Menu::find()->where(['table_name' => 'stat_goverment_unit'])->one();
-        if (!isset($menu)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
-            return;
-        }
-
-
-        $dir = 'upload/';
-        if (!is_dir($dir)) mkdir($dir);
-        $dir .= date('Y');
-        if (!is_dir($dir)) mkdir($dir);
-
-        $tmp_name = $_FILES['file_upload']['tmp_name'];
-        $name = $_FILES['file_upload']['name'];
-        $names = explode(".", $name);
-        $ext = end($names);
-        $filename = $menu->table_name . "_" . date('Y_m_d_His') . '.' . $ext;
-
-        if (!move_uploaded_file($tmp_name, $dir . "/" . $filename)) {
-            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, "ພົບບັນຫາໃນການອັບໂຫຼດຟາຍ");
-            return;
-        }
-
-        $model = new Attachment();
-        $model->phiscal_year_id = $year->id;
-        $model->menu_id = $menu->id;
-        $model->user_id = Yii::$app->user->id;
-        $model->deleted = 0;
-        $model->name = $filename;
-        $model->issued_no = $post['issued_no'];
-        $model->issued_date = MyHelper::convertdatefordb($post['issued_date']);
-        $model->issued_by = $post['issued_by'];
-        $model->upload_date = date('Y-m-d H:i:s');
-        $model->original_name = $name;
-        $model->dir = date('Y');
-        if (!$model->save()) {
-            unlink($dir . "/" . $filename);
-            MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
-            return;
-        }
+//        $this->enableCsrfValidation = true;
     }
-<<<<<<< HEAD
     
     public function beforeAction($action) {
     	$user = Yii::$app->user->identity;
@@ -319,67 +259,4 @@ class StatGovermentUnitController extends Controller
     	return parent::beforeAction ( $action );
     }
     
-=======
-
-    public function actionGetreferences($year)
-    {
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
-            return;
-        }
-
-        $files = Attachment::find()->alias('a')
-            ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
-                ':table' => 'stat_goverment_unit'
-            ])
-            ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
-            ->orderBy('upload_date desc')
-            ->asArray()->all();
-
-        return json_encode([
-            'files' => $files
-        ]);
-    }
-
-    public function actionDeletefile($year)
-    {
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
-            return;
-        }
-        if ($year->status != 'O') {
-            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, "The year is not allow to input");
-            return;
-        }
-        $post = Yii::$app->request->post();
-        if (isset($post)) {
-            $model = Attachment::findOne($post['id']);
-            if (!isset($model)) {
-                MyHelper::response(HttpCode::NOT_FOUND, "Data not found");
-                return;
-            }
-            $model->deleted = 1;
-            echo 'upload/' . $model->dir . '/' . $model->name;
-            if (!is_dir('upload/' . $model->dir . '/backup')) mkdir('upload/' . $model->dir . '/backup');
-
-            if (!copy('upload/' . $model->dir . '/' . $model->name, 'upload/' . $model->dir . '/backup/' . $model->name)) {
-                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, "Cannot move file");
-                return;
-            }
-
-            if (!unlink('upload/' . $model->dir . '/' . $model->name)) {
-                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, "Cannot delete file");
-                return;
-            }
-
-            if (!$model->save()) {
-                MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, json_encode($model->errors));
-                return;
-            }
-        }
-    }
-
->>>>>>> 857e53e810e66f166149a2d70ea718d08a42ad3c
 }
