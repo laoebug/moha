@@ -46,6 +46,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 	public $theBraches=[];
 	public $theSubcordinateUsers=[];
 	public $theProvinces=[];
+	public $province_id;
     /**
      * @inheritdoc
      */
