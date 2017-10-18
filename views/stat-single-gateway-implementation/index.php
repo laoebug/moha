@@ -196,5 +196,94 @@ $this->params['breadcrumbs'][] = $this->title;
         }, 15000);
       });
     };
+
+
+    $scope.uploadedFile = function (element) {
+      if(!$scope.issued_no) {
+        $scope.files = null;
+        alert('ກະລຸນາປ້ອນເລກທີ');
+        return;
+      }
+      $scope.issued_date = $('.datepicker').val();
+      if(!$scope.issued_date) {
+        $scope.files = null;
+        alert('ກະລຸນາປ້ອນວັນທີ');
+        return;
+      }
+
+      $scope.$apply(function ($scope) {
+        $scope.files = element.files;
+        $http({
+          url: $scope.url + "upload&year=" + $scope.year.id,
+          method: "POST",
+          processData: false,
+          headers: {'Content-Type': undefined},
+          data: {
+            '_csrf': $('meta[name="csrf-token"]').attr("content"),
+            'issued_no': $scope.issued_no,
+            'issued_date': $scope.issued_date,
+            'issued_by': $scope.issued_by
+          },
+          transformRequest: function (data) {
+            var formData = new FormData();
+            var file = $scope.files[0];
+            formData.append("file_upload", file);
+            angular.forEach(data, function (value, key) {
+              formData.append(key, value);
+            });
+            return formData;
+          }
+        }).success(function (data, status, headers, config) {
+          $scope.getreferences();
+          $scope.issued_date = null;
+          $scope.issued_no = null;
+          $scope.issued_by = null;
+          $("input[name='image'], .datepicker").val("");
+          $scope.status = data.status;
+          $scope.formdata = "";
+        }).error(function (data, status, headers, config) {
+          $scope.response = data;
+          $timeout(function () {
+            $scope.response = null;
+          }, 15000);
+        });
+      });
+    };
+
+    $scope.getreferences = function() {
+      if($scope.year) {
+        $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
+          .then(function (r) {
+            if (r.data)
+              $scope.references = r.data.files;
+          }, function (r) {
+            $scope.response = r;
+            $timeout(function () {
+              $scope.response = null;
+            }, 15000);
+          });
+      }
+    };
+
+    $scope.deletefile = function(f) {
+      if($scope.year && f) {
+        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
+          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
+            'id': f.id,
+            '_csrf': $('meta[name="csrf-token"]').attr("content")
+          }).then(function (r) {
+            $scope.response = r;
+            $scope.getreferences();
+            $timeout(function () {
+              $scope.response = null;
+            }, 15000);
+          }, function (r) {
+            $scope.response = r;
+            $timeout(function () {
+              $scope.response = null;
+            }, 15000);
+          });
+      }
+    };
   });
 </script>
