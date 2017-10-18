@@ -224,7 +224,7 @@ class StatCopyController extends Controller
             return;
         }
 
-        $menu = Menu::find()->where(['table_name' => 'stat_association_foundation'])->one();
+        $menu = Menu::find()->where(['table_name' => 'stat_copy'])->one();
         if (!isset($menu)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
             return;
@@ -275,7 +275,7 @@ class StatCopyController extends Controller
 
         $files = Attachment::find()->alias('a')
             ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
-                ':table' => 'stat_association_foundation'
+                ':table' => 'stat_copy'
             ])
             ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
             ->orderBy('upload_date desc')
