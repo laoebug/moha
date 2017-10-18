@@ -4,6 +4,7 @@ use app\models\User;
 use app\models\Menu;
 
 function displayTopMenu($menu_parent_id) {
+	$li = '';
     $user = User::findOne(Yii::$app->user->id);
     try {
         $sql = "select o1.*,ifnull(child_count.count,0) as child_count from (SELECT a.* FROM menu a ,  role_has_menu b
