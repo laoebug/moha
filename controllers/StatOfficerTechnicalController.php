@@ -145,6 +145,10 @@ class StatOfficerTechnicalController extends Controller
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
+        if ($year->status != 'O') {
+            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, "The year is not allow to input");
+            return;
+        }
 
         $post = Yii::$app->request->post();
         if(isset($post)) {

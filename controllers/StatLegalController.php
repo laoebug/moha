@@ -146,7 +146,6 @@ class StatLegalController extends Controller
     		}
     	}
     	
-    	
         $post = Yii::$app->request->post();
         if(!isset($post['StatLegalDetail'])) {
             MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));

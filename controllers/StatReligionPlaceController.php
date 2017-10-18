@@ -177,6 +177,10 @@ class StatReligionPlaceController extends Controller
             MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app','Inccorect Request Mehotd'));
             return;
         }
+        if ($year->status != 'O') {
+            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, "The year is not allow to input");
+            return;
+        }
 
         $transaction = Yii::$app->db->beginTransaction();
         try{
