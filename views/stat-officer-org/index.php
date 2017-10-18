@@ -163,6 +163,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $scope.models = r.data.models;
             $scope.stat = r.data.stat;
             $scope.stat.colors = ['#0000FF', '#FF0000'];
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

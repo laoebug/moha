@@ -285,7 +285,28 @@ $this->params['breadcrumbs'][] = $this->title;
               $scope.model.middle_women = parseInt($scope.model.middle_women);
               $scope.model.begin_women = parseInt($scope.model.begin_women);
               $scope.model.no_women = parseInt($scope.model.no_women);
+            } else {
+              $scope.model.doctor_total = null;
+              $scope.model.post_master_total = null;
+              $scope.model.master_total = null;
+              $scope.model.post_bachelor_total = null;
+              $scope.model.bachelor_total = null;
+              $scope.model.high_total = null;
+              $scope.model.middle_total = null;
+              $scope.model.begin_total = null;
+              $scope.model.no_total = null;
+
+              $scope.model.doctor_women = null;
+              $scope.model.post_master_women = null;
+              $scope.model.master_women = null;
+              $scope.model.post_bachelor_women = null;
+              $scope.model.bachelor_women = null;
+              $scope.model.high_women = null;
+              $scope.model.middle_women = null;
+              $scope.model.begin_women = null;
+              $scope.model.no_women = null;
             }
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

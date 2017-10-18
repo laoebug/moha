@@ -231,6 +231,7 @@ $this->params['breadcrumbs'][] = $this->title;
               $scope.model.army_women = parseInt($scope.model.army_women);
               $scope.model.soe_women = parseInt($scope.model.soe_women);
             }
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

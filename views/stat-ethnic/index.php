@@ -158,6 +158,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
           .then(function (r) {
             $scope.result = $sce.trustAsHtml(r.data);
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

@@ -392,6 +392,7 @@ $this->params['breadcrumbs'][] = $this->title;
           .then(function (r) {
             $scope.models = r.data.models;
             $scope.stat = r.data.stat;
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

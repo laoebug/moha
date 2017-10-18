@@ -241,12 +241,22 @@ $this->params['breadcrumbs'][] = $this->title;
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
           .then(function (r) {
             $scope.model = r.data.model;
-            $scope.model.center_total = parseInt(r.data.model.center_total);
-            $scope.model.center_women = parseInt(r.data.model.center_women);
-            $scope.model.province_total = parseInt(r.data.model.province_total);
-            $scope.model.province_women = parseInt(r.data.model.province_women);
-            $scope.model.district_total = parseInt(r.data.model.district_total);
-            $scope.model.district_women = parseInt(r.data.model.district_women);
+            if(r.data.model) {
+              $scope.model.center_total = parseInt(r.data.model.center_total);
+              $scope.model.center_women = parseInt(r.data.model.center_women);
+              $scope.model.province_total = parseInt(r.data.model.province_total);
+              $scope.model.province_women = parseInt(r.data.model.province_women);
+              $scope.model.district_total = parseInt(r.data.model.district_total);
+              $scope.model.district_women = parseInt(r.data.model.district_women);
+            } else {
+              $scope.model.center_total = null;
+              $scope.model.center_women = null;
+              $scope.model.province_total = null;
+              $scope.model.province_women = null;
+              $scope.model.district_total = null;
+              $scope.model.district_women = null;
+            }
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

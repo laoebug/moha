@@ -285,7 +285,18 @@ $this->params['breadcrumbs'][] = $this->title;
               $scope.model.admin_non_women = parseInt($scope.model.admin_non_women);
               $scope.model.officer_approve_women = parseInt($scope.model.officer_approve_women);
               $scope.model.officer_non_women = parseInt($scope.model.officer_non_women);
+            } else {
+              $scope.model.admin_approve_total = null;
+              $scope.model.admin_non_total = null;
+              $scope.model.officer_approve_total = null;
+              $scope.model.officer_non_total = null;
+
+              $scope.model.admin_approve_women = null;
+              $scope.model.admin_non_women = null;
+              $scope.model.officer_approve_women = null;
+              $scope.model.officer_non_women = null;
             }
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

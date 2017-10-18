@@ -159,6 +159,7 @@ $this->params['breadcrumbs'][] = $this->title;
           .then(function (r) {
             if (r.data)
               $scope.result = $sce.trustAsHtml(r.data);
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

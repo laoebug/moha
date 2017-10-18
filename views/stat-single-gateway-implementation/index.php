@@ -137,6 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
       $http.get(url + 'enquiry&year=' + $scope.year.id)
         .then(function (r) {
           $scope.models = r.data.models;
+          $scope.getreferences();
         }, function (r) {
           $scope.response = r;
           $timeout(function () {

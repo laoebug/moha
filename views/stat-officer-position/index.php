@@ -269,7 +269,26 @@ $this->params['breadcrumbs'][] = $this->title;
               $scope.model.p6_women = parseInt($scope.model.p6_women);
               $scope.model.p7_women = parseInt($scope.model.p7_women);
               $scope.model.p8_women = parseInt($scope.model.p8_women);
+            } else {
+              $scope.model.p1_total = null;
+              $scope.model.p2_total = null;
+              $scope.model.p3_total = null;
+              $scope.model.p4_total = null;
+              $scope.model.p5_total = null;
+              $scope.model.p6_total = null;
+              $scope.model.p7_total = null;
+              $scope.model.p8_total = null;
+
+              $scope.model.p1_women = null;
+              $scope.model.p2_women = null;
+              $scope.model.p3_women = null;
+              $scope.model.p4_women = null;
+              $scope.model.p5_women = null;
+              $scope.model.p6_women = null;
+              $scope.model.p7_women = null;
+              $scope.model.p8_women = null;
             }
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

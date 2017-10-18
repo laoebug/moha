@@ -192,7 +192,12 @@ $this->params['breadcrumbs'][] = $this->title;
               $scope.model.center = parseInt($scope.model.center);
               $scope.model.province = parseInt($scope.model.province);
               $scope.model.district = parseInt($scope.model.district);
+            } else {
+              $scope.model.center = null;
+              $scope.model.province = null;
+              $scope.model.district = null;
             }
+            $scope.getreferences();
           }, function (r) {
             $scope.response = r;
             $timeout(function () {

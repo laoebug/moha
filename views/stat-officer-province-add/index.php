@@ -182,7 +182,7 @@ $this->params['breadcrumbs'][] = $this->title;
         }, 15000);
       });
 
-    $scope.enquiry = function() {
+    $scope.enquiry = function () {
       $scope.models=null;
       if($scope.year)
         $http.get($scope.url + 'enquiry&year='+$scope.year.id)
