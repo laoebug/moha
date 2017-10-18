@@ -197,7 +197,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $scope.sum = [];
     $scope.mode = 'read';
     $scope.changemode = function () {
-      $scope.mode = $scope.mode == 'read' ? 'insert' : 'read';
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
     $http.get($scope.url + 'get')
       .then(function (r) {

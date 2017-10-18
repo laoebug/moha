@@ -311,7 +311,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $scope.url = 'index.php?r=stat-local-admin/';
     $scope.mode = 'read';
     $scope.changemode = function () {
-      $scope.mode = $scope.mode == 'read' ? 'insert' : 'read';
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
     $scope.sum = [];
     $http.get($scope.url + 'get')
