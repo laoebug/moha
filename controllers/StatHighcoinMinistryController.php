@@ -269,7 +269,7 @@ class StatHighcoinMinistryController extends Controller
             return;
         }
 
-        $menu = Menu::find()->where(['table_name' => 'stat_hornorcoin_ministry'])->one();
+        $menu = Menu::find()->where(['table_name' => 'stat_highcoin_ministry'])->one();
         if (!isset($menu)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
             return;
@@ -320,7 +320,7 @@ class StatHighcoinMinistryController extends Controller
 
         $files = Attachment::find()->alias('a')
             ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
-                ':table' => 'stat_hornorcoin_ministry'
+                ':table' => 'stat_highcoin_ministry'
             ])
             ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
             ->orderBy('upload_date desc')

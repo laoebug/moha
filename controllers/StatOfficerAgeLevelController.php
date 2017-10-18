@@ -267,7 +267,7 @@ class StatOfficerAgeLevelController extends Controller
             return;
         }
 
-        $menu = Menu::find()->where(['table_name' => 'stat_officer_agelevel'])->one();
+        $menu = Menu::find()->where(['table_name' => 'stat_officer_age_level'])->one();
         if (!isset($menu)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
             return;
@@ -318,7 +318,7 @@ class StatOfficerAgeLevelController extends Controller
 
         $files = Attachment::find()->alias('a')
             ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
-                ':table' => 'stat_officer_agelevel'
+                ':table' => 'stat_officer_age_level'
             ])
             ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
             ->orderBy('upload_date desc')

@@ -314,6 +314,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $scope.sum = function (key) {
       var s = 0;
+      if($scope.models)
       for (var i = 0; i < $scope.models.length; i++) {
         if ($scope.models[i][key])
           s += parseInt($scope.models[i][key]);
