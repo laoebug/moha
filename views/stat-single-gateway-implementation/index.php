@@ -115,13 +115,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-  var url = 'index.php?r=stat-single-gateway-implementation/';
   app.controller('singleGatewayController', function ($scope, $http, $sce, $timeout) {
+    $scope.url = 'index.php?r=stat-single-gateway-implementation/';
     $scope.mode = 'read';
     $scope.changemode = function () {
       $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
-    $http.get(url + 'get')
+    $http.get($scope.url + 'get')
       .then(function (r) {
         $scope.years = r.data.years;
         $scope.ministries = r.data.ministries;
@@ -134,7 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $scope.enquiry = function () {
       $scope.selected = null;
-      $http.get(url + 'enquiry&year=' + $scope.year.id)
+      $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
         .then(function (r) {
           $scope.models = r.data.models;
           $scope.getreferences();
@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $scope.inquiry = function () {
       if ($scope.selected.ministry)
-        $http.get(url + 'inquiry&year=' + $scope.year.id + '&ministry=' + $scope.selected.ministry.id)
+        $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&ministry=' + $scope.selected.ministry.id)
           .then(function (r) {
             if (r.data.model)
               if (r.data.model.start_date)
@@ -180,7 +180,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $scope.save = function () {
       $scope.selected.start_date = $(".datepicker").val();
-      $http.post(url + 'save&year=' + $scope.year.id, {
+      $http.post($scope.url + 'save&year=' + $scope.year.id, {
         Model: $scope.selected,
         '_csrf': $('meta[name="csrf-token"]').attr("content")
       }).then(function (r) {
