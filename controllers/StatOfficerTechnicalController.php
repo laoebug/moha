@@ -10,6 +10,7 @@ use Codeception\Util\HttpCode;
 use Yii;
 use app\models\StatOfficerTechnical;
 use app\models\StatOfficerTechnicalSearch;
+use app\models\Attachment;
 use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
