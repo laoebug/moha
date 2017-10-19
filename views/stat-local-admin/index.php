@@ -93,15 +93,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td class="text-center" colspan="2">ຄອບຄົວ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Women') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Women') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Women') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%">ທຸກຍາກ</td>
+                            <td class="text-center" style="width: 12%"><?= Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12%"><?= Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" style="width: 12%"><?= Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12%"><?= Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" style="width: 12%"><?= Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12%"><?= Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" style="width: 12%"><?= Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 8%">ທຸກຍາກ</td>
                         </tr>
                         <tr>
                             <td class="text-center"><input min="0" type="number" class="form-control"

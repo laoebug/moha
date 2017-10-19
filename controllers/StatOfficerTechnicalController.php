@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
+use app\models\Attachment;
 use app\models\OfficerLevel;
 use app\models\PhiscalYear;
 use app\models\StatOfficerTechnicalDetail;
