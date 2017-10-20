@@ -138,20 +138,38 @@ class UserController extends Controller {
 		$menuList = array ();
 		if (Yii::$app->request->isAjax) {
 			$data = Yii::$app->request->post ();
+			
 			try {
+				$sql_menu = "";
+				$params = [ ];
 				
-				$sql_menu = " select ";
-				$sql_menu .= " ifnull((select menu_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as menu_id, ";
-				$sql_menu .= " ifnull((select role_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as role_id, ";
-				$sql_menu .= " a.* from menu a";
-				$sql_menu .= " where a.deleted=:deleted ";
-				$sql_menu .= " order by a.position ";
-				$params = [ 
-						':role_id' => $data ["role_id"],
-						':role_id' => $data ["role_id"],
-						':deleted' => 0 
-				];
-				
+				$role = Role::findOne ( ( int ) $data ["role_id"] );
+				if ($role->is_province == 1) {
+					$sql_menu = " select ";
+					$sql_menu .= " ifnull((select menu_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as menu_id, ";
+					$sql_menu .= " ifnull((select role_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as role_id, ";
+					$sql_menu .= " a.* from menu a";
+					$sql_menu .= " where a.deleted=:deleted AND has_province=:has_province";
+					$sql_menu .= " order by a.position ";
+					$params = [ 
+							':role_id' => $data ["role_id"],
+							':role_id' => $data ["role_id"],
+							':deleted' => 0 ,
+							':has_province'=>1
+					];
+				} else {
+					$sql_menu = " select ";
+					$sql_menu .= " ifnull((select menu_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as menu_id, ";
+					$sql_menu .= " ifnull((select role_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as role_id, ";
+					$sql_menu .= " a.* from menu a";
+					$sql_menu .= " where a.deleted=:deleted ";
+					$sql_menu .= " order by a.position ";
+					$params = [ 
+							':role_id' => $data ["role_id"],
+							':role_id' => $data ["role_id"],
+							':deleted' => 0 
+					];
+				}
 				$menus = Menu::findBySql ( $sql_menu, $params )->all ();
 				
 				if (count ( $menus ) > 0) {
@@ -199,7 +217,6 @@ class UserController extends Controller {
 				$sql_action .= "  a.* from action a ";
 				$sql_action .= " where a.deleted=:deleted ";
 				
-				
 				$params = [ 
 						':role_id' => $data ["role_id"],
 						':role_id' => $data ["role_id"],
@@ -219,8 +236,7 @@ class UserController extends Controller {
 								"role_id" => $action ['role_id'],
 								"action_id" => $action ['action_id'],
 								"name" => $action ['description'],
-								"method" => $action ['method']
-								
+								"method" => $action ['method'] 
 						];
 					}
 					
@@ -686,23 +702,20 @@ class UserController extends Controller {
 			throw new NotFoundHttpException ( 'The requested page does not exist.' );
 		}
 	}
-// 	public function beforeAction($action) {
-// 		$this->enableCsrfValidation = false;
-		
-// 		return parent::beforeAction ( $action );
-// 	}
-
-	public function beforeAction($action)
-	{
+	// public function beforeAction($action) {
+	// $this->enableCsrfValidation = false;
+	
+	// return parent::beforeAction ( $action );
+	// }
+	public function beforeAction($action) {
 		$this->enableCsrfValidation = false;
-		parent::beforeAction($action);
-	
-		if (Yii::$app->getRequest()->getMethod() === 'OPTIONS') {
+		parent::beforeAction ( $action );
+		
+		if (Yii::$app->getRequest ()->getMethod () === 'OPTIONS') {
 			// End it, otherwise a 401 will be shown.
-			Yii::$app->end();
+			Yii::$app->end ();
 		}
-	
+		
 		return true;
 	}
-	
 }

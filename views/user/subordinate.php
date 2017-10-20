@@ -1,6 +1,5 @@
 
 <?php
-use yii\widgets\Pjax;
 use yii\widgets\DetailView;
 use yii\helpers\Html;
 /* @var $this yii\web\View */
@@ -74,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?php
 				echo Yii::$app->controller->renderPartial('_branchList', [
 				        'model' => $model
-				    ]) 
+				    ]) ;
 				?>								               
 			</div>
 			
@@ -82,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?php
 				echo Yii::$app->controller->renderPartial('_provinceList', [
 				        'model' => $model
-				    ]) 
+				    ]); 
 				?>								               
 			</div>
 			
@@ -104,6 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+
 <script type="text/javascript">
 
 var table_branch = $('#_branch_table').DataTable({'paging': false});

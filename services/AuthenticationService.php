@@ -78,7 +78,7 @@ class AuthenticationService {
 			Yii::$app->session->setFlash ( 'danger', "Action(s) could not be retrieved" );
 		}
 		return $isAccessisbleAction;
-// 		return $actions;
+
 	}
 	
 	

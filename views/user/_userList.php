@@ -41,11 +41,7 @@
 					</td>
 				</tr>
 				<?php endforeach;?>
-				<?php else:?>
-				<tr>
-					<td colspan="8"><?php echo Yii::t("app","No data available")?></td>
-					
-				</tr>
+				
 				<?php endif;?>
 			</tbody>
 		</table>
