@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use \yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -154,9 +155,11 @@ class UserController extends Controller {
 					$params = [ 
 							':role_id' => $data ["role_id"],
 							':role_id' => $data ["role_id"],
-							':deleted' => 0 ,
-							':has_province'=>1
+							':deleted' => 0,
+							':has_province' => 1 
 					];
+					echo $sql_menu;
+					exit ();
 				} else {
 					$sql_menu = " select ";
 					$sql_menu .= " ifnull((select menu_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as menu_id, ";
@@ -170,6 +173,7 @@ class UserController extends Controller {
 							':deleted' => 0 
 					];
 				}
+				
 				$menus = Menu::findBySql ( $sql_menu, $params )->all ();
 				
 				if (count ( $menus ) > 0) {
@@ -702,20 +706,16 @@ class UserController extends Controller {
 			throw new NotFoundHttpException ( 'The requested page does not exist.' );
 		}
 	}
-	// public function beforeAction($action) {
-	// $this->enableCsrfValidation = false;
 	
-	// return parent::beforeAction ( $action );
-	// }
-	public function beforeAction($action) {
-		$this->enableCsrfValidation = false;
-		parent::beforeAction ( $action );
-		
-		if (Yii::$app->getRequest ()->getMethod () === 'OPTIONS') {
-			// End it, otherwise a 401 will be shown.
-			Yii::$app->end ();
-		}
-		
-		return true;
-	}
+// 	public function beforeAction($action) {
+// 		if (parent::beforeAction ( $action )) {
+// 			if (Yii::$app->user->isGuest) {
+// 				Yii::$app->user->loginUrl = [ 
+// 						'/site/index',
+// 						'return' => \Yii::$app->request->url 
+// 				];
+// 				return $this->redirect ( Yii::$app->user->loginUrl )->send ();
+// 			}
+// 		}
+// 	}
 }

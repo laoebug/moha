@@ -1,7 +1,8 @@
 <?php
-	if(Yii::$app->user->isGuest){
-		return Yii::$app->getResponse()->redirect('index.php?r=site/login');
-	}
+// 	if(Yii::$app->user->isGuest){
+// 		return Yii::$app->getResponse()->redirect('index.php?r=site/login');
+// 	}
+	
 ?>
 <?php
 

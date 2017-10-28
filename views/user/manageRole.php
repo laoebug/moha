@@ -101,7 +101,8 @@ $('#role_table tbody').on( 'click', 'tr', function () {
 	$.post(
 		urlMenu,
 		{ 
-		"role_id":$(this).data('value')
+		"role_id":$(this).data('value'),
+		"is_province":$('#is_province').val()
  		}, 
  		function(data,status,xhr){ //jQuery Ajax post	
 			$("#menu_list").empty();	
