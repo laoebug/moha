@@ -73,14 +73,14 @@ use yii\helpers\ArrayHelper;
 
 	
     <div class="form-group">
-        <?= Html::submitButton('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>
+       
         <?= Html::button('<i class="fa fa-fw fa-user"></i>'. Yii::t('app', 'New'), [
             'class' => 'btn btn-md btn-info',            
              'title'=>Yii::t('app', 'New Record'),
             'id'=>'btnNew','id'=>'btnNew'
         ]);
         ?>
-        
+        <?= Html::submitButton('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?> 
         
         <?php
 //         echo Html::button("<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>",

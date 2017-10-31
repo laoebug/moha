@@ -1,8 +1,8 @@
 <?php
 use yii\db\Migration;
-class m171030_020416_db_phoubaodtcom extends Migration {
+class m171030_075007_mh20171030 extends Migration {
 	public function safeUp() {
-		$sql = file_get_contents ( dirname ( __FILE__ ) . '/moha_phoubao.sql' );
+		$sql = file_get_contents ( dirname ( __FILE__ ) . '/moha_20171030.sql' );
 		$this->execute ( $sql );
 	}
 	public function safeDown() {
@@ -22,22 +22,6 @@ class m171030_020416_db_phoubaodtcom extends Migration {
 		
 		$mysqli->query ( 'SET foreign_key_checks = 1' );
 		$mysqli->close ();
-	
-	/**
-	 * We can use below code too
-	 */
-		
-		// $connection = Yii::$app->db;
-		// $sql = "show tables where Tables_in_moha != 'migration' ";
-		// $command = $connection->createCommand ( $sql );
-		
-		// $results = $command->queryAll ();
-		// $connection->createCommand ( "SET foreign_key_checks = 0" )->query ();
-		// foreach ( $results as $row ) {
-		// $sql_drop = " DROP TABLE IF EXISTS " . $row ["Tables_in_moha"];
-		// $connection->createCommand ( $sql_drop )->query ();
-		// }
-		// $connection->createCommand ( "SET foreign_key_checks = 1" )->query ();
 	}
 	private function getDsnAttribute($name, $dsn) {
 		if (preg_match ( '/' . $name . '=([^;]*)/', $dsn, $match )) {

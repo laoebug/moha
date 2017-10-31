@@ -1,4 +1,4 @@
-<h4><?php echo Yii::t("app","User List"); ?> </h4>
+<h4><?php echo Yii::t("app","Subordinate List"); ?> </h4>
 <div class="table-responsive">
 	<div class="card-body">
 		<table class="table table-hover table-bordered" id="_user_table">

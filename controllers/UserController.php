@@ -146,20 +146,32 @@ class UserController extends Controller {
 				
 				$role = Role::findOne ( ( int ) $data ["role_id"] );
 				if ($role->is_province == 1) {
+					$menuIds = [ ];
+					$connection = Yii::$app->db;
+					$sql = " select a.id,menu_parent_id from menu a where a.deleted=:deleted AND has_province=:has_province; ";
+					$params = [ 
+							':deleted' => 0,
+							':has_province' => 1 
+					];
+					$command = $connection->createCommand ( $sql )->bindValues ( $params );
+					$results = $command->queryAll ();
+					foreach ( $results as $row ) {
+						$menuIds [] = $row ["id"];
+						$menuId_result = Menu::getMenuIdByParentId ( $row ['menu_parent_id'] );
+						$menuIds = array_merge ( $menuId_result, $menuIds );
+					}
+					
 					$sql_menu = " select ";
 					$sql_menu .= " ifnull((select menu_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as menu_id, ";
 					$sql_menu .= " ifnull((select role_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as role_id, ";
 					$sql_menu .= " a.* from menu a";
-					$sql_menu .= " where a.deleted=:deleted AND has_province=:has_province";
+					$sql_menu .= " where a.id  IN(" . implode ( ',', $menuIds ) . ") and a.deleted=:deleted ";
 					$sql_menu .= " order by a.position ";
 					$params = [ 
 							':role_id' => $data ["role_id"],
 							':role_id' => $data ["role_id"],
-							':deleted' => 0,
-							':has_province' => 1 
+							':deleted' => 0 
 					];
-					echo $sql_menu;
-					exit ();
 				} else {
 					$sql_menu = " select ";
 					$sql_menu .= " ifnull((select menu_id from role_has_menu where role_id=:role_id and menu_id=a.id),0) as menu_id, ";
@@ -300,10 +312,20 @@ class UserController extends Controller {
 			$model->is_province = $data ["is_province"];
 			$model->user_id = $user->id;
 			$model->deleted = 0;
-			if ($model->save ()) {
-				Yii::$app->session->setFlash ( "success", "Role has been added successfully" );
+			if ($model->validate ()) {
+				if ($model->save ()) {
+					Yii::$app->session->setFlash ( "success", "Role has been added successfully" );
+				} else {
+					Yii::$app->session->setFlash ( "danger", "Role cannot be added" );
+				}
 			} else {
-				Yii::$app->session->setFlash ( "danger", "Role cannot be added" );
+				$errmsg = "";
+				foreach ( $model->getErrors () as $attribute => $errors ) {
+					foreach ( $errors as $error ) {
+						$errmsg .= $error ? $error : "";
+					}
+				}
+				Yii::$app->session->setFlash ( "danger", $errmsg );
 			}
 		}
 	}
@@ -707,15 +729,25 @@ class UserController extends Controller {
 		}
 	}
 	
-// 	public function beforeAction($action) {
-// 		if (parent::beforeAction ( $action )) {
-// 			if (Yii::$app->user->isGuest) {
-// 				Yii::$app->user->loginUrl = [ 
-// 						'/site/index',
-// 						'return' => \Yii::$app->request->url 
-// 				];
-// 				return $this->redirect ( Yii::$app->user->loginUrl )->send ();
-// 			}
-// 		}
-// 	}
+	public function beforeAction($action) {
+		$user = Yii::$app->user->identity;
+		$this->enableCsrfValidation = false;
+		$controller_id = Yii::$app->controller->id;
+		$acton_id = Yii::$app->controller->action->id;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
+				if (Yii::$app->request->isAjax) {
+					MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
+					return;
+				} else {
+					return $this->redirect ( [
+							'authentication/notallowed'
+					] );
+				}
+			}
+		}
+	
+		return parent::beforeAction ( $action );
+	}
+	
 }

@@ -220,32 +220,30 @@ class Menu extends \yii\db\ActiveRecord
         ]);
     }
     
-    public static function displayMenu()
-    {
-        
-//         $user = User::findOne(Yii::$app->user->id);
-        
-//         $parent_menu = array();
-//         $sub_menu = array();
-        
-//         try {
-            
-            
-//             $sql = " SELECT a.* FROM `menu` a , role_has_menu b ";
-//             $sql .= " where a.id=b.menu_id and b.role_id=:role_id";
-            
-//             $command = Yii::$app->db->createCommand($sql);
-//             $command->bindValue(':role_id', $user->role_id);
-//             $rows = $command->queryAll();
-            
-//             foreach ($rows as $row) {
-            
-//             }
-//         } catch (Exception $e) {
-//             echo "Data could not be retrieved";
-//             exit();
-//         }
-        
-        // exit();
+ 
+    
+    public static function  getMenuIdByParentId($menu_parent_id) {
+    	$menuIds=[];
+    	$connection = Yii::$app->db;
+    	
+    	$sql = " select a.id,menu_parent_id from menu a where a.deleted=:deleted AND id=:id;";
+    	$params = [':deleted' => 0, ':id' => $menu_parent_id];
+    	$command = $connection->createCommand ( $sql )->bindValues($params);
+    	$results = $command->queryAll ();
+    	foreach ($results as $row){
+    		$menuIds[] =$row["id"];
+    		//self::getMenuIdByParentId($row["menu_parent_id"]);
+    		//$menu_parent_id = $row["menu_parent_id"];
+    		//$menuIds[] = self::getMenuIdByParentId($menu_parent_id);
+    		
+    		if($row["menu_parent_id"]!=0 || $row["menu_parent_id"]!=''){
+    			//$menuIds[] = self::getMenuIdByParentId($row["menu_parent_id"]);
+    			$menuIds = array_merge(self::getMenuIdByParentId($row['menu_parent_id']), $menuIds);
+    		}
+    		
+    	}
+    	
+    	//print_r($menuIds);exit;
+    	return $menuIds;
     }
 }
