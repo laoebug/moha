@@ -138,6 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="bs-component card">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#chart" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
                 <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -192,6 +193,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="tab-pane fade" id="chart">
+                    <h3>ເສັ້ນສະແດງສົມທຽບການເພີ່ມຂຶ້ນ-ຫຼຸດລົງ ຂອງພົນລະເມືອງ</h3>
+                    <canvas id="stat" class="chart chart-bar"
+                            chart-data="stat.data"
+                            chart-labels="stat.labels"
+                            chart-series="stat.series"
+                            chart-colors="stat.colors"
+                    </canvas>
                 </div>
                 <div class="tab-pane fade" id="reference">
                     <div class="row">
@@ -251,13 +261,14 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 </div>
+<script type="text/javascript" src="js/Chart.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
+<script type="text/javascript" src="js/angular-chart.js"></script>
 <script type="text/javascript" src="js/moment.js"></script>
 <script type="text/javascript" src="js/datetimepicker.js"></script>
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
-  var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-
+  var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
   app.controller('statPopulationMovementController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-population-movement/';
     $scope.mode = 'read';
@@ -281,6 +292,8 @@ $this->params['breadcrumbs'][] = $this->title;
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
           .then(function (r) {
             $scope.models = r.data.models;
+            $scope.stat = r.data.stat;
+            $scope.stat.colors = ['#FF0000', '#0000FF'];
             $scope.getreferences();
           }, function (r) {
             $scope.response = r;

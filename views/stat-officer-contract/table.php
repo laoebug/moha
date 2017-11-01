@@ -35,50 +35,91 @@
                     <tr>
                         <th class="text-center" rowspan="7">VII</th>
                         <th colspan="2">ຈຳນວນພະນັກງານຕາມສັນຍາ (1+2)</th>
-                        <th class="text-center">{{formatNumber(model.admin_approve_total + model.admin_non_total + model.officer_approve_total + model.officer_non_total)}}</th>
-                        <th class="text-center">{{formatNumber(model.admin_approve_women + model.admin_non_women + model.officer_approve_women + model.officer_non_women)}}</th>
-                        <th class="text-center">{{formatNumber(model.admin_approve_total + model.admin_non_total + model.officer_approve_total + model.officer_non_total - (model.admin_approve_women + model.admin_non_women + model.officer_approve_women + model.officer_non_women))}}</th>
+                        <th class="text-center">
+                            <?= number_format($total = $model['admin_approve_total'] + $model['admin_non_total'] + $model['officer_approve_total'] + $model['officer_non_total']) ?>
+                        </th>
+                        <th class="text-center">
+                            <?= number_format($women = $model['admin_approve_women'] + $model['admin_non_women'] + $model['officer_approve_women'] + $model['officer_non_women']) ?>
+                        </th>
+                        <th class="text-center">
+                            <?= number_format($total - $women) ?>
+                        </th>
                     </tr>
                     <tr>
                         <td colspan="2">1. ພະນັກງານຕາມສັນຍາ (ບໍລິຫານຮັບໃຊ້)</td>
-                        <td class='text-center'>{{formatNumber(model.admin_approve_total + model.admin_non_total)}}</td>
-                        <td class='text-center'>{{formatNumber(model.admin_approve_women + model.admin_non_women)}}</td>
-                        <td class='text-center'>{{formatNumber(model.admin_approve_total+model.admin_non_total - (model.admin_approve_women + model.admin_non_women))}}</td>
+                        <td class='text-center'>
+                            <?= number_format($totsl = $model['admin_approve_total'] - $model['admin_non_total']) ?>
+                        </td>
+                        <td class='text-center'>
+                            <?= number_format($women = $model['admin_approve_women'] - $model['admin_non_women']) ?>
+                        </td>
+                        <td class='text-center'>
+                            <?= number_format($total - $women) ?>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>ຮັບເຈົ້າຕາມຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ</td>
-                        <td class="text-center">{{formatNumber(model.admin_approve_total)}}</td>
-                        <td class="text-center">{{formatNumber(model.admin_approve_women)}}</td>
-                        <td class="text-center">{{formatNumber(model.admin_approve_total - model.admin_approve_women)}}</td>
+                        <td class="text-center">
+                            <?= number_format($model['admin_approve_total']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['admin_approve_women']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['admin_approve_total'] - $model['admin_approve_women']) ?>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>ຮັບເຂົ້າໂດຍບໍ່ນອນໃນຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ (ຈ້າງເອງ)</td>
-                        <td class="text-center">{{formatNumber(model.admin_non_total)}}</td>
-                        <td class="text-center">{{formatNumber(model.admin_non_women)}}</td>
-                        <td class="text-center">{{formatNumber(model.admin_non_total - model.admin_non_women)}}</td>
+                        <td class="text-center">
+                            <?= number_format($model['admin_non_total']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['admin_non_women']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['admin_non_total'] - $model['admin_non_women']) ?>
+                        </td>
                     </tr>
-
                     <tr>
                         <td colspan="2">2. ພະນັກງານຕາມສັນຍາ (ວິຊາການ)</td>
-                        <td class='text-center'>{{formatNumber(model.officer_approve_total + model.officer_non_total)}}</td>
-                        <td class='text-center'>{{formatNumber(model.officer_approve_women + model.officer_non_women)}}</td>
-                        <td class='text-center'>{{formatNumber(model.officer_approve_total + model.officer_non_total - (model.officer_approve_women + model.officer_non_women))}}</td>
+                        <td class="text-center">
+                            <?= number_format($model['officer_approve_total'] + $model['officer_non_total']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['officer_approve_women'] + $model['officer_non_women']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['officer_approve_total'] + $model['officer_non_total'] - ($model['officer_approve_women'] + $model['officer_non_women'])) ?>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>ຮັບເຈົ້າຕາມຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ</td>
-                        <td class="text-center">{{formatNumber(model.officer_approve_total)}}</td>
-                        <td class="text-center">{{formatNumber(model.officer_approve_women)}}</td>
-                        <td class="text-center">{{formatNumber(model.officer_approve_total - model.officer_approve_women)}}</td>
+                        <td class="text-center">
+                            <?= number_format($model['officer_approve_total']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['officer_approve_women']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['officer_approve_total'] - $model['officer_approve_women']) ?>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>ຮັບເຂົ້າໂດຍບໍ່ນອນໃນຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ (ຈ້າງເອງ)</td>
-                        <td class="text-center">{{formatNumber(model.officer_non_total)}}</td>
-                        <td class="text-center">{{formatNumber(model.officer_non_women)}}</td>
-                        <td class="text-center">{{formatNumber(model.officer_non_total - model.officer_non_women)}}</td>
+                        <td class="text-center">
+                            <?= number_format($model['officer_non_total']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['officer_non_women']) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format($model['officer_non_total'] - $model['officer_non_women']) ?>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

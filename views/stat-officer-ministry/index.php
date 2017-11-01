@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12" ng-show="models">
         <div class="bs-component card">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li class="active"><a href="#table" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
                 <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -81,13 +81,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             <label>ອອກໂດຍ</label>
                             <input type="text" ng-model="issued_by" class="form-control">
                         </div>
-
                         <div class="col-sm-3">
                             <label>ເລືອກໄຟລ໌</label>
                             <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"
                                    class="form-control" required>
                         </div>
-
                         <div class="col-sm-12" ng-if="references">
                             <div class="card">
                                 <table class="table table-bordered">
@@ -114,7 +112,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>

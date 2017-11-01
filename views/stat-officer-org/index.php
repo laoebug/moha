@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12" ng-show="models">
         <div class="bs-component card">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li class="active"><a href="#table" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
                 <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
             </ul>
             <div class="tab-content" id="myTabContent">

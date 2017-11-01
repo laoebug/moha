@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12" ng-show="models">
         <div class="bs-component card">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li class="active"><a href="#table" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
                 <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -67,60 +67,57 @@ $this->params['breadcrumbs'][] = $this->title;
                                 chart-options="options"
                         </canvas>
                     </div>
-                    <div class="tab-pane fade" id="reference">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label>ເລກທີ</label>
-                                <input type="text" ng-model="issued_no" class="form-control">
-                            </div>
-                            <div class="col-sm-3">
-                                <label>ລົງວັນທີ</label>
-                                <input id="issued_date" class="form-control datepicker"
-                                       data-ng-model="$parent.issued_date" type="text">
-                            </div>
-                            <div class="col-sm-3">
-                                <label>ອອກໂດຍ</label>
-                                <input type="text" ng-model="issued_by" class="form-control">
-                            </div>
+                </div>
+                <div class="tab-pane fade" id="reference">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label>ເລກທີ</label>
+                            <input type="text" ng-model="issued_no" class="form-control">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>ລົງວັນທີ</label>
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>ອອກໂດຍ</label>
+                            <input type="text" ng-model="issued_by" class="form-control">
+                        </div>
 
-                            <div class="col-sm-3">
-                                <label>ເລືອກໄຟລ໌</label>
-                                <input type="file" name="image"
-                                       onchange="angular.element(this).scope().uploadedFile(this);"
-                                       class="form-control" required>
-                            </div>
+                        <div class="col-sm-3">
+                            <label>ເລືອກໄຟລ໌</label>
+                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"
+                                   class="form-control" required>
+                        </div>
 
-                            <div class="col-sm-12" ng-if="references">
-                                <div class="card">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-center">ວັນທີອັບໂຫຼດ</th>
-                                            <th class="text-center">ຊື່</th>
-                                            <th class="text-center">ເລກທີ</th>
-                                            <th class="text-center">ລົງວັນທີ</th>
-                                            <th class="text-center">ອອກໂດຍ</th>
-                                            <th class="text-center">ລຶບ</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ng-repeat="f in references">
-                                            <td class="text-center">{{f.upload_date}}</td>
-                                            <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}"
-                                                                       target="_blank">{{f.original_name}}</a></td>
-                                            <td class="text-center">{{f.issued_no}}</td>
-                                            <td class="text-center">{{f.issued_date | date}}</td>
-                                            <td class="text-center">{{f.issued_by}}</td>
-                                            <td class="text-center">
-                                                <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                        <div class="col-sm-12" ng-if="references">
+                            <div class="card">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">ວັນທີອັບໂຫຼດ</th>
+                                        <th class="text-center">ຊື່</th>
+                                        <th class="text-center">ເລກທີ</th>
+                                        <th class="text-center">ລົງວັນທີ</th>
+                                        <th class="text-center">ອອກໂດຍ</th>
+                                        <th class="text-center">ລຶບ</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="f in references">
+                                        <td class="text-center">{{f.upload_date}}</td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                                        <td class="text-center">{{f.issued_no}}</td>
+                                        <td class="text-center">{{f.issued_date | date}}</td>
+                                        <td class="text-center">{{f.issued_by}}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -11,6 +11,7 @@ use app\models\StatPopulationMovementDetail;
 use Codeception\Util\HttpCode;
 use Yii;
 use app\models\StatPopulationMovement;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -93,8 +94,18 @@ class StatPopulationMovementController extends Controller
             return;
         }
 
+        $models = $this->getModels($year);
+        $years = PhiscalYear::find()->select('id, year, status')->asArray()->all();
         return json_encode([
-            'models' => $this->getModels($year)
+            'models' => $models,
+            'stat' => [
+                'labels' => ArrayHelper::getColumn($years, 'year'),
+                'series' => [Yii::t('app', 'Total'), Yii::t('app', 'Women')],
+                'data' => [
+                    ArrayHelper::getColumn($models, 'population_total'),
+                    ArrayHelper::getColumn($models, 'population_women')
+                ]
+            ],
         ]);
     }
 
@@ -122,7 +133,7 @@ class StatPopulationMovementController extends Controller
             ->asArray()->one();
 
         return json_encode([
-            'model' => $model
+            'model' => $model,
         ]);
     }
 
