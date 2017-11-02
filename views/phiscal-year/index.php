@@ -11,7 +11,7 @@ use app\components\MyHelper;
 $this->title = Yii::t('app', 'Phiscal Years');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="phiscal-year-index">
+<div class="card">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -26,8 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'year',
+        		
             [
-//                'header' => Yii::t('app', 'Date'),
                 'attribute' => 'start_date',
                 'value' => function($data) {
                     return MyHelper::convertdatefordisplay($data->start_date). " ~ " . MyHelper::convertdatefordisplay($data->end_date);
@@ -49,4 +49,6 @@ $this->params['breadcrumbs'][] = $this->title;
             Yii::$app->params["action"]
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+<?php Pjax::end(); ?>
+</div>
+

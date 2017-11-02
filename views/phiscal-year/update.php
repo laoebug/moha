@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
 /* @var $model app\models\PhiscalYear */
 
@@ -12,10 +10,11 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Phiscal Years'), 'ur
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="phiscal-year-update">
+<div class="card">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?php echo Yii::$app->controller->renderPartial ( '_form', [ 'model' => $model ] )?>
+    
 
 </div>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
