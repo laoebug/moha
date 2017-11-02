@@ -1,17 +1,13 @@
 <?php if (isset ( $role)) : ?>
-	<h4><?php echo Yii::t("app","Role") . " : " .$role["name"]; ?> </h4>
+<h4><?php echo Yii::t("app","Role") . " : " .$role["name"]; ?> </h4>
 <?php endif;?>
-<input type="hidden" id="the_role_id" value="<?php echo isset($role["id"]) ?$role["id"]:""; ?>" >
-<!-- <div class="animated-checkbox"> -->
-	<label class="checkbox-inline">
-	<input type="checkbox"  id="select_all_menu" /> <span class="label-text"><strong><?php echo Yii::t("app","Selecct All"); ?></strong></span>
-	
-	</label>    
-<!-- </div> -->
-<!-- <div class="animated-checkbox">            	 -->
-<?php createMenuTreeView($menuList, 0); ?>
-<!-- </div> -->
+<input type="hidden" id="the_role_id"
+	value="<?php echo isset($role["id"]) ?$role["id"]:""; ?>">
+<label class="checkbox-inline"> <input type="checkbox"
+	id="select_all_menu" /> <span class="label-text"><strong><?php echo Yii::t("app","Select All"); ?></strong></span>
 
+</label>
+<?php createMenuTreeView($menuList, 0); ?>
 <?php
 function createMenuTreeView($array, $currentParent, $currLevel = 0, $prevLevel = -1) {
 	foreach ( $array as $menuId => $menu ) {
@@ -19,6 +15,7 @@ function createMenuTreeView($array, $currentParent, $currLevel = 0, $prevLevel =
 		if ($currentParent == $menu ['menu_parent_id']) {
 			if ($currLevel > $prevLevel)
 				echo " <ol class='tree'> ";
+			
 			if ($currLevel == $prevLevel)
 				echo " </li> ";
 			$checked = "";
@@ -26,23 +23,14 @@ function createMenuTreeView($array, $currentParent, $currLevel = 0, $prevLevel =
 				$checked = "checked";
 			}
 			
-			$output="";
-			$output.='<li>';
-			//$output.='<div class="animated-checkbox">';
-			$output.='<input class="menu" type="checkbox" value="' . $menu ['id'] . '"   '.$checked .' name="menuList[]" id="menuList[]"/>';
-			//$output.='<label> &nbsp; <span class="label-text"> ' . $menu ['name'] . '</span> </label>';
-			$output.='<span class="label-text"> ' . $menu ['name'] . '</span>';
-			//$output.='</div>';
-			$output.='</li>';
-
-			
-			echo $output;
+			echo '<li>' . ' <input type="checkbox" class="menu"  value="' . $menu ['id'] . '"   ' . $checked . ' name="menuList[]" id="menuList[]"/>'. ' '. $menu ["name"];
 			
 			if ($currLevel > $prevLevel) {
 				$prevLevel = $currLevel;
 			}
 			
 			$currLevel ++;
+			
 			createMenuTreeView ( $array, $menuId, $currLevel, $prevLevel );
 			
 			$currLevel --;
@@ -95,7 +83,15 @@ $(document).ready(function(){
 	$('.menu').change(function () {
 		checkAllMenu();
 	});
-	
+
+	$('input[type=checkbox]').click(function(){
+	    // children checkboxes depend on current checkbox
+	    $(this).next().find('input[type=checkbox]').prop('checked',this.checked);
+	    // go up the hierarchy - and check/uncheck depending on number of children checked/unchecked
+	    $(this).parents('ol').prev('input[type=checkbox]').prop('checked',function(){
+	        return $(this).next().find(':checked').length;
+	    });
+	});
 	   
 });
 

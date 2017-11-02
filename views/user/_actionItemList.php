@@ -1,47 +1,39 @@
 
 <?php if (isset ( $role)) : ?>
-	<h4><?php echo Yii::t("app","Role") . " : " .$role["name"]; ?> </h4>
+<h4><?php echo Yii::t("app","Role") . " : " .$role["name"]; ?> </h4>
 <?php endif;?>
 
-<!-- <div class="animated-checkbox"> -->
-	<label class="checkbox-inline">
-	<input type="checkbox"  id="select_all_action" /> <span class="label-text"><strong><?php echo Yii::t("app","Selecct All"); ?></strong></span>
-	
-	</label>    
-<!-- </div> -->
-<!-- <div class="animated-checkbox">     -->
-<?php createActionTreeView($actionList, 0); ?>
-<!-- </div>     -->
+<label class="checkbox-inline"> <input type="checkbox"
+	id="select_all_action" /> <span class="label-text"><strong><?php echo Yii::t("app","Selecct All"); ?></strong></span>
 
+</label>
+
+<?php createActionTreeView($actionList, 0); ?>
 <?php
-function createActionTreeView($array, $currentParent, $currLevel = 0, $prevLevel = -1) {	
+
+function createActionTreeView($array, $currentParent, $currLevel = 0, $prevLevel = -1) {
 	foreach ( $array as $actionId => $action ) {
 		
 		if ($currentParent == $action ['parent_id']) {
 			if ($currLevel > $prevLevel)
 				echo " <ol class='tree'> ";
+			
 			if ($currLevel == $prevLevel)
 				echo " </li> ";
-			$checked = "";		
+			$checked = "";
+			
 			if ($action ['id'] == $action ['action_id']) {
 				$checked = "checked";
 			}
 			
-			$output="";
-			$output.='<li>';
-			$output.='<input class="action" type="checkbox" value="' . $action ['id'] . '"   '.$checked .' name="actionList[]" id="actionList[]"/>';
-			//$output.='<label> &nbsp; ' . $action ['name'] . '</label>';
-			$output.='<span class="label-text"> ' . $action ['name'] . '</span>';
-			$output.='</li>';
-
-			
-			echo $output;
+			echo '<li>' . ' <input class="action" type="checkbox" value="' . $action ['id'] . '"   ' . $checked . ' name="actionList[]" id="actionList[]"/> '. '   '. $action ["name"];
 			
 			if ($currLevel > $prevLevel) {
 				$prevLevel = $currLevel;
 			}
 			
 			$currLevel ++;
+			
 			createActionTreeView ( $array, $actionId, $currLevel, $prevLevel );
 			
 			$currLevel --;
@@ -94,6 +86,16 @@ $(document).ready(function(){
 	$('.action').change(function () {
 		checkAllAction();
 	});
+
+	$('input[type=checkbox]').click(function(){
+	    // children checkboxes depend on current checkbox
+	    $(this).next().find('input[type=checkbox]').prop('checked',this.checked);
+	    // go up the hierarchy - and check/uncheck depending on number of children checked/unchecked
+	    $(this).parents('ol').prev('input[type=checkbox]').prop('checked',function(){
+	        return $(this).next().find(':checked').length;
+	    });
+	});
+	
 	   
 });
 
