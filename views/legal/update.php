@@ -9,7 +9,7 @@ $this->title = 'ແກ້ໄຂຂໍ້ມູນ ນິຕິກຳ';
 $this->params['breadcrumbs'][] = ['label' => 'ນິຕິກຳ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'ແກ້ໄຂຂໍ້ມູນ';
 ?>
-<div class="legal-update">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -7,16 +7,16 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\LegalSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Legals');
+$this->title = 'ຈັດການຂໍ້ມູນ ນິຕິກຳ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="legal-index">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Legal'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', ''), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
