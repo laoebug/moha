@@ -2,34 +2,19 @@
 
 namespace app\controllers;
 
-use app\models\ApproverLevel;
-use Yii;
 use app\models\Approver;
+use app\models\ApproverLevel;
 use app\models\ApproverSearch;
+use app\services\AuthenticationService;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * ApproverController implements the CRUD actions for Approver model.
  */
 class ApproverController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Approver models.
      * @return mixed
@@ -46,18 +31,6 @@ class ApproverController extends Controller
     }
 
     /**
-     * Displays a single Approver model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Approver model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -68,9 +41,9 @@ class ApproverController extends Controller
 
         $post = Yii::$app->request->post();
         if ($model->load($post)) {
-            if(isset($post['Approver']['approver_level'])) {
+            if (isset($post['Approver']['approver_level'])) {
                 $approverlevel = ApproverLevel::find()->where(['code' => $post['Approver']['approver_level']])->one();
-                if(isset($approverlevel)) $model->approver_level_id = $approverlevel->id;
+                if (isset($approverlevel)) $model->approver_level_id = $approverlevel->id;
             }
             $model->save();
             return $this->redirect(['index']);
@@ -90,7 +63,7 @@ class ApproverController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if(isset($model->approverLevel))
+        if (isset($model->approverLevel))
             $model->approver_level = $model->approverLevel->code;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -100,19 +73,6 @@ class ApproverController extends Controller
                 'model' => $model,
             ]);
         }
-    }
-
-    /**
-     * Deletes an existing Approver model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**
@@ -130,24 +90,26 @@ class ApproverController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    public function beforeAction($action) {
-    	$user = Yii::$app->user->identity;
-    	$this->enableCsrfValidation = true;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			if (Yii::$app->request->isAjax) {
-    				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    				return;
-    			} else {
-    				return $this->redirect ( [
-    						'authentication/notallowed'
-    				] );
-    			}
-    		}
-    	}
-    
-    	return parent::beforeAction ( $action );
+
+    public function beforeAction($action)
+    {
+        $user = Yii::$app->user->identity;
+        $this->enableCsrfValidation = true;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                if (Yii::$app->request->isAjax) {
+                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                    return;
+                } else {
+                    return $this->redirect([
+                        'authentication/notallowed'
+                    ]);
+                }
+            }
+        }
+
+        return parent::beforeAction($action);
     }
 }

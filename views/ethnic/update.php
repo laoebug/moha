@@ -5,12 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Ethnic */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Ethnic',
-]) . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Ethnics'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = 'ແກ້ໄຂຂໍ້ມູນ ຊົນເຜົ່າ';
+$this->params['breadcrumbs'][] = ['label' => 'ຊົນເຜົ່າ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'ແກ້ໄຂຂໍ້ມູນ';
 ?>
 <div class="ethnic-update">
 

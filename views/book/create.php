@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Book */
 
-$this->title = Yii::t('app', 'Create Book');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Books'), 'url' => ['index']];
+$this->title = 'ຈັດການຂໍ້ມູນ ເອກະສານປະເພດປຶ້ມ';
+$this->params['breadcrumbs'][] = ['label' => 'ເອກະສານປະເພດປຶ້ມ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="book-create">

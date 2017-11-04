@@ -8,15 +8,17 @@ use app\components\MyHelper;
 /* @var $searchModel app\models\PhiscalYearSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Phiscal Years');
+$this->title = 'ຈັດການຂໍ້ມູນ ສົກປີ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
 
+    <h1><?= \yii\helpers\Html::encode($this->title) ?></h1>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Phiscal Year'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?php Pjax::begin(); ?>
     <?= GridView::widget([
@@ -24,9 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'year',
-        		
             [
                 'attribute' => 'start_date',
                 'value' => function($data) {

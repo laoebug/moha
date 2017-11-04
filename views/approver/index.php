@@ -7,16 +7,16 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ApproverSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Approvers');
+$this->title = 'ຜູ້ອະນຸມັດ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="approver-index">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Approver'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

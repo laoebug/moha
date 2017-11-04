@@ -6,11 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Ethnic */
 
-$this->title = Yii::t('app', 'Create Ethnic');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Ethnics'), 'url' => ['index']];
+$this->title = 'ເພີ່ມຂໍ້ມູນ ຊົນເຜົ່າ';
+$this->params['breadcrumbs'][] = ['label' => 'ຊົນເຜົ່າ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="ethnic-create">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

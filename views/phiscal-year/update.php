@@ -3,18 +3,15 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\PhiscalYear */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Phiscal Year',
-]) . $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Phiscal Years'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = 'ແກ້ໄຂຂໍ້ມູນ ສົກປີ';
+$this->params['breadcrumbs'][] = ['label' => 'ສົກປີ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'ແກ້ໄຂຂໍ້ມູນ';
 ?>
 <div class="card">
 
-    <?php echo Yii::$app->controller->renderPartial ( '_form', [ 'model' => $model ] )?>
-    
+    <h1><?= \yii\helpers\Html::encode($this->title) ?></h1>
 
+    <?php echo Yii::$app->controller->renderPartial ( '_form', [ 'model' => $model ] )?>
 </div>
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>

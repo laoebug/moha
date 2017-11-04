@@ -13,11 +13,8 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-
-
     <?= $form->field($model, 'deleted')->dropDownList(Yii::$app->params['YESNO']) ?>
-    <?= $form->field($model, 'position')->textInput(['type'=> 'number']) ?>
+    <?= $form->field($model, 'position')->textInput(['type' => 'number']) ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

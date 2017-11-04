@@ -7,16 +7,16 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Provinces');
+$this->title = 'ຈັດການຂໍ້ມູນ ແຂວງ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="province-index">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Province'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -30,8 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'input_dt_stamp',
             // 'deleted',
              'position',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            Yii::$app->params['action']
         ],
     ]); ?>
 </div>

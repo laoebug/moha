@@ -5,14 +5,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Organisation */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Organisation',
-]) . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Organisations'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = 'ແກ້ໄຂຂໍ້ມູນ ອົງການຈັດຕັ້ງ';
+$this->params['breadcrumbs'][] = ['label' => 'ອົງການຈັດຕັ້ງ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'ແກ້ໄຂຂໍ້ມູນ';
 ?>
-<div class="organisation-update">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

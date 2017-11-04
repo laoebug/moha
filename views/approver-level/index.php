@@ -7,26 +7,26 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ApproverLevelSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Approver Levels');
+$this->title = "ຂັ້ນຜູ້ອະນຸມັດ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="approver-level-index">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Approver Level'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'name',
-            'deleted',
-            'position',
             'code',
+            'name',
+            'position',
+            'deleted',
             Yii::$app->params['action']
         ],
     ]); ?>

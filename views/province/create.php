@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Province */
 
-$this->title = Yii::t('app', 'Create Province');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Provinces'), 'url' => ['index']];
+$this->title = 'ເພີ່ມຂໍ້ມູນ ແຂວງ';
+$this->params['breadcrumbs'][] = ['label' => 'ແຂວງ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="province-create">

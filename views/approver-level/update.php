@@ -5,14 +5,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\ApproverLevel */
 
-$this->title = Yii::t('app', 'Update {modelClass}: ', [
-    'modelClass' => 'Approver Level',
-]) . $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Approver Levels'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = 'ແກ້ໄຂຂໍ້ມູນ ຂັ້ນຜູ້ອະນຸມັດ ';
+$this->params['breadcrumbs'][] = ['label' => 'ຂັ້ນຜູ້ອະນຸມັດ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'ແ້ກໄຂຂໍ້ມູນ';
 ?>
-<div class="approver-level-update">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

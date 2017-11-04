@@ -54,7 +54,7 @@ class Approver extends \yii\db\ActiveRecord
             'deleted' => Yii::t('app', 'Deleted'),
             'ministry_id' => Yii::t('app', 'Ministry'),
             'province_id' => Yii::t('app', 'Province'),
-            'approver_level_id' => Yii::t('app', 'Approver Level'),
+            'approver_level_id' => 'ຂັ້ນຜູ້ອະນຸມັດ',
         ];
     }
 

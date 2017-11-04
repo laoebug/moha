@@ -6,11 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\OfficerLevel */
 
-$this->title = Yii::t('app', 'Create Officer Level');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Officer Levels'), 'url' => ['index']];
+$this->title = 'ເພີ່ມຂໍ້ມູນ ຂັ້ນລັດຖະກອນ';
+$this->params['breadcrumbs'][] = ['label' => 'ຂັ້ນລັດຖະກອນ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="officer-level-create">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

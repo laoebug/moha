@@ -6,11 +6,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Approver */
 
-$this->title = Yii::t('app', 'Create Approver');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Approvers'), 'url' => ['index']];
+$this->title = "ເພີ່ມ ຜູ້ອະນຸມັດ";
+$this->params['breadcrumbs'][] = ['label' => 'ຜູ້ອະນຸມັດ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="approver-create">
+<div class="card">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
