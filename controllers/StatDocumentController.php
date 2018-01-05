@@ -10,16 +10,14 @@ use app\models\Ministry;
 use app\models\Organisation;
 use app\models\PhiscalYear;
 use app\models\Province;
+use app\models\StatDocument;
 use app\models\StatDocumentDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatDocument;
-use app\models\StatDocumentSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatDocumentController implements the CRUD actions for StatDocument model.
  */
@@ -34,17 +32,18 @@ class StatDocumentController extends Controller
         return $this->render('index');
     }
 
-    public function actionGet() {
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionGet()
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
         $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
         $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
@@ -59,20 +58,21 @@ class StatDocumentController extends Controller
         ]);
     }
 
-    public function actionEnquiry($year) {
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionEnquiry($year)
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app','Incorrect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -98,51 +98,53 @@ class StatDocumentController extends Controller
             ->orderBy('m.position')->asArray()->all();
 
         return json_encode(['models' => [
-                    ['name' => 'ກະຊວງ ແລະ ອົງການທຽບເທົ່າ','details' => $ministries,],
-                    ['name' => 'ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ','details' => $organisations,],
-                    ['name' => 'ແຂວງ','details' => $provinces,],
-                    ['name' => 'ເອກະສານປະເພດປຶ້ມ','details' => $books,],
-                ]
+                ['name' => 'ກະຊວງ ແລະ ອົງການທຽບເທົ່າ', 'details' => $ministries,],
+                ['name' => 'ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ', 'details' => $organisations,],
+                ['name' => 'ແຂວງ', 'details' => $provinces,],
+                ['name' => 'ເອກະສານປະເພດປຶ້ມ', 'details' => $books,],
+            ]
             ]
         );
     }
 
-    public function actionInquiry($year, $province=null, $ministry=null,$organisation=null,$book=null) {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
-        if(!isset($province) && !isset($ministry) && !isset($organisation) && !isset($book)) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app','Bad Request'));
+    public function actionInquiry($year, $province = null, $ministry = null, $organisation = null, $book = null)
+    {
+
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
+        if (!isset($province) && !isset($ministry) && !isset($organisation) && !isset($book)) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Bad Request'));
             return;
         }
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app','Incorrect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $query = StatDocumentDetail::find()->alias('d')
             ->join('join', 'stat_document s', 's.id = d.stat_document_id and s.phiscal_year_id=:year', [':year' => $year->id]);
-        if(isset($ministry)) $query->where(['ministry_id' => $ministry]);
-        if(isset($province)) $query->where(['province_id' => $province]);
-        if(isset($organisation)) $query->where(['organisation_id' => $organisation]);
-        if(isset($book)) $query->where(['book_id' => $book]);
+        if (isset($ministry)) $query->where(['ministry_id' => $ministry]);
+        if (isset($province)) $query->where(['province_id' => $province]);
+        if (isset($organisation)) $query->where(['organisation_id' => $organisation]);
+        if (isset($book)) $query->where(['book_id' => $book]);
 
         return json_encode(['model' => $query->asArray()->one()]);
     }
 
-    public function actionSave($year) {
+    public function actionSave($year)
+    {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app','Incorrect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
         if ($year->status != 'O') {
@@ -151,18 +153,18 @@ class StatDocumentController extends Controller
         }
 
         $post = Yii::$app->request->post();
-        if(isset($post)) {
+        if (isset($post)) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 $model = StatDocument::find()->where(['phiscal_year_id' => $year->id])->one();
-                if(!isset($model)) {
+                if (!isset($model)) {
                     $model = new StatDocument();
                     $model->phiscal_year_id = $year->id;
                     $model->user_id = Yii::$app->user->id;
                 }
                 $model->saved = 1;
                 $model->last_update = date('Y-m-d H:i:s');
-                if(!$model->save()) throw new Exception(json_encode($model->errors));
+                if (!$model->save()) throw new Exception(json_encode($model->errors));
 
                 $query = StatDocumentDetail::find()
                     ->where(['stat_document_id' => $model->id]);
@@ -187,7 +189,7 @@ class StatDocumentController extends Controller
                     ]);
 
                 $detail = $query->one();
-                if(!isset($detail)) {
+                if (!isset($detail)) {
                     $detail = new StatDocumentDetail();
                     $detail->stat_document_id = $model->id;
                     if ($post['Model']['section']['code'] == 'm' && isset($post['Model']['ministry']['id']))
@@ -204,7 +206,7 @@ class StatDocumentController extends Controller
                 }
 
                 $detail->attributes = $post['Model'];
-                if(!$detail->save()) throw new Exception(json_encode($detail->errors));
+                if (!$detail->save()) throw new Exception(json_encode($detail->errors));
                 $transaction->commit();
             } catch (Exception $exception) {
                 $transaction->rollBack();
@@ -215,10 +217,11 @@ class StatDocumentController extends Controller
         }
     }
 
-    public function actionPrint($year) {
+    public function actionPrint($year)
+    {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app','Incorrect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -247,34 +250,79 @@ class StatDocumentController extends Controller
             'content' => $this->renderPartial('table', [
                 'year' => $year,
                 'models' => [
-                    ['name' => 'ກະຊວງ ແລະ ອົງການທຽບເທົ່າ','details' => $ministries,],
-                    ['name' => 'ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ','details' => $organisations,],
-                    ['name' => 'ແຂວງ','details' => $provinces,],
-                    ['name' => 'ເອກະສານປະເພດປຶ້ມ','details' => $books,]
+                    ['name' => 'ກະຊວງ ແລະ ອົງການທຽບເທົ່າ', 'details' => $ministries,],
+                    ['name' => 'ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ', 'details' => $organisations,],
+                    ['name' => 'ແຂວງ', 'details' => $provinces,],
+                    ['name' => 'ເອກະສານປະເພດປຶ້ມ', 'details' => $books,]
                 ]
             ])
         ]);
     }
-    
-    public function beforeAction($action) {
-    	$user = Yii::$app->user->identity;
-    	$this->enableCsrfValidation = true;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			if (Yii::$app->request->isAjax) {
-    				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    				return;
-    			} else {
-    				return $this->redirect ( [
-    						'authentication/notallowed'
-    				] );
-    			}
-    		}
-    	}
-    
-    	return parent::beforeAction ( $action );
+
+
+    public function actionDownload($year)
+    {
+        $year = PhiscalYear::findOne($year);
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        $ministries = StatDocumentDetail::find()->alias('d')->select('d.*')->addSelect(['name' => 'm.name'])
+            ->where('ministry_id is not null')
+            ->join('join', 'stat_document s', 's.id = d.stat_document_id and s.phiscal_year_id=:year', [':year' => $year->id])->where('ministry_id is not null')
+            ->join('join', 'ministry m', 'm.id = d.ministry_id')
+            ->orderBy('m.position')->asArray()->all();
+
+        $organisations = StatDocumentDetail::find()->alias('d')->select('d.*')->addSelect(['name' => 'm.name'])
+            ->join('join', 'stat_document s', 's.id = d.stat_document_id and s.phiscal_year_id=:year', [':year' => $year->id])->where('organisation_id is not null')
+            ->join('join', 'organisation m', 'm.id = d.organisation_id')
+            ->orderBy('m.position')->asArray()->all();
+
+        $provinces = StatDocumentDetail::find()->alias('d')->select('d.*')->addSelect(['name' => 'm.province_name'])
+            ->join('join', 'stat_document s', 's.id = d.stat_document_id and s.phiscal_year_id=:year', [':year' => $year->id])->where('province_id is not null')
+            ->join('join', 'province m', 'm.id = d.province_id')
+            ->orderBy('m.province_code')->asArray()->all();
+
+        $books = StatDocumentDetail::find()->alias('d')->select('d.*')->addSelect(['name' => 'm.name'])
+            ->join('join', 'stat_document s', 's.id = d.stat_document_id and s.phiscal_year_id=:year', [':year' => $year->id])->where('book_id is not null')
+            ->join('join', 'book m', 'm.id = d.book_id')
+            ->orderBy('m.position')->asArray()->all();
+
+        return $this->renderPartial('../ministry/excel', [
+            'file' => 'Stat Document ' . $year->year . '.xls',
+            'content' => $this->renderPartial('table', [
+                'year' => $year,
+                'models' => [
+                    ['name' => 'ກະຊວງ ແລະ ອົງການທຽບເທົ່າ', 'details' => $ministries,],
+                    ['name' => 'ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ', 'details' => $organisations,],
+                    ['name' => 'ແຂວງ', 'details' => $provinces,],
+                    ['name' => 'ເອກະສານປະເພດປຶ້ມ', 'details' => $books,]
+                ]
+            ])
+        ]);
+    }
+
+    public function beforeAction($action)
+    {
+        $user = Yii::$app->user->identity;
+        $this->enableCsrfValidation = true;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                if (Yii::$app->request->isAjax) {
+                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                    return;
+                } else {
+                    return $this->redirect([
+                        'authentication/notallowed'
+                    ]);
+                }
+            }
+        }
+
+        return parent::beforeAction($action);
     }
 
     public function actionUpload($year)

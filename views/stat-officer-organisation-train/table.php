@@ -30,7 +30,7 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th class="text-center" rowspan="5"><?= Yii::t('app', 'No.')?></th>
+                            <th class="text-center" rowspan="4"><?= Yii::t('app', 'No.')?></th>
                             <th class="text-center" rowspan="3"><?= Yii::t('app', 'Name')?></th>
                             <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Total')?></th>
                             <th class="text-center" colspan="4"><?= Yii::t('app', 'Technical Trainning') ?></th>

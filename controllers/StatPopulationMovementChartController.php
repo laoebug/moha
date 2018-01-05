@@ -73,7 +73,6 @@ class StatPopulationMovementChartController extends Controller
     }
 
     public function actionEnquiry($year) {
-    	
     	$user = Yii::$app->user->identity;
     	$controller_id = Yii::$app->controller->id;
     	$acton_id = Yii::$app->controller->action->id;
@@ -96,7 +95,6 @@ class StatPopulationMovementChartController extends Controller
     }
 
     public function actionInquiry() {
-    	
     	$user = Yii::$app->user->identity;
     	$controller_id = Yii::$app->controller->id;
     	$acton_id = Yii::$app->controller->action->id;
@@ -125,9 +123,7 @@ class StatPopulationMovementChartController extends Controller
         );
     }
 
-    public function actionPrint($year) {
-    	
-    	
+    public function actionPrint() {
     	$user = Yii::$app->user->identity;
     	$controller_id = Yii::$app->controller->id;
     	$acton_id = Yii::$app->controller->action->id;
@@ -137,22 +133,16 @@ class StatPopulationMovementChartController extends Controller
     			return;
     		}
     	}
-        $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-            return;
-        }
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
-                'year' => $year,
                 'cols' => $this->COLUMNS,
-                'models' => $this->getModels($year)
+                'models' => $this->getModels()
             ])
         ]);
     }
 
-    public function actionDownload($year) {
+    public function actionDownload() {
     	
     	$user = Yii::$app->user->identity;
     	$controller_id = Yii::$app->controller->id;
@@ -163,21 +153,29 @@ class StatPopulationMovementChartController extends Controller
     			return;
     		}
     	}
-    	
-        $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-            return;
-        }
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Stat Local Administration '. $year->year .'.xls',
+            'file' => 'Stat Populcation Movement.xls',
             'content' => $this->renderPartial('table', [
-                'year' => $year,
                 'cols' => $this->COLUMNS,
-                'models' => $this->getModels($year)
+                'models' => $this->getModels(),
             ])
         ]);
+    	
+//        $year = PhiscalYear::findOne($year);
+//        if(!isset($year)) {
+//            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+//            return;
+//        }
+//
+//        return $this->renderPartial('../ministry/excel', [
+//            'file' => 'Stat Local Administration '. $year->year .'.xls',
+//            'content' => $this->renderPartial('table', [
+//                'year' => $year,
+//                'cols' => $this->COLUMNS,
+//                'models' => $this->getModels($year)
+//            ])
+//        ]);
     }
 
     public function getModels($year = "") { //1,2,3,

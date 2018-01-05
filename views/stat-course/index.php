@@ -242,12 +242,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $scope.delete = function () {
       if ($scope.model && confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ່?'))
-        $http.post($scope.url + 'delete&=' + $scope.year.id, {
+        $http.post($scope.url + 'delete&year=' + $scope.year.id, {
           'id': $scope.model.id,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
         }).then(function (r) {
           $scope.response = r;
           $scope.enquiry();
+          $scope.model = null;
         }, function (r) {
           $scope.response = r;
           $timeout(function () {

@@ -235,7 +235,7 @@ class StatOfficerOrganisationTrainController extends Controller
             ->join('left join', 'stat_officer_organisation_train_detail d', 'd.organisation_id=m.id and d.stat_officer_organisation_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
 
-        return $this->renderPartial('../orgnisation/print', [
+        return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
                 'models' => $models, 'year' => $year, 'cols' => $this->columns
             ])
@@ -271,8 +271,8 @@ class StatOfficerOrganisationTrainController extends Controller
             ->join('left join', 'stat_officer_organisation_train_detail d', 'd.organisation_id=m.id and d.stat_officer_organisation_train_id=:id', [':id' => $model->id])
             ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
 
-        return $this->renderPartial('../orgnisation/excel', [
-            'file' => 'Stat Officers Needed '. $year->year . '.xls',
+        return $this->renderPartial('../ministry/excel', [
+            'file' => 'Stat Officer Organisation Train '. $year->year . '.xls',
             'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year, 'cols' => $this->columns])
         ]);
     }

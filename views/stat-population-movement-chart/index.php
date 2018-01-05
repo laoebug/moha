@@ -1,8 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatPopulationMovementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -45,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <p>
                                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
                                             class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                <a class="btn btn-info" target="_blank" href="{{url}}download"><i
                                             class="fa fa-download fa-2x"></i></a>
                             </p>
                         </div>
@@ -83,72 +80,71 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
                 <div class="tab-pane fade" id="chart">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <h3>ເສັ້ນສະແດງສົມທຽບການເພີ່ມຂຶ້ນ-ຫຼຸດລົງ ຂອງພົນລະເມືອງ</h3>
-                            <canvas id="stat" class="chart chart-bar"
-                                    chart-data="stat.data"
-                                    chart-labels="stat.labels"
-                                    chart-series="stat.series"
-                                    chart-colors="stat.colors"
-                            </canvas>
-                        </div>
+                    <div class="card">
+                        <h3>ເສັ້ນສະແດງສົມທຽບການເພີ່ມຂຶ້ນ-ຫຼຸດລົງ ຂອງພົນລະເມືອງ</h3>
+                        <canvas id="stat" class="chart chart-bar"
+                                chart-data="stat.data"
+                                chart-labels="stat.labels"
+                                chart-series="stat.series"
+                                chart-colors="stat.colors"
+                        </canvas>
+
                     </div>
                 </div>
-<!--                <div class="tab-pane fade" id="reference">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-sm-3">-->
-<!--                            <label>ເລກທີ</label>-->
-<!--                            <input type="text" ng-model="issued_no" class="form-control">-->
-<!--                        </div>-->
-<!--                        <div class="col-sm-3">-->
-<!--                            <label>ລົງວັນທີ</label>-->
-<!--                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">-->
-<!--                        </div>-->
-<!--                        <div class="col-sm-3">-->
-<!--                            <label>ອອກໂດຍ</label>-->
-<!--                            <input type="text" ng-model="issued_by" class="form-control">-->
-<!--                        </div>-->
-<!---->
-<!--                        <div class="col-sm-3">-->
-<!--                            <label>ເລືອກໄຟລ໌</label>-->
-<!--                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"-->
-<!--                                   class="form-control" required>-->
-<!--                        </div>-->
-<!---->
-<!--                        <div class="col-sm-12" ng-if="references">-->
-<!--                            <div class="card">-->
-<!--                                <table class="table table-bordered">-->
-<!--                                    <thead>-->
-<!--                                    <tr>-->
-<!--                                        <th class="text-center">ວັນທີອັບໂຫຼດ</th>-->
-<!--                                        <th class="text-center">ຊື່</th>-->
-<!--                                        <th class="text-center">ເລກທີ</th>-->
-<!--                                        <th class="text-center">ລົງວັນທີ</th>-->
-<!--                                        <th class="text-center">ອອກໂດຍ</th>-->
-<!--                                        <th class="text-center">ລຶບ</th>-->
-<!--                                    </tr>-->
-<!--                                    </thead>-->
-<!--                                    <tbody>-->
-<!--                                    <tr ng-repeat="f in references">-->
-<!--                                        <td class="text-center">{{f.upload_date}}</td>-->
-<!--                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>-->
-<!--                                        <td class="text-center">{{f.issued_no}}</td>-->
-<!--                                        <td class="text-center">{{f.issued_date | date}}</td>-->
-<!--                                        <td class="text-center">{{f.issued_by}}</td>-->
-<!--                                        <td class="text-center">-->
-<!--                                            <button class="btn btn-danger" type="button" ng-click="deletefile(f)">-->
-<!--                                                <i class="fa fa-trash"></i>-->
-<!--                                            </button>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
-<!---->
-<!--                                    </tbody>-->
-<!--                                </table>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="tab-pane fade" id="reference">-->
+                <!--                    <div class="row">-->
+                <!--                        <div class="col-sm-3">-->
+                <!--                            <label>ເລກທີ</label>-->
+                <!--                            <input type="text" ng-model="issued_no" class="form-control">-->
+                <!--                        </div>-->
+                <!--                        <div class="col-sm-3">-->
+                <!--                            <label>ລົງວັນທີ</label>-->
+                <!--                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">-->
+                <!--                        </div>-->
+                <!--                        <div class="col-sm-3">-->
+                <!--                            <label>ອອກໂດຍ</label>-->
+                <!--                            <input type="text" ng-model="issued_by" class="form-control">-->
+                <!--                        </div>-->
+                <!---->
+                <!--                        <div class="col-sm-3">-->
+                <!--                            <label>ເລືອກໄຟລ໌</label>-->
+                <!--                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"-->
+                <!--                                   class="form-control" required>-->
+                <!--                        </div>-->
+                <!---->
+                <!--                        <div class="col-sm-12" ng-if="references">-->
+                <!--                            <div class="card">-->
+                <!--                                <table class="table table-bordered">-->
+                <!--                                    <thead>-->
+                <!--                                    <tr>-->
+                <!--                                        <th class="text-center">ວັນທີອັບໂຫຼດ</th>-->
+                <!--                                        <th class="text-center">ຊື່</th>-->
+                <!--                                        <th class="text-center">ເລກທີ</th>-->
+                <!--                                        <th class="text-center">ລົງວັນທີ</th>-->
+                <!--                                        <th class="text-center">ອອກໂດຍ</th>-->
+                <!--                                        <th class="text-center">ລຶບ</th>-->
+                <!--                                    </tr>-->
+                <!--                                    </thead>-->
+                <!--                                    <tbody>-->
+                <!--                                    <tr ng-repeat="f in references">-->
+                <!--                                        <td class="text-center">{{f.upload_date}}</td>-->
+                <!--                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>-->
+                <!--                                        <td class="text-center">{{f.issued_no}}</td>-->
+                <!--                                        <td class="text-center">{{f.issued_date | date}}</td>-->
+                <!--                                        <td class="text-center">{{f.issued_by}}</td>-->
+                <!--                                        <td class="text-center">-->
+                <!--                                            <button class="btn btn-danger" type="button" ng-click="deletefile(f)">-->
+                <!--                                                <i class="fa fa-trash"></i>-->
+                <!--                                            </button>-->
+                <!--                                        </td>-->
+                <!--                                    </tr>-->
+                <!---->
+                <!--                                    </tbody>-->
+                <!--                                </table>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
         </div>
     </div>
@@ -181,15 +177,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $scope.enquiry();
 
-
     $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
+      if (!$scope.issued_no) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນເລກທີ');
         return;
       }
       $scope.issued_date = $('#issued_date').val();
-      if(!$scope.issued_date) {
+      if (!$scope.issued_date) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນວັນທີ');
         return;
@@ -234,8 +229,8 @@ $this->params['breadcrumbs'][] = $this->title;
       });
     };
 
-    $scope.getreferences = function() {
-      if($scope.year) {
+    $scope.getreferences = function () {
+      if ($scope.year) {
         $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
           .then(function (r) {
             if (r.data)
@@ -249,10 +244,10 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
+    $scope.deletefile = function (f) {
+      if ($scope.year && f) {
+        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
+          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
             'id': f.id,
             '_csrf': $('meta[name="csrf-token"]').attr("content")
           }).then(function (r) {

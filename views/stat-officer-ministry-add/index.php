@@ -52,11 +52,43 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-12" ng-show="models">
         <div class="bs-component card">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#table" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
+                <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
+                <li><a href="#chart" data-toggle="tab">ເສັ້ນສະແດງ</a></li>
                 <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active in" id="table">
+                    <div class="card">
+                        <div class="card-title-w-btn ">
+                            <h3>ຕາຕະລາງ <?= $this->title ?> {{year.year}}</h3>
+                            <p>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
+                                            class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
+                                            class="fa fa-download fa-2x"></i></a>
+                            </p>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th><?= Yii::t('app', 'No.') ?></th>
+                                <th>ກະຊວງ, ອົງການທຽບເທົ່າກະຊວງ</th>
+                                <th class="text-right">ເພີ່ມເຂົ້າ</th>
+                                <th class="text-right">ລາອອກ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="m in models">
+                                <td>{{$index + 1}}</td>
+                                <td>{{m.name}}</td>
+                                <td class="text-right">{{m.add | number}}</td>
+                                <td class="text-right">{{m.resign | number}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="chart">
                     <div class="card">
                         <h3><?= $this->title ?> {{year.year}}</h3>
                         <canvas id="stat" class="chart chart-bar"

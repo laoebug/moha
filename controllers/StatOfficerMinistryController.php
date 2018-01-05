@@ -23,6 +23,7 @@ use app\services\AuthenticationService;
  */
 class StatOfficerMinistryController extends Controller
 {
+    public $COLUMNS = ['total', 'women'];
     /**
      * Lists all StatOfficerMinistry models.
      * @return mixed
@@ -181,39 +182,58 @@ class StatOfficerMinistryController extends Controller
         }
     }
 
-//    public function actionPrint($year) {
-//        $year = PhiscalYear::findOne($year);
-//        if(!isset($year)) {
-//            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-//            return;
-//        }
-//
-//        $models = Ministry::find()->alias('m')
-//            ->join('left join', 'stat_officer_ministry_detail d', 'd.ministry_id=m.id')
-//            ->join('join', 'stat_officer_ministry o', 'd.stat_officer_ministry_id = o.id and o.phiscal_year_id=:year', [':year'=>$year->id])
-//            ->all();
-//        return $this->renderPartial('../ministry/print', [
-//            'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
-//        ]);
-//    }
-//
-//    public function actionDownload($year) {
-//        $year = PhiscalYear::findOne($year);
-//        if(!isset($year)) {
-//            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-//            return;
-//        }
-//
-//        $model = StatOfficerMinistryDetail::find()->alias('d')
-//            ->join('join', 'stat_officer_ministry o', 'o.id = d.stat_officer_ministry_id and o.phiscal_year_id=:year', [':year'=> $year->id])
-//            ->one();
-//
-//        return $this->renderPartial('../ministry/excel', [
-//            'file' => 'Stat Officers Needed '. $year->year . '.xls',
-//            'content' => $this->renderPartial('table', ['model' => $model, 'year' => $year])
-//        ]);
-//    }
+    public function actionPrint($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
 
+        $model = StatOfficerMinistry::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Ministry::find()->alias('m')
+            ->select('m.*, d.*')
+            ->join('left join', 'stat_officer_ministry_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_id=:id', [':id' =>$model->id])
+            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+
+        return $this->renderPartial('../ministry/print', [
+            'content' => $this->renderPartial('table', [
+                'models' => $models,
+                'year' => $year
+            ])
+        ]);
+    }
+
+    public function actionDownload($year) {
+        $year = PhiscalYear::findOne($year);
+        if(!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
+
+        $model = StatOfficerMinistry::find()->where(['phiscal_year_id' => $year->id])->one();
+        if(!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Ministry::find()->alias('m')
+            ->select('m.*, d.*')
+            ->join('left join', 'stat_officer_ministry_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_id=:id', [':id' =>$model->id])
+            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+
+        return $this->renderPartial('../ministry/excel', [
+            'file' => 'Stat Officers Ministry '. $year->year . '.xls',
+            'content' => $this->renderPartial('table', [
+                'models' => $models,
+                'year' => $year
+            ])
+        ]);
+    }
 
     public function actionUpload($year)
     {

@@ -29,7 +29,7 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th class="text-center" rowspan="5"><?= Yii::t('app', 'No.') ?></th>
+                        <th class="text-center" rowspan="4"><?= Yii::t('app', 'No.') ?></th>
                         <th class="text-center" rowspan="3"><?= Yii::t('app', 'Ministry')?></th>
                         <th class="text-center" rowspan="2" colspan="2"><?= Yii::t('app', 'Total')?></th>
 

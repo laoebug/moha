@@ -13,10 +13,8 @@ use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
 use yii\db\Exception;
-use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 
 /**
  * StatOfficerOrganisationAddController implements the CRUD actions for StatOfficerOrganisationAdd model.
@@ -44,6 +42,14 @@ class StatOfficerOrganisationAddController extends Controller
                 return;
             }
         }
+
+        $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
+        $organisations = Organisation::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+
+        return json_encode([
+            'years' => $years,
+            'organisations' => $organisations,
+        ]);
     }
 
     public function actionEnquiry($year)
@@ -192,6 +198,88 @@ class StatOfficerOrganisationAddController extends Controller
         }
     }
 
+    public function actionPrint($year)
+    {
+
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
+        $year = PhiscalYear::findOne($year);
+        if (!isset ($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
+
+        $model = StatOfficerOrganisationAdd::find()->where([
+            'phiscal_year_id' => $year->id
+        ])->one();
+        if (!isset ($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Organisation::find()->alias('m')->select('m.*, d.*')->join('left join', 'stat_officer_organisation_add_detail d', 'd.organisation_id=m.id and d.stat_officer_organisation_add_id=:id', [
+            ':id' => $model->id
+        ])->where([
+            'deleted' => 0
+        ])->orderBy('m.position')->asArray()->all();
+
+        return $this->renderPartial('../ministry/print', [
+            'content' => $this->renderPartial('table', [
+                'models' => $models,
+                'year' => $year
+            ])
+        ]);
+    }
+
+    public function actionDownload($year)
+    {
+
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
+        $year = PhiscalYear::findOne($year);
+        if (!isset ($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
+
+        $model = StatOfficerOrganisationAdd::find()->where([
+            'phiscal_year_id' => $year->id
+        ])->one();
+        if (!isset ($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = Organisation::find()->alias('m')->select('m.*, d.*')->join('left join', 'stat_officer_organisation_add_detail d', 'd.organisation_id=m.id and d.stat_officer_organisation_add_id=:id', [
+            ':id' => $model->id
+        ])->where([
+            'deleted' => 0
+        ])->orderBy('m.position')->asArray()->all();
+
+        return $this->renderPartial('../ministry/excel', [
+            'file' => 'Stat Officer Organisation Add ' . $year->year . '.xls',
+            'content' => $this->renderPartial('table', [
+                'models' => $models,
+                'year' => $year
+            ])
+        ]);
+    }
 
     public function actionUpload($year)
     {

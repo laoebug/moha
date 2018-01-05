@@ -124,9 +124,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th class="text-center" rowspan="2" colspan="2">ລວມທັງໝົດ</th>
                                 <th class="text-center" colspan="16">ຕຳແໜ່ງບໍລິຫານ</th>
                             </tr>
+                            <tr>
                             <?php for ($c = 1; $c <= 8; $c++): ?>
                                 <th colspan="2" class="text-center">ປະເພດ <?= $c ?></th>
                             <?php endfor; ?>
+                            </tr>
                             <tr>
                                 <?php for ($i = 0; $i < 18; $i++): ?>
                                     <th class="text-center"><?= $i % 2 == 0 ? 'ລ' : 'ຍ' ?></th>
