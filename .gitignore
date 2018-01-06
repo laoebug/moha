@@ -19,3 +19,4 @@ gen
 /runtime/
 /web/assets/
 /config/db.php
+/web/upload/

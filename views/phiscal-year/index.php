@@ -12,11 +12,7 @@ $this->title = 'ຈັດການຂໍ້ມູນ ສົກປີ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
-
     <h1><?= \yii\helpers\Html::encode($this->title) ?></h1>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
         <?= Html::a(Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
