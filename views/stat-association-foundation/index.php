@@ -104,9 +104,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr ng-repeat="a in l.approvers">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{l.code == 'M' ? a.ministry.name:a.province.province_name}}</td>
-                                <td class="text-center">{{a.association}}</td>
-                                <td class="text-center">{{a.foundation}}</td>
-                                <td class="text-center">{{a.remark}}</td>
+                                <td class="text-center">{{a.association | number  | dash}}</td>
+                                <td class="text-center">{{a.foundation | number  | dash}}</td>
+                                <td class="text-center">{{a.remark | number  | dash}}</td>
                             </tr>
                             </tbody>
                             <tfoot>
@@ -181,6 +181,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statAssoController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-association-foundation/';
     $scope.sum = [];

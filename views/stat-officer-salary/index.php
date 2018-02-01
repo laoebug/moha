@@ -159,23 +159,23 @@ $this->params['breadcrumbs'][] = $this->title;
                             </tr>
                             <tr>
                                 <th class="text-center" colspan="2">1. ກະຊວງພາຍໃນ ລວມທັງໝົດ</th>
-                                <th class="text-center">{{sumtotal('total') | number}}</th>
-                                <th class="text-center">{{sumtotal('women') | number}}</th>
+                                <th class="text-center">{{sumtotal('total') | number | dash}}</th>
+                                <th class="text-center">{{sumtotal('women') | number | dash}}</th>
 
                                 <?php for ($i = 1; $i < 16; $i++): ?>
-                                    <th class="text-center">{{sumcolumn('level<?= $i ?>_total') | number}}</th>
-                                    <th class="text-center">{{sumcolumn('level<?= $i ?>_women') | number}}</th>
+                                    <th class="text-center">{{sumcolumn('level<?= $i ?>_total') | number | dash}}</th>
+                                    <th class="text-center">{{sumcolumn('level<?= $i ?>_women') | number | dash}}</th>
                                 <?php endfor; ?>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td colspan="2">{{m.name}}</td>
-                                <td class="text-center">{{sumrow(m, 'total') | number}}</td>
-                                <td class="text-center">{{sumrow(m, 'women') | number}}</td>
+                                <td class="text-center">{{sumrow(m, 'total') | number | dash}}</td>
+                                <td class="text-center">{{sumrow(m, 'women') | number | dash}}</td>
                                 <?php for ($i = 1; $i < 16; $i++): ?>
-                                    <td class="text-center">{{m.level<?= $i ?>_total | number}}</td>
-                                    <td class="text-center">{{m.level<?= $i ?>_women | number}}</td>
+                                    <td class="text-center">{{m.level<?= $i ?>_total | number | dash}}</td>
+                                    <td class="text-center">{{m.level<?= $i ?>_women | number | dash}}</td>
                                 <?php endfor; ?>
                             </tr>
                             </tbody>
@@ -246,6 +246,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statOfficerSalary', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-salary/';
     $scope.mode = 'read';

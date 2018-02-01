@@ -96,20 +96,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             </tr>
                             <tr>
                                 <th class="text-center" colspan="2">ລວມ</th>
-                                <th class="text-center">{{sumcolumn('mark') | number}}</th>
-                                <th class="text-center">{{sumcolumn('point') | number}}</th>
-                                <th class="text-center">{{sumcolumn('hm') | number}}</th>
-                                <th class="text-center">{{sumcolumn('km') | number}}</th>
+                                <th class="text-center">{{sumcolumn('mark') | number | dash}}</th>
+                                <th class="text-center">{{sumcolumn('point') | number | dash}}</th>
+                                <th class="text-center">{{sumcolumn('hm') | number | dash}}</th>
+                                <th class="text-center">{{sumcolumn('km') | number | dash}}</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models" style="cursor: pointer">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{m.province}}</td>
-                                <td class="text-center">{{m.mark | number }}</td>
-                                <td class="text-center">{{m.point | number }}</td>
-                                <td class="text-center">{{m.hm | number }}</td>
-                                <td class="text-center">{{m.km | number }}</td>
+                                <td class="text-center">{{m.mark | number | dash }}</td>
+                                <td class="text-center">{{m.point | number | dash }}</td>
+                                <td class="text-center">{{m.hm | number | dash }}</td>
+                                <td class="text-center">{{m.km | number | dash }}</td>
                                 <td class="text-center">{{m.remark}}</td>
                             </tr>
                             </tbody>
@@ -180,6 +180,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statExplore', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-explore/';
     $scope.mode = 'read';

@@ -3,8 +3,8 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\PhiscalYear */
 
-$this->title = 'ແກ້ໄຂຂໍ້ມູນ ສົກປີ';
-$this->params['breadcrumbs'][] = ['label' => 'ສົກປີ', 'url' => ['index']];
+$this->title = 'ແກ້ໄຂຂໍ້ມູນ ປີ';
+$this->params['breadcrumbs'][] = ['label' => 'ປີ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'ແກ້ໄຂຂໍ້ມູນ';
 ?>
 <div class="card">

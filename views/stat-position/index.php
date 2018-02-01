@@ -136,22 +136,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             </tr>
                             <tr>
                                 <th class="text-center">ກະຊວງພາຍໃນ</th>
-                                <th class="text-center">{{sumtotal('total') | number}}</th>
-                                <th class="text-center">{{sumtotal('women') | number}}</th>
+                                <th class="text-center">{{sumtotal('total') | number | dash}}</th>
+                                <th class="text-center">{{sumtotal('women') | number | dash}}</th>
                                 <?php for ($c = 1; $c <= 8; $c++): ?>
-                                    <th class="text-center">{{sumcolumn('position<?= $c ?>_total') | number}}</th>
-                                    <th class="text-center">{{sumcolumn('position<?= $c ?>_women') | number}}</th>
+                                    <th class="text-center">{{sumcolumn('position<?= $c ?>_total') | number | dash}}</th>
+                                    <th class="text-center">{{sumcolumn('position<?= $c ?>_women') | number | dash}}</th>
                                 <?php endfor; ?>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td>{{m.name}}</td>
-                                <td class="text-center">{{sumrow(m, 'total') | number}}</td>
-                                <td class="text-center">{{sumrow(m, 'women') | number}}</td>
+                                <td class="text-center">{{sumrow(m, 'total') | number | dash}}</td>
+                                <td class="text-center">{{sumrow(m, 'women') | number | dash}}</td>
                                 <?php for ($c = 1; $c <= 8; $c++): ?>
-                                    <td class="text-center">{{m.position<?= $c ?>_total | number}}</td>
-                                    <td class="text-center">{{m.position<?= $c ?>_women | number}}</td>
+                                    <td class="text-center">{{m.position<?= $c ?>_total | number | dash}}</td>
+                                    <td class="text-center">{{m.position<?= $c ?>_women | number | dash}}</td>
                                 <?php endfor; ?>
                             </tr>
                             </tbody>
@@ -222,6 +222,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statOfficerAgeLevel', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-position/';
     $scope.mode = 'read';

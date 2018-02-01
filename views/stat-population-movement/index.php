@@ -178,7 +178,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr>
                                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
                                 <?php foreach ($columns as $c): ?>
-                                    <th class="text-center">{{sum('<?= $c ?>') | number}}</th>
+                                    <th class="text-center">{{sum('<?= $c ?>') | number | dash}}</th>
                                 <?php endforeach; ?>
                             </tr>
                             </thead>
@@ -187,7 +187,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{m.province_name}}</td>
                                 <?php foreach ($columns as $c): ?>
-                                    <td class="text-center">{{m.<?= $c ?> | number}}</td>
+                                    <td class="text-center">{{m.<?= $c ?> | number | dash}}</td>
                                 <?php endforeach; ?>
                             </tr>
                             </tbody>
@@ -269,6 +269,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statPopulationMovementController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-population-movement/';
     $scope.mode = 'read';

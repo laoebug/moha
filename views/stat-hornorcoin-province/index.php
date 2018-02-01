@@ -114,14 +114,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tbody>
                 <tr>
                     <th colspan="3">ລວມ</th>
-                    <td class="text-center">{{sum('hero_personal')| number }} </td>
-                    <td class="text-center">{{sum('hero_team')| number }} </td>
-                    <td class="text-center">{{sum('knight_personal')| number }} </td>
-                    <td class="text-center">{{sum('knight_team')| number }} </td>
-                    <td class="text-center">{{sum('labor_personal')| number }} </td>
-                    <td class="text-center">{{sum('labor_team')| number }} </td>
-                    <td class="text-center">{{sum('dev_personal')| number }} </td>
-                    <td class="text-center">{{sum('dev_team')| number }} </td>
+                    <td class="text-center">{{sum('hero_personal')| number | dash }} </td>
+                    <td class="text-center">{{sum('hero_team')| number | dash }} </td>
+                    <td class="text-center">{{sum('knight_personal')| number | dash }} </td>
+                    <td class="text-center">{{sum('knight_team')| number | dash }} </td>
+                    <td class="text-center">{{sum('labor_personal')| number | dash }} </td>
+                    <td class="text-center">{{sum('labor_team')| number | dash }} </td>
+                    <td class="text-center">{{sum('dev_personal')| number | dash }} </td>
+                    <td class="text-center">{{sum('dev_team')| number | dash }} </td>
                     <td class="text-center">{{sum('hero_personal') + sum('knight_personal') + sum('labor_personal') + sum('dev_personal')}}</td>
                     <td class="text-center">{{sum('hero_team') + sum('knight_team') + sum('labor_team') + sum('dev_team')}}</td>
                     <td class="text-center"></td>
@@ -130,16 +130,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td class="text-center">{{$index + 1}}</td>
                     <td class="text-center">{{model.province}}</td>
                     <td class="text-center">{{model.award}}</td>
-                    <td class="text-center">{{model.hero_personal | number}}</td>
-                    <td class="text-center">{{model.hero_team | number}}</td>
-                    <td class="text-center">{{model.knight_personal | number}}</td>
-                    <td class="text-center">{{model.knight_team | number}}</td>
-                    <td class="text-center">{{model.labor_personal | number}}</td>
-                    <td class="text-center">{{model.labor_team | number}}</td>
-                    <td class="text-center">{{model.dev_personal | number}}</td>
-                    <td class="text-center">{{model.dev_team | number}}</td>
-                    <td class="text-center">{{sumpersonal(model) | number}}</td>
-                    <td class="text-center">{{sumteam(model) | number}}</td>
+                    <td class="text-center">{{model.hero_personal | number | dash}}</td>
+                    <td class="text-center">{{model.hero_team | number | dash}}</td>
+                    <td class="text-center">{{model.knight_personal | number | dash}}</td>
+                    <td class="text-center">{{model.knight_team | number | dash}}</td>
+                    <td class="text-center">{{model.labor_personal | number | dash}}</td>
+                    <td class="text-center">{{model.labor_team | number | dash}}</td>
+                    <td class="text-center">{{model.dev_personal | number | dash}}</td>
+                    <td class="text-center">{{model.dev_team | number | dash}}</td>
+                    <td class="text-center">{{sumpersonal(model) | number | dash}}</td>
+                    <td class="text-center">{{sumteam(model) | number | dash}}</td>
                     <td class="text-center">{{model.remark}}</td>
                 </tr>
                 </tbody>
@@ -210,6 +210,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statHornorcoingProvince', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-hornorcoin-province/';
     $scope.mode = 'read';

@@ -131,11 +131,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td>{{m.name}}</td>
                                 <td class="text-center">{{m.code}}</td>
                                 <td class="text-center">{{m.start_year}} - {{m.end_year}}</td>
-                                <td class="text-right">{{m.amount | number}}</td>
+                                <td class="text-right">{{m.amount | number | dash}}</td>
                                 <td class="text-center">{{m.free ? 'P' : ''}}</td>
                                 <td class="text-center">{{m.loan ? 'P' : ''}}</td>
                                 <td class="text-center">{{m.organisation}}</td>
-                                <td class="text-right">{{m.receive | number}}</td>
+                                <td class="text-right">{{m.receive | number | dash}}</td>
                             </tr>
                             </tbody>
                             <tfoot>
@@ -143,11 +143,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <th colspan="2">ລວມ</th>
                                 <th></th>
                                 <th></th>
-                                <th class="text-right">{{sumcolumn('amount') | number }}</th>
+                                <th class="text-right">{{sumcolumn('amount') | number | dash }}</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th class="text-right">{{sumcolumn('receive') | number }}</th>
+                                <th class="text-right">{{sumcolumn('receive') | number | dash }}</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -219,7 +219,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statContract', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-oda/';
     $scope.mode = 'read';

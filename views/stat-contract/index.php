@@ -1,7 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-
 /* @var $this yii\web\View */
 /* @var $model app\models\StatContract */
 
@@ -126,29 +124,29 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tbody>
                             <tr>
                                 <th>ກະຊວງພາຍໃນ</th>
-                                <td class="text-center">{{sumtotal('total') | number }}</td>
-                                <td class="text-center">{{sumtotal('women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('quota_manage_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('quota_manage_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('quota_technic_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('quota_technic_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('nonquota_manage_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('nonquota_manage_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('nonquota_technic_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('nonquota_technic_women') | number }}</td>
+                                <td class="text-center">{{sumtotal('total') | number | dash }}</td>
+                                <td class="text-center">{{sumtotal('women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('quota_manage_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('quota_manage_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('quota_technic_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('quota_technic_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('nonquota_manage_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('nonquota_manage_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('nonquota_technic_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('nonquota_technic_women') | number | dash }}</td>
                             </tr>
                             <tr ng-repeat="m in models">
                                 <td>{{m.name}}</td>
-                                <td class="text-center">{{sumrow(m, 'total') | number }}</td>
-                                <td class="text-center">{{sumrow(m, 'women') | number }}</td>
-                                <td class="text-center">{{m.quota_manage_total | number }}</td>
-                                <td class="text-center">{{m.quota_manage_women | number }}</td>
-                                <td class="text-center">{{m.quota_technic_total | number }}</td>
-                                <td class="text-center">{{m.quota_technic_women | number }}</td>
-                                <td class="text-center">{{m.nonquota_manage_total | number }}</td>
-                                <td class="text-center">{{m.nonquota_manage_women | number }}</td>
-                                <td class="text-center">{{m.nonquota_technic_total | number }}</td>
-                                <td class="text-center">{{m.nonquota_technic_women | number }}</td>
+                                <td class="text-center">{{sumrow(m, 'total') | number | dash }}</td>
+                                <td class="text-center">{{sumrow(m, 'women') | number | dash }}</td>
+                                <td class="text-center">{{m.quota_manage_total | number | dash }}</td>
+                                <td class="text-center">{{m.quota_manage_women | number | dash }}</td>
+                                <td class="text-center">{{m.quota_technic_total | number | dash }}</td>
+                                <td class="text-center">{{m.quota_technic_women | number | dash }}</td>
+                                <td class="text-center">{{m.nonquota_manage_total | number | dash }}</td>
+                                <td class="text-center">{{m.nonquota_manage_women | number | dash }}</td>
+                                <td class="text-center">{{m.nonquota_technic_total | number | dash }}</td>
+                                <td class="text-center">{{m.nonquota_technic_women | number | dash }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -191,7 +189,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <tbody>
                                     <tr ng-repeat="f in references">
                                         <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                        </td>
                                         <td class="text-center">{{f.issued_no}}</td>
                                         <td class="text-center">{{f.issued_date | date}}</td>
                                         <td class="text-center">{{f.issued_by}}</td>
@@ -201,7 +200,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -218,7 +216,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-
+  app.filter('dash', function () {
+    return function (input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statContract', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-contract/';
     $scope.mode = 'read';
@@ -305,10 +307,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $scope.sumcolumn = function (key) {
       var s = 0;
-      if($scope.models)
-      for (var i = 0; i < $scope.models.length; i++)
-        if ($scope.models[i][key])
-          s += parseInt($scope.models[i][key]);
+      if ($scope.models)
+        for (var i = 0; i < $scope.models.length; i++)
+          if ($scope.models[i][key])
+            s += parseInt($scope.models[i][key]);
       return s;
     };
 
@@ -339,13 +341,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
+      if (!$scope.issued_no) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນເລກທີ');
         return;
       }
       $scope.issued_date = $('.datepicker').val();
-      if(!$scope.issued_date) {
+      if (!$scope.issued_date) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນວັນທີ');
         return;
@@ -390,8 +392,8 @@ $this->params['breadcrumbs'][] = $this->title;
       });
     };
 
-    $scope.getreferences = function() {
-      if($scope.year) {
+    $scope.getreferences = function () {
+      if ($scope.year) {
         $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
           .then(function (r) {
             if (r.data)
@@ -405,10 +407,10 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
+    $scope.deletefile = function (f) {
+      if ($scope.year && f) {
+        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
+          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
             'id': f.id,
             '_csrf': $('meta[name="csrf-token"]').attr("content")
           }).then(function (r) {

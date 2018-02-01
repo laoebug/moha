@@ -109,10 +109,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr ng-repeat="m in models" ng-click="select(m)">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{m.title}}</td>
-                                <td class="text-center">{{m.total | number}}</td>
-                                <td class="text-center">{{m.women | number}}</td>
+                                <td class="text-center">{{m.total | number | dash}}</td>
+                                <td class="text-center">{{m.women | number | dash}}</td>
                                 <td class="text-center">{{m.start_date}} - {{m.end_date}}</td>
-                                <td class="text-center">{{m.times | number}}</td>
+                                <td class="text-center">{{m.times | number | dash}}</td>
                                 <td class="text-center">{{m.place}}</td>
                             </tr>
                             </tbody>
@@ -193,6 +193,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statInstituteMeetingController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-institute-meeting/';
     $scope.mode = 'read';

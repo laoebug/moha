@@ -242,7 +242,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('officerDegreeController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-degree/';
     $scope.mode = 'read';

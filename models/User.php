@@ -35,7 +35,6 @@ use Yii;
  * @property Role[] $roles
  * @property Role $role
  */
-
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
 
@@ -43,10 +42,13 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public $accessToken;
     public $subordinate_usr_id; // subordinate_usr_id  is user_id in user_subordinate table
     public $subordinate_user_id; // subordinate_user_id is subordinate_user_id in user_subordinate table
-	public $theBraches=[];
-	public $theSubcordinateUsers=[];
-	public $theProvinces=[];
-	public $province_id;
+    public $theBraches = [];
+    public $theSubcordinateUsers = [];
+    public $theProvinces = [];
+    public $province_id;
+    public $newpassword;
+    public $confirmpassword;
+
     /**
      * @inheritdoc
      */
@@ -55,7 +57,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return 'user';
     }
 
-   
 
     /**
      * @inheritdoc
@@ -63,7 +64,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'firstname', 'lastname', 'tel','role_id','status'], 'required'],
+            [['username', 'password', 'firstname', 'lastname', 'tel', 'role_id', 'status'], 'required'],
             [['deleted', 'role_id', 'user_id'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['username', 'tel'], 'string', 'max' => 50],
@@ -75,24 +76,24 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             //[['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'Username'),
-            'password' => Yii::t('app', 'Password'),
-            'firstname' => Yii::t('app', 'First Name'),
-            'lastname' => Yii::t('app', 'Last Name'),
-            'status' => Yii::t('app', 'Status'),
-            'tel' => Yii::t('app', 'Tel'),
-            'email' => Yii::t('app', 'Email'),
-            'deleted' => Yii::t('app', 'Deleted'),
-            'role_id' => Yii::t('app', 'Role'),
-        	'province_id' => Yii::t('app', 'Province'),
+            'id' => Yii::t('app', 'ລະຫັດ'),
+            'username' => Yii::t('app', 'ຊື່ຜູ້ໃຊ້'),
+            'password' => Yii::t('app', 'ລະຫດັຜ່ານ'),
+            'firstname' => Yii::t('app', 'ຊື່ແທ້'),
+            'lastname' => Yii::t('app', 'ນາມສະກຸນ'),
+            'status' => Yii::t('app', 'ສະຖານະ'),
+            'tel' => Yii::t('app', 'ເບີໂທ'),
+            'email' => Yii::t('app', 'ອີເມວ'),
+            'deleted' => Yii::t('app', 'ລຶບ'),
+            'role_id' => Yii::t('app', 'ສິດ ແລະ ໜ້າທີ່'),
+            'province_id' => Yii::t('app', 'ແຂວງ'),
             'user_id' => Yii::t('app', 'User ID'),
             'input_dt_stamp' => Yii::t('app', 'Input Date Time Stamp'),
         ];
@@ -272,6 +273,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->password === $password;
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -279,11 +281,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasOne(Role::className(), ['id' => 'role_id']);
     }
-    
+
     public function getProvince()
     {
-    	return $this->hasOne(Province::className(), ['id' => 'province_id']);
+        return $this->hasOne(Province::className(), ['id' => 'province_id']);
     }
-    
-    
+
+
 }

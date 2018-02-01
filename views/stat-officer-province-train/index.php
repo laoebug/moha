@@ -149,16 +149,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr ng-repeat="m in models">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td class="text-center">{{m.province_name}}</td>
-                                <td class="text-center">{{formatNumber(sumtotal(m)) | number}}</td>
-                                <td class="text-center">{{formatNumber(sumwomen(m)) | number}}</td>
-                                <td class="text-center">{{formatNumber(m.tech_in_total )| number}}</td>
-                                <td class="text-center">{{formatNumber(m.tech_in_women )| number}}</td>
-                                <td class="text-center">{{formatNumber(m.tech_out_total) | number}}</td>
-                                <td class="text-center">{{formatNumber(m.tech_out_women) | number}}</td>
-                                <td class="text-center">{{formatNumber(m.theo_in_total )| number}}</td>
-                                <td class="text-center">{{formatNumber(m.theo_in_women )| number}}</td>
-                                <td class="text-center">{{formatNumber(m.theo_out_total) | number}}</td>
-                                <td class="text-center">{{formatNumber(m.theo_out_women) | number}}</td>
+                                <td class="text-center">{{formatNumber(sumtotal(m)) | number | dash}}</td>
+                                <td class="text-center">{{formatNumber(sumwomen(m)) | number | dash}}</td>
+                                <td class="text-center">{{formatNumber(m.tech_in_total )| number | dash}}</td>
+                                <td class="text-center">{{formatNumber(m.tech_in_women )| number | dash}}</td>
+                                <td class="text-center">{{formatNumber(m.tech_out_total) | number | dash}}</td>
+                                <td class="text-center">{{formatNumber(m.tech_out_women) | number | dash}}</td>
+                                <td class="text-center">{{formatNumber(m.theo_in_total )| number | dash}}</td>
+                                <td class="text-center">{{formatNumber(m.theo_in_women )| number | dash}}</td>
+                                <td class="text-center">{{formatNumber(m.theo_out_total) | number | dash}}</td>
+                                <td class="text-center">{{formatNumber(m.theo_out_women) | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -252,6 +252,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('officerOrganisationTrainController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-province-train/';
     $scope.mode = 'read';

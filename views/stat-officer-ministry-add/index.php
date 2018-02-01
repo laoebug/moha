@@ -81,8 +81,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr ng-repeat="m in models">
                                 <td>{{$index + 1}}</td>
                                 <td>{{m.name}}</td>
-                                <td class="text-right">{{m.add | number}}</td>
-                                <td class="text-right">{{m.resign | number}}</td>
+                                <td class="text-right">{{m.add | number | dash}}</td>
+                                <td class="text-right">{{m.resign | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -166,8 +166,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   Chart.defaults.global.defaultFontFamily = 'Saysettha OT';
-
   var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('officerMinistryAddController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-ministry-add/';
     $scope.mode = 'read';

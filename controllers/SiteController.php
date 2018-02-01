@@ -2,9 +2,10 @@
 
 namespace app\controllers;
 
-use app\models\ContactForm;
 use app\models\LoginForm;
+use app\models\User;
 use Yii;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -57,6 +58,10 @@ class SiteController extends Controller
             return $this->goBack();
         }
 
+        $cookies = Yii::$app->request->cookies;
+        if($cookies->has('username'))
+            $model->username = $cookies->get('username');
+
         $this->layout = "login";
         return $this->render('login', [
             'model' => $model,
@@ -74,4 +79,39 @@ class SiteController extends Controller
         return $this->redirect(['site/login']);
     }
 
+    public function actionChangepassword()
+    {
+        $model = User::findOne(Yii::$app->user->id);
+        $post = Yii::$app->request->post();
+        if (isset($post['User'])) {
+            try {
+                if ($model->password !== $post['User']['password']) {
+                    throw new Exception('ລະຫັດຜ່ານ ປະຈຸບັນ ບໍ່ຖືກຕ້ອງ');
+                }
+                if ($post['User']['newpassword'] !== $post['User']['confirmpassword']) {
+                    throw new Exception('ຢືນຢັນ ລະຫັດຜ່ານ ໃໝ່ ບໍ່ຖືກຕ້ອງ');
+                }
+                $model->password = $post['User']['newpassword'];
+                if(!$model->save(false)) {
+                    throw new Exception(json_encode($model->errors));
+                }
+                Yii::$app->session->setFlash('success', "ສຳເລັດ");
+            } catch (Exception $exception) {
+                Yii::$app->session->setFlash('danger', $exception->getMessage());
+            }
+        }
+        $model->password = null;
+        $model->newpassword = null;
+        $model->confirmpassword = null;
+        return $this->render('changepassword', [
+            'model' => $model
+        ]);
+    }
+
+    public function actionProfile() {
+        $model = User::findOne(Yii::$app->user->id);
+        return $this->render('profile', [
+            'model' => $model
+        ]);
+    }
 }

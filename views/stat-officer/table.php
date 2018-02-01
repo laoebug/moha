@@ -14,7 +14,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title">ຕາຕະລາງສັງລວມສະຖິຕິ ລັດຖະກອນ ສົກປີ (<?= $year->year ?>)</h3>
+                <h3 class="title">ຕາຕະລາງສັງລວມສະຖິຕິ ລັດຖະກອນ ປີ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">

@@ -177,36 +177,36 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tbody>
                             <tr>
                                 <th class="text-center" colspan="3">ລວມ</th>
-                                <td class="text-center">{{sumcolumn('free1_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free1_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free2_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free2_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free3_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free3_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('free1_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free1_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free2_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free2_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free3_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free3_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('revo1_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo1_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo2_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo2_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo3_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo3_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('revo1_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo1_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo2_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo2_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo3_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo3_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('labo1_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo1_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo2_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo2_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo3_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo3_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('labo1_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo1_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo2_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo2_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo3_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo3_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('deve1_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve1_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve2_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve2_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve3_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve3_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('deve1_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve1_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve2_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve2_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve3_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve3_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumtotal('personal') | number }}</td>
-                                <td class="text-center">{{sumtotal('team') | number }}</td>
+                                <td class="text-center">{{sumtotal('personal') | number | dash }}</td>
+                                <td class="text-center">{{sumtotal('team') | number | dash }}</td>
 
                                 <td class="text-center"></td>
                             </tr>
@@ -214,36 +214,36 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td class="text-center">{{model.province}}</td>
                                 <td class="text-center">{{model.award}}</td>
-                                <td class="text-center">{{model.free1_personal | number }}</td>
-                                <td class="text-center">{{model.free1_team | number }}</td>
-                                <td class="text-center">{{model.free2_personal | number }}</td>
-                                <td class="text-center">{{model.free2_team | number }}</td>
-                                <td class="text-center">{{model.free3_personal | number }}</td>
-                                <td class="text-center">{{model.free3_team | number }}</td>
+                                <td class="text-center">{{model.free1_personal | number | dash }}</td>
+                                <td class="text-center">{{model.free1_team | number | dash }}</td>
+                                <td class="text-center">{{model.free2_personal | number | dash }}</td>
+                                <td class="text-center">{{model.free2_team | number | dash }}</td>
+                                <td class="text-center">{{model.free3_personal | number | dash }}</td>
+                                <td class="text-center">{{model.free3_team | number | dash }}</td>
 
-                                <td class="text-center">{{model.revo1_personal | number }}</td>
-                                <td class="text-center">{{model.revo1_team | number }}</td>
-                                <td class="text-center">{{model.revo2_personal | number }}</td>
-                                <td class="text-center">{{model.revo2_team | number }}</td>
-                                <td class="text-center">{{model.revo3_personal | number }}</td>
-                                <td class="text-center">{{model.revo3_team | number }}</td>
+                                <td class="text-center">{{model.revo1_personal | number | dash }}</td>
+                                <td class="text-center">{{model.revo1_team | number | dash }}</td>
+                                <td class="text-center">{{model.revo2_personal | number | dash }}</td>
+                                <td class="text-center">{{model.revo2_team | number | dash }}</td>
+                                <td class="text-center">{{model.revo3_personal | number | dash }}</td>
+                                <td class="text-center">{{model.revo3_team | number | dash }}</td>
 
-                                <td class="text-center">{{model.labo1_personal | number }}</td>
-                                <td class="text-center">{{model.labo1_team | number }}</td>
-                                <td class="text-center">{{model.labo2_personal | number }}</td>
-                                <td class="text-center">{{model.labo2_team | number }}</td>
-                                <td class="text-center">{{model.labo3_personal | number }}</td>
-                                <td class="text-center">{{model.labo3_team | number }}</td>
+                                <td class="text-center">{{model.labo1_personal | number | dash }}</td>
+                                <td class="text-center">{{model.labo1_team | number | dash }}</td>
+                                <td class="text-center">{{model.labo2_personal | number | dash }}</td>
+                                <td class="text-center">{{model.labo2_team | number | dash }}</td>
+                                <td class="text-center">{{model.labo3_personal | number | dash }}</td>
+                                <td class="text-center">{{model.labo3_team | number | dash }}</td>
 
-                                <td class="text-center">{{model.deve1_personal | number }}</td>
-                                <td class="text-center">{{model.deve1_team | number }}</td>
-                                <td class="text-center">{{model.deve2_personal | number }}</td>
-                                <td class="text-center">{{model.deve2_team | number }}</td>
-                                <td class="text-center">{{model.deve3_personal | number }}</td>
-                                <td class="text-center">{{model.deve3_team | number }}</td>
+                                <td class="text-center">{{model.deve1_personal | number | dash }}</td>
+                                <td class="text-center">{{model.deve1_team | number | dash }}</td>
+                                <td class="text-center">{{model.deve2_personal | number | dash }}</td>
+                                <td class="text-center">{{model.deve2_team | number | dash }}</td>
+                                <td class="text-center">{{model.deve3_personal | number | dash }}</td>
+                                <td class="text-center">{{model.deve3_team | number | dash }}</td>
 
-                                <td class="text-center">{{sumrow(model, 'personal') | number }}</td>
-                                <td class="text-center">{{sumrow(model, 'team') | number }}</td>
+                                <td class="text-center">{{sumrow(model, 'personal') | number | dash }}</td>
+                                <td class="text-center">{{sumrow(model, 'team') | number | dash }}</td>
 
                                 <td class="text-center">{{model.remark}}</td>
                             </tr>
@@ -315,6 +315,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statVictorycoinProvince', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-victorycoin-province/';
     $scope.mode = 'read';

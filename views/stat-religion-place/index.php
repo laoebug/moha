@@ -190,20 +190,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr>
                                 <th style="width: 10%" class="text-center"
                                     colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                                <th style="width: 10%" class="text-center">{{sum('buddhis_total') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('buddhis_nomonk') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('buddhis_sim') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('buddhis_nosim') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('christ_news_not') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('christ_sat_total') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('christ_sat_not') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('christ_cato_not') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('bahai_total') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('bahai_not') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('idslam_total') | number}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('idslam_not') | number}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_total') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_nomonk') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_sim') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_nosim') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_news_not') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_sat_total') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_sat_not') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_cato_not') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('bahai_total') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('bahai_not') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('idslam_total') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('idslam_not') | number | dash}}</th>
                                 <th style="width: 10%"></th>
                             </tr>
                             </thead>
@@ -211,20 +211,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr ng-repeat="m in models">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{m.province_name}}</td>
-                                <td class="text-center">{{m.buddhis_total | number}}</td>
-                                <td class="text-center">{{m.buddhis_nomonk | number}}</td>
-                                <td class="text-center">{{m.buddhis_sim | number}}</td>
-                                <td class="text-center">{{m.buddhis_nosim | number}}</td>
-                                <td class="text-center">{{m.christ_news_total | number}}</td>
-                                <td class="text-center">{{m.christ_news_not | number}}</td>
-                                <td class="text-center">{{m.christ_sat_total | number}}</td>
-                                <td class="text-center">{{m.christ_sat_not | number}}</td>
-                                <td class="text-center">{{m.christ_cato_total | number}}</td>
-                                <td class="text-center">{{m.christ_cato_not | number}}</td>
-                                <td class="text-center">{{m.bahai_total | number}}</td>
-                                <td class="text-center">{{m.bahai_not | number}}</td>
-                                <td class="text-center">{{m.idslam_total | number}}</td>
-                                <td class="text-center">{{m.idslam_not | number}}</td>
+                                <td class="text-center">{{m.buddhis_total | number | dash}}</td>
+                                <td class="text-center">{{m.buddhis_nomonk | number | dash}}</td>
+                                <td class="text-center">{{m.buddhis_sim | number | dash}}</td>
+                                <td class="text-center">{{m.buddhis_nosim | number | dash}}</td>
+                                <td class="text-center">{{m.christ_news_total | number | dash}}</td>
+                                <td class="text-center">{{m.christ_news_not | number | dash}}</td>
+                                <td class="text-center">{{m.christ_sat_total | number | dash}}</td>
+                                <td class="text-center">{{m.christ_sat_not | number | dash}}</td>
+                                <td class="text-center">{{m.christ_cato_total | number | dash}}</td>
+                                <td class="text-center">{{m.christ_cato_not | number | dash}}</td>
+                                <td class="text-center">{{m.bahai_total | number | dash}}</td>
+                                <td class="text-center">{{m.bahai_not | number | dash}}</td>
+                                <td class="text-center">{{m.idslam_total | number | dash}}</td>
+                                <td class="text-center">{{m.idslam_not | number | dash}}</td>
                                 <td class="text-center">{{m.remark}}</td>
                             </tr>
                             </tbody>
@@ -318,6 +318,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('rerigionPlaceController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-religion-place/';
     $scope.mode = 'read';

@@ -126,22 +126,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tbody>
                             <tr>
                                 <th class="text-center" colspan="3">ລວມ</th>
-                                <td class="text-center">{{sumcolumn('labo_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('memo_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('memo_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('labo_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('memo_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('memo_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('amer_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('amer_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('fran_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('fran_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('gove_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('gove_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('amer_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('amer_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('fran_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('fran_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('gove_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('gove_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumtotal('personal') | number }}</td>
-                                <td class="text-center">{{sumtotal('team') | number }}</td>
+                                <td class="text-center">{{sumtotal('personal') | number | dash }}</td>
+                                <td class="text-center">{{sumtotal('team') | number | dash }}</td>
 
                                 <td class="text-center"></td>
                             </tr>
@@ -149,21 +149,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td class="text-center">{{model.province}}</td>
                                 <td class="text-center">{{model.award}}</td>
-                                <td class="text-center">{{model.labo_personal| number }}</td>
-                                <td class="text-center">{{model.labo_team | number }}</td>
-                                <td class="text-center">{{model.deve_personal| number }}</td>
-                                <td class="text-center">{{model.deve_team | number }}</td>
-                                <td class="text-center">{{model.memo_personal| number }}</td>
-                                <td class="text-center">{{model.memo_team | number }}</td>
-                                <td class="text-center">{{model.amer_personal| number }}</td>
-                                <td class="text-center">{{model.amer_team | number }}</td>
-                                <td class="text-center">{{model.fran_personal| number }}</td>
-                                <td class="text-center">{{model.fran_team | number }}</td>
-                                <td class="text-center">{{model.gove_personal| number }}</td>
-                                <td class="text-center">{{model.gove_team | number }}</td>
+                                <td class="text-center">{{model.labo_personal| number | dash }}</td>
+                                <td class="text-center">{{model.labo_team | number | dash }}</td>
+                                <td class="text-center">{{model.deve_personal| number | dash }}</td>
+                                <td class="text-center">{{model.deve_team | number | dash }}</td>
+                                <td class="text-center">{{model.memo_personal| number | dash }}</td>
+                                <td class="text-center">{{model.memo_team | number | dash }}</td>
+                                <td class="text-center">{{model.amer_personal| number | dash }}</td>
+                                <td class="text-center">{{model.amer_team | number | dash }}</td>
+                                <td class="text-center">{{model.fran_personal| number | dash }}</td>
+                                <td class="text-center">{{model.fran_team | number | dash }}</td>
+                                <td class="text-center">{{model.gove_personal| number | dash }}</td>
+                                <td class="text-center">{{model.gove_team | number | dash }}</td>
 
-                                <td class="text-center">{{sumrow($index, 'personal') | number }}</td>
-                                <td class="text-center">{{sumrow($index, 'team') | number }}</td>
+                                <td class="text-center">{{sumrow($index, 'personal') | number | dash }}</td>
+                                <td class="text-center">{{sumrow($index, 'team') | number | dash }}</td>
 
                                 <td class="text-center">{{model.remark}}</td>
                             </tr>
@@ -235,7 +235,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statGovoverseaProvince', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-govoversea-province/';
     $scope.mode = 'read';

@@ -1,8 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatVictoryoverseaProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -202,39 +199,39 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tbody>
                             <tr>
                                 <th class="text-center" colspan="3">ລວມ</th>
-                                <td class="text-center">{{sumcolumn('free1_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free1_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free2_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free2_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free3_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('free3_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('free1_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free1_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free2_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free2_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free3_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('free3_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('revo1_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo1_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo2_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo2_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo3_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('revo3_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('revo1_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo1_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo2_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo2_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo3_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('revo3_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('labo1_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo1_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo2_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo2_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo3_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('labo3_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('labo1_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo1_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo2_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo2_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo3_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('labo3_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('deve1_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve1_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve2_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve2_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve3_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('deve3_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('deve1_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve1_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve2_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve2_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve3_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('deve3_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('frien_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('frien_team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('frien_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('frien_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumtotal('personal') | number }}</td>
-                                <td class="text-center">{{sumtotal('team') | number }}</td>
+                                <td class="text-center">{{sumtotal('personal') | number | dash }}</td>
+                                <td class="text-center">{{sumtotal('team') | number | dash }}</td>
 
                                 <td class="text-center"></td>
                             </tr>
@@ -242,39 +239,39 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td class="text-center">{{model.province}}</td>
                                 <td class="text-center">{{model.award}}</td>
-                                <td class="text-center">{{model.free1_personal | number }}</td>
-                                <td class="text-center">{{model.free1_team | number }}</td>
-                                <td class="text-center">{{model.free2_personal | number }}</td>
-                                <td class="text-center">{{model.free2_team | number }}</td>
-                                <td class="text-center">{{model.free3_personal | number }}</td>
-                                <td class="text-center">{{model.free3_team | number }}</td>
+                                <td class="text-center">{{model.free1_personal | number | dash }}</td>
+                                <td class="text-center">{{model.free1_team | number | dash }}</td>
+                                <td class="text-center">{{model.free2_personal | number | dash }}</td>
+                                <td class="text-center">{{model.free2_team | number | dash }}</td>
+                                <td class="text-center">{{model.free3_personal | number | dash }}</td>
+                                <td class="text-center">{{model.free3_team | number | dash }}</td>
 
-                                <td class="text-center">{{model.revo1_personal | number }}</td>
-                                <td class="text-center">{{model.revo1_team | number }}</td>
-                                <td class="text-center">{{model.revo2_personal | number }}</td>
-                                <td class="text-center">{{model.revo2_team | number }}</td>
-                                <td class="text-center">{{model.revo3_personal | number }}</td>
-                                <td class="text-center">{{model.revo3_team | number }}</td>
+                                <td class="text-center">{{model.revo1_personal | number | dash }}</td>
+                                <td class="text-center">{{model.revo1_team | number | dash }}</td>
+                                <td class="text-center">{{model.revo2_personal | number | dash }}</td>
+                                <td class="text-center">{{model.revo2_team | number | dash }}</td>
+                                <td class="text-center">{{model.revo3_personal | number | dash }}</td>
+                                <td class="text-center">{{model.revo3_team | number | dash }}</td>
 
-                                <td class="text-center">{{model.labo1_personal | number }}</td>
-                                <td class="text-center">{{model.labo1_team | number }}</td>
-                                <td class="text-center">{{model.labo2_personal | number }}</td>
-                                <td class="text-center">{{model.labo2_team | number }}</td>
-                                <td class="text-center">{{model.labo3_personal | number }}</td>
-                                <td class="text-center">{{model.labo3_team | number }}</td>
+                                <td class="text-center">{{model.labo1_personal | number | dash }}</td>
+                                <td class="text-center">{{model.labo1_team | number | dash }}</td>
+                                <td class="text-center">{{model.labo2_personal | number | dash }}</td>
+                                <td class="text-center">{{model.labo2_team | number | dash }}</td>
+                                <td class="text-center">{{model.labo3_personal | number | dash }}</td>
+                                <td class="text-center">{{model.labo3_team | number | dash }}</td>
 
-                                <td class="text-center">{{model.deve1_personal | number }}</td>
-                                <td class="text-center">{{model.deve1_team | number }}</td>
-                                <td class="text-center">{{model.deve2_personal | number }}</td>
-                                <td class="text-center">{{model.deve2_team | number }}</td>
-                                <td class="text-center">{{model.deve3_personal | number }}</td>
-                                <td class="text-center">{{model.deve3_team | number }}</td>
+                                <td class="text-center">{{model.deve1_personal | number | dash }}</td>
+                                <td class="text-center">{{model.deve1_team | number | dash }}</td>
+                                <td class="text-center">{{model.deve2_personal | number | dash }}</td>
+                                <td class="text-center">{{model.deve2_team | number | dash }}</td>
+                                <td class="text-center">{{model.deve3_personal | number | dash }}</td>
+                                <td class="text-center">{{model.deve3_team | number | dash }}</td>
 
-                                <td class="text-center">{{model.frien_personal | number }}</td>
-                                <td class="text-center">{{model.frien_team | number }}</td>
+                                <td class="text-center">{{model.frien_personal | number | dash }}</td>
+                                <td class="text-center">{{model.frien_team | number | dash }}</td>
 
-                                <td class="text-center">{{sumrow(model, 'personal') | number }}</td>
-                                <td class="text-center">{{sumrow(model, 'team') | number }}</td>
+                                <td class="text-center">{{sumrow(model, 'personal') | number | dash }}</td>
+                                <td class="text-center">{{sumrow(model, 'team') | number | dash }}</td>
 
                                 <td class="text-center">{{model.remark}}</td>
                             </tr>
@@ -290,7 +287,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-sm-3">
                             <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
+                                   type="text">
                         </div>
                         <div class="col-sm-3">
                             <label>ອອກໂດຍ</label>
@@ -319,7 +317,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <tbody>
                                     <tr ng-repeat="f in references">
                                         <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                        </td>
                                         <td class="text-center">{{f.issued_no}}</td>
                                         <td class="text-center">{{f.issued_date | date}}</td>
                                         <td class="text-center">{{f.issued_by}}</td>
@@ -346,7 +345,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-
+  app.filter('dash', function () {
+    return function (input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statVictoryoverseaProvince', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-victoryoversea-province/';
     $scope.mode = 'read';
@@ -477,11 +480,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $scope.sumcolumn = function (key) {
       var s = 0;
-      if($scope.models)
-      for (var i = 0; i < $scope.models.length; i++) {
-        if ($scope.models[i][key])
-          s += parseInt($scope.models[i][key]);
-      }
+      if ($scope.models)
+        for (var i = 0; i < $scope.models.length; i++) {
+          if ($scope.models[i][key])
+            s += parseInt($scope.models[i][key]);
+        }
       return s;
     };
 
@@ -554,13 +557,13 @@ $this->params['breadcrumbs'][] = $this->title;
     };
 
     $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
+      if (!$scope.issued_no) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນເລກທີ');
         return;
       }
       $scope.issued_date = $('#issued_date').val();
-      if(!$scope.issued_date) {
+      if (!$scope.issued_date) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນວັນທີ');
         return;
@@ -605,8 +608,8 @@ $this->params['breadcrumbs'][] = $this->title;
       });
     };
 
-    $scope.getreferences = function() {
-      if($scope.year) {
+    $scope.getreferences = function () {
+      if ($scope.year) {
         $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
           .then(function (r) {
             if (r.data)
@@ -620,10 +623,10 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
+    $scope.deletefile = function (f) {
+      if ($scope.year && f) {
+        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
+          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
             'id': f.id,
             '_csrf': $('meta[name="csrf-token"]').attr("content")
           }).then(function (r) {

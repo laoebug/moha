@@ -1,8 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatDocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -132,10 +129,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr ng-repeat="m in model.details">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td class="text-center">{{m.name}}</td>
-                                <td class="text-center">{{m.before | number}}</td>
-                                <td class="text-center">{{m.after | number}}</td>
-                                <td class="text-center">{{m.after_new | number}}</td>
-                                <td class="text-center">{{sumrow(m) | number}}</td>
+                                <td class="text-center">{{m.before | number | dash}}</td>
+                                <td class="text-center">{{m.after | number | dash}}</td>
+                                <td class="text-center">{{m.after_new | number | dash}}</td>
+                                <td class="text-center">{{sumrow(m) | number | dash}}</td>
                                 <td>{{m.remark}}</td>
                             </tr>
                             </tbody>
@@ -179,7 +176,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <tbody>
                                     <tr ng-repeat="f in references">
                                         <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                        </td>
                                         <td class="text-center">{{f.issued_no}}</td>
                                         <td class="text-center">{{f.issued_date | date}}</td>
                                         <td class="text-center">{{f.issued_by}}</td>
@@ -189,7 +187,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -206,7 +203,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statDocument', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-document/';
     $scope.mode = 'read';
@@ -327,13 +328,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
+      if (!$scope.issued_no) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນເລກທີ');
         return;
       }
       $scope.issued_date = $('.datepicker').val();
-      if(!$scope.issued_date) {
+      if (!$scope.issued_date) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນວັນທີ');
         return;
@@ -378,8 +379,8 @@ $this->params['breadcrumbs'][] = $this->title;
       });
     };
 
-    $scope.getreferences = function() {
-      if($scope.year) {
+    $scope.getreferences = function () {
+      if ($scope.year) {
         $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
           .then(function (r) {
             if (r.data)
@@ -393,10 +394,10 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
+    $scope.deletefile = function (f) {
+      if ($scope.year && f) {
+        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
+          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
             'id': f.id,
             '_csrf': $('meta[name="csrf-token"]').attr("content")
           }).then(function (r) {

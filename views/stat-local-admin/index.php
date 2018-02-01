@@ -1,8 +1,5 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatLocalAdminSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -104,8 +101,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             <td class="text-center" style="width: 8%">ທຸກຍາກ</td>
                         </tr>
                         <tr>
-                            <td class="text-center"><input min="0" type="number" class="form-control"
-                                                           ng-model="model.village_head_total"></td>
+                            <td class="text-center">
+                                <input min="0" type="number" class="form-control"
+                                       ng-model="model.village_head_total">
+                            </td>
                             <td class="text-center"><input
                                         ng-blur="model.village_head_women = model.village_head_total < model.village_head_women ? null : model.village_head_women"
                                         min="0" max="{{model.village_head_total}}" type="number" class="form-control"
@@ -197,46 +196,46 @@ $this->params['breadcrumbs'][] = $this->title;
                             </tr>
                             <tr>
                                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center">{{sum('province_head_total') | number}}</th>
-                                <th class="text-center">{{sum('province_head_women') | number}}</th>
-                                <th class="text-center">{{sum('province_vice_total') | number}}</th>
-                                <th class="text-center">{{sum('province_vice_women') | number}}</th>
-                                <th class="text-center">{{sum('district_head_total') | number}}</th>
-                                <th class="text-center">{{sum('district_head_women') | number}}</th>
-                                <th class="text-center">{{sum('district_vice_total') | number}}</th>
-                                <th class="text-center">{{sum('district_vice_women') | number}}</th>
-                                <th class="text-center">{{sum('village_head_total') | number}}</th>
-                                <th class="text-center">{{sum('village_head_women') | number}}</th>
-                                <th class="text-center">{{sum('village_vice_total') | number}}</th>
-                                <th class="text-center">{{sum('village_vice_women') | number}}</th>
-                                <th class="text-center">{{sum('population_total') | number}}</th>
-                                <th class="text-center">{{sum('population_women') | number}}</th>
-                                <th class="text-center">{{sum('village') | number}}</th>
-                                <th class="text-center">{{sum('family_total') | number}}</th>
-                                <th class="text-center">{{sum('family_poor') | number}}</th>
+                                <th class="text-center">{{sum('province_head_total') | number  | dash}}</th>
+                                <th class="text-center">{{sum('province_head_women') | number  | dash}}</th>
+                                <th class="text-center">{{sum('province_vice_total') | number  | dash}}</th>
+                                <th class="text-center">{{sum('province_vice_women') | number  | dash}}</th>
+                                <th class="text-center">{{sum('district_head_total') | number  | dash}}</th>
+                                <th class="text-center">{{sum('district_head_women') | number  | dash}}</th>
+                                <th class="text-center">{{sum('district_vice_total') | number  | dash}}</th>
+                                <th class="text-center">{{sum('district_vice_women') | number  | dash}}</th>
+                                <th class="text-center">{{sum('village_head_total') | number  | dash}}</th>
+                                <th class="text-center">{{sum('village_head_women') | number  | dash}}</th>
+                                <th class="text-center">{{sum('village_vice_total') | number  | dash}}</th>
+                                <th class="text-center">{{sum('village_vice_women') | number  | dash}}</th>
+                                <th class="text-center">{{sum('population_total') | number  | dash}}</th>
+                                <th class="text-center">{{sum('population_women') | number  | dash}}</th>
+                                <th class="text-center">{{sum('village') | number  | dash}}</th>
+                                <th class="text-center">{{sum('family_total') | number  | dash}}</th>
+                                <th class="text-center">{{sum('family_poor') | number  | dash}}</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{m.province_name}}</td>
-                                <td class="text-center">{{m.province_head_total | number}}</td>
-                                <td class="text-center">{{m.province_head_women | number}}</td>
-                                <td class="text-center">{{m.province_vice_total | number}}</td>
-                                <td class="text-center">{{m.province_vice_women | number}}</td>
-                                <td class="text-center">{{m.district_head_total | number}}</td>
-                                <td class="text-center">{{m.district_head_women | number}}</td>
-                                <td class="text-center">{{m.district_vice_total | number}}</td>
-                                <td class="text-center">{{m.district_vice_women | number}}</td>
-                                <td class="text-center">{{m.village_head_total | number}}</td>
-                                <td class="text-center">{{m.village_head_women | number}}</td>
-                                <td class="text-center">{{m.village_vice_total | number}}</td>
-                                <td class="text-center">{{m.village_vice_women | number}}</td>
-                                <td class="text-center">{{m.population_total | number}}</td>
-                                <td class="text-center">{{m.population_women | number}}</td>
-                                <td class="text-center">{{m.village | number}}</td>
-                                <td class="text-center">{{m.family_total | number}}</td>
-                                <td class="text-center">{{m.family_poor | number}}</td>
+                                <td class="text-center">{{m.province_head_total | number  | dash}}</td>
+                                <td class="text-center">{{m.province_head_women | number  | dash}}</td>
+                                <td class="text-center">{{m.province_vice_total | number  | dash}}</td>
+                                <td class="text-center">{{m.province_vice_women | number  | dash}}</td>
+                                <td class="text-center">{{m.district_head_total | number  | dash}}</td>
+                                <td class="text-center">{{m.district_head_women | number  | dash}}</td>
+                                <td class="text-center">{{m.district_vice_total | number  | dash}}</td>
+                                <td class="text-center">{{m.district_vice_women | number  | dash}}</td>
+                                <td class="text-center">{{m.village_head_total | number  | dash}}</td>
+                                <td class="text-center">{{m.village_head_women | number  | dash}}</td>
+                                <td class="text-center">{{m.village_vice_total | number  | dash}}</td>
+                                <td class="text-center">{{m.village_vice_women | number  | dash}}</td>
+                                <td class="text-center">{{m.population_total | number  | dash}}</td>
+                                <td class="text-center">{{m.population_women | number  | dash}}</td>
+                                <td class="text-center">{{m.village | number  | dash}}</td>
+                                <td class="text-center">{{m.family_total | number  | dash}}</td>
+                                <td class="text-center">{{m.family_poor | number  | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -250,7 +249,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-sm-3">
                             <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
+                                   type="text">
                         </div>
                         <div class="col-sm-3">
                             <label>ອອກໂດຍ</label>
@@ -279,7 +279,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <tbody>
                                     <tr ng-repeat="f in references">
                                         <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                        </td>
                                         <td class="text-center">{{f.issued_no}}</td>
                                         <td class="text-center">{{f.issued_date | date}}</td>
                                         <td class="text-center">{{f.issued_by}}</td>
@@ -289,7 +290,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -306,7 +306,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-
+    app.filter('dash', function() {
+      return function(input) {
+        return input ? input : '-';
+      };
+    });
   app.controller('statLocalAdminController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-local-admin/';
     $scope.mode = 'read';
@@ -424,13 +428,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
+      if (!$scope.issued_no) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນເລກທີ');
         return;
       }
       $scope.issued_date = $('#issued_date').val();
-      if(!$scope.issued_date) {
+      if (!$scope.issued_date) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນວັນທີ');
         return;
@@ -475,8 +479,8 @@ $this->params['breadcrumbs'][] = $this->title;
       });
     };
 
-    $scope.getreferences = function() {
-      if($scope.year) {
+    $scope.getreferences = function () {
+      if ($scope.year) {
         $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
           .then(function (r) {
             if (r.data)
@@ -490,10 +494,10 @@ $this->params['breadcrumbs'][] = $this->title;
       }
     };
 
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
+    $scope.deletefile = function (f) {
+      if ($scope.year && f) {
+        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
+          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
             'id': f.id,
             '_csrf': $('meta[name="csrf-token"]').attr("content")
           }).then(function (r) {

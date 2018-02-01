@@ -175,49 +175,49 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tbody>
                             <tr>
                                 <th>ກະຊວງພາຍໃນ</th>
-                                <td class="text-center">{{sumtotal('total') | number }}</td>
-                                <td class="text-center">{{sumtotal('women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('retire_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('retire_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('bumnet_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('bumnet_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('die_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('die_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('leave_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('leave_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('fire_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('fire_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('resign_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('resign_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('lose_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('lose_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('army_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('army_women') | number }}</td>
-                                <td class="text-center">{{sumcolumn('ministry_total') | number }}</td>
-                                <td class="text-center">{{sumcolumn('ministry_women') | number }}</td>
+                                <td class="text-center">{{sumtotal('total') | number | dash }}</td>
+                                <td class="text-center">{{sumtotal('women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('retire_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('retire_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('bumnet_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('bumnet_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('die_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('die_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('leave_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('leave_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('fire_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('fire_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('resign_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('resign_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('lose_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('lose_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('army_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('army_women') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('ministry_total') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('ministry_women') | number | dash }}</td>
                             </tr>
                             <tr ng-repeat="m in models">
                                 <td>{{m.name}}</td>
-                                <td class="text-center">{{sumrow(m, 'total') | number }}</td>
-                                <td class="text-center">{{sumrow(m, 'women') | number }}</td>
-                                <td class="text-center">{{m.retire_total | number }}</td>
-                                <td class="text-center">{{m.retire_women | number }}</td>
-                                <td class="text-center">{{m.bumnet_total | number }}</td>
-                                <td class="text-center">{{m.bumnet_women | number }}</td>
-                                <td class="text-center">{{m.die_total | number }}</td>
-                                <td class="text-center">{{m.die_women | number }}</td>
-                                <td class="text-center">{{m.leave_total | number }}</td>
-                                <td class="text-center">{{m.leave_women | number }}</td>
-                                <td class="text-center">{{m.fire_total | number }}</td>
-                                <td class="text-center">{{m.fire_women | number }}</td>
-                                <td class="text-center">{{m.resign_total | number }}</td>
-                                <td class="text-center">{{m.resign_women | number }}</td>
-                                <td class="text-center">{{m.lose_total | number }}</td>
-                                <td class="text-center">{{m.lose_women | number }}</td>
-                                <td class="text-center">{{m.army_total | number }}</td>
-                                <td class="text-center">{{m.army_women | number }}</td>
-                                <td class="text-center">{{m.ministry_total | number }}</td>
-                                <td class="text-center">{{m.ministry_women | number }}</td>
+                                <td class="text-center">{{sumrow(m, 'total') | number | dash }}</td>
+                                <td class="text-center">{{sumrow(m, 'women') | number | dash }}</td>
+                                <td class="text-center">{{m.retire_total | number | dash }}</td>
+                                <td class="text-center">{{m.retire_women | number | dash }}</td>
+                                <td class="text-center">{{m.bumnet_total | number | dash }}</td>
+                                <td class="text-center">{{m.bumnet_women | number | dash }}</td>
+                                <td class="text-center">{{m.die_total | number | dash }}</td>
+                                <td class="text-center">{{m.die_women | number | dash }}</td>
+                                <td class="text-center">{{m.leave_total | number | dash }}</td>
+                                <td class="text-center">{{m.leave_women | number | dash }}</td>
+                                <td class="text-center">{{m.fire_total | number | dash }}</td>
+                                <td class="text-center">{{m.fire_women | number | dash }}</td>
+                                <td class="text-center">{{m.resign_total | number | dash }}</td>
+                                <td class="text-center">{{m.resign_women | number | dash }}</td>
+                                <td class="text-center">{{m.lose_total | number | dash }}</td>
+                                <td class="text-center">{{m.lose_women | number | dash }}</td>
+                                <td class="text-center">{{m.army_total | number | dash }}</td>
+                                <td class="text-center">{{m.army_women | number | dash }}</td>
+                                <td class="text-center">{{m.ministry_total | number | dash }}</td>
+                                <td class="text-center">{{m.ministry_women | number | dash }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -284,6 +284,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', []);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statResign', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-resign/';
     $scope.mode = 'read';

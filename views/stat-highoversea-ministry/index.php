@@ -116,29 +116,29 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tbody>
                             <tr>
                                 <th class="text-center" colspan="3">ລວມ</th>
-                                <td class="text-center">{{sumcolumn('gold_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('gold_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('lanx_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('lanx_team') | number }}</td>
-                                <td class="text-center">{{sumcolumn('hono_personal') | number }}</td>
-                                <td class="text-center">{{sumcolumn('hono_team') | number }}</td>
-                                <td class="text-center">{{sumtotal('personal') | number }}</td>
-                                <td class="text-center">{{sumtotal('team') | number }}</td>
+                                <td class="text-center">{{sumcolumn('gold_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('gold_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('lanx_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('lanx_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('hono_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('hono_team') | number | dash }}</td>
+                                <td class="text-center">{{sumtotal('personal') | number | dash }}</td>
+                                <td class="text-center">{{sumtotal('team') | number | dash }}</td>
                                 <td class="text-center"></td>
                             </tr>
                             <tr ng-repeat="model in models">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td class="text-center">{{model.ministry}}</td>
                                 <td class="text-center">{{model.award}}</td>
-                                <td class="text-center">{{model.gold_personal| number }}</td>
-                                <td class="text-center">{{model.gold_team | number }}</td>
-                                <td class="text-center">{{model.lanx_personal| number }}</td>
-                                <td class="text-center">{{model.lanx_team | number }}</td>
-                                <td class="text-center">{{model.hono_personal| number }}</td>
-                                <td class="text-center">{{model.hono_team | number }}</td>
+                                <td class="text-center">{{model.gold_personal| number | dash }}</td>
+                                <td class="text-center">{{model.gold_team | number | dash }}</td>
+                                <td class="text-center">{{model.lanx_personal| number | dash }}</td>
+                                <td class="text-center">{{model.lanx_team | number | dash }}</td>
+                                <td class="text-center">{{model.hono_personal| number | dash }}</td>
+                                <td class="text-center">{{model.hono_team | number | dash }}</td>
 
-                                <td class="text-center">{{sumrow($index, 'personal') | number }}</td>
-                                <td class="text-center">{{sumrow($index, 'team') | number }}</td>
+                                <td class="text-center">{{sumrow($index, 'personal') | number | dash }}</td>
+                                <td class="text-center">{{sumrow($index, 'team') | number | dash }}</td>
 
                                 <td class="text-center">{{model.remark}}</td>
                             </tr>
@@ -210,6 +210,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statHighoverseaMinistry', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-highoversea-ministry/';
     $scope.mode = 'read';

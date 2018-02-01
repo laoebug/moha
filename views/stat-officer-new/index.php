@@ -119,11 +119,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             </tr>
                             <tr>
                                 <th class="text-center">ກະຊວງພາຍໃນ</th>
-                                <th class="text-center">{{sumtotal('total') | number}}</th>
-                                <th class="text-center">{{sumtotal('women') | number}}</th>
+                                <th class="text-center">{{sumtotal('total') | number | dash}}</th>
+                                <th class="text-center">{{sumtotal('women') | number | dash}}</th>
                                 <?php foreach (["new", "ministry", "army", "soe"] as $c): ?>
-                                    <th class="text-center">{{sumcolumn('<?= $c ?>_total') | number}}</th>
-                                    <th class="text-center">{{sumcolumn('<?= $c ?>_women') | number}}</th>
+                                    <th class="text-center">{{sumcolumn('<?= $c ?>_total') | number | dash}}</th>
+                                    <th class="text-center">{{sumcolumn('<?= $c ?>_women') | number | dash}}</th>
                                 <?php endforeach; ?>
                                 <th class="text-center">{{sumcolumn('quota')}}</th>
                                 <th class="text-center">{{sumcolumn('need')}}</th>
@@ -132,8 +132,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td>{{m.name}}</td>
-                                <td class="text-center">{{sumrow(m, 'total') | number}}</td>
-                                <td class="text-center">{{sumrow(m, 'women') | number}}</td>
+                                <td class="text-center">{{sumrow(m, 'total') | number | dash}}</td>
+                                <td class="text-center">{{sumrow(m, 'women') | number | dash}}</td>
                                 <td class="text-center">{{m.new_total}}</td>
                                 <td class="text-center">{{m.new_women}}</td>
                                 <td class="text-center">{{m.ministry_total}}</td>
@@ -215,7 +215,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statOfficerNew', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-new/';
     $scope.mode = 'read';

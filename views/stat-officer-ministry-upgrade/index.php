@@ -241,10 +241,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr ng-repeat="m in models">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td class="text-center">{{m.name}}</td>
-                                <td class="text-center">{{formatNumber(sumtotal(m)) | number}}</td>
-                                <td class="text-center">{{formatNumber(sumwomen(m)) | number}}</td>
+                                <td class="text-center">{{formatNumber(sumtotal(m)) | number | dash}}</td>
+                                <td class="text-center">{{formatNumber(sumwomen(m)) | number | dash}}</td>
                                 <?php foreach ($cols as $col): ?>
-                                    <td class="text-center">{{formatNumber(m.<?= $col ?> )| number}}</td>
+                                    <td class="text-center">{{formatNumber(m.<?= $col ?> )| number | dash}}</td>
                                 <?php endforeach; ?>
                             </tr>
                             </tbody>
@@ -352,6 +352,11 @@ $this->params['breadcrumbs'][] = $this->title;
     text: 'Custom Chart Title'
   };
   var app = angular.module('mohaApp', ['chart.js']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('officerMinistryUpgradeController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-officer-ministry-upgrade/';
     $scope.mode = 'read';

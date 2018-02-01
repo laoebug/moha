@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <tr ng-repeat="m in models">
                                 <td>{{m.year}}</td>
                                 <?php foreach ($columns as $c): ?>
-                                    <td class="text-center">{{m.<?= $c ?> | number}}</td>
+                                    <td class="text-center">{{m.<?= $c ?> | number | dash}}</td>
                                 <?php endforeach; ?>
                             </tr>
                             </tbody>
@@ -157,6 +157,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statPopulationMovementController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-population-movement-chart/';
     $scope.enquiry = function () {
