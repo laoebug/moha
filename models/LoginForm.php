@@ -61,12 +61,13 @@ class LoginForm extends Model
     {
         if ($this->validate()) {
 //            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
-            Yii::$app->response->cookies
-                ->add(new \yii\web\Cookie([
-                'name' => 'username',
-                'value' => $this->username,
-            ]));
-            return Yii::$app->user->login($this->getUser(),0);
+            if ($this->rememberMe)
+                Yii::$app->response->cookies
+                    ->add(new \yii\web\Cookie([
+                        'name' => 'username',
+                        'value' => $this->username,
+                    ]));
+            return Yii::$app->user->login($this->getUser(), 0);
         }
         return false;
     }
