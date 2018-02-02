@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m171019_042001_menu_data extends Migration
 {
-public function safeUp() {
+	public function safeUp() {
 		$sql = "
             set foreign_key_checks=0;
 			DROP TABLE IF EXISTS `menu`;

@@ -11,6 +11,7 @@ function displayTopMenu($menu_parent_id) {
         WHERE a.id=b.menu_id 
         and b.role_id=:role_id 
         and b.accessible=:accessible 
+        and a.deleted=:deleted		
         and a.menu_parent_id=:menu_parent_id ) o1 
         LEFT OUTER JOIN ( 
         SELECT menu_parent_id, COUNT(*) AS count FROM `menu` am,role_has_menu rm 
@@ -23,6 +24,7 @@ function displayTopMenu($menu_parent_id) {
         $params = [
             ':role_id' => $user->role_id,
             ':accessible' => 1,
+        	':deleted'=>0,
             ':menu_parent_id' => $menu_parent_id,
             ':accessible' => 1,
             ':role_id' => $user->role_id

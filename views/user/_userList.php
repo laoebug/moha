@@ -5,7 +5,7 @@
 		<table class="table table-hover table-bordered" id="_user_table">
 			<thead>
 				<tr>
-					<th><?php echo Yii::t("app","No")?></th>
+					<th><?php echo Yii::t("app","No.")?></th>
 					<th><?php echo Yii::t("app","User Name")?></th>
 					<th><?php echo Yii::t("app","First Name")?></th>
 					<th><?php echo Yii::t("app","Last Name")?></th>

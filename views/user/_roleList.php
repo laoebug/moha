@@ -3,7 +3,7 @@
 	<table class="table table-hover table-bordered" id="role_table">
 		<thead>
 			<tr>
-				<th><?php echo Yii::t("app","No")?></th>
+				<th><?php echo Yii::t("app","No.")?></th>
 				<th><?php echo Yii::t("app","Role Name")?></th>
 				<th><?php echo Yii::t("app","Created Date Time")?></th>
 				<th style="text-align:center"><?php echo Yii::t("app","Is Province")?></th>

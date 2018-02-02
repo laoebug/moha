@@ -106,7 +106,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <script type="text/javascript">
 
-var table_branch = $('#_branch_table').DataTable({'paging': false});
+var table_branch = $('#_branch_table').DataTable(		
+		{
+			
+			//"pagingType": "full_numbers",
+			"paging": false,
+			language: {
+				 search: "<?php echo Yii::t("app","Search:");?>",
+				 searchPlaceholder: "<?php echo Yii::t("app","Search Keyword");?>",
+				 "lengthMenu":"<?php echo Yii::t("app","Display"); ?> _MENU_ <?php echo Yii::t("app","records"); ?> <?php echo Yii::t("app","per"); ?> <?php echo Yii::t("app","page"); ?>",
+		         "zeroRecords": "<?php echo Yii::t("app","Sorry , Nothing found"); ?>",
+		         "info":"<?php echo Yii::t("app","Showing");?> _START_ <?php echo Yii::t("app","to");?> _END_ <?php echo Yii::t("app","of");?> _TOTAL_ <?php echo Yii::t("app","entries");?>",
+		         "infoEmpty":"<?php echo Yii::t("app","No records available"); ?>",
+		         "infoFiltered":"<?php echo Yii::t("app","filtered from"); ?> _MAX_ <?php echo Yii::t("app","total records"); ?>",
+		         "paginate": {
+		        	 "first": "<?php echo Yii::t("app","First"); ?> ",
+		        	 "last": "<?php echo Yii::t("app","Last"); ?> ",
+		        	 "previous": "<?php echo Yii::t("app","Previous"); ?> ",
+		             "next": "<?php echo Yii::t("app","Next"); ?> "
+		          }	        			  
+			},
+		}	
+);
 
 $('#_branch_table tbody').on( 'click', 'tr', function () {
 
@@ -123,7 +144,28 @@ $('#_branch_table tbody').on( 'click', 'tr', function () {
 } );
 
 
-var table_user = $('#_user_table').DataTable({'paging': false});
+var table_user = $('#_user_table').DataTable(
+{
+			
+			//"pagingType": "full_numbers",
+			"paging": false,
+			language: {
+				 search: "<?php echo Yii::t("app","Search:");?>",
+				 searchPlaceholder: "<?php echo Yii::t("app","Search Keyword");?>",
+				 "lengthMenu":"<?php echo Yii::t("app","Display"); ?> _MENU_ <?php echo Yii::t("app","records"); ?> <?php echo Yii::t("app","per"); ?> <?php echo Yii::t("app","page"); ?>",
+		         "zeroRecords": "<?php echo Yii::t("app","Sorry , Nothing found"); ?>",
+		         "info":"<?php echo Yii::t("app","Showing");?> _START_ <?php echo Yii::t("app","to");?> _END_ <?php echo Yii::t("app","of");?> _TOTAL_ <?php echo Yii::t("app","entries");?>",
+		         "infoEmpty":"<?php echo Yii::t("app","No records available"); ?>",
+		         "infoFiltered":"<?php echo Yii::t("app","filtered from"); ?> _MAX_ <?php echo Yii::t("app","total records"); ?>",
+		         "paginate": {
+		        	 "first": "<?php echo Yii::t("app","First"); ?> ",
+		        	 "last": "<?php echo Yii::t("app","Last"); ?> ",
+		        	 "previous": "<?php echo Yii::t("app","Previous"); ?> ",
+		             "next": "<?php echo Yii::t("app","Next"); ?> "
+		          }	        			  
+			},
+		}	
+);
 
 $('#_user_table tbody').on( 'click', 'tr', function () {
 
@@ -140,7 +182,28 @@ $('#_user_table tbody').on( 'click', 'tr', function () {
 } );
 
 
-var table_user_province = $('#_province_table').DataTable({'paging': false});
+var table_user_province = $('#_province_table').DataTable(
+{
+			
+			//"pagingType": "full_numbers",
+			"paging": false,
+			language: {
+				 search: "<?php echo Yii::t("app","Search:");?>",
+				 searchPlaceholder: "<?php echo Yii::t("app","Search Keyword");?>",
+				 "lengthMenu":"<?php echo Yii::t("app","Display"); ?> _MENU_ <?php echo Yii::t("app","records"); ?> <?php echo Yii::t("app","per"); ?> <?php echo Yii::t("app","page"); ?>",
+		         "zeroRecords": "<?php echo Yii::t("app","Sorry , Nothing found"); ?>",
+		         "info":"<?php echo Yii::t("app","Showing");?> _START_ <?php echo Yii::t("app","to");?> _END_ <?php echo Yii::t("app","of");?> _TOTAL_ <?php echo Yii::t("app","entries");?>",
+		         "infoEmpty":"<?php echo Yii::t("app","No records available"); ?>",
+		         "infoFiltered":"<?php echo Yii::t("app","filtered from"); ?> _MAX_ <?php echo Yii::t("app","total records"); ?>",
+		         "paginate": {
+		        	 "first": "<?php echo Yii::t("app","First"); ?> ",
+		        	 "last": "<?php echo Yii::t("app","Last"); ?> ",
+		        	 "previous": "<?php echo Yii::t("app","Previous"); ?> ",
+		             "next": "<?php echo Yii::t("app","Next"); ?> "
+		          }	        			  
+			},
+		}	
+);
 
 $('#_province_table tbody').on( 'click', 'tr', function () {
 
