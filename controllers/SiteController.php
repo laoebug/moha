@@ -3,10 +3,13 @@
 namespace app\controllers;
 
 use app\models\LoginForm;
+use app\models\Notice;
+use app\models\NoticeSearch;
 use app\models\User;
 use Yii;
 use yii\db\Exception;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class SiteController extends Controller
@@ -38,8 +41,24 @@ class SiteController extends Controller
     {
         if (Yii::$app->user->isGuest)
             return $this->redirect(["site/login"]);
-        else
-            return $this->render('index');
+        else {
+            $notices = Notice::find()->where(['show' => 1])
+                ->orderBy('position, created_date desc')
+                ->asArray()
+                ->all();
+            if(!Yii::$app->session->has('notices') || count(Yii::$app->session->get('notices', [])) != count($notices)) {
+                Yii::$app->session->set('notices', $notices);
+                exit;
+            }
+
+            $searchModel = new NoticeSearch();
+            $searchModel->show = 1;
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -111,6 +130,15 @@ class SiteController extends Controller
     public function actionProfile() {
         $model = User::findOne(Yii::$app->user->id);
         return $this->render('profile', [
+            'model' => $model
+        ]);
+    }
+
+    public function actionNotice($id) {
+        $model = Notice::findOne($id);
+        if(!isset($model))
+            throw new NotFoundHttpException('ບໍ່ພົບຂໍ້ມູນ');
+        return $this->render('notice', [
             'model' => $model
         ]);
     }

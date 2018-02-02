@@ -118,42 +118,27 @@ use app\components\TopMenuWidget;
                             <i class="fa fa-bell-o fa-lg"></i> ແຈ້ງການ
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="not-head">You have 4 new notifications.</li>
-                            <li><a class="media" href="javascript:;"><span class="media-left media-icon"><span
-                                                class="fa-stack fa-lg"><i
-                                                    class="fa fa-circle fa-stack-2x text-primary"></i><i
-                                                    class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></span>
-                                    <div class="media-body"><span class="block">Lisa sent you a mail</span><span
-                                                class="text-muted block">2min ago</span></div>
-                                </a></li>
-                            <li>
-                                <a class="media" href="javascript:;">
-                                    <span class="media-left media-icon">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x text-danger"></i>
-                                            <i class="fa fa-hdd-o fa-stack-1x fa-inverse"></i>
+                            <li class="not-head">ແຈ້ງການທັງໝົດ <?= count(Yii::$app->session->get('notices', [])) ?></li>
+                            <?php
+                            foreach (Yii::$app->session->get('notices', []) as $notice):
+                                ?>
+                                <li>
+                                    <a class="media" href="index.php?r=site/notice&id=<?= $notice['id'] ?>">
+                                        <span class="media-left media-icon">
+                                            <span class="fa-stack fa-lg"><i
+                                                        class="fa fa-circle fa-stack-2x text-primary"></i><i
+                                                        class="fa fa-newspaper-o fa-stack-1x fa-inverse"></i>
+                                            </span>
                                         </span>
-                                    </span>
-                                    <div class="media-body">
-                                        <span class="block">Server Not Working</span>
-                                        <span class="text-muted block">2min ago</span></div>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="media" href="javascript:;">
-                                    <span class="media-left media-icon">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x text-success"></i>
-                                            <i class="fa fa-money fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </span>
-                                    <div class="media-body">
-                                        <span class="block">Transaction xyz complete</span>
-                                        <span class="text-muted block">2min ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="not-footer"><a href="#">See all notifications.</a></li>
+                                        <div class="media-body">
+                                            <span class="block"><?= $notice['title'] ?></span>
+                                            <span class="text-muted block"><?= $notice['created_date'] ?></span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <?php
+                            endforeach;
+                            ?>
                         </ul>
                     </li>
                     <li class="dropdown notification-menu">
@@ -169,8 +154,10 @@ use app\components\TopMenuWidget;
                             <?= Yii::$app->user->identity->username ?>
                         </a>
                         <ul class="dropdown-menu settings-menu">
-                            <li><a href="index.php?r=site/changepassword"><i class="fa fa-cog fa-lg"></i> ປ່ຽນລະຫັດຜ່ານ</a></li>
-                            <li><a href="index.php?r=site/profile"><i class="fa fa-user fa-lg"></i> ຂໍ້ມູນຜູ້ໃຊ້</a></li>
+                            <li><a href="index.php?r=site/changepassword"><i class="fa fa-cog fa-lg"></i> ປ່ຽນລະຫັດຜ່ານ</a>
+                            </li>
+                            <li><a href="index.php?r=site/profile"><i class="fa fa-user fa-lg"></i> ຂໍ້ມູນຜູ້ໃຊ້</a>
+                            </li>
                             <li><a href="index.php?r=site/logout"><i class="fa fa-sign-out fa-lg"></i> ອອກຈາກລະບົບ</a>
                             </li>
                         </ul>
@@ -205,13 +192,12 @@ use app\components\TopMenuWidget;
     </div>
 </div>
 
-<section class="material-half-bg" style="padding-top: 94vh;">
-    <div class="cover" style="vertical-align: middle">
-        <h6 style="color: #ffffff;padding-top: 10px;text-align: center">
-            ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
-        </h6>
-    </div>
-</section>
+<div style="position: fixed;bottom: 0;background-color: #009688;width: 100%">
+    <p style="padding-top: 5px;color: #ffffff;margin-bottom: 2px;" class="text-center">
+        ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
+    </p>
+</div>
+
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/plugins/pace.min.js"></script>
