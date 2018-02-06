@@ -8,7 +8,7 @@
 					<input type="checkbox" name="check-all-branch" id="check-all-branch" value="">
 					<?php echo Yii::t("app","Select All"); ?>
 					</th>
-					<th><?php echo Yii::t("app","No")?></th>
+					<th><?php echo Yii::t("app","No.")?></th>
 					<th><?php echo Yii::t("app","Department List")?></th>
 					
 				</tr>

@@ -8,7 +8,7 @@
 					<input type="checkbox" name="check-all-province" id="check-all-province" value="">
 					<?php echo Yii::t("app","Select All"); ?>
 					</th>
-					<th><?php echo Yii::t("app","No")?></th>
+					<th><?php echo Yii::t("app","No.")?></th>
 					<th><?php echo Yii::t("app","Province")?></th>
 					
 				</tr>

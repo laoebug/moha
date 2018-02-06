@@ -55,10 +55,10 @@ class Role extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
+            'name' => Yii::t('app', 'Role Name'),
             'deleted' => Yii::t('app', 'Deleted'),
             'user_id' => Yii::t('app', 'User ID'),
-            'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
+            'input_dt_stamp' => Yii::t('app', 'Input Date Time Stamp'),
             'is_province' => Yii::t('app', 'Is Province Role'),
         ];
     }

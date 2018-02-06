@@ -61,7 +61,24 @@ $this->params['breadcrumbs'][] = $this->title;
 <script type="text/javascript">
 
 var table = $('#role_table').DataTable(
-				
+	{
+		"pagingType": "full_numbers",
+		language: {
+			 search: "<?php echo Yii::t("app","Search:");?>",
+			 searchPlaceholder: "<?php echo Yii::t("app","Search Keyword");?>",
+			 "lengthMenu":"<?php echo Yii::t("app","Display"); ?> _MENU_ <?php echo Yii::t("app","records"); ?> <?php echo Yii::t("app","per"); ?> <?php echo Yii::t("app","page"); ?>",
+	         "zeroRecords": "<?php echo Yii::t("app","Sorry , Nothing found"); ?>",
+	         "info":"<?php echo Yii::t("app","Showing");?> _START_ <?php echo Yii::t("app","to");?> _END_ <?php echo Yii::t("app","of");?> _TOTAL_ <?php echo Yii::t("app","entries");?>",
+	         "infoEmpty":"<?php echo Yii::t("app","No records available"); ?>",
+	         "infoFiltered":"<?php echo Yii::t("app","filtered from"); ?> _MAX_ <?php echo Yii::t("app","total records"); ?>",
+	         "paginate": {
+	        	 "first": "<?php echo Yii::t("app","First"); ?> ",
+	        	 "last": "<?php echo Yii::t("app","Last"); ?> ",
+	        	 "previous": "<?php echo Yii::t("app","Previous"); ?> ",
+	             "next": "<?php echo Yii::t("app","Next"); ?> "
+	          }	        			  
+		},
+	}				
 );
 
 $('#role_table tbody').on( 'click', 'tr', function () {

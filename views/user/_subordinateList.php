@@ -8,8 +8,8 @@
 					<input type="checkbox" name="check-all-user" id="check-all-user" value="">
 					<?php echo Yii::t("app","Select All"); ?>
 					</th>
-					<th><?php echo Yii::t("app","No")?></th>
-					<th><?php echo Yii::t("app","User Name ")?></th>
+					<th><?php echo Yii::t("app","No.")?></th>
+					<th><?php echo Yii::t("app","User Name")?></th>
 					
 				</tr>
 			</thead>
