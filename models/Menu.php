@@ -130,7 +130,7 @@ class Menu extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
+            'name' => 'ຊື່',
             'url' => Yii::t('app', 'Url'),
             'icon' => Yii::t('app', 'Icon'),
             'description' => Yii::t('app', 'Description'),

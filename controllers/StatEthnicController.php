@@ -63,6 +63,8 @@ class StatEthnicController extends Controller
         $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->all();
         $ethnics = Ethnic::find()->where(['deleted' => 0])->orderBy('position')->all();
         $models = StatEthnicDetail::find()->alias('d')
+            ->select("ifnull(d.total, '-') total")
+            ->addSelect("ifnull(d.women, '-') women")
             ->join('join', 'stat_ethnic e', 'e.id = d.stat_ethnic_id and e.phiscal_year_id=:year', [':year'=> $year->id])
             ->all();
 

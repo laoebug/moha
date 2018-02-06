@@ -12,7 +12,11 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <div class="col-xs-12">
         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+
+        <?= $form->field($model, 'content')->widget(\dosamigos\ckeditor\CKEditor::className(), [
+            'options' => ['rows' => 6],
+            'preset' => 'full'
+        ]) ?>
     </div>
     <div class="col-xs-3">
         <label>ເລີ່ມວັນທີ</label>
