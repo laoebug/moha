@@ -11,29 +11,11 @@ $this->params['breadcrumbs'][] = ['label' => 'ແຈ້ງການ', 'url' => [
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'created_date',
-            'title',
-            'content:ntext',
-            'start_date',
-            'end_date',
-            [
-                'attribute' => 'show',
-                'value' => function ($data) {
-                    return Yii::$app->params['YESNO'][$data->show];
-                }
-            ],
-            [
-                'attribute' => 'user_id',
-                'value' => function ($data) {
-                    return $data->user->username;
-                }
-            ],
-            'position',
-        ],
-    ]) ?>
-
+    <h4><?= Html::encode($this->title) ?></h4>
+    <p class="pull-right">
+        <span class="badge badge-primary"><?= \app\components\MyHelper::converttimefordisplay($model->created_date) ?></span></p>
+    <hr>
+    <div>
+        <?= $model->content ?>
+    </div>
 </div>

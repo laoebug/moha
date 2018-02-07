@@ -13,7 +13,6 @@ class m180202_144627_notification extends Migration
     public function safeUp()
     {
         $sql = "
-
 CREATE TABLE IF NOT EXISTS `moha`.`notice` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `created_date` DATETIME NOT NULL,

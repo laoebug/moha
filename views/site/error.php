@@ -11,13 +11,16 @@ $this->title = $name;
 ?>
 
 <div class="page-error">
-    <h1><i class="fa fa-exclamation-circle"></i> <?= Html::encode($this->title) ?></h1>
-    <div class="alert alert-danger">
+    <h1>
+        <i class="fa fa-exclamation-circle"></i>
         <?= nl2br(Html::encode($message)) ?>
+    </h1>
+    <div class="alert alert-danger">
+        <?= Html::encode($this->title) ?>
     </div>
     <p>
         <a href="javascript:window.history.back();" class="btn btn-default">
-            <i class="fa fa-arrow-left"></i> <?= Yii::t('app', 'Go Back') ?>
+            <i class="fa fa-arrow-left"></i> ກັບຄືນ
         </a>
     </p>
 </div>

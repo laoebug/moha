@@ -136,8 +136,9 @@ class SiteController extends Controller
 
     public function actionNotice($id) {
         $model = Notice::findOne($id);
-        if(!isset($model))
+        if(!isset($model) || $model->show != 1)
             throw new NotFoundHttpException('ບໍ່ພົບຂໍ້ມູນ');
+
         return $this->render('notice', [
             'model' => $model
         ]);

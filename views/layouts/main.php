@@ -118,16 +118,16 @@ use app\components\TopMenuWidget;
                             <i class="fa fa-bell-o fa-lg"></i> ແຈ້ງການ
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="not-head">ແຈ້ງການທັງໝົດ <?= count(Yii::$app->session->get('notices', [])) ?></li>
                             <?php
-                            foreach (Yii::$app->session->get('notices', []) as $notice):
+                            foreach (Yii::$app->session->get('notices', []) as $i => $notice):
+                                if ($i > 5) break;
                                 ?>
                                 <li>
                                     <a class="media" href="index.php?r=site/notice&id=<?= $notice['id'] ?>">
                                         <span class="media-left media-icon">
-                                            <span class="fa-stack fa-lg"><i
-                                                        class="fa fa-circle fa-stack-2x text-primary"></i><i
-                                                        class="fa fa-newspaper-o fa-stack-1x fa-inverse"></i>
+                                            <span class="fa-stack fa-lg">
+                                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                                <i class="fa fa-newspaper-o fa-stack-1x fa-inverse"></i>
                                             </span>
                                         </span>
                                         <div class="media-body">
@@ -139,6 +139,11 @@ use app\components\TopMenuWidget;
                                 <?php
                             endforeach;
                             ?>
+                            <li class="not-head">
+                                <a href="index.php?r=notice/index">
+                                    ແຈ້ງການທັງໝົດ
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="dropdown notification-menu">
@@ -175,6 +180,10 @@ use app\components\TopMenuWidget;
             <div>
                 <?=
                 \yii\widgets\Breadcrumbs::widget([
+                    'homeLink' => [
+                        'label' => 'ໜ້າຫຼັກ',
+                        'url' => ['site/index'],
+                    ],
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ])
                 ?>

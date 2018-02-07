@@ -18,6 +18,10 @@ use yii\grid\GridView;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
+                'filterInputOptions' => [
+                    'placeholder' => 'ຊອກຫາຕາມ ຊື່ສະຖິຕິ',
+                    'class' => 'form-control datepicker',
+                ],
                 'attribute' => 'name',
                 'format' => 'html',
                 'value' => function ($data) {

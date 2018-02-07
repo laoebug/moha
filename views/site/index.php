@@ -11,7 +11,8 @@ $this->params['breadcrumbs'] = null;
             <div class="col-xs-10 col-xs-offset-1 card">
                 <h3 class="text-center">
                     <i class="fa fa-newspaper-o"></i>
-                    ແຈ້ງການ</h3>
+                    ແຈ້ງການ
+                </h3>
                 <hr>
                 <?= \yii\grid\GridView::widget([
                     'emptyText' => '',
@@ -20,13 +21,20 @@ $this->params['breadcrumbs'] = null;
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                        [
+                            'class' => 'yii\grid\SerialColumn',
+                            'options' => [
+                                'style' => [
+                                    'width' => '5%'
+                                ]
+                            ],
+                        ],
                         [
                             'attribute' => 'created_date',
                             'label' => 'ວັນທີ',
                             'options' => [
                                 'style' => [
-                                    'width' => '30%'
+                                    'width' => '20%'
                                 ]
                             ],
                             'filterInputOptions' => [
@@ -44,6 +52,10 @@ $this->params['breadcrumbs'] = null;
                                 'placeholder' => 'ຊອກຫາຕາມ ຫົວຂໍ້',
                                 'class' => 'form-control'
                             ],
+                            'format' => 'html',
+                            'value' => function ($data) {
+                                return '<a href="index.php?r=site/notice&id=' . $data->id . '">' . $data->title . '</a>';
+                            }
                         ],
                         [
                             'attribute' => 'id',
