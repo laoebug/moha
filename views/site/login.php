@@ -10,8 +10,8 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row text-center">
-    <img src="images/Emblem_of_Laos.svg" style="width: 20%"/>
+<div class="row text-center" style="margin-top: 20px;">
+    <img src="images/logo.png" style="width: 20%"/>
 </div>
 <h3 class="login-head text-center">
     ລະບົບບັນທຶກຂໍ້ມູນ ກະຊວງພາຍໃນ
