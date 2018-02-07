@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
 $this->title = "ສະຖິຕິລັດຖະກອນທີ່ເພີ່ມເຂົ້າ ແລະ ອອກໃນທຸກຮູບການທົ່ວແຂວງ ແລະ ນະຄອນຫຼວງວຽງຈັນ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>

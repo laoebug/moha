@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatVictoryoverseaProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
 $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບຍ້ອງຍໍຕ່າງປະເທດຂອງບັນດາແຂວງ, ນະຄອຍຫຼວງ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>

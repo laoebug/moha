@@ -64,7 +64,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'firstname', 'lastname', 'tel', 'role_id', 'status'], 'required'],
+            [['username', 'password', 'firstname', 'lastname', 'tel', 'role_id', 'status'], 'required','message'=>'Please enter a value for {attribute}'],
             [['deleted', 'role_id', 'user_id'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['username', 'tel'], 'string', 'max' => 50],

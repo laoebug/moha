@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatOfficerNeedSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
 $this->title = "ແຜນຄວາມຕ້ອງການລັດຖະກອນໃໝ່";
 $this->params['breadcrumbs'][] = $this->title;
 ?>

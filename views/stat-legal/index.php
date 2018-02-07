@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\GovermentlevelSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມພັດທະນາ ແລະ ການບໍລິຫານລັດ'), 'url' => ['index']];
 $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜງພາຍໃນທີ່ກຳລັງປັບປຸງ ແລະ ຮ່າງຂຶ້ນໃໝ່";
 $this->params['breadcrumbs'][] = $this->title;
 ?>

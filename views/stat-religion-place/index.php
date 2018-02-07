@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatReligionPlaceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມວຽກງານຊົນເຜົ່າ ແລະ ສາສະໜາ'), 'url' => ['index']];
 $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ່ວປະເທດ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>

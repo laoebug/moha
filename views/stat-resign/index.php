@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatResignSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຈັດຕັ້ງ ແລະ ພະນັກງານ'), 'url' => ['index']];
 $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນຮູບການຕ່າງໆ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
