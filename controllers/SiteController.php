@@ -48,7 +48,6 @@ class SiteController extends Controller
                 ->all();
             if(!Yii::$app->session->has('notices') || count(Yii::$app->session->get('notices', [])) != count($notices)) {
                 Yii::$app->session->set('notices', $notices);
-                exit;
             }
 
             $searchModel = new NoticeSearch();

@@ -7,7 +7,7 @@
  */
 
 use yii\grid\GridView;
-
+$this->title = 'ລາຍງານ';
 ?>
 <div class="card">
     <h3 class="">ຊອກຫາຂໍ້ມູນສະຖິຕິ</h3>

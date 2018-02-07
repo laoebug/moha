@@ -26,7 +26,7 @@ use app\components\TopMenuWidget;
     <link rel="stylesheet" href="css/datetimepicker.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <title><?= \yii\helpers\Html::encode($this->title) ?></title>
+    <title>ກະຊວງພາຍໃນ - <?= \yii\helpers\Html::encode($this->title) ?></title>
     <style type="text/css">
         .table-responsive {
             max-height: 800px;

@@ -7,7 +7,7 @@
 
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+$this->title = 'ເຂົ້າສູ່ລະບົບ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row text-center" style="margin-top: 20px;">

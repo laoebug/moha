@@ -22,19 +22,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'summary' => false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'attribute' => 'title',
                 'label' => 'ຫົວຂໍ້'
             ],
-            [
-                'attribute' => 'content',
-                'label' => 'ເນື້ອໃນ'
-            ],
+//            [
+//                'attribute' => 'content',
+//                'label' => 'ເນື້ອໃນ'
+//            ],
             [
                 'attribute' => 'start_date',
-                'label' => 'ຈາກວັນທີ'
+                'label' => 'ສະແດງຈາກວັນທີ'
             ],
             [
                 'attribute' => 'end_date',
@@ -47,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Yii::$app->params['YESNO'][$data->show];
                 }
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            Yii::$app->params['action'],
         ],
     ]); ?>
 </div>
