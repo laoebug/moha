@@ -35,6 +35,7 @@ class Menu extends \yii\db\ActiveRecord
     public $menu_id;
     public $role_id;
     public $has_province;
+    public $department_link;
     /**
      * @inheritdoc
      */
