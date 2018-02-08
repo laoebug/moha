@@ -43,15 +43,20 @@ function displayTopMenu($menu_parent_id) {
                 }else{
                 	$caret = ' ';
                 }
-                $c = $menu_parent_id == 0 ? '' : 'dropdown-submenu';
-//                 if($menu_parent_id != 0){
-//                 	$c='';
-//                 }else{
-//                 	$c='dropdown-submenu';
-//                 }
-                
-                $li .= '<li class="'.$c.'"><a href="'.$menu->department_link. '" class="dropdown-toggle" data-toggle="dropdown">'.$menu->name.$caret.'</a>
+                //$c = $menu_parent_id == 0 ? '' : 'dropdown-submenu';
+                if($menu_parent_id== 0){
+                	$c='';
+                	$li .= '<li class="'.$c.'"><a href="#" class="dropdown-toggle" data-toggle="dropdown">'.$menu->name.$caret.'</a>
                             <ul class="dropdown-menu">'.displayTopMenu($menu['id']).'</ul>';
+                }else{
+                	$c='dropdown-submenu';
+                	$li .= '<li class="'.$c.'"><a href="'.$menu->department_link. '" class="dropdown-toggle" >'.$menu->name.$caret.'</a>
+                            <ul class="dropdown-menu">'.displayTopMenu($menu['id']).'</ul>';
+                }
+                
+//                $li .= '<li class="'.$c.'"><a href="'.$menu->department_link. '" class="dropdown-toggle" >'.$menu->name.$caret.'</a>
+//                             <ul class="dropdown-menu">'.displayTopMenu($menu['id']).'</ul>';
+                
             }
             $li .= '</li>';
         }
