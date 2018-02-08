@@ -7,7 +7,7 @@ function displayTopMenu($menu_parent_id) {
 	$li = '';
     $user = User::findOne(Yii::$app->user->id);
     try {
-        $sql = "select o1.*,ifnull(child_count.count,0) as child_count from (SELECT a.*,CONCAT('?r=department/view&id=' , id) as department_link  FROM menu a ,  role_has_menu b
+        $sql = "select o1.*,ifnull(child_count.count,0) as child_count from (SELECT a.*,CONCAT('?r=department/view&id=', id) as department_link  FROM menu a ,  role_has_menu b
         WHERE a.id=b.menu_id 
         and b.role_id=:role_id 
         and b.accessible=:accessible 
@@ -29,7 +29,7 @@ function displayTopMenu($menu_parent_id) {
             ':accessible' => 1,
             ':role_id' => $user->role_id
         ];
-       // echo $sql;exit;
+
         $authorizeMenus = Menu::findBySql($sql, $params)->all();
         $li = '';
         foreach ($authorizeMenus as $menu) {
