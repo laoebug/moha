@@ -7,7 +7,7 @@ function displayTopMenu($menu_parent_id) {
 	$li = '';
     $user = User::findOne(Yii::$app->user->id);
     try {
-        $sql = "select o1.*,ifnull(child_count.count,0) as child_count from (SELECT a.* FROM menu a ,  role_has_menu b
+        $sql = "select o1.*,ifnull(child_count.count,0) as child_count from (SELECT a.*,CONCAT('?r=department/view&id=', id) as department_link  FROM menu a ,  role_has_menu b
         WHERE a.id=b.menu_id 
         and b.role_id=:role_id 
         and b.accessible=:accessible 
@@ -20,7 +20,7 @@ function displayTopMenu($menu_parent_id) {
         and rm.role_id=:role_id 
         GROUP BY menu_parent_id ) child_count
         ON o1.id = child_count.menu_parent_id order by o1.position ASC";
-
+		
         $params = [
             ':role_id' => $user->role_id,
             ':accessible' => 1,
@@ -29,6 +29,7 @@ function displayTopMenu($menu_parent_id) {
             ':accessible' => 1,
             ':role_id' => $user->role_id
         ];
+
         $authorizeMenus = Menu::findBySql($sql, $params)->all();
         $li = '';
         foreach ($authorizeMenus as $menu) {
@@ -37,9 +38,25 @@ function displayTopMenu($menu_parent_id) {
                 $li .= '<li><a href="index.php?r='.$url.'">' . $menu->name . '</a>';
             } else {
                 $caret = $menu_parent_id == 0?'<b class="caret"></b>' : '';
-                $c = $menu_parent_id == 0 ? '' : 'dropdown-submenu';
-                $li .= '<li class="'.$c.'"><a href="#" class="dropdown-toggle" data-toggle="dropdown">'.$menu->name.$caret.'</a>
+                if($menu_parent_id == 0){
+                	$caret = '<b class="caret"></b>';
+                }else{
+                	$caret = ' ';
+                }
+                //$c = $menu_parent_id == 0 ? '' : 'dropdown-submenu';
+                if($menu_parent_id== 0){
+                	$c='';
+                	$li .= '<li class="'.$c.'"><a href="#" class="dropdown-toggle" data-toggle="dropdown">'.$menu->name.$caret.'</a>
                             <ul class="dropdown-menu">'.displayTopMenu($menu['id']).'</ul>';
+                }else{
+                	$c='dropdown-submenu';
+                	$li .= '<li class="'.$c.'"><a href="'.$menu->department_link. '" class="dropdown-toggle" >'.$menu->name.$caret.'</a>
+                            <ul class="dropdown-menu">'.displayTopMenu($menu['id']).'</ul>';
+                }
+                
+//                $li .= '<li class="'.$c.'"><a href="'.$menu->department_link. '" class="dropdown-toggle" >'.$menu->name.$caret.'</a>
+//                             <ul class="dropdown-menu">'.displayTopMenu($menu['id']).'</ul>';
+                
             }
             $li .= '</li>';
         }

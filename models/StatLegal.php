@@ -33,7 +33,7 @@ class StatLegal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['last_update', 'phiscal_year_id'], 'required'],
+            [['last_update', 'phiscal_year_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['last_update'], 'safe'],
             [['user_id', 'phiscal_year_id', 'saved'], 'integer'],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],

@@ -59,7 +59,7 @@ class StatVictoryoverseaProvinceDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_victoryoversea_province_id', 'province_id', 'award_id'], 'required'],
+            [['stat_victoryoversea_province_id', 'province_id', 'award_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_victoryoversea_province_id', 'province_id', 'award_id', 'free1_personal', 'free1_team', 'free2_personal', 'free2_team', 'free3_personal', 'free3_team', 'revo1_personal', 'revo1_team', 'revo2_personal', 'revo2_team', 'revo3_personal', 'revo3_team', 'labo1_personal', 'labo1_team', 'labo2_personal', 'labo2_team', 'labo3_personal', 'labo3_team', 'deve1_personal', 'deve1_team', 'deve2_personal', 'deve2_team', 'deve3_personal', 'deve3_team', 'frien_personal', 'frien_team'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],

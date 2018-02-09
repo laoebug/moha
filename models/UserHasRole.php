@@ -30,7 +30,7 @@ class UserHasRole extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'role_id', 'set_date'], 'required'],
+            [['user_id', 'role_id', 'set_date'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['user_id', 'role_id'], 'integer'],
             [['set_date'], 'safe'],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],

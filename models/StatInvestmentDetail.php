@@ -35,7 +35,7 @@ class StatInvestmentDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_investment_id', 'place', 'description', 'project_id'], 'required'],
+            [['stat_investment_id', 'place', 'description', 'project_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_investment_id', 'project_id', 'deleted'], 'integer'],
             [['description'], 'string'],
             [['place', 'implement', 'remark'], 'string', 'max' => 255],

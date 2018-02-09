@@ -33,7 +33,7 @@ class StatCopyDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_copy_id', 'activity'], 'required'],
+            [['stat_copy_id', 'activity'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_copy_id', 'start_year', 'end_year'], 'integer'],
             [['activity', 'summary', 'remark'], 'string', 'max' => 255],
             [['stat_copy_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatCopy::className(), 'targetAttribute' => ['stat_copy_id' => 'id']],

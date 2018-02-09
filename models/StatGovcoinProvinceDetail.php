@@ -46,7 +46,7 @@ class StatGovcoinProvinceDetail extends \yii\db\ActiveRecord
     {
         return [
             [['labo_personal', 'labo_team', 'deve_personal', 'deve_team', 'memo_personal', 'memo_team', 'amer_personal', 'amer_team', 'fran_personal', 'fran_team', 'gove_personal', 'gove_team', 'award_id', 'province_id', 'stat_govcoin_province_id'], 'integer'],
-            [['award_id', 'province_id', 'stat_govcoin_province_id'], 'required'],
+            [['award_id', 'province_id', 'stat_govcoin_province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],

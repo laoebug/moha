@@ -40,7 +40,7 @@ class OfficerLevel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'deleted', 'last_update', 'user_id'], 'required'],
+            [['name', 'deleted', 'last_update', 'user_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted', 'position', 'user_id'], 'integer'],
             [['last_update'], 'safe'],
             [['name'], 'string', 'max' => 255],

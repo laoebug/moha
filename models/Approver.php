@@ -37,7 +37,7 @@ class Approver extends \yii\db\ActiveRecord
     {
         return [
             [['deleted', 'ministry_id', 'province_id', 'approver_level_id'], 'integer'],
-            [['approver_level_id'], 'required'],
+            [['approver_level_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['approver_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => ApproverLevel::className(), 'targetAttribute' => ['approver_level_id' => 'id']],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],

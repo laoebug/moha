@@ -39,7 +39,7 @@ class Role extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted', 'user_id', 'is_province'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['name'], 'string', 'max' => 45],

@@ -47,7 +47,7 @@ class StatPositionDetail extends \yii\db\ActiveRecord
     {
         return [
             [['position1_total', 'position1_women', 'position2_total', 'position2_women', 'position3_total', 'position3_women', 'position4_total', 'position4_women', 'position5_total', 'position5_women', 'position6_total', 'position6_women', 'position7_total', 'position7_women', 'position8_total', 'position8_women', 'officer_level_id', 'stat_position_id'], 'integer'],
-            [['officer_level_id', 'stat_position_id'], 'required'],
+            [['officer_level_id', 'stat_position_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
             [['stat_position_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatPosition::className(), 'targetAttribute' => ['stat_position_id' => 'id']],
         ];

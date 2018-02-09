@@ -36,7 +36,7 @@ class StatInstituteTrainDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_institute_train_id'], 'required'],
+            [['stat_institute_train_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_institute_train_id', 'total', 'women', 'times'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['title', 'cooperator', 'place'], 'string', 'max' => 255],

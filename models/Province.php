@@ -56,7 +56,7 @@ class Province extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['province_code', 'province_name'], 'required'],
+            [['province_code', 'province_name'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['input_id', 'deleted', 'position'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['province_code'], 'string', 'max' => 20],

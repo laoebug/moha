@@ -34,7 +34,7 @@ class StatOfficerDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_id'], 'required'],
+            [['stat_officer_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_id', 'center_total', 'province_total', 'district_total', 'center_women', 'province_women', 'district_women'], 'integer'],
             [['stat_officer_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficer::className(), 'targetAttribute' => ['stat_officer_id' => 'id']],
         ];

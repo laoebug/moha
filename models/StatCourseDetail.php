@@ -32,7 +32,7 @@ class StatCourseDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_course_id', 'deleted'], 'required'],
+            [['stat_course_id', 'deleted'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_course_id', 'deleted', 'parent_id', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['stat_course_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatCourse::className(), 'targetAttribute' => ['stat_course_id' => 'id']],

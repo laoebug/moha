@@ -29,7 +29,7 @@ class UserHasProvince extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'province_id'], 'required'],
+            [['user_id', 'province_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['user_id', 'province_id'], 'integer'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

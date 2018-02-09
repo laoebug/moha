@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatMapServiceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຜນທີ່ແຫ່ງຊາດ'), 'url' => ['index']];
 $this->title = "ສະຖິຕິການບໍລິການແຜນທີ່ມາດຕາສ່ວນ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>

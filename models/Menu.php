@@ -35,6 +35,7 @@ class Menu extends \yii\db\ActiveRecord
     public $menu_id;
     public $role_id;
     public $has_province;
+    public $department_link;
     /**
      * @inheritdoc
      */
@@ -55,8 +56,10 @@ class Menu extends \yii\db\ActiveRecord
                     'url',
                     'menugroup_id'
                 ],
-                'required'
-            ],
+                'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')
+            		
+       		 ],
+            
             [
                 [
                     'deleted',

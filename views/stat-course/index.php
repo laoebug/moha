@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ສະຖາບັນຄົ້ນຄວ້າວິທະຍາສາດການປົກຄອງ ແລະ ຝຶກອົບຮົມ'), 'url' => ['index']];
 $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະນາຫຼັກສູດຝຶກອົບຮົມລັດຖະກອນ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>

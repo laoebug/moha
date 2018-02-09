@@ -39,7 +39,7 @@ class StatOfficerOrgTrainDetail extends \yii\db\ActiveRecord
     {
         return [
             [['tech_in_total', 'tech_in_women', 'tech_out_total', 'tech_out_women', 'theo_in_total', 'theo_in_women', 'theo_out_total', 'theo_out_women', 'stat_officer_org_train_id', 'organisation_id'], 'integer'],
-            [['stat_officer_org_train_id', 'organisation_id'], 'required'],
+            [['stat_officer_org_train_id', 'organisation_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['organisation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['organisation_id' => 'id']],
             [['stat_officer_org_train_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerOrgTrain::className(), 'targetAttribute' => ['stat_officer_org_train_id' => 'id']],
         ];

@@ -35,7 +35,7 @@ class StatEthnicDetail extends \yii\db\ActiveRecord
     {
         return [
             [['total', 'ethnic_id', 'stat_ethnic_id', 'women', 'province_id'], 'integer'],
-            [['ethnic_id', 'stat_ethnic_id', 'province_id'], 'required'],
+            [['ethnic_id', 'stat_ethnic_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['ethnic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ethnic::className(), 'targetAttribute' => ['ethnic_id' => 'id']],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_ethnic_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatEthnic::className(), 'targetAttribute' => ['stat_ethnic_id' => 'id']],

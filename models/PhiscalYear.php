@@ -90,7 +90,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['year', 'start_date', 'end_date'], 'required'],
+            [['year', 'start_date', 'end_date'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['start_date', 'end_date'], 'safe'],
             [['deleted'], 'integer'],
             [['year'], 'string', 'max' => 255],

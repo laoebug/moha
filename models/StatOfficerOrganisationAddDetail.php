@@ -33,7 +33,7 @@ class StatOfficerOrganisationAddDetail extends \yii\db\ActiveRecord
     {
         return [
             [['add', 'resign', 'stat_officer_organisation_add_id', 'organisation_id'], 'integer'],
-            [['stat_officer_organisation_add_id', 'organisation_id'], 'required'],
+            [['stat_officer_organisation_add_id', 'organisation_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['organisation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['organisation_id' => 'id']],
             [['stat_officer_organisation_add_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerOrganisationAdd::className(), 'targetAttribute' => ['stat_officer_organisation_add_id' => 'id']],
         ];

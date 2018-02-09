@@ -35,7 +35,7 @@ class StatExploreDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['province_id', 'stat_explore_id'], 'required'],
+            [['province_id', 'stat_explore_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['province_id', 'stat_explore_id', 'mark', 'point', 'hm', 'km'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],

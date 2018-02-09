@@ -43,7 +43,7 @@ class Branch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'user_id', 'ministry_id'], 'required'],
+            [['name', 'user_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['address', 'remark'], 'string'],
             [['deleted', 'position', 'user_id', 'ministry_id'], 'integer'],
             [['last_update'], 'safe'],

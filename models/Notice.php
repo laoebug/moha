@@ -36,7 +36,7 @@ class Notice extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_date', 'title', 'start_date', 'end_date', 'user_id'], 'required'],
+            [['created_date', 'title', 'start_date', 'end_date', 'user_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['created_date', 'start_date', 'end_date'], 'safe'],
             [['content'], 'string'],
             [['show', 'user_id', 'position'], 'integer'],

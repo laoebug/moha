@@ -53,7 +53,7 @@ class Ministry extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'last_update'], 'required'],
+            [['name', 'last_update'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted', 'ministry_group_id', 'position', 'user_id', 'equal'], 'integer'],
             [['last_update', 'input_dt_stamp'], 'safe'],
             [['remark'], 'string'],

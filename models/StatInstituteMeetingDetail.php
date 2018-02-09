@@ -37,7 +37,7 @@ class StatInstituteMeetingDetail extends \yii\db\ActiveRecord
         return [
             [['total', 'women', 'times', 'stat_institute_meeting_id'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
-            [['stat_institute_meeting_id'], 'required'],
+            [['stat_institute_meeting_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['title', 'place'], 'string', 'max' => 255],
             [['stat_institute_meeting_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatInstituteMeeting::className(), 'targetAttribute' => ['stat_institute_meeting_id' => 'id']],
         ];

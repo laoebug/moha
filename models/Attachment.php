@@ -41,7 +41,7 @@ class Attachment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['menu_id', 'name', 'deleted', 'user_id', 'phiscal_year_id'], 'required'],
+            [['menu_id', 'name', 'deleted', 'user_id', 'phiscal_year_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['menu_id', 'deleted', 'user_id', 'phiscal_year_id'], 'integer'],
             [['upload_date', 'issued_date'], 'safe'],
             [['data'], 'string'],

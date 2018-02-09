@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatHighoverseaMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
 $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບຍ້ອງຍໍຕ່າງປະເທດຂອງບັນດາ ກະຊວງ, ອົງການ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>

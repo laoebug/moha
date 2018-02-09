@@ -31,7 +31,7 @@ class GovermentUnit extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'branch_id'], 'required'],
+            [['name', 'branch_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted', 'branch_id', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],

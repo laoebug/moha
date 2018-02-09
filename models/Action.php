@@ -37,7 +37,7 @@ class Action extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class_name', 'method'], 'required'],
+            [['class_name', 'method'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted', 'controller_id', 'parent_id'], 'integer'],
             [['description'], 'string'],
             [['class_name', 'method'], 'string', 'max' => 255],

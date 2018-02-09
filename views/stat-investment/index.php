@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຜນທີ່ແຫ່ງຊາດ'), 'url' => ['index']];
 $this->title = "ສະຖິຕິໂຄງການລົງທຶນຂອງລັດ";
 $this->params['breadcrumbs'][] = $this->title;
 ?>

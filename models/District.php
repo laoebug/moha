@@ -35,7 +35,7 @@ class District extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['district_code', 'district_name', 'province_id'], 'required'],
+            [['district_code', 'district_name', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['province_id', 'input_id', 'deleted'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['district_code'], 'string', 'max' => 20],
