@@ -25,7 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'status',
                 'tel',
                 'email:email',
-                'deleted',
+                [
+                    'attribute' => 'deleted',
+                    'value' => function ($data) {
+                        return Yii::$app->params['YESNO'][$data->deleted];
+                    }
+                ],
                 [
                     'name' => 'role',
                     'label' => "ສິດໜ້າທີ່",
