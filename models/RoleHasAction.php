@@ -30,7 +30,7 @@ class RoleHasAction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['role_id', 'action_id'], 'required'],
+            [['role_id', 'action_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['role_id', 'action_id'], 'integer'],
             [['allowed'], 'string', 'max' => 1],
             [['action_id'], 'exist', 'skipOnError' => true, 'targetClass' => Action::className(), 'targetAttribute' => ['action_id' => 'id']],

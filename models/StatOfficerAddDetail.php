@@ -35,7 +35,7 @@ class StatOfficerAddDetail extends \yii\db\ActiveRecord
     {
         return [
             [['quota_total', 'quota_women', 'army_total', 'army_women', 'soe_total', 'soe_women', 'stat_officer_add_id'], 'integer'],
-            [['stat_officer_add_id'], 'required'],
+            [['stat_officer_add_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_add_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerAdd::className(), 'targetAttribute' => ['stat_officer_add_id' => 'id']],
         ];
     }

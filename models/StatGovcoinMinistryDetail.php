@@ -45,7 +45,7 @@ class StatGovcoinMinistryDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_govcoin_ministry_id', 'ministry_id', 'award_id'], 'required'],
+            [['stat_govcoin_ministry_id', 'ministry_id', 'award_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_govcoin_ministry_id', 'ministry_id', 'award_id', 'labo_personal', 'labo_team', 'deve_personal', 'deve_team', 'memo_personal', 'memo_team', 'amer_personal', 'amer_team', 'fran_personal', 'fran_team', 'gove_personal', 'gove_team'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],

@@ -34,7 +34,7 @@ class StatGovermentUnit extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'saved', 'phiscal_year_id'], 'integer'],
-            [['last_update', 'phiscal_year_id'], 'required'],
+            [['last_update', 'phiscal_year_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['last_update'], 'safe'],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

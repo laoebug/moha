@@ -27,7 +27,7 @@ class LegalStatus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'deleted'], 'required'],
+            [['name', 'deleted'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],

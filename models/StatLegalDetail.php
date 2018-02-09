@@ -36,7 +36,7 @@ class StatLegalDetail extends \yii\db\ActiveRecord
         return [
             [['new', 'improve', 'stat_legal_id', 'legal_id'], 'integer'],
             [['remark'], 'string'],
-            [['stat_legal_id', 'legal_id'], 'required'],
+            [['stat_legal_id', 'legal_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['publish'], 'string', 'max' => 255],
             [['legal_id'], 'exist', 'skipOnError' => true, 'targetClass' => Legal::className(), 'targetAttribute' => ['legal_id' => 'id']],
             [['stat_legal_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatLegal::className(), 'targetAttribute' => ['stat_legal_id' => 'id']],

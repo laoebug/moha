@@ -47,7 +47,7 @@ class StatOfficerDegreeDetail extends \yii\db\ActiveRecord
     {
         return [
             [['doctor_total', 'doctor_women', 'post_master_total', 'post_master_women', 'master_total', 'master_women', 'post_bachelor_total', 'post_bachelor_women', 'bachelor_total', 'bachelor_women', 'high_total', 'high_women', 'middle_total', 'middle_women', 'begin_total', 'begin_women', 'no_total', 'no_women', 'stat_officer_degree_id'], 'integer'],
-            [['stat_officer_degree_id'], 'required'],
+            [['stat_officer_degree_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_degree_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerDegree::className(), 'targetAttribute' => ['stat_officer_degree_id' => 'id']],
         ];
     }

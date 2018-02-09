@@ -33,7 +33,7 @@ class Accociation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'approved_date'], 'required'],
+            [['name', 'approved_date'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['approved_date'], 'safe'],
             [['province_id', 'approved_by_moha', 'position'], 'integer'],
             [['remark'], 'string'],

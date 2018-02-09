@@ -48,7 +48,7 @@ class StatOfficerResignDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_resign_id'], 'required'],
+            [['stat_officer_resign_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_resign_id', 'retire_total', 'bumnet_total', 'die_total', 'leave_total', 'fire_total', 'resign_total', 'lose_total', 'move_soe_total', 'moveto_ministry_total', 'movein_ministry_total', 'retire_women', 'bumnet_women', 'die_women', 'leave_women', 'fire_women', 'resign_women', 'lose_women', 'move_soe_women', 'moveto_ministry_women', 'movein_ministry_women'], 'integer'],
             [['stat_officer_resign_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerResign::className(), 'targetAttribute' => ['stat_officer_resign_id' => 'id']],
         ];

@@ -36,7 +36,7 @@ class StatOfficerContractDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_contract_id'], 'required'],
+            [['stat_officer_contract_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_contract_id', 'admin_approve_total', 'admin_approve_women', 'admin_non_total', 'admin_non_women', 'officer_approve_total', 'officer_approve_women', 'officer_non_total', 'officer_non_women'], 'integer'],
             [['stat_officer_contract_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerContract::className(), 'targetAttribute' => ['stat_officer_contract_id' => 'id']],
         ];

@@ -26,7 +26,7 @@ class Migration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['version'], 'required'],
+            [['version'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['apply_time'], 'integer'],
             [['version'], 'string', 'max' => 180],
         ];

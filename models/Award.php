@@ -42,7 +42,7 @@ class Award extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'deleted', 'user_id'], 'required'],
+            [['name', 'deleted', 'user_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted', 'user_id', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

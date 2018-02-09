@@ -32,7 +32,7 @@ class Foundation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name', 'approved_date'], 'required'],
+            [['id', 'name', 'approved_date'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['id', 'province_id', 'approved_by_moha'], 'integer'],
             [['approved_date'], 'safe'],
             [['remark'], 'string'],

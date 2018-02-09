@@ -30,7 +30,7 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'position'], 'required'],
+            [['name', 'position'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];

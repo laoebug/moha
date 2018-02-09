@@ -35,7 +35,7 @@ class StatAssociationFoundationDetail extends \yii\db\ActiveRecord
         return [
             [['association', 'foundation', 'stat_association_foundation_id', 'approver_id'], 'integer'],
             [['remark'], 'string'],
-            [['stat_association_foundation_id', 'approver_id'], 'required'],
+            [['stat_association_foundation_id', 'approver_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['approver_id'], 'exist', 'skipOnError' => true, 'targetClass' => Approver::className(), 'targetAttribute' => ['approver_id' => 'id']],
             [['stat_association_foundation_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatAssociationFoundation::className(), 'targetAttribute' => ['stat_association_foundation_id' => 'id']],
         ];

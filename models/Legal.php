@@ -32,7 +32,7 @@ class Legal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'legal_type_id'], 'required'],
+            [['name', 'legal_type_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted', 'legal_type_id', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['legal_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => LegalType::className(), 'targetAttribute' => ['legal_type_id' => 'id']],

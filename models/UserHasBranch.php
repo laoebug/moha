@@ -29,7 +29,7 @@ class UserHasBranch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'branch_id'], 'required'],
+            [['user_id', 'branch_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['user_id', 'branch_id'], 'integer'],
             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::className(), 'targetAttribute' => ['branch_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

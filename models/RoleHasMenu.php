@@ -30,7 +30,7 @@ class RoleHasMenu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['role_id', 'menu_id'], 'required'],
+            [['role_id', 'menu_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['role_id', 'menu_id'], 'integer'],
             [['accessible'], 'string', 'max' => 1],
             [['menu_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menu::className(), 'targetAttribute' => ['menu_id' => 'id']],

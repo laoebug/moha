@@ -33,7 +33,7 @@ class StatMapServiceDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_map_service_id', 'activity'], 'required'],
+            [['stat_map_service_id', 'activity'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_map_service_id', 'amount', 'km', 'point'], 'integer'],
             [['activity', 'remark'], 'string', 'max' => 255],
             [['stat_map_service_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatMapService::className(), 'targetAttribute' => ['stat_map_service_id' => 'id']],

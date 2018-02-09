@@ -31,7 +31,7 @@ class ApproverLevel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['code'], 'string', 'max' => 1],

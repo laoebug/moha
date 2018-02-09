@@ -38,7 +38,7 @@ class StatOdaDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_oda_id'], 'required'],
+            [['stat_oda_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_oda_id', 'start_year', 'end_year', 'amount', 'free', 'loan', 'receive', 'deleted'], 'integer'],
             [['code', 'name', 'organisation'], 'string', 'max' => 255],
             [['stat_oda_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOda::className(), 'targetAttribute' => ['stat_oda_id' => 'id']],

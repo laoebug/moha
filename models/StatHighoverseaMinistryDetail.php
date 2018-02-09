@@ -39,7 +39,7 @@ class StatHighoverseaMinistryDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_highoversea_ministry_id', 'ministry_id', 'award_id'], 'required'],
+            [['stat_highoversea_ministry_id', 'ministry_id', 'award_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_highoversea_ministry_id', 'ministry_id', 'award_id', 'gold_personal', 'gold_team', 'lanx_personal', 'lanx_team', 'hono_personal', 'hono_team'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
