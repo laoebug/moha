@@ -3,7 +3,6 @@
 namespace app\components;
 
 use yii\base\Widget;
-use app\services\AuthenticationService;
 use Yii;
 use app\models\Menu;
 
@@ -17,33 +16,29 @@ class BreacrumbWidget extends Widget {
 		$id = $request->get ( 'id' );
 		$theMenus = [ ];
 		$menus = [ ];
-		if(isset($id) && !empty($id)){
-		while ( 1 ) {
-			$menu = $this->getMenu ( $id );
-			if (isset ( $menu )) {
-				$theMenus [] = $menu;
-				if (isset ( $menu->menu_parent_id ) && $menu->menu_parent_id == 0) {
-					$id = 0;
-				} else {
-					
-					$id = $menu->menu_parent_id;
-					
+		if (isset ( $id ) && ! empty ( $id )) {
+			while ( 1 ) {
+				$menu = $this->getMenu ( $id );
+				if (isset ( $menu )) {
+					$theMenus [] = $menu;
+					if (isset ( $menu->menu_parent_id ) && $menu->menu_parent_id == 0) {
+						$id = 0;
+					} else {
+						$id = $menu->menu_parent_id;
+					}
+				}
+				
+				if ($menu->menu_parent_id == 0) {
+					break;
 				}
 			}
 			
-			if ($menu->menu_parent_id == 0 || $id==$menu->menu_parent_id) {
-				break;
-			}
-		}
-		
-		$menus = array_reverse ( $theMenus );
+			$menus = array_reverse ( $theMenus );
 		}
 		return $this->render ( "_breadcrums", array (
 				
 				"menus" => $menus 
 		) );
-
-		
 	}
 	public function getMenu($id) {
 		return Menu::findOne ( $id );
