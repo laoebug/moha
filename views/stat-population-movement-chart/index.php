@@ -1,11 +1,12 @@
+<?php $_GET['menu']=1;?>
 <?php
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatPopulationMovementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = "ການສົມທຽບສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງ";
-$this->params['breadcrumbs'][] = $this->title;
+// $this->title = "ການສົມທຽບສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງ";
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="statPopulationMovementController">

@@ -1,9 +1,10 @@
+<?php $_GET['menu']=1;?>
 <?php
 
 /* @var $this yii\web\View */
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຜນທີ່ແຫ່ງຊາດ'), 'url' => ['index']];
-$this->title = "ສະຖິຕິໂຄງການລົງທຶນຂອງລັດ";
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຜນທີ່ແຫ່ງຊາດ'), 'url' => ['index']];
+// $this->title = "ສະຖິຕິໂຄງການລົງທຶນຂອງລັດ";
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="statInvestmentController">

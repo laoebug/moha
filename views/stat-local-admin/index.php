@@ -1,11 +1,12 @@
+<?php $_GET['menu']=1;?>
 <?php
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatLocalAdminSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມການປົກຄອງທ້ອງຖິ່ນ'), 'url' => ['index']];
-$this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ";
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມການປົກຄອງທ້ອງຖິ່ນ'), 'url' => ['index']];
+// $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ";
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="statLocalAdminController">

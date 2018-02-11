@@ -1,11 +1,12 @@
+<?php $_GET['menu']=1;?>
 <?php
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatOfficerMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
-$this->title = "ສະຖິຕິລັດຖະກອນລວມຂອງແຕ່ລະກະຊວງ, ອົງການທຽບເທົ່າກະຊວງ";
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
+// $this->title = "ສະຖິຕິລັດຖະກອນລວມຂອງແຕ່ລະກະຊວງ, ອົງການທຽບເທົ່າກະຊວງ";
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="officerMinistryController">
     <div class="col-sm-12">

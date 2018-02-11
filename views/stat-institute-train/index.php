@@ -1,3 +1,4 @@
+<?php $_GET['menu']=1;?>
 <?php
 
 use yii\helpers\Html;
@@ -6,9 +7,9 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatInstituteTrainSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ສະຖາບັນຄົ້ນຄວ້າວິທະຍາສາດການປົກຄອງ ແລະ ຝຶກອົບຮົມ'), 'url' => ['index']];
-$this->title = "ສະຖິຕິສັງລວມສະຖາບັນຈັດກອງປະຊຸມ ແລະ ເຝິກອົບຮົມໃຫ້ບັນດາກະຊວງ, ອົງການຈັດຕັ້ງຂັ້ນສູນກາງ ແລະ ທ້ອງຖິ່ນ";
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ສະຖາບັນຄົ້ນຄວ້າວິທະຍາສາດການປົກຄອງ ແລະ ຝຶກອົບຮົມ'), 'url' => ['index']];
+// $this->title = "ສະຖິຕິສັງລວມສະຖາບັນຈັດກອງປະຊຸມ ແລະ ເຝິກອົບຮົມໃຫ້ບັນດາກະຊວງ, ອົງການຈັດຕັ້ງຂັ້ນສູນກາງ ແລະ ທ້ອງຖິ່ນ";
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 

@@ -1,3 +1,4 @@
+
 <?php
 
 use yii\helpers\Html;
@@ -8,8 +9,8 @@ use app\components\MyHelper;
 /* @var $searchModel app\models\PhiscalYearSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-// $this->title = 'ຈັດການຂໍ້ມູນ ປີ';
-// $this->params['breadcrumbs'][] = $this->title;
+$this->title = 'ຈັດການຂໍ້ມູນ ປີ';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
     <h1><?= \yii\helpers\Html::encode($this->title) ?></h1>

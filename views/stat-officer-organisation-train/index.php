@@ -1,3 +1,4 @@
+<?php $_GET['menu']=1;?>
 <?php
 
 use yii\helpers\Html;
@@ -6,9 +7,9 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatOfficerOrganisationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມປະເມີນຜົນ ແລະ ພັດທະນາລັດຖະກອນ'), 'url' => ['index']];
-$this->title = "ຕາຕະລາງສັງລວມສະຖິຕິພະນັກງານລັດຖະກອນຂັ້ນອົງການທຽບເທົ່າ ທີ່ໄປຝຶກອົບຮົມ ຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມປະເມີນຜົນ ແລະ ພັດທະນາລັດຖະກອນ'), 'url' => ['index']];
+// $this->title = "ຕາຕະລາງສັງລວມສະຖິຕິພະນັກງານລັດຖະກອນຂັ້ນອົງການທຽບເທົ່າ ທີ່ໄປຝຶກອົບຮົມ ຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="officerOrganisationTrainController">

@@ -1,4 +1,5 @@
 
+<?php $_GET['menu']=1;?>
 <?php
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */

@@ -1,3 +1,4 @@
+<?php $_GET['menu']=1;?>
 <?php
 
 use yii\helpers\Html;
@@ -6,9 +7,9 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatReligionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມວຽກງານຊົນເຜົ່າ ແລະ ສາສະໜາ'), 'url' => ['index']];
-$this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສາສະໜາ ແລະ ຄວາມເຊື່ອອື່ນ ໃນທົ່ວປະເທດ";
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມວຽກງານຊົນເຜົ່າ ແລະ ສາສະໜາ'), 'url' => ['index']];
+// $this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສາສະໜາ ແລະ ຄວາມເຊື່ອອື່ນ ໃນທົ່ວປະເທດ";
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="statReligionController">

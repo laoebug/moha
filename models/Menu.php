@@ -249,4 +249,37 @@ class Menu extends \yii\db\ActiveRecord
     	//print_r($menuIds);exit;
     	return $menuIds;
     }
+    
+    public static function getMenuList($id) {    
+    	$theMenus = [ ];
+    	$menus = [ ];
+    	if (isset ( $id ) && ! empty ( $id )) {
+    		while ( 1 ) {
+    			$sql = " select *,CONCAT('?r=department/view&id=', id) as department_link, ";
+    			$sql.= " (select count(*) from menu where menu_parent_id=:menu_parent_id) as child_count ";
+    			$sql.= " from menu where id=:id ";
+
+    			$params = [
+    					':menu_parent_id' => $id,
+    					':id' => $id    					
+    			];    			
+    			$menu = Menu::findBySql($sql, $params)->one();    			    			    			    			
+    			if (isset ( $menu )) {
+    				$theMenus [] = $menu;
+    				if (isset ( $menu->menu_parent_id ) && $menu->menu_parent_id == 0) {
+    					$id = 0;
+    				} else {
+    					$id = $menu->menu_parent_id;
+    				}
+    			}
+    
+    			if ($menu->menu_parent_id == 0) {
+    				break;
+    			}
+    		}
+    
+    		$menus = array_reverse ( $theMenus );
+    	}
+    	return $menus;
+    }
 }

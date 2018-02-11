@@ -177,11 +177,13 @@ use app\components\BreacrumbWidget;
                 <h1><i class="fa fa-dashboard"></i> <?= $this->title ?></h1>
                 <p><?= isset($this->subtitle) ? $this->subtitle : "" ?></p>
             </div>
+            <?php if(isset($_GET['menu']) && $_GET['menu']!=0): ;?>
             <?php 
             	//to initial Wideget menu data
 	            BreacrumbWidget::begin();
 				BreacrumbWidget::end();
 			?>
+			<?php endif;?>
             <div>
                 <?=
                 \yii\widgets\Breadcrumbs::widget([

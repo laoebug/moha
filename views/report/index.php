@@ -1,3 +1,4 @@
+<?php $_GET['menu']=1;?>
 <?php
 /**
  * Created by PhpStorm.
