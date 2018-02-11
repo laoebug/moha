@@ -40,6 +40,27 @@ class MinistryController extends Controller {
 	 * @return mixed
 	 */
 	public function actionIndex() {
+		//echo Yii::$app->request->getUrl();exit;
+// 		$request = Yii::$app->request;
+// 		$get = $request->get();
+		
+// 		// equivalent to: $get = $_GET;
+// 		//echo $get;exit;
+// 		$id = $request->get('id');
+// 		// equivalent to: $id = isset($_GET['id']) ? $_GET['id'] : null;
+// 		//echo $id;exit;
+// 		//$id = $request->get('id', 1);
+// 		// equivalent to: $id = isset($_GET['id']) ? $_GET['id'] : 1;
+// 		//echo $id;exit;
+// 		$post = $request->post();
+// 		// equivalent to: $post = $_POST;
+// 		//echo $post;exit;
+// 		$name = $request->post('name');
+// 		// equivalent to: $name = isset($_POST['name']) ? $_POST['name'] : null;
+// 		//echo $name;exit;
+// 		$name = $request->post('name', '');
+// 		// equivalent to: $name = isset($_POST['name']) ? $_POST['name'] : '';
+		
 		return $this->render ( 'index' );
 	}
 	public function actionEnquiry() {

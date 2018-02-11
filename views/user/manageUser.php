@@ -6,8 +6,8 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'User Control');
-$this->params['breadcrumbs'][] = $this->title;
+// $this->title = Yii::t('app', 'User Control');
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
 <?php Pjax::begin(); ?>   

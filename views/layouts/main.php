@@ -11,7 +11,7 @@
 /* @var $content string */
 
 use app\components\TopMenuWidget;
-
+use app\components\BreacrumbWidget;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -177,6 +177,11 @@ use app\components\TopMenuWidget;
                 <h1><i class="fa fa-dashboard"></i> <?= $this->title ?></h1>
                 <p><?= isset($this->subtitle) ? $this->subtitle : "" ?></p>
             </div>
+            <?php 
+            	//to initial Wideget menu data
+	            BreacrumbWidget::begin();
+				BreacrumbWidget::end();
+			?>
             <div>
                 <?=
                 \yii\widgets\Breadcrumbs::widget([
@@ -188,6 +193,7 @@ use app\components\TopMenuWidget;
                 ])
                 ?>
             </div>
+          
         </div>
         <div class="row">
             <?php

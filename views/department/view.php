@@ -3,9 +3,18 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\Menu */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = $this->title;
+//$this->title = $model->name;
+
+//$breadcrumbs[] = ['label' => Yii::t('app', $model->name), 'url' =>  Yii::$app->request->getUrl()];
+//$breadcrumbs[] = ['label' => Yii::t('app', $model->name), 'url' =>  Yii::$app->request->getUrl()];
+//$this->params['breadcrumbs'][]=$breadcrumbs;
+
+
+// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', $model->name), 'url' =>  Yii::$app->request->getUrl()];
+// $this->params['breadcrumbs'][] = $this->title;
+
 ?>
+<?php //echo Yii::$app->request->getUrl();exit;?>
 <div class="card">
     <h1><?= $this->title ?></h1>
     <?= \yii\grid\GridView::widget([

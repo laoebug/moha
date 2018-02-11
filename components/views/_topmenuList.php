@@ -35,7 +35,7 @@ function displayTopMenu($menu_parent_id) {
         foreach ($authorizeMenus as $menu) {
             $url = isset($menu->url) ? $menu->url : "#";
             if ($menu->child_count == 0) {
-                $li .= '<li><a href="index.php?r='.$url.'">' . $menu->name . '</a>';
+                $li .= '<li><a href="index.php?r='.$url.'&id='.$menu->id.'">' . $menu->name . '</a>';
             } else {
                 $caret = $menu_parent_id == 0?'<b class="caret"></b>' : '';
                 if($menu_parent_id == 0){
