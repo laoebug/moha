@@ -14,13 +14,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <img src="images/logo.png" style="width: 20%"/>
 </div>
 <h3 class="login-head text-center">
-    ລະບົບບັນທຶກຂໍ້ມູນ ກະຊວງພາຍໃນ
+    ລະບົບຖານຂໍ້ມູນສະຖິຕິຂະແໜງການພາຍໃນ
 </h3>
 
 <section class="material-half-bg" style="padding-top: 90vh;">
     <div class="cover" style="vertical-align: middle">
         <h6 style="color: #ffffff;padding-top: 10px;text-align: center">
-            ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
+            ກົມແຜນການ ແລະ ການຮ່ວມມື, ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
         </h6>
     </div>
 </section>
