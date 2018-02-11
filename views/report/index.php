@@ -28,6 +28,13 @@ $this->title = 'ລາຍງານ';
                 'value' => function ($data) {
                     return "<a href='index.php?r=" . $data->url . "'>" . $data->name . "</a>";
                 }
+            ],
+            [
+                'label' => 'ເບິ່ງ',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return "<a href='index.php?r=" . $data->url . "' class='btn btn-primary'><i class='fa fa-eye'></i></a>";
+                }
             ]
         ],
     ]);
