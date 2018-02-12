@@ -39,7 +39,7 @@ class StatResearchDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_research_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_research_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_research_id', 'total', 'women', 'times', 'goverment', 'dornor'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['title', 'attendance', 'place', 'remark'], 'string', 'max' => 255],

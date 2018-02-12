@@ -52,7 +52,7 @@ class StatOfficerTechnicalDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_technical_id', 'officer_level_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_technical_id', 'officer_level_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_technical_id', 'officer_level_id', 'doctor_total', 'doctor_women', 'post_master_total', 'post_master_women', 'master_total', 'master_women', 'post_bachelor_total', 'post_bachelor_women', 'bachelor_total', 'bachelor_women', 'high_total', 'high_women', 'middle_total', 'middle_women', 'begin_total', 'begin_women', 'hischool_total', 'hischool_women', 'second_total', 'second_women', 'primary_total', 'primary_women'], 'integer'],
             [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
             [['stat_officer_technical_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerTechnical::className(), 'targetAttribute' => ['stat_officer_technical_id' => 'id']],

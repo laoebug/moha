@@ -39,7 +39,7 @@ class StatOfficerMinistryTrainDetail extends \yii\db\ActiveRecord
     {
         return [
             [['tech_in_total', 'tech_in_women', 'tech_out_total', 'tech_out_women', 'theo_in_total', 'theo_in_women', 'theo_out_total', 'theo_out_women', 'stat_officer_ministry_train_id', 'ministry_id'], 'integer'],
-            [['stat_officer_ministry_train_id', 'ministry_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_ministry_train_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['stat_officer_ministry_train_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerMinistryTrain::className(), 'targetAttribute' => ['stat_officer_ministry_train_id' => 'id']],
         ];

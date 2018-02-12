@@ -32,7 +32,7 @@ class StatOfficerNeedDetail extends \yii\db\ActiveRecord
     {
         return [
             [['center', 'province', 'district', 'stat_officer_need_id'], 'integer'],
-            [['stat_officer_need_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_need_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_need_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerNeed::className(), 'targetAttribute' => ['stat_officer_need_id' => 'id']],
         ];
     }

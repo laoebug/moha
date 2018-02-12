@@ -33,7 +33,7 @@ class StatOfficerMinistryDetail extends \yii\db\ActiveRecord
     {
         return [
             [['total', 'women', 'stat_officer_ministry_id', 'ministry_id'], 'integer'],
-            [['stat_officer_ministry_id', 'ministry_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_ministry_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['stat_officer_ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerMinistry::className(), 'targetAttribute' => ['stat_officer_ministry_id' => 'id']],
         ];

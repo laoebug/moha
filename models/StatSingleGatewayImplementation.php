@@ -33,7 +33,7 @@ class StatSingleGatewayImplementation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'phiscal_year_id', 'last_update'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['user_id', 'phiscal_year_id', 'last_update'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['user_id', 'phiscal_year_id', 'saved'], 'integer'],
             [['last_update'], 'safe'],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],

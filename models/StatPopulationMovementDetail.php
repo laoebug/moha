@@ -47,7 +47,7 @@ class StatPopulationMovementDetail extends \yii\db\ActiveRecord
     {
         return [
             [['district', 'village', 'population_total', 'population_women', 'born_total', 'born_women', 'die_total', 'die_women', 'married', 'divorce', 'movein_total', 'movein_women', 'moveout_total', 'moveout_women', 'real_total', 'real_women', 'province_id', 'stat_population_movement_id'], 'integer'],
-            [['province_id', 'stat_population_movement_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['province_id', 'stat_population_movement_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_population_movement_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatPopulationMovement::className(), 'targetAttribute' => ['stat_population_movement_id' => 'id']],
         ];

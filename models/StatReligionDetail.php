@@ -47,7 +47,7 @@ class StatReligionDetail extends \yii\db\ActiveRecord
         return [
             [['buddhis_total', 'buddhis_women', 'christ_news_total', 'christ_news_women', 'christ_sat_total', 'christ_sat_women', 'christ_cato_total', 'christ_cato_women', 'bahai_total', 'bahai_women', 'idslam_total', 'idslam_women', 'other_total', 'other_women', 'stat_religion_id', 'province_id'], 'integer'],
             [['remark'], 'string'],
-            [['stat_religion_id', 'province_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_religion_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_religion_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatReligion::className(), 'targetAttribute' => ['stat_religion_id' => 'id']],
         ];

@@ -44,7 +44,7 @@ class StatHighcoinMinistryDetail extends \yii\db\ActiveRecord
     {
         return [
             [['gold_personal', 'gold_team', 'hero_personal', 'hero_team', 'knight_personal', 'knight_team', 'labor_personal', 'labor_team', 'dev_personal', 'dev_team', 'stat_highcoin_ministry_id', 'award_id', 'ministry_id'], 'integer'],
-            [['stat_highcoin_ministry_id', 'award_id', 'ministry_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_highcoin_ministry_id', 'award_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],

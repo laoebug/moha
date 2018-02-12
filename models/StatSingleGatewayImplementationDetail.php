@@ -33,7 +33,7 @@ class StatSingleGatewayImplementationDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_single_gateway_implementation_id', 'ministry_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_single_gateway_implementation_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_single_gateway_implementation_id', 'ministry_id'], 'integer'],
             [['start_date'], 'safe'],
             [['remark'], 'string'],
