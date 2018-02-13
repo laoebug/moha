@@ -2,67 +2,74 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
+
 /* @var $model app\models\ContactForm */
 
-use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
+use yii\helpers\Html;
 
-$this->title = 'Contact';
+$this->title = 'ຕິດຕໍ່ພວກເຮົາ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-contact">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
-
-        <div class="alert alert-success">
-            Thank you for contacting us. We will respond to you as soon as possible.
+<div class="card">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td class="text-right"><i class="fa fa-phone"></i> ເບີໂທ</td>
+                    <th style="width: 50%"><?= $contents['TELEPHONE'] ?></th>
+                </tr>
+                <tr>
+                    <td class="text-right"><i class="fa fa-envelope"></i> ອີເມວ</td>
+                    <th><?= $contents['EMAIL'] ?></th>
+                </tr>
+                <tr>
+                    <td class="text-right"><i class="fa fa-globe"></i> ເວັບໄຊ</td>
+                    <th><?= $contents['WEBSITE'] ?></th>
+                </tr>
+                <tr>
+                    <td class="text-right"><i class="fa fa-home"></i> ທີ່ຢູ່</td>
+                    <th><?= $contents['ADDRESS'] ?></th>
+                </tr>
+                </tbody>
+            </table>
+            <div id="map" style="width: 100%;height: 70vh"></div>
         </div>
+        <div class="col-xs-6 hidden">
+            <h1>ຝາກຄຳຄິດເຫັນ</h1>
+            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
+            <?= $form->field($model, 'name') ?>
+            <?= $form->field($model, 'email') ?>
+            <?= $form->field($model, 'subject') ?>
+            <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+            ]) ?>
 
-        <p>
-            Note that if you turn on the Yii debugger, you should be able
-            to view the mail message on the mail panel of the debugger.
-            <?php if (Yii::$app->mailer->useFileTransport): ?>
-                Because the application is in development mode, the email is not sent but saved as
-                a file under <code><?= Yii::getAlias(Yii::$app->mailer->fileTransportPath) ?></code>.
-                Please configure the <code>useFileTransport</code> property of the <code>mail</code>
-                application component to be false to enable email sending.
-            <?php endif; ?>
-        </p>
-
-    <?php else: ?>
-
-        <p>
-            If you have business inquiries or other questions, please fill out the following form to contact us.
-            Thank you.
-        </p>
-
-        <div class="row">
-            <div class="col-lg-5">
-
-                <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
-
-                    <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
-
-                    <?= $form->field($model, 'email') ?>
-
-                    <?= $form->field($model, 'subject') ?>
-
-                    <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
-
-                    <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                        'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                    ]) ?>
-
-                    <div class="form-group">
-                        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
-                    </div>
-
-                <?php ActiveForm::end(); ?>
-
+            <div class="form-group">
+                <?= Html::submitButton('ສົ່ງຄຳເຫັນ', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
             </div>
+            <?php ActiveForm::end(); ?>
         </div>
-
-    <?php endif; ?>
+    </div>
 </div>
+<script>
+  function initMap() {
+    var uluru = {lat: <?= $contents['LAT'] ?>, lng: <?= $contents['LON'] ?>};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: <?= $contents['MAPZOOM'] ?>,
+      center: uluru
+    });
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+      animation: google.maps.Animation.BOUNCE,
+    });
+  }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBuSAiSvY718_Aascagsk2ydjqVb3WsgM&callback=initMap">
+</script>

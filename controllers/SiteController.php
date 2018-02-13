@@ -2,12 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\ContactForm;
+use app\models\Content;
 use app\models\LoginForm;
 use app\models\Notice;
 use app\models\NoticeSearch;
 use app\models\User;
 use Yii;
 use yii\db\Exception;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -46,7 +49,7 @@ class SiteController extends Controller
                 ->orderBy('position, created_date desc')
                 ->asArray()
                 ->all();
-            if(!Yii::$app->session->has('notices') || count(Yii::$app->session->get('notices', [])) != count($notices)) {
+            if (!Yii::$app->session->has('notices') || count(Yii::$app->session->get('notices', [])) != count($notices)) {
                 Yii::$app->session->set('notices', $notices);
             }
 
@@ -77,7 +80,7 @@ class SiteController extends Controller
         }
 
         $cookies = Yii::$app->request->cookies;
-        if($cookies->has('username'))
+        if ($cookies->has('username'))
             $model->username = $cookies->get('username');
 
         $this->layout = "login";
@@ -110,7 +113,7 @@ class SiteController extends Controller
                     throw new Exception('ຢືນຢັນ ລະຫັດຜ່ານ ໃໝ່ ບໍ່ຖືກຕ້ອງ');
                 }
                 $model->password = $post['User']['newpassword'];
-                if(!$model->save(false)) {
+                if (!$model->save(false)) {
                     throw new Exception(json_encode($model->errors));
                 }
                 Yii::$app->session->setFlash('success', "ສຳເລັດ");
@@ -126,20 +129,37 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionProfile() {
+    public function actionProfile()
+    {
         $model = User::findOne(Yii::$app->user->id);
         return $this->render('profile', [
             'model' => $model
         ]);
     }
 
-    public function actionNotice($id) {
+    public function actionNotice($id)
+    {
         $model = Notice::findOne($id);
-        if(!isset($model) || $model->show != 1)
+        if (!isset($model) || $model->show != 1)
             throw new NotFoundHttpException('ບໍ່ພົບຂໍ້ມູນ');
 
         return $this->render('notice', [
             'model' => $model
+        ]);
+    }
+
+    public function actionContact()
+    {
+        $model = new ContactForm();
+        $post = Yii::$app->request->post();
+        if (isset($post['ContactForm'])) {
+            $model->load($post);
+        }
+        $contents = Content::find()->all();
+        $contents = ArrayHelper::map($contents, 'code', 'value');
+        return $this->render('contact', [
+            'model' => $model,
+            'contents' => $contents
         ]);
     }
 }
