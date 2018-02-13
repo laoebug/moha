@@ -15,28 +15,32 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="card">
     <div class="row">
         <div class="col-xs-12">
-            <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
-            <table class="table">
-                <tbody>
-                <tr>
-                    <td class="text-right"><i class="fa fa-phone"></i> ເບີໂທ</td>
-                    <th style="width: 50%"><?= $contents['TELEPHONE'] ?></th>
-                </tr>
-                <tr>
-                    <td class="text-right"><i class="fa fa-envelope"></i> ອີເມວ</td>
-                    <th><?= $contents['EMAIL'] ?></th>
-                </tr>
-                <tr>
-                    <td class="text-right"><i class="fa fa-globe"></i> ເວັບໄຊ</td>
-                    <th><?= $contents['WEBSITE'] ?></th>
-                </tr>
-                <tr>
-                    <td class="text-right"><i class="fa fa-home"></i> ທີ່ຢູ່</td>
-                    <th><?= $contents['ADDRESS'] ?></th>
-                </tr>
-                </tbody>
-            </table>
-            <div id="map" style="width: 100%;height: 70vh"></div>
+            <div class="col-sm-6">
+                <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td class="text-right"><i class="fa fa-phone"></i> ເບີໂທ</td>
+                        <th style="width: 70%"><?= $contents['TELEPHONE'] ?></th>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><i class="fa fa-envelope"></i> ອີເມວ</td>
+                        <th><?= $contents['EMAIL'] ?></th>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><i class="fa fa-globe"></i> ເວັບໄຊ</td>
+                        <th><?= $contents['WEBSITE'] ?></th>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><i class="fa fa-home"></i> ທີ່ຢູ່</td>
+                        <th><?= $contents['ADDRESS'] ?></th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <div id="map" style="width: 100%;height: 70vh"></div>
+            </div>
         </div>
         <div class="col-xs-6 hidden">
             <h1>ຝາກຄຳຄິດເຫັນ</h1>
