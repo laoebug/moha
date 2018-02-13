@@ -32,7 +32,7 @@ class StatOfficerMinistryAddDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_ministry_add_id', 'ministry_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_ministry_add_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_ministry_add_id', 'add', 'resign', 'ministry_id'], 'integer'],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['stat_officer_ministry_add_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerMinistryAdd::className(), 'targetAttribute' => ['stat_officer_ministry_add_id' => 'id']],

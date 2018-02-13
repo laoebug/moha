@@ -34,7 +34,7 @@ class StatOfficerEthnicDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_ethnic_id', 'officer_level_id', 'ethnic_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_ethnic_id', 'officer_level_id', 'ethnic_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_ethnic_id', 'total', 'officer_level_id', 'ethnic_id', 'women'], 'integer'],
             [['ethnic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ethnic::className(), 'targetAttribute' => ['ethnic_id' => 'id']],
             [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],

@@ -52,7 +52,7 @@ class StatOfficerAgelevelDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_agelevel_id', 'officer_level_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_agelevel_id', 'officer_level_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['stat_officer_agelevel_id', 'officer_level_id', 'total_18', 'women_18', 'total_20', 'women_20', 'total_25', 'women_25', 'total_30', 'women_30', 'total_35', 'women_35', 'total_40', 'women_40', 'total_45', 'women_45', 'total_50', 'women_50', 'total_55', 'women_55', 'total_60', 'women_60', 'total_60p', 'women_60p'], 'integer'],
             [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
             [['stat_officer_agelevel_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerAgelevel::className(), 'targetAttribute' => ['stat_officer_agelevel_id' => 'id']],

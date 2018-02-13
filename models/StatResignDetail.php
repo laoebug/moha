@@ -49,7 +49,7 @@ class StatResignDetail extends \yii\db\ActiveRecord
     {
         return [
             [['retire_total', 'retire_women', 'bumnet_total', 'bumnet_women', 'stat_resign_id', 'die_total', 'die_women', 'officer_level_id', 'leave_total', 'leave_women', 'fire_total', 'fire_women', 'resign_total', 'resign_women', 'lose_total', 'lose_women', 'army_total', 'army_women', 'ministry_total', 'ministry_women'], 'integer'],
-            [['stat_resign_id', 'officer_level_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_resign_id', 'officer_level_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
             [['stat_resign_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatResign::className(), 'targetAttribute' => ['stat_resign_id' => 'id']],
         ];

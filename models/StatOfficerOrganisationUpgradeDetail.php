@@ -55,7 +55,7 @@ class StatOfficerOrganisationUpgradeDetail extends \yii\db\ActiveRecord
     {
         return [
             [['doctor_in_total', 'doctor_in_women', 'doctor_out_total', 'doctor_out_women', 'master_in_total', 'master_in_women', 'master_out_total', 'master_out_women', 'bachelor_in_total', 'bachelor_in_women', 'bachelor_out_total', 'bachelor_out_women', 'high_in_total', 'high_in_women', 'high_out_total', 'high_out_women', 'middle_in_total', 'middle_in_women', 'middle_out_total', 'middle_out_women', 'begin_in_total', 'begin_in_women', 'begin_out_total', 'begin_out_women', 'organisation_id', 'stat_officer_organisation_upgrade_id'], 'integer'],
-            [['organisation_id', 'stat_officer_organisation_upgrade_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['organisation_id', 'stat_officer_organisation_upgrade_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['organisation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['organisation_id' => 'id']],
             [['stat_officer_organisation_upgrade_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerOrganisationUpgrade::className(), 'targetAttribute' => ['stat_officer_organisation_upgrade_id' => 'id']],
         ];

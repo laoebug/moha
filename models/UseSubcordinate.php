@@ -29,7 +29,7 @@ class UseSubcordinate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'subcordinate_user_id'], 'required', 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['user_id', 'subcordinate_user_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['user_id', 'subcordinate_user_id'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['subcordinate_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['subcordinate_user_id' => 'id']],
