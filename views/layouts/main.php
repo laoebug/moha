@@ -151,11 +151,6 @@ use app\components\BreacrumbWidget;
                             <i class="fa fa-download fa-lg"></i> ຄູ່ມືນໍາໃຊ້
                         </a>
                     </li>
-                    <li class="dropdown notification-menu">
-                        <a class="dropdown-toggle" href="index.php?r=site/contact" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-phone fa-lg"></i> ຕິດຕໍ່ພວກເຮົາ
-                        </a>
-                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button"
                            aria-haspopup="true" aria-expanded="false">
@@ -215,7 +210,7 @@ use app\components\BreacrumbWidget;
 
 <div style="position: fixed;bottom: 0;background-color: #009688;width: 100%">
     <p style="padding-top: 5px;color: #ffffff;margin-bottom: 2px;" class="text-center">
-        ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
+        ກົມແຜນການ ແລະ ການຮ່ວມມື, ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
     </p>
 </div>
 
