@@ -151,7 +151,11 @@ use app\components\BreacrumbWidget;
                             <i class="fa fa-download fa-lg"></i> ຄູ່ມືນໍາໃຊ້
                         </a>
                     </li>
-                    <!-- User Menu-->
+                    <li class="dropdown notification-menu">
+                        <a class="dropdown-toggle" href="index.php?r=site/contact" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-phone fa-lg"></i> ຕິດຕໍ່ພວກເຮົາ
+                        </a>
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button"
                            aria-haspopup="true" aria-expanded="false">
