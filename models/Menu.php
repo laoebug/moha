@@ -36,6 +36,8 @@ class Menu extends \yii\db\ActiveRecord
     public $role_id;
     public $has_province;
     public $department_link;
+    public $department_name;
+    public $dept_id;
     /**
      * @inheritdoc
      */
@@ -144,6 +146,8 @@ class Menu extends \yii\db\ActiveRecord
             'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
             'position' => Yii::t('app', 'Position'),
             'table_name' => Yii::t('app', 'Table Name'),
+        	'department_name' => Yii::t('app', 'Department Name')
+        		
         ];
     }
 

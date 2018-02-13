@@ -15,7 +15,7 @@ use yii\base\Controller;
 use yii\base\Exception;
 
 class ReportController extends Controller {
-	public function actionIndex() {
+	public function actionIndex_Old() {
 		$searchModel = new MenuSearch ();
 		$dataProvider = $searchModel->search ( \Yii::$app->request->queryParams );
 		$dataProvider->query->where ( 'url is not null and menu_parent_id <> 0' );
@@ -56,7 +56,7 @@ class ReportController extends Controller {
 				'reports' => $reports 
 		] );
 	}
-	public function actionSearchreport() {
+	public function actionIndex() {
 		
 		define ( "DEPARTMENT_FLAG", 3 ); // refers to menu_parent_id in which value =3 
 		define ( "DELETED", 0 );
@@ -71,7 +71,9 @@ class ReportController extends Controller {
 				':deleted' => DELETED,
 				':menu_parent_id' => DEPARTMENT_FLAG 
 		];		
+		
 		$models = Menu::findBySql ( $sql, $params )->all ();
+		
 		
 		return $this->render ( 'searchReport', [ 
 				'models' => $models 

@@ -185,7 +185,7 @@ $("#btnUpdateRole").click(function(){
 		 
  		}, 
  		function(data,status,xhr){ //jQuery Ajax post
- 	 		console.log(data);		
+ 	 		
  			if(status=='success'){
 				 location.reload();
 
@@ -205,7 +205,7 @@ $("#btnDeleteRole").click(function(){
 		 "id":$("#the_role_id").val()		 
  		}, 
  		function(data,status,xhr){ //jQuery Ajax post
- 	 		console.log(data);		
+ 	 				
  			if(status=='success'){
 				 location.reload();
 
