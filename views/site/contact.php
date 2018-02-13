@@ -71,5 +71,5 @@ $this->params['breadcrumbs'][] = $this->title;
   }
 </script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBuSAiSvY718_Aascagsk2ydjqVb3WsgM&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBuSAiSvY718_Aascagsk2ydjqVb3WsgM&language=lo&region=LO&callback=initMap">
 </script>
