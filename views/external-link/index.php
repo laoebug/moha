@@ -1,15 +1,29 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\ExternalLinkSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = Yii::t('app', 'External Links');
+$this->params['breadcrumbs'][] = $this->title;
+?>
+
 <div class="card">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 			<div class="card-body">
-				<table class="table table-hover table-bordered" id="report_table">
+				<table class="table table-hover table-bordered" id="data_table">
 
 					<thead>
 						<tr>
 							<th style="text-align:center"><?php echo Yii::t("app","No.")?></th>
-							<th><?php echo Yii::t("app","Table Name")?></th>
-							<th><?php echo Yii::t("app","Department")?></th>
+							<th><?php echo Yii::t("app","Link")?></th>
+							<th><?php echo Yii::t("app","Description")?></th>
 
 
 						</tr>
@@ -27,14 +41,12 @@
 					<?php echo $sq++; ?>					
 					</td>
 							<td>
-							<a href="index.php?r=<?php echo $model->url;?>">
-							<i class="fa fa-calendar" style="color:green"></i>
-						
-							<?php echo isset($model["name"])? $model["name"]: ""; ?>
-							</a>
+																		
+							<?php echo isset($model["url"])? $model["url"]: ""; ?>
+							<?php echo Html::encode(isset($model["url"])? $model["url"]: ""); ?>
 							</td>
 							<td>						
-							<?php echo isset($model->department_name)? $model->department_name: ""; ?>
+							<?php echo isset($model->description)? $model->description: ""; ?>
 							</td>
 							
 					</tr>
@@ -56,10 +68,6 @@
 	</div>
 </div>
 
-  
-        
-
-
 <script src="js/jquery-2.1.4.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/plugins/pace.min.js"></script>
@@ -72,12 +80,12 @@
 <script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
 
 <script type="text/javascript">
-var table = $('#report_table').DataTable(
+var table = $('#data_table').DataTable(
 	{
 		"pagingType": "full_numbers",
 		language: {
 			 search: "<?php echo Yii::t("app","Search:");?>",
-			 searchPlaceholder: "<?php echo Yii::t("app","Search keyword by static table name or department name");?>",
+			 searchPlaceholder: "<?php echo Yii::t("app","Search Keyword");?>",
 			 "lengthMenu":"<?php echo Yii::t("app","Display"); ?> _MENU_ <?php echo Yii::t("app","records"); ?> <?php echo Yii::t("app","per"); ?> <?php echo Yii::t("app","page"); ?>",
 	         "zeroRecords": "<?php echo Yii::t("app","Sorry , Nothing found"); ?>",
 	         "info":"<?php echo Yii::t("app","Showing");?> _START_ <?php echo Yii::t("app","to");?> _END_ <?php echo Yii::t("app","of");?> _TOTAL_ <?php echo Yii::t("app","entries");?>",
@@ -91,26 +99,26 @@ var table = $('#report_table').DataTable(
 	          }	        			  
 		},
 		//to hide colom in which garet is 2 in which department
-	    "columnDefs": [
-	         { "visible": false, "targets": 2 }
-	    ],
+// 	    "columnDefs": [
+// 	         { "visible": false, "targets": 2 }
+// 	    ],
 	    //"order": [[ 2, 'asc' ]],
 		"displayLength": 20,	    	               
 		//Customize for group
-		"drawCallback": function ( settings ) {
-	        var api = this.api();
-	        var rows = api.rows( {page:'current'} ).nodes();
-	        var last=null;
+// 		"drawCallback": function ( settings ) {
+// 	        var api = this.api();
+// 	        var rows = api.rows( {page:'current'} ).nodes();
+// 	        var last=null;
 
-	        api.column(2, {page:'current'} ).data().each( function ( group, i ) {
-	            if ( last !== group ) {
-	                $(rows).eq( i ).before(
-	                    '<tr class="group"><td colspan="2">'+group+'</td></tr>'
-	                );
-	                last = group;
-	            }
-	        } );
-	    }
+// 	        api.column(2, {page:'current'} ).data().each( function ( group, i ) {
+// 	            if ( last !== group ) {
+// 	                $(rows).eq( i ).before(
+// 	                    '<tr class="group"><td colspan="2">'+group+'</td></tr>'
+// 	                );
+// 	                last = group;
+// 	            }
+// 	        } );
+// 	    }
 		
 	}	
 			
@@ -118,7 +126,7 @@ var table = $('#report_table').DataTable(
 
 
 $('.dataTables_filter input[type="search"]').
-attr('placeholder','<?php echo Yii::t("app","Search keyword by static table name or department name");?>').
+attr('placeholder','<?php echo Yii::t("app","Search Keyword");?>').
 css({'height':'40px','width':'500px','display':'inline-block'});
 
 
