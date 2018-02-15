@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </section>
 
-<section class="login-content" style="margin-top: -20vh">
+<section class="login-content">
     <div class="row">
         <div class="col-xs-12">
             <div class="login-box">
