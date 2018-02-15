@@ -26,7 +26,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
             'url:url',
-            ['class' => 'yii\grid\ActionColumn'],
-    ],
+            [
+                'filter' => false,
+                'header' => 'ເບິ່ງ ແກ້ໄຂ',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return Html::a('<i class="fa fa-eye"></i>', ['view','id' => $data->id], ['class' => 'btn btn-warning'])
+                        . ' ' .
+                        Html::a('<i class="fa fa-pencil"></i>', ['update','id' => $data->id], ['class' => 'btn btn-primary']);
+                }
+            ]
+        ],
     ]); ?>
 </div>

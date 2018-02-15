@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterInputOptions' => ['placeholder' => 'ຊອກຫາຕາມຊື່', 'class' => 'form-control'],
                 'format' => 'html',
                 'value' => function ($data) {
-                    return "<a href='" . $data->url . "'>" . $data->name . "</a>";
+                    return "<a href='" . $data->url . "' target='_blank'>" . $data->name . "</a>";
                 }
             ]
         ],

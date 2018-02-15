@@ -10,10 +10,8 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'ແກ້ໄຂຂໍ້ມູນ ເຊື່ອມຕໍ່ພາຍນອກ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="link-view">
-
+<div class="card">
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('ແກ້ໄຂຂໍ້ມູນ', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('ລຶບ', ['delete', 'id' => $model->id], [
@@ -24,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -32,5 +29,4 @@ $this->params['breadcrumbs'][] = $this->title;
             'url:url',
         ],
     ]) ?>
-
 </div>
