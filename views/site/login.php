@@ -16,15 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <h3 class="login-head text-center">
     ລະບົບຖານຂໍ້ມູນສະຖິຕິຂະແໜງການພາຍໃນ
 </h3>
-
-<section class="material-half-bg" style="padding-top: 90vh;">
-    <div class="cover" style="vertical-align: middle">
-        <h6 style="color: #ffffff;padding-top: 10px;text-align: center">
-            ກົມແຜນການ ແລະ ການຮ່ວມມື, ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
-        </h6>
-    </div>
-</section>
-
 <section class="login-content">
     <div class="row">
         <div class="col-xs-12">
@@ -41,9 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]);
                 ?>
-<!--                <h4 class="login-head">-->
-<!--                    <i class="fa fa-lg fa-fw fa-user"></i>ເຂົ້າສູ່ລະບົບ-->
-<!--                </h4>-->
                 <div class="">
                     <label class="control-label">ຊື່ຜູ້ໃຊ້</label>
                     <?= $form->field($model, 'username')->textInput([

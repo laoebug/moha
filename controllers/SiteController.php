@@ -138,6 +138,15 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionNotices() {
+        $searchModel = new NoticeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('notices', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionNotice($id)
     {
         $model = Notice::findOne($id);
