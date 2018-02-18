@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມພັດທະນາ ແລະ ການບໍລິຫານລັດ'), 'url' => ['index']];
-// $this->title = Yii::t('app', 'Statistics of Single Gateway Implementations');
+ $this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ';
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 

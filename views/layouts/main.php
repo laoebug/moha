@@ -140,7 +140,7 @@ use app\components\BreacrumbWidget;
                             endforeach;
                             ?>
                             <li class="not-head">
-                                <a href="index.php?r=notice/index">
+                                <a href="index.php?r=site/notices">
                                     ແຈ້ງການທັງໝົດ
                                 </a>
                             </li>

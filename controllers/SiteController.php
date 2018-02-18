@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ContactForm;
 use app\models\Content;
+use app\models\LinkSearch;
 use app\models\LoginForm;
 use app\models\Notice;
 use app\models\NoticeSearch;
@@ -137,6 +138,15 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionNotices() {
+        $searchModel = new NoticeSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('notices', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionNotice($id)
     {
         $model = Notice::findOne($id);
@@ -160,6 +170,16 @@ class SiteController extends Controller
         return $this->render('contact', [
             'model' => $model,
             'contents' => $contents
+        ]);
+    }
+
+    public function actionLinks() {
+        $searchModel = new LinkSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('links', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 }

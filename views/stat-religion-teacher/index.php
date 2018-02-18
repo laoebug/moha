@@ -152,7 +152,7 @@ use yii\grid\GridView;
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active in" id="table">
-                    <div class="card">
+                    <div class="card" style="overflow-x: scroll">
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?> {{year.year}}</h3>
                             <p>
