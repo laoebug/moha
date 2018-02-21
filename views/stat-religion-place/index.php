@@ -185,7 +185,7 @@ use yii\grid\GridView;
                                 <th class="text-center">ສິມ</th>
                                 <th class="text-center">ບໍ່ມີສິມ</th>
                                 <?php for ($i = 0; $i < 10; $i++): ?>
-                                    <th class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'N') ?></th>
+                                    <th class="text-center"><?= $i % 2 == 0 ? 'ລວມ' : 'ບໍ່ອະນຸຍາດ' ?></th>
                                 <?php endfor; ?>
                             </tr>
                             <tr>

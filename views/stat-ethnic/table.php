@@ -45,7 +45,7 @@
                         $value = '-';
                         foreach ($models as $model)
                             if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
-                                $value = $model->total;
+                                $value = number_format($model->total);
                                 break;
                             }
                         echo $value;
@@ -63,7 +63,7 @@
                         $value = '-';
                         foreach ($models as $model)
                             if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
-                                $value = $model->women;
+                                $value = number_format($model->women);
                                 break;
                             }
                         echo $value;
@@ -105,7 +105,7 @@
                             $value = '-';
                             foreach ($models as $model)
                                 if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
-                                    $value = $model->total;
+                                    $value = number_format($model->total);
                                     break;
                                 }
                             echo $value;
@@ -123,7 +123,7 @@
                             $value = '-';
                             foreach ($models as $model)
                                 if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
-                                    $value = $model->women;
+                                    $value = number_format($model->women);
                                     break;
                                 }
                             echo $value;

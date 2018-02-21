@@ -42,7 +42,7 @@ use yii\grid\GridView;
                         <tr>
                             <td class="text-center" rowspan="2">ຈຳນວນເມືອງ</td>
                             <td class="text-center" rowspan="2">ຈຳນວນບ້ານ</td>
-                            <td class="text-center" colspan="2">ຂຳນວນ ພົນລະເມືອງ</td>
+                            <td class="text-center" colspan="2">ຈຳນວນ ພົນລະເມືອງ</td>
                         </tr>
                         <tr>
                             <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
@@ -172,8 +172,8 @@ use yii\grid\GridView;
                             </tr>
                             <tr>
                                 <?php for ($i = 0; $i < 6; $i++): ?>
-                                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
+                                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
                                 <?php endfor; ?>
                             </tr>
                             <tr>
