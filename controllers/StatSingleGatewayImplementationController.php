@@ -52,7 +52,6 @@ class StatSingleGatewayImplementationController extends Controller
 
     public function actionEnquiry($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -62,27 +61,8 @@ class StatSingleGatewayImplementationController extends Controller
                 return;
             }
         }
-
-
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
-
-//        $model = StatSingleGatewayImplementation::find()
-//            ->alias('i')
-//            ->join('join', 'stat_single_gateway_implementation_detail d', 'i.id=d.ministry_id and i.phiscal_year_id=:year', [
-//                ':year' => $year->id
-//            ])
-//            ->join('right join', 'ministry m', 'm.id=d.ministry_id')
-//            ->with(['statSingleGatewayImplementationDetails' => function(ActiveQuery $query) {
-//                $query
-////                    ->select('d.id, d.name, d.remark, d.ministry_id, d.stat_single_gateway_implementation_id')
-//                    ->select(['DATE_FORMAT(`start_date`, "%d-%m-%Y") as `start_date`, `d`.`id`, `d`.`name`, `d`.`remark`, `d`.`ministry_id`, `d`.`stat_single_gateway_implementation_id`'])
-//                    ->alias('d')
-//                    ->with(['ministry']);
-//            }])
-//            ->orderBy('m.position')
-//            ->asArray()
-//            ->one();
 
         $model = StatSingleGatewayImplementation::find()->where(['phiscal_year_id' => $year])->one();
         if (!isset($model)) throw new HttpException(Yii::t('app', 'No Data'));
@@ -103,7 +83,6 @@ class StatSingleGatewayImplementationController extends Controller
 
     public function actionInquiry($year, $ministry)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -113,7 +92,6 @@ class StatSingleGatewayImplementationController extends Controller
                 return;
             }
         }
-
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));

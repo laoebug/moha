@@ -1,11 +1,11 @@
-<?php $_GET['menu']=1;?>
+<?php $_GET['menu'] = 1; ?>
 <?php
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatLocalAdminSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມການປົກຄອງທ້ອງຖິ່ນ'), 'url' => ['index']];
-// $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ";
+$this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -24,7 +24,8 @@
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+                ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
@@ -197,46 +198,46 @@
                             </tr>
                             <tr>
                                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center">{{sum('province_head_total') | number  | dash}}</th>
-                                <th class="text-center">{{sum('province_head_women') | number  | dash}}</th>
-                                <th class="text-center">{{sum('province_vice_total') | number  | dash}}</th>
-                                <th class="text-center">{{sum('province_vice_women') | number  | dash}}</th>
-                                <th class="text-center">{{sum('district_head_total') | number  | dash}}</th>
-                                <th class="text-center">{{sum('district_head_women') | number  | dash}}</th>
-                                <th class="text-center">{{sum('district_vice_total') | number  | dash}}</th>
-                                <th class="text-center">{{sum('district_vice_women') | number  | dash}}</th>
-                                <th class="text-center">{{sum('village_head_total') | number  | dash}}</th>
-                                <th class="text-center">{{sum('village_head_women') | number  | dash}}</th>
-                                <th class="text-center">{{sum('village_vice_total') | number  | dash}}</th>
-                                <th class="text-center">{{sum('village_vice_women') | number  | dash}}</th>
-                                <th class="text-center">{{sum('population_total') | number  | dash}}</th>
-                                <th class="text-center">{{sum('population_women') | number  | dash}}</th>
-                                <th class="text-center">{{sum('village') | number  | dash}}</th>
-                                <th class="text-center">{{sum('family_total') | number  | dash}}</th>
-                                <th class="text-center">{{sum('family_poor') | number  | dash}}</th>
+                                <th class="text-center">{{sum('province_head_total') | number | dash}}</th>
+                                <th class="text-center">{{sum('province_head_women') | number | dash}}</th>
+                                <th class="text-center">{{sum('province_vice_total') | number | dash}}</th>
+                                <th class="text-center">{{sum('province_vice_women') | number | dash}}</th>
+                                <th class="text-center">{{sum('district_head_total') | number | dash}}</th>
+                                <th class="text-center">{{sum('district_head_women') | number | dash}}</th>
+                                <th class="text-center">{{sum('district_vice_total') | number | dash}}</th>
+                                <th class="text-center">{{sum('district_vice_women') | number | dash}}</th>
+                                <th class="text-center">{{sum('village_head_total') | number | dash}}</th>
+                                <th class="text-center">{{sum('village_head_women') | number | dash}}</th>
+                                <th class="text-center">{{sum('village_vice_total') | number | dash}}</th>
+                                <th class="text-center">{{sum('village_vice_women') | number | dash}}</th>
+                                <th class="text-center">{{sum('population_total') | number | dash}}</th>
+                                <th class="text-center">{{sum('population_women') | number | dash}}</th>
+                                <th class="text-center">{{sum('village') | number | dash}}</th>
+                                <th class="text-center">{{sum('family_total') | number | dash}}</th>
+                                <th class="text-center">{{sum('family_poor') | number | dash}}</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{m.province_name}}</td>
-                                <td class="text-center">{{m.province_head_total | number  | dash}}</td>
-                                <td class="text-center">{{m.province_head_women | number  | dash}}</td>
-                                <td class="text-center">{{m.province_vice_total | number  | dash}}</td>
-                                <td class="text-center">{{m.province_vice_women | number  | dash}}</td>
-                                <td class="text-center">{{m.district_head_total | number  | dash}}</td>
-                                <td class="text-center">{{m.district_head_women | number  | dash}}</td>
-                                <td class="text-center">{{m.district_vice_total | number  | dash}}</td>
-                                <td class="text-center">{{m.district_vice_women | number  | dash}}</td>
-                                <td class="text-center">{{m.village_head_total | number  | dash}}</td>
-                                <td class="text-center">{{m.village_head_women | number  | dash}}</td>
-                                <td class="text-center">{{m.village_vice_total | number  | dash}}</td>
-                                <td class="text-center">{{m.village_vice_women | number  | dash}}</td>
-                                <td class="text-center">{{m.population_total | number  | dash}}</td>
-                                <td class="text-center">{{m.population_women | number  | dash}}</td>
-                                <td class="text-center">{{m.village | number  | dash}}</td>
-                                <td class="text-center">{{m.family_total | number  | dash}}</td>
-                                <td class="text-center">{{m.family_poor | number  | dash}}</td>
+                                <td class="text-center">{{m.province_head_total | number | dash}}</td>
+                                <td class="text-center">{{m.province_head_women | number | dash}}</td>
+                                <td class="text-center">{{m.province_vice_total | number | dash}}</td>
+                                <td class="text-center">{{m.province_vice_women | number | dash}}</td>
+                                <td class="text-center">{{m.district_head_total | number | dash}}</td>
+                                <td class="text-center">{{m.district_head_women | number | dash}}</td>
+                                <td class="text-center">{{m.district_vice_total | number | dash}}</td>
+                                <td class="text-center">{{m.district_vice_women | number | dash}}</td>
+                                <td class="text-center">{{m.village_head_total | number | dash}}</td>
+                                <td class="text-center">{{m.village_head_women | number | dash}}</td>
+                                <td class="text-center">{{m.village_vice_total | number | dash}}</td>
+                                <td class="text-center">{{m.village_vice_women | number | dash}}</td>
+                                <td class="text-center">{{m.population_total | number | dash}}</td>
+                                <td class="text-center">{{m.population_women | number | dash}}</td>
+                                <td class="text-center">{{m.village | number | dash}}</td>
+                                <td class="text-center">{{m.family_total | number | dash}}</td>
+                                <td class="text-center">{{m.family_poor | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -307,11 +308,11 @@
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-    app.filter('dash', function() {
-      return function(input) {
-        return input ? input : '-';
-      };
-    });
+  app.filter('dash', function () {
+    return function (input) {
+      return input ? input : '-';
+    };
+  });
   app.controller('statLocalAdminController', function ($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-local-admin/';
     $scope.mode = 'read';
@@ -424,7 +425,7 @@
         for (var n = 0; n < $scope.models.length; n++)
           if ($scope.models[n][key])
             total += parseInt($scope.models[n][key]);
-      return total == 0 ? null : total;
+      return total == 0 ? 0 : total;
     };
 
 

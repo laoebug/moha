@@ -12,7 +12,7 @@
     @page { size: landscape; }
 </style>
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12" style="overflow-x: scroll">
         <div class="card">
             <div class="card-title-w-btn ">
                 <h3 class="title">ຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ ປີ (<?= $year->year ?>)</h3>
@@ -52,15 +52,15 @@
                             <th class="text-center"><?= number_format($total-$women) ?></th>
                         </tr>
                         <tr>
-                            <td class="text-center" colspan="2">< 25</td>
-                            <td class="text-center" colspan="2">25 - 30</td>
-                            <td class="text-center" colspan="2">31 - 35</td>
-                            <td class="text-center" colspan="2">36 - 40</td>
-                            <td class="text-center" colspan="2">41 - 45</td>
-                            <td class="text-center" colspan="2">46 - 50</td>
-                            <td class="text-center" colspan="2">51 - 55</td>
-                            <td class="text-center" colspan="2">56 - 60</td>
-                            <td class="text-center" colspan="2">61 +</td>
+                            <td class="text-center" colspan="2">ອາຍຸຕໍ່າກວ່າ 25 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 25 ຫາ 30 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 31 ຫາ 35 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 36 ຫາ 40 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 41 ຫາ 45 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 46 ຫາ 50 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 51 ຫາ 55 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 56 ຫາ 60 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 61 ປີ ຂຶ້ນໄປ</td>
                             <td colspan="3" rowspan="3"></td>
                         </tr>
                         <tr>

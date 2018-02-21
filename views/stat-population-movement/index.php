@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatPopulationMovementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງພົນລະເມືອງ'), 'url' => ['index']];
-// $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງຂອງກະຊວງພາຍໃນ";
+$this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງຂອງກະຊວງພາຍໃນ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -383,7 +383,7 @@ use yii\grid\GridView;
         for (var n = 0; n < $scope.models.length; n++)
           if ($scope.models[n][key])
             total += parseInt($scope.models[n][key]);
-      return total == 0 ? null : total;
+      return total == 0 ? 0 : total;
     };
 
     $scope.uploadedFile = function (element) {

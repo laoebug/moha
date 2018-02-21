@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerPositionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
-// $this->title = "ຈຳນວນລັດຖະກອນ ແຍກຕາມຕຳແໜ່ງບໍລິຫານປະເພດຕ່າງໆ";
+ $this->title = "ຈຳນວນລັດຖະກອນ ແຍກຕາມຕຳແໜ່ງບໍລິຫານປະເພດຕ່າງໆ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -151,7 +151,7 @@ use yii\grid\GridView;
                             </tr>
                             <tr>
                                 <?php for ($i = 1; $i < 17; $i++): ?>
-                                    <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
+                                    <td class="text-center"><?= Yii::t('app', $i % 2 == 1 ? 'T' : 'W') ?></td>
                                 <?php endfor; ?>
                             </tr>
                             <tr>

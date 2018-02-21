@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatResearchSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ສະຖາບັນຄົ້ນຄວ້າວິທະຍາສາດການປົກຄອງ ແລະ ຝຶກອົບຮົມ'), 'url' => ['index']];
-// $this->title = "ສະຖິຕິສູນຄົ້ນຄວ້າວຽກງານການປົກຄອງ";
+$this->title = "ສະຖິຕິສູນຄົ້ນຄວ້າວຽກງານການປົກຄອງ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -84,6 +84,11 @@ use yii\grid\GridView;
                 <div class="col-sm-2" style="margin-top: 1em">
                     <button type="button" class="btn btn-primary col-sm-12" ng-click="save()">
                         <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
+                    </button>
+                </div>
+                <div class="col-sm-2" style="margin-top: 1em" ng-if="model">
+                    <button type="button" class="btn btn-danger col-sm-12" ng-click="delete()">
+                        <i class="fa fa-trash"></i> ລຶບ
                     </button>
                 </div>
             </div>
@@ -252,6 +257,45 @@ use yii\grid\GridView;
         });
       }
     };
+
+    $scope.delete = function() {
+      if ($scope.model && $scope.year && confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ່?')) {
+        $http.post($scope.url + 'delete&year=' + $scope.year.id, {
+          'Model': $scope.model,
+          '_csrf': $('meta[name="csrf-token"]').attr("content")
+        }).then(function (r) {
+          $scope.model = null;
+          $('.datepicker').val('');
+          $scope.response = r;
+          $scope.enquiry();
+          $timeout(function () {
+            $scope.response = null;
+          }, 15000);
+        }, function (r) {
+          $scope.model = null;
+          $scope.response = r;
+          $timeout(function () {
+            $scope.response = null;
+          }, 15000);
+        });
+      }
+    };
+
+    $scope.getreferences = function() {
+      if($scope.year) {
+        $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
+          .then(function (r) {
+            if (r.data)
+              $scope.references = r.data.files;
+          }, function (r) {
+            $scope.response = r;
+            $timeout(function () {
+              $scope.response = null;
+            }, 15000);
+          });
+      }
+    };
+
 
     $scope.sum = function (key) {
       var s = 0;

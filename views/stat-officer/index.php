@@ -6,7 +6,7 @@ use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
-// $this->title = "ຈຳນວນລັດຖະກອນທົ່ວປະເທດ";
+ $this->title = "ຈຳນວນລັດຖະກອນທົ່ວປະເທດ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -108,13 +108,13 @@ use yii\grid\GridView;
                             <tr>
                                 <th rowspan="5">I</th>
                                 <th colspan="2"><?= $this->title ?></th>
-                                <th class="text-right">{{formatNumber(model.center_total + model.province_total +
+                                <th class="text-center">{{formatNumber(model.center_total + model.province_total +
                                     model.district_total)}}
                                 </th>
-                                <th class="text-right">{{formatNumber(model.center_women + model.province_women +
+                                <th class="text-center">{{formatNumber(model.center_women + model.province_women +
                                     model.district_women)}}
                                 </th>
-                                <th class="text-right">{{formatNumber(model.center_total + model.province_total +
+                                <th class="text-center">{{formatNumber(model.center_total + model.province_total +
                                     model.district_total -(model.center_women + model.province_women +
                                     model.district_women))}}
                                 </th>
@@ -122,33 +122,33 @@ use yii\grid\GridView;
                             <tr>
                                 <th>1</th>
                                 <th>ຂັ້ນກະຊວງ (ສູນກາງ)</th>
-                                <th class="text-right">{{formatNumber(model.center_total)}}</th>
-                                <th class="text-right">{{formatNumber(model.center_women)}}</th>
-                                <th class="text-right">{{formatNumber(model.center_total- model.center_women)}}</th>
+                                <th class="text-center">{{formatNumber(model.center_total)}}</th>
+                                <th class="text-center">{{formatNumber(model.center_women)}}</th>
+                                <th class="text-center">{{formatNumber(model.center_total- model.center_women)}}</th>
                             </tr>
                             <tr>
                                 <th rowspan="3">2</th>
                                 <th>ຂັ້ນທ້ອງຖິ່ນ</th>
-                                <th class="text-right">{{formatNumber(model.province_total + model.district_total)}}
+                                <th class="text-center">{{formatNumber(model.province_total + model.district_total)}}
                                 </th>
-                                <th class="text-right">{{formatNumber(model.province_women + model.district_women)}}
+                                <th class="text-center">{{formatNumber(model.province_women + model.district_women)}}
                                 </th>
-                                <th class="text-right">{{formatNumber(model.province_total + model.district_total -
+                                <th class="text-center">{{formatNumber(model.province_total + model.district_total -
                                     (model.province_women + model.district_women))}}
                                 </th>
                             </tr>
                             <tr>
                                 <td>ພະແນກການແຂວງ</td>
-                                <td class="text-right">{{formatNumber(model.province_total)}}</td>
-                                <td class="text-right">{{formatNumber(model.province_women)}}</td>
-                                <td class="text-right">{{formatNumber(model.province_total - model.province_women)}}
+                                <td class="text-center">{{formatNumber(model.province_total)}}</td>
+                                <td class="text-center">{{formatNumber(model.province_women)}}</td>
+                                <td class="text-center">{{formatNumber(model.province_total - model.province_women)}}
                                 </td>
                             </tr>
                             <tr>
                                 <td>ຫ້ອງການຂັ້ນເມືອງ</td>
-                                <td class="text-right">{{formatNumber(model.district_total)}}</td>
-                                <td class="text-right">{{formatNumber(model.district_women)}}</td>
-                                <td class="text-right">{{formatNumber(model.district_total - model.district_women)}}
+                                <td class="text-center">{{formatNumber(model.district_total)}}</td>
+                                <td class="text-center">{{formatNumber(model.district_women)}}</td>
+                                <td class="text-center">{{formatNumber(model.district_total - model.district_women)}}
                                 </td>
                             </tr>
                             </tbody>

@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatPopulationMovementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-// $this->title = "ການສົມທຽບສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງ";
+$this->title = "ການສົມທຽບສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

@@ -95,9 +95,9 @@ use yii\widgets\Pjax;
                                 <tr ng-repeat="m in models" style="cursor:pointer;">
                                     <td>{{$index + 1}}</td>
                                     <td>{{m.name}}</td>
-                                    <td class="text-center">{{m.start_date}}</td>
-                                    <td class="text-center">{{m.servicename}}</td>
-                                    <td class="text-center">{{m.remark}}</td>
+                                    <td class="text-center">{{m.start_date | dash}}</td>
+                                    <td class="text-center">{{m.servicename | dash}}</td>
+                                    <td class="text-center">{{m.remark | dash}}</td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -31,9 +31,9 @@
                             <tr>
                                 <td><?= ++$i ?></td>
                                 <td><?= $b->ministry->name ?></td>
-                                <td><?= \app\components\MyHelper::convertdatefordisplay($b->start_date) ?></td>
-                                <td><?= $b->name ?></td>
-                                <td><?= $b->remark ?></td>
+                                <td><?= isset($b->start_date)? \app\components\MyHelper::convertdatefordisplay($b->start_date):'-' ?></td>
+                                <td><?= isset($b->name)?$b->name:'-' ?></td>
+                                <td><?= isset($b->remark)?$b->remark:'-' ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

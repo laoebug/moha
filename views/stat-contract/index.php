@@ -4,7 +4,7 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\StatContract */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຈັດຕັ້ງ ແລະ ພະນັກງານ'), 'url' => ['index']];
-// $this->title = "ຕາຕະລາງສັງລວມພະນັກງານຕາມສັນຍາ";
+$this->title = "ຕາຕະລາງສັງລວມພະນັກງານຕາມສັນຍາ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

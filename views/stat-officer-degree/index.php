@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatOfficerDegreeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
-// $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ້ນວິຊາສະເພາະ";
+$this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ້ນວິຊາສະເພາະ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerAgeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
-// $this->title = "ຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ";
+ $this->title = "ຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -34,11 +34,11 @@ use yii\grid\GridView;
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <td class="text-center" colspan="2">< 25</td>
-                            <td class="text-center" colspan="2">25 - 30</td>
-                            <td class="text-center" colspan="2">31 - 35</td>
-                            <td class="text-center" colspan="2">36 - 40</td>
-                            <td class="text-center" colspan="2">41 - 45</td>
+                            <td class="text-center" colspan="2">ອາຍຸຕໍ່າກວ່າ 25 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 25 ຫາ 30 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 31 ຫາ 35 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 36 ຫາ 40 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 41 ຫາ 45 ປີ</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -71,10 +71,10 @@ use yii\grid\GridView;
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <td class="text-center" colspan="2">46 - 50</td>
-                            <td class="text-center" colspan="2">51 - 55</td>
-                            <td class="text-center" colspan="2">56 - 60</td>
-                            <td class="text-center" colspan="2">61 +</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 46 ຫາ 50 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 51 ຫາ 55 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 56 ຫາ 60 ປີ</td>
+                            <td class="text-center" colspan="2">ອາຍຸ 61 ປີ ຂຶ້ນໄປ</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -143,7 +143,7 @@ use yii\grid\GridView;
                             <tbody>
                             <tr>
                                 <th rowspan="4">III</th>
-                                <th class="text-center" colspan="18"><?= $this->title ?></th>
+                                <th class="" colspan="18"><?= $this->title ?></th>
                                 <th class="text-center">
                                     {{model.total_u25+ model.total_25_30+ model.total_31_35+ model.total_36_40+
                                     model.total_41_45+ model.total_46_50+ model.total_51_55+ model.total_56_60+
@@ -163,15 +163,15 @@ use yii\grid\GridView;
                                 </th>
                             </tr>
                             <tr>
-                                <td class="text-center" colspan="2">< 25</td>
-                                <td class="text-center" colspan="2">25 - 30</td>
-                                <td class="text-center" colspan="2">31 - 35</td>
-                                <td class="text-center" colspan="2">36 - 40</td>
-                                <td class="text-center" colspan="2">41 - 45</td>
-                                <td class="text-center" colspan="2">46 - 50</td>
-                                <td class="text-center" colspan="2">51 - 55</td>
-                                <td class="text-center" colspan="2">56 - 60</td>
-                                <td class="text-center" colspan="2">61 +</td>
+                                <td class="text-center" colspan="2">ອາຍຸຕໍ່າກວ່າ 25 ປີ</td>
+                                <td class="text-center" colspan="2">ອາຍຸ 25 ຫາ 30 ປີ</td>
+                                <td class="text-center" colspan="2">ອາຍຸ 31 ຫາ 35 ປີ</td>
+                                <td class="text-center" colspan="2">ອາຍຸ 36 ຫາ 40 ປີ</td>
+                                <td class="text-center" colspan="2">ອາຍຸ 41 ຫາ 45 ປີ</td>
+                                <td class="text-center" colspan="2">ອາຍຸ 46 ຫາ 50 ປີ</td>
+                                <td class="text-center" colspan="2">ອາຍຸ 51 ຫາ 55 ປີ</td>
+                                <td class="text-center" colspan="2">ອາຍຸ 56 ຫາ 60 ປີ</td>
+                                <td class="text-center" colspan="2">ອາຍຸ 61 ປີ ຂຶ້ນໄປ</td>
                                 <td colspan="3" rowspan="3"></td>
                             </tr>
                             <tr>
@@ -180,24 +180,24 @@ use yii\grid\GridView;
                                 <?php endfor; ?>
                             </tr>
                             <tr>
-                                <td class="text-center">{{model.total_u25 }}</td>
-                                <td>{{model.women_u25 }}</td>
-                                <td class="text-center">{{model.total_25_30}}</td>
-                                <td>{{model.women_25_30 }}</td>
-                                <td class="text-center">{{model.total_31_35}}</td>
-                                <td>{{model.women_31_35 }}</td>
-                                <td class="text-center">{{model.total_36_40}}</td>
-                                <td>{{model.women_36_40 }}</td>
-                                <td class="text-center">{{model.total_41_45}}</td>
-                                <td>{{model.women_41_45 }}</td>
-                                <td class="text-center">{{model.total_46_50}}</td>
-                                <td>{{model.women_46_50 }}</td>
-                                <td class="text-center">{{model.total_51_55}}</td>
-                                <td>{{model.women_51_55 }}</td>
-                                <td class="text-center">{{model.total_56_60}}</td>
-                                <td>{{model.women_56_60 }}</td>
-                                <td class="text-center">{{model.total_61u }}</td>
-                                <td>{{model.women_61u }}</td>
+                                <td class="text-center">{{model.total_u25 | number | dash}}</td>
+                                <td>{{model.women_u25 | number | dash}}</td>
+                                <td class="text-center">{{model.total_25_30 | number | dash}}</td>
+                                <td>{{model.women_25_30 | number | dash}}</td>
+                                <td class="text-center">{{model.total_31_35 | number | dash}}</td>
+                                <td>{{model.women_31_35 | number | dash}}</td>
+                                <td class="text-center">{{model.total_36_40 | number | dash}}</td>
+                                <td>{{model.women_36_40 | number | dash}}</td>
+                                <td class="text-center">{{model.total_41_45 | number | dash}}</td>
+                                <td>{{model.women_41_45 | number | dash}}</td>
+                                <td class="text-center">{{model.total_46_50 | number | dash}}</td>
+                                <td>{{model.women_46_50 | number | dash}}</td>
+                                <td class="text-center">{{model.total_51_55 | number | dash}}</td>
+                                <td>{{model.women_51_55 | number | dash}}</td>
+                                <td class="text-center">{{model.total_56_60 | number | dash}}</td>
+                                <td>{{model.women_56_60 | number | dash}}</td>
+                                <td class="text-center">{{model.total_61u | number | dash}}</td>
+                                <td>{{model.women_61u | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>

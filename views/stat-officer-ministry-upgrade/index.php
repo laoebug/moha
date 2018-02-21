@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatOfficerMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມປະເມີນຜົນ ແລະ ພັດທະນາລັດຖະກອນ'), 'url' => ['index']];
-// $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂັ້ນກະຊວງທີ່ໄປຍົກລະດັບຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
+$this->title = "ສະຖິຕິສັງລວມພະນັກງານຂັ້ນກະຊວງທີ່ໄປຍົກລະດັບຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

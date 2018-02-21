@@ -1,9 +1,9 @@
-<?php $_GET['menu']=1;?>
+<?php $_GET['menu'] = 1; ?>
 <?php
 
 /* @var $this yii\web\View */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຜນທີ່ແຫ່ງຊາດ'), 'url' => ['index']];
-// $this->title = "ສະຖິຕິໂຄງການລົງທຶນຂອງລັດ";
+$this->title = "ສະຖິຕິໂຄງການລົງທຶນຂອງລັດ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -22,7 +22,8 @@
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+                ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="row">
@@ -182,8 +183,8 @@
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-  app.filter('dash', function() {
-    return function(input) {
+  app.filter('dash', function () {
+    return function (input) {
       return input ? input : '-';
     };
   });

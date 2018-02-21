@@ -1,14 +1,11 @@
-<?php $_GET['menu']=1;?>
+<?php $_GET['menu'] = 1; ?>
 <?php
-
-use yii\helpers\Html;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatOfficerProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມປະເມີນຜົນ ແລະ ພັດທະນາລັດຖະກອນ'), 'url' => ['index']];
-// $this->title = "ສະຖິຕິສັງລວມພະນັກງານ ລັດຖະກອນ ຂັ້ນທ້ອງຖິ່ນທີ່ໄປຍົກລະດັບຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
+$this->title = "ສະຖິຕິສັງລວມພະນັກງານ ລັດຖະກອນ ຂັ້ນທ້ອງຖິ່ນທີ່ໄປຍົກລະດັບຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -27,7 +24,8 @@ use yii\grid\GridView;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+                ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
@@ -245,8 +243,8 @@ use yii\grid\GridView;
                             <tr ng-repeat="m in models">
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td class="text-center">{{m.province_name}}</td>
-                                <td class="text-center">{{formatNumber(sumtotal(m)) | number | dash}}</td>
-                                <td class="text-center">{{formatNumber(sumwomen(m)) | number | dash}}</td>
+                                <td class="text-center">{{sumtotal(m) | number | dash}}</td>
+                                <td class="text-center">{{sumwomen(m) | number | dash}}</td>
                                 <?php foreach ($cols as $col): ?>
                                     <td class="text-center">{{formatNumber(m.<?= $col ?> )| number | dash}}</td>
                                 <?php endforeach; ?>
@@ -287,7 +285,8 @@ use yii\grid\GridView;
                         </div>
                         <div class="col-sm-3">
                             <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
+                                   type="text">
                         </div>
                         <div class="col-sm-3">
                             <label>ອອກໂດຍ</label>
@@ -316,7 +315,8 @@ use yii\grid\GridView;
                                     <tbody>
                                     <tr ng-repeat="f in references">
                                         <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                        </td>
                                         <td class="text-center">{{f.issued_no}}</td>
                                         <td class="text-center">{{f.issued_date | date}}</td>
                                         <td class="text-center">{{f.issued_by}}</td>
@@ -346,8 +346,8 @@ use yii\grid\GridView;
 <script type="text/javascript">
   Chart.defaults.global.defaultFontFamily = 'Saysettha OT';
   var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
-  app.filter('dash', function() {
-    return function(input) {
+  app.filter('dash', function () {
+    return function (input) {
       return input ? input : '-';
     };
   });
@@ -472,7 +472,7 @@ use yii\grid\GridView;
       if (m.middle_out_total) s += parseInt(m.middle_out_total);
       if (m.begin_in_total) s += parseInt(m.begin_in_total);
       if (m.begin_out_total) s += parseInt(m.begin_out_total);
-      return $scope.formatNumber(s);
+      return s;
     };
 
     $scope.sumwomen = function (m) {
@@ -490,7 +490,7 @@ use yii\grid\GridView;
       if (m.middle_out_women) s += parseInt(m.middle_out_women);
       if (m.begin_in_women) s += parseInt(m.begin_in_women);
       if (m.begin_out_women) s += parseInt(m.begin_out_women);
-      return $scope.formatNumber(s);
+      return s;
     };
 
     $scope.formatNumber = function (num, dec) {
@@ -509,13 +509,13 @@ use yii\grid\GridView;
 
 
     $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
+      if (!$scope.issued_no) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນເລກທີ');
         return;
       }
       $scope.issued_date = $('#issued_date').val();
-      if(!$scope.issued_date) {
+      if (!$scope.issued_date) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນວັນທີ');
         return;
@@ -560,8 +560,8 @@ use yii\grid\GridView;
       });
     };
 
-    $scope.getreferences = function() {
-      if($scope.year) {
+    $scope.getreferences = function () {
+      if ($scope.year) {
         $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
           .then(function (r) {
             if (r.data)
@@ -575,10 +575,10 @@ use yii\grid\GridView;
       }
     };
 
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
+    $scope.deletefile = function (f) {
+      if ($scope.year && f) {
+        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
+          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
             'id': f.id,
             '_csrf': $('meta[name="csrf-token"]').attr("content")
           }).then(function (r) {

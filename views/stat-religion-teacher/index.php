@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatReligionTeacherSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມວຽກງານຊົນເຜົ່າ ແລະ ສາສະໜາ'), 'url' => ['index']];
-// $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສາສະໜາ ໃນທົ່ວປະເທດ";
+$this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສາສະໜາ ໃນທົ່ວປະເທດ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -438,7 +438,7 @@ use yii\grid\GridView;
         for (var n = 0; n < $scope.models.length; n++)
           if ($scope.models[n][key])
             total += parseInt($scope.models[n][key]);
-      return total == 0 ? null : total;
+      return total == 0 ? 0 : total;
     };
 
 

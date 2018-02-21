@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatOfficerSalarySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຈັດຕັ້ງ ແລະ ພະນັກງານ'), 'url' => ['index']];
-// $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ";
+$this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

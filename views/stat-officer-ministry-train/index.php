@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatOfficerMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມປະເມີນຜົນ ແລະ ພັດທະນາລັດຖະກອນ'), 'url' => ['index']];
-// $this->title = "ຕາຕະລາງສັງລວມສະຖິຕິພະນັກງານລັດຖະກອນຂັ້ນກະຊວງ ທີ່ໄປຝຶກອົບຮົມ ຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
+$this->title = "ຕາຕະລາງສັງລວມສະຖິຕິພະນັກງານລັດຖະກອນຂັ້ນກະຊວງ ທີ່ໄປຝຶກອົບຮົມ ຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -349,7 +349,7 @@
         for (var n = 0; n < $scope.models.length; n++)
           if ($scope.models[n][key])
             total += parseInt($scope.models[n][key]);
-      return total == 0 ? null : total;
+      return total == 0 ? 0 : total;
     };
 
     $scope.sumtotal = function (m) {
@@ -358,7 +358,7 @@
       if (m.tech_out_total) s += parseInt(m.tech_out_total);
       if (m.theo_in_total) s += parseInt(m.theo_in_total);
       if (m.theo_out_total) s += parseInt(m.theo_out_total);
-      return s == 0 ? null : s;
+      return s == 0 ? 0 : s;
     };
 
     $scope.sumwomen = function (m) {
@@ -367,7 +367,7 @@
       if (m.tech_out_women) s += parseInt(m.tech_out_women);
       if (m.theo_in_women) s += parseInt(m.theo_in_women);
       if (m.theo_out_women) s += parseInt(m.theo_out_women);
-      return s == 0 ? null : s;
+      return s == 0 ? 0 : s;
     };
 
     $scope.formatNumber = function (num, dec) {

@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\StatMapServiceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຜນທີ່ແຫ່ງຊາດ'), 'url' => ['index']];
-// $this->title = "ສະຖິຕິການບໍລິການແຜນທີ່ມາດຕາສ່ວນ";
+$this->title = "ສະຖິຕິການບໍລິການແຜນທີ່ມາດຕາສ່ວນ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
