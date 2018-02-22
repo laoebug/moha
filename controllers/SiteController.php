@@ -202,7 +202,7 @@ class SiteController extends Controller
                     $folder = 'upload/' . date('Y') . '/';
                     if (!is_dir($folder)) {
                         mkdir($folder);
-                        chmod($folder, 124);
+                        chmod($folder, 0755);
                     }
                     move_uploaded_file($_FILES['upload']['tmp_name'], $folder . $name);
                     $message = 'ສຳເລັດ';
