@@ -187,23 +187,6 @@ class SiteController extends Controller
 
     public function actionUpload()
     {
-//        $funcNum = $_REQUEST['CKEditorFuncNum'];
-//        if ($_FILES['upload']) {
-//            if (($_FILES['upload'] == "none") OR (empty($_FILES['upload']['name']))) {
-//                $message = 'ຟາຍບໍ່ຖືກຕ້ອງ';
-//            } else if ($_FILES['upload']["size"] == 0 OR $_FILES['upload']["size"] > 500 * 1024 * 1024) {
-//                $message = 'ບໍ່ສາມາດອັບໂຫຼດຟາຍທີ່ມີຂະໜາດເກີນ 500MB';
-//            } else if (!is_uploaded_file($_FILES['upload']["tmp_name"])) {
-//                $message = 'ພົບບັນຫາໃນການອັບໂຫຼດ';
-//            } else {
-//                $extension = pathinfo($_FILES['upload']['name'], PATHINFO_EXTENSION);
-//                $name = 'notice-' . date('YmdHis') . "-" . rand(123456789, 9876543210) . '.' . $extension;
-//                $folder = 'upload/' . date('Y') . '/';
-//                $url = Yii::$app->urlManager->createAbsoluteUrl($folder . $name);
-//                move_uploaded_file($_FILES['upload']['tmp_name'], $folder . $name);
-//            }
-//        }
-
         if ($_FILES['upload']) {
             try {
                 $funcNum = $_REQUEST['CKEditorFuncNum'];
