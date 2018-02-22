@@ -13,18 +13,24 @@ use yii\widgets\ActiveForm;
     <div class="col-xs-12">
         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'content')->widget(\dosamigos\ckeditor\CKEditor::className(), [
-            'options' => ['rows' => 6],
-            'preset' => 'full'
-        ]) ?>
+        <?= $form->field($model, 'content')
+            ->widget(\dosamigos\ckeditor\CKEditor::className(), [
+                'options' => ['rows' => 6],
+                'preset' => 'full',
+                'clientOptions' => [
+                    'filebrowserUploadUrl' => 'index.php?r=site/upload'
+                ]
+            ]) ?>
     </div>
     <div class="col-xs-3">
         <label>ເລີ່ມວັນທີ</label>
-        <input id="start_date" name="Notice[start_date]" value="<?= $model->start_date ?>" class="form-control datepicker" type="text">
+        <input id="start_date" name="Notice[start_date]" value="<?= $model->start_date ?>"
+               class="form-control datepicker" type="text">
     </div>
     <div class="col-xs-3">
         <label>ເຖິງວັນທີ</label>
-        <input id="end_date" name="Notice[end_date]" value="<?= $model->end_date ?>" class="form-control datepicker" type="text">
+        <input id="end_date" name="Notice[end_date]" value="<?= $model->end_date ?>" class="form-control datepicker"
+               type="text">
     </div>
     <div class="col-xs-3">
         <?= $form->field($model, 'position')->textInput() ?>

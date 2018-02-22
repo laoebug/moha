@@ -28,7 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'created_date',
             'title',
-            'content:ntext',
+            [
+                'attribute' => 'content',
+                'format' => 'html'
+            ],
             'start_date',
             'end_date',
             [

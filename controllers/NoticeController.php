@@ -74,6 +74,12 @@ class NoticeController extends Controller
                 $model->start_date = MyHelper::convertdatefordb($model->start_date);
                 $model->end_date = MyHelper::convertdatefordb($model->end_date);
                 if (!$model->save()) throw new Exception(json_encode($model->errors));
+
+                $notices = Notice::find()->where(['show' => 1])
+                    ->orderBy('position, created_date desc')
+                    ->asArray()
+                    ->all();
+                Yii::$app->session->set('notices', $notices);
                 return $this->redirect(['view', 'id' => $model->id]);
             } catch (Exception $exception) {
                 Yii::$app->session->setFlash('danger', $exception->getMessage());
@@ -102,6 +108,11 @@ class NoticeController extends Controller
                 $model->start_date = MyHelper::convertdatefordb($model->start_date);
                 $model->end_date = MyHelper::convertdatefordb($model->end_date);
                 if (!$model->save()) throw new Exception(json_encode($model->errors));
+                $notices = Notice::find()->where(['show' => 1])
+                    ->orderBy('position, created_date desc')
+                    ->asArray()
+                    ->all();
+                Yii::$app->session->set('notices', $notices);
                 return $this->redirect(['view', 'id' => $model->id]);
             } catch (Exception $exception) {
                 Yii::$app->session->setFlash('danger', $exception->getMessage());
