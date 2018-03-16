@@ -199,7 +199,7 @@ class SiteController extends Controller
                 } else {
                     $extension = pathinfo($_FILES['upload']['name'], PATHINFO_EXTENSION);
                     $name = 'notice-' . date('YmdHis') . "-" . rand(1234567890, 9876543210) . '.' . $extension;
-                    $folder = 'upload/' . date('Y') . '/';
+                    $folder = 'upload/files/' . date('Y') . '/';
                     if (!is_dir($folder)) {
                         mkdir($folder);
                         chmod($folder, 0755);

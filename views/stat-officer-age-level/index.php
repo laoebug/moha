@@ -69,7 +69,7 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
                         </tr>
                         <tr>
                             <?php for ($i = 0; $i < 8; $i++) : ?>
-                                <th class="text-center"><?= $i % 2 == 1 ? 'ລ' : 'ຍ' ?></th>
+                                <th class="text-center"><?= $i % 2 == 1 ? 'ຍ' : 'ລ' ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
@@ -93,13 +93,13 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
                         </tr>
                         <tr>
                             <?php for ($i = 0; $i < 8; $i++) : ?>
-                                <th class="text-center"><?= $i % 2 == 1 ? 'ລ' : 'ຍ' ?></th>
+                                <th class="text-center"><?= $i % 2 == 1 ? 'ຍ' : 'ລ' ?></th>
                             <?php endfor; ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for ($i = 13; $i < 21; $i++) : ?>
+                            <?php for ($i = 14; $i < 22; $i++) : ?>
                                 <td><input class="form-control" ng-model="model.<?= $columns[$i] ?>" type="number"
                                            min="0"></td>
                             <?php endfor; ?>

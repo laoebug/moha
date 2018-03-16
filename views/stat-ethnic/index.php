@@ -196,9 +196,7 @@ $this->title = "ສະຖິຕິຊົນເຜົ່າໃນທົ່ວປ�
           'StatEthnicDetail': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
         }).then(function (r) {
-          $scope.model.total = null;
-          $scope.model.women = null;
-          $scope.model.ethnic = null;
+          $scope.model = null;
           $scope.response = r;
           $scope.enquiry();
           $timeout(function () {

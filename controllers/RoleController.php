@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\components\MyHelper;
+use Codeception\Util\HttpCode;
 use Yii;
 use app\models\Role;
 use app\models\RoleSearch;

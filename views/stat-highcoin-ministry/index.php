@@ -142,8 +142,8 @@ $this->title = "ປະເພດຫຼຽນໄຊ ຊັນສູງ ແລະ �
                             </tr>
                             <tr ng-repeat="model in models">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{model.ministry}}</td>
-                                <td class="text-center">{{model.award}}</td>
+                                <td>{{model.ministry}}</td>
+                                <td>{{model.award}}</td>
                                 <td class="text-center">{{model.hero_personal | number | dash}}</td>
                                 <td class="text-center">{{model.hero_team | number | dash}}</td>
                                 <td class="text-center">{{model.knight_personal | number | dash}}</td>
