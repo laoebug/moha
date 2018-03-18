@@ -144,7 +144,7 @@ $this->title = "ສະຖິຕິສູນຄົ້ນຄວ້າວຽກງ�
                                 <td class="text-center">{{m.start_date}} - {{m.end_date}}</td>
                                 <td class="text-center">{{m.times | number | dash}}</td>
                                 <td class="text-center">{{m.place}}</td>
-                                <td class="text-center">{{m.remark}}</td>
+                                <td>{{m.remark}}</td>
                             </tr>
                             </tbody>
                             <tfoot>

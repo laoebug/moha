@@ -119,7 +119,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
                                 <td class="text-center">{{l.new == '1' ? '1':''}}</td>
                                 <td class="text-center">{{l.improve == '1' ? '1':''}}</td>
                                 <td class="text-center">{{l.publish}}</td>
-                                <td class="text-center">{{l.remark}}</td>
+                                <td>{{l.remark}}</td>
                             </tr>
                             <tr ng-show="t.legals.length > 0">
                                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>

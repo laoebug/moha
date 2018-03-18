@@ -111,7 +111,7 @@ $this->title = "ສະຖິຕິການບໍລິການແຜນທີ�
                                 <td class="text-center">{{m.amount | number | dash }}</td>
                                 <td class="text-center">{{m.km | number | dash }}</td>
                                 <td class="text-center">{{m.point | number | dash }}</td>
-                                <td class="text-center">{{m.remark}}</td>
+                                <td>{{m.remark}}</td>
                             </tr>
                             </tbody>
                         </table>

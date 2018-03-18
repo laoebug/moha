@@ -238,8 +238,8 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
                             </tr>
                             <tr ng-repeat="model in models">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{model.province}}</td>
-                                <td class="text-center">{{model.award}}</td>
+                                <td>{{model.province}}</td>
+                                <td>{{model.award}}</td>
                                 <td class="text-center">{{model.free1_personal | number | dash }}</td>
                                 <td class="text-center">{{model.free1_team | number | dash }}</td>
                                 <td class="text-center">{{model.free2_personal | number | dash }}</td>
@@ -274,7 +274,7 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
                                 <td class="text-center">{{sumrow(model, 'personal') | number | dash }}</td>
                                 <td class="text-center">{{sumrow(model, 'team') | number | dash }}</td>
 
-                                <td class="text-center">{{model.remark}}</td>
+                                <td>{{model.remark}}</td>
                             </tr>
                             </tbody>
                         </table>

@@ -108,7 +108,7 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
                                 <td>{{l.code == 'M' ? a.ministry.name:a.province.province_name}}</td>
                                 <td class="text-center">{{a.association | number | dash}}</td>
                                 <td class="text-center">{{a.foundation | number | dash}}</td>
-                                <td class="text-center">{{a.remark | number | dash}}</td>
+                                <td>{{a.remark}}</td>
                             </tr>
                             </tbody>
                             <tfoot>

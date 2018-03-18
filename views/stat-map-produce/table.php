@@ -39,7 +39,7 @@
                         <td class="text-center"><?= $index + 1 ?></td>
                         <td><?= $m['activity'] ?></td>
                         <td class="text-center"><?= number_format($m['amount']) ?></td>
-                        <td class="text-center"><?= $m['remark'] ?></td>
+                        <td><?= $m['remark'] ?></td>
                     </tr>
                     <?php endforeach; ?>
                     </tbody>

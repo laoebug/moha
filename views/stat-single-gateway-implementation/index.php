@@ -97,7 +97,7 @@ use yii\widgets\Pjax;
                                     <td>{{m.name}}</td>
                                     <td class="text-center">{{m.start_date | dash}}</td>
                                     <td class="text-center">{{m.servicename | dash}}</td>
-                                    <td class="text-center">{{m.remark | dash}}</td>
+                                    <td>{{m.remark}}</td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -71,7 +71,7 @@ foreach ($models as $model)
                         <?php foreach ($cols as $col): ?>
                             <td class="text-center"><?= number_format($model[$col]) ?></td>
                         <?php endforeach; ?>
-                        <td class="text-center"><?= $model['remark'] ?></td>
+                        <td><?= $model['remark'] ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

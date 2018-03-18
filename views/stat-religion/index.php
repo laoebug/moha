@@ -214,7 +214,7 @@ $this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສ
                                 <td class="text-center">{{m.idslam_women | number | dash}}</td>
                                 <td class="text-center">{{m.other_total | number | dash}}</td>
                                 <td class="text-center">{{m.other_women | number | dash}}</td>
-                                <td class="text-center">{{m.remark}}</td>
+                                <td>{{m.remark}}</td>
                             </tr>
                             </tbody>
                         </table>

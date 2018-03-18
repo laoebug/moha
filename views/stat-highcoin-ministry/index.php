@@ -159,7 +159,7 @@ $this->title = "ປະເພດຫຼຽນໄຊ ຊັນສູງ ແລະ �
                                 <td class="text-center">{{model.dev_team | number | dash}}</td>
                                 <td class="text-center">{{sumpersonal(model) | number | dash}}</td>
                                 <td class="text-center">{{sumteam(model) | number | dash}}</td>
-                                <td class="text-center">{{model.remark}}</td>
+                                <td>{{model.remark}}</td>
                             </tr>
                             </tbody>
                         </table>

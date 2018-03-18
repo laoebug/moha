@@ -46,7 +46,7 @@ class MyKCFinder extends \dosamigos\ckeditor\CKEditor
         $this->clientOptions = ArrayHelper::merge($browseOptions, $this->clientOptions);
 
         $kcfOptions = array_merge(KCFinder::$kcfDefaultOptions, [
-            'uploadURL' => \Yii::getAlias('@web').'/upload',
+            'uploadURL' => \Yii::getAlias('@web').'/upload/files',
             'access' => [
                 'files' => [
                     'upload' => true,

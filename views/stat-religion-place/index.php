@@ -226,7 +226,7 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                 <td class="text-center">{{m.bahai_not | number | dash}}</td>
                                 <td class="text-center">{{m.idslam_total | number | dash}}</td>
                                 <td class="text-center">{{m.idslam_not | number | dash}}</td>
-                                <td class="text-center">{{m.remark}}</td>
+                                <td>{{m.remark}}</td>
                             </tr>
                             </tbody>
                         </table>

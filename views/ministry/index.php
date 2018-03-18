@@ -94,7 +94,7 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
                                     ng-click="select(ministry)" style="cursor:pointer;">
                                     <td>{{$index+1}}</td>
                                     <td>{{ministry.name}}</td>
-                                    <td class="text-center">{{ministry.remark}}</td>
+                                    <td>{{ministry.remark}}</td>
                                 </tr>
                                 </tbody>
                                 <tfoot>

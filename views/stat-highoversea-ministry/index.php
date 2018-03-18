@@ -129,8 +129,8 @@ $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບ
                             </tr>
                             <tr ng-repeat="model in models">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{model.ministry}}</td>
-                                <td class="text-center">{{model.award}}</td>
+                                <td>{{model.ministry}}</td>
+                                <td>{{model.award}}</td>
                                 <td class="text-center">{{model.gold_personal| number | dash }}</td>
                                 <td class="text-center">{{model.gold_team | number | dash }}</td>
                                 <td class="text-center">{{model.lanx_personal| number | dash }}</td>
@@ -141,7 +141,7 @@ $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບ
                                 <td class="text-center">{{sumrow($index, 'personal') | number | dash }}</td>
                                 <td class="text-center">{{sumrow($index, 'team') | number | dash }}</td>
 
-                                <td class="text-center">{{model.remark}}</td>
+                                <td>{{model.remark}}</td>
                             </tr>
                             </tbody>
                         </table>

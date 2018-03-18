@@ -14,15 +14,6 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
         <?php
-//            echo $form->field($model, 'content')
-//            ->widget(\dosamigos\ckeditor\CKEditor::className(), [
-//                'options' => ['rows' => 6],
-//                'preset' => 'full',
-//                'clientOptions' => [
-//                    'filebrowserUploadUrl' => 'index.php?r=site/upload',
-//                    'filebrowserImageUploadUrl' => 'index.php?=site/browse'
-//                ]
-//            ]);
         echo $form->field($model, 'content')
             ->widget(\app\components\MyKCFinder::className(), [
                 'options' => ['rows' => 6],
@@ -32,10 +23,6 @@ use yii\widgets\ActiveForm;
 //                    'filebrowserImageUploadUrl' => 'index.php?=site/browse'
                 ]
             ]);
-        echo $form->field($model, 'content')->widget(\iutbay\yii2kcfinder\KCFinderInputWidget::className(), [
-            'multiple' => true,
-        ]);
-
         ?>
     </div>
     <div class="col-xs-3">

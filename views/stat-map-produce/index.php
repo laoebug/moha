@@ -92,7 +92,7 @@ $this->title = "ສະຖິຕິຜະລິດແຜນທີ່";
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{m.activity}}</td>
                                 <td class="text-center">{{m.amount | number | dash }}</td>
-                                <td class="text-center">{{m.remark}}</td>
+                                <td>{{m.remark}}</td>
                             </tr>
                             </tbody>
                         </table>

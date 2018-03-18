@@ -148,8 +148,8 @@ $this->title = "ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃ�
                             </tr>
                             <tr ng-repeat="model in models">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{model.province}}</td>
-                                <td class="text-center">{{model.award}}</td>
+                                <td>{{model.province}}</td>
+                                <td>{{model.award}}</td>
                                 <td class="text-center">{{model.labo_personal| number | dash }}</td>
                                 <td class="text-center">{{model.labo_team | number | dash }}</td>
                                 <td class="text-center">{{model.deve_personal| number | dash }}</td>
@@ -166,7 +166,7 @@ $this->title = "ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃ�
                                 <td class="text-center">{{sumrow($index, 'personal') | number | dash }}</td>
                                 <td class="text-center">{{sumrow($index, 'team') | number | dash }}</td>
 
-                                <td class="text-center">{{model.remark}}</td>
+                                <td>{{model.remark}}</td>
                             </tr>
                             </tbody>
                         </table>

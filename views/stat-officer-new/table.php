@@ -79,18 +79,18 @@ foreach ($model as $k => $m) {
                             }
                         }
                         ?>
-                        <td class="text-center"><?= $t ?></td>
-                        <td class="text-center"><?= $w ?></td>
-                        <td class="text-center"><?= $model['new_total'] ?></td>
-                        <td class="text-center"><?= $model['new_women'] ?></td>
-                        <td class="text-center"><?= $model['ministry_total'] ?></td>
-                        <td class="text-center"><?= $model['ministry_women'] ?></td>
-                        <td class="text-center"><?= $model['army_total'] ?></td>
-                        <td class="text-center"><?= $model['army_women'] ?></td>
-                        <td class="text-center"><?= $model['soe_total'] ?></td>
-                        <td class="text-center"><?= $model['soe_women'] ?></td>
-                        <td class="text-center"><?= $model['quota'] ?></td>
-                        <td class="text-center"><?= $model['need'] ?></td>
+                        <td class="text-center"><?= number_format($t) ?></td>
+                        <td class="text-center"><?= number_format($w) ?></td>
+                        <td class="text-center"><?= number_format($model['new_total']) ?></td>
+                        <td class="text-center"><?= number_format($model['new_women']) ?></td>
+                        <td class="text-center"><?= number_format($model['ministry_total']) ?></td>
+                        <td class="text-center"><?= number_format($model['ministry_women']) ?></td>
+                        <td class="text-center"><?= number_format($model['army_total']) ?></td>
+                        <td class="text-center"><?= number_format($model['army_women']) ?></td>
+                        <td class="text-center"><?= number_format($model['soe_total']) ?></td>
+                        <td class="text-center"><?= number_format($model['soe_women']) ?></td>
+                        <td class="text-center"><?= number_format($model['quota']) ?></td>
+                        <td class="text-center"><?= number_format($model['need']) ?></td>
                  ']   </tr>
                     <?php endforeach; ?>
                     </tbody>

@@ -124,14 +124,14 @@ $this->title = "ປະເພດຫຼຽນນາມມະຍົດຕ່າງ�
                     <td class="text-center">{{sum('labor_team')| number | dash }} </td>
                     <td class="text-center">{{sum('dev_personal')| number | dash }} </td>
                     <td class="text-center">{{sum('dev_team')| number | dash }} </td>
-                    <td class="text-center">{{sum('hero_personal') + sum('knight_personal') + sum('labor_personal') + sum('dev_personal')}}</td>
-                    <td class="text-center">{{sum('hero_team') + sum('knight_team') + sum('labor_team') + sum('dev_team')}}</td>
+                    <td class="text-center">{{sum('hero_personal') + sum('knight_personal') + sum('labor_personal') + sum('dev_personal') | number | dash}}</td>
+                    <td class="text-center">{{sum('hero_team') + sum('knight_team') + sum('labor_team') + sum('dev_team') | number | dash}}</td>
                     <td class="text-center"></td>
                 </tr>
                 <tr ng-repeat="model in models">
                     <td class="text-center">{{$index + 1}}</td>
-                    <td class="text-center">{{model.province}}</td>
-                    <td class="text-center">{{model.award}}</td>
+                    <td>{{model.province}}</td>
+                    <td>{{model.award}}</td>
                     <td class="text-center">{{model.hero_personal | number | dash}}</td>
                     <td class="text-center">{{model.hero_team | number | dash}}</td>
                     <td class="text-center">{{model.knight_personal | number | dash}}</td>
@@ -142,7 +142,7 @@ $this->title = "ປະເພດຫຼຽນນາມມະຍົດຕ່າງ�
                     <td class="text-center">{{model.dev_team | number | dash}}</td>
                     <td class="text-center">{{sumpersonal(model) | number | dash}}</td>
                     <td class="text-center">{{sumteam(model) | number | dash}}</td>
-                    <td class="text-center">{{model.remark}}</td>
+                    <td>{{model.remark}}</td>
                 </tr>
                 </tbody>
             </table>

@@ -143,7 +143,7 @@ use yii\grid\GridView;
                             <tbody>
                             <tr>
                                 <th rowspan="4">III</th>
-                                <th class="" colspan="18"><?= $this->title ?></th>
+                                <th colspan="18"><?= $this->title ?></th>
                                 <th class="text-center">
                                     {{model.total_u25+ model.total_25_30+ model.total_31_35+ model.total_36_40+
                                     model.total_41_45+ model.total_46_50+ model.total_51_55+ model.total_56_60+

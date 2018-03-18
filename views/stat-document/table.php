@@ -38,7 +38,7 @@
                     <?php foreach ($model['details'] as $index => $m) : ?>
                     <tr>
                         <td class="text-center"><?= $index + 1 ?></td>
-                        <td class="text-center"><?= $m['name'] ?></td>
+                        <td><?= $m['name'] ?></td>
                         <td class="text-center"><?= number_format($m['before']) ?></td>
                         <td class="text-center"><?= number_format($m['after']) ?></td>
                         <td class="text-center"><?= number_format($m['after_new'] ) ?></td>
