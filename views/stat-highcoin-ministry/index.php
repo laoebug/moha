@@ -108,6 +108,7 @@ $this->title = "ປະເພດຫຼຽນໄຊ ຊັນສູງ ແລະ �
                                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
                                 <th class="text-center" rowspan="2">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</th>
                                 <th class="text-center" rowspan="2">ຍ້ອງຍໍຜົນງານ</th>
+                                <th class="text-center" colspan="2">ຫຼຽນຄຳແຫ່ງຊາດ</th>
                                 <th class="text-center" colspan="2">ຫຼຽນນາມມະຍົດວິລະຊົນແຫ່ງຊາດ</th>
                                 <th class="text-center" colspan="2">ຫຼຽນນາມມະຍົດນັກຮົບແຂ່ງຂັນແຫ່ງຊາດ</th>
                                 <th class="text-center" colspan="2">ຫຼຽນນາມມະຍົດວິລະຊົນແຮງງານ</th>
@@ -124,6 +125,8 @@ $this->title = "ປະເພດຫຼຽນໄຊ ຊັນສູງ ແລະ �
                             <tbody>
                             <tr>
                                 <th class="text-center" colspan="3">ລວມ</th>
+                                <td class="text-center">{{sum('gold_personal')| number | dash }}</td>
+                                <td class="text-center">{{sum('gold_team')| number | dash }}</td>
                                 <td class="text-center">{{sum('hero_personal')| number | dash }}</td>
                                 <td class="text-center">{{sum('hero_team')| number | dash }}</td>
                                 <td class="text-center">{{sum('knight_personal')| number | dash }}</td>
@@ -144,6 +147,8 @@ $this->title = "ປະເພດຫຼຽນໄຊ ຊັນສູງ ແລະ �
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{model.ministry}}</td>
                                 <td>{{model.award}}</td>
+                                <td class="text-center">{{model.gold_personal | number | dash}}</td>
+                                <td class="text-center">{{model.gold_team | number | dash}}</td>
                                 <td class="text-center">{{model.hero_personal | number | dash}}</td>
                                 <td class="text-center">{{model.hero_team | number | dash}}</td>
                                 <td class="text-center">{{model.knight_personal | number | dash}}</td>
