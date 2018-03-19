@@ -73,7 +73,7 @@ class StatSingleGatewayImplementationController extends Controller
                 'start_date' => 'DATE_FORMAT(`start_date`, "%d-%m-%Y")',
             ])
             ->join('left join', 'stat_single_gateway_implementation_detail d', 'd.ministry_id = m.id and d.stat_single_gateway_implementation_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])
+            ->where('deleted=0 and ministry_group_id in (1,2)')
             ->orderBy('m.position')->asArray()->all();
 
         return json_encode([

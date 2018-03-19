@@ -43,7 +43,7 @@
                                 <td><?=$legal['name']?></td>
                                 <td class="text-center" style="width: 15%"><?=$legal['new'] == 1?1:''?></td>
                                 <td class="text-center" style="width: 15%"><?=$legal['improve'] == 1?1:''?></td>
-                                <td class="text-center"><?=$legal['publish']?></td>
+                                <td class="text-center"><?=isset($legal['publish'])?$legal['publish']:'-'?></td>
                                 <td class="text-center"><?=$legal['remark']?></td>
                             </tr>
                         <?php endforeach; ?>

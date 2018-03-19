@@ -118,7 +118,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
                                 <td>{{l.name}}</td>
                                 <td class="text-center">{{l.new == '1' ? '1':''}}</td>
                                 <td class="text-center">{{l.improve == '1' ? '1':''}}</td>
-                                <td class="text-center">{{l.publish}}</td>
+                                <td class="text-center">{{l.publish ? l.publish : '-'}}</td>
                                 <td>{{l.remark}}</td>
                             </tr>
                             <tr ng-show="t.legals.length > 0">

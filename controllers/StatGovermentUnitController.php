@@ -58,7 +58,9 @@ class StatGovermentUnitController extends Controller
             ->where(['deleted' => 0])->asArray()->all();
 
         $ministries = Ministry::find()
-            ->where("deleted=0 and ministry_group_id = 1")->orderBy('position')->asArray()->all();
+            ->where("deleted=0 and ministry_group_id = 1")
+            ->orderBy('position')
+            ->asArray()->all();
 
         return json_encode([
             "years" => $years,
@@ -74,15 +76,16 @@ class StatGovermentUnitController extends Controller
         }
 
         $ministries = Ministry::find()
-            ->where(['deleted' => 0])->orderBy('position')->all();
+            ->where('deleted=0 and ministry_group_id in (1,2)')
+            ->orderBy('position')->all();
 
         $model = StatGovermentUnit::find()
             ->with([
                 'statGovermentUnitDetails' => function(ActiveQuery $query) {
                     $query
                         ->with(['ministry' => function(ActiveQuery $query) {
-                            $query->where('deleted=0 and ministry_group_id = 1')
-                                ->orderBy('position');
+                            $query->where('ministry.deleted=0 and ministry.ministry_group_id = 1')
+                                ->orderBy('ministry.position');
                         }]);
                 }
             ])
