@@ -97,7 +97,7 @@ class StatVictorycoinMinistryController extends Controller
                 'award' => 'a.name'
             ])
             ->join('join', 'stat_victorycoin_ministry t', 't.id=d.stat_victorycoin_ministry_id and t.phiscal_year_id=:year', [':year'=> $year->id])
-            ->join('join', 'ministry m', 'm.id=d.ministry_id')
+            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
             ->join('join', 'award a', 'a.id=d.award_id')
             ->orderBy('m.position')
             ->asArray()->all();

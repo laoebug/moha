@@ -232,7 +232,6 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
                                     sum('middle_in_women') + sum('middle_out_women') + sum('begin_in_women') +
                                     sum('begin_out_women'))}}
                                 </th>
-                                </th>
                                 <?php foreach ($cols as $col): ?>
                                     <th class="text-center">{{formatNumber(sum('<?= $col ?>'))}}</th>
                                 <?php endforeach; ?>
@@ -262,7 +261,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
                                         chart-labels="stat.labels"
                                         chart-series="stat.series"
                                         chart-colors="stat.colors"
-                                        chart-options="options"
+                                        chart-options="options">
                                 </canvas>
                             </div>
                             <div class="col-sm-4">
@@ -270,7 +269,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
                                         chart-data="stat.data"
                                         chart-labels="stat.labels"
                                         chart-series="stat.series"
-                                        chart-colors="stat.colors"
+                                        chart-colors="stat.colors">
                                 </canvas>
                             </div>
                         </div>
@@ -329,7 +328,6 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -368,7 +366,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
       legend: {
         display: false,
         labels: {
-          fontColor: '',
+          fontColor: ''
         }
       },
       scales: {
@@ -391,7 +389,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
             }
           }]
         }
-      },
+      }
     };
 
     $http.get($scope.url + 'get')

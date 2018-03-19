@@ -123,7 +123,9 @@ class StatOfficerOrganisationAddController extends Controller
             return;
         }
 
-        $model = StatOfficerOrganisationAddDetail::find()->alias('d')->join('join', 'stat_officer_organisation_add o', 'o.id = d.stat_officer_organisation_add_id and o.phiscal_year_id=:year', [
+        $model = StatOfficerOrganisationAddDetail::find()
+            ->alias('d')
+            ->join('join', 'stat_officer_organisation_add o', 'o.id = d.stat_officer_organisation_add_id and o.phiscal_year_id=:year', [
             ':year' => $year->id
         ])->where([
             'organisation_id' => $organisation

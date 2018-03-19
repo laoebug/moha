@@ -91,7 +91,7 @@ class StatOfficerMinistryUpgradeController extends Controller
         $models = Ministry::find()->alias('m')
             ->select('m.*, d.*')
             ->join('left join', 'stat_officer_ministry_upgrade_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_upgrade_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+            ->where(['m.deleted' => 0])->orderBy('m.position')->asArray()->all();
 
         $query = StatOfficerProvinceUpgradeDetail::find()
             ->select(['stat_officer_province_upgrade_id' => 'stat_officer_province_upgrade_id']);
@@ -155,6 +155,7 @@ class StatOfficerMinistryUpgradeController extends Controller
 
         $model = StatOfficerMinistryUpgradeDetail::find()->alias('d')
             ->join('join', 'stat_officer_ministry_upgrade o', 'o.id = d.stat_officer_ministry_upgrade_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
             ->where(['d.ministry_id' => $ministry])
             ->asArray()->one();
 

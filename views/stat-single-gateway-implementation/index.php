@@ -1,15 +1,11 @@
-<?php $_GET['menu']=1;?>
+<?php $_GET['menu'] = 1; ?>
 <?php
-
-use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມພັດທະນາ ແລະ ການບໍລິຫານລັດ'), 'url' => ['index']];
- $this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ';
+$this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ';
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -29,7 +25,8 @@ use yii\widgets\Pjax;
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+                ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="row">
@@ -55,6 +52,11 @@ use yii\widgets\Pjax;
                 <div class="col-sm-2" style="margin-top: 2em">
                     <button type="button" class="btn btn-info col-sm-12" ng-click="save()">
                         <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
+                    </button>
+                </div>
+                <div class="col-sm-2" style="margin-top: 2em">
+                    <button ng-if="selected" type="button" class="btn btn-danger col-sm-12" ng-click="delete()">
+                        <i class="fa fa-trash"></i> <?= Yii::t('app', 'Delete') ?>
                     </button>
                 </div>
             </div>
@@ -92,7 +94,7 @@ use yii\widgets\Pjax;
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="m in models" style="cursor:pointer;">
+                                <tr ng-repeat="m in models" style="cursor:pointer;" ng-click="select(m)">
                                     <td>{{$index + 1}}</td>
                                     <td>{{m.name}}</td>
                                     <td class="text-center">{{m.start_date | dash}}</td>
@@ -117,8 +119,8 @@ use yii\widgets\Pjax;
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-  app.filter('dash', function() {
-    return function(input) {
+  app.filter('dash', function () {
+    return function (input) {
       return input ? input : '-';
     };
   });
@@ -182,7 +184,15 @@ use yii\widgets\Pjax;
     };
 
     $scope.select = function (m) {
-      $scope.selected = m;
+      $scope.selected = {};
+      for(var i in $scope.ministries) {
+        var ministry = $scope.ministries[i];
+        if(m.id === ministry.id) {
+          $scope.selected.ministry = ministry;
+          $scope.inquiry();
+          break;
+        }
+      }
     };
 
     $scope.save = function () {
@@ -205,15 +215,30 @@ use yii\widgets\Pjax;
       });
     };
 
+    $scope.delete = function () {
+      if ($scope.selected) {
+        $http.post($scope.url + 'delete', {'id': $scope.selected.id})
+          .then(function (r) {
+            $scope.selected = null;
+            $scope.enquiry();
+          }, function (r) {
+            $scope.response = r;
+            $timeout(function () {
+              $scope.response = null;
+            }, 15000);
+          });
+      }
+    };
+
 
     $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
+      if (!$scope.issued_no) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນເລກທີ');
         return;
       }
       $scope.issued_date = $('.datepicker').val();
-      if(!$scope.issued_date) {
+      if (!$scope.issued_date) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນວັນທີ');
         return;
@@ -258,8 +283,8 @@ use yii\widgets\Pjax;
       });
     };
 
-    $scope.getreferences = function() {
-      if($scope.year) {
+    $scope.getreferences = function () {
+      if ($scope.year) {
         $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
           .then(function (r) {
             if (r.data)
@@ -273,10 +298,10 @@ use yii\widgets\Pjax;
       }
     };
 
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
+    $scope.deletefile = function (f) {
+      if ($scope.year && f) {
+        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
+          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
             'id': f.id,
             '_csrf': $('meta[name="csrf-token"]').attr("content")
           }).then(function (r) {

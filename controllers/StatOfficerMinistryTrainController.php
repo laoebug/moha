@@ -96,6 +96,7 @@ class StatOfficerMinistryTrainController extends Controller
                 'theo_in_total' => 'sum(d.theo_in_total)',
                 'theo_out_total' => 'sum(d.theo_out_total)',
             ])->alias('d')
+            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
             ->where(['d.stat_officer_ministry_train_id' => $model->id])
             ->asArray()->one();
         $data = null;
@@ -143,6 +144,7 @@ class StatOfficerMinistryTrainController extends Controller
 
         $model = StatOfficerMinistryTrainDetail::find()->alias('d')
             ->join('join', 'stat_officer_ministry_train o', 'o.id = d.stat_officer_ministry_train_id and o.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
             ->where(['d.ministry_id' => $ministry])
             ->asArray()->one();
 
