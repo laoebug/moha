@@ -6,16 +6,14 @@ use app\components\MyHelper;
 use app\models\Attachment;
 use app\models\Menu;
 use app\models\PhiscalYear;
+use app\models\StatInstituteMeeting;
 use app\models\StatInstituteMeetingDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatInstituteMeeting;
-use app\models\StatInstituteMeetingSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatInstituteMeetingController implements the CRUD actions for StatInstituteMeeting model.
  */
@@ -128,6 +126,16 @@ class StatInstituteMeetingController extends Controller
                 $transaction->rollBack();
                 MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
                 return;
+            }
+        }
+    }
+
+    public function actionDelete()
+    {
+        $post = Yii::$app->request->post();
+        if (isset($post['Model'])) {
+            if (isset($post['Model']['id'])) {
+                return StatInstituteMeetingDetail::deleteAll(['id' => $post['Model']['id']]);
             }
         }
     }

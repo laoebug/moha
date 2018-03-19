@@ -7,17 +7,14 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\Ministry;
 use app\models\PhiscalYear;
+use app\models\StatOfficerMinistryTrain;
 use app\models\StatOfficerMinistryTrainDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerMinistryTrain;
-use app\models\StatOfficerMinistryTrainSearch;
 use yii\db\Exception;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerMinistryTrainController implements the CRUD actions for StatOfficerMinistryTrain model.
  */
@@ -86,7 +83,7 @@ class StatOfficerMinistryTrainController extends Controller
         $models = Ministry::find()->alias('m')
             ->select('m.*, d.*')
             ->join('left join', 'stat_officer_ministry_train_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_train_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+            ->where(['deleted' => 0, 'ministry_group_id' => 1])->orderBy('m.position')->asArray()->all();
 
         $stat = StatOfficerMinistryTrainDetail::find()
             ->select([

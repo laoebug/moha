@@ -7,16 +7,14 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\Organisation;
 use app\models\PhiscalYear;
+use app\models\StatOfficerOrganisationUpgrade;
 use app\models\StatOfficerOrganisationUpgradeDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerOrganisationUpgrade;
-use app\models\StatOfficerOrganisationUpgradeSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerOrganisationUpgradeController implements the CRUD actions for StatOfficerOrganisationUpgrade model.
  */
@@ -114,19 +112,18 @@ class StatOfficerOrganisationUpgradeController extends Controller
             'stat' => [
                 'series' => [Yii::t('app', 'Organisation Officer Upgrading')],
                 'labels' => [
-                    Yii::t('app', 'Doctor Local')
-                    , Yii::t('app', 'Doctor Oversea')
-                    , Yii::t('app', 'Master Local')
-                    , Yii::t('app', 'Master Oversea')
-                    , Yii::t('app', 'Bachelor Local')
-                    , Yii::t('app', 'Bachelor Oversea')
-
-                    , Yii::t('app', 'High Local')
-                    , Yii::t('app', 'High Oversea')
-                    , Yii::t('app', 'Middle Local')
-                    , Yii::t('app', 'Middle Oversea')
-                    , Yii::t('app', 'Begin Local')
-                    , Yii::t('app', 'Begin Oversea')
+                    'ປະລິນຍາເອກ ພາຍໃນ',
+                    'ປະລິນຍາເອກ ຕ່າງປະເທດ',
+                    'ປະລິນຍາໂທ ພາຍໃນ',
+                    'ປະລິນຍາໂທ ຕ່າງປະເທດ',
+                    'ປະລິນຍາຕີ ພາຍໃນ',
+                    'ປະລິນຍາຕີ ຕ່າງປະເທດ',
+                    'ຊັ້ນສູງ ຫຼື ທຽບເທົ່າ ພາຍໃນ',
+                    'ຊັ້ນສູງ ຫຼື ທຽບເທົ່າ ຕ່າງປະເທດ',
+                    'ຊັ້ນກາງ ພາຍໃນ',
+                    'ຊັ້ນກາງ ຕ່າງປະເທດ',
+                    'ຊັ້ນຕົ້ນ ພາຍໃນ',
+                    'ຊັ້ນຕົ້ນ ຕ່າງປະເທດ'
                 ],
                 'data' => $data
             ],

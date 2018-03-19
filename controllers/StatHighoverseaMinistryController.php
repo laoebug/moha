@@ -8,16 +8,14 @@ use app\models\Award;
 use app\models\Menu;
 use app\models\Ministry;
 use app\models\PhiscalYear;
+use app\models\StatHighoverseaMinistry;
 use app\models\StatHighoverseaMinistryDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatHighoverseaMinistry;
-use app\models\StatHighoverseaMinistrySearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatHighoverseaMinistryController implements the CRUD actions for StatHighoverseaMinistry model.
  */
@@ -51,7 +49,9 @@ class StatHighoverseaMinistryController extends Controller
     	
         $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
         $awards = Award::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
-        $ministries = Ministry::find()->where(['deleted' =>0])->orderBy('position')->asArray()->all();
+        $ministries = Ministry::find()
+            ->where('deleted=0 and ministry_group_id in (1,2)')
+            ->orderBy('position')->asArray()->all();
 
         return json_encode([
             'years' => $years,

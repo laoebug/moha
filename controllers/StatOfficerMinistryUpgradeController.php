@@ -7,18 +7,15 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\Ministry;
 use app\models\PhiscalYear;
+use app\models\StatOfficerMinistryUpgrade;
 use app\models\StatOfficerMinistryUpgradeDetail;
 use app\models\StatOfficerProvinceUpgradeDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
-use function GuzzleHttp\Psr7\str;
 use Yii;
-use app\models\StatOfficerMinistryUpgrade;
-use app\models\StatOfficerMinistryUpgradeSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerMinistryUpgradeController implements the CRUD actions for StatOfficerMinistryUpgrade model.
  */
@@ -117,19 +114,18 @@ class StatOfficerMinistryUpgradeController extends Controller
             'stat' => [
                 'series' => [Yii::t('app', 'Ministry Officer Upgrading')],
                 'labels' => [
-                    Yii::t('app', 'Doctor Local')
-                    , Yii::t('app', 'Doctor Oversea')
-                    , Yii::t('app', 'Master Local')
-                    , Yii::t('app', 'Master Oversea')
-                    , Yii::t('app', 'Bachelor Local')
-                    , Yii::t('app', 'Bachelor Oversea')
-
-                    , Yii::t('app', 'High Local')
-                    , Yii::t('app', 'High Oversea')
-                    , Yii::t('app', 'Middle Local')
-                    , Yii::t('app', 'Middle Oversea')
-                    , Yii::t('app', 'Begin Local')
-                    , Yii::t('app', 'Begin Oversea')
+                    'ປະລິນຍາເອກ ພາຍໃນ',
+                    'ປະລິນຍາເອກ ຕ່າງປະເທດ',
+                    'ປະລິນຍາໂທ ພາຍໃນ',
+                    'ປະລິນຍາໂທ ຕ່າງປະເທດ',
+                    'ປະລິນຍາຕີ ພາຍໃນ',
+                    'ປະລິນຍາຕີ ຕ່າງປະເທດ',
+                    'ຊັ້ນສູງ ຫຼື ທຽບເທົ່າ ພາຍໃນ',
+                    'ຊັ້ນສູງ ຫຼື ທຽບເທົ່າ ຕ່າງປະເທດ',
+                    'ຊັ້ນກາງ ພາຍໃນ',
+                    'ຊັ້ນກາງ ຕ່າງປະເທດ',
+                    'ຊັ້ນຕົ້ນ ພາຍໃນ',
+                    'ຊັ້ນຕົ້ນ ຕ່າງປະເທດ'
                 ],
                 'data' => $data
             ],
@@ -155,7 +151,7 @@ class StatOfficerMinistryUpgradeController extends Controller
 
         $model = StatOfficerMinistryUpgradeDetail::find()->alias('d')
             ->join('join', 'stat_officer_ministry_upgrade o', 'o.id = d.stat_officer_ministry_upgrade_id and o.phiscal_year_id=:year', [':year'=> $year->id])
-            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
+            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0 and m.ministry_group_id=1')
             ->where(['d.ministry_id' => $ministry])
             ->asArray()->one();
 

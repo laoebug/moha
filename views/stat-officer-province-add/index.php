@@ -74,16 +74,16 @@ $this->title = "ສະຖິຕິລັດຖະກອນທີ່ເພີ່�
                             <tr>
                                 <th><?= Yii::t('app', 'No.') ?></th>
                                 <th>ແຂວງ/ນະຄອນຫຼວງ</th>
-                                <th class="text-right"><?= Yii::t('app', 'Add') ?></th>
-                                <th class="text-right"><?= Yii::t('app', 'Resign') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Add') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Resign') ?></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td>{{$index + 1}}</td>
                                 <td>{{m.province_name}}</td>
-                                <td class="text-right">{{m.add | number | dash}}</td>
-                                <td class="text-right">{{m.resign | number | dash}}</td>
+                                <td class="text-center">{{m.add | number | dash}}</td>
+                                <td class="text-center">{{m.resign | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -97,7 +97,7 @@ $this->title = "ສະຖິຕິລັດຖະກອນທີ່ເພີ່�
                                 chart-labels="stat.labels"
                                 chart-series="stat.series"
                                 chart-colors="stat.colors"
-                                chart-options="options"
+                                chart-options="options">
                         </canvas>
                     </div>
                 </div>
