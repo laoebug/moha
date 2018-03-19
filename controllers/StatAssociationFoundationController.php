@@ -133,7 +133,9 @@ class StatAssociationFoundationController extends Controller
                         ->join('left join', 'stat_association_foundation_detail d', 'a.id = d.approver_id and d.stat_association_foundation_id=:id', [':id' => $model->id]);
                 }
             ])->alias('l')
-            ->where(['l.deleted' => 0])->orderBy('l.position')->asArray()->all();
+            ->where(['l.deleted' => 0])
+            ->orderBy('l.position, position')
+            ->asArray()->all();
 
         return json_encode([
             'models' => $models

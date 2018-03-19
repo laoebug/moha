@@ -108,8 +108,8 @@ use yii\grid\GridView;
             </div>
         </div>
     </div>
-    <div ng-show="model" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
-        <div class="bs-component card">
+    <div ng-show="model" class="col-sm-12">
+        <div class="bs-component card" style="margin-top: 2em;overflow-x: scroll">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
                 <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
@@ -181,23 +181,23 @@ use yii\grid\GridView;
                             </tr>
                             <tr>
                                 <td class="text-center">{{model.total_u25 | number | dash}}</td>
-                                <td>{{model.women_u25 | number | dash}}</td>
+                                <td class="text-center">{{model.women_u25 | number | dash}}</td>
                                 <td class="text-center">{{model.total_25_30 | number | dash}}</td>
-                                <td>{{model.women_25_30 | number | dash}}</td>
+                                <td class="text-center">{{model.women_25_30 | number | dash}}</td>
                                 <td class="text-center">{{model.total_31_35 | number | dash}}</td>
-                                <td>{{model.women_31_35 | number | dash}}</td>
+                                <td class="text-center">{{model.women_31_35 | number | dash}}</td>
                                 <td class="text-center">{{model.total_36_40 | number | dash}}</td>
-                                <td>{{model.women_36_40 | number | dash}}</td>
+                                <td class="text-center">{{model.women_36_40 | number | dash}}</td>
                                 <td class="text-center">{{model.total_41_45 | number | dash}}</td>
-                                <td>{{model.women_41_45 | number | dash}}</td>
+                                <td class="text-center">{{model.women_41_45 | number | dash}}</td>
                                 <td class="text-center">{{model.total_46_50 | number | dash}}</td>
-                                <td>{{model.women_46_50 | number | dash}}</td>
+                                <td class="text-center">{{model.women_46_50 | number | dash}}</td>
                                 <td class="text-center">{{model.total_51_55 | number | dash}}</td>
-                                <td>{{model.women_51_55 | number | dash}}</td>
+                                <td class="text-center">{{model.women_51_55 | number | dash}}</td>
                                 <td class="text-center">{{model.total_56_60 | number | dash}}</td>
-                                <td>{{model.women_56_60 | number | dash}}</td>
+                                <td class="text-center">{{model.women_56_60 | number | dash}}</td>
                                 <td class="text-center">{{model.total_61u | number | dash}}</td>
-                                <td>{{model.women_61u | number | dash}}</td>
+                                <td class="text-center">{{model.women_61u | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
