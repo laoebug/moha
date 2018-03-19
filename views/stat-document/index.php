@@ -129,7 +129,7 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
                             </tr>
                             <tr ng-repeat="m in model.details">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{m.name}}</td>
+                                <td>{{m.name}}</td>
                                 <td class="text-center">{{m.before | number | dash}}</td>
                                 <td class="text-center">{{m.after | number | dash}}</td>
                                 <td class="text-center">{{m.after_new | number | dash}}</td>

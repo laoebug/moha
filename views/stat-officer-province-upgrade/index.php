@@ -242,7 +242,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານ ລ
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{m.province_name}}</td>
+                                <td>{{m.province_name}}</td>
                                 <td class="text-center">{{sumtotal(m) | number | dash}}</td>
                                 <td class="text-center">{{sumwomen(m) | number | dash}}</td>
                                 <?php foreach ($cols as $col): ?>
