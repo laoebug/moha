@@ -109,14 +109,14 @@ use yii\grid\GridView;
         </div>
     </div>
     <div ng-show="model" class="col-sm-12">
-        <div class="bs-component card" style="margin-top: 2em;overflow-x: scroll">
+        <div class="bs-component card">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
                 <li><a href="#reference" data-toggle="tab">ເອກະສານອ້າງອີງ</a></li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active in" id="table">
-                    <div class="card">
+                    <div class="card" style="margin-top: 2em;overflow-x: scroll">
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?> {{year.year}}</h3>
                             <p>
