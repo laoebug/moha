@@ -203,7 +203,7 @@ class StatInvestmentController extends Controller
             return;
         }
 
-        StatInvestmentDetail::updateAll(['deleted' => 1], ['id' => $post['id']]);
+        StatInvestmentDetail::deleteAll(['id' => $post['id']]);
     }
 
     public function actionDownload($year)

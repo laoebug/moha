@@ -7,16 +7,14 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\OfficerLevel;
 use app\models\PhiscalYear;
+use app\models\StatOfficerAgeLevel;
 use app\models\StatOfficerAgelevelDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerAgeLevel;
-use app\models\StatOfficerAgeLevelSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerAgeLevelController implements the CRUD actions for StatOfficerAgeLevel model.
  */
@@ -37,7 +35,8 @@ class StatOfficerAgeLevelController extends Controller
     ];
 
     public $labels = [
-        '<18', '18-20','21-25', '26-30', '31-35', '35-40', '41-45', '46-50', '51-55', '56-60', '60+'
+        'ຕໍ່າກວ່າ 18 ປີ', '18 - 20 ປີ', '21 - 25 ປີ', '26 - 30 ປີ', '31 - 35 ປີ', '35 - 40 ປີ', '41 - 45 ປີ',
+        '46 - 50 ປີ', '51 - 55 ປີ', '56 - 60 ປີ', '60 ປີ ຂຶ້ນໄປ'
     ];
 
     /**

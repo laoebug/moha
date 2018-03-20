@@ -8,16 +8,14 @@ use app\models\Award;
 use app\models\Menu;
 use app\models\PhiscalYear;
 use app\models\Province;
+use app\models\StatGovoverseaProvince;
 use app\models\StatGovoverseaProvinceDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatGovoverseaProvince;
-use app\models\StatGovoverseaProvinceSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatGovoverseaProvinceController implements the CRUD actions for StatGovoverseaProvince model.
  */
@@ -188,6 +186,14 @@ class StatGovoverseaProvinceController extends Controller
                 return;
             }
         }
+    }
+
+    public function actionDelete()
+    {
+        $post = Yii::$app->request->post();
+        if (isset($post['Model']))
+            if (isset($post['Model']['id']))
+                return StatGovoverseaProvinceDetail::deleteAll(['id' => $post['Model']['id']]);
     }
 
     public function actionPrint($year) {

@@ -350,22 +350,34 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
 
     $scope.deletefile = function (f) {
       if ($scope.year && f) {
-        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });

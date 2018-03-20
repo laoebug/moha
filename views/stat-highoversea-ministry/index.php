@@ -1,8 +1,5 @@
-<?php $_GET['menu']=1;?>
+<?php $_GET['menu'] = 1; ?>
 <?php
-
-use yii\helpers\Html;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatHighoverseaMinistrySearch */
@@ -27,7 +24,8 @@ $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບ
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+                ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
@@ -184,7 +182,8 @@ $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບ
                                     <tbody>
                                     <tr ng-repeat="f in references">
                                         <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                        </td>
                                         <td class="text-center">{{f.issued_no}}</td>
                                         <td class="text-center">{{f.issued_date | date}}</td>
                                         <td class="text-center">{{f.issued_by}}</td>
@@ -211,8 +210,8 @@ $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບ
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
   var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-  app.filter('dash', function() {
-    return function(input) {
+  app.filter('dash', function () {
+    return function (input) {
       return input ? input : '-';
     };
   });
@@ -302,11 +301,11 @@ $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບ
 
     $scope.sumcolumn = function (key) {
       var s = 0;
-      if($scope.models)
-      for (var i = 0; i < $scope.models.length; i++) {
-        if ($scope.models[i][key])
-          s += parseInt($scope.models[i][key]);
-      }
+      if ($scope.models)
+        for (var i = 0; i < $scope.models.length; i++) {
+          if ($scope.models[i][key])
+            s += parseInt($scope.models[i][key]);
+        }
       return s;
     };
 
@@ -352,13 +351,13 @@ $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບ
 
 
     $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
+      if (!$scope.issued_no) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນເລກທີ');
         return;
       }
       $scope.issued_date = $('.datepicker').val();
-      if(!$scope.issued_date) {
+      if (!$scope.issued_date) {
         $scope.files = null;
         alert('ກະລຸນາປ້ອນວັນທີ');
         return;
@@ -403,8 +402,8 @@ $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບ
       });
     };
 
-    $scope.getreferences = function() {
-      if($scope.year) {
+    $scope.getreferences = function () {
+      if ($scope.year) {
         $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
           .then(function (r) {
             if (r.data)
@@ -418,24 +417,36 @@ $this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບ
       }
     };
 
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+    $scope.deletefile = function (f) {
+      if ($scope.year && f) {
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });
