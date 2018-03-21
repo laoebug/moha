@@ -147,7 +147,7 @@ use app\components\BreacrumbWidget;
                         </ul>
                     </li>
                     <li class="dropdown notification-menu">
-                        <a class="dropdown-toggle" href="manual.pdf" data-toggle="dropdown" aria-expanded="false">
+                        <a class="dropdown-toggle" href="manual.pdf"  aria-expanded="false" download>
                             <i class="fa fa-download fa-lg"></i> ຄູ່ມືນໍາໃຊ້
                         </a>
                     </li>
