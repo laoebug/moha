@@ -1,9 +1,6 @@
 <?php $_GET['menu']=1;?>
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatOfficerAgeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -108,7 +105,7 @@ use yii\grid\GridView;
             </div>
         </div>
     </div>
-    <div ng-show="model" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
+    <div ng-show="model" class="col-sm-12">
         <div class="bs-component card">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
@@ -116,7 +113,7 @@ use yii\grid\GridView;
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active in" id="table">
-                    <div class="card">
+                    <div class="card" style="margin-top: 2em;overflow-x: scroll">
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?> {{year.year}}</h3>
                             <p>
@@ -143,7 +140,7 @@ use yii\grid\GridView;
                             <tbody>
                             <tr>
                                 <th rowspan="4">III</th>
-                                <th class="" colspan="18"><?= $this->title ?></th>
+                                <th colspan="18"><?= $this->title ?></th>
                                 <th class="text-center">
                                     {{model.total_u25+ model.total_25_30+ model.total_31_35+ model.total_36_40+
                                     model.total_41_45+ model.total_46_50+ model.total_51_55+ model.total_56_60+
@@ -181,23 +178,23 @@ use yii\grid\GridView;
                             </tr>
                             <tr>
                                 <td class="text-center">{{model.total_u25 | number | dash}}</td>
-                                <td>{{model.women_u25 | number | dash}}</td>
+                                <td class="text-center">{{model.women_u25 | number | dash}}</td>
                                 <td class="text-center">{{model.total_25_30 | number | dash}}</td>
-                                <td>{{model.women_25_30 | number | dash}}</td>
+                                <td class="text-center">{{model.women_25_30 | number | dash}}</td>
                                 <td class="text-center">{{model.total_31_35 | number | dash}}</td>
-                                <td>{{model.women_31_35 | number | dash}}</td>
+                                <td class="text-center">{{model.women_31_35 | number | dash}}</td>
                                 <td class="text-center">{{model.total_36_40 | number | dash}}</td>
-                                <td>{{model.women_36_40 | number | dash}}</td>
+                                <td class="text-center">{{model.women_36_40 | number | dash}}</td>
                                 <td class="text-center">{{model.total_41_45 | number | dash}}</td>
-                                <td>{{model.women_41_45 | number | dash}}</td>
+                                <td class="text-center">{{model.women_41_45 | number | dash}}</td>
                                 <td class="text-center">{{model.total_46_50 | number | dash}}</td>
-                                <td>{{model.women_46_50 | number | dash}}</td>
+                                <td class="text-center">{{model.women_46_50 | number | dash}}</td>
                                 <td class="text-center">{{model.total_51_55 | number | dash}}</td>
-                                <td>{{model.women_51_55 | number | dash}}</td>
+                                <td class="text-center">{{model.women_51_55 | number | dash}}</td>
                                 <td class="text-center">{{model.total_56_60 | number | dash}}</td>
-                                <td>{{model.women_56_60 | number | dash}}</td>
+                                <td class="text-center">{{model.women_56_60 | number | dash}}</td>
                                 <td class="text-center">{{model.total_61u | number | dash}}</td>
-                                <td>{{model.women_61u | number | dash}}</td>
+                                <td class="text-center">{{model.women_61u | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -447,22 +444,34 @@ use yii\grid\GridView;
 
     $scope.deletefile = function(f) {
       if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });

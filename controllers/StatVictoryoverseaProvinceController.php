@@ -9,6 +9,7 @@ use app\models\PhiscalYear;
 use app\models\Province;
 use app\models\StatVictoryoverseaProvince;
 use app\models\StatVictoryoverseaProvinceDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
 use yii\db\Exception;
@@ -195,9 +196,16 @@ class StatVictoryoverseaProvinceController extends Controller
         }
     }
 
+    public function actionDelete()
+    {
+        $post = Yii::$app->request->post();
+        if (isset($post['Model']))
+            if (isset($post['Model']['id']))
+                return StatVictoryoverseaProvinceDetail::deleteAll(['id' => $post['Model']['id']]);
+    }
+
     public function actionPrint($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -224,7 +232,6 @@ class StatVictoryoverseaProvinceController extends Controller
             ->join('join', 'award a', 'a.id=d.award_id')
             ->asArray()->all();
 
-
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
                 'models' => $models,
@@ -238,7 +245,6 @@ class StatVictoryoverseaProvinceController extends Controller
 
     public function actionDownload($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;

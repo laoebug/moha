@@ -74,16 +74,16 @@ $this->title = "ສະຖິຕິລັດຖະກອນລວມຂອງແ�
                             <tr>
                                 <th><?= Yii::t('app', 'No.') ?></th>
                                 <th>ກະຊວງ, ອົງການທຽບເທົ່າກະຊວງ</th>
-                                <th class="text-right"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-right"><?= Yii::t('app', 'Women') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td>{{$index + 1}}</td>
                                 <td>{{m.name}}</td>
-                                <td class="text-right">{{m.total | number | dash}}</td>
-                                <td class="text-right">{{m.women | number | dash}}</td>
+                                <td class="text-center">{{m.total | number | dash}}</td>
+                                <td class="text-center">{{m.women | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -96,7 +96,7 @@ $this->title = "ສະຖິຕິລັດຖະກອນລວມຂອງແ�
                                 chart-data="stat.data"
                                 chart-labels="stat.labels"
                                 chart-series="stat.series"
-                                chart-colors="stat.colors"
+                                chart-colors="stat.colors">
                         </canvas>
                     </div>
                 </div>
@@ -315,22 +315,34 @@ $this->title = "ສະຖິຕິລັດຖະກອນລວມຂອງແ�
 
     $scope.deletefile = function (f) {
       if ($scope.year && f) {
-        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
 
@@ -403,22 +415,34 @@ $this->title = "ສະຖິຕິລັດຖະກອນລວມຂອງແ�
 
     $scope.deletefile = function (f) {
       if ($scope.year && f) {
-        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });

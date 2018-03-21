@@ -129,7 +129,7 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
                             </tr>
                             <tr ng-repeat="m in model.details">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{m.name}}</td>
+                                <td>{{m.name}}</td>
                                 <td class="text-center">{{m.before | number | dash}}</td>
                                 <td class="text-center">{{m.after | number | dash}}</td>
                                 <td class="text-center">{{m.after_new | number | dash}}</td>
@@ -397,22 +397,34 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
 
     $scope.deletefile = function (f) {
       if ($scope.year && f) {
-        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });

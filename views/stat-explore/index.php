@@ -1,9 +1,6 @@
 <?php $_GET['menu']=1;?>
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatExploreSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -55,9 +52,14 @@ $this->title = "ການເຄື່ອນໄຫວວຽກງານການ�
                     <label><?= Yii::t('app', 'Remark') ?></label>
                     <input type="text" class="form-control" ng-model="model.remark">
                 </div>
-                <div class="col-sm-3" style="margin-top: 1em">
+                <div class="col-sm-2" style="margin-top: 1em">
                     <button type="button" class="btn btn-primary col-sm-12" ng-click="save()">
                         <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
+                    </button>
+                </div>
+                <div class="col-sm-2" style="margin-top: 1em" ng-if="model">
+                    <button type="button" class="btn btn-danger col-sm-12" ng-click="delete()">
+                        <i class="fa fa-trash"></i> <?= Yii::t('app', 'Delete') ?>
                     </button>
                 </div>
             </div>
@@ -104,9 +106,9 @@ $this->title = "ການເຄື່ອນໄຫວວຽກງານການ�
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="m in models" style="cursor: pointer">
+                            <tr ng-repeat="m in models" style="cursor: pointer" ng-click="select(m)">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td>{{m.province}}</td>
+                                <td>{{m.province.province_name ? m.province.province_name : m.province}}</td>
                                 <td class="text-center">{{m.mark | number | dash }}</td>
                                 <td class="text-center">{{m.point | number | dash }}</td>
                                 <td class="text-center">{{m.hm | number | dash }}</td>
@@ -244,6 +246,52 @@ $this->title = "ການເຄື່ອນໄຫວວຽກງານການ�
       }
     };
 
+    $scope.select = function (m) {
+      $scope.model = m;
+      $scope.model.mark = parseInt(m.mark);
+      $scope.model.point = parseInt(m.point);
+      $scope.model.hm = parseInt(m.hm);
+      $scope.model.km = parseInt(m.km);
+
+      for (var i in $scope.provinces) {
+        var province = $scope.provinces[i];
+        if (province.id === $scope.model.province_id) {
+          $scope.model.province = province;
+          break;
+        }
+      }
+    };
+
+    $scope.delete = function () {
+      if ($scope.model) {
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'delete', {
+              'Model': $scope.model,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.model = null;
+              $scope.enquiry();
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
+      }
+    };
+
     $scope.save = function () {
       if ($scope.year && $scope.model) {
         $http.post($scope.url + 'save&year=' + $scope.year.id, {
@@ -345,22 +393,34 @@ $this->title = "ການເຄື່ອນໄຫວວຽກງານການ�
 
     $scope.deletefile = function(f) {
       if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });

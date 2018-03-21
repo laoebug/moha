@@ -74,7 +74,7 @@
                                                 echo (isset($detail[$item])?$detail[$item]:"");
                                                 echo '</td>';
                                             }
-                                            echo '<td class="text-center">' . (isset($detail['remark'])?$detail['remark']:'') . '</td>';
+                                            echo '<td>' . (isset($detail['remark'])?$detail['remark']:'') . '</td>';
                                             break;
                                         }
                                     }

@@ -1,9 +1,6 @@
 <?php $_GET['menu']=1;?>
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatInstituteTrainSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -73,6 +70,11 @@ $this->title = "ສະຖິຕິສັງລວມສະຖາບັນຈັ�
                 <div class="col-sm-2" style="margin-top: 1em">
                     <button type="button" class="btn btn-primary col-sm-12" ng-click="save()">
                         <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
+                    </button>
+                </div>
+                <div class="col-sm-2" style="margin-top: 1em" ng-if="model">
+                    <button type="button" class="btn btn-danger col-sm-12" ng-click="delete()">
+                        <i class="fa fa-trash"></i> <?= Yii::t('app', 'Delete') ?>
                     </button>
                 </div>
             </div>
@@ -264,6 +266,8 @@ $this->title = "ສະຖິຕິສັງລວມສະຖາບັນຈັ�
           '_csrf': $('meta[name="csrf-token"]').attr("content")
         }).then(function (r) {
           $scope.model = null;
+          $('#start_date').val(null);
+          $('#end_date').val(null);
           $scope.response = r;
           $scope.enquiry();
           $timeout(function () {
@@ -271,10 +275,43 @@ $this->title = "ສະຖິຕິສັງລວມສະຖາບັນຈັ�
           }, 15000);
         }, function (r) {
           $scope.model = null;
+          $('#start_date').val(null);
+          $('#end_date').val(null);
           $scope.response = r;
           $timeout(function () {
             $scope.response = null;
           }, 15000);
+        });
+      }
+    };
+
+    $scope.delete = function () {
+      if ($scope.model) {
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'delete', {
+              'Model': $scope.model,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.enquiry();
+            }, function (r) {
+              $scope.model = null;
+              $('#start_date').val(null);
+              $('#end_date').val(null);
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
         });
       }
     };
@@ -371,22 +408,34 @@ $this->title = "ສະຖິຕິສັງລວມສະຖາບັນຈັ�
 
     $scope.deletefile = function(f) {
       if($scope.year && f) {
-        if(confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year='+$scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });

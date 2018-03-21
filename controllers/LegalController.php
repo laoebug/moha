@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\components\MyHelper;
 use app\models\Legal;
 use app\models\LegalSearch;
 use app\services\AuthenticationService;
+use Codeception\Util\HttpCode;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

@@ -46,7 +46,7 @@
                         <td class="text-center"><?= number_format($m['amount']) ?></td>
                         <td class="text-center"><?= number_format($m['km']) ?></td>
                         <td class="text-center"><?= number_format($m['point']) ?></td>
-                        <td class="text-center"><?= $m['remark'] ?></td>
+                        <td><?= $m['remark'] ?></td>
                     </tr>
                     <?php endforeach; ?>
                     </tbody>

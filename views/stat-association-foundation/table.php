@@ -43,7 +43,7 @@
                                 <td><?=$t['code']=='M'?$a['ministry']['name']:$a['province']['province_name']?></td>
                                 <td class="text-center" style="width: 15%"><?=$a['association']?></td>
                                 <td class="text-center" style="width: 15%"><?=$a['foundation']?></td>
-                                <td class="text-center"><?=$a['remark']?></td>
+                                <td><?=$a['remark']?></td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endforeach; ?>

@@ -8,28 +8,26 @@ use app\models\Award;
 use app\models\Menu;
 use app\models\Ministry;
 use app\models\PhiscalYear;
+use app\models\StatGovoverseaMinistry;
 use app\models\StatGovoverseaMinistryDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatGovoverseaMinistry;
-use app\models\StatGovoverseaMinistrySearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatGovoverseaMinistryController implements the CRUD actions for StatGovoverseaMinistry model.
  */
 class StatGovoverseaMinistryController extends Controller
 {
     public $columns = [
-        'labo_personal','labo_team',
-        'deve_personal','deve_team',
-        'memo_personal','memo_team',
-        'amer_personal','amer_team',
-        'fran_personal','fran_team',
-        'gove_personal','gove_team',
+        'labo_personal', 'labo_team',
+        'deve_personal', 'deve_team',
+        'memo_personal', 'memo_team',
+        'amer_personal', 'amer_team',
+        'fran_personal', 'fran_team',
+        'gove_personal', 'gove_team',
     ];
 
     public $lables = ['ຫຼຽນກາແຮງງານ', 'ຫຼຽນກາພັດທະນາ', 'ຫຼຽນກາລະນຶກ 5 ປີ', 'ຫຼຽນກາຕໍ່ຕ້ານ A', 'ຫຼຽນກາຕໍ່ຕ້ານ F', 'ໃບຍ້ອງຍໍລັດຖະບານ'];
@@ -41,20 +39,23 @@ class StatGovoverseaMinistryController extends Controller
         ]);
     }
 
-    public function actionGet() {
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionGet()
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
         $awards = Award::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
-        $ministries = Ministry::find()->where(['deleted' =>0])->orderBy('position')->asArray()->all();
+        $ministries = Ministry::find()
+            ->where('deleted=0 and ministry_group_id in (1,2)')
+            ->orderBy('position')->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -63,20 +64,20 @@ class StatGovoverseaMinistryController extends Controller
         ]);
     }
 
-    public function actionEnquiry($year) {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionEnquiry($year)
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
+        if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
@@ -86,8 +87,8 @@ class StatGovoverseaMinistryController extends Controller
                 'ministry' => 'm.name',
                 'award' => 'a.name'
             ])
-            ->join('join', 'stat_govoversea_ministry t', 't.id=d.stat_govoversea_ministry_id and t.phiscal_year_id=:year', [':year'=> $year->id])
-            ->join('join', 'ministry m', 'm.id=d.ministry_id')
+            ->join('join', 'stat_govoversea_ministry t', 't.id=d.stat_govoversea_ministry_id and t.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
             ->join('join', 'award a', 'a.id=d.award_id')
             ->orderBy('m.position')
             ->asArray()->all();
@@ -97,20 +98,20 @@ class StatGovoverseaMinistryController extends Controller
         ]);
     }
 
-    public function actionInquiry($year, $ministry, $award) {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionInquiry($year, $ministry, $award)
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
+        if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
@@ -125,20 +126,20 @@ class StatGovoverseaMinistryController extends Controller
         return json_encode(['model' => $model]);
     }
 
-    public function actionSave($year) {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionSave($year)
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
+        if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
@@ -148,7 +149,7 @@ class StatGovoverseaMinistryController extends Controller
         }
 
         $post = Yii::$app->request->post();
-        if(isset($post)) {
+        if (isset($post)) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 $model = StatGovoverseaMinistry::find()->where(['phiscal_year_id' => $year->id])->one();
@@ -168,7 +169,7 @@ class StatGovoverseaMinistryController extends Controller
                         'ministry_id' => $post['Model']['ministry']['id'],
                         'award_id' => $post['Model']['award']['id'],
                     ])->one();
-                if(!isset($detail)) {
+                if (!isset($detail)) {
                     $detail = new StatGovoverseaMinistryDetail();
                     $detail->ministry_id = $post['Model']['ministry']['id'];
                     $detail->award_id = $post['Model']['award']['id'];
@@ -187,9 +188,18 @@ class StatGovoverseaMinistryController extends Controller
         }
     }
 
-    public function actionPrint($year) {
+    public function actionDelete()
+    {
+        $post = Yii::$app->request->post();
+        if (isset($post['Model']))
+            if (isset($post['Model']['id']))
+                return StatGovoverseaMinistryDetail::deleteAll(['id' => $post['Model']['id']]);
+    }
+
+    public function actionPrint($year)
+    {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
+        if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
@@ -200,7 +210,7 @@ class StatGovoverseaMinistryController extends Controller
                 'ministry' => 'm.name',
                 'award' => 'a.name'
             ])
-            ->join('join', 'stat_govoversea_ministry t', 't.id=d.stat_govoversea_ministry_id and t.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('join', 'stat_govoversea_ministry t', 't.id=d.stat_govoversea_ministry_id and t.phiscal_year_id=:year', [':year' => $year->id])
             ->join('join', 'ministry m', 'm.id=d.ministry_id')
             ->join('join', 'award a', 'a.id=d.award_id')
             ->asArray()->all();
@@ -216,9 +226,10 @@ class StatGovoverseaMinistryController extends Controller
         ]);
     }
 
-    public function actionDownload($year) {
+    public function actionDownload($year)
+    {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
+        if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
@@ -228,13 +239,13 @@ class StatGovoverseaMinistryController extends Controller
                 'ministry' => 'm.name',
                 'award' => 'a.name'
             ])
-            ->join('join', 'stat_govoversea_ministry t', 't.id=d.stat_govoversea_ministry_id and t.phiscal_year_id=:year', [':year'=> $year->id])
+            ->join('join', 'stat_govoversea_ministry t', 't.id=d.stat_govoversea_ministry_id and t.phiscal_year_id=:year', [':year' => $year->id])
             ->join('join', 'ministry m', 'm.id=d.ministry_id')
             ->join('join', 'award a', 'a.id=d.award_id')
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Gov Coin Ministry '. $year->year . '.xls',
+            'file' => 'Gov Coin Ministry ' . $year->year . '.xls',
             'content' => $this->renderPartial('table', [
                 'models' => $models,
                 'year' => $year,
@@ -244,25 +255,26 @@ class StatGovoverseaMinistryController extends Controller
         ]);
     }
 
-    public function beforeAction($action) {
-    	$user = Yii::$app->user->identity;
-    	$this->enableCsrfValidation = true;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			if (Yii::$app->request->isAjax) {
-    				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    				return;
-    			} else {
-    				return $this->redirect ( [
-    						'authentication/notallowed'
-    				] );
-    			}
-    		}
-    	}
-    
-    	return parent::beforeAction ( $action );
+    public function beforeAction($action)
+    {
+        $user = Yii::$app->user->identity;
+        $this->enableCsrfValidation = true;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                if (Yii::$app->request->isAjax) {
+                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                    return;
+                } else {
+                    return $this->redirect([
+                        'authentication/notallowed'
+                    ]);
+                }
+            }
+        }
+
+        return parent::beforeAction($action);
     }
 
     public function actionUpload($year)

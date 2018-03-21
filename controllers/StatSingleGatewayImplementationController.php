@@ -73,7 +73,7 @@ class StatSingleGatewayImplementationController extends Controller
                 'start_date' => 'DATE_FORMAT(`start_date`, "%d-%m-%Y")',
             ])
             ->join('left join', 'stat_single_gateway_implementation_detail d', 'd.ministry_id = m.id and d.stat_single_gateway_implementation_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])
+            ->where('deleted=0 and ministry_group_id in (1,2)')
             ->orderBy('m.position')->asArray()->all();
 
         return json_encode([
@@ -102,6 +102,7 @@ class StatSingleGatewayImplementationController extends Controller
                 ':year' => $year->id
             ])
             ->where(['d.ministry_id' => $ministry])
+            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
             ->asArray()->one();
 
         if (isset($model))
@@ -179,7 +180,6 @@ class StatSingleGatewayImplementationController extends Controller
 
     public function actionPrint($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -205,6 +205,14 @@ class StatSingleGatewayImplementationController extends Controller
                 }
             ])->where(['phiscal_year_id' => $year->id])->one();
         return $this->renderPartial('print', ['content' => $this->renderPartial('table', ['model' => $model])]);
+    }
+
+    public function actionDelete() {
+        if (!isset($_POST['id'])) {
+            MyHelper::response(HttpCode::NOT_FOUND, 'ບໍ່ພົບຂໍ້ມູນ');
+            return;
+        }
+        StatSingleGatewayImplementationDetail::deleteAll(['id' => $_POST['id']]);
     }
 
     public function actionDownload($year)

@@ -238,8 +238,8 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆ ສຳລັບ
                             </tr>
                             <tr ng-repeat="model in models">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{model.ministry}}</td>
-                                <td class="text-center">{{model.award}}</td>
+                                <td>{{model.ministry}}</td>
+                                <td>{{model.award}}</td>
                                 <td class="text-center">{{model.free1_personal | number | dash }}</td>
                                 <td class="text-center">{{model.free1_team | number | dash }}</td>
                                 <td class="text-center">{{model.free2_personal | number | dash }}</td>
@@ -274,7 +274,7 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆ ສຳລັບ
                                 <td class="text-center">{{sumrow(model, 'personal') | number | dash }}</td>
                                 <td class="text-center">{{sumrow(model, 'team') | number | dash }}</td>
 
-                                <td class="text-center">{{model.remark}}</td>
+                                <td>{{model.remark}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -626,22 +626,34 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆ ສຳລັບ
 
     $scope.deletefile = function (f) {
       if ($scope.year && f) {
-        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });

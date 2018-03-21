@@ -77,7 +77,7 @@
                     <?php foreach ($models as $index => $model): ?>
                         <tr>
                             <td class="text-center"><?= $index+1 ?></td>
-                            <td class="text-center"><?= $model['name'] ?></td>
+                            <td><?= $model['name'] ?></td>
                                 <?php
                                 $t = ['total' => 0, 'women' => 0];
                                 foreach ($cols as $col) {

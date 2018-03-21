@@ -13,14 +13,17 @@ use yii\widgets\ActiveForm;
     <div class="col-xs-12">
         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'content')
-            ->widget(\dosamigos\ckeditor\CKEditor::className(), [
+        <?php
+        echo $form->field($model, 'content')
+            ->widget(\app\components\MyKCFinder::className(), [
                 'options' => ['rows' => 6],
                 'preset' => 'full',
                 'clientOptions' => [
-                    'filebrowserUploadUrl' => 'index.php?r=site/upload'
+                    'filebrowserUploadUrl' => 'index.php?r=site/upload',
+//                    'filebrowserImageUploadUrl' => 'index.php?=site/browse'
                 ]
-            ]) ?>
+            ]);
+        ?>
     </div>
     <div class="col-xs-3">
         <label>ເລີ່ມວັນທີ</label>

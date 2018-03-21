@@ -44,7 +44,8 @@ class StatOfficerMinistryAddController extends Controller
         }
 
         $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
-        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $ministries = Ministry::find()->where('deleted=0 and ministry_group_id=1')
+            ->orderBy('position')->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -79,7 +80,8 @@ class StatOfficerMinistryAddController extends Controller
         $models = Ministry::find()->alias('m')
             ->select('m.*, d.*')
             ->join('left join', 'stat_officer_ministry_add_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_add_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.position')->asArray()->all();
+            ->where('m.deleted=0 and m.ministry_group_id=1')
+            ->orderBy('m.position')->asArray()->all();
 
         $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
 
@@ -117,7 +119,8 @@ class StatOfficerMinistryAddController extends Controller
 
         $model = StatOfficerMinistryAddDetail::find()->alias('d')
             ->join('join', 'stat_officer_ministry_add o', 'o.id = d.stat_officer_ministry_add_id and o.phiscal_year_id=:year', [':year' => $year->id])
-            ->where(['ministry_id' => $ministry])
+            ->where(['d.ministry_id' => $ministry])
+            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
             ->asArray()->one();
 
         return json_encode([

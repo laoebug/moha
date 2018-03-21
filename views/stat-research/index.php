@@ -1,9 +1,6 @@
 <?php $_GET['menu']=1;?>
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatResearchSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -144,7 +141,7 @@ $this->title = "ສະຖິຕິສູນຄົ້ນຄວ້າວຽກງ�
                                 <td class="text-center">{{m.start_date}} - {{m.end_date}}</td>
                                 <td class="text-center">{{m.times | number | dash}}</td>
                                 <td class="text-center">{{m.place}}</td>
-                                <td class="text-center">{{m.remark}}</td>
+                                <td>{{m.remark}}</td>
                             </tr>
                             </tbody>
                             <tfoot>
@@ -259,24 +256,37 @@ $this->title = "ສະຖິຕິສູນຄົ້ນຄວ້າວຽກງ�
     };
 
     $scope.delete = function() {
-      if ($scope.model && $scope.year && confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ່?')) {
-        $http.post($scope.url + 'delete&year=' + $scope.year.id, {
-          'Model': $scope.model,
-          '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function (r) {
-          $scope.model = null;
-          $('.datepicker').val('');
-          $scope.response = r;
-          $scope.enquiry();
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        }, function (r) {
-          $scope.model = null;
-          $scope.response = r;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
+      if ($scope.model && $scope.year) {
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'delete&year=' + $scope.year.id, {
+              'Model': $scope.model,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.model = null;
+              $('.datepicker').val('');
+              $scope.response = r;
+              $scope.enquiry();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.model = null;
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
         });
       }
     };

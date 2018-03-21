@@ -64,8 +64,8 @@
             <?php foreach ($models as $index => $model): ?>
             <tr>
                 <td class="text-center"><?= $index + 1?></td>
-                <td class="text-center"><?= $model['province'] ?></td>
-                <td class="text-center"><?= $model['award'] ?></td>
+                <td><?= $model['province'] ?></td>
+                <td><?= $model['award'] ?></td>
                 <?php
                 $row = ['personal' => 0, 'team' => 0];
                 foreach ($cols as $col):
@@ -78,7 +78,7 @@
                 <?php endforeach; ?>
                 <td class="text-center"><?= number_format($row['personal']) ?></td>
                 <td class="text-center"><?= number_format($row['team']) ?></td>
-                <td class="text-center"><?= $model['remark'] ?></td>
+                <td><?= $model['remark'] ?></td>
             </tr>
             <?php endforeach; ?>
             </tbody>

@@ -20,3 +20,4 @@ gen
 /web/assets/
 /config/db.php
 /web/upload/
+/vendors/

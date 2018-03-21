@@ -232,7 +232,6 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
                                     sum('middle_in_women') + sum('middle_out_women') + sum('begin_in_women') +
                                     sum('begin_out_women'))}}
                                 </th>
-                                </th>
                                 <?php foreach ($cols as $col): ?>
                                     <th class="text-center">{{formatNumber(sum('<?= $col ?>'))}}</th>
                                 <?php endforeach; ?>
@@ -241,7 +240,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
                             <tbody>
                             <tr ng-repeat="m in models">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{m.name}}</td>
+                                <td>{{m.name}}</td>
                                 <td class="text-center">{{formatNumber(sumtotal(m)) | number | dash}}</td>
                                 <td class="text-center">{{formatNumber(sumwomen(m)) | number | dash}}</td>
                                 <?php foreach ($cols as $col): ?>
@@ -262,7 +261,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
                                         chart-labels="stat.labels"
                                         chart-series="stat.series"
                                         chart-colors="stat.colors"
-                                        chart-options="options"
+                                        chart-options="options">
                                 </canvas>
                             </div>
                             <div class="col-sm-4">
@@ -270,7 +269,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
                                         chart-data="stat.data"
                                         chart-labels="stat.labels"
                                         chart-series="stat.series"
-                                        chart-colors="stat.colors"
+                                        chart-colors="stat.colors">
                                 </canvas>
                             </div>
                         </div>
@@ -329,7 +328,6 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -368,7 +366,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
       legend: {
         display: false,
         labels: {
-          fontColor: '',
+          fontColor: ''
         }
       },
       scales: {
@@ -391,7 +389,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
             }
           }]
         }
-      },
+      }
     };
 
     $http.get($scope.url + 'get')
@@ -591,22 +589,34 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານຂ�
 
     $scope.deletefile = function (f) {
       if ($scope.year && f) {
-        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });

@@ -55,7 +55,7 @@
                             <td class="text-center"><?= \app\components\MyHelper::convertdatefordisplay($model['start_date']) . ' ~ ' . \app\components\MyHelper::convertdatefordisplay($model['end_date']) ?></td>
                             <td class="text-center"><?= number_format($model['times']) ?></td>
                             <td class="text-center"><?= $model['place'] ?></td>
-                            <td class="text-center"><?= $model['remark'] ?></td>
+                            <td><?= $model['remark'] ?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>

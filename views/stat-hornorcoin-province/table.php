@@ -82,8 +82,8 @@
                         ?>
                         <tr >
                             <td class="text-center"><?= $index + 1 ?></td>
-                            <td class="text-center"><?= $model['province'] ?></td>
-                            <td class="text-center"><?= $model['award'] ?></td>
+                            <td><?= $model['province'] ?></td>
+                            <td><?= $model['award'] ?></td>
                             <?php foreach ($cols as $col): ?>
                                 <td class="text-center"><?= number_format($model[$col]) ?></td>
                             <?php endforeach; ?>

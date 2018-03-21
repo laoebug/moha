@@ -1,4 +1,4 @@
-<?php $_GET['menu']=1;?>
+<?php $_GET['menu'] = 1; ?>
 <?php
 
 /* @var $this yii\web\View */
@@ -24,7 +24,8 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+                ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
@@ -121,7 +122,7 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th colspan="2">ຫຼຽນໄຊມິດຕະພາບ</th>
+                            <th colspan="2" class="text-center">ຫຼຽນໄຊມິດຕະພາບ</th>
                         </tr>
                         <tr>
                             <th class="text-center">ບຸກຄົນ</th>
@@ -145,6 +146,11 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
                         <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
                     </button>
                 </div>
+                <div class="col-sm-2" style="margin-top: 1em" ng-if="model">
+                    <button type="button" class="btn btn-danger col-sm-12" ng-click="delete()">
+                        <i class="fa fa-trash"></i> <?= Yii::t('app', 'Delete') ?>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -160,10 +166,12 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?> {{year.year}}</h3>
                             <p>
-                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                            class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i></a>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}">
+                                    <i class="fa fa-print fa-2x"></i>
+                                </a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}">
+                                    <i class="fa fa-download fa-2x"></i>
+                                </a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover">
@@ -236,10 +244,11 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
 
                                 <td class="text-center"></td>
                             </tr>
-                            <tr ng-repeat="model in models">
+                            <tr ng-repeat="model in models" style="cursor: pointer;" ng-click="select(model)">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{model.province}}</td>
-                                <td class="text-center">{{model.award}}</td>
+                                <td>{{model.province.province_name ? model.province.province_name : model.province}}
+                                </td>
+                                <td>{{model.award.name ? model.award.name : model.award}}</td>
                                 <td class="text-center">{{model.free1_personal | number | dash }}</td>
                                 <td class="text-center">{{model.free1_team | number | dash }}</td>
                                 <td class="text-center">{{model.free2_personal | number | dash }}</td>
@@ -274,7 +283,7 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
                                 <td class="text-center">{{sumrow(model, 'personal') | number | dash }}</td>
                                 <td class="text-center">{{sumrow(model, 'team') | number | dash }}</td>
 
-                                <td class="text-center">{{model.remark}}</td>
+                                <td>{{model.remark}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -329,7 +338,6 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -455,6 +463,84 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
               $scope.response = null;
             }, 15000);
           });
+      }
+    };
+
+    $scope.select = function (m) {
+      $scope.model = m;
+      $scope.model.free1_personal = parseInt(m.free1_personal);
+      $scope.model.free1_team = parseInt(m.free1_team);
+      $scope.model.free2_personal = parseInt(m.free2_personal);
+      $scope.model.free2_team = parseInt(m.free2_team);
+      $scope.model.free3_personal = parseInt(m.free3_personal);
+      $scope.model.free3_team = parseInt(m.free3_team);
+
+      $scope.model.revo1_personal = parseInt(m.revo1_personal);
+      $scope.model.revo1_team = parseInt(m.revo1_team);
+      $scope.model.revo2_personal = parseInt(m.revo2_personal);
+      $scope.model.revo2_team = parseInt(m.revo2_team);
+      $scope.model.revo3_personal = parseInt(m.revo3_personal);
+      $scope.model.revo3_team = parseInt(m.revo3_team);
+
+      $scope.model.labo1_personal = parseInt(m.labo1_personal);
+      $scope.model.labo1_team = parseInt(m.labo1_team);
+      $scope.model.labo2_personal = parseInt(m.labo2_personal);
+      $scope.model.labo2_team = parseInt(m.labo2_team);
+      $scope.model.labo3_personal = parseInt(m.labo3_personal);
+      $scope.model.labo3_team = parseInt(m.labo3_team);
+
+      $scope.model.deve1_personal = parseInt(m.deve1_personal);
+      $scope.model.deve1_team = parseInt(m.deve1_team);
+      $scope.model.deve2_personal = parseInt(m.deve2_personal);
+      $scope.model.deve2_team = parseInt(m.deve2_team);
+      $scope.model.deve3_personal = parseInt(m.deve3_personal);
+      $scope.model.deve3_team = parseInt(m.deve3_team);
+      $scope.model.frien_personal = parseInt(m.frien_personal);
+      $scope.model.frien_team = parseInt(m.frien_team);
+
+      for (var i in $scope.provinces) {
+        var province = $scope.provinces[i];
+        if (province.id === $scope.model.province_id) {
+          $scope.model.province = province;
+          break;
+        }
+      }
+      for (var i in $scope.awards) {
+        var award = $scope.awards[i];
+        if (award.id === $scope.model.award_id) {
+          $scope.model.award = award;
+          break;
+        }
+      }
+    };
+
+    $scope.delete = function () {
+      if ($scope.model) {
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'delete', {
+              'Model': $scope.model,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.model = null;
+              $scope.enquiry();
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
 
@@ -626,22 +712,34 @@ $this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆສຳລັບ�
 
     $scope.deletefile = function (f) {
       if ($scope.year && f) {
-        if (confirm('ທ່ານຕ້ອງການລຶບແທ້ບໍ?'))
-          $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-            'id': f.id,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.getreferences();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
       }
     };
   });
