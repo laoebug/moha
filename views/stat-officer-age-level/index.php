@@ -388,7 +388,6 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
       return s;
     };
 
-
     $scope.uploadedFile = function (element) {
       if(!$scope.issued_no) {
         $scope.files = null;

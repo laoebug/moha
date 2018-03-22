@@ -1,10 +1,6 @@
 <?php $_GET['menu']=1;?>
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
-
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -41,24 +37,33 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
                     <label for=""><?= Yii::t('app', 'Remark') ?></label>
                     <input type="text" class="form-control" ng-model="ministry.remark">
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" ng-show="ministry && !ministry.id">
                     <label for="">&nbsp;</label>
                     <button type="button" class="btn btn-success col-sm-12" ng-click="save(1)">
                         <i class="fa fa-plus"></i> ເພີ່ມ
                     </button>
                 </div>
-                <div class="col-sm-2" ng-show="ministry">
+                <div class="col-sm-2" ng-show="ministry && ministry.id"
+                ">
                     <label for="">&nbsp;</label>
                     <button type="button" class="btn btn-info col-sm-12" ng-click="save(0)">
-                        <i class="fa fa-save"></i> ບັນທຶກ
+                        <i class="fa fa-save"></i> ແກ້ໄຂ
                     </button>
                 </div>
-                <div class="col-sm-2" ng-show="ministry">
+            <div class="col-sm-2" ng-show="ministry && ministry.id"
+            ">
                     <label for="">&nbsp;</label>
                     <button type="button" class="btn btn-danger col-sm-12" ng-click="delete(0)">
                         <i class="fa fa-trash"></i> ລຶບ
                     </button>
                 </div>
+        <div class="col-sm-2" ng-show="ministry && ministry.id"
+        ">
+        <label for="">&nbsp;</label>
+        <button type="button" class="btn btn-default col-sm-12" ng-click="ministry = null">
+            <i class="fa fa-refresh"></i> ຍົກເລີກ
+        </button>
+    </div>
             </div>
         </div>
     </div>
@@ -108,7 +113,59 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
                     </div>
                 </div>
                 <div class="tab-pane fade" id="reference">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label>ເລກທີ</label>
+                            <input type="text" ng-model="issued_no" class="form-control">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>ລົງວັນທີ</label>
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
+                                   type="text">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>ອອກໂດຍ</label>
+                            <input type="text" ng-model="issued_by" class="form-control">
+                        </div>
 
+                        <div class="col-sm-3">
+                            <label>ເລືອກໄຟລ໌</label>
+                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"
+                                   class="form-control" required>
+                        </div>
+
+                        <div class="col-sm-12" ng-if="references">
+                            <div class="card">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">ວັນທີອັບໂຫຼດ</th>
+                                        <th class="text-center">ຊື່</th>
+                                        <th class="text-center">ເລກທີ</th>
+                                        <th class="text-center">ລົງວັນທີ</th>
+                                        <th class="text-center">ອອກໂດຍ</th>
+                                        <th class="text-center">ລຶບ</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="f in references">
+                                        <td class="text-center">{{f.upload_date}}</td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                        </td>
+                                        <td class="text-center">{{f.issued_no}}</td>
+                                        <td class="text-center">{{f.issued_date | date}}</td>
+                                        <td class="text-center">{{f.issued_by}}</td>
+                                        <td class="text-center">
+                                            <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,21 +223,34 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
 
     $scope.delete = function () {
       if ($scope.ministry)
-        $http.post(url + 'delete', {
-          Ministry: $scope.ministry,
-          '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function (r) {
-          $scope.response = r;
-          $scope.ministry = null;
-          $scope.enquiry();
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        }, function (r) {
-          $scope.response = r;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function (isConfirm) {
+          if (isConfirm) {
+            $http.post(url + 'delete', {
+              Ministry: $scope.ministry,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function (r) {
+              $scope.response = r;
+              $scope.ministry = null;
+              $scope.enquiry();
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            }, function (r) {
+              $scope.response = r;
+              $timeout(function () {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
         });
     };
   });
