@@ -11,10 +11,13 @@ namespace app\controllers;
 use app\models\Menu;
 use app\models\MenuSearch;
 use app\models\PhiscalYear;
-use yii\base\Controller;
+// use yii\base\Controller;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use Yii;
+use app\services\AuthenticationService;
+use yii\web\Controller;
+
 
 class ReportController extends Controller {
 	public function actionIndex_Old() {
@@ -92,10 +95,23 @@ class ReportController extends Controller {
 		] );
 	}
 	public function actionIndex() {
+		$user = Yii::$app->user->identity;
+	    $controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+	    if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            $controller_id = Yii::$app->controller->id;
+            $acton_id = Yii::$app->controller->action->id;
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                return $this->redirect([
+                    'authentication/notallowed'
+                ]);
+//             	Yii::$app->request->redirect(Yii::$app->createAbsoluteUrl("authentication/notallowed"));
+            }
+        }
 		define ( "DEPARTMENT_FLAG", 3 ); // refers to menu_parent_id in which value =3
 		define ( "DELETED", 0 );
 		define ( "ACCESSIBLE", 1 );
-		$user = Yii::$app->user->identity;
+		
 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
 
 			$sql = " select o.* from ( select rp.*,dept.dept_id,dept.department_name from (select * from menu where id not in (select id from menu where menu_parent_id=:menu_parent_id) ";
