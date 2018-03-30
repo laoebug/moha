@@ -30,14 +30,27 @@ class ReportController extends Controller {
 				'dataProvider' => $dataProvider 
 		] );
 	}
-	public function actionIncomplete($year = null) {
+	public function actionComplete($year = null) {
+		$user = Yii::$app->user->identity;
+	
+// 		$controller_id = Yii::$app->controller->id;
+// 		$acton_id = Yii::$app->controller->action->id;
+// 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+// 			$controller_id = Yii::$app->controller->id;
+// 			$acton_id = Yii::$app->controller->action->id;
+// 			if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+// 				return $this->redirect([
+// 						'authentication/notallowed'
+// 				]);
+// 			}
+// 		}
 		$years = PhiscalYear::find ()->all ();
 		$menus = [ ];
 		$reports = [ ];
-		
+	
 		if (isset ( $year )) {
-			$menus = Menu::find ()->select ( 'table_name, name, url' )->distinct ( true )->where ( [ 
-					"table_name is not null and table_name like 'stat_%'" 
+			$menus = Menu::find ()->select ( 'table_name, name, url' )->distinct ( true )->where ( [
+					"table_name is not null and table_name like 'stat_%' and id in (select menu_id from role_has_menu where role_id=".$user->role_id .")"
 			] )->all ();
 			foreach ( $menus as $menu ) {
 				try {
@@ -57,12 +70,91 @@ class ReportController extends Controller {
 		} else {
 			foreach ( $years as $y ) {
 				$reports [$y->year] = [ ];
-				$menus = Menu::find ()->select ( 'table_name, name, url' )->distinct ( true )->where ( "table_name is not null and table_name like 'stat_%'" )->all ();
+				$menus = Menu::find ()->select ( 'table_name, name, url' )->distinct ( true )->where ( "table_name is not null and table_name like 'stat_%' and id in (select menu_id from role_has_menu where role_id=".$user->role_id .") " )->all ();
+				foreach ( $menus as $menu ) {
+					try {
+						if (in_array ( $menu ['table_name'], $reports [$y->year] ))
+							continue;
+							$sql = "select d.* from " . $menu ['table_name'] . " t right join " . $menu ['table_name'] . "_detail d on t.id = d." . $menu ['table_name'] . "_id where phiscal_year_id=" . $y->id;
+	
+							$tables = \Yii::$app->db->createCommand ( $sql )->queryAll ();
+							foreach ( $tables as $details ) {
+								foreach ( $details as $d => $detail ) {
+									if (in_array ( $menu ['table_name'], ArrayHelper::map ( $reports [$y->year], 'table', 'table' ) ))
+										continue;
+										if (in_array ( $d, [
+												'id',
+												'name'
+										] ))
+											continue;
+											if ($detail != "") {
+												$reports [$y->year] [] = [
+														'name' => $menu ['name'],
+														'table' => $menu ['table_name'],
+														'url' => $menu ['url']
+												];
+												break;
+											}
+								}
+							}
+					} catch ( Exception $ex ) {
+						// \Yii::$app->session->setFlash('danger', $ex->getMessage());
+					}
+				}
+			}
+		}
+		return $this->render ( 'complete', [
+				'years' => $years,
+				'reports' => $reports
+		] );
+	}
+	
+	public function actionIncomplete($year = null) {
+		$user = Yii::$app->user->identity;
+// 		$controller_id = Yii::$app->controller->id;
+// 		$acton_id = Yii::$app->controller->action->id;
+// 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+// 			$controller_id = Yii::$app->controller->id;
+// 			$acton_id = Yii::$app->controller->action->id;
+// 			if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+// 				return $this->redirect([
+// 						'authentication/notallowed'
+// 				]);
+// 			}
+// 		}
+		$years = PhiscalYear::find ()->all ();
+		$menus = [ ];
+		$reports = [ ];
+		
+		if (isset ( $year )) {
+			$menus = Menu::find ()->select ( 'table_name, name, url' )->distinct ( true )->where ( [ 
+					"table_name is not null and table_name like 'stat_%' and id in (select menu_id from role_has_menu where role_id=".$user->role_id .")" 
+			] )->all ();
+			foreach ( $menus as $menu ) {
+				try {
+					$sql = "select id from " . $menu ['table_name'] . " where phiscal_year_id=:year";
+					$tables = \Yii::$app->db->createCommand ( $sql )->queryAll ();
+					foreach ( $tables as $table ) {
+						$details = $table [$menu ['table_name'] . '_detail'];
+						foreach ( $details as $detail )
+							foreach ( $detail as $column )
+								if (! isset ( $column ))
+									$reports [] = $menu ['table_name'];
+					}
+				} catch ( Exception $ex ) {
+					\Yii::$app->session->setFlash ( 'danger', $ex->getMessage () );
+				}
+			}
+		} else {
+			foreach ( $years as $y ) {
+				$reports [$y->year] = [ ];
+				$menus = Menu::find ()->select ( 'table_name, name, url' )->distinct ( true )->where ( "table_name is not null and table_name like 'stat_%' and id in (select menu_id from role_has_menu where role_id=".$user->role_id .") " )->all ();
 				foreach ( $menus as $menu ) {
 					try {
 						if (in_array ( $menu ['table_name'], $reports [$y->year] ))
 							continue;
 						$sql = "select d.* from " . $menu ['table_name'] . " t right join " . $menu ['table_name'] . "_detail d on t.id = d." . $menu ['table_name'] . "_id where phiscal_year_id=" . $y->id;
+						
 						$tables = \Yii::$app->db->createCommand ( $sql )->queryAll ();
 						foreach ( $tables as $details ) {
 							foreach ( $details as $d => $detail ) {
@@ -96,18 +188,17 @@ class ReportController extends Controller {
 	}
 	public function actionIndex() {
 		$user = Yii::$app->user->identity;
-	    $controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-	    if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-            $controller_id = Yii::$app->controller->id;
-            $acton_id = Yii::$app->controller->action->id;
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                return $this->redirect([
-                    'authentication/notallowed'
-                ]);
-//             	Yii::$app->request->redirect(Yii::$app->createAbsoluteUrl("authentication/notallowed"));
-            }
-        }
+// 	    $controller_id = Yii::$app->controller->id;
+//     	$acton_id = Yii::$app->controller->action->id;
+// 	    if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+//             $controller_id = Yii::$app->controller->id;
+//             $acton_id = Yii::$app->controller->action->id;
+//             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+//                 return $this->redirect([
+//                     'authentication/notallowed'
+//                 ]);
+//             }
+//         }
 		define ( "DEPARTMENT_FLAG", 3 ); // refers to menu_parent_id in which value =3
 		define ( "DELETED", 0 );
 		define ( "ACCESSIBLE", 1 );
