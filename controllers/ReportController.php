@@ -33,17 +33,17 @@ class ReportController extends Controller {
 	public function actionComplete($year = null) {
 		$user = Yii::$app->user->identity;
 	
-// 		$controller_id = Yii::$app->controller->id;
-// 		$acton_id = Yii::$app->controller->action->id;
-// 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-// 			$controller_id = Yii::$app->controller->id;
-// 			$acton_id = Yii::$app->controller->action->id;
-// 			if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-// 				return $this->redirect([
-// 						'authentication/notallowed'
-// 				]);
-// 			}
-// 		}
+		$controller_id = Yii::$app->controller->id;
+		$acton_id = Yii::$app->controller->action->id;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+				return $this->redirect([
+						'authentication/notallowed'
+				]);
+			}
+		}
 		$years = PhiscalYear::find ()->all ();
 		$menus = [ ];
 		$reports = [ ];
@@ -111,17 +111,17 @@ class ReportController extends Controller {
 	
 	public function actionIncomplete($year = null) {
 		$user = Yii::$app->user->identity;
-// 		$controller_id = Yii::$app->controller->id;
-// 		$acton_id = Yii::$app->controller->action->id;
-// 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-// 			$controller_id = Yii::$app->controller->id;
-// 			$acton_id = Yii::$app->controller->action->id;
-// 			if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-// 				return $this->redirect([
-// 						'authentication/notallowed'
-// 				]);
-// 			}
-// 		}
+		$controller_id = Yii::$app->controller->id;
+		$acton_id = Yii::$app->controller->action->id;
+		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+			$controller_id = Yii::$app->controller->id;
+			$acton_id = Yii::$app->controller->action->id;
+			if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+				return $this->redirect([
+						'authentication/notallowed'
+				]);
+			}
+		}
 		$years = PhiscalYear::find ()->all ();
 		$menus = [ ];
 		$reports = [ ];
@@ -188,17 +188,18 @@ class ReportController extends Controller {
 	}
 	public function actionIndex() {
 		$user = Yii::$app->user->identity;
-// 	    $controller_id = Yii::$app->controller->id;
-//     	$acton_id = Yii::$app->controller->action->id;
-// 	    if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-//             $controller_id = Yii::$app->controller->id;
-//             $acton_id = Yii::$app->controller->action->id;
-//             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-//                 return $this->redirect([
-//                     'authentication/notallowed'
-//                 ]);
-//             }
-//         }
+	    $controller_id = Yii::$app->controller->id;
+    	$acton_id = Yii::$app->controller->action->id;
+    	
+	    if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            $controller_id = Yii::$app->controller->id;
+            $acton_id = Yii::$app->controller->action->id;
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                return $this->redirect([
+                    'authentication/notallowed'
+                ]);
+            }
+        }
 		define ( "DEPARTMENT_FLAG", 3 ); // refers to menu_parent_id in which value =3
 		define ( "DELETED", 0 );
 		define ( "ACCESSIBLE", 1 );
