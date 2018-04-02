@@ -22,8 +22,15 @@ function createMenuTreeView($array, $currentParent, $currLevel = 0, $prevLevel =
 			if ($menu ['id'] == $menu ['menu_id']) {
 				$checked = "checked";
 			}
+			$dataInputUser="";
+			if(isset($menu->has_province) && $menu->has_province==1){
+				$dataInputUser=Yii::t("app","Table for provincial user input data");
+			}else{				
+				$dataInputUser=Yii::t("app","Table for central user input data");
+			}
 			
-			echo '<li>' . ' <input type="checkbox" class="menu"  value="' . $menu ['id'] . '"   ' . $checked . ' name="menuList[]" id="menuList[]"/>'. ' '. $menu ["name"];
+			//echo '<li>' . ' <input type="checkbox" class="menu"  value="' . $menu ['id'] . '"   ' . $checked . ' name="menuList[]" id="menuList[]"/>'. '   '. $menu ["name"]. $dataInputUser;
+			echo '<li>' . ' <input type="checkbox" class="menu"  value="' . $menu ['id'] . '"   ' . $checked . ' name="menuList[]" id="menuList[]"/>'. '   '. $menu ["name"];
 			
 			if ($currLevel > $prevLevel) {
 				$prevLevel = $currLevel;

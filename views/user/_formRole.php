@@ -28,43 +28,46 @@ use yii\widgets\ActiveForm;
 	</div>
    
 
-    <div class="form-group">
-        <?php 
-        //Html::submitButton('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])
-        ?>
-        <?= Html::button('<i class="fa fa-fw fa-user"></i>'. Yii::t('app', 'New'), [
-            'class' => 'btn btn-md btn-info',            
-             'title'=>Yii::t('app', 'New Record'),
-            'id'=>'btnNew','name'=>'btnNew'
-        ]);
-        ?>
-        
-        <?= Html::button('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save Role'), [
-            'class' => 'btn btn-md btn-success',            
-             'title'=>Yii::t('app', 'Save Role'),
-            'id'=>'btnAddRole','name'=>'btnAddRole'
-        ]);
-        ?>
-		
-		<?= Html::button('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Update Role'), [
-            'class' => 'btn btn-md btn-primary',            
-             'title'=>Yii::t('app', 'Update Role'),
-            'id'=>'btnUpdateRole','name'=>'btnUpdateRole'
-        ]);
-        ?>
-        
-        <?= Html::button('<i class="fa fa-fw fa-trash"></i>'. Yii::t('app', 'Delete Role'), [
-            'class' => 'btn btn-md btn-danger',            
-             'title'=>Yii::t('app', 'Delete Role'),
-            'id'=>'btnDeleteRole','name'=>'btnDeleteRole'
-        ]);
-        ?>
-        
+    
+    	<div class="row">
+    	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+	        <?php 
+	        //Html::submitButton('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])
+	        ?>
+	        <?= Html::button('<i class="fa fa-fw fa-user"></i>'. Yii::t('app', 'New'), [
+	            'class' => 'btn btn-md btn-info',            
+	             'title'=>Yii::t('app', 'New Record'),
+	            'id'=>'btnNew','name'=>'btnNew'
+	        ]);
+	        ?>
+	        
+	        <?= Html::button('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save Role'), [
+	            'class' => 'btn btn-md btn-success',            
+	             'title'=>Yii::t('app', 'Save Role'),
+	            'id'=>'btnAddRole','name'=>'btnAddRole'
+	        ]);
+	        ?>
+			
+			<?= Html::button('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Update Role'), [
+	            'class' => 'btn btn-md btn-primary',            
+	             'title'=>Yii::t('app', 'Update Role'),
+	            'id'=>'btnUpdateRole','name'=>'btnUpdateRole'
+	        ]);
+	        ?>
+	        
+	        <?= Html::button('<i class="fa fa-fw fa-trash"></i>'. Yii::t('app', 'Delete Role'), [
+	            'class' => 'btn btn-md btn-danger',            
+	             'title'=>Yii::t('app', 'Delete Role'),
+	            'id'=>'btnDeleteRole','name'=>'btnDeleteRole'
+	        ]);
+	        ?>
+        </div>
+        </div>
                 
         
         
         
-    </div>
+    
 
     <?php ActiveForm::end(); ?>
 

@@ -50,7 +50,7 @@ use yii\helpers\ArrayHelper;
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">	
 		
-		<?= $form->field($model, 'status')->dropDownList(['A' => 'Active', 'I' => 'In Active'],['prompt'=>Yii::t('app','Plase select'),'id'=>'status']); ?>
+		<?= $form->field($model, 'status')->dropDownList(['A' => 'Active', 'I' => 'In Active'],['prompt'=>Yii::t('app','Please select'),'id'=>'status']); ?>
 		
 		</div>
 		
@@ -63,7 +63,7 @@ use yii\helpers\ArrayHelper;
              ArrayHelper::map(Role::find()
     
                     ->all(),'id','name'),
-            ['prompt'=>Yii::t('app','Plase select'),'id'=>'role']
+            ['prompt'=>Yii::t('app','Please select'),'id'=>'role']
         ) 
 		?>
 		
@@ -73,7 +73,9 @@ use yii\helpers\ArrayHelper;
 
 	
     <div class="form-group">
-       
+       <div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">	
+	
         <?= Html::button('<i class="fa fa-fw fa-user"></i>'. Yii::t('app', 'New'), [
             'class' => 'btn btn-md btn-info',            
              'title'=>Yii::t('app', 'New Record'),
@@ -93,7 +95,8 @@ use yii\helpers\ArrayHelper;
             
         ?>
 
-        
+        </div>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>
