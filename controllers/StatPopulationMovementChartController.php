@@ -64,7 +64,7 @@ class StatPopulationMovementChartController extends Controller
     		}
     	}
     	
-        $years = PhiscalYear::find()
+        $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
 
         return json_encode([
@@ -105,7 +105,7 @@ class StatPopulationMovementChartController extends Controller
     		}
     	}
     	
-        $years = PhiscalYear::find()->select('id, year, status')->asArray()->all();
+        $years = PhiscalYear::find()->select('id, year, status')->orderBy('year')->asArray()->all();
         $year = implode(',', ArrayHelper::getColumn($years, 'id'));
         $models = $this->getModels();
         return json_encode(
@@ -179,7 +179,7 @@ class StatPopulationMovementChartController extends Controller
     }
 
     public function getModels($year = "") { //1,2,3,
-        $query = PhiscalYear::find()
+        $query = PhiscalYear::find()->orderBy('year')
             ->alias('y')
             ->select('y.year');
         foreach ($this->COLUMNS as $col)

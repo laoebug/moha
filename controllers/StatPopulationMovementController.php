@@ -63,7 +63,7 @@ class StatPopulationMovementController extends Controller
     		}
     	}
     	
-        $years = PhiscalYear::find()
+        $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
 
         $provinces = Province::find()
@@ -95,7 +95,7 @@ class StatPopulationMovementController extends Controller
         }
 
         $models = $this->getModels($year);
-        $years = PhiscalYear::find()->select('id, year, status')->asArray()->all();
+        $years = PhiscalYear::find()->select('id, year, status')->orderBy('year')->asArray()->all();
         return json_encode([
             'models' => $models,
             'stat' => [

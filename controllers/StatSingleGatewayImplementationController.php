@@ -45,7 +45,7 @@ class StatSingleGatewayImplementationController extends Controller
         }
 
         return json_encode([
-            'years' => PhiscalYear::find()->where(['deleted' => 0])->asArray()->all(),
+            'years' => PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all(),
             'ministries' => Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all()
         ]);
     }

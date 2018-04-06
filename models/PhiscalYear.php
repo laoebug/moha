@@ -594,4 +594,5 @@ class PhiscalYear extends \yii\db\ActiveRecord
     {
         return new PhiscalYearQuery(get_called_class());
     }
+
 }

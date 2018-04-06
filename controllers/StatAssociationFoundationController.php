@@ -59,7 +59,7 @@ class StatAssociationFoundationController extends Controller
             }
         }
 
-        $years = PhiscalYear::find()
+        $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
 
         $approverLevels = ApproverLevel::find()

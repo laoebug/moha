@@ -31,7 +31,7 @@ class StatOdaController extends Controller
     }
 
     public function actionGet() {
-        $years = PhiscalYear::find()->asArray()->all();
+        $years = PhiscalYear::find()->orderBy('year')->asArray()->all();
 
         return json_encode([
             'years' => $years

@@ -37,7 +37,7 @@ class StatResearchController extends Controller
             }
         }
 
-        $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
+        $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         return json_encode([
             'years' => $years
         ]);

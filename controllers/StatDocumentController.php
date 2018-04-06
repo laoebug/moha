@@ -44,7 +44,7 @@ class StatDocumentController extends Controller
             }
         }
 
-        $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
+        $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
         $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
         $organisations = Organisation::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();

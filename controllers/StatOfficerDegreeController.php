@@ -42,7 +42,7 @@ class StatOfficerDegreeController extends Controller
     		}
     	}
     	
-        $years = PhiscalYear::find()
+        $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
 
         return json_encode([

@@ -47,7 +47,7 @@ class StatHighoverseaMinistryController extends Controller
     		}
     	}
     	
-        $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
+        $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         $awards = Award::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
         $ministries = Ministry::find()
             ->where('deleted=0 and ministry_group_id in (1,2)')

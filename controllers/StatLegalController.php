@@ -46,7 +46,7 @@ class StatLegalController extends Controller
     		}
     	}
     	
-        $years = PhiscalYear::find()
+        $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
 
         $legalTypes = LegalType::find()

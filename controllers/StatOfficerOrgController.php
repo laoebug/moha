@@ -42,7 +42,7 @@ class StatOfficerOrgController extends Controller
             }
         }
 
-        $years = PhiscalYear::find()->where(['deleted' => 0])->asArray()->all();
+        $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         $organisations = Organisation::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
 
         return json_encode([
