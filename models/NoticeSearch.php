@@ -18,7 +18,7 @@ class NoticeSearch extends Notice
     public function rules()
     {
         return [
-            [['id', 'show', 'user_id', 'position'], 'integer'],
+            [['id', 'show', 'user_id', 'position', 'deleted'], 'integer'],
             [['created_date', 'title', 'content', 'start_date', 'end_date'], 'safe'],
         ];
     }
@@ -66,6 +66,7 @@ class NoticeSearch extends Notice
             'show' => $this->show,
             'user_id' => $this->user_id,
             'position' => $this->position,
+            'deleted' => $this->deleted,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

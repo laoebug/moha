@@ -18,7 +18,12 @@ $sql = "CREATE TABLE link
     name VARCHAR(255) NOT NULL,
     url VARCHAR(255) NOT NULL
 );
-CREATE UNIQUE INDEX link_id_uindex ON link (id);";
+CREATE UNIQUE INDEX link_id_uindex ON link (id);
+
+ALTER TABLE `moha`.`notice` 
+ADD COLUMN `deleted` INT NOT NULL DEFAULT 0 AFTER `position`;
+
+";
 $this->execute($sql);
     }
 

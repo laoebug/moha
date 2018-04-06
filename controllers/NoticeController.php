@@ -19,17 +19,17 @@ class NoticeController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all Notice models.
@@ -38,6 +38,7 @@ class NoticeController extends Controller
     public function actionIndex()
     {
         $searchModel = new NoticeSearch();
+        $searchModel->deleted = 0;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -73,6 +74,7 @@ class NoticeController extends Controller
                 $model->user_id = Yii::$app->user->id;
                 $model->start_date = MyHelper::convertdatefordb($model->start_date);
                 $model->end_date = MyHelper::convertdatefordb($model->end_date);
+                $model->deleted = 0;
                 if (!$model->save()) throw new Exception(json_encode($model->errors));
 
                 $notices = Notice::find()->where(['show' => 1])
@@ -133,8 +135,13 @@ class NoticeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+//        $this->findModel($id)->delete();
+        $notice = $this->findModel($id);
+        $notice->deleted = 1;
+        if($notice->save())
+            Yii::$app->session->setFlash('success', 'ສຳເລັດ');
+        else
+            Yii::$app->session->setFlash('danger', json_encode($notice->errors));
         return $this->redirect(['index']);
     }
 
@@ -147,7 +154,7 @@ class NoticeController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Notice::findOne($id)) !== null) {
+        if (($model = Notice::findOne($id)) !== null && ($model->deleted !== 1)) {
             return $model;
         }
 

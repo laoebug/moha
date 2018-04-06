@@ -46,7 +46,7 @@ class SiteController extends Controller
         if (Yii::$app->user->isGuest)
             return $this->redirect(["site/login"]);
         else {
-            $notices = Notice::find()->where(['show' => 1])
+            $notices = Notice::find()->where(['show' => 1, 'deleted' => 0])
                 ->orderBy('position, created_date desc')
                 ->asArray()
                 ->all();
@@ -141,6 +141,7 @@ class SiteController extends Controller
     public function actionNotices()
     {
         $searchModel = new NoticeSearch();
+        $searchModel->deleted = 0;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('notices', [
             'searchModel' => $searchModel,
@@ -151,7 +152,7 @@ class SiteController extends Controller
     public function actionNotice($id)
     {
         $model = Notice::findOne($id);
-        if (!isset($model) || $model->show != 1)
+        if (!isset($model) || $model->show != 1 || $model->deleted == 1)
             throw new NotFoundHttpException('ບໍ່ພົບຂໍ້ມູນ');
 
         return $this->render('notice', [
