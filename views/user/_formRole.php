@@ -30,10 +30,8 @@ use yii\widgets\ActiveForm;
 
     
     	<div class="row">
-    	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-	        <?php 
-	        //Html::submitButton('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])
-	        ?>
+    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	    
 	        <?= Html::button('<i class="fa fa-fw fa-user"></i>'. Yii::t('app', 'New'), [
 	            'class' => 'btn btn-md btn-info',            
 	             'title'=>Yii::t('app', 'New Record'),

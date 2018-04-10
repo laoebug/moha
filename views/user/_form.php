@@ -82,7 +82,8 @@ use yii\helpers\ArrayHelper;
             'id'=>'btnNew','id'=>'btnNew'
         ]);
         ?>
-        <?= Html::submitButton('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?> 
+        <?= Html::submitButton('<i class="fa fa-fw fa-save"></i>'. Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary','id'=>'btnSave','name'=>'btnSave','value'=>'Save']);?>
+        <?= Html::submitButton('<i class="fa fa-fw fa-trash"></i>'. Yii::t('app', 'Delete'), ['class' => 'btn btn-danger', 'id'=>'btnDelete','name'=>'btnDelete','value'=>'Delete']); ?>
         
         <?php
 //         echo Html::button("<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>",
