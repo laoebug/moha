@@ -70,8 +70,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['username', 'tel'], 'string', 'max' => 50],
             [['password', 'email'], 'string', 'max' => 100],
             [['firstname', 'lastname'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],
-            [['username'], 'unique'],
+            [['status'], 'string', 'max' => 1],        	//	
+            [['username'], 'unique','targetAttribute' => ['username'],'message'=> Yii::t('app','{attribute}'). '  "{value}" ' . Yii::t('app','has already been taken.')],        	
+        	//[['username'], 'unique'],        	//
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             //[['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
