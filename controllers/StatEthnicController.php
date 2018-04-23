@@ -8,16 +8,14 @@ use app\models\Ethnic;
 use app\models\Menu;
 use app\models\PhiscalYear;
 use app\models\Province;
+use app\models\StatEthnic;
 use app\models\StatEthnicDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatEthnic;
-use yii\data\ActiveDataProvider;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatEthnicController implements the CRUD actions for StatEthnic model.
  */
@@ -65,7 +63,7 @@ class StatEthnicController extends Controller
             $models = StatEthnicDetail::find()->alias('d')
                 ->join('join', 'stat_ethnic e', 'e.id = d.stat_ethnic_id and e.phiscal_year_id=:year', [':year'=> $year->id])
                 ->all();
-            return $this->renderPartial('table', [
+            return $this->renderPartial('view', [
                 'ethnics' => $ethnics,
                 'models' => $models,
                 'year' => $year,
