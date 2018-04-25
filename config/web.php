@@ -43,17 +43,15 @@ $config = [
             ],
         ],
         'db' => $db,
-        
 //         'urlManager' => [
 //             'enablePrettyUrl' => true,
 //             'enableStrictParsing' => true,
 //             'showScriptName' => false,
 //             'rules' => [
 //                   ['class' => 'yii\rest\UrlRule', 'controller' => 'myrole'],
-                 
+
 //             ],
 //         ],
-        
         'i18n' => [
             'translations' => [
                 'app*' => [
@@ -72,27 +70,24 @@ $config = [
             ]
         ],
     ],
-		
-	'as beforeRequest' => [  // if guest user access site so, redirect to login page.
-				'class' => 'yii\filters\AccessControl',
-				'rules' => [ 
-						[ 
-								'actions' => [ 
-										'login',
-										'error' 
-								],
-								'allow' => true 
-						],
-						[ 
-								'allow' => true,
-								'roles' => [ 
-										'@' 
-								] 
-						] 
-				] 
-		],
-		
-		
+//    'as beforeRequest' => [  // if guest user access site so, redirect to login page.
+//        'class' => 'yii\filters\AccessControl',
+//        'rules' => [
+//            [
+//                'actions' => [
+//                    'login',
+//                    'error'
+//                ],
+//                'allow' => true
+//            ],
+//            [
+//                'allow' => true,
+//                'roles' => [
+//                    '@'
+//                ]
+//            ]
+//        ]
+//    ],
     'params' => $params,
 ];
 
@@ -104,7 +99,6 @@ if (YII_ENV_DEV) {
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
-
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
