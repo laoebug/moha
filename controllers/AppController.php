@@ -60,8 +60,6 @@ class AppController extends Controller
 
     public function actionInquiry($report, $year, $province = "")
     {
-        print_r(\Yii::$app->request->headers);
-        exit;
         $model = [
             "report" => $report,
             "province" => $province,
@@ -73,7 +71,7 @@ class AppController extends Controller
                     "province_id" => $province,
                 ])->join("left join", "stat_local_admin s", "s.id = d.stat_local_admin_id and s.phiscal_year_id = :phiscal_year_id", [
                     ":phiscal_year_id" => $year
-                ])->asArray()->all();
+                ])->asArray()->one();
                 break;
         }
         return $model;
@@ -89,41 +87,62 @@ class AppController extends Controller
             throw new BadRequestHttpException('Bad Request');
 
         switch ($report) {
-            case "stat_local_admin":
+            case "stat-local-admin":
                 $model = StatLocalAdminDetail::find()->alias('d')
                     ->join('join', 'stat_local_admin s', 's.id = d.stat_local_admin_id and s.phiscal_year_id=:year', [
                         ':year' => $year
                     ])
                     ->where(['province_id' => $post['province']])
                     ->one();
-
                 if (!isset($model))
                     throw new NotFoundHttpException();
 
-                $model->province_head_total = $post['province_head']['total'];
-                $model->province_head_women = $post['province_head']['women'];
-                $model->province_vice_total = $post['province_vice']['total'];
-                $model->province_vice_women = $post['province_vice']['women'];
+                if (isset($post['province_head_total'])) $model->province_head_total = $post['province_head_total'];
+                if (isset($post['province_head_women'])) $model->province_head_women = $post['province_head_women'];
+                if (isset($post['province_vice_total'])) $model->province_vice_total = $post['province_vice_total'];
+                if (isset($post['province_vice_women'])) $model->province_vice_women = $post['province_vice_women'];
 
-                $model->district_head_total = $post['district_head']['total'];
-                $model->district_head_women = $post['district_head']['women'];
-                $model->district_vice_total = $post['district_vice']['total'];
-                $model->district_vice_women = $post['district_vice']['women'];
+                if (isset($post['district_head_total'])) $model->district_head_total = $post['district_head_total'];
+                if (isset($post['district_head_women'])) $model->district_head_women = $post['district_head_women'];
+                if (isset($post['district_vice_total'])) $model->district_vice_total = $post['district_vice_total'];
+                if (isset($post['district_vice_women'])) $model->district_vice_women = $post['district_vice_women'];
 
-                $model->village_head_total = $post['village_head']['total'];
-                $model->village_head_women = $post['village_head']['women'];
-                $model->village_vice_total = $post['village_vice']['total'];
-                $model->village_vice_women = $post['village_vice']['women'];
+                if (isset($post['village_head_total'])) $model->village_head_total = $post['village_head_total'];
+                if (isset($post['village_head_women'])) $model->village_head_women = $post['village_head_women'];
+                if (isset($post['village_vice_total'])) $model->village_vice_total = $post['village_vice_total'];
+                if (isset($post['village_vice_women'])) $model->village_vice_women = $post['village_vice_women'];
 
-                $model->population_total = $post['population']['total'];
-                $model->population_women = $post['population']['women'];
-                $model->village = $post['village'];
-                $model->family_total = $post['family']['total'];
-                $model->family_poor = $post['family']['poor'];
+                if (isset($post['population_total'])) $model->population_total = $post['population_total'];
+                if (isset($post['population_women'])) $model->population_women = $post['population_women'];
+
+                if (isset($post['village'])) $model->village = $post['village'];
+
+                if (isset($post['family_total'])) $model->family_total = $post['family_total'];
+                if (isset($post['family_poor'])) $model->family_poor = $post['family_poor'];
+
                 if (!$model->save())
-                    throw new \Exception(json_encode($model->errors));
+                    throw new \HttpRuntimeException(json_encode($model->getFirstErrors()));
 
                 break;
         }
+    }
+
+    public function actionReport($name, $year = "")
+    {
+        $models = [];
+        $year = $year == "" ? date("Y") : $year;
+        switch ($name) {
+            case 'stat-local-admin':
+                $models = Province::find()->alias('p')
+                    ->select('d.*, p.*')
+                    ->join('left join', 'stat_local_admin_detail d', 'p.id = d.province_id')
+                    ->join('left join', 'stat_local_admin s', 's.id = d.stat_local_admin_id and s.phiscal_year_id=:year', [
+                        ':year' => $year
+                    ])
+                    ->orderBy('p.id')
+                    ->asArray()->all();
+                break;
+        }
+        return $models;
     }
 }
