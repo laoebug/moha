@@ -48,7 +48,7 @@ class StatLocalAdminDetail extends \yii\db\ActiveRecord
     {
         return [
             [['stat_local_admin_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['stat_local_admin_id', 'province_id', 'province_head_total', 'province_head_women', 'province_vice_total', 'province_vice_women', 'district_head_total', 'district_head_women', 'district_vice_total', 'district_vice_women', 'village_head_total', 'village_head_women', 'village_vice_total', 'village_vice_women', 'population_total', 'population_women', 'village', 'family_total', 'family_poor'], 'integer'],
+//            [['stat_local_admin_id', 'province_id', 'province_head_total', 'province_head_women', 'province_vice_total', 'province_vice_women', 'district_head_total', 'district_head_women', 'district_vice_total', 'district_vice_women', 'village_head_total', 'village_head_women', 'village_vice_total', 'village_vice_women', 'population_total', 'population_women', 'village', 'family_total', 'family_poor'], 'integer'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_local_admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatLocalAdmin::className(), 'targetAttribute' => ['stat_local_admin_id' => 'id']],
         ];

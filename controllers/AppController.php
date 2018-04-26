@@ -11,11 +11,11 @@ namespace app\controllers;
 
 use app\models\PhiscalYear;
 use app\models\Province;
+use app\models\StatLocalAdmin;
 use app\models\StatLocalAdminDetail;
 use app\models\User;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class AppController extends Controller
@@ -60,11 +60,12 @@ class AppController extends Controller
 
     public function actionInquiry($report, $year, $province = "")
     {
-        $model = [
+        $output = [
             "report" => $report,
             "province" => $province,
             "year" => $year
         ];
+        $model = [];
         switch ($report) {
             case "stat-local-admin":
                 $model = StatLocalAdminDetail::find()->alias("d")->where([
@@ -72,6 +73,7 @@ class AppController extends Controller
                 ])->join("left join", "stat_local_admin s", "s.id = d.stat_local_admin_id and s.phiscal_year_id = :phiscal_year_id", [
                     ":phiscal_year_id" => $year
                 ])->asArray()->one();
+                if (!isset($model)) $model = $output;
                 break;
         }
         return $model;
@@ -94,9 +96,19 @@ class AppController extends Controller
                     ])
                     ->where(['province_id' => $post['province']])
                     ->one();
-                if (!isset($model))
-                    throw new NotFoundHttpException();
+                if (!isset($model)) {
+                    $master = new StatLocalAdmin();
+                    $master->phiscal_year_id = $year;
+                    $master->user_id = $post['user'];
+                    $master->saved = 1;
+                    $master->last_update = date('Y-m-d H:i:s');
+                    if (!$master->save())
+                        throw new BadRequestHttpException(json_encode($master->errors));
 
+                    $model = new StatLocalAdminDetail();
+                    $model->stat_local_admin_id = $master->id;
+                    $model->province_id = $post['province'];
+                }
                 if (isset($post['province_head_total'])) $model->province_head_total = $post['province_head_total'];
                 if (isset($post['province_head_women'])) $model->province_head_women = $post['province_head_women'];
                 if (isset($post['province_vice_total'])) $model->province_vice_total = $post['province_vice_total'];
@@ -121,7 +133,7 @@ class AppController extends Controller
                 if (isset($post['family_poor'])) $model->family_poor = $post['family_poor'];
 
                 if (!$model->save())
-                    throw new \HttpRuntimeException(json_encode($model->getFirstErrors()));
+                    throw new BadRequestHttpException(json_encode($model->errors));
 
                 break;
         }
