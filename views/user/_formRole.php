@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\ArrayHelper;
+use app\models\Province;
 /* @var $this yii\web\View */
 /* @var $model app\models\Role */
 /* @var $form yii\widgets\ActiveForm */
@@ -27,7 +28,24 @@ use yii\widgets\ActiveForm;
 		</div>
 	</div>
    
-
+	 <div class="row">
+		    
+		    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			
+		   <?php
+				echo $form->field($model, 'province_id')->dropDownList(
+		             ArrayHelper::map(Province::find()
+		    
+		                    ->all(),'id','province_name'),
+		            ['prompt'=>Yii::t('app','Please select'),'id'=>'province']
+		        ) 
+			?>
+		    </div>
+		   
+	</div>
+	
+	
+		
     
     	<div class="row">
     	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

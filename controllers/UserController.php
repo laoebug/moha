@@ -93,11 +93,6 @@ class UserController extends Controller {
 			$model->province_id = "";
 		}
 		
-		// if (Yii::$app->request->post ( 'btnSave' )) {
-		
-		// echo "KO";
-		// exit ();
-		// }
 		
 		if ($model->load ( Yii::$app->request->post () )) {
 			
@@ -308,6 +303,7 @@ class UserController extends Controller {
 		}
 		
 		$model = new Role ();
+
 		$menuList = [ ];
 		// $models = Role::findAll(['deleted'=>0]);
 		$models = Role::find ()->where ( 'deleted=:deleted' )->addParams ( [ 
@@ -333,11 +329,14 @@ class UserController extends Controller {
 		}
 		
 		$model = new Role ();
-		
+		$model->scenario = 'is_province_check';
 		if (Yii::$app->request->isAjax) {
 			$data = Yii::$app->request->post ();
 			$model->name = $data ["role_name"];
+			
 			$model->is_province = $data ["is_province"];
+			$model->province_id = $data ["province_id"];			
+
 			$model->user_id = $user->id;
 			$model->deleted = 0;
 			if ($model->validate ()) {
@@ -372,9 +371,12 @@ class UserController extends Controller {
 		if (Yii::$app->request->isAjax) {
 			$id = $_POST ["id"];
 			$model = Role::findOne ( $id );
+			$model->scenario = 'is_province_check';
 			$model->name = $_POST ["role_name"];
 			$model->user_id = $user->id;
-			$model->is_province = $_POST ["is_province"];
+			$model->is_province = $_POST ["is_province"];			
+			$model->province_id = $_POST ["province_id"];			
+			
 			if ($model->save ()) {
 				Yii::$app->session->setFlash ( "success", "Role has been update successfully" );
 			} else {
@@ -495,6 +497,7 @@ class UserController extends Controller {
 	 */
 	public function actionCreate() {
 		$user = Yii::$app->user->identity;
+
 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
 			$controller_id = Yii::$app->controller->id;
 			$acton_id = Yii::$app->controller->action->id;
@@ -545,6 +548,7 @@ class UserController extends Controller {
 	 * @return mixed
 	 */
 	public function actionUpdate($id) {
+		
 		$user = Yii::$app->user->identity;
 		if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
 			$controller_id = Yii::$app->controller->id;
