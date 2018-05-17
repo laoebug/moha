@@ -20,7 +20,7 @@
                         <th class="text-center">ລ/ດ</th>
                         <th class="text-center">ກິດຈະກຳ</th>
                         <th class="text-center">ຈຳນວນ (ໃບ)</th>
-                        <th class="text-center">ຈຳນວນ km</th>
+                        <th class="text-center">ຈຳນວນ km<sup>2</sup></th>
                         <th class="text-center">ຈຳນວນຈຸດ</th>
                         <th class="text-center">ໝາຍເຫດ</th>
                     </tr>

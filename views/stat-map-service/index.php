@@ -36,7 +36,7 @@ $this->title = "ສະຖິຕິການບໍລິການແຜນທີ�
                     <input class="form-control" ng-model="model.amount" type="number" min="0">
                 </div>
                 <div class="col-sm-2">
-                    <label>ຈຳນວນ km</label>
+                    <label>ຈຳນວນ km<sup>2</sup></label>
                     <input class="form-control" ng-model="model.km" type="number" min="0">
                 </div>
                 <div class="col-sm-2">
@@ -89,7 +89,7 @@ $this->title = "ສະຖິຕິການບໍລິການແຜນທີ�
                                 <th class="text-center">ລ/ດ</th>
                                 <th class="text-center">ກິດຈະກຳ</th>
                                 <th class="text-center">ຈຳນວນ (ໃບ)</th>
-                                <th class="text-center">ຈຳນວນ km</th>
+                                <th class="text-center">ຈຳນວນ km<sup>2</sup></th>
                                 <th class="text-center">ຈຳນວນຈຸດ</th>
                                 <th class="text-center">ໝາຍເຫດ</th>
                             </tr>

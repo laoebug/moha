@@ -37,13 +37,6 @@ class DepartmentController extends Controller
             throw new NotFoundHttpException ('| number | dash');
         $model = Menu::findOne($id);
 
-// 		$x = 1;
-
-// 		while($model->id <= 5) {
-// 			echo "The number is: $x <br>";
-// 			$x++;
-// 		}
-
         $searchModel = new MenuSearch ();
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         $dataProvider->query->andWhere([

@@ -6,24 +6,16 @@ use app\components\MyHelper;
 use app\models\Attachment;
 use app\models\Menu;
 use app\models\Ministry;
-use app\models\MinistryGroup;
 use app\models\PhiscalYear;
-use app\models\StatGovermentUnitDetail;
-use Codeception\Util\HttpCode;
-use function foo\func;
-use Yii;
 use app\models\StatGovermentUnit;
-use app\models\StatGovermentUnitSearch;
+use app\models\StatGovermentUnitDetail;
+use app\services\AuthenticationService;
+use Codeception\Util\HttpCode;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\web\MethodNotAllowedHttpException;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\web\Response;
-use yii\web\ServerErrorHttpException;
-use app\services\AuthenticationService;
+
 /**
  * StatGovermentUnitController implements the CRUD actions for StatGovermentUnit model.
  */
@@ -36,41 +28,16 @@ class StatGovermentUnitController extends Controller
     public function actionIndex($year = null)
     {
         $table = null;
-        if(isset($year)) {
+        if (isset($year)) {
             $table = $this->enquiry($year);
         }
         return $this->render('index');
     }
 
-    public function actionGet() {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
-        $years = PhiscalYear::find()->orderBy('year')
-            ->where(['deleted' => 0])->asArray()->all();
-
-        $ministries = Ministry::find()
-            ->where("deleted=0 and ministry_group_id = 1")
-            ->orderBy('position')
-            ->asArray()->all();
-
-        return json_encode([
-            "years" => $years,
-            "ministries" => $ministries,
-        ]);
-    }
-
-    private function enquiry($year, $showstatus = true) {
+    private function enquiry($year, $showstatus = true)
+    {
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
+        if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
@@ -81,10 +48,10 @@ class StatGovermentUnitController extends Controller
 
         $model = StatGovermentUnit::find()
             ->with([
-                'statGovermentUnitDetails' => function(ActiveQuery $query) {
+                'statGovermentUnitDetails' => function (ActiveQuery $query) {
                     $query
-                        ->with(['ministry' => function(ActiveQuery $query) {
-                            $query->where('ministry.deleted=0 and ministry.ministry_group_id = 1')
+                        ->with(['ministry' => function (ActiveQuery $query) {
+                            $query->where('ministry.deleted=0 and ministry.ministry_group_id in (1,2)')
                                 ->orderBy('ministry.position');
                         }]);
                 }
@@ -92,7 +59,7 @@ class StatGovermentUnitController extends Controller
             ->where(['phiscal_year_id' => $year->id])
             ->one();
 
-        if(!isset($model)) {
+        if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
@@ -105,55 +72,82 @@ class StatGovermentUnitController extends Controller
         ]);
     }
 
-    public function actionEnquiry($year) {
+    public function actionGet()
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
+        $years = PhiscalYear::find()->orderBy('year')
+            ->where(['deleted' => 0])->asArray()->all();
+
+        $ministries = Ministry::find()
+            ->where("deleted=0 and ministry_group_id in (1,2)")
+            ->orderBy('position')
+            ->asArray()->all();
+
+        return json_encode([
+            "years" => $years,
+            "ministries" => $ministries,
+        ]);
+    }
+
+    public function actionEnquiry($year)
+    {
         return $this->enquiry($year);
     }
 
-    public function actionInquiry($year, $ministry) {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionInquiry($year, $ministry)
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $detail = StatGovermentUnitDetail::find()
-            ->with(['statGovermentUnit' => function(ActiveQuery $query) use($year) {
+            ->with(['statGovermentUnit' => function (ActiveQuery $query) use ($year) {
                 $query->where(['phiscal_year_id' => $year]);
             }])
             ->where(['ministry_id' => $ministry])->asArray()->one();
         return json_encode($detail);
     }
 
-    public function actionSave() {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionSave()
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $post = Yii::$app->request->post();
-        if(!isset($post)) {
+        if (!isset($post)) {
             MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
             return;
         }
 
         $year = PhiscalYear::findOne($post['year']);
-        if(!isset($year)) {
+        if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
-        if($year->status != "O")  {
+        if ($year->status != "O") {
             MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
             return;
         }
@@ -161,18 +155,18 @@ class StatGovermentUnitController extends Controller
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model = StatGovermentUnit::find()->where(['phiscal_year_id' => $year->id])->one();
-            if(!isset($model)) {
+            if (!isset($model)) {
                 $model = new StatGovermentUnit();
                 $model->phiscal_year_id = $year->id;
             }
             $model->user_id = Yii::$app->user->id;
             $model->saved = 1;
             $model->last_update = date('Y-m-d H:i:s');
-            if(!$model->save()) throw new Exception(json_encode($model->errors));
+            if (!$model->save()) throw new Exception(json_encode($model->errors));
 
             $detail = StatGovermentUnitDetail::find()
                 ->where(['stat_goverment_unit_id' => $model->id, 'ministry_id' => $post['ministry']])->one();
-            if(!isset($detail)) {
+            if (!isset($detail)) {
                 $detail = new StatGovermentUnitDetail();
                 $detail->ministry_id = $post['ministry'];
                 $detail->stat_goverment_unit_id = $model->id;
@@ -182,7 +176,7 @@ class StatGovermentUnitController extends Controller
             $detail->insitute = $post['insitute'];
             $detail->center = $post['center'];
             $detail->remark = $post['remark'];
-            if(!$detail->save()) throw new Exception(json_encode($detail->errors));
+            if (!$detail->save()) throw new Exception(json_encode($detail->errors));
 
             $transaction->commit();
             return $this->enquiry($year);
@@ -192,9 +186,10 @@ class StatGovermentUnitController extends Controller
         }
     }
 
-    public function actionPrint($year) {
-        $year =PhiscalYear::findOne($year);
-        if(!isset($year)) {
+    public function actionPrint($year)
+    {
+        $year = PhiscalYear::findOne($year);
+        if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
@@ -204,20 +199,20 @@ class StatGovermentUnitController extends Controller
         ]);
     }
 
-    public function actionDownload($year) {
-        $year =PhiscalYear::findOne($year);
-        if(!isset($year)) {
+    public function actionDownload($year)
+    {
+        $year = PhiscalYear::findOne($year);
+        if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
 
         return $this->renderPartial('excel', [
-            'file' => 'stat_goverment_unit_'.$year->year.'.xls',
+            'file' => 'stat_goverment_unit_' . $year->year . '.xls',
             'content' => $this->enquiry($year->id, false)
         ]);
     }
 
-   
 
     public function actionUpload($year)
     {
@@ -338,29 +333,30 @@ class StatGovermentUnitController extends Controller
             }
         }
     }
-    
-    public function beforeAction($action) {
-    	$user = Yii::$app->user->identity;
-    	$this->enableCsrfValidation = true;
-    	$controller_id = Yii::$app->controller->id;
-    	$action_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $action_id )) {
-    			if (Yii::$app->request->isAjax) {
-    				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    				return;
-    			} else {
-    				return $this->redirect ( [
-    						'authentication/notallowed',
-    						'controller_id'=>$controller_id,
-    						'action_id'=>$action_id
-    				] );
-    			}
-    		}
-    	}
-    
-    	return parent::beforeAction ( $action );
+
+    public function beforeAction($action)
+    {
+        $user = Yii::$app->user->identity;
+        $this->enableCsrfValidation = true;
+        $controller_id = Yii::$app->controller->id;
+        $action_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $action_id)) {
+                if (Yii::$app->request->isAjax) {
+                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                    return;
+                } else {
+                    return $this->redirect([
+                        'authentication/notallowed',
+                        'controller_id' => $controller_id,
+                        'action_id' => $action_id
+                    ]);
+                }
+            }
+        }
+
+        return parent::beforeAction($action);
     }
-    
-    
+
+
 }
