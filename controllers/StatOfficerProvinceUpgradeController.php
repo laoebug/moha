@@ -85,10 +85,10 @@ class StatOfficerProvinceUpgradeController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('m')
-            ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_province_upgrade_detail d', 'd.province_id=m.id and d.stat_officer_province_upgrade_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+        $models = Province::find()->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_officer_province_upgrade_detail d', 'd.province_id=province.id and d.stat_officer_province_upgrade_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         $query = StatOfficerProvinceUpgradeDetail::find()
             ->select(['stat_officer_province_upgrade_id' => 'stat_officer_province_upgrade_id']);
@@ -243,10 +243,10 @@ class StatOfficerProvinceUpgradeController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('m')
-            ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_province_upgrade_detail d', 'd.province_id=m.id and d.stat_officer_province_upgrade_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+        $models = Province::find()->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_officer_province_upgrade_detail d', 'd.province_id=province.id and d.stat_officer_province_upgrade_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -279,10 +279,10 @@ class StatOfficerProvinceUpgradeController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('m')
-            ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_province_upgrade_detail d', 'd.province_id=m.id and d.stat_officer_province_upgrade_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+        $models = Province::find()->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_officer_province_upgrade_detail d', 'd.province_id=province.id and d.stat_officer_province_upgrade_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Officers Province Upgrade '. $year->year . '.xls',

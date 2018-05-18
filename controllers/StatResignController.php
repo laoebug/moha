@@ -7,16 +7,14 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\OfficerLevel;
 use app\models\PhiscalYear;
+use app\models\StatResign;
 use app\models\StatResignDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatResign;
-use app\models\StatResignSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatResignController implements the CRUD actions for StatResign model.
  */

@@ -6,17 +6,14 @@ use app\components\MyHelper;
 use app\models\Attachment;
 use app\models\OfficerLevel;
 use app\models\PhiscalYear;
+use app\models\StatOfficerTechnical;
 use app\models\StatOfficerTechnicalDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerTechnical;
-use app\models\StatOfficerTechnicalSearch;
-
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerTechnicalController implements the CRUD actions for StatOfficerTechnical model.
  */

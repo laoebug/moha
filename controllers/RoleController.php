@@ -3,14 +3,15 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
-use Codeception\Util\HttpCode;
-use Yii;
 use app\models\Role;
 use app\models\RoleSearch;
+use app\services\AuthenticationService;
+use Codeception\Util\HttpCode;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * RoleController implements the CRUD actions for Role model.
  */

@@ -2,13 +2,13 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\Menugroup;
 use app\models\MenugroupSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * MenugroupController implements the CRUD actions for Menugroup model.
  */

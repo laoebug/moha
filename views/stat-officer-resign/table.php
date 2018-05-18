@@ -65,16 +65,22 @@
                     </tr>
                     <tr>
                         <th>ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</th>
-                        <th class="text-center"><?= number_format($model->moveto_ministry_total + $model->movein_ministry_total)?></th>
-                        <th class="text-center"><?= number_format($model->moveto_ministry_women + $model->movein_ministry_women)?></th>
-                        <th class="text-center"><?= number_format($model->moveto_ministry_total + $model->movein_ministry_total - ($model->moveto_ministry_women + $model->movein_ministry_women))?></th>
+                        <th class="text-center"><?= number_format($model->moveto_ministry_total + 0) ?></th>
+                        <th class="text-center"><?= number_format($model->moveto_ministry_women + 0) ?></th>
+                        <th class="text-center"><?= number_format($model->moveto_ministry_total + 0 - ($model->moveto_ministry_women + 0)) ?></th>
                     </tr>
-                    <tr>
-                        <td>1. ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td><td class='text-center'><?= number_format($model->moveto_ministry_total)?></td><td class='text-center'><?= number_format($model->moveto_ministry_women)?></td><td class='text-center'><?= number_format($model->moveto_ministry_total - $model->moveto_ministry_women)?></td>
-                    </tr>
-                    <tr>
-                        <td>2. ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td><td class='text-center'><?= number_format($model->movein_ministry_total)?></td><td class='text-center'><?= number_format($model->movein_ministry_women)?></td><td class='text-center'><?= number_format($model->movein_ministry_total - $model->movein_ministry_women)?></td>
-                    </tr>
+                    <!--                    <tr>-->
+                    <!--                        <td>1. ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td><td class='text-center'>-->
+                    <? //= number_format($model->moveto_ministry_total)?><!--</td><td class='text-center'>-->
+                    <? //= number_format($model->moveto_ministry_women)?><!--</td><td class='text-center'>-->
+                    <? //= number_format($model->moveto_ministry_total - $model->moveto_ministry_women)?><!--</td>-->
+                    <!--                    </tr>-->
+                    <!--                    <tr>-->
+                    <!--                        <td>2. ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td><td class='text-center'>-->
+                    <? //= number_format($model->movein_ministry_total)?><!--</td><td class='text-center'>-->
+                    <? //= number_format($model->movein_ministry_women)?><!--</td><td class='text-center'>-->
+                    <? //= number_format($model->movein_ministry_total - $model->movein_ministry_women)?><!--</td>-->
+                    <!--                    </tr>-->
                     </tbody>
                 </table>
             </div>

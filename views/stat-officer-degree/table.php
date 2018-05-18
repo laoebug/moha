@@ -24,13 +24,13 @@
                     <thead>
                     <tr>
                         <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
-                        <th class="text-center" colspan="20"><?= Yii::t('app', 'Description') ?></th>
+                        <th class="text-center" colspan="21"><?= Yii::t('app', 'Description') ?></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <th class="text-center" rowspan="4">IV</th>
-                        <th class="" colspan="20">ຈຳນວນລັດຖະກອນແຍກຕາມຊັ້ນວິຊາສະເພາະ</th>
+                        <th class="" colspan="21">ຈຳນວນລັດຖະກອນແຍກຕາມຊັ້ນວິຊາສະເພາະ</th>
                     </tr>
                     <tr>
                         <td class="text-center" colspan="2">ປະລິນຍາເອກ</td>
@@ -42,12 +42,13 @@
                         <td class="text-center" colspan="2">ຊັ້ນກາງ</td>
                         <td class="text-center" colspan="2">ຊັ້ນຕົ້ນ</td>
                         <td class="text-center" colspan="2">ບໍ່ມີຊັ້ນ ວິຊາສະເພາະ</td>
-                        <td class="text-center" colspan="2">ລວມ</td>
+                        <td class="text-center" colspan="3">ລວມ</td>
                     </tr>
                     <tr>
                         <?php for ($i = 0; $i < 20; $i++): ?>
                             <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
                         <?php endfor; ?>
+                        <td class="text-center"><?= Yii::t('app', 'M') ?></td>
                     </tr>
                     <tr>
                         <td class="text-center"><?= number_format($model->doctor_total) ?></td>
@@ -79,6 +80,15 @@
                                 $model->doctor_women + $model->post_master_women + $model->master_women + $model->post_bachelor_women
                                 + $model->bachelor_women + $model->high_women + $model->middle_women + $model->begin_women + $model->no_women
                             ) ?>
+                        </td>
+                        <td class="text-center">
+                            <?= number_format((
+                                    $model->doctor_total + $model->post_master_total + $model->master_total + $model->post_bachelor_total
+                                    + $model->bachelor_total + $model->high_total + $model->middle_total + $model->begin_total + $model->no_total
+                                ) - (
+                                    $model->doctor_women + $model->post_master_women + $model->master_women + $model->post_bachelor_women
+                                    + $model->bachelor_women + $model->high_women + $model->middle_women + $model->begin_women + $model->no_women
+                                )) ?>
                         </td>
                     </tr>
                     </tbody>

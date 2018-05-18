@@ -7,15 +7,13 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\PhiscalYear;
 use app\models\Province;
+use app\models\StatReligionPlace;
 use app\models\StatReligionPlaceDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatReligionPlace;
-use app\models\StatReligionPlaceSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatReligionPlaceController implements the CRUD actions for StatReligionPlace model.
  */
@@ -80,9 +78,9 @@ class StatReligionPlaceController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('p')->select('p.*, d.*')
-            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id and d.stat_religion_place_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
+        $models = Province::find()->alias('province')->select('province.*, d.*')
+            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = province.id and d.stat_religion_place_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         $stat = StatReligionPlaceDetail::find()
             ->select([
@@ -253,9 +251,9 @@ class StatReligionPlaceController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('p')->select('p.*, d.*')
-            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id and d.stat_religion_place_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
+        $models = Province::find()->alias('province')->select('province.*, d.*')
+            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = province.id and d.stat_religion_place_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', ['models' => $models, "year" => $year])
@@ -286,9 +284,9 @@ class StatReligionPlaceController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('p')->select('p.*, d.*')
-            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id and d.stat_religion_place_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
+        $models = Province::find()->alias('province')->select('province.*, d.*')
+            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = province.id and d.stat_religion_place_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Local Administration '. $year->year .'.xls',

@@ -2,13 +2,12 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\ExternalLink;
 use app\models\ExternalLinkSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use Codeception\Exception\ExternalUrlException;
 
 /**
  * ExternalLinkController implements the CRUD actions for ExternalLink model.
