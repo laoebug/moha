@@ -28,7 +28,7 @@ $this->title = "ສະຖິຕິພະນັກງານລັດຖະກອ�
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
-                    <label>ອົງການຈັດຕັ້ງ</label>
+                    <label>ແຂວງ</label>
                     <select ng-options="m.province_name for m in provinces" ng-model="model.province" ng-change="inquiry()"
                             class="form-control"></select>
                 </div>

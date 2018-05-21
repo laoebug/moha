@@ -3,15 +3,16 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
+use app\models\Message;
 use app\models\SourceMessage;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\Message;
 use yii\db\Exception;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * MessageController implements the CRUD actions for Message model.
  */

@@ -28,7 +28,6 @@ class StatHighcoinMinistryController extends Controller
 
     public function actionGet()
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -42,7 +41,7 @@ class StatHighcoinMinistryController extends Controller
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         $awards = Award::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
         $ministries = Ministry::find()
-            ->where('deleted=0 and ministry_group_id in (1,2)')
+            ->where('deleted=0 and ministry_group_id in (1,2,3)')
             ->orderBy('position')->asArray()->all();
 
         return json_encode([
@@ -261,7 +260,6 @@ class StatHighcoinMinistryController extends Controller
                 }
             }
         }
-
         return parent::beforeAction($action);
     }
 

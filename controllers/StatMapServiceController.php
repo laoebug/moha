@@ -6,22 +6,19 @@ use app\components\MyHelper;
 use app\models\Attachment;
 use app\models\Menu;
 use app\models\PhiscalYear;
+use app\models\StatMapService;
 use app\models\StatMapServiceDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatMapService;
-use app\models\StatMapServiceSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatMapServiceController implements the CRUD actions for StatMapService model.
  */
 class StatMapServiceController extends Controller
 {
-
     /**
      * Lists all StatMapService models.
      * @return mixed
@@ -65,6 +62,7 @@ class StatMapServiceController extends Controller
 
         $models = StatMapServiceDetail::find()->alias('d')
             ->join('join', 'stat_map_service c', 'c.id = d.stat_map_service_id and c.phiscal_year_id=:year', [':year' => $year->id])
+            ->orderBy('position')
             ->asArray()->all();
 
         return json_encode([
@@ -164,6 +162,7 @@ class StatMapServiceController extends Controller
 
         $models = StatMapServiceDetail::find()->alias('d')
             ->join('join', 'stat_map_service c', 'c.id = d.stat_map_service_id and c.phiscal_year_id=:year', [':year' => $year->id])
+            ->orderBy('position')
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
@@ -195,6 +194,7 @@ class StatMapServiceController extends Controller
 
         $models = StatMapServiceDetail::find()->alias('d')
             ->join('join', 'stat_map_service c', 'c.id = d.stat_map_service_id and c.phiscal_year_id=:year', [':year' => $year->id])
+            ->orderBy('position')
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [

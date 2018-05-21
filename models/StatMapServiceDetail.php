@@ -14,6 +14,7 @@ use Yii;
  * @property integer $km
  * @property integer $point
  * @property string $remark
+ * @property integer $position
  *
  * @property StatMapService $statMapService
  */
@@ -34,8 +35,8 @@ class StatMapServiceDetail extends \yii\db\ActiveRecord
     {
         return [
             [['stat_map_service_id', 'activity'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['stat_map_service_id', 'amount', 'km', 'point'], 'integer'],
-            [['activity', 'remark'], 'string', 'max' => 255],
+            [['stat_map_service_id', 'amount', 'km', 'point', 'position'], 'integer'],
+            [['activity', 'remark'], 'string', 'max' => 255],            
             [['stat_map_service_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatMapService::className(), 'targetAttribute' => ['stat_map_service_id' => 'id']],
         ];
     }
@@ -53,6 +54,7 @@ class StatMapServiceDetail extends \yii\db\ActiveRecord
             'km' => Yii::t('app', 'Km'),
             'point' => Yii::t('app', 'Point'),
             'remark' => Yii::t('app', 'Remark'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 

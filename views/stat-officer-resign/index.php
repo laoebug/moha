@@ -92,13 +92,13 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
                             <td><input type="number" min="0" ng-model="model.moveto_ministry_women"
                                        max="{{model.moveto_ministry_total}}" class="form-control"></td>
                         </tr>
-                        <tr>
-                            <td>ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td>
-                            <td><input type="number" min="0" ng-model="model.movein_ministry_total"
-                                       class="form-control"></td>
-                            <td><input type="number" min="0" ng-model="model.movein_ministry_women"
-                                       max="{{model.movein_ministry_total}}" class="form-control"></td>
-                        </tr>
+                        <!--                        <tr>-->
+                        <!--                            <td>ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td>-->
+                        <!--                            <td><input type="number" min="0" ng-model="model.movein_ministry_total"-->
+                        <!--                                       class="form-control"></td>-->
+                        <!--                            <td><input type="number" min="0" ng-model="model.movein_ministry_women"-->
+                        <!--                                       max="{{model.movein_ministry_total}}" class="form-control"></td>-->
+                        <!--                        </tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -224,22 +224,22 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
                                     model.movein_ministry_women))}}
                                 </th>
                             </tr>
-                            <tr>
-                                <td>1. ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td>
-                                <td class='text-center'>{{formatNumber(model.moveto_ministry_total)}}</td>
-                                <td class='text-center'>{{formatNumber(model.moveto_ministry_women)}}</td>
-                                <td class='text-center'>{{formatNumber(model.moveto_ministry_total -
-                                    model.moveto_ministry_women)}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2. ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td>
-                                <td class='text-center'>{{formatNumber(model.movein_ministry_total)}}</td>
-                                <td class='text-center'>{{formatNumber(model.movein_ministry_women)}}</td>
-                                <td class='text-center'>{{formatNumber(model.movein_ministry_total -
-                                    model.movein_ministry_women)}}
-                                </td>
-                            </tr>
+                            <!--                            <tr>-->
+                            <!--                                <td>1. ຍົກຍ້າຍໄປກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ</td>-->
+                            <!--                                <td class='text-center'>{{formatNumber(model.moveto_ministry_total)}}</td>-->
+                            <!--                                <td class='text-center'>{{formatNumber(model.moveto_ministry_women)}}</td>-->
+                            <!--                                <td class='text-center'>{{formatNumber(model.moveto_ministry_total --->
+                            <!--                                    model.moveto_ministry_women)}}-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                                <td>2. ຍົກຍ້າຍມາຈາກພາກສ່ວນອື່ນໆ (ກະຊວງ, ອົງການ, ແຂວງ, ນະຄອນຫຼວງ)</td>-->
+                            <!--                                <td class='text-center'>{{formatNumber(model.movein_ministry_total)}}</td>-->
+                            <!--                                <td class='text-center'>{{formatNumber(model.movein_ministry_women)}}</td>-->
+                            <!--                                <td class='text-center'>{{formatNumber(model.movein_ministry_total --->
+                            <!--                                    model.movein_ministry_women)}}-->
+                            <!--                                </td>-->
+                            <!--                            </tr>-->
                             </tbody>
                         </table>
                     </div>
@@ -346,7 +346,8 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
               $scope.model.move_soe_total = parseInt($scope.model.move_soe_total);
               $scope.model.move_soe_total = parseInt($scope.model.move_soe_total);
               $scope.model.moveto_ministry_total = parseInt($scope.model.moveto_ministry_total);
-              $scope.model.movein_ministry_total = parseInt($scope.model.movein_ministry_total);
+//              $scope.model.movein_ministry_total = parseInt($scope.model.movein_ministry_total);
+              $scope.model.movein_ministry_total = 0;
 
               $scope.model.retire_women = parseInt($scope.model.retire_women);
               $scope.model.bumnet_women = parseInt($scope.model.bumnet_women);
@@ -358,7 +359,8 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
               $scope.model.move_soe_women = parseInt($scope.model.move_soe_women);
               $scope.model.move_soe_women = parseInt($scope.model.move_soe_women);
               $scope.model.moveto_ministry_women = parseInt($scope.model.moveto_ministry_women);
-              $scope.model.movein_ministry_women = parseInt($scope.model.movein_ministry_women);
+//              $scope.model.movein_ministry_women = parseInt($scope.model.movein_ministry_women);
+              $scope.model.movein_ministry_women = 0;
             } else {
               $scope.model.retire_total =  null;
               $scope.model.bumnet_total =  null;

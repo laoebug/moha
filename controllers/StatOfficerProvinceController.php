@@ -78,14 +78,14 @@ class StatOfficerProvinceController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('m')
+        $models = Province::find()->alias('province')
             ->select([
-                'm.*',
+                'province.*',
                 'total' => 'ifnull(d.total, 0)',
                 'women' => 'ifnull(d.women, 0)'
             ])
-            ->join('left join', 'stat_officer_province_detail d', 'd.province_id = m.id and d.stat_officer_province_id=:id', [':id' => $model->id])
-            ->where(['m.deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+            ->join('left join', 'stat_officer_province_detail d', 'd.province_id = province.id and d.stat_officer_province_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return json_encode([
             'models' => $models,
@@ -214,14 +214,14 @@ class StatOfficerProvinceController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('m')
+        $models = Province::find()->alias('province')
             ->select([
-                'm.*',
+                'province.*',
                 'total' => 'ifnull(d.total, 0)',
                 'women' => 'ifnull(d.women, 0)'
             ])
             ->join('left join', 'stat_officer_province_detail d', 'd.province_id = m.id and d.stat_officer_province_id=:id', [':id' => $model->id])
-            ->where(['m.deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -256,14 +256,14 @@ class StatOfficerProvinceController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('m')
+        $models = Province::find()->alias('province')
             ->select([
-                'm.*',
+                'province.*',
                 'total' => 'ifnull(d.total, 0)',
                 'women' => 'ifnull(d.women, 0)'
             ])
-            ->join('left join', 'stat_officer_province_detail d', 'd.province_id = m.id and d.stat_officer_province_id=:id', [':id' => $model->id])
-            ->where(['m.deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+            ->join('left join', 'stat_officer_province_detail d', 'd.province_id = province.id and d.stat_officer_province_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Officer Province ' . $year->year . '.xls',

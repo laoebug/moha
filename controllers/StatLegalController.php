@@ -7,19 +7,15 @@ use app\models\Attachment;
 use app\models\LegalType;
 use app\models\Menu;
 use app\models\PhiscalYear;
-use app\models\StatLegalDetail;
-use Codeception\Util\HttpCode;
-use function foo\func;
-use Yii;
 use app\models\StatLegal;
-use app\models\StatLegalSearch;
+use app\models\StatLegalDetail;
+use app\services\AuthenticationService;
+use Codeception\Util\HttpCode;
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\MethodNotAllowedHttpException;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatLegalController implements the CRUD actions for StatLegal model.
  */

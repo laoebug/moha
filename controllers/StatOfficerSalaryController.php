@@ -7,17 +7,14 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\OfficerLevel;
 use app\models\PhiscalYear;
-use app\models\StatExploreDetail;
+use app\models\StatOfficerSalary;
 use app\models\StatOfficerSalaryDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerSalary;
-use app\models\StatOfficerSalarySearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerSalaryController implements the CRUD actions for StatOfficerSalary model.
  */

@@ -8,13 +8,14 @@ use app\models\Ethnic;
 use app\models\Menu;
 use app\models\OfficerLevel;
 use app\models\PhiscalYear;
+use app\models\StatOfficerEthnic;
 use app\models\StatOfficerEthnicDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerEthnic;
 use yii\base\Exception;
 use yii\web\Controller;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerEthnicController implements the CRUD actions for StatOfficerEthnic model.
  */

@@ -48,7 +48,8 @@ class StatOfficerMinistryTrainController extends Controller
     	
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         $ministries = Ministry::find()
-            ->where(['deleted' => 0, 'ministry_group_id' => 1])
+            ->where(['deleted' => 0])
+            ->andWhere('ministry_group_id in (1,2,3)')
             ->orderBy('position')->asArray()->all();
 
         return json_encode([

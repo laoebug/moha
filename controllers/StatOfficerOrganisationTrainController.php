@@ -9,15 +9,12 @@ use app\models\Organisation;
 use app\models\PhiscalYear;
 use app\models\StatOfficerOrganisationTrain;
 use app\models\StatOfficerOrganisationTrainDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerOrgTrain;
-use app\models\StatOfficerOrgTrainSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerOrgTrainController implements the CRUD actions for StatOfficerOrgTrain model.
  */

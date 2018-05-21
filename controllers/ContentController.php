@@ -2,12 +2,11 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\Content;
 use app\models\ContentSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ContenController implements the CRUD actions for Content model.

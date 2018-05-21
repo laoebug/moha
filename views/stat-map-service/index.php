@@ -43,9 +43,13 @@ $this->title = "ສະຖິຕິການບໍລິການແຜນທີ�
                     <label>ຈຳນວນຈຸດ</label>
                     <input class="form-control" ng-model="model.point" type="number" min="0">
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-10">
                     <label><?= Yii::t('app', 'Remark') ?></label>
                     <input type="text" class="form-control" ng-model="model.remark">
+                </div>
+                <div class="col-sm-2">
+                    <label><?= Yii::t('app', 'Position') ?></label>
+                    <input type="number" class="form-control" ng-model="model.position">
                 </div>
                 <div class="col-sm-3" style="margin-top: 1em">
                     <button type="button" class="btn btn-info col-sm-12" ng-click="add()">
@@ -241,6 +245,7 @@ $this->title = "ສະຖິຕິການບໍລິການແຜນທີ�
       $scope.model.amount = parseInt(m.amount);
       $scope.model.km = parseInt(m.km);
       $scope.model.point = parseInt(m.point);
+      $scope.model.position = parseInt(m.position);
     };
 
     $scope.sumcolumn = function (key) {

@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use app\components\MyHelper;
 use Yii;
 
 /**

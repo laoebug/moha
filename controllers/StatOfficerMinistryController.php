@@ -7,17 +7,15 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\Ministry;
 use app\models\PhiscalYear;
+use app\models\StatOfficerMinistry;
 use app\models\StatOfficerMinistryDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerMinistry;
-use app\models\StatOfficerMinistrySearch;
 use yii\db\Exception;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerMinistryController implements the CRUD actions for StatOfficerMinistry model.
  */

@@ -32,11 +32,14 @@ $this->title = "ຈຳນວນພະນັກງານຕາມສັນຍາ"
                         <thead>
                         <tr>
                             <th class="text-center"><?= Yii::t('app', 'Description') ?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                            <th class="text-center" style="width: 20%"><?= Yii::t('app', 'Total') ?></th>
+                            <th class="text-center" style="width: 20%"><?= Yii::t('app', 'Women') ?></th>
                         </tr>
                         </thead>
                         <tbody>
+                        <tr>
+                            <th colspan="3">1. ຈຳນວນພະນັກງານຕາມສັນຍາ (ບໍລິຫານຮັບໃຊ້)</th>
+                        </tr>
                         <tr>
                             <td>ຮັບເຂົ້າຕາມຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ</td>
                             <td><input type="number" min="0" ng-model="model.admin_approve_total" class="form-control">
@@ -49,6 +52,9 @@ $this->title = "ຈຳນວນພະນັກງານຕາມສັນຍາ"
                             <td><input type="number" min="0" ng-model="model.admin_non_total" class="form-control"></td>
                             <td><input type="number" min="0" ng-model="model.admin_non_women"
                                        max="{{model.admin_non_total}}" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <th colspan="3">2. ຈຳນວນພະນັກງານຕາມສັນຍາ (ວິຊາການ)</th>
                         </tr>
                         <tr>
                             <td>ຮັບເຂົ້າຕາມຈຳນວນຕົວເລກທີ່ລັດຖະບານອະນຸມັດ</td>

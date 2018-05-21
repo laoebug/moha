@@ -46,7 +46,7 @@ class StatOfficerProvinceTrainController extends Controller
             }
         }
 
-        $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
+        $years = PhiscalYear::find()->where(['deleted' => 0])->orderBy('year')->asArray()->all();
         $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
 
         return json_encode([
@@ -57,7 +57,6 @@ class StatOfficerProvinceTrainController extends Controller
 
     public function actionEnquiry($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -80,10 +79,11 @@ class StatOfficerProvinceTrainController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('m')
-            ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=m.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+        $models = Province::find()->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=province.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
+//            ->where(['deleted' => 0])
+            ->orderBy('province.province_code')->asArray()->all();
 
         $stat = StatOfficerProvinceTrainDetail::find()
             ->select([
@@ -235,10 +235,10 @@ class StatOfficerProvinceTrainController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('m')
-            ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=m.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+        $models = Province::find()->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=province.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -271,10 +271,10 @@ class StatOfficerProvinceTrainController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('m')
-            ->select('m.*, d.*')
-            ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=m.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
-            ->where(['deleted' => 0])->orderBy('m.province_code')->asArray()->all();
+        $models = Province::find()->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=province.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Officers Province Train ' . $year->year . '.xls',

@@ -6,16 +6,14 @@ use app\components\MyHelper;
 use app\models\Attachment;
 use app\models\Menu;
 use app\models\PhiscalYear;
+use app\models\StatOfficerContract;
 use app\models\StatOfficerContractDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerContract;
-use app\models\StatOfficerContractSearch;
 use yii\db\Exception;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+
 /**
  * StatOfficerContractController implements the CRUD actions for StatOfficerContract model.
  */

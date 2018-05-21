@@ -6,16 +6,15 @@ use app\components\MyHelper;
 use app\models\Attachment;
 use app\models\Menu;
 use app\models\PhiscalYear;
+use app\models\StatOfficerAge;
 use app\models\StatOfficerAgeDetail;
+use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use app\models\StatOfficerAge;
-use app\models\StatOfficerAgeSearch;
 use yii\db\Exception;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\services\AuthenticationService;
+use yii\web\Controller;
+
 /**
  * StatOfficerAgeController implements the CRUD actions for StatOfficerAge model.
  */
