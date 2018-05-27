@@ -1,7 +1,9 @@
 
 <?php
-use yii\widgets\DetailView;
+
 use yii\helpers\Html;
+use yii\widgets\DetailView;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */

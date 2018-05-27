@@ -1,7 +1,9 @@
 
 <?php $_GET['menu']=1;?>
 <?php
+
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */

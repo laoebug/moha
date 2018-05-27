@@ -40,6 +40,7 @@ use Yii;
  * @property integer $level15_total
  * @property integer $level15_women
  * @property integer $officer_level_id
+ * @property integer $salary_level_id
  *
  * @property OfficerLevel $officerLevel
  * @property StatOfficerSalary $statOfficerSalary
@@ -60,10 +61,11 @@ class StatOfficerSalaryDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_salary_id', 'officer_level_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['stat_officer_salary_id', 'level1_total', 'level1_women', 'level2_total', 'level2_women', 'level3_total', 'level3_women', 'level4_total', 'level4_women', 'level5_total', 'level5_women', 'level6_total', 'level6_women', 'level7_total', 'level7_women', 'level8_total', 'level8_women', 'level9_total', 'level9_women', 'level10_total', 'level10_women', 'level11_total', 'level11_women', 'level12_total', 'level12_women', 'level13_total', 'level13_women', 'level14_total', 'level14_women', 'level15_total', 'level15_women', 'officer_level_id'], 'integer'],
+            [['stat_officer_salary_id', 'officer_level_id', 'salary_level_id'], 'required', 'message' => Yii::t('app', 'Please enter a value for') . Yii::t('app', '{attribute}')],
+            [['stat_officer_salary_id', 'level1_total', 'level1_women', 'level2_total', 'level2_women', 'level3_total', 'level3_women', 'level4_total', 'level4_women', 'level5_total', 'level5_women', 'level6_total', 'level6_women', 'level7_total', 'level7_women', 'level8_total', 'level8_women', 'level9_total', 'level9_women', 'level10_total', 'level10_women', 'level11_total', 'level11_women', 'level12_total', 'level12_women', 'level13_total', 'level13_women', 'level14_total', 'level14_women', 'level15_total', 'level15_women', 'officer_level_id', 'salary_level_id'], 'integer'],
             [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
             [['stat_officer_salary_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerSalary::className(), 'targetAttribute' => ['stat_officer_salary_id' => 'id']],
+            [['salary_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => SalaryLevel::className(), 'targetAttribute' => ['salary_level_id' => 'id']],
         ];
     }
 
@@ -106,6 +108,7 @@ class StatOfficerSalaryDetail extends \yii\db\ActiveRecord
             'level15_total' => Yii::t('app', 'Level15 Total'),
             'level15_women' => Yii::t('app', 'Level15 Women'),
             'officer_level_id' => Yii::t('app', 'Officer Level ID'),
+            'salary_level_id' => Yii::t('app', 'Salary Level ID'),
         ];
     }
 
@@ -115,6 +118,14 @@ class StatOfficerSalaryDetail extends \yii\db\ActiveRecord
     public function getOfficerLevel()
     {
         return $this->hasOne(OfficerLevel::className(), ['id' => 'officer_level_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSalaryLevel()
+    {
+        return $this->hasOne(SalaryLevel::className(), ['id' => 'salary_level_id']);
     }
 
     /**

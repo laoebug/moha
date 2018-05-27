@@ -31,6 +31,9 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
                     <label>ພາກສ່ວນ</label>
                     <select class="form-control" ng-model="model.level" ng-change="inquiry()"
                             ng-options="l.name for l in levels"></select>
+                    <label>ຊັ້ນ</label>
+                    <select class="form-control" ng-model="model.step" ng-change="inquiry()"
+                            ng-options="l.name for l in steps"></select>
                 </div>
                 <div class="col-sm-8">
                     <table class="table table-bordered table-hover">
@@ -137,47 +140,55 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
                                             class="fa fa-download fa-2x"></i></a>
                             </p>
                         </div>
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th class="text-center" rowspan="3">ລ/ດ</th>
-                                <th class="text-center" rowspan="3">ພາກສ່ວນຕ່າງໆ</th>
-                                <th class="text-center" rowspan="3" colspan="2">ຈ/ນ ລັດຖະກອນ ທັງໝົດ</th>
-                                <th class="text-center" colspan="30">ຈຳນວນລັດຖະກອນທີ່ບັນຈຸຕາມຊັ້ນເງິນເດືອນ</th>
-                            </tr>
-                            <tr>
-                                <?php for ($i = 1; $i < 16; $i++): ?>
-                                    <th class="text-center" colspan="2">ຂັ້ນ <?= $i ?></th>
-                                <?php endfor; ?>
-                            </tr>
-                            <tr>
-                                <?php for ($i = 1; $i < 31; $i++): ?>
-                                    <th class="text-center"><?= $i % 2 == 1 ? 'ລ' : 'ຍ' ?></th>
-                                <?php endfor; ?>
-                            </tr>
-                            <tr>
-                                <th class="text-center" colspan="2">1. ກະຊວງພາຍໃນ ລວມທັງໝົດ</th>
-                                <th class="text-center">{{sumtotal('total') | number | dash}}</th>
-                                <th class="text-center">{{sumtotal('women') | number | dash}}</th>
-
-                                <?php for ($i = 1; $i < 16; $i++): ?>
-                                    <th class="text-center">{{sumcolumn('level<?= $i ?>_total') | number | dash}}</th>
-                                    <th class="text-center">{{sumcolumn('level<?= $i ?>_women') | number | dash}}</th>
-                                <?php endfor; ?>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="m in models">
-                                <td colspan="2">{{m.name}}</td>
-                                <td class="text-center">{{sumrow(m, 'total') | number | dash}}</td>
-                                <td class="text-center">{{sumrow(m, 'women') | number | dash}}</td>
-                                <?php for ($i = 1; $i < 16; $i++): ?>
-                                    <td class="text-center">{{m.level<?= $i ?>_total | number | dash}}</td>
-                                    <td class="text-center">{{m.level<?= $i ?>_women | number | dash}}</td>
-                                <?php endfor; ?>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div ng-repeat="model in models">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th class="text-center" rowspan="4">ລ/ດ</th>
+                                    <th class="text-center" rowspan="4">ພາກສ່ວນຕ່າງໆ</th>
+                                    <th class="text-center" rowspan="4" colspan="2">ຈ/ນ ລັດຖະກອນ ທັງໝົດ</th>
+                                    <th class="text-center" colspan="30">ຈຳນວນລັດຖະກອນທີ່ບັນຈຸຕາມຊັ້ນເງິນເດືອນ</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center" colspan="30">ຊັ້ນ {{model[0].step}}</th>
+                                </tr>
+                                <tr>
+                                    <?php for ($i = 1; $i < 16; $i++): ?>
+                                        <th class="text-center" colspan="2">ຂັ້ນ <?= $i ?></th>
+                                    <?php endfor; ?>
+                                </tr>
+                                <tr>
+                                    <?php for ($i = 1; $i < 31; $i++): ?>
+                                        <th class="text-center"><?= $i % 2 == 1 ? 'ລ' : 'ຍ' ?></th>
+                                    <?php endfor; ?>
+                                </tr>
+                                <tr>
+                                    <th class="text-center" colspan="2">1. ກະຊວງພາຍໃນ ລວມທັງໝົດ</th>
+                                    <th class="text-center">{{sumtotal(model, 'total') | number | dash}}</th>
+                                    <th class="text-center">{{sumtotal(model, 'women') | number | dash}}</th>
+                                    <?php for ($i = 1; $i < 16; $i++): ?>
+                                        <th class="text-center">{{sumcolumn(model, 'level<?= $i ?>_total') | number |
+                                            dash}}
+                                        </th>
+                                        <th class="text-center">{{sumcolumn(model, 'level<?= $i ?>_women') | number |
+                                            dash}}
+                                        </th>
+                                    <?php endfor; ?>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="m in model">
+                                    <td colspan="2">{{m.name}}</td>
+                                    <td class="text-center">{{sumrow(m, 'total') | number | dash}}</td>
+                                    <td class="text-center">{{sumrow(m, 'women') | number | dash}}</td>
+                                    <?php for ($i = 1; $i < 16; $i++): ?>
+                                        <td class="text-center">{{m.level<?= $i ?>_total | number | dash}}</td>
+                                        <td class="text-center">{{m.level<?= $i ?>_women | number | dash}}</td>
+                                    <?php endfor; ?>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="reference">
@@ -227,7 +238,6 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -259,6 +269,7 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
       .then(function (r) {
         $scope.years = r.data.years;
         $scope.levels = r.data.levels;
+        $scope.steps = r.data.steps;
       }, function (r) {
         $scope.response = r;
         $timeout(function () {
@@ -267,15 +278,14 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
       });
 
     $scope.inquiry = function () {
-      if ($scope.year && $scope.model.level)
-        $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&level=' + $scope.model.level.id)
+      if ($scope.year && $scope.model.level && $scope.model.step)
+        $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&level=' + $scope.model.level.id + '&step=' + $scope.model.step.id)
           .then(function (r) {
             if (r.data.model) {
                 <?php for($i = 0;$i < 16;$i++): ?>
               $scope.model.level<?=$i?>_total = parseInt(r.data.model.level<?=$i?>_total);
               $scope.model.level<?=$i?>_women = parseInt(r.data.model.level<?=$i?>_women);
                 <?php endfor; ?>
-
             } else {
                 <?php for($i = 0;$i < 16;$i++): ?>
               $scope.model.level<?=$i?>_total = null;
@@ -326,12 +336,12 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
       }
     };
 
-    $scope.sumcolumn = function (key) {
+    $scope.sumcolumn = function (model, key) {
       var s = 0;
-      if($scope.models)
-      for (var i = 0; i < $scope.models.length; i++)
-        if ($scope.models[i][key])
-          s += parseInt($scope.models[i][key]);
+      if (model)
+        for (var i = 0; i < model.length; i++)
+          if (model[i][key])
+            s += parseInt(model[i][key]);
       return s;
     };
 
@@ -351,15 +361,15 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
       return s;
     };
 
-    $scope.sumtotal = function (key) {
+    $scope.sumtotal = function (model, key) {
       var s = 0;
       if (key == 'total') {
           <?php for($i = 1;$i < 16;$i++): ?>
-        s += $scope.sumcolumn('level<?=$i?>_total');
+        s += $scope.sumcolumn(model, 'level<?=$i?>_total');
           <?php endfor; ?>
       } else if (key == 'women') {
           <?php for($i = 1;$i < 16;$i++): ?>
-        s += $scope.sumcolumn('level<?=$i?>_women');
+        s += $scope.sumcolumn(model, 'level<?=$i?>_women');
           <?php endfor; ?>
       }
       return s;

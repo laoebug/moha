@@ -1,7 +1,5 @@
 <?php
 // use Yii;
-use app\models\User;
-use app\models\Menu;
 ?>
 <!-- Default URL -->
 <?php $url= Yii::$app->request->getUrl(); ?>

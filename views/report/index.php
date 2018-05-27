@@ -8,6 +8,7 @@
  */
 
 use yii\grid\GridView;
+
 $this->title = 'ລາຍງານ';
 ?>
 <div class="card">

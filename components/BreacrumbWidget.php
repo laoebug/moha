@@ -2,9 +2,9 @@
 // VoteWidget.php
 namespace app\components;
 
-use yii\base\Widget;
-use Yii;
 use app\models\Menu;
+use Yii;
+use yii\base\Widget;
 
 class BreacrumbWidget extends Widget {
 	public $breadcrumbs = [ ];

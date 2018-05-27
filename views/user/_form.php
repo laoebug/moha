@@ -1,9 +1,10 @@
 <?php
+
+use app\models\Role;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\models\Role;
-use app\models\Province;
-use yii\helpers\ArrayHelper;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 /* @var $form yii\widgets\ActiveForm */

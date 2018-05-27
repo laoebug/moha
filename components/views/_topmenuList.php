@@ -1,7 +1,7 @@
 <?php
 // use Yii;
-use app\models\User;
 use app\models\Menu;
+use app\models\User;
 
 function displayTopMenu($menu_parent_id) {
 	$li = '';

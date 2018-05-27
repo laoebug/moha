@@ -10,8 +10,9 @@
 
 /* @var $content string */
 
-use app\components\TopMenuWidget;
 use app\components\BreacrumbWidget;
+use app\components\TopMenuWidget;
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
