@@ -82,10 +82,10 @@ class StatLocalAdminController extends Controller
         }
 
         $models = Province::find()
-            ->alias('p')
-            ->select('p.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
+            ->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id])
+            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
 
         return json_encode([
             'models' => $models

@@ -35,7 +35,7 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
                     <select class="form-control" ng-model="model.step" ng-change="inquiry()"
                             ng-options="l.name for l in steps"></select>
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-8" ng-show="model.level && model.step">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -61,7 +61,7 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
                         </tbody>
                     </table>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12" ng-show="model.level && model.step">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -87,7 +87,7 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
                         </tbody>
                     </table>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12" ng-if="model.level && model.step">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -114,7 +114,7 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
                     </table>
                 </div>
 
-                <div class="col-sm-3" style="margin-top: 1em">
+                <div class="col-sm-3" style="margin-top: 1em" ng-if="model.level && model.step">
                     <button type="button" class="btn btn-primary col-sm-12" ng-click="save()">
                         <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
                     </button>
