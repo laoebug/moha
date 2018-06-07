@@ -267,11 +267,15 @@ class StatPopulationMovementController extends Controller
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
-        return Province::find()
+        $models = Province::find()
             ->alias('province')
             ->select('province.*, d.*')
-            ->join('left join', 'stat_population_movement_detail d', 'd.province_id = province.id and d.stat_population_movement_id=:id', [':id' => $model->id])
-            ->asArray()->all();
+            ->join('left join', 'stat_population_movement_detail d', 'd.province_id = province.id and d.stat_population_movement_id=:id', [':id' => $model->id]);
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->andWhere(['province.id' => $user->role->province_id]);
+        }
+        return $models->orderBy('province.position')->asArray()->all();
     }
 
     public function actionUpload($year)
