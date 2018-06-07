@@ -34,9 +34,7 @@ use yii\widgets\ActiveForm;
                 'prompt' => '',
             ]) ?>
         <?= $form->field($model, 'province_id', ['options' => ['style' => getStyle($model->approverLevel, 'P')]])
-            ->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Province::find()
-                ->where(['deleted' => 0])
-                ->orderBy('position')->all(), 'id', 'province_name'), [
+            ->dropDownList(\yii\helpers\ArrayHelper::map(\app\models\Province::find()->all(), 'id', 'province_name'), [
                 'prompt' => '',
             ]) ?>
 

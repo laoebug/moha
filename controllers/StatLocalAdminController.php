@@ -31,7 +31,6 @@ class StatLocalAdminController extends Controller
 
     public function actionGet()
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -45,10 +44,7 @@ class StatLocalAdminController extends Controller
         $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
 
-        $provinces = Province::find()
-            ->where(['deleted' => 0])
-            ->orderBy('province_code')
-            ->asArray()->all();
+        $provinces = Province::find()->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -58,7 +54,6 @@ class StatLocalAdminController extends Controller
 
     public function actionEnquiry($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -84,8 +79,10 @@ class StatLocalAdminController extends Controller
         $models = Province::find()
             ->alias('province')
             ->select('province.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id]);
+
+        $models = $models
+            ->asArray()->all();
 
         return json_encode([
             'models' => $models
@@ -94,7 +91,6 @@ class StatLocalAdminController extends Controller
 
     public function actionInquiry($year, $province)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -114,8 +110,12 @@ class StatLocalAdminController extends Controller
         $model = StatLocalAdminDetail::find()
             ->alias('d')
             ->join('join', 'stat_local_admin l', 'l.id = d.stat_local_admin_id and l.phiscal_year_id=:year', [':year' => $year->id])
-            ->where(['province_id' => $province])
-            ->asArray()->one();
+            ->where(['province_id' => $province]);
+        $user = Yii::$app->user->identity;
+        if (!empty ($user->role->province_id)) {
+            $model->andWhere(['province_id' => $user->role->province_id]);
+        }
+        $model = $model->asArray()->one();
 
         return json_encode([
             'model' => $model
@@ -227,10 +227,10 @@ class StatLocalAdminController extends Controller
         }
 
         $models = Province::find()
-            ->alias('p')
-            ->select('p.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
+            ->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id])
+            ->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
@@ -262,10 +262,10 @@ class StatLocalAdminController extends Controller
         }
 
         $models = Province::find()
-            ->alias('p')
-            ->select('p.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
+            ->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id])
+            ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Local Administration ' . $year->year . '.xls',

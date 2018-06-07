@@ -40,7 +40,7 @@ class StatHornorcoinProvinceController extends Controller
 
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         $awards = Award::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
-        $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
+        $provinces = Province::find()->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -51,7 +51,6 @@ class StatHornorcoinProvinceController extends Controller
 
     public function actionEnquiry($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -75,9 +74,13 @@ class StatHornorcoinProvinceController extends Controller
             ])
             ->join('join', 'stat_hornorcoin_province t', 't.id=d.stat_hornorcoin_province_id and t.phiscal_year_id=:year', [':year' => $year->id])
             ->join('join', 'province m', 'm.id=d.province_id')
-            ->join('join', 'award a', 'a.id=d.award_id')
-            ->asArray()->all();
+            ->join('join', 'award a', 'a.id=d.award_id');
 
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->asArray()->all();
         return json_encode([
             'models' => $models
         ]);
@@ -95,7 +98,6 @@ class StatHornorcoinProvinceController extends Controller
             }
         }
 
-
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
@@ -107,8 +109,12 @@ class StatHornorcoinProvinceController extends Controller
             ->where([
                 'award_id' => $award,
                 'province_id' => $province,
-            ])->asArray()->one();
-
+            ]);
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $model = $model->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $model = $model->asArray()->one();
         return json_encode(['model' => $model]);
     }
 
@@ -210,9 +216,13 @@ class StatHornorcoinProvinceController extends Controller
             ])
             ->join('join', 'stat_hornorcoin_province t', 't.id=d.stat_hornorcoin_province_id and t.phiscal_year_id=:year', [':year' => $year->id])
             ->join('join', 'province m', 'm.id=d.province_id')
-            ->join('join', 'award a', 'a.id=d.award_id')
+            ->join('join', 'award a', 'a.id=d.award_id');
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models
             ->asArray()->all();
-
 
         return $this->renderPartial('../ministry/print', ['content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])]);
     }
@@ -232,8 +242,12 @@ class StatHornorcoinProvinceController extends Controller
             ])
             ->join('join', 'stat_hornorcoin_province t', 't.id=d.stat_hornorcoin_province_id and t.phiscal_year_id=:year', [':year' => $year->id])
             ->join('join', 'province m', 'm.id=d.province_id')
-            ->join('join', 'award a', 'a.id=d.award_id')
-            ->asArray()->all();
+            ->join('join', 'award a', 'a.id=d.award_id');
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Research ' . $year->year . '.xls',

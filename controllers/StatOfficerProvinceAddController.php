@@ -44,7 +44,7 @@ class StatOfficerProvinceAddController extends Controller
         }
 
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
-        $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
+        $provinces = Province::find()->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -80,9 +80,9 @@ class StatOfficerProvinceAddController extends Controller
         $models = Province::find()->alias('province')
             ->select('province.*, d.*')
             ->join('left join', 'stat_officer_province_add_detail d', 'd.province_id=province.id and d.stat_officer_province_add_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->asArray()->all();
 
-        $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
+        $provinces = Province::find()->asArray()->all();
 
         return json_encode([
             'models' => $models,
@@ -213,7 +213,7 @@ class StatOfficerProvinceAddController extends Controller
         $models = Province::find()->alias('province')
             ->select('province.*, d.*')
             ->join('left join', 'stat_officer_province_add_detail d', 'd.province_id=province.id and d.stat_officer_province_add_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -250,7 +250,7 @@ class StatOfficerProvinceAddController extends Controller
         $models = Province::find()->alias('province')
             ->select('province.*, d.*')
             ->join('left join', 'stat_officer_province_add_detail d', 'd.province_id=province.id and d.stat_officer_province_add_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Officer Province Add ' . $year->year . '.xls',

@@ -54,7 +54,6 @@ class StatVictoryoverseaProvinceController extends Controller
 
     public function actionGet()
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -66,7 +65,7 @@ class StatVictoryoverseaProvinceController extends Controller
         }
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         $awards = Award::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
-        $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
+        $provinces = Province::find()->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -94,13 +93,17 @@ class StatVictoryoverseaProvinceController extends Controller
         $models = StatVictoryoverseaProvinceDetail::find()->alias('d')
             ->select([
                 'd.*',
-                'province' => 'm.province_name',
+                'province' => 'province.province_name',
                 'award' => 'a.name'
             ])
             ->join('join', 'stat_victoryoversea_province t', 't.id=d.stat_victoryoversea_province_id and t.phiscal_year_id=:year', [':year' => $year->id])
-            ->join('join', 'province m', 'm.id=d.province_id')
-            ->join('join', 'award a', 'a.id=d.award_id')
-            ->orderBy('m.province_code')
+            ->join('join', 'province', 'province.id=d.province_id')
+            ->join('join', 'award a', 'a.id=d.award_id');
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->orderBy('province.position')
             ->asArray()->all();
 
         return json_encode([
@@ -130,7 +133,12 @@ class StatVictoryoverseaProvinceController extends Controller
             ->where([
                 'award_id' => $award,
                 'province_id' => $province,
-            ])->asArray()->one();
+            ]);
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $model = $model->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $model = $model->asArray()->one();
 
         return json_encode(['model' => $model]);
     }
@@ -224,13 +232,17 @@ class StatVictoryoverseaProvinceController extends Controller
         $models = StatVictoryoverseaProvinceDetail::find()->alias('d')
             ->select([
                 'd.*',
-                'province' => 'm.province_name',
+                'province' => 'province.province_name',
                 'award' => 'a.name'
             ])
             ->join('join', 'stat_victoryoversea_province t', 't.id=d.stat_victoryoversea_province_id and t.phiscal_year_id=:year', [':year' => $year->id])
-            ->join('join', 'province m', 'm.id=d.province_id')
-            ->join('join', 'award a', 'a.id=d.award_id')
-            ->asArray()->all();
+            ->join('join', 'province', 'province.id=d.province_id')
+            ->join('join', 'award a', 'a.id=d.award_id');
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->orderBy('province.position')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -267,9 +279,12 @@ class StatVictoryoverseaProvinceController extends Controller
             ])
             ->join('join', 'stat_victoryoversea_province t', 't.id=d.stat_victoryoversea_province_id and t.phiscal_year_id=:year', [':year' => $year->id])
             ->join('join', 'province m', 'm.id=d.province_id')
-            ->join('join', 'award a', 'a.id=d.award_id')
-            ->asArray()->all();
-
+            ->join('join', 'award a', 'a.id=d.award_id');
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->orderBy('province.position')->asArray()->all();
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Victory Oversea Province ' . $year->year . '.xls',
             'content' => $this->renderPartial('table', [

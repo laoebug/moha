@@ -21,18 +21,17 @@ class ProvinceQuery extends \yii\db\ActiveQuery
     {
         parent::init();
         $user = Yii::$app->user->identity;
-        $modelClass = $this->modelClass;
-        $tableName = $modelClass::tableName();
         if (!empty ($user->role->province_id)) {
-            $this->onCondition($tableName . '.deleted <> :deleted AND ' . $tableName . '.id = :id ', [
-                ':deleted' => 1,
-                ':id' => $user->role->province_id
+            $this->andWhere([
+                'province.id' => $user->role->province_id,
+                'province.deleted' => 0
             ]);
         } else {
-            $this->onCondition($tableName . '.deleted <> :deleted ', [
-                ':deleted' => 1
+            $this->where('province.deleted = :deleted ', [
+                ':deleted' => 0
             ]);
         }
+        $this->orderBy('position');
     }
 
     /**

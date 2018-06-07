@@ -32,7 +32,6 @@ class StatOfficerProvinceController extends Controller
 
     public function actionGet()
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -44,7 +43,7 @@ class StatOfficerProvinceController extends Controller
         }
 
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
-        $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
+        $provinces = Province::find()->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -54,7 +53,6 @@ class StatOfficerProvinceController extends Controller
 
     public function actionEnquiry($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -85,7 +83,7 @@ class StatOfficerProvinceController extends Controller
                 'women' => 'ifnull(d.women, 0)'
             ])
             ->join('left join', 'stat_officer_province_detail d', 'd.province_id = province.id and d.stat_officer_province_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->asArray()->all();
 
         return json_encode([
             'models' => $models,
@@ -120,8 +118,13 @@ class StatOfficerProvinceController extends Controller
 
         $model = StatOfficerProvinceDetail::find()->alias('d')
             ->join('join', 'stat_officer_province o', 'o.id = d.stat_officer_province_id and o.phiscal_year_id=:year', [':year' => $year->id])
-            ->where(['province_id' => $province])
-            ->asArray()->one();
+            ->where(['province_id' => $province]);
+
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $model = $model->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $model = $model->asArray()->one();
 
         return json_encode([
             'model' => $model
@@ -130,7 +133,6 @@ class StatOfficerProvinceController extends Controller
 
     public function actionSave($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -201,7 +203,6 @@ class StatOfficerProvinceController extends Controller
             }
         }
 
-
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
@@ -220,8 +221,8 @@ class StatOfficerProvinceController extends Controller
                 'total' => 'ifnull(d.total, 0)',
                 'women' => 'ifnull(d.women, 0)'
             ])
-            ->join('left join', 'stat_officer_province_detail d', 'd.province_id = m.id and d.stat_officer_province_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->join('left join', 'stat_officer_province_detail d', 'd.province_id = province.id and d.stat_officer_province_id=:id', [':id' => $model->id])
+            ->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -243,7 +244,6 @@ class StatOfficerProvinceController extends Controller
             }
         }
 
-
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
@@ -263,7 +263,7 @@ class StatOfficerProvinceController extends Controller
                 'women' => 'ifnull(d.women, 0)'
             ])
             ->join('left join', 'stat_officer_province_detail d', 'd.province_id = province.id and d.stat_officer_province_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Officer Province ' . $year->year . '.xls',

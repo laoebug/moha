@@ -48,7 +48,6 @@ class StatAssociationFoundationController extends Controller
 
     public function actionGet()
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -59,29 +58,39 @@ class StatAssociationFoundationController extends Controller
             }
         }
 
+        $user = Yii::$app->user->identity;
         $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
-
         $approverLevels = ApproverLevel::find()
             ->alias('l')
             ->with([
-                'approvers' => function (ActiveQuery $query) {
+                'approvers' => function (ActiveQuery $query) use ($user) {
                     $query->alias('a')
                         ->with([
-                            'province' => function (ActiveQuery $query) {
-                                $query->alias('p')
-                                    ->orderBy('p.position');
+                            'province' => function (ActiveQuery $query) use ($user) {
+                                $query = $query->alias('province')
+                                    ->where(['province.deleted' => 0]);
+                                if (!empty ($user->role->province_id)) {
+                                    $query = $query->andWhere(['province.id' => $user->role->province_id]);
+                                }
+                                $query->orderBy('province.position');
                             },
                             'ministry' => function (ActiveQuery $query) {
-                                $query->alias('m')
-                                    ->orderBy('m.position');
+                                $query->orderBy('position');
                             }
                         ])
                         ->where(['a.deleted' => 0]);
+                    if (!empty ($user->role->province_id)) {
+                        $query->andWhere(['province_id' => $user->role->province_id]);
+                    }
                 }
             ])
-            ->where(['l.deleted' => 0])->orderBy('l.position')->asArray()->all();
+            ->where(['l.deleted' => 0])->orderBy('l.position');
 
+        if (!empty ($user->role->province_id)) {
+            $approverLevels = $approverLevels->andWhere(['code' => 'P']);
+        }
+        $approverLevels = $approverLevels->asArray()->all();
         return json_encode([
             "years" => $years,
             "approverLevels" => $approverLevels,
@@ -90,7 +99,6 @@ class StatAssociationFoundationController extends Controller
 
     public function actionEnquiry($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -100,7 +108,6 @@ class StatAssociationFoundationController extends Controller
                 return;
             }
         }
-
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
@@ -120,17 +127,21 @@ class StatAssociationFoundationController extends Controller
                     $query->where(['deleted' => 0])
                         ->with([
                             'province' => function (ActiveQuery $query) {
-                                $query->alias('p')
-                                    ->orderBy('p.position');
+                                $query->where(['deleted' => 0])
+                                    ->orderBy('position');
                             },
                             'ministry' => function (ActiveQuery $query) {
-                                $query->alias('m')
-                                    ->orderBy('m.position');
+                                $query->orderBy('position');
                             }
                         ])
                         ->alias('a')
                         ->select('a.*, d.*')
-                        ->join('left join', 'stat_association_foundation_detail d', 'a.id = d.approver_id and d.stat_association_foundation_id=:id', [':id' => $model->id]);
+                        ->join('join', 'stat_association_foundation_detail d', 'a.id = d.approver_id and d.stat_association_foundation_id=:id', [':id' => $model->id]);
+
+                    $user = Yii::$app->user->identity;
+                    if (!empty ($user->role->province_id)) {
+                        $query->andWhere(['d.approver_id' => $user->role->province_id]);
+                    }
                 }
             ])->alias('l')
             ->where(['l.deleted' => 0])
@@ -162,7 +173,6 @@ class StatAssociationFoundationController extends Controller
 
     public function actionSave($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -242,8 +252,12 @@ class StatAssociationFoundationController extends Controller
                     $query->where(['deleted' => 0])
                         ->with([
                             'province' => function (ActiveQuery $query) {
-                                $query->alias('p')
-                                    ->orderBy('p.position');
+                                $user = Yii::$app->user->identity;
+                                $query = $query->alias('province')->where(['province.deleted' => 0]);
+                                if (!empty ($user->role->province_id)) {
+                                    $query = $query->andWhere(['province.id' => $user->role->province_id]);
+                                }
+                                $query->orderBy('province.position');
                             },
                             'ministry' => function (ActiveQuery $query) {
                                 $query->alias('m')
@@ -283,8 +297,8 @@ class StatAssociationFoundationController extends Controller
                     $query->where(['deleted' => 0])
                         ->with([
                             'province' => function (ActiveQuery $query) {
-                                $query->alias('p')
-                                    ->orderBy('p.position');
+                                $query->alias('province')
+                                    ->orderBy('province.position');
                             },
                             'ministry' => function (ActiveQuery $query) {
                                 $query->alias('m')

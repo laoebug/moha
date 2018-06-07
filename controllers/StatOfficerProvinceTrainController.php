@@ -47,7 +47,7 @@ class StatOfficerProvinceTrainController extends Controller
         }
 
         $years = PhiscalYear::find()->where(['deleted' => 0])->orderBy('year')->asArray()->all();
-        $provinces = Province::find()->where(['deleted' => 0])->orderBy('province_code')->asArray()->all();
+        $provinces = Province::find()->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -82,8 +82,7 @@ class StatOfficerProvinceTrainController extends Controller
         $models = Province::find()->alias('province')
             ->select('province.*, d.*')
             ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=province.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
-//            ->where(['deleted' => 0])
-            ->orderBy('province.province_code')->asArray()->all();
+            ->asArray()->all();
 
         $stat = StatOfficerProvinceTrainDetail::find()
             ->select([
@@ -238,7 +237,7 @@ class StatOfficerProvinceTrainController extends Controller
         $models = Province::find()->alias('province')
             ->select('province.*, d.*')
             ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=province.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -274,7 +273,7 @@ class StatOfficerProvinceTrainController extends Controller
         $models = Province::find()->alias('province')
             ->select('province.*, d.*')
             ->join('left join', 'stat_officer_province_train_detail d', 'd.province_id=province.id and d.stat_officer_province_train_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Officers Province Train ' . $year->year . '.xls',

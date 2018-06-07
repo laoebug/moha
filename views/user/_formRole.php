@@ -36,7 +36,6 @@ use yii\widgets\ActiveForm;
 		   <?php
 				echo $form->field($model, 'province_id')->dropDownList(
 		             ArrayHelper::map(Province::find()
-		    
 		                    ->all(),'id','province_name'),
 		            ['prompt'=>Yii::t('app','Please select'),'id'=>'province']
 		        ) 

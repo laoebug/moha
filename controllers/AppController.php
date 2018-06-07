@@ -207,7 +207,6 @@ class AppController extends Controller
                     ->join('left join', 'stat_local_admin s', 's.id = d.stat_local_admin_id and s.phiscal_year_id=:year', [
                         ':year' => $year
                     ])
-                    ->orderBy('province.province_code')
                     ->asArray()->all();
                 break;
             case 'stat-officer-province':
@@ -217,7 +216,6 @@ class AppController extends Controller
                     ->join('left join', 'stat_officer_province s', 's.id = d.stat_officer_province_id and s.phiscal_year_id=:year', [
                         ':year' => $year
                     ])
-                    ->orderBy('province.province_code')
                     ->asArray()->all();
                 break;
         }
