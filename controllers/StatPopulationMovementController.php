@@ -101,8 +101,8 @@ class StatPopulationMovementController extends Controller
                 'labels' => ArrayHelper::getColumn($years, 'year'),
                 'series' => [Yii::t('app', 'Total'), Yii::t('app', 'Women')],
                 'data' => [
-                    ArrayHelper::getColumn($models, 'population_total'),
-                    ArrayHelper::getColumn($models, 'population_women')
+                    isset($models) ? ArrayHelper::getColumn($models, 'population_total') : [],
+                    isset($models) ? ArrayHelper::getColumn($models, 'population_women') : []
                 ]
             ],
         ]);
@@ -205,7 +205,6 @@ class StatPopulationMovementController extends Controller
 
     public function actionPrint($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -268,7 +267,6 @@ class StatPopulationMovementController extends Controller
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
-
         return Province::find()
             ->alias('province')
             ->select('province.*, d.*')

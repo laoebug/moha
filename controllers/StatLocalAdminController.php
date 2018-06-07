@@ -80,8 +80,11 @@ class StatLocalAdminController extends Controller
             ->alias('province')
             ->select('province.*, d.*')
             ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id]);
-
-        $models = $models
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->orderBy('province.position')
             ->asArray()->all();
 
         return json_encode([
@@ -113,7 +116,7 @@ class StatLocalAdminController extends Controller
             ->where(['province_id' => $province]);
         $user = Yii::$app->user->identity;
         if (!empty ($user->role->province_id)) {
-            $model->andWhere(['province_id' => $user->role->province_id]);
+            $model->andWhere(['d.province_id' => $user->role->province_id]);
         }
         $model = $model->asArray()->one();
 
