@@ -192,6 +192,7 @@ $this->title = "ສະຖິຕິສູນຄົ້ນຄວ້າວຽກງ�
       });
 
     $scope.enquiry = function () {
+      $scope.models = null;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
           .then(function (r) {

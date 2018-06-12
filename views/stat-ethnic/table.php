@@ -100,7 +100,7 @@
                     <?php for ($i = 25; $i < count($ethnics); $i++):
                         $ethnic = $ethnics[$i];
                         ?>
-                        <td class="text-center">
+                        <td class="text-right">
                             <?php
                             $value = '-';
                             foreach ($models as $model)
@@ -118,7 +118,7 @@
                     <?php for ($i = 25; $i < count($ethnics); $i++):
                         $ethnic = $ethnics[$i];
                         ?>
-                        <td class="text-center">
+                        <td class="text-right">
                             <?php
                             $value = '-';
                             foreach ($models as $model)

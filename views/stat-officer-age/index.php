@@ -142,21 +142,51 @@
                                 <th rowspan="4">III</th>
                                 <th colspan="18"><?= $this->title ?></th>
                                 <th class="text-center">
-                                    {{model.total_u25+ model.total_25_30+ model.total_31_35+ model.total_36_40+
-                                    model.total_41_45+ model.total_46_50+ model.total_51_55+ model.total_56_60+
-                                    model.total_61u}}
+                                    {{model.total_u25 ? model.total_u25 : 0
+                                    + model.total_25_30 ? model.total_25_30 : 0
+                                    + model.total_31_35 ? model.total_31_35 : 0
+                                    + model.total_36_40 ? model.total_36_40 : 0
+                                    + model.total_41_45 ? model.total_41_45 : 0
+                                    + model.total_46_50 ? model.total_46_50 : 0
+                                    + model.total_51_55 ? model.total_51_55 : 0
+                                    + model.total_56_60 ? model.total_56_60 : 0
+                                    + model.total_61u ? model.total_61u : 0
+                                    }}
                                 </th>
                                 <th class="text-center">
-                                    {{model.women_u25+ model.women_25_30+ model.women_31_35+ model.women_36_40+
-                                    model.women_41_45+ model.women_46_50+ model.women_51_55+ model.women_56_60+
-                                    model.women_61u}}
+                                    {{
+                                    model.women_u25 ? model.women_u25 : 0
+                                    + model.women_25_30 ? model.women_25_30 : 0
+                                    + model.women_31_35 ? model.women_31_35 : 0
+                                    + model.women_36_40 ? model.women_36_40 : 0
+                                    + model.women_41_45 ? model.women_41_45 : 0
+                                    + model.women_46_50 ? model.women_46_50 : 0
+                                    + model.women_51_55 ? model.women_51_55 : 0
+                                    + model.women_56_60 ? model.women_56_60 : 0
+                                    + model.women_61u ? model.women_61u : 0
+                                    }}
                                 </th>
                                 <th class="text-center">
-                                    {{model.total_u25+ model.total_25_30+ model.total_31_35+ model.total_36_40+
-                                    model.total_41_45+ model.total_46_50+ model.total_51_55+ model.total_56_60+
-                                    model.total_61u- (model.women_u25+ model.women_25_30+ model.women_31_35+
-                                    model.women_36_40+ model.women_41_45+ model.women_46_50+ model.women_51_55+
-                                    model.women_56_60+ model.women_61u)}}
+                                    {{
+                                    model.total_u25 ? model.total_u25 : 0
+                                    + model.total_25_30 ? model.total_25_30 : 0
+                                    + model.total_31_35 ? model.total_31_35 : 0
+                                    + model.total_36_40 ? model.total_36_40 : 0
+                                    + model.total_41_45 ? model.total_41_45 : 0
+                                    + model.total_46_50 ? model.total_46_50 : 0
+                                    + model.total_51_55 ? model.total_51_55 : 0
+                                    + model.total_56_60 ? model.total_56_60 : 0
+                                    + model.total_61u ? model.total_61u : 0
+                                    - (model.women_u25 ? model.women_u25 : 0
+                                    + model.women_25_30 ? model.women_25_30 : 0
+                                    + model.women_31_35 ? model.women_31_35 : 0
+                                    + model.women_36_40 ? model.women_36_40 : 0
+                                    + model.women_41_45 ? model.women_41_45 : 0
+                                    + model.women_46_50 ? model.women_46_50 : 0
+                                    + model.women_51_55 ? model.women_51_55 : 0
+                                    + model.women_56_60 ? model.women_56_60 : 0
+                                    + model.women_61u ? model.women_61u : 0
+                                    )}}
                                 </th>
                             </tr>
                             <tr>
@@ -311,26 +341,6 @@
               $scope.model.women_51_55 = parseInt($scope.model.women_51_55);
               $scope.model.women_56_60 = parseInt($scope.model.women_56_60);
               $scope.model.women_61u = parseInt($scope.model.women_61u);
-            } else  {
-              $scope.model.total_u25 = null;
-              $scope.model.total_25_30 = null;
-              $scope.model.total_31_35 = null;
-              $scope.model.total_36_40 = null;
-              $scope.model.total_41_45 = null;
-              $scope.model.total_46_50 = null;
-              $scope.model.total_51_55 = null;
-              $scope.model.total_56_60 = null;
-              $scope.model.total_61u = null;
-
-              $scope.model.women_u25 = null;
-              $scope.model.women_25_30 = null;
-              $scope.model.women_31_35 = null;
-              $scope.model.women_36_40 = null;
-              $scope.model.women_41_45 = null;
-              $scope.model.women_46_50 = null;
-              $scope.model.women_51_55 = null;
-              $scope.model.women_56_60 = null;
-              $scope.model.women_61u = null;
             }
             $scope.getreferences();
           }, function (r) {

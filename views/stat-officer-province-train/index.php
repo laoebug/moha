@@ -274,6 +274,7 @@ $this->title = "ສະຖິຕິພະນັກງານລັດຖະກອ�
 
     $scope.enquiry = function () {
       $scope.models = null;
+      $scope.stat = null;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
           .then(function (r) {

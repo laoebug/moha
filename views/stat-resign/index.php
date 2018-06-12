@@ -356,6 +356,7 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
     };
 
     $scope.enquiry = function () {
+      $scope.models = null;
       $scope.model = null;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)

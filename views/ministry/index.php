@@ -181,6 +181,7 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
       $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
     $scope.enquiry = function () {
+      $scope.ministries = null;
       $http.get(url + 'enquiry')
         .then(function (r) {
           $scope.ministries = r.data.ministries;

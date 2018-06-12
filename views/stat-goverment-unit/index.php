@@ -165,6 +165,7 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
       });
 
     $scope.enquiry = function () {
+      $scope.result = null;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
           .then(function (r) {

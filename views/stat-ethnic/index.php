@@ -155,6 +155,7 @@ $this->title = "ສະຖິຕິຊົນເຜົ່າໃນທົ່ວປ�
 
     $scope.enquiry = function () {
       $scope.model = null;
+      $scope.result = null;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
           .then(function (r) {
@@ -162,6 +163,7 @@ $this->title = "ສະຖິຕິຊົນເຜົ່າໃນທົ່ວປ�
             $scope.getreferences();
           }, function (r) {
             $scope.response = r;
+            $scope.result = null;
             $timeout(function () {
               $scope.response = null;
             }, 15000);

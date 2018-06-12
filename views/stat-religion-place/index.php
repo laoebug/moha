@@ -341,6 +341,8 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
 
     $scope.enquiry = function () {
       $scope.model = null;
+      $scope.models = null;
+      $scope.stat = null;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
           .then(function (r) {

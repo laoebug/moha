@@ -167,6 +167,8 @@ $this->title = "ການສົມທຽບສະຖິຕິເໜັງຕີ�
     $scope.url = 'index.php?r=stat-population-movement-chart/';
     $scope.enquiry = function () {
       $scope.model = null;
+      $scope.models = null;
+      $scope.stat = null;
       $http.get($scope.url + 'inquiry')
         .then(function (r) {
           $scope.models = r.data.models;
