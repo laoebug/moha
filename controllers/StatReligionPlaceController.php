@@ -94,22 +94,22 @@ class StatReligionPlaceController extends Controller
         if (isset($user->role->province_id)) {
             $stat = $stat->andWhere(['d.province_id' => $user->role->province_id]);
         }
-        $stat = $stat
-            ->asArray()->one();
+        $stat = $stat->asArray()->one();
         $data = null;
         if (isset($stat))
             if (isset($stat['phiscal_year_id'])) {
-                try {
-                    $percent = 100 / ($stat['buddhis'] + $stat['christ'] + $stat['bahai'] + $stat['idslam']);
-                } catch (Exception $exception) {
-                    $percent = 0;
+                $s = $stat['buddhis'] + $stat['christ'] + $stat['bahai'] + $stat['idslam'];
+                if ($s > 0) {
+                    $percent = 100 / $s;
+                    $data = [
+                        number_format($stat['buddhis'] * $percent, 2),
+                        number_format($stat['christ'] * $percent, 2),
+                        number_format($stat['bahai'] * $percent, 2),
+                        number_format($stat['idslam'] * $percent, 2),
+                    ];
+                } else {
+                    $data = [];
                 }
-                $data = [
-                    number_format($stat['buddhis'] * $percent, 2),
-                    number_format($stat['christ'] * $percent, 2),
-                    number_format($stat['bahai'] * $percent, 2),
-                    number_format($stat['idslam'] * $percent, 2),
-                ];
             }
 
         return json_encode([
