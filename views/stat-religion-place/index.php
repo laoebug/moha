@@ -88,7 +88,7 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                         <tr>
                             <?php for ($i = 0; $i < 8; $i++): ?>
                                 <td style="width: 10%"
-                                    class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'N') ?></td>
+                                    class="text-center"><?= $i % 2 == 0 ? 'ລວມ' : 'ບໍ່ອະນຸຍາດ' ?></td>
                             <?php endfor; ?>
                         </tr>
                         <tr>
