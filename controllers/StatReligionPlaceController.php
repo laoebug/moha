@@ -99,7 +99,11 @@ class StatReligionPlaceController extends Controller
         $data = null;
         if (isset($stat))
             if (isset($stat['phiscal_year_id'])) {
-                $percent = 100 / ($stat['buddhis'] + $stat['christ'] + $stat['bahai'] + $stat['idslam']);
+                try {
+                    $percent = 100 / ($stat['buddhis'] + $stat['christ'] + $stat['bahai'] + $stat['idslam']);
+                } catch (Exception $exception) {
+                    $percent = 0;
+                }
                 $data = [
                     number_format($stat['buddhis'] * $percent, 2),
                     number_format($stat['christ'] * $percent, 2),
