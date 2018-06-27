@@ -20,6 +20,8 @@ use Yii;
  * @property integer $christ_sat_women
  * @property integer $christ_cato_total
  * @property integer $christ_cato_women
+ * @property integer $christ_novice_total
+ * @property integer $christ_novice_women
  * @property integer $bahai_total
  * @property integer $bahai_women
  * @property integer $idslam_total
@@ -47,7 +49,7 @@ class StatReligionTeacherDetail extends \yii\db\ActiveRecord
     {
         return [
             [['stat_religion_teacher_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['stat_religion_teacher_id', 'buddhis_monk', 'buddhis_novice', 'buddhis_dad', 'buddhis_mom', 'buddhis_boy', 'christ_news_total', 'christ_news_women', 'christ_sat_total', 'christ_sat_women', 'christ_cato_total', 'christ_cato_women', 'bahai_total', 'bahai_women', 'idslam_total', 'idslam_women', 'province_id'], 'integer'],
+            [['stat_religion_teacher_id', 'buddhis_monk', 'buddhis_novice', 'buddhis_dad', 'buddhis_mom', 'buddhis_boy', 'christ_news_total', 'christ_news_women', 'christ_sat_total', 'christ_sat_women', 'christ_cato_total', 'christ_cato_women', 'christ_novice_total', 'christ_novice_women', 'bahai_total', 'bahai_women', 'idslam_total', 'idslam_women', 'province_id'], 'integer'],
             [['remark'], 'string'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_religion_teacher_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatReligionTeacher::className(), 'targetAttribute' => ['stat_religion_teacher_id' => 'id']],
@@ -73,6 +75,8 @@ class StatReligionTeacherDetail extends \yii\db\ActiveRecord
             'christ_sat_women' => Yii::t('app', 'Christ Sat Women'),
             'christ_cato_total' => Yii::t('app', 'Christ Cato Total'),
             'christ_cato_women' => Yii::t('app', 'Christ Cato Women'),
+            'christ_novice_total' => Yii::t('app', 'Christ Novice Total'),
+            'christ_novice_women' => Yii::t('app', 'Christ Novice Women'),
             'bahai_total' => Yii::t('app', 'Bahai Total'),
             'bahai_women' => Yii::t('app', 'Bahai Women'),
             'idslam_total' => Yii::t('app', 'Idslam Total'),

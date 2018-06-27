@@ -63,19 +63,18 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</td>
-                            <td class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</td>
-                            <td class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</td>
-                            <td class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></td>
+                            <td class="text-center" colspan="8">ສາສະໜາເຍຊູຄຣິດ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" colspan="2">ຂ່າວປະເສີດ</td>
-                            <td class="text-center" colspan="2">ວັນເສົາ</td>
-                            <td class="text-center" colspan="2">ກາໂຕລິກ</td>
+                            <td class="text-center" colspan="2" rowspan="2">ຂ່າວປະເສີດ</td>
+                            <td class="text-center" colspan="2" rowspan="2">ວັນເສົາ</td>
+                            <td class="text-center" colspan="4">ກາໂຕລິກ</td>
                         </tr>
                         <tr>
-                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
-                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" colspan="2">ຄູຄຳສອນ</td>
+                            <td class="text-center" colspan="2">ນັກບວດ</td>
+                        </tr>
+                        <tr>
                             <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
                             <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Women') ?></td>
                             <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
@@ -110,6 +109,31 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                                        max="{{model.christ_cato_total}}" type="number"
                                        ng-blur="model.christ_cato_women = model.christ_cato_total < model.christ_cato_women ? null : model.christ_cato_women">
                             </td>
+                            <td class="text-center">
+                                <input ng-model="model.christ_novice_total" class="form-control" min="0" type="number">
+                            </td>
+                            <td class="text-center">
+                                <input ng-model="model.christ_novice_women" class="form-control" min="0"
+                                       max="{{model.christ_novice_total}}" type="number"
+                                       ng-blur="model.christ_novice_women = model.christ_novice_total < model.christ_novice_women ? null : model.christ_novice_women">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-12">
+                    <table class="table table-bordered">
+                        <tr>
+                            <td class="text-center" colspan="2">ສາສະໜາບາຮາຍ</td>
+                            <td class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</td>
+                            <td class="text-center" rowspan="2"><?= Yii::t('app', 'Remark') ?></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Women') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
+                            <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Women') ?></td>
+                        </tr>
+                        <tr>
                             <td class="text-center">
                                 <input ng-model="model.bahai_total" class="form-control" min="0" type="number">
                             </td>
@@ -162,35 +186,33 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                         <table class="table table-bordered table-hover" ng-show="models">
                             <thead>
                             <tr>
-                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
+                                <th class="text-center" rowspan="4"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center" rowspan="4"><?= Yii::t('app', 'Province') ?></th>
                                 <th class="text-center" colspan="5">ສາສະໜາພຸດ</th>
-                                <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
-                                <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
-                                <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
-                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
+                                <th class="text-center" colspan="8">ສາສະໜາເຍຊູຄຣິດ</th>
+                                <th class="text-center" colspan="2" rowspan="3">ສາສະໜາບາຮາຍ</th>
+                                <th class="text-center" colspan="2" rowspan="3">ສາສະໜາອິດສະລາມ</th>
+                                <th class="text-center" rowspan="4"><?= Yii::t('app', 'Remark') ?></th>
                             </tr>
                             <tr>
-                                <th class="text-center" rowspan="2">ພະ</th>
-                                <th class="text-center" rowspan="2">ຈົວ</th>
-                                <th class="text-center" rowspan="2">ພໍ່ຂາວ</th>
-                                <th class="text-center" rowspan="2">ແມ່ຂາວ</th>
-                                <th class="text-center" rowspan="2">ສັງກະລີ</th>
-                                <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
-                                <th class="text-center" colspan="2">ວັນເສົາ</th>
-                                <th class="text-center" colspan="2">ກາໂຕລິກ</th>
+                                <th class="text-center" rowspan="3">ພະ</th>
+                                <th class="text-center" rowspan="3">ຈົວ</th>
+                                <th class="text-center" rowspan="3">ພໍ່ຂາວ</th>
+                                <th class="text-center" rowspan="3">ແມ່ຂາວ</th>
+                                <th class="text-center" rowspan="3">ສັງກະລີ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ຂ່າວປະເສີດ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ວັນເສົາ</th>
+                                <th class="text-center" colspan="4">ກາໂຕລິກ</th>
                             </tr>
                             <tr>
-                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                <th class="text-center" colspan="2">ຄູຄໍາສອນ</th>
+                                <th class="text-center" colspan="2">ນັກບວດ</th>
+                            </tr>
+                            <tr>
+                                <?php for ($i = 0; $i < 6; $i++): ?>
+                                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                <?php endfor; ?>
                             </tr>
                             <tr>
                                 <th style="width: 10%" class="text-center"
@@ -206,6 +228,12 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                                 <th style="width: 10%" class="text-center">{{sum('christ_sat_women') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('christ_cato_women') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_novice_total') | number |
+                                    dash}}
+                                </th>
+                                <th style="width: 10%" class="text-center">{{sum('christ_novice_women') | number |
+                                    dash}}
+                                </th>
                                 <th style="width: 10%" class="text-center">{{sum('bahai_total') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('bahai_women') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('idslam_total') | number | dash}}</th>
@@ -228,6 +256,8 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                                 <td class="text-center">{{m.christ_sat_women | number | dash}}</td>
                                 <td class="text-center">{{m.christ_cato_total | number | dash}}</td>
                                 <td class="text-center">{{m.christ_cato_women | number | dash}}</td>
+                                <td class="text-center">{{m.christ_novice_total | number | dash}}</td>
+                                <td class="text-center">{{m.christ_novice_women | number | dash}}</td>
                                 <td class="text-center">{{m.bahai_total | number | dash}}</td>
                                 <td class="text-center">{{m.bahai_women | number | dash}}</td>
                                 <td class="text-center">{{m.idslam_total | number | dash}}</td>
@@ -365,7 +395,6 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
       if ($scope.year && $scope.model.province)
         $http.get($scope.url + 'inquiry&province=' + $scope.model.province.id + '&year=' + $scope.year.id)
           .then(function (r) {
-            var p = $scope.model.province;
             if (r.data.model) {
               $scope.model.buddhis_monk = parseInt(r.data.model.buddhis_monk);
               $scope.model.buddhis_novice = parseInt(r.data.model.buddhis_novice);
@@ -378,6 +407,8 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
               $scope.model.christ_sat_women = parseInt(r.data.model.christ_sat_women);
               $scope.model.christ_cato_total = parseInt(r.data.model.christ_cato_total);
               $scope.model.christ_cato_women = parseInt(r.data.model.christ_cato_women);
+              $scope.model.christ_novice_total = parseInt(r.data.model.christ_novice_total);
+              $scope.model.christ_novice_women = parseInt(r.data.model.christ_novice_women);
               $scope.model.bahai_total = parseInt(r.data.model.bahai_total);
               $scope.model.bahai_women = parseInt(r.data.model.bahai_women);
               $scope.model.idslam_total = parseInt(r.data.model.idslam_total);
@@ -395,6 +426,8 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
               $scope.model.christ_sat_women = null;
               $scope.model.christ_cato_total = null;
               $scope.model.christ_cato_women = null;
+              $scope.model.christ_novice_total = null;
+              $scope.model.christ_novice_women = null;
               $scope.model.bahai_total = null;
               $scope.model.bahai_women = null;
               $scope.model.idslam_total = null;

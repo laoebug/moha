@@ -6,7 +6,7 @@
 
 $cols = [
     'buddhis_monk', 'buddhis_novice', 'buddhis_dad', 'buddhis_mom', 'buddhis_boy',
-    'christ_news_total', 'christ_news_women', 'christ_sat_total', 'christ_sat_women', 'christ_cato_total', 'christ_cato_women',
+    'christ_news_total', 'christ_news_women', 'christ_sat_total', 'christ_sat_women', 'christ_cato_total', 'christ_cato_women', 'christ_novice_total', 'christ_novice_women',
     'bahai_total', 'bahai_women', 'idslam_total', 'idslam_women'
 ];
 $sum = [];
@@ -27,35 +27,33 @@ foreach ($models as $model)
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
-                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
+                <th class="text-center" rowspan="4"><?= Yii::t('app', 'No.') ?></th>
+                <th class="text-center" rowspan="4"><?= Yii::t('app', 'Province') ?></th>
                 <th class="text-center" colspan="5">ສາສະໜາພຸດ</th>
-                <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
-                <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
-                <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
-                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
+                <th class="text-center" colspan="8">ສາສະໜາເຍຊູຄຣິດ</th>
+                <th class="text-center" colspan="2" rowspan="3">ສາສະໜາບາຮາຍ</th>
+                <th class="text-center" colspan="2" rowspan="3">ສາສະໜາອິດສະລາມ</th>
+                <th class="text-center" rowspan="4"><?= Yii::t('app', 'Remark') ?></th>
             </tr>
             <tr>
-                <th class="text-center" rowspan="2">ພະ</th>
-                <th class="text-center" rowspan="2">ຈົວ</th>
-                <th class="text-center" rowspan="2">ພໍ່ຂາວ</th>
-                <th class="text-center" rowspan="2">ແມ່ຂາວ</th>
-                <th class="text-center" rowspan="2">ສັງກະລີ</th>
-                <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
-                <th class="text-center" colspan="2">ວັນເສົາ</th>
-                <th class="text-center" colspan="2">ກາໂຕລິກ</th>
+                <th class="text-center" rowspan="3">ພະ</th>
+                <th class="text-center" rowspan="3">ຈົວ</th>
+                <th class="text-center" rowspan="3">ພໍ່ຂາວ</th>
+                <th class="text-center" rowspan="3">ແມ່ຂາວ</th>
+                <th class="text-center" rowspan="3">ສັງກະລີ</th>
+                <th class="text-center" colspan="2" rowspan="2">ຂ່າວປະເສີດ</th>
+                <th class="text-center" colspan="2" rowspan="2">ວັນເສົາ</th>
+                <th class="text-center" colspan="4">ກາໂຕລິກ</th>
             </tr>
             <tr>
-                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                <th class="text-center" colspan="2">ຄູຄຳສອນ</th>
+                <th class="text-center" colspan="2">ນັກບວດ</th>
+            </tr>
+            <tr>
+                <?php for ($i = 0; $i < 6; $i++): ?>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                <?php endfor; ?>
             </tr>
                 <tr>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>

@@ -84,7 +84,7 @@ class StatReligionTeacherController extends Controller
             ->select([
                 'phiscal_year_id' => 'r.phiscal_year_id',
                 'buddhis' => 'sum(d.buddhis_monk + d.buddhis_novice + d.buddhis_dad + d.buddhis_mom + d.buddhis_boy)',
-                'christ' => 'sum(d.christ_cato_total + d.christ_news_total + d.christ_sat_total)',
+                'christ' => 'sum(d.christ_cato_total + d.christ_novice_total + + d.christ_news_total + d.christ_sat_total)',
                 'bahai' => 'r.phiscal_year_id, sum(d.bahai_total)',
                 'idslam' => 'r.phiscal_year_id, sum(d.idslam_total)',
             ])->alias('d')
@@ -212,6 +212,8 @@ class StatReligionTeacherController extends Controller
             $detail->christ_sat_women = $post['StatReligionTeacherDetail']['christ_sat_women'];
             $detail->christ_cato_total = $post['StatReligionTeacherDetail']['christ_cato_total'];
             $detail->christ_cato_women = $post['StatReligionTeacherDetail']['christ_cato_women'];
+            $detail->christ_novice_total = $post['StatReligionTeacherDetail']['christ_novice_total'];
+            $detail->christ_novice_women = $post['StatReligionTeacherDetail']['christ_novice_women'];
             $detail->bahai_total = $post['StatReligionTeacherDetail']['bahai_total'];
             $detail->bahai_women = $post['StatReligionTeacherDetail']['bahai_women'];
             $detail->idslam_total = $post['StatReligionTeacherDetail']['idslam_total'];
