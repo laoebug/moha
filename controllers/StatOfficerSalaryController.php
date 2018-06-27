@@ -157,7 +157,7 @@ class StatOfficerSalaryController extends Controller
                     ->where([
                         'stat_officer_salary_id' => $model->id,
                         'officer_level_id' => $post['Model']['level']['id'],
-                        'stat_officer_salary_id' => $post['Model']['step']['id']
+                        'salary_level_id' => $post['Model']['step']['id']
                     ])->one();
                 if (!isset($detail)) {
                     $detail = new StatOfficerSalaryDetail();
