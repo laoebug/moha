@@ -37,32 +37,47 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                 <div class="col-sm-9">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center" colspan="4">ສາສະໜາພຸດ</td>
+                            <td class="text-center" colspan="7">ສາສະໜາພຸດ</td>
                             <td class="text-center" colspan="2">ສາສະໜາເຍຊູຄຣິດ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" colspan="4">ວັດ</td>
+                            <td class="text-center" colspan="7">ວັດ</td>
                             <td class="text-center" colspan="2">ຂ່າວປະເສີດ</td>
                         </tr>
                         <tr>
                             <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
+                            <td class="text-center" style="width: 12.5%">ມີພະສົງ</td>
                             <td class="text-center" style="width: 12.5%">ບໍ່ມີພະສົງ</td>
+                            <td class="text-center" style="width: 12.5%">ມີຂໍ້ຕົກລົງສ້າງວັດ</td>
+                            <td class="text-center" style="width: 12.5%">ບໍ່ມີຂໍ້ຕົກລົງສ້າງວັດ</td>
                             <td class="text-center" style="width: 12.5%">ສິມ</td>
                             <td class="text-center" style="width: 12.5%">ບໍ່ມີສິມ</td>
                             <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
                             <td class="text-center" style="width: 12.5%">ບໍ່ອະນຸຍາດ</td>
-                        </tr>
+                        </tr>                   
+                                
                         <tr>
                             <td class="text-center"><input min="0" type="number" class="form-control"
                                                            ng-model="model.buddhis_total"></td>
+							<td class="text-center"><input
+                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_nomonk - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
+                                        min="0" type="number" class="form-control" ng-model="model.buddhis_monk"></td>
+                                                                                                   
                             <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim}}"
+                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_nomonk"></td>
+                             <td class="text-center"><input
+                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_nomonk- model.buddhis_no_agreement_built_temple}}"
+                                        min="0" type="number" class="form-control" ng-model="model.buddhis_agreement_built_temple"></td>
                             <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_nomonk - model.buddhis_nosim}}"
+                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_nomonk- model.buddhis_agreement_built_temple}}"
+                                        min="0" type="number" class="form-control" ng-model="model.buddhis_no_agreement_built_temple"></td>
+                                                                
+                            <td class="text-center"><input
+                                        max="{{model.buddhis_total - model.buddhis_nomonk - model.buddhis_nosim-model.buddhis_sim - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_sim"></td>
                             <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_nomonk - model.buddhis_sim}}"
+                                        max="{{model.buddhis_total - model.buddhis_nomonk - model.buddhis_sim -model.buddhis_monk - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_nosim"></td>
                             <td class="text-center"><input min="0" type="number" class="form-control"
                                                            ng-model="model.christ_news_total"></td>
@@ -162,14 +177,14 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                             <tr>
                                 <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
                                 <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
-                                <th class="text-center" colspan="4">ສາສະໜາພຸດ</th>
+                                <th class="text-center" colspan="7">ສາສະໜາພຸດ</th>
                                 <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
                                 <th class="text-center" colspan="2">ສາສະໜາບາຮາຍ</th>
                                 <th class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</th>
                                 <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
                             </tr>
                             <tr>
-                                <th class="text-center" colspan="4">ວັດ</th>
+                                <th class="text-center" colspan="7">ວັດ</th>
                                 <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
                                 <th class="text-center" colspan="2">ວັນເສົາ</th>
                                 <th class="text-center" colspan="2">ກາໂທລິກ</th>
@@ -178,7 +193,10 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                             </tr>
                             <tr>
                                 <th class="text-center">ລວມ</th>
+                                <th class="text-center">ມີພະສົງ</th>
                                 <th class="text-center">ບໍ່ມີພະສົງ</th>
+                                <th class="text-center">ມີຂໍ້ຕົກລົງສ້າງວັດ</th>
+                                <th class="text-center">ບໍ່ມີຂໍ້ຕົກລົງສ້າງວັດ</th>
                                 <th class="text-center">ສິມ</th>
                                 <th class="text-center">ບໍ່ມີສິມ</th>
                                 <?php for ($i = 0; $i < 10; $i++): ?>
@@ -189,7 +207,10 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                 <th style="width: 10%" class="text-center"
                                     colspan="2"><?= Yii::t('app', 'Total') ?></th>
                                 <th style="width: 10%" class="text-center">{{sum('buddhis_total') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_monk') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('buddhis_nomonk') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_agreement_built_temple') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_no_agreement_built_temple') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('buddhis_sim') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('buddhis_nosim') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number | dash}}</th>
@@ -210,7 +231,10 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{m.province_name}}</td>
                                 <td class="text-center">{{m.buddhis_total | number | dash}}</td>
+                                <td class="text-center">{{m.buddhis_monk | number | dash}}</td>
                                 <td class="text-center">{{m.buddhis_nomonk | number | dash}}</td>
+                                <td class="text-center">{{m.buddhis_agreement_built_temple | number | dash}}</td>
+                                <td class="text-center">{{m.buddhis_no_agreement_built_temple | number | dash}}</td>
                                 <td class="text-center">{{m.buddhis_sim | number | dash}}</td>
                                 <td class="text-center">{{m.buddhis_nosim | number | dash}}</td>
                                 <td class="text-center">{{m.christ_news_total | number | dash}}</td>
@@ -365,7 +389,10 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
             var p = $scope.model.province;
             if (r.data.model) {
               $scope.model.buddhis_total = parseInt(r.data.model.buddhis_total);
+              $scope.model.buddhis_monk = parseInt(r.data.model.buddhis_monk);
               $scope.model.buddhis_nomonk = parseInt(r.data.model.buddhis_nomonk);
+              $scope.model.buddhis_agreement_built_temple = parseInt(r.data.model.buddhis_agreement_built_temple);
+              $scope.model.buddhis_no_agreement_built_temple = parseInt(r.data.model.buddhis_no_agreement_built_temple);
               $scope.model.buddhis_sim = parseInt(r.data.model.buddhis_sim);
               $scope.model.buddhis_nosim = parseInt(r.data.model.buddhis_nosim);
               $scope.model.christ_news_total = parseInt(r.data.model.christ_news_total);
@@ -381,7 +408,10 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
               $scope.model.remark = r.data.model.remark;
             } else {
               $scope.model.buddhis_total = null;
+              $scope.model.buddhis_monk = null;
               $scope.model.buddhis_nomonk = null;
+              $scope.model.buddhis_agreement_built_temple = null;
+              $scope.model.buddhis_no_agreement_built_temple = null;
               $scope.model.buddhis_sim = null;
               $scope.model.buddhis_nosim = null;
               $scope.model.christ_news_total = null;

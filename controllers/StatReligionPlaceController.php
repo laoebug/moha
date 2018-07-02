@@ -217,7 +217,10 @@ class StatReligionPlaceController extends Controller
                 $detail->stat_religion_place_id = $model->id;
             }
             $detail->buddhis_total = @$post['StatReligionPlaceDetail']['buddhis_total'];
+            $detail->buddhis_monk = @$post['StatReligionPlaceDetail']['buddhis_monk'];
             $detail->buddhis_nomonk = @$post['StatReligionPlaceDetail']['buddhis_nomonk'];
+            $detail->buddhis_agreement_built_temple = @$post['StatReligionPlaceDetail']['buddhis_agreement_built_temple'];
+            $detail->buddhis_no_agreement_built_temple = @$post['StatReligionPlaceDetail']['buddhis_no_agreement_built_temple'];
             $detail->buddhis_sim = @$post['StatReligionPlaceDetail']['buddhis_sim'];
             $detail->buddhis_nosim = @$post['StatReligionPlaceDetail']['buddhis_nosim'];
             $detail->christ_news_total = @$post['StatReligionPlaceDetail']['christ_news_total'];

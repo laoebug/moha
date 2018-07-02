@@ -10,6 +10,9 @@ use Yii;
  * @property integer $id
  * @property integer $buddhis_total
  * @property integer $buddhis_nomonk
+ * @property integer $buddhis_monk
+ * @property integer $buddhis_agreement_built_temple
+ * @property integer $buddhis_no_agreement_built_temple
  * @property integer $buddhis_nosim
  * @property integer $buddhis_sim
  * @property integer $christ_news_total
@@ -62,6 +65,9 @@ class StatReligionPlaceDetail extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'buddhis_total' => Yii::t('app', 'Buddhis Total'),
             'buddhis_nomonk' => Yii::t('app', 'Buddhis Nomonk'),
+			'buddhis_monk' => Yii::t('app', 'Buddhis Monk'),
+			'buddhis_agreement_built_temple' => Yii::t('app', 'Buddhis Agreement Built Temple'),
+			'buddhis_no_agreement_built_temple' => Yii::t('app', 'Buddhis No Agreement Built Temple'),
             'buddhis_nosim' => Yii::t('app', 'Buddhis Nosim'),
             'buddhis_sim' => Yii::t('app', 'Buddhis Sim'),
             'christ_news_total' => Yii::t('app', 'Christ News Total'),
