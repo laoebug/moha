@@ -33,7 +33,7 @@ foreach ($models as $model)
                 <th class="text-center" colspan="8">ສາສະໜາເຍຊູຄຣິດ</th>
                 <th class="text-center" colspan="2" rowspan="3">ສາສະໜາບາຮາຍ</th>
                 <th class="text-center" colspan="2" rowspan="3">ສາສະໜາອິດສະລາມ</th>
-                <th class="text-center" rowspan="4"><?= Yii::t('app', 'Remark') ?></th>
+                
             </tr>
             <tr>
                 <th class="text-center" rowspan="3">ພະ</th>
@@ -42,7 +42,7 @@ foreach ($models as $model)
                 <th class="text-center" rowspan="3">ແມ່ຂາວ</th>
                 <th class="text-center" rowspan="3">ສັງກະລີ</th>
                 <th class="text-center" colspan="2" rowspan="2">ຂ່າວປະເສີດ</th>
-                <th class="text-center" colspan="2" rowspan="2">ວັນເສົາ</th>
+                <th class="text-center" colspan="2" rowspan="2">ຄະນະວັນເສົາ</th>
                 <th class="text-center" colspan="4">ກາໂຕລິກ</th>
             </tr>
             <tr>
@@ -56,7 +56,7 @@ foreach ($models as $model)
                 <?php endfor; ?>
             </tr>
                 <tr>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
                         <?php foreach ($cols as $col): ?>
                             <th class="text-center"><?=number_format($sum[$col]) ?></th>
                         <?php endforeach; ?>
@@ -71,7 +71,7 @@ foreach ($models as $model)
                         <?php foreach ($cols as $col): ?>
                             <td class="text-center"><?= number_format($model[$col]) ?></td>
                         <?php endforeach; ?>
-                        <td class="text-center"><?= $model['remark'] ?></td>
+                        
                     </tr>
                 <?php endforeach; ?>
             </tbody>

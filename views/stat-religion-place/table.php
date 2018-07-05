@@ -5,7 +5,7 @@
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $cols = [
-    'buddhis_total', 'buddhis_nomonk', 'buddhis_sim', 'buddhis_nosim',
+    'buddhis_total', 'buddhis_monk','buddhis_nomonk', 'buddhis_sim', 'buddhis_nosim','buddhis_agreement_built_temple','buddhis_no_agreement_built_temple',
     'christ_news_total', 'christ_news_not', 'christ_sat_total', 'christ_sat_not', 'christ_cato_total', 'christ_cato_not',
     'bahai_total', 'bahai_not', 'idslam_total', 'idslam_not'
 ];
@@ -22,38 +22,41 @@ foreach ($models as $model)
 <div class="row">
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
         <div class="card-title-w-btn ">
-            <h3><?= Yii::t('app', 'Statistics of Religion Teacher'). " " . $year->year ?></h3>
+            <h3><?= Yii::t('app', 'ສະຖຕິສາສະນະສະຖານ ໃນທົ່ວປະເທດສົກປີ'). " " . $year->year ?></h3>
         </div>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
                     <th class="text-center" rowspan="3"><?= Yii::t('app', 'Province') ?></th>
-                    <th class="text-center" colspan="4">ສາສະໜາພຸດ</th>
+                    <th class="text-center" colspan="7">ສາສະໜາພຸດ</th>
                     <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
                     <th class="text-center" colspan="2">ສາສະໜາບາຮາຍ</th>
                     <th class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</th>
-                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
+                    
                 </tr>
                 <tr>
-                    <th class="text-center" colspan="4">ວັດ</th>
+                    <th class="text-center" colspan="7">ວັດ</th>
                     <th class="text-center" colspan="2">ຂ່າວປະເສີດ (ໂບດ)</th>
-                    <th class="text-center" colspan="2">ວັນເສົາ (ໂບດ)</th>
-                    <th class="text-center" colspan="2">ກາໂຕລິກ (ວັດ)</th>
+                    <th class="text-center" colspan="2">ຄະນະວັນເສົາ (ໂບດ)</th>
+                    <th class="text-center" colspan="2">ກາໂຕລິກ (ໂບດ)</th>
                     <th class="text-center" colspan="2">ສາສະໜາບາຮາຍ (ທຳມະສະພາ)</th>
                     <th class="text-center" colspan="2">ສາສະໜາອິດສະລາມ (ສຸເຫຼົ່າຫຼື ມັດສະຍິດ)</th>
                 </tr>
                 <tr>
-                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center">ລວມ</th>
+                    <th class="text-center">ມີພະສົງ</th>
                     <th class="text-center">ບໍ່ມີພະສົງ</th>
-                    <th class="text-center">ສິມ</th>
-                    <th class="text-center">ບໍ່ມີສິມ</th>
+					<th class="text-center">ມີສິມ</th>
+					<th class="text-center">ບໍ່ມີສິມ</th>                                
+					<th class="text-center">ມີຂໍ້ຕົກລົງສ້າງວັດ</th>
+					<th class="text-center">ບໍ່ມີຂໍ້ຕົກລົງສ້າງວັດ</th>
                     <?php for ($i=0;$i<10;$i++): ?>
-                        <th class="text-center"><?= Yii::t('app', $i%2==0?'ທັງໝົດ':'ບໍ່ອະນຸຍາດ') ?></th>
+                        <th class="text-center"><?= Yii::t('app', $i%2==0?'ລວມ':'ບໍ່ຮັບຮູ້') ?></th>
                     <?php endfor; ?>
                 </tr>
                 <tr>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                    <th class="text-center" colspan="1"><?= Yii::t('app', 'Total') ?></th>
                         <?php foreach ($cols as $col): ?>
                             <th class="text-center"><?=number_format($sum[$col]) ?></th>
                         <?php endforeach; ?>
@@ -67,8 +70,7 @@ foreach ($models as $model)
                         <td class="text-center"><?= $model['province_name'] ?></td>
                         <?php foreach ($cols as $col): ?>
                             <td class="text-center"><?= number_format($model[$col]) ?></td>
-                        <?php endforeach; ?>
-                        <td><?= $model['remark'] ?></td>
+                        <?php endforeach; ?>                        
                     </tr>
                 <?php endforeach; ?>
             </tbody>

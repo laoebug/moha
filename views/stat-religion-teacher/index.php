@@ -67,7 +67,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                         </tr>
                         <tr>
                             <td class="text-center" colspan="2" rowspan="2">ຂ່າວປະເສີດ</td>
-                            <td class="text-center" colspan="2" rowspan="2">ວັນເສົາ</td>
+                            <td class="text-center" colspan="2" rowspan="2">ຄະນະວັນເສົາ</td>
                             <td class="text-center" colspan="4">ກາໂຕລິກ</td>
                         </tr>
                         <tr>
@@ -125,7 +125,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                         <tr>
                             <td class="text-center" colspan="2">ສາສະໜາບາຮາຍ</td>
                             <td class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</td>
-                            <td class="text-center" rowspan="2"><?= Yii::t('app', 'Remark') ?></td>
+                           
                         </tr>
                         <tr>
                             <td style="width: 10%" class="text-center"><?= Yii::t('app', 'Total') ?></td>
@@ -150,9 +150,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                                        max="{{model.idslam_total}}" type="number"
                                        ng-blur="model.idslam_women = model.idslam_total < model.idslam_women ? null : model.idslam_women">
                             </td>
-                            <td class="text-center">
-                                <input ng-model="model.remark" class="form-control" type="text">
-                            </td>
+                            
                         </tr>
                     </table>
                 </div>
@@ -192,7 +190,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                                 <th class="text-center" colspan="8">ສາສະໜາເຍຊູຄຣິດ</th>
                                 <th class="text-center" colspan="2" rowspan="3">ສາສະໜາບາຮາຍ</th>
                                 <th class="text-center" colspan="2" rowspan="3">ສາສະໜາອິດສະລາມ</th>
-                                <th class="text-center" rowspan="4"><?= Yii::t('app', 'Remark') ?></th>
+                               
                             </tr>
                             <tr>
                                 <th class="text-center" rowspan="3">ພະ</th>
@@ -201,7 +199,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                                 <th class="text-center" rowspan="3">ແມ່ຂາວ</th>
                                 <th class="text-center" rowspan="3">ສັງກະລີ</th>
                                 <th class="text-center" colspan="2" rowspan="2">ຂ່າວປະເສີດ</th>
-                                <th class="text-center" colspan="2" rowspan="2">ວັນເສົາ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ຄະນະວັນເສົາ</th>
                                 <th class="text-center" colspan="4">ກາໂຕລິກ</th>
                             </tr>
                             <tr>
@@ -238,7 +236,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                                 <th style="width: 10%" class="text-center">{{sum('bahai_women') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('idslam_total') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('idslam_women') | number | dash}}</th>
-                                <th style="width: 10%"></th>
+                                
                             </tr>
                             </thead>
                             <tbody>
@@ -262,7 +260,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                                 <td class="text-center">{{m.bahai_women | number | dash}}</td>
                                 <td class="text-center">{{m.idslam_total | number | dash}}</td>
                                 <td class="text-center">{{m.idslam_women | number | dash}}</td>
-                                <td class="text-center">{{m.remark}}</td>
+                                
                             </tr>
                             </tbody>
                         </table>

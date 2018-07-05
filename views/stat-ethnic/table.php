@@ -31,14 +31,17 @@
             <?php foreach ($ethnics as $i => $ethnic): if ($i == 25) break; ?>
                 <th><?= $ethnic->name ?></th>
             <?php endforeach; ?>
+            <th class="text-center">ລວມ</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody>        
         <?php foreach ($provinces as $i => $province): ?>
             <tr>
                 <td rowspan="2"><?= $i + 1 ?></td>
                 <td rowspan="2"><?= $province->province_name ?></td>
                 <td><?= Yii::t('app', 'Total') ?></td>
+                <?php $sum_total=0;?>
+        		<?php $sum_women=0;?>
                 <?php foreach ($ethnics as $j => $ethnic): ?>
                     <td class="text-center">
                         <?php
@@ -46,14 +49,20 @@
                         foreach ($models as $model)
                             if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
                                 $value = number_format($model->total);
+                                $sum_total += $model->total;
                                 break;
                             }
+                        
                         echo $value;
                         ?>
                     </td>
+                    
                     <?php
                     if ($j == 24) break;
                 endforeach; ?>
+                <td class="text-right">
+                <?php echo number_format($sum_total); ?>
+                </td>
             </tr>
             <tr>
                 <td><?= Yii::t('app', 'Women') ?></td>
@@ -64,6 +73,7 @@
                         foreach ($models as $model)
                             if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
                                 $value = number_format($model->women);
+                                $sum_women += $model->women;
                                 break;
                             }
                         echo $value;
@@ -72,6 +82,9 @@
                     <?php
                     if ($e == 24) break;
                 endforeach; ?>
+                <td class="text-right">
+                <?php echo number_format($sum_women); ?>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -89,6 +102,7 @@
                     ?>
                     <th><?= $ethnic->name ?></th>
                 <?php endfor; ?>
+                <th class="text-center">ລວມ</th>
             </tr>
             </thead>
             <tbody>
@@ -97,6 +111,9 @@
                     <td rowspan="2"><?= $p + 1 ?></td>
                     <td rowspan="2"><?= $province->province_name ?></td>
                     <td><?= Yii::t('app', 'Total') ?></td>
+                    <?php $sum_total=0;?>
+        			<?php $sum_women=0;?>
+        		
                     <?php for ($i = 25; $i < count($ethnics); $i++):
                         $ethnic = $ethnics[$i];
                         ?>
@@ -106,12 +123,17 @@
                             foreach ($models as $model)
                                 if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
                                     $value = number_format($model->total);
+                                    $sum_total += $model->total;
                                     break;
                                 }
                             echo $value;
                             ?>
                         </td>
                     <?php endfor; ?>
+                    <td class="text-right">
+	                <?php echo number_format($sum_total); ?>
+	                </td>
+                    
                 </tr>
                 <tr>
                     <td><?= Yii::t('app', 'Women') ?></td>
@@ -124,12 +146,16 @@
                             foreach ($models as $model)
                                 if ($model->province_id == $province->id && $model->ethnic_id == $ethnic->id) {
                                     $value = number_format($model->women);
+                                    $sum_women += $model->women;
                                     break;
                                 }
                             echo $value;
                             ?>
                         </td>
                     <?php endfor; ?>
+                     <td class="text-right">
+	                 <?php echo number_format($sum_women); ?>
+	                 </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

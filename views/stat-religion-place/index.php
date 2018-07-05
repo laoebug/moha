@@ -45,15 +45,15 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                             <td class="text-center" colspan="2">ຂ່າວປະເສີດ</td>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%">ມີພະສົງ</td>
-                            <td class="text-center" style="width: 12.5%">ບໍ່ມີພະສົງ</td>
-                            <td class="text-center" style="width: 12.5%">ມີຂໍ້ຕົກລົງສ້າງວັດ</td>
-                            <td class="text-center" style="width: 12.5%">ບໍ່ມີຂໍ້ຕົກລົງສ້າງວັດ</td>
-                            <td class="text-center" style="width: 12.5%">ສິມ</td>
-                            <td class="text-center" style="width: 12.5%">ບໍ່ມີສິມ</td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%">ບໍ່ອະນຸຍາດ</td>
+                            <td class="text-center" style="width: 11.1%">ລວມ</td>
+                            <td class="text-center" style="width: 11.1%">ມີພະສົງ</td>
+                            <td class="text-center" style="width: 11.1%">ບໍ່ມີພະສົງ</td>                            
+                            <td class="text-center" style="width: 11.1%">ມີສິມ</td>
+                            <td class="text-center" style="width: 11.1%">ບໍ່ມີສິມ</td>
+                            <td class="text-center" style="width: 11.1%">ມີຂໍ້ຕົກລົງສ້າງວັດ</td>
+                            <td class="text-center" style="width: 11.1%">ບໍ່ມີຂໍ້ຕົກລົງສ້າງວັດ</td>
+                            <td class="text-center" style="width: 11.1%">ລວມ</td>
+                            <td class="text-center" style="width: 11.1%">ບໍ່ຮັບຮູ້</td>
                         </tr>                   
                                 
                         <tr>
@@ -65,13 +65,7 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                                                                                    
                             <td class="text-center"><input
                                         max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
-                                        min="0" type="number" class="form-control" ng-model="model.buddhis_nomonk"></td>
-                             <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_nomonk- model.buddhis_no_agreement_built_temple}}"
-                                        min="0" type="number" class="form-control" ng-model="model.buddhis_agreement_built_temple"></td>
-                            <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_nomonk- model.buddhis_agreement_built_temple}}"
-                                        min="0" type="number" class="form-control" ng-model="model.buddhis_no_agreement_built_temple"></td>
+                                        min="0" type="number" class="form-control" ng-model="model.buddhis_nomonk"></td>                             
                                                                 
                             <td class="text-center"><input
                                         max="{{model.buddhis_total - model.buddhis_nomonk - model.buddhis_nosim-model.buddhis_sim - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
@@ -79,6 +73,13 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                             <td class="text-center"><input
                                         max="{{model.buddhis_total - model.buddhis_nomonk - model.buddhis_sim -model.buddhis_monk - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_nosim"></td>
+                            <td class="text-center"><input
+                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_nomonk- model.buddhis_no_agreement_built_temple}}"
+                                        min="0" type="number" class="form-control" ng-model="model.buddhis_agreement_built_temple"></td>
+                            <td class="text-center"><input
+                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_nomonk- model.buddhis_agreement_built_temple}}"
+                                        min="0" type="number" class="form-control" ng-model="model.buddhis_no_agreement_built_temple"></td>
+                                                    
                             <td class="text-center"><input min="0" type="number" class="form-control"
                                                            ng-model="model.christ_news_total"></td>
                             <td class="text-center"><input min="0" max="{{model.christ_news_total}}" type="number"
@@ -92,10 +93,10 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                             <td class="text-center" colspan="4">ສາສະໜາເຍຊູຄຣິດ</td>
                             <td class="text-center" colspan="2">ສາສະໜາບາຮາຍ</td>
                             <td class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</td>
-                            <td class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></td>
+<!--                             <td class="text-center" rowspan="3">ໝາຍເຫດ</td> -->
                         </tr>
                         <tr>
-                            <td class="text-center" colspan="2">ວັນເສົາ</td>
+                            <td class="text-center" colspan="2">ຄະນະວັນເສົາ</td>
                             <td class="text-center" colspan="2">ກາໂທລິກ</td>
                             <td class="text-center" colspan="2">ທຳມະສະພາ</td>
                             <td class="text-center" colspan="2">ສຸເຫຼົ່າ ຫຼື ມັດສະຍິດ</td>
@@ -103,7 +104,7 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                         <tr>
                             <?php for ($i = 0; $i < 8; $i++): ?>
                                 <td style="width: 10%"
-                                    class="text-center"><?= $i % 2 == 0 ? 'ລວມ' : 'ບໍ່ອະນຸຍາດ' ?></td>
+                                    class="text-center"><?= $i % 2 == 0 ? 'ລວມ' : 'ບໍ່ຮັບຮູ້' ?></td>
                             <?php endfor; ?>
                         </tr>
                         <tr>
@@ -139,9 +140,9 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                        max="{{model.idslam_total}}" type="number"
                                        ng-blur="model.idslam_not = model.idslam_total < model.idslam_not ? null : model.idslam_not">
                             </td>
-                            <td class="text-center">
-                                <input ng-model="model.remark" class="form-control" type="text">
-                            </td>
+<!--                             <td class="text-center"> -->
+<!--                                 <input ng-model="model.remark" class="form-control" type="text"> -->
+<!--                             </td> -->
                         </tr>
                     </table>
                 </div>
@@ -181,12 +182,12 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                 <th class="text-center" colspan="6">ສາສະໜາເຍຊູຄຣິດ</th>
                                 <th class="text-center" colspan="2">ສາສະໜາບາຮາຍ</th>
                                 <th class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</th>
-                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
+<!--                                 <th class="text-center" rowspan="3">ໝາຍເຫດ</th> -->
                             </tr>
                             <tr>
                                 <th class="text-center" colspan="7">ວັດ</th>
                                 <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
-                                <th class="text-center" colspan="2">ວັນເສົາ</th>
+                                <th class="text-center" colspan="2">ຄະນະວັນເສົາ</th>
                                 <th class="text-center" colspan="2">ກາໂທລິກ</th>
                                 <th class="text-center" colspan="2">ທຳມະສະພາ</th>
                                 <th class="text-center" colspan="2">ສຸເຫຼົ່າ ຫຼື ມັດສະຍິດ</th>
@@ -195,12 +196,12 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                 <th class="text-center">ລວມ</th>
                                 <th class="text-center">ມີພະສົງ</th>
                                 <th class="text-center">ບໍ່ມີພະສົງ</th>
+                                <th class="text-center">ມີສິມ</th>
+                                <th class="text-center">ບໍ່ມີສິມ</th>                                
                                 <th class="text-center">ມີຂໍ້ຕົກລົງສ້າງວັດ</th>
-                                <th class="text-center">ບໍ່ມີຂໍ້ຕົກລົງສ້າງວັດ</th>
-                                <th class="text-center">ສິມ</th>
-                                <th class="text-center">ບໍ່ມີສິມ</th>
+                                <th class="text-center">ບໍ່ມີຂໍ້ຕົກລົງສ້າງວັດ</th>                                
                                 <?php for ($i = 0; $i < 10; $i++): ?>
-                                    <th class="text-center"><?= $i % 2 == 0 ? 'ລວມ' : 'ບໍ່ອະນຸຍາດ' ?></th>
+                                    <th class="text-center"><?= $i % 2 == 0 ? 'ລວມ' : 'ບໍ່ຮັບຮູ້' ?></th>
                                 <?php endfor; ?>
                             </tr>
                             <tr>
@@ -208,11 +209,11 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                     colspan="2"><?= Yii::t('app', 'Total') ?></th>
                                 <th style="width: 10%" class="text-center">{{sum('buddhis_total') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('buddhis_monk') | number | dash}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('buddhis_nomonk') | number | dash}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('buddhis_agreement_built_temple') | number | dash}}</th>
-                                <th style="width: 10%" class="text-center">{{sum('buddhis_no_agreement_built_temple') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_nomonk') | number | dash}}</th>                                
                                 <th style="width: 10%" class="text-center">{{sum('buddhis_sim') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('buddhis_nosim') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_agreement_built_temple') | number | dash}}</th>
+                                <th style="width: 10%" class="text-center">{{sum('buddhis_no_agreement_built_temple') | number | dash}}</th> 
                                 <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('christ_news_not') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('christ_sat_total') | number | dash}}</th>
@@ -223,7 +224,8 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                 <th style="width: 10%" class="text-center">{{sum('bahai_not') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('idslam_total') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('idslam_not') | number | dash}}</th>
-                                <th style="width: 10%"></th>
+                                
+                                
                             </tr>
                             </thead>
                             <tbody>
@@ -232,11 +234,11 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                 <td>{{m.province_name}}</td>
                                 <td class="text-center">{{m.buddhis_total | number | dash}}</td>
                                 <td class="text-center">{{m.buddhis_monk | number | dash}}</td>
-                                <td class="text-center">{{m.buddhis_nomonk | number | dash}}</td>
-                                <td class="text-center">{{m.buddhis_agreement_built_temple | number | dash}}</td>
-                                <td class="text-center">{{m.buddhis_no_agreement_built_temple | number | dash}}</td>
+                                <td class="text-center">{{m.buddhis_nomonk | number | dash}}</td>                                
                                 <td class="text-center">{{m.buddhis_sim | number | dash}}</td>
                                 <td class="text-center">{{m.buddhis_nosim | number | dash}}</td>
+								<td class="text-center">{{m.buddhis_agreement_built_temple | number | dash}}</td>
+                                <td class="text-center">{{m.buddhis_no_agreement_built_temple | number | dash}}</td>                                
                                 <td class="text-center">{{m.christ_news_total | number | dash}}</td>
                                 <td class="text-center">{{m.christ_news_not | number | dash}}</td>
                                 <td class="text-center">{{m.christ_sat_total | number | dash}}</td>
@@ -247,7 +249,7 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                                 <td class="text-center">{{m.bahai_not | number | dash}}</td>
                                 <td class="text-center">{{m.idslam_total | number | dash}}</td>
                                 <td class="text-center">{{m.idslam_not | number | dash}}</td>
-                                <td>{{m.remark}}</td>
+<!--                                 <td>{{m.remark}}</td> -->
                             </tr>
                             </tbody>
                         </table>

@@ -42,7 +42,7 @@ $this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສ
                         </tr>
                         <tr>
                             <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
-                            <th class="text-center" colspan="2">ວັນເສົາ</th>
+                            <th class="text-center" colspan="2">ຄະນະວັນເສົາ</th>
                             <th class="text-center" colspan="2">ກາໂທລິກ</th>
                         </tr>
                         <tr>
@@ -85,7 +85,7 @@ $this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສ
                             <th class="text-center" colspan="2">ສາສະໜາບາຮາຍ</th>
                             <th class="text-center" colspan="2">ສາສະໜາອິດສະລາມ</th>
                             <th class="text-center" colspan="2">ຄວາມເຊື່ອອື່ນ</th>
-                            <th class="text-center" rowspan="2" style="width: 12.5%"><?= Yii::t('app', 'Remark') ?></th>
+                            
                         </tr>
                         <tr>
                             <?php for ($i = 0; $i < 6; $i++): ?>
@@ -118,9 +118,7 @@ $this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສ
                                        max="{{model.other_total}}" type="number"
                                        ng-blur="model.other_women = model.other_total < model.other_women ? null : model.other_women">
                             </td>
-                            <td class="text-center">
-                                <input ng-model="model.remark" class="form-control" type="text">
-                            </td>
+                            
                         </tr>
                     </table>
                 </div>
@@ -161,11 +159,11 @@ $this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສ
                                 <th class="text-center" colspan="2" rowspan="2">ສາສະໜາບາຮາຍ</th>
                                 <th class="text-center" colspan="2" rowspan="2">ສາສະໜາອິດສະລາມ</th>
                                 <th class="text-center" colspan="2" rowspan="2">ຄວາມເຊື່ອອື່ນ</th>
-                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'Remark') ?></th>
+                                
                             </tr>
                             <tr>
                                 <th class="text-center" colspan="2">ຂ່າວປະເສີດ</th>
-                                <th class="text-center" colspan="2">ວັນເສົາ</th>
+                                <th class="text-center" colspan="2">ຄະນະວັນເສົາ</th>
                                 <th class="text-center" colspan="2">ກາໂທລິກ</th>
                             </tr>
                             <tr>
@@ -190,7 +188,7 @@ $this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສ
                                 <th style="width: 10%" class="text-center">{{sum('idslam_women') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('other_total') | number | dash}}</th>
                                 <th style="width: 10%" class="text-center">{{sum('other_women') | number | dash}}</th>
-                                <th style="width: 10%"></th>
+                                
                             </tr>
                             </thead>
                             <tbody>
@@ -211,7 +209,7 @@ $this->title = "ສະຖິຕິປະຊາຊົນເຊື່ອຖື ສ
                                 <td class="text-center">{{m.idslam_women | number | dash}}</td>
                                 <td class="text-center">{{m.other_total | number | dash}}</td>
                                 <td class="text-center">{{m.other_women | number | dash}}</td>
-                                <td>{{m.remark}}</td>
+                                
                             </tr>
                             </tbody>
                         </table>
