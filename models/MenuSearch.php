@@ -4,7 +4,7 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
+use Yii;
 /**
  * MenuSearch represents the model behind the search form about `app\models\Menu`.
  */
@@ -39,8 +39,20 @@ class MenuSearch extends Menu
      */
     public function search($params)
     {
-        $query = Menu::find()->orderBy(['position'=>SORT_ASC]);
 
+    	$user = Yii::$app->user->identity;    	
+		if($user->role ["is_province"]){			
+			$query = Menu::find()->where('has_province =:has_province AND menu_parent_id=:menu_parent_id and id in (select menu_id from role_has_menu where role_id=:role_id)',
+					[
+							':has_province' => $user->role ["is_province"],
+							':menu_parent_id' => $params["id"],
+							':role_id' => $user->role["id"]
+							
+					])->orderBy(['position'=>SORT_ASC]);
+		}else {
+			$query = Menu::find()->orderBy(['position'=>SORT_ASC]);
+		}
+        
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
