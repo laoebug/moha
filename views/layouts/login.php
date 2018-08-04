@@ -18,12 +18,27 @@
 </head>
 <body>
 <?= $content ?>
-
+ 
 <div style="position: fixed;bottom: 0;background-color: #009688;width: 100%">
-    <p style="padding-top: 5px;color: #ffffff;margin-bottom: 2px;" class="text-center">
+    
+	    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+	    &nbsp;
+	    </div>
+    	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+    	<p style="padding-top: 5px;color: #ffffff;margin-bottom: 2px;" class="text-center">
         ກົມແຜນການ ແລະ ການຮ່ວມມື, ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
-    </p>
+        </p>
+   		</div>
+    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+    	<p style="padding-top: 5px;color: #ffffff;margin-bottom: 2px;" class="text-center">
+    	Designed and Developed by AKAT Solution
+    	</p>   
+   </div>
+    
+    
 </div>
+
+ 
 
 </body>
 <script src="js/jquery-2.1.4.min.js"></script>
