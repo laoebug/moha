@@ -208,13 +208,21 @@ use app\components\TopMenuWidget;
         </div>
     </div>
 </div>
-
+<!-- 
 <div style="position: fixed;bottom: 0;background-color: #009688;width: 100%">
     <p style="padding-top: 5px;color: #ffffff;margin-bottom: 2px;" class="text-center">
         ກົມແຜນການ ແລະ ການຮ່ວມມື, ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
     </p>
 </div>
-
+ -->
+ 
+<div style="position: fixed;bottom: 0;background-color: #009688;width: 100%">
+    <p style="padding-top: 5px;color: #ffffff;margin-bottom: 2px;" class="text-center">
+        Designed and Developed by AKAT Solution &copy; <?= date('Y') ?>
+    </p>
+</div>
+ 
+ 
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/plugins/pace.min.js"></script>
