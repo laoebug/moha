@@ -220,12 +220,15 @@ use app\components\TopMenuWidget;
    		</div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
     	<p style="padding-top: 5px;color: #ffffff;margin-bottom: 2px;" class="text-center">
-    	Designed and Developed by AKAT Solution
-    	</p>   
-   </div>
-    
-    
+        <?= Yii::t('app', 'Designed & Developed by ') ?>
+      <a href="http://akatsolution.com" target="_blank" style="color: #49FF33;;">
+          <?= Yii::t('app', 'AKAT Solution') ?>
+      </a>
+     </p>    
+   </div>       
 </div>
+
+
  
  
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
