@@ -60,24 +60,24 @@ $this->title = "ສະຖິຕິສາສະໜາສະຖານ ໃນທົ
                             <td class="text-center"><input min="0" type="number" class="form-control"
                                                            ng-model="model.buddhis_total"></td>
 							<td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_nomonk - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
+                                        
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_monk"></td>
                                                                                                    
                             <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
+                                       
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_nomonk"></td>                             
                                                                 
                             <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_nomonk - model.buddhis_nosim-model.buddhis_sim - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
+                                      
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_sim"></td>
                             <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_nomonk - model.buddhis_sim -model.buddhis_monk - model.buddhis_agreement_built_temple- model.buddhis_no_agreement_built_temple}}"
+                                      
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_nosim"></td>
                             <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_nomonk- model.buddhis_no_agreement_built_temple}}"
+                                       
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_agreement_built_temple"></td>
                             <td class="text-center"><input
-                                        max="{{model.buddhis_total - model.buddhis_sim - model.buddhis_nosim - model.buddhis_monk - model.buddhis_nomonk- model.buddhis_agreement_built_temple}}"
+                                       
                                         min="0" type="number" class="form-control" ng-model="model.buddhis_no_agreement_built_temple"></td>
                                                     
                             <td class="text-center"><input min="0" type="number" class="form-control"
