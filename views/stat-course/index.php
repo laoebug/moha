@@ -36,7 +36,7 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
                 </div>
                 <div class="col-sm-6">
                     <label for="">ກຸ່ມຫຼັກສູດ</label>
-                    <select class="form-control" ng-model="model.parent" ng-options="g.name for g in parents"></select>
+                    <select class="form-control" ng-model="model.parent" ng-options="g.name for g in parents" ng-change="selectCourseGroup(model.parent)"></select>
                 </div>
                 <div class="col-sm-2">
                     <label for="">&nbsp;</label>
@@ -169,6 +169,8 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
     };
   });
   app.controller('statCourseController', function ($scope, $http, $sce, $timeout) {
+   
+
     $scope.url = 'index.php?r=stat-course/';
     $scope.mode = 'read';
     $scope.changemode = function () {
@@ -209,7 +211,9 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
       $scope.model = null;
     };
 
+  
     $scope.select = function (k) {
+      
       $scope.model = k;
       if ($scope.model.position)
         $scope.model.position = parseInt($scope.model.position);
@@ -247,7 +251,13 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
         });
       }
     };
-
+    $scope.selectCourseGroup = function (m) {
+      // $scope.model = m;
+      // $scope.year.id
+      // $scope.model.id
+      $scope.model.id = m.id;    
+    };
+    
     $scope.delete = function () {
       if ($scope.model) {
         swal({
