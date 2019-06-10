@@ -33,10 +33,10 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
                 <div class="col-sm-3">
                     <label for="">ຕຳແໜ່ງ</label>
                     <input type="number" min="0" class="form-control" ng-model="model.position">
-                </div>                
+                </div>
                 <div class="col-sm-6">
                     <label for="">ກຸ່ມຫຼັກສູດ</label>
-                    <select class="form-control" ng-model="model.parent" ng-options="g.name for g in parents"></select>
+                    <select class="form-control" ng-model="model.parent" ng-options="g.name for g in parents" ng-change="selectCourseGroup(model.parent)"></select>
                 </div>
                 <div class="col-sm-2">
                     <label for="">&nbsp;</label>
@@ -252,7 +252,9 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
         });
       }
     };
-    
+    $scope.selectCourseGroup = function (m) {      
+      $scope.model.id = m.id;    
+    };
     
     $scope.delete = function () {
       if ($scope.model) {
