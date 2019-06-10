@@ -69,7 +69,7 @@ class StatCourseController extends Controller
             $models[$k]['childs'] = $this->getChilds($year, $model['id']);
             $models[$k]['parent'] = StatCourseDetail::find()->where(['id' => $model['parent_id']])->asArray()->one();
         }
-        $parents = StatCourseDetail::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $parents = StatCourseDetail::find()->where(['deleted' => 0, 'parent_id' => 0])->orderBy('position')->asArray()->all();
 
 
         return json_encode(['models' => $models, 'parents' => $parents]);
@@ -82,7 +82,7 @@ class StatCourseController extends Controller
             ->where(['parent_id' => $parent, 'deleted' => 0])->orderBy('position')
             ->asArray()->all();
     }
-
+    
     public function actionSave($year)
     {
 
@@ -120,8 +120,10 @@ class StatCourseController extends Controller
                 }
                 $model->saved = 1;
                 $model->last_update = date('Y-m-d H:i:s');
+
                 if (!$model->save())
                     throw new Exception(json_encode($model->errors));
+                
 
                 if (isset($post['Model']['id'])) {
                     $detail = StatCourseDetail::findOne($post['Model']['id']);
@@ -135,10 +137,15 @@ class StatCourseController extends Controller
                     $detail->stat_course_id = $model->id;
                     $detail->deleted = 0;
                 }
+                
                 $detail->stat_course_id = $model->id;
                 $detail->attributes = $post['Model'];
                 $detail->parent_id = isset($post['Model']['parent']) ? $post['Model']['parent']['id'] : 0;
                 $detail->deleted = 0;
+
+                
+
+
                 if (!$detail->save())
                     throw new Exception(json_encode($detail->errors));
 
@@ -148,7 +155,7 @@ class StatCourseController extends Controller
                 MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $ex->getMessage());
                 return;
             }
-        }
+        }        
     }
 
     public function actionDelete($year)
