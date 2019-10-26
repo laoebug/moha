@@ -7,17 +7,18 @@ use Yii;
 /**
  * This is the model class for table "ministry".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
+ * @property int $deleted
  * @property string $code
  * @property string $last_update
- * @property integer $ministry_group_id
- * @property integer $position
- * @property integer $user_id
+ * @property int $ministry_group_id
+ * @property int $position
+ * @property int $user_id
  * @property string $remark
  * @property string $input_dt_stamp
- * @property integer $equal
+ * @property int $equal equal ministry
+ * @property int $phiscal_year_id
  *
  * @property Approver[] $approvers
  * @property Branch[] $branches
@@ -54,7 +55,7 @@ class Ministry extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'last_update'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['deleted', 'ministry_group_id', 'position', 'user_id', 'equal'], 'integer'],
+            [['deleted', 'ministry_group_id', 'position', 'user_id', 'equal', 'phiscal_year_id'], 'integer'],
             [['last_update', 'input_dt_stamp'], 'safe'],
             [['remark'], 'string'],
             [['name'], 'string', 'max' => 255],
@@ -80,7 +81,8 @@ class Ministry extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'remark' => Yii::t('app', 'Remark'),
             'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
-            'equal' => Yii::t('app', 'Equal'),
+            'equal' => Yii::t('app', 'equal ministry'),
+            'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
         ];
     }
 

@@ -142,6 +142,7 @@ class StatCourseController extends Controller
                 $detail->attributes = $post['Model'];
                 $detail->parent_id = isset($post['Model']['parent']) ? $post['Model']['parent']['id'] : 0;
                 $detail->deleted = 0;
+                
 
                 
 

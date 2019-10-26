@@ -27,8 +27,10 @@ class StatSingleGatewayImplementationController extends Controller
      * Lists all StatSingleGatewayImplementation models.
      * @return mixed
      */
+    
     public function actionIndex()
     {
+
         return $this->render('index');
     }
 
@@ -37,7 +39,7 @@ class StatSingleGatewayImplementationController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -55,27 +57,49 @@ class StatSingleGatewayImplementationController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
             }
         }
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+        //if (!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
 
         $model = StatSingleGatewayImplementation::find()->where(['phiscal_year_id' => $year])->one();
-        if (!isset($model)) throw new HttpException(Yii::t('app', 'No Data'));
+        
+        // // worked well but also using new sql statement below this code
+        // if (isset($model)) {
+        
+        // $models = Ministry::find()->alias('m')
+        //     ->select('m.*,`d`.`name` as `servicename`, `d`.`remark`')
+        //     ->addSelect([
+        //         'start_date' => 'DATE_FORMAT(`start_date`, "%d-%m-%Y")',
+        //     ])
+        //     ->join('left join', 'stat_single_gateway_implementation_detail d', 'd.ministry_id = m.id and d.stat_single_gateway_implementation_id=:id', [':id' => $model->id])
+        //     ->where('deleted=0 and ministry_group_id in (1,2)')
+        //     ->orderBy('m.position')->asArray()->all();
+        // }else {
+        //     $models=[];
+        // }
+        
+        if (isset($model)) {
+            $params = [];
+            $sql = " select m.*,d.name as  servicename,  d.remark,DATE_FORMAT(d.start_date, '%d-%m-%Y') as start_date   from (select mi.* from ministry mi ";
+            $sql .= " where mi.ministry_group_id in (1,2) and mi.deleted=:deleted) m ";
+            $sql .= " left join stat_single_gateway_implementation_detail d ";
+            $sql .= " on (d.ministry_id = m.id) and stat_single_gateway_implementation_id=:stat_single_gateway_implementation_id ";
+            $sql .= " order by m.position ";            
+            $params = [
+            
+                ':deleted' => 0,
+                ':stat_single_gateway_implementation_id' => $model->id
+            ];
 
-        $models = Ministry::find()->alias('m')
-            ->select('m.*,`d`.`name` as `servicename`, `d`.`remark`')
-            ->addSelect([
-                'start_date' => 'DATE_FORMAT(`start_date`, "%d-%m-%Y")',
-            ])
-            ->join('left join', 'stat_single_gateway_implementation_detail d', 'd.ministry_id = m.id and d.stat_single_gateway_implementation_id=:id', [':id' => $model->id])
-            ->where('deleted=0 and ministry_group_id in (1,2)')
-            ->orderBy('m.position')->asArray()->all();
-
+            $models = Ministry::findBySql($sql, $params)->asArray()->all();
+        }else{
+            $models=[];
+        }
         return json_encode([
             'models' => $models,
         ]);
@@ -86,7 +110,7 @@ class StatSingleGatewayImplementationController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -120,7 +144,7 @@ class StatSingleGatewayImplementationController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -162,7 +186,7 @@ class StatSingleGatewayImplementationController extends Controller
                     $detail->ministry_id = $post['Model']['ministry']['id'];
                 }
                 $detail->remark = $post['Model']['remark'];
-                if(isset($post['Model']['start_date']) && $post['Model']['start_date'] != '')
+                if (isset($post['Model']['start_date']) && $post['Model']['start_date'] != '')
                     $detail->start_date = date('Y-m-d', strtotime($post['Model']['start_date']));
                 else $detail->start_date = null;
                 $detail->name = $post['Model']['name'];
@@ -178,36 +202,78 @@ class StatSingleGatewayImplementationController extends Controller
         }
     }
 
+    // public function actionPrint_old($year)
+    // {
+    //     $user = Yii::$app->user->identity;
+    //     $controller_id = Yii::$app->controller->id;
+    //     $acton_id = Yii::$app->controller->action->id;
+    //     if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+    //         if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+    //             MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+    //             return;
+    //         }
+    //     }
+
+    //     $year = PhiscalYear::findOne($year);
+    //     if (!isset($year)) {
+    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+    //         return;
+    //     }
+
+    //     $model = StatSingleGatewayImplementation::find()
+    //         ->with([
+    //             'statSingleGatewayImplementationDetails' => function (ActiveQuery $query) {
+    //                 $query->alias('d')
+    //                     ->join('right join', 'ministry m', 'm.id=d.ministry_id')
+    //                     ->orderBy('m.position');
+    //             }
+    //         ])->where(['phiscal_year_id' => $year->id])->one();
+    //     return $this->renderPartial('print', ['content' => $this->renderPartial('table', ['model' => $model])]);
+    // }
+
     public function actionPrint($year)
     {
+
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
             }
         }
-
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-            return;
-        }
+        
+        //if (!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
 
-        $model = StatSingleGatewayImplementation::find()
-            ->with([
-                'statSingleGatewayImplementationDetails' => function (ActiveQuery $query) {
-                    $query->alias('d')
-                        ->join('right join', 'ministry m', 'm.id=d.ministry_id')
-                        ->orderBy('m.position');
-                }
-            ])->where(['phiscal_year_id' => $year->id])->one();
-        return $this->renderPartial('print', ['content' => $this->renderPartial('table', ['model' => $model])]);
+        $model = StatSingleGatewayImplementation::find()->where(['phiscal_year_id' => $year])->one();
+        
+        $models=[];
+        if (isset($model)) {
+            $params = [];
+            $sql = " select m.*,d.name as  servicename,  d.remark,DATE_FORMAT(d.start_date, '%d-%m-%Y') as start_date   from (select mi.* from ministry mi ";
+            $sql .= " where mi.ministry_group_id in (1,2) and mi.deleted=:deleted) m ";
+            $sql .= " left join stat_single_gateway_implementation_detail d ";
+            $sql .= " on (d.ministry_id = m.id) and stat_single_gateway_implementation_id=:stat_single_gateway_implementation_id ";
+            $sql .= " order by m.position ";            
+            $params = [
+            
+                ':deleted' => 0,
+                ':stat_single_gateway_implementation_id' => $model->id
+            ];
+            
+            $models = Ministry::findBySql($sql, $params)->all();
+        }else{
+            
+            $models=[];
+        }
+        
+        return $this->renderPartial('print', ['content' => $this->renderPartial('table', ['models' => $models,'model'=>$model])]);
     }
 
-    public function actionDelete() {
+    public function actionDelete()
+    {
         if (!isset($_POST['id'])) {
             MyHelper::response(HttpCode::NOT_FOUND, 'ບໍ່ພົບຂໍ້ມູນ');
             return;
@@ -221,32 +287,77 @@ class StatSingleGatewayImplementationController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
             }
         }
-
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-            return;
-        }
+        
+        //if (!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
 
-        $model = StatSingleGatewayImplementation::find()
-            ->with([
-                'statSingleGatewayImplementationDetails' => function (ActiveQuery $query) {
-                    $query->alias('d')
-                        ->join('right join', 'ministry m', 'm.id=d.ministry_id')
-                        ->orderBy('m.position');
-                }
-            ])->where(['phiscal_year_id' => $year->id])->one();
+        $model = StatSingleGatewayImplementation::find()->where(['phiscal_year_id' => $year])->one();
+        
+        $models=[];
+        if (isset($model)) {
+            $params = [];
+            $sql = " select m.*,d.name as  servicename,  d.remark,DATE_FORMAT(d.start_date, '%d-%m-%Y') as start_date   from (select mi.* from ministry mi ";
+            $sql .= " where mi.ministry_group_id in (1,2) and mi.deleted=:deleted) m ";
+            $sql .= " left join stat_single_gateway_implementation_detail d ";
+            $sql .= " on (d.ministry_id = m.id) and stat_single_gateway_implementation_id=:stat_single_gateway_implementation_id ";
+            $sql .= " order by m.position ";            
+            $params = [
+            
+                ':deleted' => 0,
+                ':stat_single_gateway_implementation_id' => $model->id
+            ];
+            
+            $models = Ministry::findBySql($sql, $params)->all();
+        }else{
+            
+            $models=[];
+        }
+        
         return $this->renderPartial('excel', [
             'file' => 'Single Gateway Implementation ' . $year->year . '.xls',
-            'content' => $this->renderPartial('table', ['model' => $model])
+            'content' => $this->renderPartial('table', ['models' => $models,'model' => $model])
         ]);
     }
+
+
+    // public function actionDownload_old($year)
+    // {
+
+    //     $user = Yii::$app->user->identity;
+    //     $controller_id = Yii::$app->controller->id;
+    //     $acton_id = Yii::$app->controller->action->id;
+    //     if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+    //         if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+    //             MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+    //             return;
+    //         }
+    //     }
+
+    //     $year = PhiscalYear::findOne($year);
+    //     if (!isset($year)) {
+    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+    //         return;
+    //     }
+
+    //     $model = StatSingleGatewayImplementation::find()
+    //         ->with([
+    //             'statSingleGatewayImplementationDetails' => function (ActiveQuery $query) {
+    //                 $query->alias('d')
+    //                     ->join('right join', 'ministry m', 'm.id=d.ministry_id')
+    //                     ->orderBy('m.position');
+    //             }
+    //         ])->where(['phiscal_year_id' => $year->id])->one();
+    //     return $this->renderPartial('excel', [
+    //         'file' => 'Single Gateway Implementation ' . $year->year . '.xls',
+    //         'content' => $this->renderPartial('table', ['model' => $model])
+    //     ]);
+    // }
 
     public function actionUpload($year)
     {
@@ -374,7 +485,7 @@ class StatSingleGatewayImplementationController extends Controller
         $this->enableCsrfValidation = true;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 if (Yii::$app->request->isAjax) {
                     MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);

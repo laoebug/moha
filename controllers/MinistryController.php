@@ -10,40 +10,58 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
+use app\models\PhiscalYear;
+use \app\models\User;
 /**
  * MinistryController implements the CRUD actions for Ministry model.
  */
 class MinistryController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => [
-                        'POST'
-                    ]
-                ]
-            ]
-        ];
-    }
+  
 
+    public function behaviors() {
+		return [ 
+				'verbs' => [ 
+						'class' => VerbFilter::className (),
+						'actions' => [ 
+								'delete' => [ 
+										'POST' 
+								] 
+						] 
+				],
+				'access' => [ 
+                    'class' => \yii\filters\AccessControl::className(),
+						'rules' => [ 
+								[ 
+										'allow' => ! Yii::$app->user->isGuest && in_array ( Yii::$app->user->identity->role_id, User::getAllowedRoleIds () ) 
+								] 
+						] 
+				] 
+		];
+    }
+    
     /**
      * Lists all Ministry models.
      *
      * @return mixed
      */
     public function actionIndex()
-    {
+    {        
         return $this->render('index');
     }
 
-    public function actionEnquiry()
+    public function actionGet()
+    {
+    
+        $years = PhiscalYear::find()->orderBy('year')
+            ->where(['deleted' => 0])->asArray()->all();        
+        return json_encode([
+            'years' => $years            
+        ]);
+    }
+
+
+    public function actionEnquiry($year)
     {
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
@@ -57,7 +75,7 @@ class MinistryController extends Controller
 
         return json_encode([
             'ministries' => Ministry::find()
-                ->where('deleted=0 and ministry_group_id in (1,2)')
+                ->where('deleted=:deleted and phiscal_year_id=:phiscal_year_id and ministry_group_id in (1,2)',[':deleted'=>0,':phiscal_year_id'=>$year])
                 ->orderBy('position')
                 ->asArray()->all()
         ]);
@@ -125,11 +143,10 @@ class MinistryController extends Controller
         }
     }
 
-    public function actionPrint()
+    public function actionPrint($year)
     {
-        $ministries = Ministry::find()->where([
-            'deleted' => 0
-        ])->orderBy('position')->asArray()->all();
+        $ministries = Ministry::find() ->where('deleted=:deleted and phiscal_year_id=:phiscal_year_id and ministry_group_id in (1,2)',[':deleted'=>0,':phiscal_year_id'=>$year])
+        ->orderBy('position')->asArray()->all();     
         return $this->renderPartial('print', [
             'content' => $this->renderPartial('table', [
                 'ministries' => $ministries
@@ -137,11 +154,11 @@ class MinistryController extends Controller
         ]);
     }
 
-    public function actionDownload()
+    public function actionDownload($year)
     {
-        $ministries = Ministry::find()->where([
-            'deleted' => 0
-        ])->orderBy('position')->asArray()->all();
+        
+        $ministries = Ministry::find() ->where('deleted=:deleted and phiscal_year_id=:phiscal_year_id and ministry_group_id in (1,2)',[':deleted'=>0,':phiscal_year_id'=>$year])
+        ->orderBy('position')->asArray()->all();        
         return $this->renderPartial('excel', [
             'file' => 'ministries.xls',
             'content' => $this->renderPartial('table', [
@@ -168,25 +185,4 @@ class MinistryController extends Controller
         }
     }
 
-    public function beforeAction($action)
-    {
-        $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
-        $controller_id = Yii::$app->controller->id;
-        $action_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $action_id)) {
-                if (Yii::$app->request->isAjax) {
-                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . " / " . $acton_id);
-                    return;
-                } else {
-                    return $this->redirect([
-                        'authentication/notallowed'
-                    ]);
-                }
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
 }

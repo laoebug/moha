@@ -64,15 +64,15 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'firstname', 'lastname', 'tel', 'role_id', 'status'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['username', 'password', 'firstname', 'lastname', 'tel', 'role_id', 'status'], 'required', 'message' => Yii::t('app', 'Please enter a value for') . Yii::t('app', '{attribute}')],
             [['deleted', 'role_id', 'user_id'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['username', 'tel'], 'string', 'max' => 50],
             [['password', 'email'], 'string', 'max' => 100],
             [['firstname', 'lastname'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],        	//	
-            [['username'], 'unique','targetAttribute' => ['username'],'message'=> Yii::t('app','{attribute}'). '  "{value}" ' . Yii::t('app','has already been taken.')],        	
-        	//[['username'], 'unique'],        	//
+            [['status'], 'string', 'max' => 1],            //	
+            [['username'], 'unique', 'targetAttribute' => ['username'], 'message' => Yii::t('app', '{attribute}') . '  "{value}" ' . Yii::t('app', 'has already been taken.')],
+            //[['username'], 'unique'],        	//
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             //[['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
@@ -288,5 +288,19 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasOne(Province::className(), ['id' => 'province_id']);
     }
 
-
+    public static function getAllowedRoleIds()
+    {
+        
+        //     	$sql = "select distinct id from role";
+        //     	$command = \Yii::$app->db->createCommand ( $sql );
+        //     	$roleIds = $command->asArray()->queryAll ();    	
+        $returnRoles = [];
+        $roleIds = Role::find()->alias('role')
+            ->select('role.id')->asArray()->all();
+        foreach ($roleIds as $roleId) {
+            $returnRoles[] = $roleId["id"];
+        }
+        
+        return $returnRoles;
+    }
 }

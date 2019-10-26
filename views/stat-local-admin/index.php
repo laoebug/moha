@@ -10,18 +10,18 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="statLocalAdminController">
-    <div class="col-sm-12">
+    
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
             <select class="form-control" ng-model="year" ng-change="enquiry()"
                     ng-options="y.year for y in years"></select>
         </div>
-        <div class="col-sm-8">
+        <!-- <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
                 {{response.statusText}}
             </div>
-        </div>
-    </div>
+        </div> -->
+    
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
             <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
@@ -153,7 +153,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                 <div class="tab-pane fade active in" id="table">
                     <div class="card" style="overflow-x: scroll">
                         <div class="card-title-w-btn ">
-                            <h3><?= $this->title ?></h3>
+                            <h3 >ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນປະຈໍາປີ  {{year.year}}</h3>
                             <p>
                                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
                                             class="fa fa-print fa-2x"></i></a>
@@ -164,8 +164,8 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                         <table class="table table-bordered table-hover" ng-show="models">
                             <thead>
                             <tr>
-                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
+                                <th class="text-center" rowspan="2">ລ/ດ<th>
+                                <th class="text-center" rowspan="2">ແຂວງ</th>
                                 <th class="text-center" colspan="2">ເຈົ້າແຂວງ</th>
                                 <th class="text-center" colspan="2">ຮອງເຈົ້າແຂວງ</th>
                                 <th class="text-center" colspan="2">ເຈົ້າເມືອງ</th>
@@ -302,6 +302,8 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="js/sweetalert2.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/moment.js"></script>
 <script type="text/javascript" src="js/datetimepicker.js"></script>
@@ -337,6 +339,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
           .then(function (r) {
+            
             $scope.models = r.data.models;
             $scope.getreferences();
           }, function (r) {
@@ -400,7 +403,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
 
     $scope.save = function () {
       if ($scope.year && $scope.model) {
-        console.log($scope.model);
+        
         $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'StatLocalAdminDetail': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
@@ -411,11 +414,33 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
           $timeout(function () {
             $scope.response = null;
           }, 15000);
+
+          if (r.status == 200) {
+            Swal.fire({                           
+              position: 'top-end',
+              type: 'success',              
+              title: 'ການບັນທຶກສໍາເລັດ',
+              text: r.status,
+              showConfirmButton: false,
+              timer: 3000
+            });
+          }
+
         }, function (r) {
           $scope.response = r;
           $timeout(function () {
             $scope.response = null;
           }, 15000);
+
+          Swal.fire({                          
+            position: 'top-end',
+            type: 'error',          
+            title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
+            text: r.status,
+            showConfirmButton: false,
+            timer: 3000
+          });
+
         });
       }
     };
@@ -519,8 +544,31 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
               $timeout(function () {
                 $scope.response = null;
               }, 15000);
+
+              if (r.status == 200) {
+                Swal.fire({
+                  position: 'top-end',
+                  type: 'success',
+                  title: 'ການລຶບສໍາເລັດ',
+                  text: r.status,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              } 
+
             }, function (r) {
               $scope.response = r;
+
+              Swal.fire({
+                position: 'top-end',
+                type: 'error',
+                title: 'ການລຶບບໍ່ສໍາເລັດ',
+                text: r.status,
+                showConfirmButton: false,
+                timer: 3000
+              });
+
+
               $timeout(function () {
                 $scope.response = null;
               }, 15000);

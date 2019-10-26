@@ -44,11 +44,11 @@ $this->title = "ສະຖິຕິການບໍລິການແຜນທີ�
                     <input class="form-control" ng-model="model.point" type="number" min="0">
                 </div>
                 <div class="col-sm-10">
-                    <label><?= Yii::t('app', 'Remark') ?></label>
+                    <label><?= Yii::t('app', 'ໝາຍເຫດ') ?></label>
                     <input type="text" class="form-control" ng-model="model.remark">
                 </div>
                 <div class="col-sm-2">
-                    <label><?= Yii::t('app', 'Position') ?></label>
+                    <label><?= Yii::t('app', 'ຈັດລຽງລໍາດັບ') ?></label>
                     <input type="number" class="form-control" ng-model="model.position">
                 </div>
                 <div class="col-sm-3" style="margin-top: 1em">

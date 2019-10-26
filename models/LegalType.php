@@ -13,9 +13,12 @@ use Yii;
  * @property integer $position
  *
  * @property Legal[] $legals
+ * @property StatLegalDetail[] $statLegalDetails
+ * 
  */
 class LegalType extends \yii\db\ActiveRecord
 {
+    // public $stat_legal_details=[];
     /**
      * @inheritdoc
      */
@@ -56,6 +59,15 @@ class LegalType extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Legal::className(), ['legal_type_id' => 'id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatLegalDetails()
+    {
+        return $this->hasMany(StatLegalDetail::className(), ['legal_type_id' => 'id']);
+    }
+
 
     /**
      * @inheritdoc

@@ -76,7 +76,49 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+        
+        // if(isset($_COOKIE["username"])) {
+            
+        //     $model->username = $_COOKIE["username"];
+            
+            
+        // }
+        // if(isset($_COOKIE["password"])) {
+        //     $model->password = $_COOKIE["password"];
+            
+        // }
+        // if(isset($_COOKIE["rememberMe"])) {
+        //     $model->rememberMe = $_COOKIE["rememberMe"];                
+        // }
+        
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+            // if(($model->rememberMe)){
+                
+            //     //(10*365*24*60*60)
+            //     setcookie('username', $model->username, time() + (86400 * 30), "/"); // 86400 = 1 day                
+            //     setcookie('password', $model->password, time() + (86400 * 30), "/");
+            //     setcookie('rememberMe', $model->rememberMe, time() + (86400 * 30), "/");
+
+                
+            // }else{
+            //                     echo "DS";exit;
+            //     if(isset($_COOKIE["username"])) {                    
+            //         unset($_COOKIE['username']); 
+            //         setcookie('username', null, -1, '/'); 
+            //     }
+            //     if(isset($_COOKIE["password"])) {
+            //         unset($_COOKIE['password']); 
+            //         setcookie('password', null, -1, '/');                     
+            //     }
+            //     if(isset($_COOKIE["rememberMe"])) {
+            //         unset($_COOKIE['rememberMe']); 
+            //         setcookie('rememberMe', null, -1, '/'); 
+            //     }
+                
+            // }
+
             return $this->goBack();
         }
 

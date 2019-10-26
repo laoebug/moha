@@ -10,18 +10,18 @@ $this->title = "ແຜນຄວາມຕ້ອງການລັດຖະກອ�
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="officerNeedController">
-    <div class="col-sm-12">
+    <!-- <div class="col-sm-12"> -->
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
             <select class="form-control" ng-model="year" ng-change="enquiry()"
                     ng-options="y.year for y in years"></select>
         </div>
-        <div class="col-sm-8">
+        <!-- <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
                 {{response.statusText}}
             </div>
-        </div>
-    </div>
+        </div> -->
+    <!-- </div> -->
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
             <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
@@ -160,6 +160,7 @@ $this->title = "ແຜນຄວາມຕ້ອງການລັດຖະກອ�
         </div>
     </div>
 </div>
+<script type="text/javascript" src="js/sweetalert2.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/moment.js"></script>
 <script type="text/javascript" src="js/datetimepicker.js"></script>
@@ -222,11 +223,33 @@ $this->title = "ແຜນຄວາມຕ້ອງການລັດຖະກອ�
           $timeout(function () {
             $scope.response = null;
           }, 15000);
+
+          if (r.status == 200) {
+            Swal.fire({                           
+              position: 'top-end',
+              type: 'success',              
+              title: 'ການບັນທຶກສໍາເລັດ',
+              text: r.status,
+              showConfirmButton: false,
+              timer: 3000
+            });
+          }
+
         }, function (r) {
           $scope.response = r;
           $timeout(function () {
             $scope.response = null;
           }, 15000);
+
+          Swal.fire({                          
+            position: 'top-end',
+            type: 'error',          
+            title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
+            text: r.status,
+            showConfirmButton: false,
+            timer: 3000
+          });
+
         });
       }
     };
@@ -335,11 +358,33 @@ $this->title = "ແຜນຄວາມຕ້ອງການລັດຖະກອ�
               $timeout(function () {
                 $scope.response = null;
               }, 15000);
+
+              if (r.status == 200) {
+                Swal.fire({
+                  position: 'top-end',
+                  type: 'success',
+                  title: 'ການລຶບສໍາເລັດ',
+                  text: r.status,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              } 
+
             }, function (r) {
               $scope.response = r;
               $timeout(function () {
                 $scope.response = null;
               }, 15000);
+
+              Swal.fire({
+                position: 'top-end',
+                type: 'error',
+                title: 'ການລຶບບໍ່ສໍາເລັດ',
+                text: r.status,
+                showConfirmButton: false,
+                timer: 3000
+              });
+              
             });
           }
         });

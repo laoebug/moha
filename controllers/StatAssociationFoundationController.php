@@ -124,10 +124,13 @@ class StatAssociationFoundationController extends Controller
         }
 
         $model = StatAssociationFoundation::find()->where(['phiscal_year_id' => $year->id])->one();
+        
         if (!isset($model)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
-            return;
-        }
+            // MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            // return;
+            $models=[];
+        }else{
+        
 
         $models = ApproverLevel::find()
             ->with([
@@ -155,7 +158,10 @@ class StatAssociationFoundationController extends Controller
             ->where(['l.deleted' => 0])
             ->orderBy('l.position, position')
             ->asArray()->all();
-
+        }
+        if(count($models)<=0){
+            $models=[];
+        }        
         return json_encode([
             'models' => $models
         ]);

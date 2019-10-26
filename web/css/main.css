@@ -13828,7 +13828,8 @@ be a descendant of the grid when it is being dragged.
 }
 
 .main-header .navbar {
-    background-color: #009688;
+     background-color: #009688; 
+    
 }
 
 .main-header .navbar .top-nav > li > a {

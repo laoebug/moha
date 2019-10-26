@@ -10,18 +10,17 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="officerDegreeController">
-    <div class="col-sm-12">
-        <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
-        <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()"
-                    ng-options="y.year for y in years"></select>
-        </div>
-        <div class="col-sm-8">
+    <!-- <div class="col-sm-12"> -->
+    <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
+    <div class="col-sm-4">
+        <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+    </div>
+    <!-- <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
                 {{response.statusText}}
             </div>
-        </div>
-    </div>
+        </div> -->
+    <!-- </div> -->
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
             <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
@@ -31,72 +30,63 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                 <div class="col-sm-12">
                     <table class="table table-bordered table-hover">
                         <thead>
-                        <tr>
-                            <td class="text-center" colspan="2">ປະລິນຍາເອກ</td>
-                            <td class="text-center" colspan="2">ເໜືອປະລິນຍາໂທ</td>
-                            <td class="text-center" colspan="2">ປະລິນຍາໂທ</td>
-                            <td class="text-center" colspan="2">ເໜືອປະລິນຍາຕີ</td>
-                            <td class="text-center" colspan="2">ປະລິນຍາຕີ</td>
-                        </tr>
+                            <tr>
+                                <td class="text-center" colspan="2">ປະລິນຍາເອກ</td>
+                                <td class="text-center" colspan="2">ເໜືອປະລິນຍາໂທ</td>
+                                <td class="text-center" colspan="2">ປະລິນຍາໂທ</td>
+                                <td class="text-center" colspan="2">ເໜືອປະລິນຍາຕີ</td>
+                                <td class="text-center" colspan="2">ປະລິນຍາຕີ</td>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <?php for ($i = 0; $i < 10; $i++): ?>
-                                <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
-                            <?php endfor; ?>
-                        </tr>
-                        <tr>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.doctor_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.doctor_total"
-                                       ng-model="model.doctor_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.post_master_total">
-                            </td>
-                            <td><input type="number" class="form-control" min="0" max="model.post_master_total"
-                                       ng-model="model.post_master_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.master_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.master_total"
-                                       ng-model="model.master_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.post_bachelor_total">
-                            </td>
-                            <td><input type="number" class="form-control" min="0" max="model.post_bachelor_total"
-                                       ng-model="model.post_bachelor_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.bachelor_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.bachelor_total"
-                                       ng-model="model.bachelor_women"></td>
-                        </tr>
+                            <tr>
+                                <?php for ($i = 0; $i < 10; $i++) : ?>
+                                    <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
+                                <?php endfor; ?>
+                            </tr>
+                            <tr>
+                                <td><input type="number" class="form-control" min="0" ng-model="model.doctor_total"></td>
+                                <td><input type="number" class="form-control" min="0" max="model.doctor_total" ng-model="model.doctor_women"></td>
+                                <td><input type="number" class="form-control" min="0" ng-model="model.post_master_total">
+                                </td>
+                                <td><input type="number" class="form-control" min="0" max="model.post_master_total" ng-model="model.post_master_women"></td>
+                                <td><input type="number" class="form-control" min="0" ng-model="model.master_total"></td>
+                                <td><input type="number" class="form-control" min="0" max="model.master_total" ng-model="model.master_women"></td>
+                                <td><input type="number" class="form-control" min="0" ng-model="model.post_bachelor_total">
+                                </td>
+                                <td><input type="number" class="form-control" min="0" max="model.post_bachelor_total" ng-model="model.post_bachelor_women"></td>
+                                <td><input type="number" class="form-control" min="0" ng-model="model.bachelor_total"></td>
+                                <td><input type="number" class="form-control" min="0" max="model.bachelor_total" ng-model="model.bachelor_women"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="col-sm-12">
                     <table class="table table-bordered table-hover">
                         <thead>
-                        <tr>
-                            <td class="text-center" colspan="2">ຊັ້ນສູງ</td>
-                            <td class="text-center" colspan="2">ຊັ້ນກາງ</td>
-                            <td class="text-center" colspan="2">ຊັ້ນຕົ້ນ</td>
-                            <td class="text-center" colspan="2">ບໍ່ມີຊັ້ນ ວິຊາສະເພາະ</td>
-                        </tr>
+                            <tr>
+                                <td class="text-center" colspan="2">ຊັ້ນສູງ</td>
+                                <td class="text-center" colspan="2">ຊັ້ນກາງ</td>
+                                <td class="text-center" colspan="2">ຊັ້ນຕົ້ນ</td>
+                                <td class="text-center" colspan="2">ບໍ່ມີຊັ້ນ ວິຊາສະເພາະ</td>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <?php for ($i = 0; $i < 8; $i++): ?>
-                                <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
-                            <?php endfor; ?>
-                        </tr>
-                        <tr>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.high_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.high_total"
-                                       ng-model="model.high_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.middle_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.middle_total"
-                                       ng-model="model.middle_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.begin_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.begin_total"
-                                       ng-model="model.begin_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.no_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.no_total"
-                                       ng-model="model.no_women"></td>
-                        </tr>
+                            <tr>
+                                <?php for ($i = 0; $i < 8; $i++) : ?>
+                                    <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
+                                <?php endfor; ?>
+                            </tr>
+                            <tr>
+                                <td><input type="number" class="form-control" min="0" ng-model="model.high_total"></td>
+                                <td><input type="number" class="form-control" min="0" max="model.high_total" ng-model="model.high_women"></td>
+                                <td><input type="number" class="form-control" min="0" ng-model="model.middle_total"></td>
+                                <td><input type="number" class="form-control" min="0" max="model.middle_total" ng-model="model.middle_women"></td>
+                                <td><input type="number" class="form-control" min="0" ng-model="model.begin_total"></td>
+                                <td><input type="number" class="form-control" min="0" max="model.begin_total" ng-model="model.begin_women"></td>
+                                <td><input type="number" class="form-control" min="0" ng-model="model.no_total"></td>
+                                <td><input type="number" class="form-control" min="0" max="model.no_total" ng-model="model.no_women"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -120,80 +110,78 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?> {{year.year}}</h3>
                             <p>
-                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                            class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i></a>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" colspan="21"><?= Yii::t('app', 'Description') ?></th>
-                            </tr>
+                                <tr>
+                                    <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
+                                    <th class="text-center" colspan="21"><?= Yii::t('app', 'Description') ?></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th class="text-center" rowspan="4">IV</th>
-                                <th class="" colspan="21"><?= $this->title ?></th>
-                            </tr>
-                            <tr>
-                                <td class="text-center" colspan="2">ປະລິນຍາເອກ</td>
-                                <td class="text-center" colspan="2">ເໜືອປະລິນຍາໂທ</td>
-                                <td class="text-center" colspan="2">ປະລິນຍາໂທ</td>
-                                <td class="text-center" colspan="2">ເໜືອປະລິນຍາຕີ</td>
-                                <td class="text-center" colspan="2">ປະລິນຍາຕີ</td>
-                                <td class="text-center" colspan="2">ຊັ້ນສູງ</td>
-                                <td class="text-center" colspan="2">ຊັ້ນກາງ</td>
-                                <td class="text-center" colspan="2">ຊັ້ນຕົ້ນ</td>
-                                <td class="text-center" colspan="2">ບໍ່ມີຊັ້ນ ວິຊາສະເພາະ</td>
-                                <td class="text-center" colspan="4">ລວມ</td>
-                            </tr>
-                            <tr>
-                                <?php for ($i = 0; $i < 20; $i++): ?>
-                                    <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
-                                <?php endfor; ?>
-                                <td class="text-center"><?= Yii::t('app', 'M') ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">{{formatNumber(model.doctor_total )}}</td>
-                                <td class="text-center">{{formatNumber(model.doctor_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.post_master_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.post_master_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.master_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.master_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.post_bachelor_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.post_bachelor_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.bachelor_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.bachelor_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.high_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.high_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.middle_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.middle_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.begin_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.begin_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.no_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.no_women )}}</td>
-                                <td class="text-center">{{
+                                <tr>
+                                    <th class="text-center" rowspan="4">IV</th>
+                                    <th class="" colspan="21"><?= $this->title ?></th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" colspan="2">ປະລິນຍາເອກ</td>
+                                    <td class="text-center" colspan="2">ເໜືອປະລິນຍາໂທ</td>
+                                    <td class="text-center" colspan="2">ປະລິນຍາໂທ</td>
+                                    <td class="text-center" colspan="2">ເໜືອປະລິນຍາຕີ</td>
+                                    <td class="text-center" colspan="2">ປະລິນຍາຕີ</td>
+                                    <td class="text-center" colspan="2">ຊັ້ນສູງ</td>
+                                    <td class="text-center" colspan="2">ຊັ້ນກາງ</td>
+                                    <td class="text-center" colspan="2">ຊັ້ນຕົ້ນ</td>
+                                    <td class="text-center" colspan="2">ບໍ່ມີຊັ້ນ ວິຊາສະເພາະ</td>
+                                    <td class="text-center" colspan="4">ລວມ</td>
+                                </tr>
+                                <tr>
+                                    <?php for ($i = 0; $i < 20; $i++) : ?>
+                                        <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
+                                    <?php endfor; ?>
+                                    <td class="text-center"><?= Yii::t('app', 'M') ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">{{formatNumber(model.doctor_total )}}</td>
+                                    <td class="text-center">{{formatNumber(model.doctor_women )}}</td>
+                                    <td class="text-center">{{formatNumber(model.post_master_total)}}</td>
+                                    <td class="text-center">{{formatNumber(model.post_master_women )}}</td>
+                                    <td class="text-center">{{formatNumber(model.master_total)}}</td>
+                                    <td class="text-center">{{formatNumber(model.master_women )}}</td>
+                                    <td class="text-center">{{formatNumber(model.post_bachelor_total)}}</td>
+                                    <td class="text-center">{{formatNumber(model.post_bachelor_women )}}</td>
+                                    <td class="text-center">{{formatNumber(model.bachelor_total)}}</td>
+                                    <td class="text-center">{{formatNumber(model.bachelor_women )}}</td>
+                                    <td class="text-center">{{formatNumber(model.high_total)}}</td>
+                                    <td class="text-center">{{formatNumber(model.high_women )}}</td>
+                                    <td class="text-center">{{formatNumber(model.middle_total)}}</td>
+                                    <td class="text-center">{{formatNumber(model.middle_women )}}</td>
+                                    <td class="text-center">{{formatNumber(model.begin_total)}}</td>
+                                    <td class="text-center">{{formatNumber(model.begin_women )}}</td>
+                                    <td class="text-center">{{formatNumber(model.no_total)}}</td>
+                                    <td class="text-center">{{formatNumber(model.no_women )}}</td>
+                                    <td class="text-center">{{
                                     formatNumber(model.doctor_total + model.post_master_total + model.master_total +
                                     model.post_bachelor_total + model.bachelor_total + model.no_total + model.high_total
                                     + model.middle_total + model.begin_total + model.no_total)}}
-                                </td>
-                                <td class="text-center">{{
+                                    </td>
+                                    <td class="text-center">{{
                                     formatNumber(model.doctor_women + model.post_master_women + model.master_women +
                                     model.post_bachelor_women + model.bachelor_women + model.no_women + model.high_women
                                     + model.middle_women + model.begin_women + model.no_women) }}
-                                </td>
-                                <td class="text-center">{{
+                                    </td>
+                                    <td class="text-center">{{
                                     formatNumber((model.doctor_total + model.post_master_total + model.master_total +
                                     model.post_bachelor_total + model.bachelor_total + model.no_total + model.high_total
                                     + model.middle_total + model.begin_total + model.no_total)
                                     - (model.doctor_women + model.post_master_women + model.master_women +
                                     model.post_bachelor_women + model.bachelor_women + model.no_women + model.high_women
                                     + model.middle_women + model.begin_women + model.no_women)) }}
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -206,8 +194,7 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                         </div>
                         <div class="col-sm-3">
                             <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
-                                   type="text">
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
                         </div>
                         <div class="col-sm-3">
                             <label>ອອກໂດຍ</label>
@@ -216,37 +203,36 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
 
                         <div class="col-sm-3">
                             <label>ເລືອກໄຟລ໌</label>
-                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"
-                                   class="form-control" required>
+                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);" class="form-control" required>
                         </div>
 
                         <div class="col-sm-12" ng-if="references">
                             <div class="card">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">ວັນທີອັບໂຫຼດ</th>
-                                        <th class="text-center">ຊື່</th>
-                                        <th class="text-center">ເລກທີ</th>
-                                        <th class="text-center">ລົງວັນທີ</th>
-                                        <th class="text-center">ອອກໂດຍ</th>
-                                        <th class="text-center">ລຶບ</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">ວັນທີອັບໂຫຼດ</th>
+                                            <th class="text-center">ຊື່</th>
+                                            <th class="text-center">ເລກທີ</th>
+                                            <th class="text-center">ລົງວັນທີ</th>
+                                            <th class="text-center">ອອກໂດຍ</th>
+                                            <th class="text-center">ລຶບ</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="f in references">
-                                        <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
-                                        </td>
-                                        <td class="text-center">{{f.issued_no}}</td>
-                                        <td class="text-center">{{f.issued_date | date}}</td>
-                                        <td class="text-center">{{f.issued_by}}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="f in references">
+                                            <td class="text-center">{{f.upload_date}}</td>
+                                            <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                            </td>
+                                            <td class="text-center">{{f.issued_no}}</td>
+                                            <td class="text-center">{{f.issued_date | date}}</td>
+                                            <td class="text-center">{{f.issued_by}}</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -258,38 +244,39 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
         </div>
     </div>
 </div>
+<script type="text/javascript" src="js/sweetalert2.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/moment.js"></script>
 <script type="text/javascript" src="js/datetimepicker.js"></script>
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
     var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-    app.filter('dash', function () {
-        return function (input) {
+    app.filter('dash', function() {
+        return function(input) {
             return input ? input : '-';
         };
     });
-    app.controller('officerDegreeController', function ($scope, $http, $sce, $timeout) {
+    app.controller('officerDegreeController', function($scope, $http, $sce, $timeout) {
         $scope.url = 'index.php?r=stat-officer-degree/';
         $scope.mode = 'read';
-        $scope.changemode = function () {
+        $scope.changemode = function() {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
         $http.get($scope.url + 'get')
-            .then(function (r) {
+            .then(function(r) {
                 $scope.years = r.data.years;
-            }, function (r) {
+            }, function(r) {
                 $scope.response = r;
-                $timeout(function () {
+                $timeout(function() {
                     $scope.response = null;
                 }, 15000);
             });
 
-        $scope.enquiry = function () {
+        $scope.enquiry = function() {
             $scope.model = null;
             if ($scope.year) {
                 $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-                    .then(function (r) {
+                    .then(function(r) {
                         $scope.model = r.data.model;
                         if (r.data.model) {
                             $scope.model.doctor_total = parseInt($scope.model.doctor_total);
@@ -333,9 +320,9 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                             $scope.model.no_women = null;
                         }
                         $scope.getreferences();
-                    }, function (r) {
+                    }, function(r) {
                         $scope.response = r;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.response = null;
                         }, 15000);
                     });
@@ -343,27 +330,49 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
             }
         };
 
-        $scope.save = function () {
+        $scope.save = function() {
             if ($scope.year && $scope.model) {
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
                     'Model': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function (r) {
+                }).then(function(r) {
                     $scope.response = r;
                     $scope.enquiry();
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
-                }, function (r) {
+
+                    if (r.status == 200) {
+                        Swal.fire({
+                            position: 'top-end',
+                            type: 'success',
+                            title: 'ການບັນທຶກສໍາເລັດ',
+                            text: r.status,
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                    }
+
+                }, function(r) {
                     $scope.response = r;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
+
+                    Swal.fire({
+                        position: 'top-end',
+                        type: 'error',
+                        title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
+                        text: r.status,
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
                 });
             }
         };
 
-        $scope.formatNumber = function (num, dec) {
+        $scope.formatNumber = function(num, dec) {
             if (dec === undefined) dec = 2;
             var r = "" + Math.abs(parseFloat(num).toFixed(dec));
             var decimals = "";
@@ -377,7 +386,7 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
             return (num < 0 ? "-" : "") + r + decimals;
         };
 
-        $scope.uploadedFile = function (element) {
+        $scope.uploadedFile = function(element) {
             if (!$scope.issued_no) {
                 $scope.files = null;
                 alert('ກະລຸນາປ້ອນເລກທີ');
@@ -390,29 +399,31 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                 return;
             }
 
-            $scope.$apply(function ($scope) {
+            $scope.$apply(function($scope) {
                 $scope.files = element.files;
                 $http({
                     url: $scope.url + "upload&year=" + $scope.year.id,
                     method: "POST",
                     processData: false,
-                    headers: {'Content-Type': undefined},
+                    headers: {
+                        'Content-Type': undefined
+                    },
                     data: {
                         '_csrf': $('meta[name="csrf-token"]').attr("content"),
                         'issued_no': $scope.issued_no,
                         'issued_date': $scope.issued_date,
                         'issued_by': $scope.issued_by
                     },
-                    transformRequest: function (data) {
+                    transformRequest: function(data) {
                         var formData = new FormData();
                         var file = $scope.files[0];
                         formData.append("file_upload", file);
-                        angular.forEach(data, function (value, key) {
+                        angular.forEach(data, function(value, key) {
                             formData.append(key, value);
                         });
                         return formData;
                     }
-                }).success(function (data, status, headers, config) {
+                }).success(function(data, status, headers, config) {
                     $scope.getreferences();
                     $scope.issued_date = null;
                     $scope.issued_no = null;
@@ -420,31 +431,31 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                     $("input[name='image'], #issued_date").val("");
                     $scope.status = data.status;
                     $scope.formdata = "";
-                }).error(function (data, status, headers, config) {
+                }).error(function(data, status, headers, config) {
                     $scope.response = data;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
                 });
             });
         };
 
-        $scope.getreferences = function () {
+        $scope.getreferences = function() {
             if ($scope.year) {
                 $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-                    .then(function (r) {
+                    .then(function(r) {
                         if (r.data)
                             $scope.references = r.data.files;
-                    }, function (r) {
+                    }, function(r) {
                         $scope.response = r;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.response = null;
                         }, 15000);
                     });
             }
         };
 
-        $scope.deletefile = function (f) {
+        $scope.deletefile = function(f) {
             if ($scope.year && f) {
                 swal({
                     title: "ໝັ້ນໃຈບໍ່?",
@@ -455,22 +466,44 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                     cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
                     closeOnConfirm: true,
                     closeOnCancel: true
-                }, function (isConfirm) {
+                }, function(isConfirm) {
                     if (isConfirm) {
                         $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
                             'id': f.id,
                             '_csrf': $('meta[name="csrf-token"]').attr("content")
-                        }).then(function (r) {
+                        }).then(function(r) {
                             $scope.response = r;
                             $scope.getreferences();
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
-                        }, function (r) {
+
+                            if (r.status == 200) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'ການລຶບສໍາເລັດ',
+                                    text: r.status,
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                });
+                            }
+
+                        }, function(r) {
                             $scope.response = r;
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
+
+                            Swal.fire({
+                                position: 'top-end',
+                                type: 'error',
+                                title: 'ການລຶບບໍ່ສໍາເລັດ',
+                                text: r.status,
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+
                         });
                     }
                 });
