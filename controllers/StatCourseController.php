@@ -64,14 +64,16 @@ class StatCourseController extends Controller
             return;
         }
 
-        $models = $this->getChilds($year, 0);
+        $parents = StatCourseDetail::find()->alias('d')
+        ->join('join', 'stat_course c', 'c.id = d.stat_course_id and c.phiscal_year_id=:year', [':year' => $year->id])
+        ->where('deleted=:deleted and (parent_id=:parent_id or parent_id is null) ' , [':deleted' => 0,':parent_id'=>0])                
+        ->orderBy('position')->asArray()->all();
+
+        $models = $parents;
         foreach ($models as $k => $model) {
             $models[$k]['childs'] = $this->getChilds($year, $model['id']);
             $models[$k]['parent'] = StatCourseDetail::find()->where(['id' => $model['parent_id']])->asArray()->one();
-        }
-        $parents = StatCourseDetail::find()->where(['deleted' => 0, 'parent_id' => 0])->orderBy('position')->asArray()->all();
-
-
+        }                
         return json_encode(['models' => $models, 'parents' => $parents]);
     }
 
@@ -127,26 +129,28 @@ class StatCourseController extends Controller
 
                 if (isset($post['Model']['id'])) {
                     $detail = StatCourseDetail::findOne($post['Model']['id']);
-                    if (!isset($detail)) {
-                        $detail = new StatCourseDetail();
-                        $detail->stat_course_id = $model->id;
-                        $detail->deleted = 0;
-                    }
+                    // if (!isset($detail)) {
+                    //     $detail = new StatCourseDetail();
+                    //     $detail->stat_course_id = $model->id;
+                    //     $detail->deleted = 0;
+                    // }
                 } else {
                     $detail = new StatCourseDetail();
                     $detail->stat_course_id = $model->id;
                     $detail->deleted = 0;
                 }
                 
-                $detail->stat_course_id = $model->id;
+                
                 $detail->attributes = $post['Model'];
-                $detail->parent_id = isset($post['Model']['parent']) ? $post['Model']['parent']['id'] : 0;
+                $detail->stat_course_id = $model->id;
+                // $detail->parent_id = isset($post['Model']['parent']) ? $post['Model']['parent']['id'] : 0;
+                if(isset($post['Model']['parent_id'])){
+                    $detail->parent_id = $post['Model']['parent_id'];
+                }else{
+                    $detail->parent_id = 0 ;
+                }
                 $detail->deleted = 0;
-                
-
-                
-
-
+                                
                 if (!$detail->save())
                     throw new Exception(json_encode($detail->errors));
 
@@ -156,8 +160,10 @@ class StatCourseController extends Controller
                 MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $ex->getMessage());
                 return;
             }
+            
         }        
     }
+
 
     public function actionDelete($year)
     {
@@ -223,7 +229,12 @@ class StatCourseController extends Controller
             return;
         }
 
-        $models = $this->getChilds($year, 0);
+        $parents = StatCourseDetail::find()->alias('d')
+        ->join('join', 'stat_course c', 'c.id = d.stat_course_id and c.phiscal_year_id=:year', [':year' => $year->id])
+        ->where('deleted=:deleted and (parent_id=:parent_id or parent_id is null) ' , [':deleted' => 0,':parent_id'=>0])                
+        ->orderBy('position')->asArray()->all();
+
+        $models = $parents;
         foreach ($models as $k => $model) {
             $models[$k]['childs'] = $this->getChilds($year, $model['id']);
             $models[$k]['parent'] = StatCourseDetail::find()->where(['id' => $model['parent_id']])->asArray()->one();
@@ -246,7 +257,13 @@ class StatCourseController extends Controller
             return;
         }
 
-        $models = $this->getChilds($year, 0);
+        $parents = StatCourseDetail::find()->alias('d')
+        ->join('join', 'stat_course c', 'c.id = d.stat_course_id and c.phiscal_year_id=:year', [':year' => $year->id])
+        ->where('deleted=:deleted and (parent_id=:parent_id or parent_id is null) ' , [':deleted' => 0,':parent_id'=>0])                
+        ->orderBy('position')->asArray()->all();
+
+        $models = $parents;
+        
         foreach ($models as $k => $model) {
             $models[$k]['childs'] = $this->getChilds($year, $model['id']);
             $models[$k]['parent'] = StatCourseDetail::find()->where(['id' => $model['parent_id']])->asArray()->one();

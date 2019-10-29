@@ -35,7 +35,12 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
         </div>
         <div class="col-sm-6">
           <label for="">ກຸ່ມຫຼັກສູດ</label>
-          <select class="form-control" ng-model="model.parent" ng-options="g.name for g in parents" ng-change="selectCourseGroup(model.parent)"></select>
+          <!-- <select class="form-control" ng-model="model.parent" ng-options="g.name for g in parents" ng-change="selectCourseGroup(model.parent)"></select> -->
+
+          <select class="form-control" ng-model="model.parent" ng-change="selectCourseGroup(model.parent)">
+              <option value=""></option>
+              <option data-ng-repeat="g in parents" value="{{g.id}}">{{g.name}}</option>
+          </select>
         </div>
         <div class="col-sm-2">
           <label for="">&nbsp;</label>
@@ -195,7 +200,7 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
       $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
         .then(function(r) {
           $scope.models = r.data.models;
-          $scope.parents = r.data.parents;
+          $scope.parents = r.data.parents;          
           $scope.getreferences();
         }, function(r) {
           $scope.response = r;
@@ -210,35 +215,34 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
     };
 
 
-    $scope.select = function(k) {
-
-      $scope.model = k;
+    $scope.select = function(k) {      
+      $scope.model = k;      
       if ($scope.model.position)
-        $scope.model.position = parseInt($scope.model.position);
-      if ($scope.model.parent_id)
-        $scope.model.parent_id = parseInt($scope.model.parent_id);
+        $scope.model.position = parseInt($scope.model.position);      
+      $scope.model.parent = k.parent_id;
+      
+      // for (var i = 0; i < $scope.models.length; i++) {
+      //   if (parseInt($scope.models[i].id) == parseInt(k.parent_id)) {
+      //     $scope.model.parent = $scope.models[i];
+      //     break;
+      //   }
+      //   for (var j = 0; j < $scope.models[i].childs.length; i++) {
+      //     if (parseInt($scope.models[i].childs[j].id) == parseInt(k.parent_id)) {
+      //       $scope.model.parent = $scope.models[i].childs[j];
+      //       break;
+      //     }
+      //   }
+      // }
 
-      for (var i = 0; i < $scope.models.length; i++) {
-        if (parseInt($scope.models[i].id) == parseInt(k.parent_id)) {
-          $scope.model.parent = $scope.models[i];
-          break;
-        }
-        for (var j = 0; j < $scope.models[i].childs.length; i++) {
-          if (parseInt($scope.models[i].childs[j].id) == parseInt(k.parent_id)) {
-            $scope.model.parent = $scope.models[i].childs[j];
-            break;
-          }
-        }
-      }
     };
 
     $scope.save = function() {
-      if ($scope.model) {
+      if ($scope.model) {        
         $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'Model': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function(r) {
-
+        }).then(function(r) {      
+          
           $scope.response = r;
           $scope.enquiry();
 
@@ -259,6 +263,7 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
 
 
         }, function(r) {
+          
           $scope.response = r;
           Swal.fire({
             // toast: true,              
@@ -277,9 +282,8 @@ $this->title = 'ຕາຕະລາງສະຖິຕິການພັດທະ�
       }
     };
     $scope.selectCourseGroup = function(m) {
-      $scope.model.id = m.id;
+      $scope.model.parent_id = m;      
     };
-
     $scope.delete = function() {
       if ($scope.model) {
         swal({

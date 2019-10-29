@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="utility">
                         <div class="animated-checkbox">
                             <label class="semibold-text">
-                                <input type="checkbox" checked="<?php echo isset($model->rememberMe)?$model->rememberMe:0; ?>" value="<?php echo isset($model->rememberMe)?$model->rememberMe:0; ?>"> <span class="label-text">ຈື່ຊື່ໄວ້</span>
+                                <input type="checkbox"  value="<?php echo isset($model->rememberMe)?$model->rememberMe:0; ?>"> <span class="label-text">ຈື່ຊື່ໄວ້</span>
                                 
                             </label>
                         </div>
