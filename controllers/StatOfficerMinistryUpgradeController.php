@@ -54,7 +54,7 @@ class StatOfficerMinistryUpgradeController extends Controller
     	}
     	
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
-        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $ministries = Ministry::find()->where(['deleted' => 0,'ministry_group_id' => 1])->orderBy('position')->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -88,7 +88,7 @@ class StatOfficerMinistryUpgradeController extends Controller
         $models = Ministry::find()->alias('m')
             ->select('m.*, d.*')
             ->join('left join', 'stat_officer_ministry_upgrade_detail d', 'd.ministry_id=m.id and d.stat_officer_ministry_upgrade_id=:id', [':id' => $model->id])
-            ->where(['m.deleted' => 0])->orderBy('m.position')->asArray()->all();
+            ->where(['m.deleted' => 0,'ministry_group_id' => 1])->orderBy('m.position')->asArray()->all();
 
         $query = StatOfficerProvinceUpgradeDetail::find()
             ->select(['stat_officer_province_upgrade_id' => 'stat_officer_province_upgrade_id']);
