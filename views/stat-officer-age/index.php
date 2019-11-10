@@ -381,12 +381,14 @@
           $timeout(function () {
             $scope.response = null;
           }, 15000);
-
+          if(r.status=='401'){
+            r.statusText='ທ່ານບໍ່ໄດ້ຮັບອານຸຍາດໃນການເຮັດທຸລະກໍານີ້';
+          }          
           Swal.fire({                          
             position: 'top-end',
             type: 'error',          
-            title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
-            text: r.status,
+            title: 'ການບັນທຶກບໍ່ສໍາເລັດ',  
+            text: r.status + '  '  + r.statusText,
             showConfirmButton: false,
             timer: 3000
           });

@@ -174,7 +174,7 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
   var app = angular.module('mohaApp', []);
   var url = 'index.php?r=ministry/';
   app.controller('ministryController', function($scope, $http, $sce, $timeout) {
-    
+
     $scope.mode = 'read';
     $scope.changemode = function() {
       $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
@@ -197,7 +197,7 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
       $scope.ministries = null;
       $scope.url = url;
       if ($scope.year)
-      $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
         .then(function(r) {
           $scope.ministries = r.data.ministries;
         }, function(r) {
@@ -210,18 +210,18 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
 
     $scope.enquiry();
 
-    $scope.select = function(m) {      
+    $scope.select = function(m) {
       $scope.ministry = m;
       $scope.ministry.position = parseInt(m.position);
     };
 
     $scope.save = function(create) {
       if ($scope.year)
-      $scope.ministry.phiscal_year_id = $scope.year.id;
+        $scope.ministry.phiscal_year_id = $scope.year.id;
       if ($scope.ministry)
-        if ($scope.ministry.name)              
+        if ($scope.ministry.name)
           $http.post($scope.url + 'save', {
-            
+
             Ministry: $scope.ministry,
             create: create,
             '_csrf': $('meta[name="csrf-token"]').attr("content")
@@ -254,7 +254,7 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
               position: 'top-end',
               type: 'error',
               title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
-              text: r.status,
+              text: r.status + '  ' + r.statusText,
               showConfirmButton: false,
               timer: 3000
             });
@@ -303,14 +303,16 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
                 $scope.response = null;
               }, 15000);
 
+
               Swal.fire({
                 position: 'top-end',
                 type: 'error',
-                title: 'ການລຶບບໍ່ສໍາເລັດ',
-                text: r.status,
+                title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
+                text: r.status + '  ' + r.statusText,
                 showConfirmButton: false,
                 timer: 3000
               });
+
 
             });
           }

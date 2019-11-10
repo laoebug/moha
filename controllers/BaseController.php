@@ -21,7 +21,7 @@ class BaseController extends Controller
 {
   
 
-    public function behaviors() {
+    public function behaviors() {		
 		return [ 
 				'verbs' => [ 
 						'class' => VerbFilter::className (),
@@ -32,10 +32,11 @@ class BaseController extends Controller
 						] 
 				],
 				'access' => [ 
-                    'class' => \yii\filters\AccessControl::className(),
+                    'class' => \app\models\TheAccessControl::className(),
 						'rules' => [ 
-								[ 
-										'allow' => ! Yii::$app->user->isGuest && in_array ( Yii::$app->user->identity->role_id, User::getAllowedRoleIds () ) 
+								[ 									
+										// 'allow' => ! Yii::$app->user->isGuest && in_array ( Yii::$app->user->identity->role_id, User::getAllowedRoleIds () ) 										
+										'allow' => ! Yii::$app->user->isGuest &&  User::isAllowedRole() 
 								] 
                         ] 
                         
@@ -48,6 +49,9 @@ class BaseController extends Controller
                         // ],
 				] 
 		];
+
+
+		
     }
     
 }
