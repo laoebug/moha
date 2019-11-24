@@ -18,7 +18,7 @@ use yii\web\Controller;
 /**
  * StatLocalAdminController implements the CRUD actions for StatLocalAdmin model.
  */
-class StatLocalAdminController extends Controller
+class StatLocalAdminController extends BaseController
 {
     /**
      * Lists all StatLocalAdmin models.
@@ -53,7 +53,7 @@ class StatLocalAdminController extends Controller
     }
 
     public function actionEnquiry($year)
-    {
+    {        
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -176,6 +176,15 @@ class StatLocalAdminController extends Controller
                 $detail->province_id = $post['StatLocalAdminDetail']['province']['id'];
                 $detail->stat_local_admin_id = $model->id;
             }
+            $detail->municipality_head_total = $post['StatLocalAdminDetail']['municipality_head_total'];
+            $detail->municipality_head_women = $post['StatLocalAdminDetail']['municipality_head_women'];
+            $detail->municipality_vice_total = $post['StatLocalAdminDetail']['municipality_vice_total'];
+            $detail->municipality_vice_women = $post['StatLocalAdminDetail']['municipality_vice_women'];
+            $detail->city_head_total = $post['StatLocalAdminDetail']['city_head_total'];
+            $detail->city_head_women = $post['StatLocalAdminDetail']['city_head_women'];
+            $detail->city_vice_total = $post['StatLocalAdminDetail']['city_vice_total'];
+            $detail->city_vice_women = $post['StatLocalAdminDetail']['city_vice_women'];
+
             $detail->province_head_total = $post['StatLocalAdminDetail']['province_head_total'];
             $detail->province_head_women = $post['StatLocalAdminDetail']['province_head_women'];
             $detail->province_vice_total = $post['StatLocalAdminDetail']['province_vice_total'];
@@ -396,26 +405,6 @@ class StatLocalAdminController extends Controller
         }
     }
 
-    public function beforeAction($action)
-    {
-        $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                if (Yii::$app->request->isAjax) {
-                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                    return;
-                } else {
-                    return $this->redirect([
-                        'authentication/notallowed'
-                    ]);
-                }
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
+    
 
 }

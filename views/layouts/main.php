@@ -15,6 +15,7 @@ use app\components\TopMenuWidget;
 
 ?>
 <?php $this->beginPage() ?>
+
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
