@@ -434,7 +434,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                         $scope.model.village = parseInt(r.data.model.village);
                         $scope.model.family_total = parseInt(r.data.model.family_total);
                         $scope.model.family_poor = parseInt(r.data.model.family_poor);
-                        console.log($scope.model);
+                        
                     } else {
 
                         $scope.model.municipality_head_total = null;
@@ -474,7 +474,8 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
 
         $scope.save = function() {
             if ($scope.year && $scope.model) {
-                console.log($scope.model);
+                
+                
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
                     'StatLocalAdminDetail': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
@@ -592,45 +593,6 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                             timer: 3000
                         });
                     });
-
-
-                //     .success(function(data, status, headers, config) {
-
-
-                //         if (data.status == 200) {
-                //             Swal.fire({
-                //                 position: 'top-end',
-                //                 type: 'success',
-                //                 title: 'ອັບໂຫລດຟາຍສໍາເລັດ',
-                //                 text: r.status,
-                //                 showConfirmButton: false,
-                //                 timer: 3000
-                //             });
-                //         }
-
-                //         $scope.getreferences();
-                //         $scope.issued_date = null;
-                //         $scope.issued_no = null;
-                //         $scope.issued_by = null;
-                //         $("input[name='image'], #issued_date").val("");
-                //         $scope.status = data.status;
-                //         $scope.formdata = "";
-                //     }).error(function(data, status, headers, config) {
-
-                //         Swal.fire({
-                //             position: 'top-end',
-                //             type: 'error',
-                //             title: 'ອັບໂຫລດຟາຍບໍ່ສໍາເລັດ',
-                //             text: status,
-                //             showConfirmButton: false,
-                //             timer: 3000
-                //         });
-
-                //         $scope.response = data;
-                //         $timeout(function() {
-                //             $scope.response = null;
-                //         }, 15000);
-                //     });
 
             });
 

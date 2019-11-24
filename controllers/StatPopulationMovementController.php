@@ -19,7 +19,7 @@ use yii\web\Controller;
 /**
  * StatPopulationMovementController implements the CRUD actions for StatPopulationMovement model.
  */
-class StatPopulationMovementController extends Controller
+class StatPopulationMovementController extends BaseController
 {
     public $COLUMNS = [
         'district'
@@ -29,9 +29,11 @@ class StatPopulationMovementController extends Controller
         , 'born_total'
         , 'born_women'
         , 'die_total'
-        , 'die_women'
+        , 'die_women'        
         , 'married'
+        , 'married_local_foreigner'
         , 'divorce'
+        , 'divorce_local_foreigner'
         , 'movein_total'
         , 'movein_women'
         , 'moveout_total'
@@ -398,26 +400,6 @@ class StatPopulationMovementController extends Controller
         }
     }
 
-    public function beforeAction($action)
-    {
-        $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                if (Yii::$app->request->isAjax) {
-                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                    return;
-                } else {
-                    return $this->redirect([
-                        'authentication/notallowed'
-                    ]);
-                }
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
+    
 
 }
