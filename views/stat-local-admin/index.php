@@ -528,6 +528,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
 
 
         $scope.uploadedFile = function(element) {
+            
             if (!$scope.issued_no) {
                 $scope.files = null;
                 alert('ກະລຸນາປ້ອນເລກທີ');
@@ -566,6 +567,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                     }
                 }).then(
                     function(r) {
+                      
                         $scope.getreferences();
                         $scope.issued_date = null;
                         $scope.issued_no = null;
@@ -581,6 +583,8 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                             showConfirmButton: false,
                             timer: 3000
                         });
+                       
+
                     },
                     function(r) {
                         $scope.response = r;
