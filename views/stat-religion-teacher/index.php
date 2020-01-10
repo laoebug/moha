@@ -321,7 +321,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                                         <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
                                         <td class="text-center">{{f.issued_no}}</td>
                                         <td class="text-center">{{f.issued_date | date}}</td>
-                                        <td class="text-center">{{f.issued_by}}</td>
+                                        <td class="text-center">{{(f.issued_by=='undefined')?'':f.issued_by}}</td>
                                         <td class="text-center">
                                             <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
                                                 <i class="fa fa-trash"></i>
@@ -443,7 +443,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
 
     $scope.save = function () {
       if ($scope.year && $scope.model) {
-        console.log($scope.model);
+        
         $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'StatReligionTeacherDetail': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
@@ -460,7 +460,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
               position: 'top-end',
               type: 'success',              
               title: 'ການບັນທຶກສໍາເລັດ',
-              text: r.status,
+              text: r.status + " " + r.statusText,
               showConfirmButton: false,
               timer: 3000
             });
@@ -476,7 +476,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
             position: 'top-end',
             type: 'error',          
             title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
-            text: r.status,
+            text: r.status + " " + r.statusText,
             showConfirmButton: false,
             timer: 3000
           });
@@ -495,56 +495,87 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
     };
 
 
-    $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
+    $scope.uploadedFile = function(element) {
+      if (!$scope.issued_no) {
         $scope.files = null;
-        alert('ກະລຸນາປ້ອນເລກທີ');
+        Swal.fire({
+          title: 'ອັບໂຫຼດຟາຍ',
+          type: 'warning',
+          text: 'ກະລຸນາປ້ອນເລກທີ',
+
+        });
         return;
       }
       $scope.issued_date = $('#issued_date').val();
-      if(!$scope.issued_date) {
+      if (!$scope.issued_date) {
         $scope.files = null;
-        alert('ກະລຸນາປ້ອນວັນທີ');
+
+        Swal.fire({
+          title: 'ອັບໂຫຼດຟາຍ',
+          type: 'warning',
+          text: 'ກະລຸນາປ້ອນວັນທີ',
+
+        });
         return;
       }
 
-      $scope.$apply(function ($scope) {
+      $scope.$apply(function($scope) {
         $scope.files = element.files;
         $http({
           url: $scope.url + "upload&year=" + $scope.year.id,
           method: "POST",
           processData: false,
-          headers: {'Content-Type': undefined},
+          headers: {
+            'Content-Type': undefined
+          },
           data: {
             '_csrf': $('meta[name="csrf-token"]').attr("content"),
             'issued_no': $scope.issued_no,
             'issued_date': $scope.issued_date,
             'issued_by': $scope.issued_by
           },
-          transformRequest: function (data) {
+          transformRequest: function(data) {
             var formData = new FormData();
             var file = $scope.files[0];
             formData.append("file_upload", file);
-            angular.forEach(data, function (value, key) {
+            angular.forEach(data, function(value, key) {
               formData.append(key, value);
             });
             return formData;
           }
-        }).success(function (data, status, headers, config) {
-          $scope.getreferences();
-          $scope.issued_date = null;
-          $scope.issued_no = null;
-          $scope.issued_by = null;
-          $("input[name='image'], #issued_date").val("");
-          $scope.status = data.status;
-          $scope.formdata = "";
-        }).error(function (data, status, headers, config) {
-          $scope.response = data;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        });
+        }).then(
+          function(r) {
+
+            $scope.getreferences();
+            $scope.issued_date = null;
+            $scope.issued_no = null;
+            $scope.issued_by = null;
+            $("input[name='image'], #issued_date").val("");
+            $scope.status = r.status;
+            $scope.formdata = "";
+            Swal.fire({
+              position: 'top-end',
+              type: 'success',
+              title: 'ອັບໂຫລດຟາຍສໍາເລັດ',
+              text: r.status + " " + r.statusText,
+              showConfirmButton: false,
+              timer: 3000
+            });
+          },
+          function(r) {
+            $scope.response = r;
+            Swal.fire({
+              position: 'top-end',
+              type: 'error',
+              title: 'ອັບໂຫລດຟາຍບໍ່ສໍາເລັດ',
+              text: r.status + " " + r.statusText,
+              showConfirmButton: false,
+              timer: 3000
+            });
+          });
+
       });
+
     };
 
     $scope.getreferences = function() {
@@ -590,7 +621,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                   position: 'top-end',
                   type: 'success',
                   title: 'ການລຶບສໍາເລັດ',
-                  text: r.status,
+                  text: r.status + " " + r.statusText,
                   showConfirmButton: false,
                   timer: 3000
                 });
@@ -606,7 +637,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                 position: 'top-end',
                 type: 'error',
                 title: 'ການລຶບບໍ່ສໍາເລັດ',
-                text: r.status,
+                text: r.status + " " + r.statusText,
                 showConfirmButton: false,
                 timer: 3000
               });

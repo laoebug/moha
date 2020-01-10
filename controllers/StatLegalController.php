@@ -19,26 +19,9 @@ use yii\web\Controller;
 /**
  * StatLegalController implements the CRUD actions for StatLegal model.
  */
-class StatLegalController extends Controller
+class StatLegalController extends BaseController
 {
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ]
-        ];
-    }
+   
     /**
      * Lists all StatLegal models.
      * @return mixed

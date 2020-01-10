@@ -39,7 +39,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                             <td class="text-center" colspan="2">ເຈົ້າຄອງນະຄອນຫຼວງ</td>
                             <td class="text-center" colspan="2">ຮອງເຈົ້າຄອງນະຄອນຫຼວງ</td>
                             <td class="text-center" colspan="2">ເຈົ້າແຂວງ</td>
-                            <td class="text-center" colspan="2">ຮອງເຈົ້າແຂວງ</td>                                                        
+                            <td class="text-center" colspan="2">ຮອງເຈົ້າແຂວງ</td>
                         </tr>
                         <tr>
 
@@ -51,12 +51,12 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                             <td class="text-center" style="width: 12.5%">ຍິງ</td>
                             <td class="text-center" style="width: 12.5%">ລວມ</td>
                             <td class="text-center" style="width: 12.5%">ຍິງ</td>
-                            
+
                         </tr>
                         <tr>
 
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.municipality_head_total"></td>
-                            <td class="text-center"><input ng-blur="model.municipality_head_women=model.municipality_head_total < model.municipality_head_women?null:model.municipality_head_women" min="0" max="{{model.municipality_head_total}}" type="number" class="form-control" ng-model="model.municipality_head_women"></td>                                
+                            <td class="text-center"><input ng-blur="model.municipality_head_women=model.municipality_head_total < model.municipality_head_women?null:model.municipality_head_women" min="0" max="{{model.municipality_head_total}}" type="number" class="form-control" ng-model="model.municipality_head_women"></td>
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.municipality_vice_total"></td>
                             <td class="text-center"><input ng-blur="model.municipality_vice_women=model.municipality_vice_total < model.municipality_vice_women?null:model.municipality_vice_women" min="0" max="{{model.municipality_vice_total}}" type="number" class="form-control" ng-model="model.municipality_vice_women"></td>
                             <td class="text-center"><input min="0" type="number" class="form-control" ng-model="model.province_head_total"></td>
@@ -73,14 +73,14 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            
+
                             <td class="text-center" colspan="2">ເຈົ້ານະຄອນ</td>
                             <td class="text-center" colspan="2">ຮອງເຈົ້ານະຄອນ</td>
                             <td class="text-center" colspan="2">ເຈົ້າເມືອງ</td>
                             <td class="text-center" colspan="2">ຮອງເຈົ້າເມືອງ</td>
                         </tr>
                         <tr>
-                            
+
 
                             <td class="text-center" style="width: 12.5%">ລວມ</td>
                             <td class="text-center" style="width: 12.5%">ຍິງ</td>
@@ -292,6 +292,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                         </table>
                     </div>
                 </div>
+                
                 <div class="tab-pane fade" id="reference">
                     <div class="row">
                         <div class="col-sm-3">
@@ -332,7 +333,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                                             </td>
                                             <td class="text-center">{{f.issued_no}}</td>
                                             <td class="text-center">{{f.issued_date | date}}</td>
-                                            <td class="text-center">{{f.issued_by}}</td>
+                                            <td class="text-center">{{(f.issued_by=='undefined')?'':f.issued_by}}</td>
                                             <td class="text-center">
                                                 <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
                                                     <i class="fa fa-trash"></i>
@@ -434,7 +435,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                         $scope.model.village = parseInt(r.data.model.village);
                         $scope.model.family_total = parseInt(r.data.model.family_total);
                         $scope.model.family_poor = parseInt(r.data.model.family_poor);
-                        
+
                     } else {
 
                         $scope.model.municipality_head_total = null;
@@ -474,8 +475,8 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
 
         $scope.save = function() {
             if ($scope.year && $scope.model) {
-                
-                
+
+
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
                     'StatLocalAdminDetail': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
@@ -528,16 +529,26 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
 
 
         $scope.uploadedFile = function(element) {
-            
             if (!$scope.issued_no) {
                 $scope.files = null;
-                alert('ກະລຸນາປ້ອນເລກທີ');
+                Swal.fire({
+                    title: 'ອັບໂຫຼດຟາຍ',
+                    type: 'warning',
+                    text: 'ກະລຸນາປ້ອນເລກທີ',
+
+                });
                 return;
             }
             $scope.issued_date = $('#issued_date').val();
             if (!$scope.issued_date) {
                 $scope.files = null;
-                alert('ກະລຸນາປ້ອນວັນທີ');
+
+                Swal.fire({
+                    title: 'ອັບໂຫຼດຟາຍ',
+                    type: 'warning',
+                    text: 'ກະລຸນາປ້ອນວັນທີ',
+
+                });
                 return;
             }
 
@@ -567,7 +578,7 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                     }
                 }).then(
                     function(r) {
-                      
+
                         $scope.getreferences();
                         $scope.issued_date = null;
                         $scope.issued_no = null;
@@ -583,8 +594,6 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                             showConfirmButton: false,
                             timer: 3000
                         });
-                       
-
                     },
                     function(r) {
                         $scope.response = r;
@@ -599,7 +608,6 @@ $this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ�
                     });
 
             });
-
 
         };
 

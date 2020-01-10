@@ -178,7 +178,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
                       </td>
                       <td class="text-center">{{f.issued_no}}</td>
                       <td class="text-center">{{f.issued_date | date}}</td>
-                      <td class="text-center">{{f.issued_by}}</td>
+                      <td class="text-center">{{(f.issued_by=='undefined')?'':f.issued_by}}</td>
                       <td class="text-center">
                         <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
                           <i class="fa fa-trash"></i>
@@ -230,7 +230,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
         .then(function(r) {
-          // console.log(r);
+          
           $scope.models = r.data.models;
           $scope.getreferences();
         }, function(r) {
@@ -311,7 +311,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
               position: 'top-end',
               type: 'success',
               title: 'ການບັນທຶກສໍາເລັດ',
-              text: r.status,
+              text: r.status + " " + r.statusText,
               showConfirmButton: false,
               timer: 3000
             });
@@ -328,7 +328,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
             position: 'top-end',
             type: 'error',
             title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
-            text: r.status,
+            text: r.status + " " + r.statusText,
             showConfirmButton: false,
             timer: 3000
           });
@@ -354,13 +354,24 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
     $scope.uploadedFile = function(element) {
       if (!$scope.issued_no) {
         $scope.files = null;
-        alert('ກະລຸນາປ້ອນເລກທີ');
+        Swal.fire({
+          title: 'ອັບໂຫຼດຟາຍ',
+          type: 'warning',
+          text: 'ກະລຸນາປ້ອນເລກທີ',
+
+        });
         return;
       }
       $scope.issued_date = $('#issued_date').val();
       if (!$scope.issued_date) {
         $scope.files = null;
-        alert('ກະລຸນາປ້ອນວັນທີ');
+
+        Swal.fire({
+          title: 'ອັບໂຫຼດຟາຍ',
+          type: 'warning',
+          text: 'ກະລຸນາປ້ອນວັນທີ',
+
+        });
         return;
       }
 
@@ -388,23 +399,41 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
             });
             return formData;
           }
-        }).success(function(data, status, headers, config) {
-          $scope.getreferences();
-          $scope.issued_date = null;
-          $scope.issued_no = null;
-          $scope.issued_by = null;
-          $("input[name='image'], #issued_date").val("");
-          $scope.status = data.status;
-          $scope.formdata = "";
-        }).error(function(data, status, headers, config) {
-          $scope.response = data;
-          $timeout(function() {
-            $scope.response = null;
-          }, 15000);
-        });
-      });
-    };
+        }).then(
+          function(r) {
 
+            $scope.getreferences();
+            $scope.issued_date = null;
+            $scope.issued_no = null;
+            $scope.issued_by = null;
+            $("input[name='image'], #issued_date").val("");
+            $scope.status = r.status;
+            $scope.formdata = "";
+            Swal.fire({
+              position: 'top-end',
+              type: 'success',
+              title: 'ອັບໂຫລດຟາຍສໍາເລັດ',
+              text: r.status + " " + r.statusText,
+              showConfirmButton: false,
+              timer: 3000
+            });
+          },
+          function(r) {
+            $scope.response = r;
+            Swal.fire({
+              position: 'top-end',
+              type: 'error',
+              title: 'ອັບໂຫລດຟາຍບໍ່ສໍາເລັດ',
+              text: r.status + " " + r.statusText,
+              showConfirmButton: false,
+              timer: 3000
+            });
+          });
+
+      });
+
+
+    };
     $scope.getreferences = function() {
       if ($scope.year) {
         $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
@@ -448,7 +477,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
                   position: 'top-end',
                   type: 'success',
                   title: 'ການລຶບສໍາເລັດ',
-                  text: r.status,
+                  text: r.status + " " + r.statusText,
                   showConfirmButton: false,
                   timer: 3000
                 });
@@ -464,7 +493,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
                 position: 'top-end',
                 type: 'error',
                 title: 'ການລຶບບໍ່ສໍາເລັດ',
-                text: r.status,
+                text: r.status + " " + r.statusText,
                 showConfirmButton: false,
                 timer: 3000
               });

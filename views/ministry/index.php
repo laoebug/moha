@@ -151,7 +151,7 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
                       </td>
                       <td class="text-center">{{f.issued_no}}</td>
                       <td class="text-center">{{f.issued_date | date}}</td>
-                      <td class="text-center">{{f.issued_by}}</td>
+                      <td class="text-center">{{(f.issued_by=='undefined')?'':f.issued_by}}</td>
                       <td class="text-center">
                         <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
                           <i class="fa fa-trash"></i>
@@ -266,13 +266,24 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
     $scope.uploadedFile = function(element) {
       if (!$scope.issued_no) {
         $scope.files = null;
-        alert('ກະລຸນາປ້ອນເລກທີ');
+        Swal.fire({
+          title: 'ອັບໂຫຼດຟາຍ',
+          type: 'warning',
+          text: 'ກະລຸນາປ້ອນເລກທີ',
+
+        });
         return;
       }
       $scope.issued_date = $('#issued_date').val();
       if (!$scope.issued_date) {
         $scope.files = null;
-        alert('ກະລຸນາປ້ອນວັນທີ');
+
+        Swal.fire({
+          title: 'ອັບໂຫຼດຟາຍ',
+          type: 'warning',
+          text: 'ກະລຸນາປ້ອນວັນທີ',
+
+        });
         return;
       }
 
@@ -302,7 +313,7 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
           }
         }).then(
           function(r) {
-            
+
             $scope.getreferences();
             $scope.issued_date = null;
             $scope.issued_no = null;
@@ -337,19 +348,19 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
     };
 
     $scope.getreferences = function() {
-            if ($scope.year) {
-                $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-                    .then(function(r) {
-                        if (r.data)
-                            $scope.references = r.data.files;
-                    }, function(r) {
-                        $scope.response = r;
-                        $timeout(function() {
-                            $scope.response = null;
-                        }, 15000);
-                    });
-            }
-        };
+      if ($scope.year) {
+        $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
+          .then(function(r) {
+            if (r.data)
+              $scope.references = r.data.files;
+          }, function(r) {
+            $scope.response = r;
+            $timeout(function() {
+              $scope.response = null;
+            }, 15000);
+          });
+      }
+    };
 
 
     $scope.delete = function() {
@@ -413,61 +424,61 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
 
 
     $scope.deletefile = function(f) {
-            if ($scope.year && f) {
-                swal({
-                    title: "ໝັ້ນໃຈບໍ່?",
-                    text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "ແມ່ນ, ລຶບ",
-                    cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
-                    closeOnConfirm: true,
-                    closeOnCancel: true
-                }, function(isConfirm) {
-                    if (isConfirm) {
-                        $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-                            'id': f.id,
-                            '_csrf': $('meta[name="csrf-token"]').attr("content")
-                        }).then(function(r) {
-                            $scope.response = r;
-                            $scope.getreferences();
-                            $timeout(function() {
-                                $scope.response = null;
-                            }, 15000);
+      if ($scope.year && f) {
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function(isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function(r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function() {
+                $scope.response = null;
+              }, 15000);
 
-                            if (r.status == 200) {
-                                Swal.fire({
-                                    position: 'top-end',
-                                    type: 'success',
-                                    title: 'ການລຶບສໍາເລັດ',
-                                    text: r.status + " " + r.statusText,
-                                    showConfirmButton: false,
-                                    timer: 3000
-                                });
-                            }
-
-                        }, function(r) {
-                            $scope.response = r;
-
-                            Swal.fire({
-                                position: 'top-end',
-                                type: 'error',
-                                title: 'ການລຶບບໍ່ສໍາເລັດ',
-                                text: r.status + " " + r.statusText,
-                                showConfirmButton: false,
-                                timer: 3000
-                            });
-
-
-                            $timeout(function() {
-                                $scope.response = null;
-                            }, 15000);
-                        });
-                    }
+              if (r.status == 200) {
+                Swal.fire({
+                  position: 'top-end',
+                  type: 'success',
+                  title: 'ການລຶບສໍາເລັດ',
+                  text: r.status + " " + r.statusText,
+                  showConfirmButton: false,
+                  timer: 3000
                 });
-            }
-        };
+              }
 
-        
+            }, function(r) {
+              $scope.response = r;
+
+              Swal.fire({
+                position: 'top-end',
+                type: 'error',
+                title: 'ການລຶບບໍ່ສໍາເລັດ',
+                text: r.status + " " + r.statusText,
+                showConfirmButton: false,
+                timer: 3000
+              });
+
+
+              $timeout(function() {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
+      }
+    };
+
+
   });
 </script>
