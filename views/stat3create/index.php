@@ -2,25 +2,17 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\StatLocalAdminSearch */
+/* @var $searchModel app\models\Stat3createSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ";
+$this->title = "ສັງລວມຈໍານວນບ້ານເປົ້າໝາຍ 3 ສ້າງໃນການສ້າງເປັນບ້ານພັດທະນາ";
 $titles = [
-    'ເຈົ້າຄອງ ນະຄອນຫຼວງ',
-    'ຮອງເຈົ້າຄອງ ນະຄອນຫຼວງ',
-    'ເຈົ້າແຂວງ',
-    'ຮອງເຈົ້າແຂວງ',
-    'ເຈົ້ານະຄອນ',
-    'ຮອງເຈົ້ານະຄອນ',
-    'ເຈົ້າເມືອງ',
-    'ຮອງເຈົ້າເມືອງ',
-    'ນາຍບ້ານ',
-    'ຮອງນາຍບ້ານ',
-    'ບ້ານທີ່ໄດ້ປັບປຸງ ເປັນ 5 ໜ່ວຍງານ',
+    'ບ້ານເປົ້າໝາຍ 3 ສ້າງໃນການສ້າງເປັນເບ້ານພັດທະນາ' => ['ຈ/ນ ບ້ານ', 'ບ້ານສືບຕໍ່', 'ບ້ານກໍານົດ ໃໝ່',],
+    'ເປົ້າໝາຍເມືອງເຂັ້ມແຂງຮອບດ້ານ' => ['ຈ/ນ ເມືອງ', 'ເມືອງສືບຕໍ່', 'ເມືອງກໍານົດໃໝ່',],
+    'ເປົ້າໝາຍສ້າງບ້ານໃຫຍ່ເປັນຕົວເມືອງໃນຊົນນະບົດ' => ['ຈ/ນ ບ້ານ/ກຸ່ມບ້ານ'],
 ];
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
-<div class="row" ng-app="mohaApp" ng-controller="statLocalAdminController">
+<div class="row" ng-app="mohaApp" ng-controller="stat3CreateController">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
@@ -49,51 +41,32 @@ $titles = [
                 <div class="col-sm-10">
                     <table class="table table-bordered">
                         <tr>
-                            <?php foreach ($titles as $i => $title): if ($i === 6) break; ?>
-                                <td class="text-center" colspan="2"><?= $title ?></td>
+                            <?php foreach ($titles as $i => $title): ?>
+                                <td class="text-center" colspan="<?= count($title) ?>"><?= $i ?></td>
                             <?php endforeach; ?>
                         </tr>
                         <tr>
-                            <?php foreach ($titles as $i => $title): if ($i === 6) break; ?>
-                                <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Total') ?></td>
-                                <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Women') ?></td>
+                            <?php foreach ($titles as $i => $title): ?>
+                                <?php foreach ($title as $j => $t): ?>
+                                    <td class="text-center" style="width: 10%">
+                                        <?= $t ?>
+                                    </td>
+                                <? endforeach; ?>
                             <? endforeach; ?>
                         </tr>
                         <tr>
-                            <td class="text-center" ng-repeat-start="c in cols | limitTo: 6">
+                            <td class="text-center" ng-repeat-start="c in cols">
                                 <input min="0" type="number" class="form-control" ng-model="model[c.first]">
                             </td>
-                            <td class="text-center" ng-repeat-end>
+                            <td class="text-center" ng-if="c.second">
                                 <input ng-blur="model[c.second]=model[c.first] < model[c.second]?null:model[c.second]"
                                        min="0" max="{{model[c.first]}}" type="number" class="form-control"
                                        ng-model="model[c.second]">
                             </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm-12">
-                    <table class="table table-bordered">
-                        <tr>
-                            <?php foreach ($titles as $i => $title): if ($i >= 6) { ?>
-                                <td class="text-center" colspan="2"><?= $title ?></td>
-                            <?php } endforeach; ?>
-                        </tr>
-                        <tr>
-                            <?php foreach ($titles as $i => $title): if ($i >= 7) { ?>
-                                <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Total') ?></td>
-                                <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Women') ?></td>
-                            <? } endforeach; ?>
-                            <td class="text-center" style="width: 8%">ປັບປຸງແລ້ວ</td>
-                            <td class="text-center" style="width: 8%">ຍັງບໍ່ປັບປຸງ</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center" ng-repeat-start="c in cols | limitTo:(6 - cols.length)">
-                                <input min="0" type="number" class="form-control" ng-model="model[c.first]">
-                            </td>
-                            <td class="text-center" ng-repeat-end>
-                                <input ng-blur="model[c.second]=model[c.first] < model[c.second]?null:model[c.second]"
+                            <td class="text-center" ng-if="c.third" ng-repeat-end>
+                                <input ng-blur="model[c.third]=model[c.first] < model[c.third]?null:model[c.third]"
                                        min="0" max="{{model[c.first]}}" type="number" class="form-control"
-                                       ng-model="model[c.second]">
+                                       ng-model="model[c.third]">
                             </td>
                         </tr>
                     </table>
@@ -130,23 +103,24 @@ $titles = [
                             <tr>
                                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
                                 <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
-                                <?php foreach ($titles as $title): ?>
-                                    <th class="text-center" colspan="2"><?= $title ?></th>
+                                <?php foreach ($titles as $i => $title): ?>
+                                    <th class="text-center" colspan="<?= count($title) ?>"><?= $i ?></th>
                                 <?php endforeach; ?>
                             </tr>
                             <tr>
-                                <?php for ($i = 0; $i < 10; $i++): ?>
-                                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                                <?php endfor; ?>
-                                <td class="text-center">ປັບປຸງແລ້ວ</td>
-                                <td class="text-center">ຍັງບໍ່ປັບປຸງ</td>
+                                <?php foreach ($titles as $i => $title): ?>
+                                    <?php foreach ($title as $j => $t): ?>
+                                        <th style="width: 10%" class="text-center"><?= $t ?></th>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
                             </tr>
                             <tr>
                                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
                                 <th class="text-center" ng-repeat-start="c in cols">{{sum(c.first) | number | dash}}
                                 </th>
-                                <th class="text-center" ng-repeat-end>{{sum(c.second) | number | dash}}</th>
+                                <th class="text-center" ng-if="c.second">{{sum(c.second) | number | dash}}</th>
+                                <th class="text-center" ng-if="c.third" ng-repeat-end>{{sum(c.third) | number | dash}}
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -154,7 +128,9 @@ $titles = [
                                 <td class="text-center">{{$index + 1}}</td>
                                 <td>{{m.province_name}}</td>
                                 <td class="text-center" ng-repeat-start="c in cols">{{m[c.first] | number | dash}}</td>
-                                <td class="text-center" ng-repeat-end>{{m[c.second] | number | dash}}</td>
+                                <td class="text-center" ng-if="c.second">{{m[c.second] | number | dash}}</td>
+                                <td class="text-center" ng-if="c.third" ng-repeat-end>{{m[c.third] | number | dash}}
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -230,24 +206,16 @@ $titles = [
             return input ? input : '-';
         };
     });
-    app.controller('statLocalAdminController', function ($scope, $http, $sce, $timeout) {
-        $scope.url = 'index.php?r=stat-local-admin/';
+    app.controller('stat3CreateController', function ($scope, $http, $sce, $timeout) {
+        $scope.url = 'index.php?r=stat3create/';
         $scope.mode = 'read';
         $scope.changemode = function () {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
         $scope.cols = [
-            {first: 'capital_head_total', second: 'capital_head_women'},
-            {first: 'capital_vice_total', second: 'capital_vice_women'},
-            {first: 'province_head_total', second: 'province_head_women'},
-            {first: 'province_vice_total', second: 'province_vice_women'},
-            {first: 'city_head_total', second: 'city_head_women'},
-            {first: 'city_vice_total', second: 'city_vice_women'},
-            {first: 'district_head_total', second: 'district_head_women'},
-            {first: 'district_vice_total', second: 'district_vice_women'},
-            {first: 'village_head_total', second: 'village_head_women'},
-            {first: 'village_vice_total', second: 'village_vice_women'},
-            {first: 'village_approved', second: 'village_pending'}
+            {first: 'dev_total', second: 'dev_continue', third: 'dev_new'},
+            {first: 'strong_total', second: 'strong_continue', third: 'strong_new'},
+            {first: 'big'}
         ];
         $scope.sum = [];
         $http.get($scope.url + 'get')
@@ -285,11 +253,13 @@ $titles = [
                             $scope.cols.forEach(function (n) {
                                 $scope.model[n.first] = parseInt(r.data.model[n.first]);
                                 $scope.model[n.second] = parseInt(r.data.model[n.second]);
+                                $scope.model[n.third] = parseInt(r.data.model[n.third]);
                             });
                         } else {
                             $scope.cols.forEach(function (n) {
                                 $scope.model[n.first] = null;
                                 $scope.model[n.second] = null;
+                                $scope.model[n.third] = null;
                             });
                         }
                     }, function (r) {
@@ -304,7 +274,7 @@ $titles = [
             if ($scope.year && $scope.model) {
                 console.log($scope.model);
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
-                    'StatLocalAdminDetail': $scope.model,
+                    'Stat3createDetail': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
                 }).then(function (r) {
                     $scope.model = null;

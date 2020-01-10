@@ -7,8 +7,8 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\PhiscalYear;
 use app\models\Province;
-use app\models\StatLocalAdmin;
-use app\models\StatLocalAdminDetail;
+use app\models\Stat3create;
+use app\models\Stat3createDetail;
 use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
@@ -16,12 +16,12 @@ use yii\db\Exception;
 use yii\web\Controller;
 
 /**
- * StatLocalAdminController implements the CRUD actions for StatLocalAdmin model.
+ * Stat3createController implements the CRUD actions for Stat3create model.
  */
-class StatLocalAdminController extends Controller
+class Stat3createController extends Controller
 {
     /**
-     * Lists all StatLocalAdmin models.
+     * Lists all Stat3create models.
      * @return mixed
      */
     public function actionIndex()
@@ -70,7 +70,7 @@ class StatLocalAdminController extends Controller
             return;
         }
 
-        $model = StatLocalAdmin::find()->where(['phiscal_year_id' => $year->id])->one();
+        $model = Stat3create::find()->where(['phiscal_year_id' => $year->id])->one();
         if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
@@ -79,7 +79,7 @@ class StatLocalAdminController extends Controller
         $models = Province::find()
             ->alias('province')
             ->select('province.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id]);
+            ->join('left join', 'stat_3create_detail d', 'd.province_id = province.id and d.stat_3create_id=:id', [':id' => $model->id]);
         $user = Yii::$app->user->identity;
         if (isset($user->role->province_id)) {
             $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
@@ -110,9 +110,9 @@ class StatLocalAdminController extends Controller
             return;
         }
 
-        $model = StatLocalAdminDetail::find()
+        $model = Stat3createDetail::find()
             ->alias('d')
-            ->join('join', 'stat_local_admin l', 'l.id = d.stat_local_admin_id and l.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_3create l', 'l.id = d.stat_3create_id and l.phiscal_year_id=:year', [':year' => $year->id])
             ->where(['province_id' => $province]);
         $user = Yii::$app->user->identity;
         if (!empty ($user->role->province_id)) {
@@ -156,11 +156,11 @@ class StatLocalAdminController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model = StatLocalAdmin::find()
+            $model = Stat3create::find()
                 ->where(['phiscal_year_id' => $year->id])
                 ->one();
             if (!isset($model)) {
-                $model = new StatLocalAdmin();
+                $model = new Stat3create();
                 $model->phiscal_year_id = $year->id;
                 $model->user_id = Yii::$app->user->id;
             }
@@ -168,41 +168,21 @@ class StatLocalAdminController extends Controller
             $model->last_update = date('Y-m-d H:i:s');
             if (!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = StatLocalAdminDetail::find()
-                ->where(['stat_local_admin_id' => $model->id, 'province_id' => $post['StatLocalAdminDetail']['province']['id']])
+            $detail = Stat3createDetail::find()
+                ->where(['stat_3create_id' => $model->id, 'province_id' => $post['Stat3createDetail']['province']['id']])
                 ->one();
             if (!isset($detail)) {
-                $detail = new StatLocalAdminDetail();
-                $detail->province_id = $post['StatLocalAdminDetail']['province']['id'];
-                $detail->stat_local_admin_id = $model->id;
+                $detail = new Stat3createDetail();
+                $detail->province_id = $post['Stat3createDetail']['province']['id'];
+                $detail->stat_3create_id = $model->id;
             }
-            $detail->province_head_total = @$post['StatLocalAdminDetail']['province_head_total'];
-            $detail->province_head_women = @$post['StatLocalAdminDetail']['province_head_women'];
-            $detail->province_vice_total = @$post['StatLocalAdminDetail']['province_vice_total'];
-            $detail->province_vice_women = @$post['StatLocalAdminDetail']['province_vice_women'];
-            $detail->district_head_total = @$post['StatLocalAdminDetail']['district_head_total'];
-            $detail->district_head_women = @$post['StatLocalAdminDetail']['district_head_women'];
-            $detail->district_vice_total = @$post['StatLocalAdminDetail']['district_vice_total'];
-            $detail->district_vice_women = @$post['StatLocalAdminDetail']['district_vice_women'];
-            $detail->village_head_total = @$post['StatLocalAdminDetail']['village_head_total'];
-            $detail->village_head_women = @$post['StatLocalAdminDetail']['village_head_women'];
-            $detail->village_vice_total = @$post['StatLocalAdminDetail']['village_vice_total'];
-            $detail->village_vice_women = @$post['StatLocalAdminDetail']['village_vice_women'];
-            $detail->capital_head_total = @$post['StatLocalAdminDetail']['capital_head_total'];
-            $detail->capital_head_women = @$post['StatLocalAdminDetail']['capital_head_women'];
-            $detail->capital_vice_total = @$post['StatLocalAdminDetail']['capital_vice_total'];
-            $detail->capital_vice_women = @$post['StatLocalAdminDetail']['capital_vice_women'];
-            $detail->city_head_total = @$post['StatLocalAdminDetail']['city_head_total'];
-            $detail->city_head_women = @$post['StatLocalAdminDetail']['city_head_women'];
-            $detail->city_vice_total = @$post['StatLocalAdminDetail']['city_vice_total'];
-            $detail->city_vice_women = @$post['StatLocalAdminDetail']['city_vice_women'];
-            $detail->population_total = @$post['StatLocalAdminDetail']['population_total'];
-            $detail->population_women = @$post['StatLocalAdminDetail']['population_women'];
-            $detail->village = @$post['StatLocalAdminDetail']['village'];
-            $detail->family_total = @$post['StatLocalAdminDetail']['family_total'];
-            $detail->family_poor = @$post['StatLocalAdminDetail']['family_poor'];
-            $detail->village_approved = @$post['StatLocalAdminDetail']['village_approved'];
-            $detail->village_pending = @$post['StatLocalAdminDetail']['village_pending'];
+            $detail->dev_continue = @$post['Stat3createDetail']['dev_continue'];
+            $detail->dev_new = @$post['Stat3createDetail']['dev_new'];
+            $detail->dev_total = @$post['Stat3createDetail']['dev_total'];
+            $detail->strong_continue = @$post['Stat3createDetail']['strong_continue'];
+            $detail->strong_new = @$post['Stat3createDetail']['strong_new'];
+            $detail->strong_total = @$post['Stat3createDetail']['strong_total'];
+            $detail->big = @$post['Stat3createDetail']['big'];
 
             if (!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
@@ -215,6 +195,7 @@ class StatLocalAdminController extends Controller
 
     public function actionPrint($year)
     {
+
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -231,7 +212,7 @@ class StatLocalAdminController extends Controller
             return;
         }
 
-        $model = StatLocalAdmin::find()->where(['phiscal_year_id' => $year->id])->one();
+        $model = Stat3create::find()->where(['phiscal_year_id' => $year->id])->one();
         if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
@@ -240,7 +221,7 @@ class StatLocalAdminController extends Controller
         $models = Province::find()
             ->alias('province')
             ->select('province.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id])
+            ->join('left join', 'stat_3create_detail d', 'd.province_id = province.id and d.stat_3create_id=:id', [':id' => $model->id])
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
@@ -266,7 +247,7 @@ class StatLocalAdminController extends Controller
             return;
         }
 
-        $model = StatLocalAdmin::find()->where(['phiscal_year_id' => $year->id])->one();
+        $model = Stat3create::find()->where(['phiscal_year_id' => $year->id])->one();
         if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
@@ -275,11 +256,11 @@ class StatLocalAdminController extends Controller
         $models = Province::find()
             ->alias('province')
             ->select('province.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id])
+            ->join('left join', 'stat_3create_detail d', 'd.province_id = province.id and d.stat_3create_id=:id', [':id' => $model->id])
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Stat Local Administration ' . $year->year . '.xls',
+            'file' => 'Stat 3 Create ' . $year->year . '.xls',
             'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
         ]);
     }
@@ -303,7 +284,7 @@ class StatLocalAdminController extends Controller
             return;
         }
 
-        $menu = Menu::find()->where(['table_name' => 'stat_local_admin'])->one();
+        $menu = Menu::find()->where(['table_name' => 'stat_3create'])->one();
         if (!isset($menu)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
             return;
@@ -354,7 +335,7 @@ class StatLocalAdminController extends Controller
 
         $files = Attachment::find()->alias('a')
             ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
-                ':table' => 'stat_local_admin'
+                ':table' => 'stat_3create'
             ])
             ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
             ->orderBy('upload_date desc')

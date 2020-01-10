@@ -6,9 +6,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * SalaryLevelSearch represents the model behind the search form of `app\models\SalaryLevel`.
+ * Stat3createSearch represents the model behind the search form of `app\models\Stat3create`.
  */
-class SalaryLevelSearch extends SalaryLevel
+class Stat3createSearch extends Stat3create
 {
     /**
      * @inheritdoc
@@ -16,8 +16,8 @@ class SalaryLevelSearch extends SalaryLevel
     public function rules()
     {
         return [
-            [['id', 'deleted', 'position', 'user_id'], 'integer'],
-            [['name', 'last_update'], 'safe'],
+            [['id', 'user_id', 'saved', 'phiscal_year_id'], 'integer'],
+            [['last_update'], 'safe'],
         ];
     }
 
@@ -39,7 +39,7 @@ class SalaryLevelSearch extends SalaryLevel
      */
     public function search($params)
     {
-        $query = SalaryLevel::find();
+        $query = Stat3create::find();
 
         // add conditions that should always apply here
 
@@ -58,13 +58,11 @@ class SalaryLevelSearch extends SalaryLevel
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'deleted' => $this->deleted,
             'last_update' => $this->last_update,
-            'position' => $this->position,
             'user_id' => $this->user_id,
+            'saved' => $this->saved,
+            'phiscal_year_id' => $this->phiscal_year_id,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

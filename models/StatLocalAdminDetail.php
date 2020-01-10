@@ -37,8 +37,8 @@ use yii\db\ActiveRecord;
  * @property int $city_head_women
  * @property int $city_vice_total
  * @property int $city_vice_women
- * @property int $family_approved
- * @property int $family_pending
+ * @property int $village_approved
+ * @property int $village_pending
  *
  * @property Province $province
  * @property StatLocalAdmin $statLocalAdmin

@@ -6,25 +6,14 @@
  * Time: 14:56
  */
 $cols = [
-    'capital_head_total', 'capital_head_women', 'capital_vice_total', 'capital_vice_women',
-    'province_head_total', 'province_head_women', 'province_vice_total', 'province_vice_women',
-    'city_head_total', 'city_head_women', 'city_vice_total', 'city_vice_women',
-    'district_head_total', 'district_head_women', 'district_vice_total', 'district_vice_women',
-    'village_head_total', 'village_head_women', 'village_vice_total', 'village_vice_women',
-    'village_approved', 'village_pending'
+    'dev_total', 'dev_continue', 'dev_new',
+    'strong_total', 'strong_continue', 'strong_new',
+    'big'
 ];
 $titles = [
-    'ເຈົ້າຄອງ ນະຄອນຫຼວງ',
-    'ຮອງເຈົ້າຄອງ ນະຄອນຫຼວງ',
-    'ເຈົ້າແຂວງ',
-    'ຮອງເຈົ້າແຂວງ',
-    'ເຈົ້ານະຄອນ',
-    'ຮອງເຈົ້ານະຄອນ',
-    'ເຈົ້າເມືອງ',
-    'ຮອງເຈົ້າເມືອງ',
-    'ນາຍບ້ານ',
-    'ຮອງນາຍບ້ານ',
-    'ບ້ານທີ່ໄດ້ປັບປຸງ ເປັນ 5 ໜ່ວຍງານ',
+    'ບ້ານເປົ້າໝາຍ 3 ສ້າງໃນການສ້າງເປັນເບ້ານພັດທະນາ' => ['ຈ/ນ ບ້ານ', 'ບ້ານສືບຕໍ່', 'ບ້ານກໍານົດ ໃໝ່',],
+    'ເປົ້າໝາຍເມືອງເຂັ້ມແຂງຮອບດ້ານ' => ['ຈ/ນ ເມືອງ', 'ເມືອງສືບຕໍ່', 'ເມືອງກໍານົດໃໝ່',],
+    'ເປົ້າໝາຍສ້າງບ້ານໃຫຍ່ເປັນຕົວເມືອງໃນຊົນນະບົດ' => ['ຈ/ນ ບ້ານ/ກຸ່ມບ້ານ'],
 ];
 $sum = [];
 foreach ($cols as $col) $sum[$col] = 0;
@@ -43,28 +32,29 @@ if (isset($models))
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
-            <div class="card-title-w-btn ">
-                <h3 class="title">
-                    ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ
-                    (<?= @$year->year ?>)</h3>
-            </div>
+            <h3 class="text-center">ສັງລວມຈໍານວນບ້ານເປົ້າໝາຍ 3 ສ້າງໃນການສ້າງເປັນບ້ານພັດທະນາ</h3>
+            <p class="text-center">
+                ເປົ້າໝາຍເມືອງເຂັ້ມແຂງຮອບດ້ານ ແລະ ເປົ້າໝາຍສ້າງບ້ານໃຫຍ່ເປັນຕົວເມືອງໃນຊົນນະບົດ ທົ່ວປະເທດ
+                (<?= @$year->year ?>)
+            </p>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
                         <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
-                        <?php foreach ($titles as $title): ?>
-                            <th class="text-center" colspan="2"><?= $title ?></th>
+                        <?php foreach ($titles as $n => $title): ?>
+                            <th class="text-center" colspan="<?= count($title) ?>"><?= $n ?></th>
                         <?php endforeach; ?>
                     </tr>
                     <tr>
-                        <?php for ($i = 0; $i < count($titles) - 1; $i++): ?>
-                            <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                        <?php endfor; ?>
-                        <td class="text-center" style="width: 8%">ປັບປຸງແລ້ວ</td>
-                        <td class="text-center" style="width: 8%">ຍັງບໍ່ປັບປຸງ</td>
+                        <?php foreach ($titles as $n => $title): ?>
+                            <?php foreach ($title as $m => $t): ?>
+                                <th class="text-center">
+                                    <?= $t ?>
+                                </th>
+                            <?php endforeach; ?>
+                        <?php endforeach; ?>
                     </tr>
                     <tr>
                         <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
