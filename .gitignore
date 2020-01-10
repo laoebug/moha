@@ -21,3 +21,6 @@ gen
 /config/db.php
 /web/upload/
 /vendors/
+compower.lock
+.project
+.settings

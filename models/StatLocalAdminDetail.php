@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_local_admin_detail".
@@ -27,11 +29,21 @@ use Yii;
  * @property integer $village
  * @property integer $family_total
  * @property integer $family_poor
+ * @property int $capital_head_total
+ * @property int $capital_head_women
+ * @property int $capital_vice_total
+ * @property int $capital_vice_women
+ * @property int $city_head_total
+ * @property int $city_head_women
+ * @property int $city_vice_total
+ * @property int $city_vice_women
+ * @property int $family_approved
+ * @property int $family_pending
  *
  * @property Province $province
  * @property StatLocalAdmin $statLocalAdmin
  */
-class StatLocalAdminDetail extends \yii\db\ActiveRecord
+class StatLocalAdminDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -84,7 +96,7 @@ class StatLocalAdminDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -92,7 +104,7 @@ class StatLocalAdminDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatLocalAdmin()
     {
