@@ -6,9 +6,7 @@ use app\components\MyHelper;
 use app\models\Attachment;
 use app\models\Menu;
 use app\models\PhiscalYear;
-use app\models\Province;
-use app\models\Stat3create;
-use app\models\Stat3createDetail;
+use app\models\StatMapSupport;
 use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
@@ -20,8 +18,10 @@ use yii\web\Controller;
  */
 class StatMapSupportController extends Controller
 {
+    public $tablename = 'stat_map_support';
+
     /**
-     * Lists all Stat3create models.
+     * Lists all StatMapSupport models.
      * @return mixed
      */
     public function actionIndex()
@@ -43,12 +43,8 @@ class StatMapSupportController extends Controller
 
         $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
-
-        $provinces = Province::find()->asArray()->all();
-
         return json_encode([
-            'years' => $years,
-            'provinces' => $provinces
+            'years' => $years
         ]);
     }
 
@@ -70,59 +66,15 @@ class StatMapSupportController extends Controller
             return;
         }
 
-        $model = Stat3create::find()->where(['phiscal_year_id' => $year->id])->one();
-        if (!isset($model)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
-            return;
-        }
-
-        $models = Province::find()
-            ->alias('province')
-            ->select('province.*, d.*')
-            ->join('left join', 'stat_3create_detail d', 'd.province_id = province.id and d.stat_3create_id=:id', [':id' => $model->id]);
-        $user = Yii::$app->user->identity;
-        if (isset($user->role->province_id)) {
-            $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
-        }
-        $models = $models->orderBy('province.position')
-            ->asArray()->all();
-
+        $models = StatMapSupport::find()->where(['phiscal_year_id' => $year->id])->asArray()->all();
         return json_encode([
             'models' => $models
         ]);
     }
 
-    public function actionInquiry($year, $province)
+    public function actionDelete($id)
     {
-        $user = Yii::$app->user->identity;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                return;
-            }
-        }
-
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-            return;
-        }
-
-        $model = Stat3createDetail::find()
-            ->alias('d')
-            ->join('join', 'stat_3create l', 'l.id = d.stat_3create_id and l.phiscal_year_id=:year', [':year' => $year->id])
-            ->where(['province_id' => $province]);
-        $user = Yii::$app->user->identity;
-        if (!empty ($user->role->province_id)) {
-            $model->andWhere(['d.province_id' => $user->role->province_id]);
-        }
-        $model = $model->asArray()->one();
-
-        return json_encode([
-            'model' => $model
-        ]);
+        StatMapSupport::deleteAll(['id' => $id]);
     }
 
     public function actionSave($year)
@@ -154,48 +106,30 @@ class StatMapSupportController extends Controller
             return;
         }
 
-        $transaction = Yii::$app->db->beginTransaction();
+        if (!isset($post['StatMapSupport'])) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request'));
+            return;
+        }
         try {
-            $model = Stat3create::find()
-                ->where(['phiscal_year_id' => $year->id])
-                ->one();
-            if (!isset($model)) {
-                $model = new Stat3create();
-                $model->phiscal_year_id = $year->id;
-                $model->user_id = Yii::$app->user->id;
-            }
-            $model->saved = 1;
+            $p = $post['StatMapSupport'];
+            $model = isset($p['id']) ? StatMapSupport::find()
+                ->where(['phiscal_year_id' => $year->id, 'id' => $p['id']])
+                ->one() : new StatMapSupport();
+            $model->load($post);
+            $model->phiscal_year_id = $year->id;
+            $model->user_id = Yii::$app->user->id;
             $model->last_update = date('Y-m-d H:i:s');
             if (!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = Stat3createDetail::find()
-                ->where(['stat_3create_id' => $model->id, 'province_id' => $post['Stat3createDetail']['province']['id']])
-                ->one();
-            if (!isset($detail)) {
-                $detail = new Stat3createDetail();
-                $detail->province_id = $post['Stat3createDetail']['province']['id'];
-                $detail->stat_3create_id = $model->id;
-            }
-            $detail->dev_continue = @$post['Stat3createDetail']['dev_continue'];
-            $detail->dev_new = @$post['Stat3createDetail']['dev_new'];
-            $detail->dev_total = @$post['Stat3createDetail']['dev_total'];
-            $detail->strong_continue = @$post['Stat3createDetail']['strong_continue'];
-            $detail->strong_new = @$post['Stat3createDetail']['strong_new'];
-            $detail->strong_total = @$post['Stat3createDetail']['strong_total'];
-            $detail->big = @$post['Stat3createDetail']['big'];
-
-            if (!$detail->save()) throw new Exception(json_encode($detail->errors));
-            $transaction->commit();
         } catch (Exception $exception) {
-            $transaction->rollBack();
             MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
             return;
         }
+
     }
 
     public function actionPrint($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -212,18 +146,7 @@ class StatMapSupportController extends Controller
             return;
         }
 
-        $model = Stat3create::find()->where(['phiscal_year_id' => $year->id])->one();
-        if (!isset($model)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
-            return;
-        }
-
-        $models = Province::find()
-            ->alias('province')
-            ->select('province.*, d.*')
-            ->join('left join', 'stat_3create_detail d', 'd.province_id = province.id and d.stat_3create_id=:id', [':id' => $model->id])
-            ->asArray()->all();
-
+        $models = StatMapSupport::find()->where(['phiscal_year_id' => $year->id])->all();
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
         ]);
@@ -247,20 +170,9 @@ class StatMapSupportController extends Controller
             return;
         }
 
-        $model = Stat3create::find()->where(['phiscal_year_id' => $year->id])->one();
-        if (!isset($model)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
-            return;
-        }
-
-        $models = Province::find()
-            ->alias('province')
-            ->select('province.*, d.*')
-            ->join('left join', 'stat_3create_detail d', 'd.province_id = province.id and d.stat_3create_id=:id', [':id' => $model->id])
-            ->asArray()->all();
-
+        $models = StatMapSupport::find()->where(['phiscal_year_id' => $year->id])->all();
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Stat 3 Create ' . $year->year . '.xls',
+            'file' => 'Stat Map Service ' . $year->year . '.xls',
             'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
         ]);
     }
@@ -284,7 +196,7 @@ class StatMapSupportController extends Controller
             return;
         }
 
-        $menu = Menu::find()->where(['table_name' => 'stat_3create'])->one();
+        $menu = Menu::find()->where(['table_name' => $this->tablename])->one();
         if (!isset($menu)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
             return;
@@ -335,7 +247,7 @@ class StatMapSupportController extends Controller
 
         $files = Attachment::find()->alias('a')
             ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
-                ':table' => 'stat_3create'
+                ':table' => $this->tablename
             ])
             ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
             ->orderBy('upload_date desc')
