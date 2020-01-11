@@ -6,12 +6,15 @@
 ?>
 <?php
 
-/* @var $this \yii\web\View */
+/* @var $this View */
 
 /* @var $content string */
 
 use app\components\BreacrumbWidget;
 use app\components\TopMenuWidget;
+use yii\helpers\Html;
+use yii\web\View;
+use yii\widgets\Breadcrumbs;
 
 ?>
 <?php $this->beginPage() ?>
@@ -21,13 +24,13 @@ use app\components\TopMenuWidget;
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= \yii\helpers\Html::csrfMetaTags() ?>
+    <?= Html::csrfMetaTags() ?>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
     <link rel="stylesheet" href="css/datetimepicker.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <title>ກະຊວງພາຍໃນ - <?= \yii\helpers\Html::encode($this->title) ?></title>
+    <title>ກະຊວງພາຍໃນ - <?= Html::encode($this->title) ?></title>
     <style type="text/css">
         .table-responsive {
             max-height: 800px;
@@ -50,7 +53,7 @@ use app\components\TopMenuWidget;
             -moz-border-radius: 0 6px 6px;
             border-radius: 0 6px 6px 6px;
             overflow-y: scroll;
-            max-height: 200px;
+            max-height: 600px;
         }
 
         .dropdown-submenu:hover > .dropdown-menu {
@@ -177,16 +180,16 @@ use app\components\TopMenuWidget;
                 <h1><i class="fa fa-dashboard"></i> <?= $this->title ?></h1>
                 <p><?= isset($this->subtitle) ? $this->subtitle : "" ?></p>
             </div>
-            <?php if(isset($_GET['menu']) && $_GET['menu']!=0): ;?>
-            <?php 
-            	//to initial Wideget menu data
-	            BreacrumbWidget::begin();
-				BreacrumbWidget::end();
-			?>
-			<?php endif;?>
+            <?php if (isset($_GET['menu']) && $_GET['menu'] != 0): ?>
+                <?php
+                //to initial Wideget menu data
+                BreacrumbWidget::begin();
+                BreacrumbWidget::end();
+                ?>
+            <?php endif; ?>
             <div>
                 <?=
-                \yii\widgets\Breadcrumbs::widget([
+                Breadcrumbs::widget([
                     'homeLink' => [
                         'label' => 'ໜ້າຫຼັກ',
                         'url' => ['site/index'],

@@ -16,13 +16,16 @@ foreach ($models as $model) {
     * {
         font-family: "Saysettha OT", "Phetsarath OT" !important;
     }
-    @page { size: landscape; }
+
+    @page {
+        size: landscape;
+    }
 </style>
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title">ຕາຕະລາງບັນຊີໂຄງການຊ່ວຍເຫຼືອທາງການເພື່ອການພັດທະນາ (ODA) (<?= $year->year ?>)</h3>
+                <h3 class="title">ຕາຕາລາງບັນດາໂຄງການຊ່ວຍເຫຼືອຂອງຕ່າງປະເທດປະຈຳປີ (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">

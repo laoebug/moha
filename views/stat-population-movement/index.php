@@ -1,11 +1,11 @@
-<?php $_GET['menu']=1;?>
+<?php $_GET['menu'] = 1; ?>
 <?php
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatPopulationMovementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງພົນລະເມືອງ'), 'url' => ['index']];
-$this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງຂອງກະຊວງພາຍໃນ";
+$this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງທົ່ວປະເທດ ປະຈຳປີ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -24,7 +24,8 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+                ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
@@ -46,16 +47,22 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                             <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Women') ?></td>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 12%"><input ng-model="model.district" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 12%"><input ng-model="model.village"
-                                                                              min="{{model.village}}" type="number"
-                                                                              class="form-control"></td>
-                            <td class="text-center" style="width: 18%"><input ng-model="model.population_total" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 18%"><input ng-model="model.population_women"
-                                                                              max="{{model.population_total}}"
-                                                                              type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 12%">
+                                <input ng-model="model.district" min="0" type="number" class="form-control">
+                            </td>
+                            <td class="text-center" style="width: 12%">
+                                <input ng-model="model.village" min="{{model.village}}" type="number"
+                                       class="form-control">
+                            </td>
+                            <td class="text-center" style="width: 18%">
+                                <input ng-model="model.population_total" min="0"
+                                       type="number" class="form-control">
+                            </td>
+                            <td class="text-center" style="width: 18%">
+                                <input ng-model="model.population_women"
+                                       max="{{model.population_total}}"
+                                       type="number" class="form-control">
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -64,8 +71,10 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                         <tr>
                             <td class="text-center" colspan="2">ຈຳນວນເກີດ</td>
                             <td class="text-center" colspan="2">ຈຳນວນເສຍຊີວິດ</td>
-                            <td class="text-center" rowspan="2">ແຕ່ງດອງ</td>
-                            <td class="text-center" rowspan="2">ຢ່າຮ້າງ</td>
+                            <td class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ລາວ</td>
+                            <td class="text-center" rowspan="2">ຢ່າຮ້າງ ລາວ-ລາວ</td>
+                            <td class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ຕ່າງປະເທດ</td>
+                            <td class="text-center" rowspan="2">ຢ່າຮ້າງ ລາວ-ຕ່າງປະເທດ</td>
                         </tr>
                         <tr>
                             <?php for ($i = 0; $i < 2; $i++): ?>
@@ -89,6 +98,18 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                             <td class="text-center" style="width: 10%"><input ng-model="model.divorce"
                                                                               max="{{model.married}}" type="number"
                                                                               class="form-control"></td>
+
+                            <td class="text-center" style="width: 10%">
+                                <input ng-model="model.married_local_foreigner" min="0"
+                                       type="number" class="form-control">
+                            </td>
+                            <td class="text-center" style="width: 10%">
+                                <input ng-model="model.divorce_local_foreigner" max="{{model.married_local_foreigner}}"
+                                       type="number"
+                                       class="form-control">
+                            </td>
+
+
                         </tr>
                     </table>
                 </div>
@@ -161,8 +182,10 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                                 <th class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ</th>
                                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Born') ?></th>
                                 <th class="text-center" colspan="2">ເສຍຊີວິດ</th>
-                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Married') ?></th>
-                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Divorced') ?></th>
+                                <th class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ລາວ</th>
+                                <th class="text-center" rowspan="2">ຢ່າຮ້າງ ລາວ-ລາວ</th>
+                                <th class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ຕ່າງປະເທດ</th>
+                                <th class="text-center" rowspan="2">ຢ່າຮ້າງ ລາວ-ຕ່າງປະເທດ</th>
                                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-In') ?></th>
                                 <th class="text-center" colspan="2">ຍ້າຍອອກໄປ</th>
                                 <th class="text-center" colspan="2"><?= Yii::t('app', 'Real') ?></th>
@@ -209,7 +232,8 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                         </div>
                         <div class="col-sm-3">
                             <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
+                                   type="text">
                         </div>
                         <div class="col-sm-3">
                             <label>ອອກໂດຍ</label>
@@ -238,7 +262,8 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                                     <tbody>
                                     <tr ng-repeat="f in references">
                                         <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                        </td>
                                         <td class="text-center">{{f.issued_no}}</td>
                                         <td class="text-center">{{f.issued_date | date}}</td>
                                         <td class="text-center">{{f.issued_by}}</td>
@@ -266,223 +291,223 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
 <script type="text/javascript" src="js/datetimepicker.js"></script>
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
-  var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
-  app.filter('dash', function() {
-    return function(input) {
-      return input ? input : '-';
-    };
-  });
-  app.controller('statPopulationMovementController', function ($scope, $http, $sce, $timeout) {
-    $scope.url = 'index.php?r=stat-population-movement/';
-    $scope.mode = 'read';
-    $scope.changemode = function () {
-      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
-    };
-    $http.get($scope.url + 'get')
-      .then(function (r) {
-        $scope.years = r.data.years;
-        $scope.provinces = r.data.provinces;
-      }, function (r) {
-        $scope.response = r;
-        $timeout(function () {
-          $scope.response = null;
-        }, 15000);
-      });
-
-    $scope.enquiry = function () {
-      $scope.model = null;
-      $scope.models = null;
-      $scope.stat = null;
-      if ($scope.year)
-        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-          .then(function (r) {
-            $scope.models = r.data.models;
-            $scope.stat = r.data.stat;
-            $scope.stat.colors = ['#FF0000', '#0000FF'];
-            $scope.getreferences();
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-    };
-
-    $scope.inquiry = function () {
-      if ($scope.year && $scope.model.province)
-        $http.get($scope.url + 'inquiry&province=' + $scope.model.province.id + '&year=' + $scope.year.id)
-          .then(function (r) {
-            if (r.data.model) {
-              $scope.model.district = parseInt(r.data.model.district);
-              $scope.model.village = parseInt(r.data.model.village);
-              $scope.model.population_total = parseInt(r.data.model.population_total);
-              $scope.model.population_women = parseInt(r.data.model.population_women);
-              $scope.model.born_total = parseInt(r.data.model.born_total);
-              $scope.model.born_women = parseInt(r.data.model.born_women);
-              $scope.model.die_total = parseInt(r.data.model.die_total);
-              $scope.model.die_women = parseInt(r.data.model.die_women);
-              $scope.model.married = parseInt(r.data.model.married);
-              $scope.model.divorce = parseInt(r.data.model.divorce);
-              $scope.model.movein_total = parseInt(r.data.model.movein_total);
-              $scope.model.movein_women = parseInt(r.data.model.movein_women);
-              $scope.model.moveout_total = parseInt(r.data.model.moveout_total);
-              $scope.model.moveout_women = parseInt(r.data.model.moveout_women);
-              $scope.model.real_total = parseInt(r.data.model.real_total);
-              $scope.model.real_women = parseInt(r.data.model.real_women);
-            } else {
-              $scope.model.district = null;
-              $scope.model.village = null;
-              $scope.model.population_total = null;
-              $scope.model.population_women = null;
-              $scope.model.born_total = null;
-              $scope.model.born_women = null;
-              $scope.model.die_total = null;
-              $scope.model.die_women = null;
-              $scope.model.married = null;
-              $scope.model.divorce = null;
-              $scope.model.movein_total = null;
-              $scope.model.movein_women = null;
-              $scope.model.moveout_total = null;
-              $scope.model.moveout_women = null;
-              $scope.model.real_total = null;
-              $scope.model.real_women = null;
-            }
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-    };
-
-    $scope.save = function () {
-      if ($scope.year && $scope.model) {
-        $http.post($scope.url + 'save&year=' + $scope.year.id, {
-          'StatPopulationMovementDetail': $scope.model,
-          '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function (r) {
-          $scope.model = null;
-          $scope.response = r;
-          $scope.enquiry();
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        }, function (r) {
-          $scope.response = r;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        });
-      }
-    };
-
-    $scope.sum = function (key) {
-      var total = 0;
-      if ($scope.models)
-        for (var n = 0; n < $scope.models.length; n++)
-          if ($scope.models[n][key])
-            total += parseInt($scope.models[n][key]);
-      return total == 0 ? 0 : total;
-    };
-
-    $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
-        $scope.files = null;
-        alert('ກະລຸນາປ້ອນເລກທີ');
-        return;
-      }
-      $scope.issued_date = $('#issued_date').val();
-      if(!$scope.issued_date) {
-        $scope.files = null;
-        alert('ກະລຸນາປ້ອນວັນທີ');
-        return;
-      }
-
-      $scope.$apply(function ($scope) {
-        $scope.files = element.files;
-        $http({
-          url: $scope.url + "upload&year=" + $scope.year.id,
-          method: "POST",
-          processData: false,
-          headers: {'Content-Type': undefined},
-          data: {
-            '_csrf': $('meta[name="csrf-token"]').attr("content"),
-            'issued_no': $scope.issued_no,
-            'issued_date': $scope.issued_date,
-            'issued_by': $scope.issued_by
-          },
-          transformRequest: function (data) {
-            var formData = new FormData();
-            var file = $scope.files[0];
-            formData.append("file_upload", file);
-            angular.forEach(data, function (value, key) {
-              formData.append(key, value);
-            });
-            return formData;
-          }
-        }).success(function (data, status, headers, config) {
-          $scope.getreferences();
-          $scope.issued_date = null;
-          $scope.issued_no = null;
-          $scope.issued_by = null;
-          $("input[name='image'], #issued_date").val("");
-          $scope.status = data.status;
-          $scope.formdata = "";
-        }).error(function (data, status, headers, config) {
-          $scope.response = data;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        });
-      });
-    };
-
-    $scope.getreferences = function() {
-      if($scope.year) {
-        $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-          .then(function (r) {
-            if (r.data)
-              $scope.references = r.data.files;
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-      }
-    };
-
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        swal({
-          title: "ໝັ້ນໃຈບໍ່?",
-          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "ແມ່ນ, ລຶບ",
-          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
-          closeOnConfirm: true,
-          closeOnCancel: true
-        }, function (isConfirm) {
-          if (isConfirm) {
-            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-              'id': f.id,
-              '_csrf': $('meta[name="csrf-token"]').attr("content")
-            }).then(function (r) {
-              $scope.response = r;
-              $scope.getreferences();
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
+    var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
+    app.filter('dash', function () {
+        return function (input) {
+            return input ? input : '-';
+        };
+    });
+    app.controller('statPopulationMovementController', function ($scope, $http, $sce, $timeout) {
+        $scope.url = 'index.php?r=stat-population-movement/';
+        $scope.mode = 'read';
+        $scope.changemode = function () {
+            $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
+        };
+        $http.get($scope.url + 'get')
+            .then(function (r) {
+                $scope.years = r.data.years;
+                $scope.provinces = r.data.provinces;
             }, function (r) {
-              $scope.response = r;
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
+                $scope.response = r;
+                $timeout(function () {
+                    $scope.response = null;
+                }, 15000);
             });
-          }
-        });
-      }
-    };
-  });
+
+        $scope.enquiry = function () {
+            $scope.model = null;
+            $scope.models = null;
+            $scope.stat = null;
+            if ($scope.year)
+                $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+                    .then(function (r) {
+                        $scope.models = r.data.models;
+                        $scope.stat = r.data.stat;
+                        $scope.stat.colors = ['#FF0000', '#0000FF'];
+                        $scope.getreferences();
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+        };
+
+        $scope.inquiry = function () {
+            if ($scope.year && $scope.model.province)
+                $http.get($scope.url + 'inquiry&province=' + $scope.model.province.id + '&year=' + $scope.year.id)
+                    .then(function (r) {
+                        if (r.data.model) {
+                            $scope.model.district = parseInt(r.data.model.district);
+                            $scope.model.village = parseInt(r.data.model.village);
+                            $scope.model.population_total = parseInt(r.data.model.population_total);
+                            $scope.model.population_women = parseInt(r.data.model.population_women);
+                            $scope.model.born_total = parseInt(r.data.model.born_total);
+                            $scope.model.born_women = parseInt(r.data.model.born_women);
+                            $scope.model.die_total = parseInt(r.data.model.die_total);
+                            $scope.model.die_women = parseInt(r.data.model.die_women);
+                            $scope.model.married = parseInt(r.data.model.married);
+                            $scope.model.divorce = parseInt(r.data.model.divorce);
+                            $scope.model.movein_total = parseInt(r.data.model.movein_total);
+                            $scope.model.movein_women = parseInt(r.data.model.movein_women);
+                            $scope.model.moveout_total = parseInt(r.data.model.moveout_total);
+                            $scope.model.moveout_women = parseInt(r.data.model.moveout_women);
+                            $scope.model.real_total = parseInt(r.data.model.real_total);
+                            $scope.model.real_women = parseInt(r.data.model.real_women);
+                        } else {
+                            $scope.model.district = null;
+                            $scope.model.village = null;
+                            $scope.model.population_total = null;
+                            $scope.model.population_women = null;
+                            $scope.model.born_total = null;
+                            $scope.model.born_women = null;
+                            $scope.model.die_total = null;
+                            $scope.model.die_women = null;
+                            $scope.model.married = null;
+                            $scope.model.divorce = null;
+                            $scope.model.movein_total = null;
+                            $scope.model.movein_women = null;
+                            $scope.model.moveout_total = null;
+                            $scope.model.moveout_women = null;
+                            $scope.model.real_total = null;
+                            $scope.model.real_women = null;
+                        }
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+        };
+
+        $scope.save = function () {
+            if ($scope.year && $scope.model) {
+                $http.post($scope.url + 'save&year=' + $scope.year.id, {
+                    'StatPopulationMovementDetail': $scope.model,
+                    '_csrf': $('meta[name="csrf-token"]').attr("content")
+                }).then(function (r) {
+                    $scope.model = null;
+                    $scope.response = r;
+                    $scope.enquiry();
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                }, function (r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                });
+            }
+        };
+
+        $scope.sum = function (key) {
+            var total = 0;
+            if ($scope.models)
+                for (var n = 0; n < $scope.models.length; n++)
+                    if ($scope.models[n][key])
+                        total += parseInt($scope.models[n][key]);
+            return total == 0 ? 0 : total;
+        };
+
+        $scope.uploadedFile = function (element) {
+            if (!$scope.issued_no) {
+                $scope.files = null;
+                alert('ກະລຸນາປ້ອນເລກທີ');
+                return;
+            }
+            $scope.issued_date = $('#issued_date').val();
+            if (!$scope.issued_date) {
+                $scope.files = null;
+                alert('ກະລຸນາປ້ອນວັນທີ');
+                return;
+            }
+
+            $scope.$apply(function ($scope) {
+                $scope.files = element.files;
+                $http({
+                    url: $scope.url + "upload&year=" + $scope.year.id,
+                    method: "POST",
+                    processData: false,
+                    headers: {'Content-Type': undefined},
+                    data: {
+                        '_csrf': $('meta[name="csrf-token"]').attr("content"),
+                        'issued_no': $scope.issued_no,
+                        'issued_date': $scope.issued_date,
+                        'issued_by': $scope.issued_by
+                    },
+                    transformRequest: function (data) {
+                        var formData = new FormData();
+                        var file = $scope.files[0];
+                        formData.append("file_upload", file);
+                        angular.forEach(data, function (value, key) {
+                            formData.append(key, value);
+                        });
+                        return formData;
+                    }
+                }).success(function (data, status, headers, config) {
+                    $scope.getreferences();
+                    $scope.issued_date = null;
+                    $scope.issued_no = null;
+                    $scope.issued_by = null;
+                    $("input[name='image'], #issued_date").val("");
+                    $scope.status = data.status;
+                    $scope.formdata = "";
+                }).error(function (data, status, headers, config) {
+                    $scope.response = data;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                });
+            });
+        };
+
+        $scope.getreferences = function () {
+            if ($scope.year) {
+                $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
+                    .then(function (r) {
+                        if (r.data)
+                            $scope.references = r.data.files;
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+            }
+        };
+
+        $scope.deletefile = function (f) {
+            if ($scope.year && f) {
+                swal({
+                    title: "ໝັ້ນໃຈບໍ່?",
+                    text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "ແມ່ນ, ລຶບ",
+                    cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+                            'id': f.id,
+                            '_csrf': $('meta[name="csrf-token"]').attr("content")
+                        }).then(function (r) {
+                            $scope.response = r;
+                            $scope.getreferences();
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        }, function (r) {
+                            $scope.response = r;
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        });
+                    }
+                });
+            }
+        };
+    });
 </script>

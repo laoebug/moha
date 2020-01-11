@@ -27,10 +27,11 @@ class StatGovcoinMinistryController extends Controller
         'memo_personal', 'memo_team',
         'amer_personal', 'amer_team',
         'fran_personal', 'fran_team',
+        'remember_team', 'remember_personal',
         'gove_personal', 'gove_team',
     ];
 
-    public $lables = ['ຫຼຽນກາແຮງງານ', 'ຫຼຽນກາພັດທະນາ', 'ຫຼຽນກາລະນຶກ 5 ປີ', 'ຫຼຽນກາຕໍ່ຕ້ານ A', 'ຫຼຽນກາຕໍ່ຕ້ານ F', 'ໃບຍ້ອງຍໍລັດຖະບານ'];
+    public $lables = ['ຫຼຽນກາແຮງງານ', 'ຫຼຽນກາພັດທະນາ', 'ຫຼຽນກາລະນຶກ 5 ປີ', 'ຫຼຽນກາຕໍ່ຕ້ານ A', 'ຫຼຽນກາຕໍ່ຕ້ານ F', 'ໃບປະເທດຊາດຈາລຶກບຸນຄຸນ', 'ໃບຍ້ອງຍໍລັດຖະບານ'];
 
     public function actionIndex()
     {
@@ -54,7 +55,7 @@ class StatGovcoinMinistryController extends Controller
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         $awards = Award::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
         $ministries = Ministry::find()
-            ->where('deleted=0 and ministry_group_id in (1,2)')
+            ->where('deleted=0')
             ->orderBy('position')->asArray()->all();
 
         return json_encode([

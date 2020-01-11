@@ -32,6 +32,8 @@ class StatPopulationMovementController extends Controller
         , 'die_women'
         , 'married'
         , 'divorce'
+        , 'married_local_foreigner'
+        , 'divorce_local_foreigner'
         , 'movein_total'
         , 'movein_women'
         , 'moveout_total'
@@ -106,6 +108,25 @@ class StatPopulationMovementController extends Controller
                 ]
             ],
         ]);
+    }
+
+    private function getModels($year)
+    {
+        $model = StatPopulationMovement::find()
+            ->where(['phiscal_year_id' => $year])->one();
+        if (!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+        $models = Province::find()
+            ->alias('province')
+            ->select('province.*, d.*')
+            ->join('left join', 'stat_population_movement_detail d', 'd.province_id = province.id and d.stat_population_movement_id=:id', [':id' => $model->id]);
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->andWhere(['province.id' => $user->role->province_id]);
+        }
+        return $models->orderBy('province.position')->asArray()->all();
     }
 
     public function actionInquiry($year, $province)
@@ -257,25 +278,6 @@ class StatPopulationMovementController extends Controller
                 'models' => $this->getModels($year)
             ])
         ]);
-    }
-
-    private function getModels($year)
-    {
-        $model = StatPopulationMovement::find()
-            ->where(['phiscal_year_id' => $year])->one();
-        if (!isset($model)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
-            return;
-        }
-        $models = Province::find()
-            ->alias('province')
-            ->select('province.*, d.*')
-            ->join('left join', 'stat_population_movement_detail d', 'd.province_id = province.id and d.stat_population_movement_id=:id', [':id' => $model->id]);
-        $user = Yii::$app->user->identity;
-        if (isset($user->role->province_id)) {
-            $models = $models->andWhere(['province.id' => $user->role->province_id]);
-        }
-        return $models->orderBy('province.position')->asArray()->all();
     }
 
     public function actionUpload($year)

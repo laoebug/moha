@@ -7,11 +7,14 @@
  */
 ?>
 <style type="text/css" media="print">
-    @page { size: landscape; }
+    @page {
+        size: landscape;
+    }
 </style>
 <div class="row">
     <div class="col-sm-12">
-        <h3 class="title">ປະເພດຫຼຽນກາສຳລັບຍ້ອງຍໍພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນຫຼວງວຽງຈັນ (<?= $year->year ?>)</h3>
+        <h3 class="title">ຕາຕະລາງສະຖີຕິປະເພດຫຼຽນໄຊ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນ ແລະ ນະຄອນຫຼວງ
+            ປະຈຳປີ <?= $year->year ?></h3>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>

@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatGovcoinMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃບຍ້ອງຍໍລັດຖະບານ ສຳລັບຍ້ອງຍໍພາຍໃນຂອງບັນດາກະຊວງ, ອົງການ";
+$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ, ອົງການອ້ອມຂ້າງສູນກາງ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statGovcoinMinistry">
@@ -66,6 +66,9 @@ $this->title = "ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃ�
                             <td><input type="number" class="form-control" ng-model="model.amer_team" min="0"></td>
                             <td><input type="number" class="form-control" ng-model="model.fran_personal" min="0"></td>
                             <td><input type="number" class="form-control" ng-model="model.fran_team" min="0"></td>
+                            <td><input type="number" class="form-control" ng-model="model.remember_personal" min="0">
+                            </td>
+                            <td><input type="number" class="form-control" ng-model="model.remember_team" min="0"></td>
                             <td><input type="number" class="form-control" ng-model="model.gove_personal" min="0"></td>
                             <td><input type="number" class="form-control" ng-model="model.gove_team" min="0"></td>
                         </tr>
@@ -110,6 +113,7 @@ $this->title = "ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃ�
                                 <th class="text-center" rowspan="3">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</th>
                                 <th class="text-center" rowspan="3">ຍ້ອງຍໍຜົນງານ</th>
                                 <th class="text-center" colspan="10">ປະເພດຫຼຽນກາ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ໃບປະເທດຊາດຈາລຶກບຸນຄຸນ</th>
                                 <th class="text-center" colspan="2" rowspan="2">ໃບຍ້ອງຍໍລັດຖະບານ</th>
                                 <th class="text-center" colspan="2" rowspan="2">ລວມ</th>
                                 <th class="text-center" rowspan="3">ໝາຍເຫດ</th>
@@ -139,6 +143,8 @@ $this->title = "ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃ�
                                 <td class="text-center">{{sumcolumn('amer_team') | number | dash }}</td>
                                 <td class="text-center">{{sumcolumn('fran_personal') | number | dash }}</td>
                                 <td class="text-center">{{sumcolumn('fran_team') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('remember_personal') | number | dash }}</td>
+                                <td class="text-center">{{sumcolumn('remember_team') | number | dash }}</td>
                                 <td class="text-center">{{sumcolumn('gove_personal') | number | dash }}</td>
                                 <td class="text-center">{{sumcolumn('gove_team') | number | dash }}</td>
 
@@ -161,6 +167,8 @@ $this->title = "ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃ�
                                 <td class="text-center">{{model.amer_team | number | dash }}</td>
                                 <td class="text-center">{{model.fran_personal| number | dash }}</td>
                                 <td class="text-center">{{model.fran_team | number | dash }}</td>
+                                <td class="text-center">{{model.remember_personal| number | dash }}</td>
+                                <td class="text-center">{{model.remember_team | number | dash }}</td>
                                 <td class="text-center">{{model.gove_personal| number | dash }}</td>
                                 <td class="text-center">{{model.gove_team | number | dash }}</td>
 

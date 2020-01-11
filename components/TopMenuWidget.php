@@ -3,7 +3,6 @@
 namespace app\components;
 
 use yii\base\Widget;
-use app\services\AuthenticationService;
 
 class TopMenuWidget extends Widget
 {
@@ -24,4 +23,3 @@ class TopMenuWidget extends Widget
         ));
     }
 }
-?>

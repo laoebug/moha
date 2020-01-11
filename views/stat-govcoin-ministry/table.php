@@ -7,11 +7,14 @@
  */
 ?>
 <style type="text/css" media="print">
-    @page { size: landscape; }
+    @page {
+        size: landscape;
+    }
 </style>
 <div class="row">
     <div class="col-sm-12">
-        <h3 class="title">ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃບຍ້ອງຍໍລັດຖະບານ ສຳລັບຍ້ອງຍໍພາຍໃນຂອງບັນດາກະຊວງ, ອົງການ (<?= $year->year ?>)</h3>
+        <h3 class="title">ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ,
+            ອົງການອ້ອມຂ້າງສູນກາງ <?= $year->year ?></h3>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -19,6 +22,7 @@
                 <th class="text-center" rowspan="3">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</th>
                 <th class="text-center" rowspan="3">ຍ້ອງຍໍຜົນງານ</th>
                 <th class="text-center" colspan="10">ປະເພດຫຼຽນກາ</th>
+                <th class="text-center" colspan="2" rowspan="2">ໃບປະເທດຊາດຈາລຶກບຸນຄຸນ</th>
                 <th class="text-center" colspan="2" rowspan="2">ໃບຍ້ອງຍໍລັດຖະບານ</th>
                 <th class="text-center" colspan="2" rowspan="2">ລວມ</th>
                 <th class="text-center" rowspan="3">ໝາຍເຫດ</th>

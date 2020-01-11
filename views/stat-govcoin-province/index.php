@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatGovcoinProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ປະເພດຫຼຽນກາສຳລັບຍ້ອງຍໍພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນຫຼວງວຽງຈັນ";
+$this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽນໄຊ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນ ແລະ ນະຄອນຫຼວງ ປະຈຳປີ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -109,8 +109,8 @@ $this->title = "ປະເພດຫຼຽນກາສຳລັບຍ້ອງຍ�
                             <thead>
                             <tr>
                                 <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" rowspan="3" rowspan="2">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</th>
-                                <th class="text-center" rowspan="3" rowspan="2">ຍ້ອງຍໍຜົນງານ</th>
+                                <th class="text-center" rowspan="3">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</th>
+                                <th class="text-center" rowspan="3">ຍ້ອງຍໍຜົນງານ</th>
                                 <th class="text-center" colspan="10">ປະເພດຫຼຽນກາ</th>
                                 <th class="text-center" colspan="2" rowspan="2">ໃບຍ້ອງຍໍລັດຖະບານ</th>
                                 <th class="text-center" colspan="2" rowspan="2">ລວມ</th>

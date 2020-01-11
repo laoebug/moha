@@ -1,15 +1,11 @@
-<?php $_GET['menu']=1;?>
+<?php $_GET['menu'] = 1; ?>
 <?php
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
-// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມພັດທະນາ ແລະ ການບໍລິຫານລັດ'), 'url' => ['index']];
 $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂອງລັດຖະບານ";
-// $this->params['breadcrumbs'][] = $this->title;
-
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="ministryController">
     <div class="col-sm-12">
@@ -43,27 +39,24 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
                         <i class="fa fa-plus"></i> ເພີ່ມ
                     </button>
                 </div>
-                <div class="col-sm-2" ng-show="ministry && ministry.id"
-                ">
+                <div class="col-sm-2" ng-show="ministry && ministry.id">
                     <label for="">&nbsp;</label>
                     <button type="button" class="btn btn-info col-sm-12" ng-click="save(0)">
                         <i class="fa fa-save"></i> ແກ້ໄຂ
                     </button>
                 </div>
-            <div class="col-sm-2" ng-show="ministry && ministry.id"
-            ">
+                <div class="col-sm-2" ng-show="ministry && ministry.id">
                     <label for="">&nbsp;</label>
                     <button type="button" class="btn btn-danger col-sm-12" ng-click="delete(0)">
                         <i class="fa fa-trash"></i> ລຶບ
                     </button>
                 </div>
-        <div class="col-sm-2" ng-show="ministry && ministry.id"
-        ">
-        <label for="">&nbsp;</label>
-        <button type="button" class="btn btn-default col-sm-12" ng-click="ministry = null">
-            <i class="fa fa-refresh"></i> ຍົກເລີກ
-        </button>
-    </div>
+                <div class="col-sm-2" ng-show="ministry && ministry.id">
+                    <label for="">&nbsp;</label>
+                    <button type="button" class="btn btn-default col-sm-12" ng-click="ministry = null">
+                        <i class="fa fa-refresh"></i> ຍົກເລີກ
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -173,86 +166,86 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
 </div>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
-  var app = angular.module('mohaApp', []);
-  var url = 'index.php?r=ministry/';
-  app.controller('ministryController', function ($scope, $http, $sce, $timeout) {
-    $scope.mode = 'read';
-    $scope.changemode = function () {
-      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
-    };
-    $scope.enquiry = function () {
-      $scope.ministries = null;
-      $http.get(url + 'enquiry')
-        .then(function (r) {
-          $scope.ministries = r.data.ministries;
-        }, function (r) {
-          $scope.response = r;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        });
-    };
+    var app = angular.module('mohaApp', []);
+    var url = 'index.php?r=ministry/';
+    app.controller('ministryController', function ($scope, $http, $sce, $timeout) {
+        $scope.mode = 'read';
+        $scope.changemode = function () {
+            $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
+        };
+        $scope.enquiry = function () {
+            $scope.ministries = null;
+            $http.get(url + 'enquiry')
+                .then(function (r) {
+                    $scope.ministries = r.data.ministries;
+                }, function (r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                });
+        };
 
-    $scope.enquiry();
+        $scope.enquiry();
 
-    $scope.select = function (m) {
-      $scope.ministry = m;
-      $scope.ministry.position = parseInt(m.position);
-    };
+        $scope.select = function (m) {
+            $scope.ministry = m;
+            $scope.ministry.position = parseInt(m.position);
+        };
 
-    $scope.save = function (create) {
-      if ($scope.ministry)
-        if ($scope.ministry.name)
-          $http.post(url + 'save', {
-            Ministry: $scope.ministry,
-            create: create,
-            '_csrf': $('meta[name="csrf-token"]').attr("content")
-          }).then(function (r) {
-            $scope.response = r;
-            $scope.ministry = null;
-            $scope.enquiry();
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-    };
+        $scope.save = function (create) {
+            if ($scope.ministry)
+                if ($scope.ministry.name)
+                    $http.post(url + 'save', {
+                        Ministry: $scope.ministry,
+                        create: create,
+                        '_csrf': $('meta[name="csrf-token"]').attr("content")
+                    }).then(function (r) {
+                        $scope.response = r;
+                        $scope.ministry = null;
+                        $scope.enquiry();
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+        };
 
-    $scope.delete = function () {
-      if ($scope.ministry)
-        swal({
-          title: "ໝັ້ນໃຈບໍ່?",
-          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "ແມ່ນ, ລຶບ",
-          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
-          closeOnConfirm: true,
-          closeOnCancel: true
-        }, function (isConfirm) {
-          if (isConfirm) {
-            $http.post(url + 'delete', {
-              Ministry: $scope.ministry,
-              '_csrf': $('meta[name="csrf-token"]').attr("content")
-            }).then(function (r) {
-              $scope.response = r;
-              $scope.ministry = null;
-              $scope.enquiry();
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
-            }, function (r) {
-              $scope.response = r;
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
-            });
-          }
-        });
-    };
-  });
+        $scope.delete = function () {
+            if ($scope.ministry)
+                swal({
+                    title: "ໝັ້ນໃຈບໍ່?",
+                    text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "ແມ່ນ, ລຶບ",
+                    cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $http.post(url + 'delete', {
+                            Ministry: $scope.ministry,
+                            '_csrf': $('meta[name="csrf-token"]').attr("content")
+                        }).then(function (r) {
+                            $scope.response = r;
+                            $scope.ministry = null;
+                            $scope.enquiry();
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        }, function (r) {
+                            $scope.response = r;
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        });
+                    }
+                });
+        };
+    });
 </script>
