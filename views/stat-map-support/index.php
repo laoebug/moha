@@ -92,9 +92,9 @@ $titles = [
                             <h3><?= $this->title ?></h3>
                             <p>
                                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                            class="fa fa-print fa-2x"></i></a>
+                                        class="fa fa-print fa-2x"></i></a>
                                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i>
+                                        class="fa fa-download fa-2x"></i>
                                 </a>
                             </p>
                         </div>

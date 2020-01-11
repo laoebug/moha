@@ -11,7 +11,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title">ສະຖິຕິຜະລິດແຜນທີ່ (<?= $year->year ?>)</h3>
+                <h3 class="title">ສະຖິຕິຜະລິດແຜນທີ່ (<?= isset($year) ? $year->year : '' ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
@@ -24,7 +24,8 @@
                     </tr>
                     <tr>
                         <?php
-                            $sum = 0;
+                        $sum = 0;
+                        if (isset($models))
                             foreach ($models as $model)
                                 $sum += $model['amount'];
                         ?>
@@ -34,14 +35,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($models as $index => $m): ?>
-                    <tr>
-                        <td class="text-center"><?= $index + 1 ?></td>
-                        <td><?= $m['activity'] ?></td>
-                        <td class="text-center"><?= number_format($m['amount']) ?></td>
-                        <td><?= $m['remark'] ?></td>
-                    </tr>
-                    <?php endforeach; ?>
+                    <?php
+                    if (isset($models))
+                        foreach ($models as $index => $m): ?>
+                            <tr>
+                                <td class="text-center"><?= $index + 1 ?></td>
+                                <td><?= $m['activity'] ?></td>
+                                <td class="text-center"><?= number_format($m['amount']) ?></td>
+                                <td><?= $m['remark'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

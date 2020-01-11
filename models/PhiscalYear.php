@@ -3,17 +3,20 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "phiscal_year".
  *
- * @property integer $id
+ * @property int $id
  * @property string $year
  * @property string $start_date
  * @property string $end_date
- * @property integer $deleted
- * @property string $status
+ * @property int $deleted
+ * @property string $status o:openning c:closed
  *
+ * @property Attachment[] $attachments
  * @property StatAssociationFoundation[] $statAssociationFoundations
  * @property StatContract[] $statContracts
  * @property StatCopy[] $statCopies
@@ -31,10 +34,14 @@ use Yii;
  * @property StatHornorcoinProvince[] $statHornorcoinProvinces
  * @property StatInstituteMeeting[] $statInstituteMeetings
  * @property StatInstituteTrain[] $statInstituteTrains
+ * @property StatInvestment[] $statInvestments
  * @property StatLegal[] $statLegals
  * @property StatLocalAdmin[] $statLocalAdmins
+ * @property StatMapCreate[] $statMapCreates
+ * @property StatMapPrint[] $statMapPrints
  * @property StatMapProduce[] $statMapProduces
  * @property StatMapService[] $statMapServices
+ * @property StatMapSupport[] $statMapSupports
  * @property StatOda[] $statOdas
  * @property StatOfficer[] $statOfficers
  * @property StatOfficerAdd[] $statOfficerAdds
@@ -74,7 +81,7 @@ use Yii;
  * @property StatVictoryoverseaMinistry[] $statVictoryoverseaMinistries
  * @property StatVictoryoverseaProvince[] $statVictoryoverseaProvinces
  */
-class PhiscalYear extends \yii\db\ActiveRecord
+class PhiscalYear extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -90,7 +97,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['year', 'start_date', 'end_date'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['year', 'start_date', 'end_date'], 'required'],
             [['start_date', 'end_date'], 'safe'],
             [['deleted'], 'integer'],
             [['year'], 'string', 'max' => 255],
@@ -115,7 +122,15 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     */
+    public function getAttachments()
+    {
+        return $this->hasMany(Attachment::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
      */
     public function getStatAssociationFoundations()
     {
@@ -123,7 +138,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatContracts()
     {
@@ -131,7 +146,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatCopies()
     {
@@ -139,7 +154,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatCourses()
     {
@@ -147,7 +162,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatDocuments()
     {
@@ -155,7 +170,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatEthnics()
     {
@@ -163,7 +178,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatExplores()
     {
@@ -171,7 +186,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovcoinMinistries()
     {
@@ -179,7 +194,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovcoinProvinces()
     {
@@ -187,7 +202,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovermentUnits()
     {
@@ -195,7 +210,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovoverseaMinistries()
     {
@@ -203,7 +218,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovoverseaProvinces()
     {
@@ -211,7 +226,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHighcoinMinistries()
     {
@@ -219,7 +234,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHighoverseaMinistries()
     {
@@ -227,7 +242,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHornorcoinProvinces()
     {
@@ -235,7 +250,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatInstituteMeetings()
     {
@@ -243,7 +258,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatInstituteTrains()
     {
@@ -251,7 +266,15 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     */
+    public function getStatInvestments()
+    {
+        return $this->hasMany(StatInvestment::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
      */
     public function getStatLegals()
     {
@@ -259,7 +282,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatLocalAdmins()
     {
@@ -267,7 +290,23 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     */
+    public function getStatMapCreates()
+    {
+        return $this->hasMany(StatMapCreate::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getStatMapPrints()
+    {
+        return $this->hasMany(StatMapPrint::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
      */
     public function getStatMapProduces()
     {
@@ -275,7 +314,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatMapServices()
     {
@@ -283,7 +322,15 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     */
+    public function getStatMapSupports()
+    {
+        return $this->hasMany(StatMapSupport::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
      */
     public function getStatOdas()
     {
@@ -291,7 +338,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficers()
     {
@@ -299,7 +346,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerAdds()
     {
@@ -307,7 +354,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerAges()
     {
@@ -315,7 +362,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerAgelevels()
     {
@@ -323,7 +370,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerContracts()
     {
@@ -331,7 +378,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerDegrees()
     {
@@ -339,7 +386,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerEthnics()
     {
@@ -347,7 +394,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerMinistries()
     {
@@ -355,7 +402,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerMinistryAdds()
     {
@@ -363,7 +410,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerMinistryTrains()
     {
@@ -371,7 +418,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerMinistryUpgrades()
     {
@@ -379,7 +426,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerNeeds()
     {
@@ -387,7 +434,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerNews()
     {
@@ -395,7 +442,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrgs()
     {
@@ -403,7 +450,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrganisationAdds()
     {
@@ -411,7 +458,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrganisationTrains()
     {
@@ -419,7 +466,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrganisationUpgrades()
     {
@@ -427,7 +474,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerPositions()
     {
@@ -435,7 +482,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerProvinces()
     {
@@ -443,7 +490,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerProvinceAdds()
     {
@@ -451,7 +498,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerProvinceTrains()
     {
@@ -459,7 +506,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerProvinceUpgrades()
     {
@@ -467,7 +514,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerResigns()
     {
@@ -475,7 +522,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerSalaries()
     {
@@ -483,7 +530,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerTechnicals()
     {
@@ -491,7 +538,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatPopulationMovements()
     {
@@ -499,7 +546,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatPositions()
     {
@@ -507,7 +554,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatReligions()
     {
@@ -515,7 +562,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatReligionPlaces()
     {
@@ -523,7 +570,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatReligionTeachers()
     {
@@ -531,7 +578,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatResearches()
     {
@@ -539,7 +586,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatResigns()
     {
@@ -547,7 +594,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatSingleGatewayImplementations()
     {
@@ -555,7 +602,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictorycoinMinistries()
     {
@@ -563,7 +610,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictorycoinProvinces()
     {
@@ -571,7 +618,7 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictoryoverseaMinistries()
     {
@@ -579,20 +626,10 @@ class PhiscalYear extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictoryoverseaProvinces()
     {
         return $this->hasMany(StatVictoryoverseaProvince::className(), ['phiscal_year_id' => 'id']);
     }
-
-    /**
-     * @inheritdoc
-     * @return PhiscalYearQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new PhiscalYearQuery(get_called_class());
-    }
-
 }

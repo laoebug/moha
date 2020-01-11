@@ -2,17 +2,11 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\Stat3createSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = "ສັງລວມຈໍານວນບ້ານເປົ້າໝາຍ 3 ສ້າງໃນການສ້າງເປັນບ້ານພັດທະນາ";
-$titles = [
-    'ບ້ານເປົ້າໝາຍ 3 ສ້າງໃນການສ້າງເປັນເບ້ານພັດທະນາ' => ['ຈ/ນ ບ້ານ', 'ບ້ານສືບຕໍ່', 'ບ້ານກໍານົດ ໃໝ່',],
-    'ເປົ້າໝາຍເມືອງເຂັ້ມແຂງຮອບດ້ານ' => ['ຈ/ນ ເມືອງ', 'ເມືອງສືບຕໍ່', 'ເມືອງກໍານົດໃໝ່',],
-    'ເປົ້າໝາຍສ້າງບ້ານໃຫຍ່ເປັນຕົວເມືອງໃນຊົນນະບົດ' => ['ຈ/ນ ບ້ານ/ກຸ່ມບ້ານ'],
-];
+$this->title = "ຕາຕາລາງ ພິມແຜນທີ່";
+$titles = ['ເນື້ອໃນພິມ', 'ຂົງເຂດ (ສະຖານທີ່)', 'ມາດຕາສ່ວນ', 'ປີພິມ', 'ຈຳນວນໃບ', 'ໝາຍເຫດ'];
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
-<div class="row" ng-app="mohaApp" ng-controller="stat3CreateController">
+<div class="row" ng-app="mohaApp" ng-controller="statMapPrintController">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
@@ -31,50 +25,36 @@ $titles = [
                 ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
-                <div class="col-sm-2">
-                    <label for=""><?= Yii::t('app', 'Province') ?></label>
-                    <select class="form-control" ng-model="model.province"
-                            ng-options="b.province_name for b in provinces"
-                            ng-change="inquiry()">
-                    </select>
-                </div>
-                <div class="col-sm-10">
+                <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <?php foreach ($titles as $i => $title): ?>
-                                <td class="text-center" colspan="<?= count($title) ?>"><?= $i ?></td>
+                            <?php foreach ($titles as $title): ?>
+                                <td class="text-center" style="width: 13%"><?= $title ?></td>
                             <?php endforeach; ?>
+                            <td></td>
                         </tr>
                         <tr>
-                            <?php foreach ($titles as $i => $title): ?>
-                                <?php foreach ($title as $j => $t): ?>
-                                    <td class="text-center" style="width: 10%">
-                                        <?= $t ?>
-                                    </td>
-                                <? endforeach; ?>
-                            <? endforeach; ?>
-                        </tr>
-                        <tr>
-                            <td class="text-center" ng-repeat-start="c in cols">
-                                <input min="0" type="number" class="form-control" ng-model="model[c.first]">
+                            <td class="text-center" ng-repeat="c in cols">
+                                <input class="form-control" ng-model="model[c.col]" ng-if="c.col !== 'paper'">
+                                <input class="form-control" ng-model="model[c.col]" type="number"
+                                       ng-if="c.col === 'paper'">
                             </td>
-                            <td class="text-center" ng-if="c.second">
-                                <input ng-blur="model[c.second]=model[c.first] < model[c.second]?null:model[c.second]"
-                                       min="0" max="{{model[c.first]}}" type="number" class="form-control"
-                                       ng-model="model[c.second]">
-                            </td>
-                            <td class="text-center" ng-if="c.third" ng-repeat-end>
-                                <input ng-blur="model[c.third]=model[c.first] < model[c.third]?null:model[c.third]"
-                                       min="0" max="{{model[c.first]}}" type="number" class="form-control"
-                                       ng-model="model[c.third]">
+                            <td>
+                                <button ng-class="model.id ? 'col-sm-4' : 'col-sm-12'" type="button"
+                                        class="btn btn-primary" ng-click="add()">
+                                    <i class="fa fa-plus"></i> ເພີ່ມ
+                                </button>
+                                <button ng-if="model.id" type="button" class="btn btn-info col-sm-4"
+                                        ng-click="update()">
+                                    <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
+                                </button>
+                                <button ng-if="model.id" type="button" class="btn btn-danger col-sm-4"
+                                        ng-click="remove()">
+                                    <i class="fa fa-trash"></i> ລຶບ
+                                </button>
                             </td>
                         </tr>
                     </table>
-                </div>
-                <div class="col-sm-2 col-sm-offset-5" style="margin-top: 1em">
-                    <button type="button" class="btn btn-primary col-sm-12" ng-click="save()">
-                        <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
-                    </button>
                 </div>
             </div>
         </div>
@@ -101,40 +81,19 @@ $titles = [
                         <table class="table table-bordered table-hover" ng-show="models">
                             <thead>
                             <tr>
-                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
-                                <?php foreach ($titles as $i => $title): ?>
-                                    <th class="text-center" colspan="<?= count($title) ?>"><?= $i ?></th>
-                                <?php endforeach; ?>
-                            </tr>
-                            <tr>
-                                <?php foreach ($titles as $i => $title): ?>
-                                    <?php foreach ($title as $j => $t): ?>
-                                        <th style="width: 10%" class="text-center"><?= $t ?></th>
-                                    <?php endforeach; ?>
+                                <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
+                                <?php foreach ($titles as $title): ?>
+                                    <th class="text-center"><?= $title ?></th>
                                 <?php endforeach; ?>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="m in models">
+                            <tr ng-repeat="m in models" ng-click="select(m)">
                                 <td class="text-center">{{$index + 1}}</td>
-                                <td>{{m.province_name}}</td>
-                                <td class="text-center" ng-repeat-start="c in cols">{{m[c.first] | number | dash}}</td>
-                                <td class="text-center" ng-if="c.second">{{m[c.second] | number | dash}}</td>
-                                <td class="text-center" ng-if="c.third" ng-repeat-end>{{m[c.third] | number | dash}}
+                                <td class="text-center" ng-repeat="c in cols">{{m[c.col]}}</td>
                                 </td>
                             </tr>
                             </tbody>
-                            <tfoot>
-                            <tr>
-                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center" ng-repeat-start="c in cols">{{sum(c.first) | number | dash}}
-                                </th>
-                                <th class="text-center" ng-if="c.second">{{sum(c.second) | number | dash}}</th>
-                                <th class="text-center" ng-if="c.third" ng-repeat-end>{{sum(c.third) | number | dash}}
-                                </th>
-                            </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -208,22 +167,28 @@ $titles = [
             return input ? input : '-';
         };
     });
-    app.controller('stat3CreateController', function ($scope, $http, $sce, $timeout) {
-        $scope.url = 'index.php?r=stat3create/';
+    app.controller('statMapPrintController', function ($scope, $http, $sce, $timeout) {
+        $scope.url = 'index.php?r=stat-map-print/';
         $scope.mode = 'read';
+        $scope.model = {};
+        $scope.models = null;
         $scope.changemode = function () {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
         $scope.cols = [
-            {first: 'dev_total', second: 'dev_continue', third: 'dev_new'},
-            {first: 'strong_total', second: 'strong_continue', third: 'strong_new'},
-            {first: 'big'}
+            {col: 'title'},
+            {col: 'place'},
+            {col: 'ratio'},
+            {col: 'year'},
+            {col: 'paper'},
+            {col: 'remark'},
         ];
-        $scope.sum = [];
+        $scope.cols.forEach(function (col) {
+            $scope.model[col.col] = null;
+        });
         $http.get($scope.url + 'get')
             .then(function (r) {
                 $scope.years = r.data.years;
-                $scope.provinces = r.data.provinces;
             }, function (r) {
                 $scope.response = r;
                 $timeout(function () {
@@ -231,8 +196,12 @@ $titles = [
                 }, 15000);
             });
 
+        $scope.select = function (model) {
+            $scope.model = model;
+            $scope.model.paper = parseInt(model.paper);
+        };
+
         $scope.enquiry = function () {
-            $scope.model = null;
             $scope.models = null;
             if ($scope.year)
                 $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
@@ -246,37 +215,15 @@ $titles = [
                         }, 15000);
                     });
         };
-
-        $scope.inquiry = function () {
-            if ($scope.year && $scope.model.province)
-                $http.get($scope.url + 'inquiry&province=' + $scope.model.province.id + '&year=' + $scope.year.id)
-                    .then(function (r) {
-                        if (r.data.model) {
-                            $scope.cols.forEach(function (n) {
-                                $scope.model[n.first] = parseInt(r.data.model[n.first]);
-                                $scope.model[n.second] = parseInt(r.data.model[n.second]);
-                                $scope.model[n.third] = parseInt(r.data.model[n.third]);
-                            });
-                        } else {
-                            $scope.cols.forEach(function (n) {
-                                $scope.model[n.first] = null;
-                                $scope.model[n.second] = null;
-                                $scope.model[n.third] = null;
-                            });
-                        }
-                    }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
+        $scope.add = function () {
+            $scope.model.id = null;
+            $scope.update();
         };
 
-        $scope.save = function () {
+        $scope.update = function () {
             if ($scope.year && $scope.model) {
-                console.log($scope.model);
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
-                    'Stat3createDetail': $scope.model,
+                    'StatMapPrint': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
                 }).then(function (r) {
                     $scope.model = null;
@@ -294,15 +241,39 @@ $titles = [
             }
         };
 
-        $scope.sum = function (key) {
-            var total = 0;
-            if ($scope.models)
-                for (var n = 0; n < $scope.models.length; n++)
-                    if ($scope.models[n][key])
-                        total += parseInt($scope.models[n][key]);
-            return total == 0 ? 0 : total;
+        $scope.remove = function () {
+            if ($scope.model) {
+                swal({
+                    title: "ໝັ້ນໃຈບໍ່?",
+                    text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "ແມ່ນ, ລຶບ",
+                    cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $http.post($scope.url + 'delete&id=' + $scope.model.id, {
+                            'StatMapPrint': $scope.model,
+                            '_csrf': $('meta[name="csrf-token"]').attr("content")
+                        }).then(function (r) {
+                            $scope.model = null;
+                            $scope.response = r;
+                            $scope.enquiry();
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        }, function (r) {
+                            $scope.response = r;
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        });
+                    }
+                });
+            }
         };
-
 
         $scope.uploadedFile = function (element) {
             if (!$scope.issued_no) {
