@@ -44,7 +44,7 @@ class StatOfficerEthnicController extends Controller
     	
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
         $ethnics = Ethnic::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
-        $levels = OfficerLevel::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $levels = OfficerLevel::find()->where(['deleted' => 0, 'is_province' => 0])->orderBy('position')->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -74,8 +74,8 @@ class StatOfficerEthnicController extends Controller
             ->join('join', 'stat_officer_ethnic e', 'e.id = d.stat_officer_ethnic_id and e.phiscal_year_id=:year', [':year' => $year->id])
             ->asArray()->all();
 
-        $levels = OfficerLevel::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
-        $ethnics = Ethnic::find()->where(['deleted'=>0])->orderBy('position')->asArray()->all();
+        $levels = OfficerLevel::find()->where(['deleted' => 0, 'is_province' => 0])->orderBy('position')->asArray()->all();
+        $ethnics = Ethnic::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
 
         return $this->renderPartial('table', ['ethnics' => $ethnics, 'models' => $models,'ethnics'=>$ethnics, 'levels' => $levels, 'year' => $year]);
     }
@@ -196,8 +196,8 @@ class StatOfficerEthnicController extends Controller
             ->join('join', 'stat_officer_ethnic e', 'e.id = d.stat_officer_ethnic_id and e.phiscal_year_id=:year', [':year' => $year->id])
             ->asArray()->all();
 
-        $levels = OfficerLevel::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
-        $ethnics = Ethnic::find()->where(['deleted'=>0])->orderBy('position')->asArray()->all();
+        $levels = OfficerLevel::find()->where(['deleted' => 0, 'is_province' => 0])->orderBy('position')->asArray()->all();
+        $ethnics = Ethnic::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -231,8 +231,8 @@ class StatOfficerEthnicController extends Controller
             ->join('join', 'stat_officer_ethnic e', 'e.id = d.stat_officer_ethnic_id and e.phiscal_year_id=:year', [':year' => $year->id])
             ->asArray()->all();
 
-        $levels = OfficerLevel::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
-        $ethnics = Ethnic::find()->where(['deleted'=>0])->orderBy('position')->asArray()->all();
+        $levels = OfficerLevel::find()->where(['deleted' => 0, 'is_province' => 0])->orderBy('position')->asArray()->all();
+        $ethnics = Ethnic::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'stat officer ethnic '. $year['year'].'.xls',

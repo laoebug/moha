@@ -37,7 +37,7 @@ $this->title = "ຈຳນວນລັດຖະກອນເພີ່ມເຂົ�
                         <thead>
                         <tr>
                             <th class="text-center" colspan="8">ຈຳນວນເພີ່ມເຂົ້າໃໝ່ໃນຮູບການຕ່າງໆ</th>
-                            <th class="text-center" rowspan="3">ໂກຕາທີ່ໄດ້ຮັບ</th>
+                            <!--                            <th class="text-center" rowspan="3">ໂກຕາທີ່ໄດ້ຮັບ</th>-->
                             <th class="text-center" rowspan="3">ຄວາມຕ້ອງການໃໝ່</th>
                         </tr>
                         <tr>
@@ -66,7 +66,7 @@ $this->title = "ຈຳນວນລັດຖະກອນເພີ່ມເຂົ�
                             <td><input type="number" class="form-control" ng-model="model.soe_total"></td>
                             <td><input type="number" class="form-control" min="{{model.soe_total}}"
                                        ng-model="model.soe_women"></td>
-                            <td><input type="number" class="form-control" ng-model="model.quota"></td>
+                            <!--                            <td><input type="number" class="form-control" ng-model="model.quota"></td>-->
                             <td><input type="number" class="form-control" ng-model="model.need"></td>
                         </tr>
                         </tbody>
@@ -95,7 +95,7 @@ $this->title = "ຈຳນວນລັດຖະກອນເພີ່ມເຂົ�
                                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
                                             class="fa fa-print fa-2x"></i></a>
                                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i></a>
+                                        class="fa fa-download fa-2x"></i></a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover">
@@ -104,7 +104,7 @@ $this->title = "ຈຳນວນລັດຖະກອນເພີ່ມເຂົ�
                                 <th class="text-center" rowspan="3">ພາກສ່ວນຕ່າງໆ</th>
                                 <th class="text-center" rowspan="2" colspan="2">ລວມທັງໝົດ</th>
                                 <th class="text-center" colspan="8">ຈຳນວນເພີ່ມເຂົ້າໃໝ່ໃນຮູບການຕ່າງໆ</th>
-                                <th class="text-center" rowspan="3">ໂກຕາທີ່ໄດ້ຮັບ</th>
+                                <!--                                <th class="text-center" rowspan="3">ໂກຕາທີ່ໄດ້ຮັບ</th>-->
                                 <th class="text-center" rowspan="3">ຄວາມຕ້ອງການໃໝ່</th>
                             </tr>
                             <tr>
@@ -126,7 +126,7 @@ $this->title = "ຈຳນວນລັດຖະກອນເພີ່ມເຂົ�
                                     <th class="text-center">{{sumcolumn('<?= $c ?>_total') | number | dash}}</th>
                                     <th class="text-center">{{sumcolumn('<?= $c ?>_women') | number | dash}}</th>
                                 <?php endforeach; ?>
-                                <th class="text-center">{{sumcolumn('quota') | number | dash}}</th>
+                                <!--                                <th class="text-center">{{sumcolumn('quota') | number | dash}}</th>-->
                                 <th class="text-center">{{sumcolumn('need') | number | dash}}</th>
                             </tr>
                             </thead>

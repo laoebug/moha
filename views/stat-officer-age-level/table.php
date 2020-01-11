@@ -39,7 +39,7 @@ foreach ($sum as $key => $s) {
                         <th class="text-center" rowspan="3">ພາກສ່ວນຕ່າງໆ</th>
                         <th class="text-center" rowspan="2" colspan="2">ຈ/ນ ລັດຖະກອນ ທັງໝົດ</th>
                         <th class="text-center" colspan="16">ຊັ້ນວິຊາສະເພາະ</th>
-                        <th class="text-center" colspan="6">ບໍ່ມີວິຊາສະເພາະ</th>
+                        <th class="text-center" colspan="6"></th>
                     </tr>
                     <tr>
                         <?php foreach($labels as $label): ?>

@@ -40,7 +40,7 @@ foreach ($model as $k => $m) {
                         <th class="text-center" rowspan="3">ພາກສ່ວນຕ່າງໆ</th>
                         <th class="text-center" rowspan="2" colspan="2">ລວມທັງໝົດ</th>
                         <th class="text-center" colspan="8">ຈຳນວນເພີ່ມເຂົ້າໃໝ່ໃນຮູບການຕ່າງໆ</th>
-                        <th class="text-center" rowspan="3">ໂກຕາທີ່ໄດ້ຮັບ</th>
+                        <!--                        <th class="text-center" rowspan="3">ໂກຕາທີ່ໄດ້ຮັບ</th>-->
                         <th class="text-center" rowspan="3">ຄວາມຕ້ອງການໃໝ່</th>
                     </tr>
                     <tr>
@@ -59,8 +59,10 @@ foreach ($model as $k => $m) {
                         <th class="text-center"><?= $total['total'] ?></th>
                         <th class="text-center"><?= $total['women'] ?></th>
                         <?php foreach ([
-                                'new_total', 'new_women', 'ministry_total', 'ministry_women',
-'army_total','army_women','soe_total','soe_women','quota','need'
+                                           'new_total', 'new_women', 'ministry_total', 'ministry_women',
+                                           'army_total', 'army_women', 'soe_total', 'soe_women',
+//                                           'quota',
+                                           'need'
                                        ] as $s): ?>
                             <th class="text-center"><?= $sum[$s] ?></th>
                         <?php endforeach; ?>

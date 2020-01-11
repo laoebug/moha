@@ -42,7 +42,7 @@ class StatPositionController extends Controller
         }
 
         $years = PhiscalYear::find()->orderBy('year')->asArray()->all();
-        $levels = OfficerLevel::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $levels = OfficerLevel::find()->where(['deleted' => 0, 'is_province' => 0])->orderBy('position')->asArray()->all();
 
         return json_encode([
             'years' => $years,
@@ -143,7 +143,7 @@ class StatPositionController extends Controller
             }
             $model->saved = 1;
             $model->last_update = date('Y-m-d H:i:s');
-            if(!$model->save()) throw new \yii\db\Exception(json_encode($model->errors));
+            if (!$model->save()) throw new Exception(json_encode($model->errors));
 
             $detail = StatPositionDetail::find()->where([
                 'stat_position_id' => $model->id,

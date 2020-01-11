@@ -43,7 +43,7 @@ class StatOfficerSalaryController extends Controller
         }
 
         $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
-        $levels = OfficerLevel::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $levels = OfficerLevel::find()->where(['deleted' => 0, 'is_province' => 0])->orderBy('position')->asArray()->all();
         $steps = SalaryLevel::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
 
         return json_encode([

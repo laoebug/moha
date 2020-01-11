@@ -128,7 +128,7 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
                                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
                                             class="fa fa-print fa-2x"></i></a>
                                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i></a>
+                                        class="fa fa-download fa-2x"></i></a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover">
@@ -137,7 +137,7 @@ $this->title = "ສັງລວມຈຳນວນລັດຖະກອນ ແຍ
                                 <th class="text-center" rowspan="3">ພາກສ່ວນຕ່າງໆ</th>
                                 <th class="text-center" rowspan="2" colspan="2">ຈ/ນ ລັດຖະກອນ ທັງໝົດ</th>
                                 <th class="text-center" colspan="16">ຊັ້ນວິຊາສະເພາະ</th>
-                                <th class="text-center" colspan="6">ບໍ່ມີວິຊາສະເພາະ</th>
+                                <th class="text-center" colspan="6"></th>
                             </tr>
                             <tr>
                                 <?php foreach ($labels as $label): ?>
