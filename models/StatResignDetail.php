@@ -3,36 +3,37 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_resign_detail".
  *
- * @property integer $id
- * @property integer $retire_total
- * @property integer $retire_women
- * @property integer $bumnet_total
- * @property integer $bumnet_women
- * @property integer $stat_resign_id
- * @property integer $die_total
- * @property integer $die_women
- * @property integer $officer_level_id
- * @property integer $leave_total
- * @property integer $leave_women
- * @property integer $fire_total
- * @property integer $fire_women
- * @property integer $resign_total
- * @property integer $resign_women
- * @property integer $lose_total
- * @property integer $lose_women
- * @property integer $army_total
- * @property integer $army_women
- * @property integer $ministry_total
- * @property integer $ministry_women
+ * @property int $id
+ * @property int $retire_total
+ * @property int $retire_women
+ * @property int $bumnet_total
+ * @property int $bumnet_women
+ * @property int $stat_resign_id
+ * @property int $die_total
+ * @property int $die_women
+ * @property int $officer_level_id
+ * @property int $leave_total
+ * @property int $leave_women
+ * @property int $fire_total
+ * @property int $fire_women
+ * @property int $resign_total
+ * @property int $resign_women
+ * @property int $lose_total
+ * @property int $lose_women
+ * @property int $army_total
+ * @property int $army_women
+ * @property int $ministry_total
+ * @property int $ministry_women
  *
- * @property OfficerLevel $officerLevel
  * @property StatResign $statResign
  */
-class StatResignDetail extends \yii\db\ActiveRecord
+class StatResignDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -49,8 +50,7 @@ class StatResignDetail extends \yii\db\ActiveRecord
     {
         return [
             [['retire_total', 'retire_women', 'bumnet_total', 'bumnet_women', 'stat_resign_id', 'die_total', 'die_women', 'officer_level_id', 'leave_total', 'leave_women', 'fire_total', 'fire_women', 'resign_total', 'resign_women', 'lose_total', 'lose_women', 'army_total', 'army_women', 'ministry_total', 'ministry_women'], 'integer'],
-            [['stat_resign_id', 'officer_level_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
+            [['stat_resign_id', 'officer_level_id'], 'required'],
             [['stat_resign_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatResign::className(), 'targetAttribute' => ['stat_resign_id' => 'id']],
         ];
     }
@@ -86,27 +86,10 @@ class StatResignDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOfficerLevel()
-    {
-        return $this->hasOne(OfficerLevel::className(), ['id' => 'officer_level_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatResign()
     {
         return $this->hasOne(StatResign::className(), ['id' => 'stat_resign_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatResignDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatResignDetailQuery(get_called_class());
     }
 }

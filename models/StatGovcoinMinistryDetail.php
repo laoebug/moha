@@ -9,22 +9,22 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "stat_govcoin_ministry_detail".
  *
- * @property integer $id
- * @property integer $stat_govcoin_ministry_id
- * @property integer $ministry_id
- * @property integer $award_id
- * @property integer $labo_personal
- * @property integer $labo_team
- * @property integer $deve_personal
- * @property integer $deve_team
- * @property integer $memo_personal
- * @property integer $memo_team
- * @property integer $amer_personal
- * @property integer $amer_team
- * @property integer $fran_personal
- * @property integer $fran_team
- * @property integer $gove_personal
- * @property integer $gove_team
+ * @property int $id
+ * @property int $stat_govcoin_ministry_id
+ * @property int $ministry_id
+ * @property int $award_id
+ * @property int $labo_personal
+ * @property int $labo_team
+ * @property int $deve_personal
+ * @property int $deve_team
+ * @property int $memo_personal
+ * @property int $memo_team
+ * @property int $amer_personal
+ * @property int $amer_team
+ * @property int $fran_personal
+ * @property int $fran_team
+ * @property int $gove_personal
+ * @property int $gove_team
  * @property string $remark
  * @property int $remember_team
  * @property int $remember_personal
@@ -49,7 +49,7 @@ class StatGovcoinMinistryDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['stat_govcoin_ministry_id', 'ministry_id', 'award_id'], 'required', 'message' => Yii::t('app', 'Please enter a value for') . Yii::t('app', '{attribute}')],
+            [['stat_govcoin_ministry_id', 'ministry_id', 'award_id'], 'required'],
             [['stat_govcoin_ministry_id', 'ministry_id', 'award_id', 'labo_personal', 'labo_team', 'deve_personal', 'deve_team', 'memo_personal', 'memo_team', 'amer_personal', 'amer_team', 'fran_personal', 'fran_team', 'gove_personal', 'gove_team', 'remember_team', 'remember_personal'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
@@ -81,6 +81,8 @@ class StatGovcoinMinistryDetail extends ActiveRecord
             'gove_personal' => Yii::t('app', 'Gove Personal'),
             'gove_team' => Yii::t('app', 'Gove Team'),
             'remark' => Yii::t('app', 'Remark'),
+            'remember_team' => Yii::t('app', 'Remember Team'),
+            'remember_personal' => Yii::t('app', 'Remember Personal'),
         ];
     }
 
@@ -106,14 +108,5 @@ class StatGovcoinMinistryDetail extends ActiveRecord
     public function getStatGovcoinMinistry()
     {
         return $this->hasOne(StatGovcoinMinistry::className(), ['id' => 'stat_govcoin_ministry_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatGovcoinMinistryDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatGovcoinMinistryDetailQuery(get_called_class());
     }
 }

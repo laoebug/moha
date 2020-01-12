@@ -3,18 +3,20 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "project".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $position
+ * @property int $deleted
+ * @property int $position
  *
  * @property StatInvestmentDetail[] $statInvestmentDetails
  */
-class Project extends \yii\db\ActiveRecord
+class Project extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -30,7 +32,7 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'position'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name', 'position'], 'required'],
             [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -50,7 +52,7 @@ class Project extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatInvestmentDetails()
     {

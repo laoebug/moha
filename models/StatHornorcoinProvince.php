@@ -3,21 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_hornorcoin_province".
  *
- * @property integer $id
- * @property integer $user_id
- * @property integer $phiscal_year_id
+ * @property int $id
+ * @property int $user_id
+ * @property int $phiscal_year_id
  * @property string $last_update
- * @property integer $saved
+ * @property int $saved
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
  * @property StatHornorcoinProvinceDetail[] $statHornorcoinProvinceDetails
  */
-class StatHornorcoinProvince extends \yii\db\ActiveRecord
+class StatHornorcoinProvince extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +35,7 @@ class StatHornorcoinProvince extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'phiscal_year_id', 'last_update'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['user_id', 'phiscal_year_id', 'last_update'], 'required'],
             [['user_id', 'phiscal_year_id', 'saved'], 'integer'],
             [['last_update'], 'safe'],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
@@ -56,7 +58,7 @@ class StatHornorcoinProvince extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPhiscalYear()
     {
@@ -64,7 +66,7 @@ class StatHornorcoinProvince extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -72,19 +74,10 @@ class StatHornorcoinProvince extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHornorcoinProvinceDetails()
     {
         return $this->hasMany(StatHornorcoinProvinceDetail::className(), ['stat_hornorcoin_province_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatHornorcoinProvinceQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatHornorcoinProvinceQuery(get_called_class());
     }
 }

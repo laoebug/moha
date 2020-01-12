@@ -3,21 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_goverment_unit".
  *
- * @property integer $id
- * @property integer $user_id
+ * @property int $id
+ * @property int $user_id
  * @property string $last_update
- * @property integer $saved
- * @property integer $phiscal_year_id
+ * @property int $saved
+ * @property int $phiscal_year_id
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
  * @property StatGovermentUnitDetail[] $statGovermentUnitDetails
  */
-class StatGovermentUnit extends \yii\db\ActiveRecord
+class StatGovermentUnit extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -34,7 +36,7 @@ class StatGovermentUnit extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'saved', 'phiscal_year_id'], 'integer'],
-            [['last_update', 'phiscal_year_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['last_update', 'phiscal_year_id'], 'required'],
             [['last_update'], 'safe'],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -56,7 +58,7 @@ class StatGovermentUnit extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPhiscalYear()
     {
@@ -64,7 +66,7 @@ class StatGovermentUnit extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -72,19 +74,10 @@ class StatGovermentUnit extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovermentUnitDetails()
     {
         return $this->hasMany(StatGovermentUnitDetail::className(), ['stat_goverment_unit_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatGovermentUnitQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatGovermentUnitQuery(get_called_class());
     }
 }

@@ -3,14 +3,15 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "migration".
  *
  * @property string $version
- * @property integer $apply_time
+ * @property int $apply_time
  */
-class Migration extends \yii\db\ActiveRecord
+class Migration extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -26,9 +27,10 @@ class Migration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['version'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['version'], 'required'],
             [['apply_time'], 'integer'],
             [['version'], 'string', 'max' => 180],
+            [['version'], 'unique'],
         ];
     }
 
@@ -41,14 +43,5 @@ class Migration extends \yii\db\ActiveRecord
             'version' => Yii::t('app', 'Version'),
             'apply_time' => Yii::t('app', 'Apply Time'),
         ];
-    }
-
-    /**
-     * @inheritdoc
-     * @return MigrationQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new MigrationQuery(get_called_class());
     }
 }

@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property string $last_update
  * @property int $phiscal_year_id
  * @property int $user_id
+ * @property int $deleted
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
@@ -36,7 +37,7 @@ class StatMinistry extends ActiveRecord
         return [
             [['last_update'], 'safe'],
             [['phiscal_year_id', 'user_id'], 'required'],
-            [['phiscal_year_id', 'user_id'], 'integer'],
+            [['phiscal_year_id', 'user_id', 'deleted'], 'integer'],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -52,6 +53,7 @@ class StatMinistry extends ActiveRecord
             'last_update' => Yii::t('app', 'Last Update'),
             'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
             'user_id' => Yii::t('app', 'User ID'),
+            'deleted' => Yii::t('app', 'Deleted'),
         ];
     }
 

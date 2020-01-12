@@ -3,49 +3,51 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_salary_detail".
  *
- * @property integer $id
- * @property integer $stat_officer_salary_id
- * @property integer $level1_total
- * @property integer $level1_women
- * @property integer $level2_total
- * @property integer $level2_women
- * @property integer $level3_total
- * @property integer $level3_women
- * @property integer $level4_total
- * @property integer $level4_women
- * @property integer $level5_total
- * @property integer $level5_women
- * @property integer $level6_total
- * @property integer $level6_women
- * @property integer $level7_total
- * @property integer $level7_women
- * @property integer $level8_total
- * @property integer $level8_women
- * @property integer $level9_total
- * @property integer $level9_women
- * @property integer $level10_total
- * @property integer $level10_women
- * @property integer $level11_total
- * @property integer $level11_women
- * @property integer $level12_total
- * @property integer $level12_women
- * @property integer $level13_total
- * @property integer $level13_women
- * @property integer $level14_total
- * @property integer $level14_women
- * @property integer $level15_total
- * @property integer $level15_women
- * @property integer $officer_level_id
- * @property integer $salary_level_id
+ * @property int $id
+ * @property int $stat_officer_salary_id
+ * @property int $level1_total
+ * @property int $level1_women
+ * @property int $level2_total
+ * @property int $level2_women
+ * @property int $level3_total
+ * @property int $level3_women
+ * @property int $level4_total
+ * @property int $level4_women
+ * @property int $level5_total
+ * @property int $level5_women
+ * @property int $level6_total
+ * @property int $level6_women
+ * @property int $level7_total
+ * @property int $level7_women
+ * @property int $level8_total
+ * @property int $level8_women
+ * @property int $level9_total
+ * @property int $level9_women
+ * @property int $level10_total
+ * @property int $level10_women
+ * @property int $level11_total
+ * @property int $level11_women
+ * @property int $level12_total
+ * @property int $level12_women
+ * @property int $level13_total
+ * @property int $level13_women
+ * @property int $level14_total
+ * @property int $level14_women
+ * @property int $level15_total
+ * @property int $level15_women
+ * @property int $officer_level_id
+ * @property int $salary_level_id
  *
- * @property OfficerLevel $officerLevel
+ * @property SalaryLevel $salaryLevel
  * @property StatOfficerSalary $statOfficerSalary
  */
-class StatOfficerSalaryDetail extends \yii\db\ActiveRecord
+class StatOfficerSalaryDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -61,11 +63,10 @@ class StatOfficerSalaryDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_salary_id', 'officer_level_id', 'salary_level_id'], 'required', 'message' => Yii::t('app', 'Please enter a value for') . Yii::t('app', '{attribute}')],
+            [['stat_officer_salary_id', 'officer_level_id', 'salary_level_id'], 'required'],
             [['stat_officer_salary_id', 'level1_total', 'level1_women', 'level2_total', 'level2_women', 'level3_total', 'level3_women', 'level4_total', 'level4_women', 'level5_total', 'level5_women', 'level6_total', 'level6_women', 'level7_total', 'level7_women', 'level8_total', 'level8_women', 'level9_total', 'level9_women', 'level10_total', 'level10_women', 'level11_total', 'level11_women', 'level12_total', 'level12_women', 'level13_total', 'level13_women', 'level14_total', 'level14_women', 'level15_total', 'level15_women', 'officer_level_id', 'salary_level_id'], 'integer'],
-            [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
-            [['stat_officer_salary_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerSalary::className(), 'targetAttribute' => ['stat_officer_salary_id' => 'id']],
             [['salary_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => SalaryLevel::className(), 'targetAttribute' => ['salary_level_id' => 'id']],
+            [['stat_officer_salary_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerSalary::className(), 'targetAttribute' => ['stat_officer_salary_id' => 'id']],
         ];
     }
 
@@ -113,15 +114,7 @@ class StatOfficerSalaryDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOfficerLevel()
-    {
-        return $this->hasOne(OfficerLevel::className(), ['id' => 'officer_level_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSalaryLevel()
     {
@@ -129,19 +122,10 @@ class StatOfficerSalaryDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerSalary()
     {
         return $this->hasOne(StatOfficerSalary::className(), ['id' => 'stat_officer_salary_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerSalaryDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerSalaryDetailQuery(get_called_class());
     }
 }

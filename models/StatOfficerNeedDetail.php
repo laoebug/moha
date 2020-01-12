@@ -3,19 +3,21 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_need_detail".
  *
- * @property integer $id
- * @property integer $center
- * @property integer $province
- * @property integer $district
- * @property integer $stat_officer_need_id
+ * @property int $id
+ * @property int $center
+ * @property int $province
+ * @property int $district
+ * @property int $stat_officer_need_id
  *
  * @property StatOfficerNeed $statOfficerNeed
  */
-class StatOfficerNeedDetail extends \yii\db\ActiveRecord
+class StatOfficerNeedDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -32,7 +34,7 @@ class StatOfficerNeedDetail extends \yii\db\ActiveRecord
     {
         return [
             [['center', 'province', 'district', 'stat_officer_need_id'], 'integer'],
-            [['stat_officer_need_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_need_id'], 'required'],
             [['stat_officer_need_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerNeed::className(), 'targetAttribute' => ['stat_officer_need_id' => 'id']],
         ];
     }
@@ -52,19 +54,10 @@ class StatOfficerNeedDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerNeed()
     {
         return $this->hasOne(StatOfficerNeed::className(), ['id' => 'stat_officer_need_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerNeedDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerNeedDetailQuery(get_called_class());
     }
 }

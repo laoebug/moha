@@ -3,21 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_association_foundation_detail".
  *
- * @property integer $id
- * @property integer $association
- * @property integer $foundation
+ * @property int $id
+ * @property int $association
+ * @property int $foundation
  * @property string $remark
- * @property integer $stat_association_foundation_id
- * @property integer $approver_id
+ * @property int $stat_association_foundation_id
+ * @property int $approver_id
  *
  * @property Approver $approver
  * @property StatAssociationFoundation $statAssociationFoundation
  */
-class StatAssociationFoundationDetail extends \yii\db\ActiveRecord
+class StatAssociationFoundationDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -35,7 +37,7 @@ class StatAssociationFoundationDetail extends \yii\db\ActiveRecord
         return [
             [['association', 'foundation', 'stat_association_foundation_id', 'approver_id'], 'integer'],
             [['remark'], 'string'],
-            [['stat_association_foundation_id', 'approver_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_association_foundation_id', 'approver_id'], 'required'],
             [['approver_id'], 'exist', 'skipOnError' => true, 'targetClass' => Approver::className(), 'targetAttribute' => ['approver_id' => 'id']],
             [['stat_association_foundation_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatAssociationFoundation::className(), 'targetAttribute' => ['stat_association_foundation_id' => 'id']],
         ];
@@ -57,7 +59,7 @@ class StatAssociationFoundationDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getApprover()
     {
@@ -65,19 +67,10 @@ class StatAssociationFoundationDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatAssociationFoundation()
     {
         return $this->hasOne(StatAssociationFoundation::className(), ['id' => 'stat_association_foundation_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatAssociationFoundationDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatAssociationFoundationDetailQuery(get_called_class());
     }
 }

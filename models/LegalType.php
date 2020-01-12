@@ -3,18 +3,20 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "legal_type".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $position
+ * @property int $deleted
+ * @property int $position
  *
  * @property Legal[] $legals
  */
-class LegalType extends \yii\db\ActiveRecord
+class LegalType extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -30,7 +32,7 @@ class LegalType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name'], 'required'],
             [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -50,19 +52,10 @@ class LegalType extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getLegals()
     {
         return $this->hasMany(Legal::className(), ['legal_type_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return LegalTypeQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new LegalTypeQuery(get_called_class());
     }
 }

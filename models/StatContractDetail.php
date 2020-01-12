@@ -3,26 +3,27 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_contract_detail".
  *
- * @property integer $id
- * @property integer $stat_contract_id
- * @property integer $officer_level_id
- * @property integer $quota_manage_total
- * @property integer $quota_manage_women
- * @property integer $quota_technic_total
- * @property integer $quota_technic_women
- * @property integer $nonquota_manage_total
- * @property integer $nonquota_manage_women
- * @property integer $nonquota_technic_total
- * @property integer $nonquota_technic_women
+ * @property int $id
+ * @property int $stat_contract_id
+ * @property int $officer_level_id
+ * @property int $quota_manage_total
+ * @property int $quota_manage_women
+ * @property int $quota_technic_total
+ * @property int $quota_technic_women
+ * @property int $nonquota_manage_total
+ * @property int $nonquota_manage_women
+ * @property int $nonquota_technic_total
+ * @property int $nonquota_technic_women
  *
- * @property OfficerLevel $officerLevel
  * @property StatContract $statContract
  */
-class StatContractDetail extends \yii\db\ActiveRecord
+class StatContractDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -38,9 +39,8 @@ class StatContractDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_contract_id', 'officer_level_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_contract_id', 'officer_level_id'], 'required'],
             [['stat_contract_id', 'officer_level_id', 'quota_manage_total', 'quota_manage_women', 'quota_technic_total', 'quota_technic_women', 'nonquota_manage_total', 'nonquota_manage_women', 'nonquota_technic_total', 'nonquota_technic_women'], 'integer'],
-            [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
             [['stat_contract_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatContract::className(), 'targetAttribute' => ['stat_contract_id' => 'id']],
         ];
     }
@@ -66,27 +66,10 @@ class StatContractDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOfficerLevel()
-    {
-        return $this->hasOne(OfficerLevel::className(), ['id' => 'officer_level_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatContract()
     {
         return $this->hasOne(StatContract::className(), ['id' => 'stat_contract_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatContractDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatContractDetailQuery(get_called_class());
     }
 }

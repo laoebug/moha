@@ -3,20 +3,22 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "legal".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $legal_type_id
- * @property integer $position
+ * @property int $deleted
+ * @property int $legal_type_id
+ * @property int $position
  *
  * @property LegalType $legalType
  * @property StatLegalDetail[] $statLegalDetails
  */
-class Legal extends \yii\db\ActiveRecord
+class Legal extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -32,7 +34,7 @@ class Legal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'legal_type_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name', 'legal_type_id'], 'required'],
             [['deleted', 'legal_type_id', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['legal_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => LegalType::className(), 'targetAttribute' => ['legal_type_id' => 'id']],
@@ -54,7 +56,7 @@ class Legal extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getLegalType()
     {
@@ -62,19 +64,10 @@ class Legal extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatLegalDetails()
     {
         return $this->hasMany(StatLegalDetail::className(), ['legal_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return LegalQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new LegalQuery(get_called_class());
     }
 }

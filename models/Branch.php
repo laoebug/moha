@@ -3,35 +3,34 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "branch".
  *
- * @property integer $id
+ * @property int $id
  * @property string $code
  * @property string $name
  * @property string $address
  * @property string $tel
- * @property integer $deleted
- * @property integer $position
+ * @property int $deleted
+ * @property int $position
  * @property string $remark
- * @property integer $user_id
+ * @property int $user_id
  * @property string $last_update
- * @property integer $ministry_id
+ * @property int $ministry_id
  *
  * @property Ministry $ministry
  * @property User $user
  * @property GovermentUnit[] $govermentUnits
  * @property UserHasBranch[] $userHasBranches
- * @property User[] $users
  */
-class Branch extends \yii\db\ActiveRecord
+class Branch extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
-	public $branch_id;
-	public $branch_user_id;
     public static function tableName()
     {
         return 'branch';
@@ -43,7 +42,7 @@ class Branch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'user_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name', 'user_id', 'ministry_id'], 'required'],
             [['address', 'remark'], 'string'],
             [['deleted', 'position', 'user_id', 'ministry_id'], 'integer'],
             [['last_update'], 'safe'],
@@ -75,7 +74,7 @@ class Branch extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMinistry()
     {
@@ -83,7 +82,7 @@ class Branch extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -91,7 +90,7 @@ class Branch extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getGovermentUnits()
     {
@@ -99,27 +98,10 @@ class Branch extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUserHasBranches()
     {
         return $this->hasMany(UserHasBranch::className(), ['branch_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_has_branch', ['branch_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return RoleHasActionQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new RoleHasActionQuery(get_called_class());
     }
 }

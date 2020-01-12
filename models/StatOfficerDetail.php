@@ -3,22 +3,24 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_detail".
  *
- * @property integer $id
- * @property integer $stat_officer_id
- * @property integer $center_total
- * @property integer $province_total
- * @property integer $district_total
- * @property integer $center_women
- * @property integer $province_women
- * @property integer $district_women
+ * @property int $id
+ * @property int $stat_officer_id
+ * @property int $center_total
+ * @property int $province_total
+ * @property int $district_total
+ * @property int $center_women
+ * @property int $province_women
+ * @property int $district_women
  *
  * @property StatOfficer $statOfficer
  */
-class StatOfficerDetail extends \yii\db\ActiveRecord
+class StatOfficerDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -34,7 +36,7 @@ class StatOfficerDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_id'], 'required'],
             [['stat_officer_id', 'center_total', 'province_total', 'district_total', 'center_women', 'province_women', 'district_women'], 'integer'],
             [['stat_officer_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficer::className(), 'targetAttribute' => ['stat_officer_id' => 'id']],
         ];
@@ -58,19 +60,10 @@ class StatOfficerDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficer()
     {
         return $this->hasOne(StatOfficer::className(), ['id' => 'stat_officer_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerDetailQuery(get_called_class());
     }
 }

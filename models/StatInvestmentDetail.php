@@ -3,23 +3,25 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_investment_detail".
  *
- * @property integer $id
- * @property integer $stat_investment_id
+ * @property int $id
+ * @property int $stat_investment_id
  * @property string $place
  * @property string $description
  * @property string $implement
  * @property string $remark
- * @property integer $project_id
- * @property integer $deleted
+ * @property int $project_id
+ * @property int $deleted
  *
  * @property Project $project
  * @property StatInvestment $statInvestment
  */
-class StatInvestmentDetail extends \yii\db\ActiveRecord
+class StatInvestmentDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -35,7 +37,7 @@ class StatInvestmentDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_investment_id', 'place', 'description', 'project_id'],  'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_investment_id', 'place', 'description', 'project_id'], 'required'],
             [['stat_investment_id', 'project_id', 'deleted'], 'integer'],
             [['description'], 'string'],
             [['place', 'implement', 'remark'], 'string', 'max' => 255],
@@ -62,7 +64,7 @@ class StatInvestmentDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProject()
     {
@@ -70,7 +72,7 @@ class StatInvestmentDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatInvestment()
     {

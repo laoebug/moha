@@ -3,23 +3,25 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_institute_meeting_detail".
  *
- * @property integer $id
+ * @property int $id
  * @property string $title
- * @property integer $total
- * @property integer $women
+ * @property int $total
+ * @property int $women
  * @property string $start_date
  * @property string $end_date
- * @property integer $times
+ * @property int $times
  * @property string $place
- * @property integer $stat_institute_meeting_id
+ * @property int $stat_institute_meeting_id
  *
  * @property StatInstituteMeeting $statInstituteMeeting
  */
-class StatInstituteMeetingDetail extends \yii\db\ActiveRecord
+class StatInstituteMeetingDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -37,7 +39,7 @@ class StatInstituteMeetingDetail extends \yii\db\ActiveRecord
         return [
             [['total', 'women', 'times', 'stat_institute_meeting_id'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
-            [['stat_institute_meeting_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_institute_meeting_id'], 'required'],
             [['title', 'place'], 'string', 'max' => 255],
             [['stat_institute_meeting_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatInstituteMeeting::className(), 'targetAttribute' => ['stat_institute_meeting_id' => 'id']],
         ];
@@ -62,19 +64,10 @@ class StatInstituteMeetingDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatInstituteMeeting()
     {
         return $this->hasOne(StatInstituteMeeting::className(), ['id' => 'stat_institute_meeting_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatInstituteMeetingDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatInstituteMeetingDetailQuery(get_called_class());
     }
 }

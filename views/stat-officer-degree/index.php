@@ -4,9 +4,20 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatOfficerDegreeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
 $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ້ນວິຊາສະເພາະ";
-// $this->params['breadcrumbs'][] = $this->title;
+$titles = [
+    'ປະລິນຍາເອກ',
+    'ເໜືອປະລິນຍາໂທ',
+    'ປະລິນຍາໂທ',
+    'ເໜືອປະລິນຍາຕີ',
+    'ປະລິນຍາຕີ',
+    'ຊັ້ນສູງ',
+    'ຊັ້ນກາງ',
+    'ຊັ້ນຕົ້ນ',
+    'ມ/ຍ ປາຍ',
+    'ມ/ຍ ຕົ້ນ',
+    'ປະຖົມ',
+];
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="officerDegreeController">
@@ -28,41 +39,30 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                 ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
-                <div class="col-sm-12">
+                <div class="col-sm-2">
+                    <select class="form-control" ng-model="model.orgGroup" ng-change="inquiry()"
+                            ng-options="y.name for y in orgGroups"></select>
+                </div>
+                <div class="col-sm-10">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <td class="text-center" colspan="2">ປະລິນຍາເອກ</td>
-                            <td class="text-center" colspan="2">ເໜືອປະລິນຍາໂທ</td>
-                            <td class="text-center" colspan="2">ປະລິນຍາໂທ</td>
-                            <td class="text-center" colspan="2">ເໜືອປະລິນຍາຕີ</td>
-                            <td class="text-center" colspan="2">ປະລິນຍາຕີ</td>
+                            <?php foreach ($titles as $i => $title): if ($i > 4) break; ?>
+                                <td class="text-center" colspan="2"><?= $title ?></td>
+                            <?php endforeach; ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for ($i = 0; $i < 10; $i++): ?>
-                                <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
-                            <?php endfor; ?>
+                            <?php foreach ($titles as $i => $title): if ($i > 4) break; ?>
+                                <td class="text-center"><?= Yii::t('app', 'T') ?></td>
+                                <td class="text-center"><?= Yii::t('app', 'W') ?></td>
+                            <?php endforeach; ?>
                         </tr>
                         <tr>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.doctor_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.doctor_total"
-                                       ng-model="model.doctor_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.post_master_total">
+                            <td ng-repeat="c in cols" ng-if="$index < 10">
+                                <input type="number" class="form-control" min="0" ng-model="model[c.col]">
                             </td>
-                            <td><input type="number" class="form-control" min="0" max="model.post_master_total"
-                                       ng-model="model.post_master_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.master_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.master_total"
-                                       ng-model="model.master_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.post_bachelor_total">
-                            </td>
-                            <td><input type="number" class="form-control" min="0" max="model.post_bachelor_total"
-                                       ng-model="model.post_bachelor_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.bachelor_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.bachelor_total"
-                                       ng-model="model.bachelor_women"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -71,31 +71,22 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <td class="text-center" colspan="2">ຊັ້ນສູງ</td>
-                            <td class="text-center" colspan="2">ຊັ້ນກາງ</td>
-                            <td class="text-center" colspan="2">ຊັ້ນຕົ້ນ</td>
-                            <td class="text-center" colspan="2">ບໍ່ມີຊັ້ນ ວິຊາສະເພາະ</td>
+                            <?php foreach ($titles as $i => $title): if ($i < 5) continue; ?>
+                                <td class="text-center" colspan="2"><?= $title ?></td>
+                            <?php endforeach; ?>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for ($i = 0; $i < 8; $i++): ?>
-                                <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
-                            <?php endfor; ?>
+                            <?php foreach ($titles as $i => $title): if ($i < 5) continue; ?>
+                                <td class="text-center"><?= Yii::t('app', 'T') ?></td>
+                                <td class="text-center"><?= Yii::t('app', 'W') ?></td>
+                            <?php endforeach; ?>
                         </tr>
                         <tr>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.high_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.high_total"
-                                       ng-model="model.high_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.middle_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.middle_total"
-                                       ng-model="model.middle_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.begin_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.begin_total"
-                                       ng-model="model.begin_women"></td>
-                            <td><input type="number" class="form-control" min="0" ng-model="model.no_total"></td>
-                            <td><input type="number" class="form-control" min="0" max="model.no_total"
-                                       ng-model="model.no_women"></td>
+                            <td ng-repeat="c in cols" ng-if="$index >= 10">
+                                <input type="number" class="form-control" min="0" ng-model="model[c.col]">
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -108,7 +99,7 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
             </div>
         </div>
     </div>
-    <div ng-show="model" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
+    <div ng-show="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
         <div class="bs-component card">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
@@ -129,70 +120,33 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" colspan="21"><?= Yii::t('app', 'Description') ?></th>
+                                <th class="text-center" rowspan="3">ລ/ດ</th>
+                                <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນຕ່າງໆ</th>
+                                <th class="text-center" rowspan="2" colspan="2">ຈຳນວນລັດຖະກອນ ທັງໝົດ</th>
+                                <th class="text-center" colspan="16">ຊັ້ນວິຊາສະເພາະ</th>
+                                <th class="text-center" colspan="6">ລັດຖະກອນທີ່ບໍ່ມີຊັ້ນວິຊາສະເພາະ</th>
+                            </tr>
+                            <tr>
+                                <?php foreach ($titles as $title): ?>
+                                    <td class="text-center" colspan="2"><?= $title ?></td>
+                                <?php endforeach; ?>
+                            </tr>
+                            <tr>
+                                <th class="text-center"><?= Yii::t('app', 'T') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'W') ?></th>
+                                <?php foreach ($titles as $title): ?>
+                                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
+                                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
+                                <?php endforeach; ?>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th class="text-center" rowspan="4">IV</th>
-                                <th class="" colspan="21"><?= $this->title ?></th>
-                            </tr>
-                            <tr>
-                                <td class="text-center" colspan="2">ປະລິນຍາເອກ</td>
-                                <td class="text-center" colspan="2">ເໜືອປະລິນຍາໂທ</td>
-                                <td class="text-center" colspan="2">ປະລິນຍາໂທ</td>
-                                <td class="text-center" colspan="2">ເໜືອປະລິນຍາຕີ</td>
-                                <td class="text-center" colspan="2">ປະລິນຍາຕີ</td>
-                                <td class="text-center" colspan="2">ຊັ້ນສູງ</td>
-                                <td class="text-center" colspan="2">ຊັ້ນກາງ</td>
-                                <td class="text-center" colspan="2">ຊັ້ນຕົ້ນ</td>
-                                <td class="text-center" colspan="2">ບໍ່ມີຊັ້ນ ວິຊາສະເພາະ</td>
-                                <td class="text-center" colspan="4">ລວມ</td>
-                            </tr>
-                            <tr>
-                                <?php for ($i = 0; $i < 20; $i++): ?>
-                                    <td class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></td>
-                                <?php endfor; ?>
-                                <td class="text-center"><?= Yii::t('app', 'M') ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">{{formatNumber(model.doctor_total )}}</td>
-                                <td class="text-center">{{formatNumber(model.doctor_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.post_master_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.post_master_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.master_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.master_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.post_bachelor_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.post_bachelor_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.bachelor_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.bachelor_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.high_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.high_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.middle_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.middle_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.begin_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.begin_women )}}</td>
-                                <td class="text-center">{{formatNumber(model.no_total)}}</td>
-                                <td class="text-center">{{formatNumber(model.no_women )}}</td>
-                                <td class="text-center">{{
-                                    formatNumber(model.doctor_total + model.post_master_total + model.master_total +
-                                    model.post_bachelor_total + model.bachelor_total + model.no_total + model.high_total
-                                    + model.middle_total + model.begin_total + model.no_total)}}
-                                </td>
-                                <td class="text-center">{{
-                                    formatNumber(model.doctor_women + model.post_master_women + model.master_women +
-                                    model.post_bachelor_women + model.bachelor_women + model.no_women + model.high_women
-                                    + model.middle_women + model.begin_women + model.no_women) }}
-                                </td>
-                                <td class="text-center">{{
-                                    formatNumber((model.doctor_total + model.post_master_total + model.master_total +
-                                    model.post_bachelor_total + model.bachelor_total + model.no_total + model.high_total
-                                    + model.middle_total + model.begin_total + model.no_total)
-                                    - (model.doctor_women + model.post_master_women + model.master_women +
-                                    model.post_bachelor_women + model.bachelor_women + model.no_women + model.high_women
-                                    + model.middle_women + model.begin_women + model.no_women)) }}
-                                </td>
+                            <tr ng-repeat="model in models">
+                                <td class="text-center">{{$index + 1}}</td>
+                                <td class="text-center">{{model.name}}</td>
+                                <td class="text-center">{{sum(model, 'total') | number | dash}}</td>
+                                <td class="text-center">{{sum(model, 'women') | number | dash}}</td>
+                                <td class="text-center" ng-repeat="c in cols">{{model[c.col] | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -272,12 +226,42 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
     app.controller('officerDegreeController', function ($scope, $http, $sce, $timeout) {
         $scope.url = 'index.php?r=stat-officer-degree/';
         $scope.mode = 'read';
+        $scope.model = {};
+        $scope.models = null;
+        $scope.cols = [
+            {col: 'doctor_total'},
+            {col: 'doctor_women'},
+            {col: 'post_master_total'},
+            {col: 'post_master_women'},
+            {col: 'master_total'},
+            {col: 'master_women'},
+            {col: 'post_bachelor_total'},
+            {col: 'post_bachelor_women'},
+            {col: 'bachelor_total'},
+            {col: 'bachelor_women'},
+            {col: 'high_total'},
+            {col: 'high_women'},
+            {col: 'middle_total'},
+            {col: 'middle_women'},
+            {col: 'begin_total'},
+            {col: 'begin_women'},
+            {col: 'highschool_total'},
+            {col: 'highschool_women'},
+            {col: 'second_total'},
+            {col: 'second_women'},
+            {col: 'primary_total'},
+            {col: 'primary_women'},
+        ];
+
         $scope.changemode = function () {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
-        $http.get($scope.url + 'get')
-            .then(function (r) {
+
+        $http.get($scope.url + 'get').then(
+            function (r) {
                 $scope.years = r.data.years;
+                $scope.orgGroups = r.data.orgGroups;
+
             }, function (r) {
                 $scope.response = r;
                 $timeout(function () {
@@ -285,53 +269,34 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
                 }, 15000);
             });
 
+        $scope.sum = function (model, key) {
+            let total = 0;
+            if (model)
+                $scope.cols.forEach(function (c) {
+                    if (c.col.indexOf(key) >= 0)
+                        total += parseInt(model[c.col]);
+                });
+            return total;
+        };
+
+        $scope.inquiry = function () {
+            if ($scope.year && $scope.model.orgGroup)
+                $http.get($scope.url + 'inquiry&orgGroup=' + $scope.model.orgGroup.id + '&year=' + $scope.year.id)
+                    .then(function (r) {
+                        if (r.data.model) {
+                            $scope.cols.forEach(function (c) {
+                                $scope.model[c.col] = r.data.model ? parseInt(r.data.model[c.col]) : null;
+                            });
+                        }
+                    });
+        };
+
         $scope.enquiry = function () {
-            $scope.model = null;
+            $scope.models = null;
             if ($scope.year) {
                 $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
                     .then(function (r) {
-                        $scope.model = r.data.model;
-                        if (r.data.model) {
-                            $scope.model.doctor_total = parseInt($scope.model.doctor_total);
-                            $scope.model.post_master_total = parseInt($scope.model.post_master_total);
-                            $scope.model.master_total = parseInt($scope.model.master_total);
-                            $scope.model.post_bachelor_total = parseInt($scope.model.post_bachelor_total);
-                            $scope.model.bachelor_total = parseInt($scope.model.bachelor_total);
-                            $scope.model.high_total = parseInt($scope.model.high_total);
-                            $scope.model.middle_total = parseInt($scope.model.middle_total);
-                            $scope.model.begin_total = parseInt($scope.model.begin_total);
-                            $scope.model.no_total = parseInt($scope.model.no_total);
-
-                            $scope.model.doctor_women = parseInt($scope.model.doctor_women);
-                            $scope.model.post_master_women = parseInt($scope.model.post_master_women);
-                            $scope.model.master_women = parseInt($scope.model.master_women);
-                            $scope.model.post_bachelor_women = parseInt($scope.model.post_bachelor_women);
-                            $scope.model.bachelor_women = parseInt($scope.model.bachelor_women);
-                            $scope.model.high_women = parseInt($scope.model.high_women);
-                            $scope.model.middle_women = parseInt($scope.model.middle_women);
-                            $scope.model.begin_women = parseInt($scope.model.begin_women);
-                            $scope.model.no_women = parseInt($scope.model.no_women);
-                        } else {
-                            $scope.model.doctor_total = null;
-                            $scope.model.post_master_total = null;
-                            $scope.model.master_total = null;
-                            $scope.model.post_bachelor_total = null;
-                            $scope.model.bachelor_total = null;
-                            $scope.model.high_total = null;
-                            $scope.model.middle_total = null;
-                            $scope.model.begin_total = null;
-                            $scope.model.no_total = null;
-
-                            $scope.model.doctor_women = null;
-                            $scope.model.post_master_women = null;
-                            $scope.model.master_women = null;
-                            $scope.model.post_bachelor_women = null;
-                            $scope.model.bachelor_women = null;
-                            $scope.model.high_women = null;
-                            $scope.model.middle_women = null;
-                            $scope.model.begin_women = null;
-                            $scope.model.no_women = null;
-                        }
+                        $scope.models = r.data.models;
                         $scope.getreferences();
                     }, function (r) {
                         $scope.response = r;
@@ -345,11 +310,13 @@ $this->title = "ຈຳນວນລັດຖະກອນແຍກຕາມຊັ�
 
         $scope.save = function () {
             if ($scope.year && $scope.model) {
+                $scope.model.organisation_group_id = $scope.model.orgGroup.id;
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
                     'Model': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
                 }).then(function (r) {
                     $scope.response = r;
+                    $scope.model = null;
                     $scope.enquiry();
                     $timeout(function () {
                         $scope.response = null;

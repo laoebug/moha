@@ -3,34 +3,35 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_position_detail".
  *
- * @property integer $id
- * @property integer $position1_total
- * @property integer $position1_women
- * @property integer $position2_total
- * @property integer $position2_women
- * @property integer $position3_total
- * @property integer $position3_women
- * @property integer $position4_total
- * @property integer $position4_women
- * @property integer $position5_total
- * @property integer $position5_women
- * @property integer $position6_total
- * @property integer $position6_women
- * @property integer $position7_total
- * @property integer $position7_women
- * @property integer $position8_total
- * @property integer $position8_women
- * @property integer $officer_level_id
- * @property integer $stat_position_id
+ * @property int $id
+ * @property int $position1_total
+ * @property int $position1_women
+ * @property int $position2_total
+ * @property int $position2_women
+ * @property int $position3_total
+ * @property int $position3_women
+ * @property int $position4_total
+ * @property int $position4_women
+ * @property int $position5_total
+ * @property int $position5_women
+ * @property int $position6_total
+ * @property int $position6_women
+ * @property int $position7_total
+ * @property int $position7_women
+ * @property int $position8_total
+ * @property int $position8_women
+ * @property int $officer_level_id
+ * @property int $stat_position_id
  *
- * @property OfficerLevel $officerLevel
  * @property StatPosition $statPosition
  */
-class StatPositionDetail extends \yii\db\ActiveRecord
+class StatPositionDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -47,8 +48,7 @@ class StatPositionDetail extends \yii\db\ActiveRecord
     {
         return [
             [['position1_total', 'position1_women', 'position2_total', 'position2_women', 'position3_total', 'position3_women', 'position4_total', 'position4_women', 'position5_total', 'position5_women', 'position6_total', 'position6_women', 'position7_total', 'position7_women', 'position8_total', 'position8_women', 'officer_level_id', 'stat_position_id'], 'integer'],
-            [['officer_level_id', 'stat_position_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
+            [['officer_level_id', 'stat_position_id'], 'required'],
             [['stat_position_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatPosition::className(), 'targetAttribute' => ['stat_position_id' => 'id']],
         ];
     }
@@ -82,27 +82,10 @@ class StatPositionDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOfficerLevel()
-    {
-        return $this->hasOne(OfficerLevel::className(), ['id' => 'officer_level_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatPosition()
     {
         return $this->hasOne(StatPosition::className(), ['id' => 'stat_position_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatPositionDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatPositionDetailQuery(get_called_class());
     }
 }

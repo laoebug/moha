@@ -3,15 +3,16 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "legal_status".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
+ * @property int $deleted
  */
-class LegalStatus extends \yii\db\ActiveRecord
+class LegalStatus extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -27,7 +28,7 @@ class LegalStatus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'deleted'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name', 'deleted'], 'required'],
             [['deleted'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
@@ -44,14 +45,5 @@ class LegalStatus extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'deleted' => Yii::t('app', 'Deleted'),
         ];
-    }
-
-    /**
-     * @inheritdoc
-     * @return LegalStatusQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new LegalStatusQuery(get_called_class());
     }
 }

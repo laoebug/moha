@@ -3,45 +3,47 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_victorycoin_province_detail".
  *
- * @property integer $id
- * @property integer $stat_victorycoin_province_id
- * @property integer $province_id
- * @property integer $free1_personal
- * @property integer $free1_team
- * @property integer $free2_personal
- * @property integer $free2_team
- * @property integer $free3_personal
- * @property integer $free3_team
- * @property integer $revo1_personal
- * @property integer $revo1_team
- * @property integer $revo2_personal
- * @property integer $revo2_team
- * @property integer $revo3_personal
- * @property integer $revo3_team
- * @property integer $labo1_personal
- * @property integer $labo1_team
- * @property integer $labo2_personal
- * @property integer $labo2_team
- * @property integer $labo3_personal
- * @property integer $labo3_team
- * @property integer $deve1_personal
- * @property integer $deve1_team
- * @property integer $deve2_personal
- * @property integer $deve2_team
- * @property integer $deve3_personal
- * @property integer $deve3_team
+ * @property int $id
+ * @property int $stat_victorycoin_province_id
+ * @property int $province_id
+ * @property int $free1_personal
+ * @property int $free1_team
+ * @property int $free2_personal
+ * @property int $free2_team
+ * @property int $free3_personal
+ * @property int $free3_team
+ * @property int $revo1_personal
+ * @property int $revo1_team
+ * @property int $revo2_personal
+ * @property int $revo2_team
+ * @property int $revo3_personal
+ * @property int $revo3_team
+ * @property int $labo1_personal
+ * @property int $labo1_team
+ * @property int $labo2_personal
+ * @property int $labo2_team
+ * @property int $labo3_personal
+ * @property int $labo3_team
+ * @property int $deve1_personal
+ * @property int $deve1_team
+ * @property int $deve2_personal
+ * @property int $deve2_team
+ * @property int $deve3_personal
+ * @property int $deve3_team
  * @property string $remark
- * @property integer $award_id
+ * @property int $award_id
  *
  * @property Award $award
  * @property Province $province
  * @property StatVictorycoinProvince $statVictorycoinProvince
  */
-class StatVictorycoinProvinceDetail extends \yii\db\ActiveRecord
+class StatVictorycoinProvinceDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -57,7 +59,7 @@ class StatVictorycoinProvinceDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_victorycoin_province_id', 'province_id', 'award_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_victorycoin_province_id', 'province_id', 'award_id'], 'required'],
             [['stat_victorycoin_province_id', 'province_id', 'free1_personal', 'free1_team', 'free2_personal', 'free2_team', 'free3_personal', 'free3_team', 'revo1_personal', 'revo1_team', 'revo2_personal', 'revo2_team', 'revo3_personal', 'revo3_team', 'labo1_personal', 'labo1_team', 'labo2_personal', 'labo2_team', 'labo3_personal', 'labo3_team', 'deve1_personal', 'deve1_team', 'deve2_personal', 'deve2_team', 'deve3_personal', 'deve3_team', 'award_id'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
@@ -105,7 +107,7 @@ class StatVictorycoinProvinceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAward()
     {
@@ -113,7 +115,7 @@ class StatVictorycoinProvinceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -121,19 +123,10 @@ class StatVictorycoinProvinceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictorycoinProvince()
     {
         return $this->hasOne(StatVictorycoinProvince::className(), ['id' => 'stat_victorycoin_province_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatVictorycoinProvinceDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatVictorycoinProvinceDetailQuery(get_called_class());
     }
 }

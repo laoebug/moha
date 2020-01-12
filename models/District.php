@@ -3,23 +3,25 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "district".
  *
- * @property integer $id
+ * @property int $id
  * @property string $district_code
  * @property string $district_name
- * @property integer $province_id
+ * @property int $province_id
  * @property string $record_status
- * @property integer $input_id
+ * @property int $input_id
  * @property string $input_dt_stamp
- * @property integer $deleted
+ * @property int $deleted
  *
  * @property Province $province
  * @property User $input
  */
-class District extends \yii\db\ActiveRecord
+class District extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -35,7 +37,7 @@ class District extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['district_code', 'district_name', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['district_code', 'district_name', 'province_id'], 'required'],
             [['province_id', 'input_id', 'deleted'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['district_code'], 'string', 'max' => 20],
@@ -64,7 +66,7 @@ class District extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -72,19 +74,10 @@ class District extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getInput()
     {
         return $this->hasOne(User::className(), ['id' => 'input_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return DistrictQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new DistrictQuery(get_called_class());
     }
 }

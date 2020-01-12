@@ -3,17 +3,18 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user_has_branch".
  *
- * @property integer $user_id
- * @property integer $branch_id
+ * @property int $user_id
+ * @property int $branch_id
  *
  * @property Branch $branch
- * @property User $user
  */
-class UserHasBranch extends \yii\db\ActiveRecord
+class UserHasBranch extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -29,10 +30,10 @@ class UserHasBranch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'branch_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['user_id', 'branch_id'], 'required'],
             [['user_id', 'branch_id'], 'integer'],
+            [['user_id', 'branch_id'], 'unique', 'targetAttribute' => ['user_id', 'branch_id']],
             [['branch_id'], 'exist', 'skipOnError' => true, 'targetClass' => Branch::className(), 'targetAttribute' => ['branch_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -48,27 +49,10 @@ class UserHasBranch extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getBranch()
     {
         return $this->hasOne(Branch::className(), ['id' => 'branch_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return UserHasBranchQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new UserHasBranchQuery(get_called_class());
     }
 }

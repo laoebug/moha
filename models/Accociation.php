@@ -3,21 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "accociation".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
  * @property string $approved_date
- * @property integer $province_id
- * @property integer $approved_by_moha
+ * @property int $province_id
+ * @property int $approved_by_moha
  * @property string $remark
- * @property integer $position
+ * @property int $position
  *
  * @property Province $province
  */
-class Accociation extends \yii\db\ActiveRecord
+class Accociation extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +35,7 @@ class Accociation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'approved_date'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name', 'approved_date'], 'required'],
             [['approved_date'], 'safe'],
             [['province_id', 'approved_by_moha', 'position'], 'integer'],
             [['remark'], 'string'],
@@ -60,19 +62,10 @@ class Accociation extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
         return $this->hasOne(Province::className(), ['id' => 'province_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return AccociationQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new AccociationQuery(get_called_class());
     }
 }

@@ -3,26 +3,28 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_province_train_detail".
  *
- * @property integer $id
- * @property integer $tech_in_total
- * @property integer $tech_in_women
- * @property integer $tech_out_total
- * @property integer $tech_out_women
- * @property integer $theo_in_total
- * @property integer $theo_in_women
- * @property integer $stat_officer_province_train_id
- * @property integer $province_id
- * @property integer $theo_out_total
- * @property integer $theo_out_women
+ * @property int $id
+ * @property int $tech_in_total
+ * @property int $tech_in_women
+ * @property int $tech_out_total
+ * @property int $tech_out_women
+ * @property int $theo_in_total
+ * @property int $theo_in_women
+ * @property int $stat_officer_province_train_id
+ * @property int $province_id
+ * @property int $theo_out_total
+ * @property int $theo_out_women
  *
  * @property Province $province
  * @property StatOfficerProvinceTrain $statOfficerProvinceTrain
  */
-class StatOfficerProvinceTrainDetail extends \yii\db\ActiveRecord
+class StatOfficerProvinceTrainDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -39,7 +41,7 @@ class StatOfficerProvinceTrainDetail extends \yii\db\ActiveRecord
     {
         return [
             [['tech_in_total', 'tech_in_women', 'tech_out_total', 'tech_out_women', 'theo_in_total', 'theo_in_women', 'stat_officer_province_train_id', 'province_id', 'theo_out_total', 'theo_out_women'], 'integer'],
-            [['stat_officer_province_train_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_province_train_id', 'province_id'], 'required'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_officer_province_train_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerProvinceTrain::className(), 'targetAttribute' => ['stat_officer_province_train_id' => 'id']],
         ];
@@ -66,7 +68,7 @@ class StatOfficerProvinceTrainDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -74,19 +76,10 @@ class StatOfficerProvinceTrainDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerProvinceTrain()
     {
         return $this->hasOne(StatOfficerProvinceTrain::className(), ['id' => 'stat_officer_province_train_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerProvinceTrainDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerProvinceTrainDetailQuery(get_called_class());
     }
 }

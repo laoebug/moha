@@ -3,32 +3,36 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_position_detail".
  *
- * @property integer $id
- * @property integer $p1_total
- * @property integer $p1_women
- * @property integer $p2_total
- * @property integer $p2_women
- * @property integer $p3_total
- * @property integer $p3_women
- * @property integer $p4_total
- * @property integer $p4_women
- * @property integer $p5_total
- * @property integer $p5_women
- * @property integer $p6_total
- * @property integer $p6_women
- * @property integer $p7_total
- * @property integer $p7_women
- * @property integer $p8_total
- * @property integer $p8_women
- * @property integer $stat_officer_position_id
+ * @property int $id
+ * @property int $p1_total
+ * @property int $p1_women
+ * @property int $p2_total
+ * @property int $p2_women
+ * @property int $p3_total
+ * @property int $p3_women
+ * @property int $p4_total
+ * @property int $p4_women
+ * @property int $p5_total
+ * @property int $p5_women
+ * @property int $p6_total
+ * @property int $p6_women
+ * @property int $p7_total
+ * @property int $p7_women
+ * @property int $p8_total
+ * @property int $p8_women
+ * @property int $stat_officer_position_id
+ * @property int $organisation_group_id
  *
+ * @property OrganisationGroup $organisationGroup
  * @property StatOfficerPosition $statOfficerPosition
  */
-class StatOfficerPositionDetail extends \yii\db\ActiveRecord
+class StatOfficerPositionDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -44,8 +48,9 @@ class StatOfficerPositionDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['p1_total', 'p1_women', 'p2_total', 'p2_women', 'p3_total', 'p3_women', 'p4_total', 'p4_women', 'p5_total', 'p5_women', 'p6_total', 'p6_women', 'p7_total', 'p7_women', 'p8_total', 'p8_women', 'stat_officer_position_id'], 'integer'],
-            [['stat_officer_position_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['p1_total', 'p1_women', 'p2_total', 'p2_women', 'p3_total', 'p3_women', 'p4_total', 'p4_women', 'p5_total', 'p5_women', 'p6_total', 'p6_women', 'p7_total', 'p7_women', 'p8_total', 'p8_women', 'stat_officer_position_id', 'organisation_group_id'], 'integer'],
+            [['stat_officer_position_id', 'organisation_group_id'], 'required'],
+            [['organisation_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrganisationGroup::className(), 'targetAttribute' => ['organisation_group_id' => 'id']],
             [['stat_officer_position_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerPosition::className(), 'targetAttribute' => ['stat_officer_position_id' => 'id']],
         ];
     }
@@ -74,23 +79,23 @@ class StatOfficerPositionDetail extends \yii\db\ActiveRecord
             'p8_total' => Yii::t('app', 'P8 Total'),
             'p8_women' => Yii::t('app', 'P8 Women'),
             'stat_officer_position_id' => Yii::t('app', 'Stat Officer Position ID'),
+            'organisation_group_id' => Yii::t('app', 'Organisation Group ID'),
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     */
+    public function getOrganisationGroup()
+    {
+        return $this->hasOne(OrganisationGroup::className(), ['id' => 'organisation_group_id']);
+    }
+
+    /**
+     * @return ActiveQuery
      */
     public function getStatOfficerPosition()
     {
         return $this->hasOne(StatOfficerPosition::className(), ['id' => 'stat_officer_position_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerPositionDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerPositionDetailQuery(get_called_class());
     }
 }

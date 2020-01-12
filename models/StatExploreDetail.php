@@ -3,23 +3,25 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_explore_detail".
  *
- * @property integer $id
- * @property integer $province_id
- * @property integer $stat_explore_id
- * @property integer $mark
- * @property integer $point
- * @property integer $hm
- * @property integer $km
+ * @property int $id
+ * @property int $province_id
+ * @property int $stat_explore_id
+ * @property int $mark
+ * @property int $point
+ * @property int $hm
+ * @property int $km
  * @property string $remark
  *
  * @property Province $province
  * @property StatExplore $statExplore
  */
-class StatExploreDetail extends \yii\db\ActiveRecord
+class StatExploreDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -35,7 +37,7 @@ class StatExploreDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['province_id', 'stat_explore_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['province_id', 'stat_explore_id'], 'required'],
             [['province_id', 'stat_explore_id', 'mark', 'point', 'hm', 'km'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
@@ -61,7 +63,7 @@ class StatExploreDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -69,19 +71,10 @@ class StatExploreDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatExplore()
     {
         return $this->hasOne(StatExplore::className(), ['id' => 'stat_explore_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatExploreDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatExploreDetailQuery(get_called_class());
     }
 }

@@ -3,21 +3,24 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "ministry".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
+ * @property int $deleted
  * @property string $code
  * @property string $last_update
- * @property integer $ministry_group_id
- * @property integer $position
- * @property integer $user_id
+ * @property int $ministry_group_id
+ * @property int $position
+ * @property int $user_id
  * @property string $remark
  * @property string $input_dt_stamp
- * @property integer $equal
+ * @property int $equal equal ministry
+ * @property int $phiscal_year_id
  *
  * @property Approver[] $approvers
  * @property Branch[] $branches
@@ -37,7 +40,7 @@ use Yii;
  * @property StatVictorycoinMinistryDetail[] $statVictorycoinMinistryDetails
  * @property StatVictoryoverseaMinistryDetail[] $statVictoryoverseaMinistryDetails
  */
-class Ministry extends \yii\db\ActiveRecord
+class Ministry extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -53,8 +56,8 @@ class Ministry extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'last_update'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['deleted', 'ministry_group_id', 'position', 'user_id', 'equal'], 'integer'],
+            [['name', 'last_update'], 'required'],
+            [['deleted', 'ministry_group_id', 'position', 'user_id', 'equal', 'phiscal_year_id'], 'integer'],
             [['last_update', 'input_dt_stamp'], 'safe'],
             [['remark'], 'string'],
             [['name'], 'string', 'max' => 255],
@@ -81,11 +84,12 @@ class Ministry extends \yii\db\ActiveRecord
             'remark' => Yii::t('app', 'Remark'),
             'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
             'equal' => Yii::t('app', 'Equal'),
+            'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getApprovers()
     {
@@ -93,7 +97,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getBranches()
     {
@@ -101,7 +105,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMinistryGroup()
     {
@@ -109,7 +113,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -117,7 +121,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatDocumentDetails()
     {
@@ -125,7 +129,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovcoinMinistryDetails()
     {
@@ -133,7 +137,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovermentUnitDetails()
     {
@@ -141,7 +145,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovoverseaMinistryDetails()
     {
@@ -149,7 +153,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHighcoinMinistryDetails()
     {
@@ -157,7 +161,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHighoverseaMinistryDetails()
     {
@@ -165,7 +169,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerMinistryAddDetails()
     {
@@ -173,7 +177,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerMinistryDetails()
     {
@@ -181,7 +185,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerMinistryTrainDetails()
     {
@@ -189,7 +193,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerMinistryUpgradeDetails()
     {
@@ -197,7 +201,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatSingleGatewayImplementationDetails()
     {
@@ -205,7 +209,7 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictorycoinMinistryDetails()
     {
@@ -213,19 +217,10 @@ class Ministry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictoryoverseaMinistryDetails()
     {
         return $this->hasMany(StatVictoryoverseaMinistryDetail::className(), ['ministry_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return MinistryQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new MinistryQuery(get_called_class());
     }
 }

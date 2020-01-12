@@ -3,19 +3,21 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_document_detail".
  *
- * @property integer $id
- * @property integer $stat_document_id
- * @property integer $province_id
- * @property integer $ministry_id
- * @property integer $organisation_id
- * @property integer $book_id
- * @property integer $before
- * @property integer $after
- * @property integer $after_new
+ * @property int $id
+ * @property int $stat_document_id
+ * @property int $province_id
+ * @property int $ministry_id
+ * @property int $organisation_id
+ * @property int $book_id
+ * @property int $before
+ * @property int $after
+ * @property int $after_new
  * @property string $remark
  *
  * @property Book $book
@@ -24,7 +26,7 @@ use Yii;
  * @property Province $province
  * @property StatDocument $statDocument
  */
-class StatDocumentDetail extends \yii\db\ActiveRecord
+class StatDocumentDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -70,7 +72,7 @@ class StatDocumentDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getBook()
     {
@@ -78,7 +80,7 @@ class StatDocumentDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMinistry()
     {
@@ -86,7 +88,7 @@ class StatDocumentDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrganisation()
     {
@@ -94,7 +96,7 @@ class StatDocumentDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -102,19 +104,10 @@ class StatDocumentDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatDocument()
     {
         return $this->hasOne(StatDocument::className(), ['id' => 'stat_document_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatDocumentDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatDocumentDetailQuery(get_called_class());
     }
 }

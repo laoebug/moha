@@ -3,20 +3,22 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_province_detail".
  *
- * @property integer $id
- * @property integer $total
- * @property integer $women
- * @property integer $stat_officer_province_id
- * @property integer $province_id
+ * @property int $id
+ * @property int $total
+ * @property int $women
+ * @property int $stat_officer_province_id
+ * @property int $province_id
  *
  * @property Province $province
  * @property StatOfficerProvince $statOfficerProvince
  */
-class StatOfficerProvinceDetail extends \yii\db\ActiveRecord
+class StatOfficerProvinceDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +35,7 @@ class StatOfficerProvinceDetail extends \yii\db\ActiveRecord
     {
         return [
             [['total', 'women', 'stat_officer_province_id', 'province_id'], 'integer'],
-            [['stat_officer_province_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_province_id', 'province_id'], 'required'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_officer_province_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerProvince::className(), 'targetAttribute' => ['stat_officer_province_id' => 'id']],
         ];
@@ -54,7 +56,7 @@ class StatOfficerProvinceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -62,19 +64,10 @@ class StatOfficerProvinceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerProvince()
     {
         return $this->hasOne(StatOfficerProvince::className(), ['id' => 'stat_officer_province_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerProvinceDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerProvinceDetailQuery(get_called_class());
     }
 }

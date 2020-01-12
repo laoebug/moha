@@ -3,20 +3,22 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_organisation_add_detail".
  *
- * @property integer $id
- * @property integer $add
- * @property integer $resign
- * @property integer $stat_officer_organisation_add_id
- * @property integer $organisation_id
+ * @property int $id
+ * @property int $add
+ * @property int $resign
+ * @property int $stat_officer_organisation_add_id
+ * @property int $organisation_id
  *
  * @property Organisation $organisation
  * @property StatOfficerOrganisationAdd $statOfficerOrganisationAdd
  */
-class StatOfficerOrganisationAddDetail extends \yii\db\ActiveRecord
+class StatOfficerOrganisationAddDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +35,7 @@ class StatOfficerOrganisationAddDetail extends \yii\db\ActiveRecord
     {
         return [
             [['add', 'resign', 'stat_officer_organisation_add_id', 'organisation_id'], 'integer'],
-            [['stat_officer_organisation_add_id', 'organisation_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_organisation_add_id', 'organisation_id'], 'required'],
             [['organisation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['organisation_id' => 'id']],
             [['stat_officer_organisation_add_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerOrganisationAdd::className(), 'targetAttribute' => ['stat_officer_organisation_add_id' => 'id']],
         ];
@@ -54,7 +56,7 @@ class StatOfficerOrganisationAddDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrganisation()
     {
@@ -62,19 +64,10 @@ class StatOfficerOrganisationAddDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrganisationAdd()
     {
         return $this->hasOne(StatOfficerOrganisationAdd::className(), ['id' => 'stat_officer_organisation_add_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerOrganisationAddDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerOrganisationAddDetailQuery(get_called_class());
     }
 }

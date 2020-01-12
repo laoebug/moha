@@ -3,17 +3,19 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "message".
  *
- * @property integer $id
+ * @property int $id
  * @property string $language
  * @property string $translation
  *
  * @property SourceMessage $id0
  */
-class Message extends \yii\db\ActiveRecord
+class Message extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -29,10 +31,11 @@ class Message extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'language'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['id', 'language'], 'required'],
             [['id'], 'integer'],
             [['translation'], 'string'],
             [['language'], 'string', 'max' => 16],
+            [['id', 'language'], 'unique', 'targetAttribute' => ['id', 'language']],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => SourceMessage::className(), 'targetAttribute' => ['id' => 'id']],
         ];
     }
@@ -50,19 +53,10 @@ class Message extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getId0()
     {
         return $this->hasOne(SourceMessage::className(), ['id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return MessageQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new MessageQuery(get_called_class());
     }
 }

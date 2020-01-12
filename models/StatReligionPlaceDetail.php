@@ -3,36 +3,38 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_religion_place_detail".
  *
- * @property integer $id
- * @property integer $buddhis_total
- * @property integer $buddhis_nomonk
- * @property integer $buddhis_monk
- * @property integer $buddhis_agreement_built_temple
- * @property integer $buddhis_no_agreement_built_temple
- * @property integer $buddhis_nosim
- * @property integer $buddhis_sim
- * @property integer $christ_news_total
- * @property integer $christ_news_not
- * @property integer $christ_sat_total
- * @property integer $christ_sat_not
- * @property integer $christ_cato_total
- * @property integer $christ_cato_not
- * @property integer $bahai_total
- * @property integer $bahai_not
- * @property integer $idslam_total
- * @property integer $idslam_not
+ * @property int $id
+ * @property int $buddhis_total
+ * @property int $buddhis_nomonk
+ * @property int $buddhis_monk
+ * @property int $buddhis_agreement_built_temple
+ * @property int $buddhis_no_agreement_built_temple
+ * @property int $buddhis_nosim
+ * @property int $buddhis_sim
+ * @property int $christ_news_total
+ * @property int $christ_news_not
+ * @property int $christ_sat_total
+ * @property int $christ_sat_not
+ * @property int $christ_cato_total
+ * @property int $christ_cato_not
+ * @property int $bahai_total
+ * @property int $bahai_not
+ * @property int $idslam_total
+ * @property int $idslam_not
  * @property string $remark
- * @property integer $stat_religion_place_id
- * @property integer $province_id
+ * @property int $stat_religion_place_id
+ * @property int $province_id
  *
  * @property Province $province
  * @property StatReligionPlace $statReligionPlace
  */
-class StatReligionPlaceDetail extends \yii\db\ActiveRecord
+class StatReligionPlaceDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -48,9 +50,9 @@ class StatReligionPlaceDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['buddhis_total', 'buddhis_nomonk', 'buddhis_nosim', 'buddhis_sim', 'christ_news_total', 'christ_news_not', 'christ_sat_total', 'christ_sat_not', 'christ_cato_total', 'christ_cato_not', 'bahai_total', 'bahai_not', 'idslam_total', 'idslam_not', 'stat_religion_place_id', 'province_id'], 'integer'],
+            [['buddhis_total', 'buddhis_nomonk', 'buddhis_monk', 'buddhis_agreement_built_temple', 'buddhis_no_agreement_built_temple', 'buddhis_nosim', 'buddhis_sim', 'christ_news_total', 'christ_news_not', 'christ_sat_total', 'christ_sat_not', 'christ_cato_total', 'christ_cato_not', 'bahai_total', 'bahai_not', 'idslam_total', 'idslam_not', 'stat_religion_place_id', 'province_id'], 'integer'],
             [['remark'], 'string'],
-            [['stat_religion_place_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_religion_place_id', 'province_id'], 'required'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_religion_place_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatReligionPlace::className(), 'targetAttribute' => ['stat_religion_place_id' => 'id']],
         ];
@@ -65,9 +67,9 @@ class StatReligionPlaceDetail extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'buddhis_total' => Yii::t('app', 'Buddhis Total'),
             'buddhis_nomonk' => Yii::t('app', 'Buddhis Nomonk'),
-			'buddhis_monk' => Yii::t('app', 'Buddhis Monk'),
-			'buddhis_agreement_built_temple' => Yii::t('app', 'Buddhis Agreement Built Temple'),
-			'buddhis_no_agreement_built_temple' => Yii::t('app', 'Buddhis No Agreement Built Temple'),
+            'buddhis_monk' => Yii::t('app', 'Buddhis Monk'),
+            'buddhis_agreement_built_temple' => Yii::t('app', 'Buddhis Agreement Built Temple'),
+            'buddhis_no_agreement_built_temple' => Yii::t('app', 'Buddhis No Agreement Built Temple'),
             'buddhis_nosim' => Yii::t('app', 'Buddhis Nosim'),
             'buddhis_sim' => Yii::t('app', 'Buddhis Sim'),
             'christ_news_total' => Yii::t('app', 'Christ News Total'),
@@ -87,7 +89,7 @@ class StatReligionPlaceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -95,19 +97,10 @@ class StatReligionPlaceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatReligionPlace()
     {
         return $this->hasOne(StatReligionPlace::className(), ['id' => 'stat_religion_place_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatReligionPlaceDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatReligionPlaceDetailQuery(get_called_class());
     }
 }

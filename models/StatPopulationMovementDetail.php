@@ -3,34 +3,38 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_population_movement_detail".
  *
- * @property integer $id
- * @property integer $district
- * @property integer $village
- * @property integer $population_total
- * @property integer $population_women
- * @property integer $born_total
- * @property integer $born_women
- * @property integer $die_total
- * @property integer $die_women
- * @property integer $married
- * @property integer $divorce
- * @property integer $movein_total
- * @property integer $movein_women
- * @property integer $moveout_total
- * @property integer $moveout_women
- * @property integer $real_total
- * @property integer $real_women
- * @property integer $province_id
- * @property integer $stat_population_movement_id
+ * @property int $id
+ * @property int $district
+ * @property int $village
+ * @property int $population_total
+ * @property int $population_women
+ * @property int $born_total
+ * @property int $born_women
+ * @property int $die_total
+ * @property int $die_women
+ * @property int $married_local_foreigner
+ * @property int $divorce_local_foreigner
+ * @property int $married
+ * @property int $divorce
+ * @property int $movein_total
+ * @property int $movein_women
+ * @property int $moveout_total
+ * @property int $moveout_women
+ * @property int $real_total
+ * @property int $real_women
+ * @property int $province_id
+ * @property int $stat_population_movement_id
  *
  * @property Province $province
  * @property StatPopulationMovement $statPopulationMovement
  */
-class StatPopulationMovementDetail extends \yii\db\ActiveRecord
+class StatPopulationMovementDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -46,8 +50,8 @@ class StatPopulationMovementDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['district', 'village', 'population_total', 'population_women', 'born_total', 'born_women', 'die_total', 'die_women', 'married', 'divorce', 'movein_total', 'movein_women', 'moveout_total', 'moveout_women', 'real_total', 'real_women', 'province_id', 'stat_population_movement_id'], 'integer'],
-            [['province_id', 'stat_population_movement_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['district', 'village', 'population_total', 'population_women', 'born_total', 'born_women', 'die_total', 'die_women', 'married_local_foreigner', 'divorce_local_foreigner', 'married', 'divorce', 'movein_total', 'movein_women', 'moveout_total', 'moveout_women', 'real_total', 'real_women', 'province_id', 'stat_population_movement_id'], 'integer'],
+            [['province_id', 'stat_population_movement_id'], 'required'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_population_movement_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatPopulationMovement::className(), 'targetAttribute' => ['stat_population_movement_id' => 'id']],
         ];
@@ -68,6 +72,8 @@ class StatPopulationMovementDetail extends \yii\db\ActiveRecord
             'born_women' => Yii::t('app', 'Born Women'),
             'die_total' => Yii::t('app', 'Die Total'),
             'die_women' => Yii::t('app', 'Die Women'),
+            'married_local_foreigner' => Yii::t('app', 'Married Local Foreigner'),
+            'divorce_local_foreigner' => Yii::t('app', 'Divorce Local Foreigner'),
             'married' => Yii::t('app', 'Married'),
             'divorce' => Yii::t('app', 'Divorce'),
             'movein_total' => Yii::t('app', 'Movein Total'),
@@ -82,7 +88,7 @@ class StatPopulationMovementDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -90,19 +96,10 @@ class StatPopulationMovementDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatPopulationMovement()
     {
         return $this->hasOne(StatPopulationMovement::className(), ['id' => 'stat_population_movement_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatPopulationMovementDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatPopulationMovementDetailQuery(get_called_class());
     }
 }

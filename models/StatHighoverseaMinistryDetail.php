@@ -3,27 +3,29 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_highoversea_ministry_detail".
  *
- * @property integer $id
- * @property integer $stat_highoversea_ministry_id
- * @property integer $ministry_id
- * @property integer $award_id
- * @property integer $gold_personal
- * @property integer $gold_team
- * @property integer $lanx_personal
- * @property integer $lanx_team
- * @property integer $hono_personal
- * @property integer $hono_team
+ * @property int $id
+ * @property int $stat_highoversea_ministry_id
+ * @property int $ministry_id
+ * @property int $award_id
+ * @property int $gold_personal
+ * @property int $gold_team
+ * @property int $lanx_personal
+ * @property int $lanx_team
+ * @property int $hono_personal
+ * @property int $hono_team
  * @property string $remark
  *
  * @property Award $award
  * @property Ministry $ministry
  * @property StatHighoverseaMinistry $statHighoverseaMinistry
  */
-class StatHighoverseaMinistryDetail extends \yii\db\ActiveRecord
+class StatHighoverseaMinistryDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -39,7 +41,7 @@ class StatHighoverseaMinistryDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_highoversea_ministry_id', 'ministry_id', 'award_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_highoversea_ministry_id', 'ministry_id', 'award_id'], 'required'],
             [['stat_highoversea_ministry_id', 'ministry_id', 'award_id', 'gold_personal', 'gold_team', 'lanx_personal', 'lanx_team', 'hono_personal', 'hono_team'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
@@ -69,7 +71,7 @@ class StatHighoverseaMinistryDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAward()
     {
@@ -77,7 +79,7 @@ class StatHighoverseaMinistryDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMinistry()
     {
@@ -85,19 +87,10 @@ class StatHighoverseaMinistryDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHighoverseaMinistry()
     {
         return $this->hasOne(StatHighoverseaMinistry::className(), ['id' => 'stat_highoversea_ministry_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatHighoverseaMinistryDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatHighoverseaMinistryDetailQuery(get_called_class());
     }
 }

@@ -3,14 +3,16 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "organisation".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $position
+ * @property int $deleted
+ * @property int $position
  *
  * @property StatDocumentDetail[] $statDocumentDetails
  * @property StatOfficerOrgDetail[] $statOfficerOrgDetails
@@ -18,7 +20,7 @@ use Yii;
  * @property StatOfficerOrganisationTrainDetail[] $statOfficerOrganisationTrainDetails
  * @property StatOfficerOrganisationUpgradeDetail[] $statOfficerOrganisationUpgradeDetails
  */
-class Organisation extends \yii\db\ActiveRecord
+class Organisation extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -34,7 +36,7 @@ class Organisation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name'], 'required'],
             [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -54,7 +56,7 @@ class Organisation extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatDocumentDetails()
     {
@@ -62,7 +64,7 @@ class Organisation extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrgDetails()
     {
@@ -70,7 +72,7 @@ class Organisation extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrganisationAddDetails()
     {
@@ -78,7 +80,7 @@ class Organisation extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrganisationTrainDetails()
     {
@@ -86,19 +88,10 @@ class Organisation extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrganisationUpgradeDetails()
     {
         return $this->hasMany(StatOfficerOrganisationUpgradeDetail::className(), ['organisation_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return OrganisationQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new OrganisationQuery(get_called_class());
     }
 }

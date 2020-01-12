@@ -3,20 +3,22 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "menugroup".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $input_id
+ * @property int $deleted
+ * @property int $input_id
  * @property string $input_dt_stamp
  *
  * @property Menu[] $menus
  * @property User $input
  */
-class Menugroup extends \yii\db\ActiveRecord
+class Menugroup extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -32,7 +34,7 @@ class Menugroup extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name'], 'required'],
             [['deleted', 'input_id'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['name'], 'string', 'max' => 255],
@@ -56,7 +58,7 @@ class Menugroup extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMenus()
     {
@@ -64,19 +66,10 @@ class Menugroup extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getInput()
     {
         return $this->hasOne(User::className(), ['id' => 'input_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return MenugroupQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new MenugroupQuery(get_called_class());
     }
 }

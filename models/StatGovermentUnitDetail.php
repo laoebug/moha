@@ -3,23 +3,25 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_goverment_unit_detail".
  *
- * @property integer $id
- * @property integer $department
- * @property integer $insitute
- * @property integer $center
- * @property integer $stat_goverment_unit_id
+ * @property int $id
+ * @property int $department
+ * @property int $insitute
+ * @property int $center
+ * @property int $stat_goverment_unit_id
  * @property string $remark
- * @property integer $office
- * @property integer $ministry_id
+ * @property int $office
+ * @property int $ministry_id
  *
  * @property Ministry $ministry
  * @property StatGovermentUnit $statGovermentUnit
  */
-class StatGovermentUnitDetail extends \yii\db\ActiveRecord
+class StatGovermentUnitDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -36,7 +38,7 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
     {
         return [
             [['department', 'insitute', 'center', 'stat_goverment_unit_id', 'office', 'ministry_id'], 'integer'],
-            [['stat_goverment_unit_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_goverment_unit_id', 'ministry_id'], 'required'],
             [['remark'], 'string'],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['stat_goverment_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatGovermentUnit::className(), 'targetAttribute' => ['stat_goverment_unit_id' => 'id']],
@@ -61,7 +63,7 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMinistry()
     {
@@ -69,19 +71,10 @@ class StatGovermentUnitDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovermentUnit()
     {
         return $this->hasOne(StatGovermentUnit::className(), ['id' => 'stat_goverment_unit_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatGovermentUnitDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatGovermentUnitDetailQuery(get_called_class());
     }
 }

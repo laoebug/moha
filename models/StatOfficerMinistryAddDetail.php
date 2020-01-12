@@ -3,20 +3,22 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_ministry_add_detail".
  *
- * @property integer $id
- * @property integer $stat_officer_ministry_add_id
- * @property integer $add
- * @property integer $resign
- * @property integer $ministry_id
+ * @property int $id
+ * @property int $stat_officer_ministry_add_id
+ * @property int $add
+ * @property int $resign
+ * @property int $ministry_id
  *
  * @property Ministry $ministry
  * @property StatOfficerMinistryAdd $statOfficerMinistryAdd
  */
-class StatOfficerMinistryAddDetail extends \yii\db\ActiveRecord
+class StatOfficerMinistryAddDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -32,7 +34,7 @@ class StatOfficerMinistryAddDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_ministry_add_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_ministry_add_id', 'ministry_id'], 'required'],
             [['stat_officer_ministry_add_id', 'add', 'resign', 'ministry_id'], 'integer'],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['stat_officer_ministry_add_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerMinistryAdd::className(), 'targetAttribute' => ['stat_officer_ministry_add_id' => 'id']],
@@ -54,7 +56,7 @@ class StatOfficerMinistryAddDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMinistry()
     {
@@ -62,19 +64,10 @@ class StatOfficerMinistryAddDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerMinistryAdd()
     {
         return $this->hasOne(StatOfficerMinistryAdd::className(), ['id' => 'stat_officer_ministry_add_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerMinistryAddDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerMinistryAddDetailQuery(get_called_class());
     }
 }

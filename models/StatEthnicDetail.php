@@ -3,22 +3,24 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_ethnic_detail".
  *
- * @property integer $id
- * @property integer $total
- * @property integer $ethnic_id
- * @property integer $stat_ethnic_id
- * @property integer $women
- * @property integer $province_id
+ * @property int $id
+ * @property int $total
+ * @property int $ethnic_id
+ * @property int $stat_ethnic_id
+ * @property int $women
+ * @property int $province_id
  *
  * @property Ethnic $ethnic
  * @property Province $province
  * @property StatEthnic $statEthnic
  */
-class StatEthnicDetail extends \yii\db\ActiveRecord
+class StatEthnicDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -35,7 +37,7 @@ class StatEthnicDetail extends \yii\db\ActiveRecord
     {
         return [
             [['total', 'ethnic_id', 'stat_ethnic_id', 'women', 'province_id'], 'integer'],
-            [['ethnic_id', 'stat_ethnic_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['ethnic_id', 'stat_ethnic_id', 'province_id'], 'required'],
             [['ethnic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ethnic::className(), 'targetAttribute' => ['ethnic_id' => 'id']],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_ethnic_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatEthnic::className(), 'targetAttribute' => ['stat_ethnic_id' => 'id']],
@@ -58,7 +60,7 @@ class StatEthnicDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEthnic()
     {
@@ -66,7 +68,7 @@ class StatEthnicDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -74,19 +76,10 @@ class StatEthnicDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatEthnic()
     {
         return $this->hasOne(StatEthnic::className(), ['id' => 'stat_ethnic_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatEthnicDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatEthnicDetailQuery(get_called_class());
     }
 }

@@ -3,21 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_org".
  *
- * @property integer $id
+ * @property int $id
  * @property string $last_update
- * @property integer $saved
- * @property integer $phiscal_year_id
- * @property integer $user_id
+ * @property int $saved
+ * @property int $phiscal_year_id
+ * @property int $user_id
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
  * @property StatOfficerOrgDetail[] $statOfficerOrgDetails
  */
-class StatOfficerOrg extends \yii\db\ActiveRecord
+class StatOfficerOrg extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +35,7 @@ class StatOfficerOrg extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['last_update', 'saved', 'phiscal_year_id', 'user_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['last_update', 'saved', 'phiscal_year_id', 'user_id'], 'required'],
             [['last_update'], 'safe'],
             [['saved', 'phiscal_year_id', 'user_id'], 'integer'],
             [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
@@ -56,7 +58,7 @@ class StatOfficerOrg extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPhiscalYear()
     {
@@ -64,7 +66,7 @@ class StatOfficerOrg extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -72,19 +74,10 @@ class StatOfficerOrg extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrgDetails()
     {
         return $this->hasMany(StatOfficerOrgDetail::className(), ['stat_officer_org_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerOrgQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerOrgQuery(get_called_class());
     }
 }

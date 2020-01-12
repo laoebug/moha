@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "salary_level".
@@ -17,7 +19,7 @@ use Yii;
  * @property User $user
  * @property StatOfficerSalaryDetail[] $statOfficerSalaryDetails
  */
-class SalaryLevel extends \yii\db\ActiveRecord
+class SalaryLevel extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -25,15 +27,6 @@ class SalaryLevel extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'salary_level';
-    }
-
-    /**
-     * @inheritdoc
-     * @return SalaryLevelQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new SalaryLevelQuery(get_called_class());
     }
 
     /**
@@ -66,7 +59,7 @@ class SalaryLevel extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -74,7 +67,7 @@ class SalaryLevel extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerSalaryDetails()
     {

@@ -3,19 +3,21 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "approver_level".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $position
- * @property string $code
+ * @property int $deleted
+ * @property int $position
+ * @property string $code M:Ministry P:Province
  *
  * @property Approver[] $approvers
  */
-class ApproverLevel extends \yii\db\ActiveRecord
+class ApproverLevel extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -31,7 +33,7 @@ class ApproverLevel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name'], 'required'],
             [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['code'], 'string', 'max' => 1],
@@ -53,19 +55,10 @@ class ApproverLevel extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getApprovers()
     {
         return $this->hasMany(Approver::className(), ['approver_level_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return ApproverLevelQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new ApproverLevelQuery(get_called_class());
     }
 }

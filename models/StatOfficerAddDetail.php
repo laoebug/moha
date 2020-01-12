@@ -3,22 +3,26 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_add_detail".
  *
- * @property integer $id
- * @property integer $quota_total
- * @property integer $quota_women
- * @property integer $army_total
- * @property integer $army_women
- * @property integer $soe_total
- * @property integer $soe_women
- * @property integer $stat_officer_add_id
+ * @property int $id
+ * @property int $quota_total
+ * @property int $quota_women
+ * @property int $army_total
+ * @property int $army_women
+ * @property int $soe_total
+ * @property int $soe_women
+ * @property int $stat_officer_add_id
+ * @property int $organisation_group_id
  *
+ * @property OrganisationGroup $organisationGroup
  * @property StatOfficerAdd $statOfficerAdd
  */
-class StatOfficerAddDetail extends \yii\db\ActiveRecord
+class StatOfficerAddDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -34,8 +38,9 @@ class StatOfficerAddDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['quota_total', 'quota_women', 'army_total', 'army_women', 'soe_total', 'soe_women', 'stat_officer_add_id'], 'integer'],
-            [['stat_officer_add_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['quota_total', 'quota_women', 'army_total', 'army_women', 'soe_total', 'soe_women', 'stat_officer_add_id', 'organisation_group_id'], 'integer'],
+            [['stat_officer_add_id', 'organisation_group_id'], 'required'],
+            [['organisation_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrganisationGroup::className(), 'targetAttribute' => ['organisation_group_id' => 'id']],
             [['stat_officer_add_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerAdd::className(), 'targetAttribute' => ['stat_officer_add_id' => 'id']],
         ];
     }
@@ -54,23 +59,23 @@ class StatOfficerAddDetail extends \yii\db\ActiveRecord
             'soe_total' => Yii::t('app', 'Soe Total'),
             'soe_women' => Yii::t('app', 'Soe Women'),
             'stat_officer_add_id' => Yii::t('app', 'Stat Officer Add ID'),
+            'organisation_group_id' => Yii::t('app', 'Organisation Group ID'),
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     */
+    public function getOrganisationGroup()
+    {
+        return $this->hasOne(OrganisationGroup::className(), ['id' => 'organisation_group_id']);
+    }
+
+    /**
+     * @return ActiveQuery
      */
     public function getStatOfficerAdd()
     {
         return $this->hasOne(StatOfficerAdd::className(), ['id' => 'stat_officer_add_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerAddDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerAddDetailQuery(get_called_class());
     }
 }

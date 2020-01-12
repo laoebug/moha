@@ -3,26 +3,28 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_oda_detail".
  *
- * @property integer $id
- * @property integer $stat_oda_id
+ * @property int $id
+ * @property int $stat_oda_id
  * @property string $code
  * @property string $name
- * @property integer $start_year
- * @property integer $end_year
- * @property integer $amount
- * @property integer $free
- * @property integer $loan
+ * @property int $start_year
+ * @property int $end_year
+ * @property int $amount
+ * @property int $free
+ * @property int $loan
  * @property string $organisation
- * @property integer $receive
- * @property integer $deleted
+ * @property int $receive
+ * @property int $deleted
  *
  * @property StatOda $statOda
  */
-class StatOdaDetail extends \yii\db\ActiveRecord
+class StatOdaDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -38,7 +40,7 @@ class StatOdaDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_oda_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_oda_id'], 'required'],
             [['stat_oda_id', 'start_year', 'end_year', 'amount', 'free', 'loan', 'receive', 'deleted'], 'integer'],
             [['code', 'name', 'organisation'], 'string', 'max' => 255],
             [['stat_oda_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOda::className(), 'targetAttribute' => ['stat_oda_id' => 'id']],
@@ -67,19 +69,10 @@ class StatOdaDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOda()
     {
         return $this->hasOne(StatOda::className(), ['id' => 'stat_oda_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOdaDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOdaDetailQuery(get_called_class());
     }
 }

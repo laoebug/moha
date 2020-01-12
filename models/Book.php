@@ -3,21 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "book".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $position
+ * @property int $deleted
+ * @property int $position
  * @property string $last_update
- * @property integer $user_id
+ * @property int $user_id
  *
  * @property User $user
  * @property StatDocumentDetail[] $statDocumentDetails
  */
-class Book extends \yii\db\ActiveRecord
+class Book extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +35,7 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'deleted', 'last_update', 'user_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name', 'deleted', 'last_update', 'user_id'], 'required'],
             [['deleted', 'position', 'user_id'], 'integer'],
             [['last_update'], 'safe'],
             [['name'], 'string', 'max' => 255],
@@ -57,7 +59,7 @@ class Book extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -65,19 +67,10 @@ class Book extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatDocumentDetails()
     {
         return $this->hasMany(StatDocumentDetail::className(), ['book_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return BookQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new BookQuery(get_called_class());
     }
 }

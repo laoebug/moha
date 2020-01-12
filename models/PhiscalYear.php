@@ -42,6 +42,7 @@ use yii\db\ActiveRecord;
  * @property StatMapProduce[] $statMapProduces
  * @property StatMapService[] $statMapServices
  * @property StatMapSupport[] $statMapSupports
+ * @property StatMinistry[] $statMinistries
  * @property StatOda[] $statOdas
  * @property StatOfficer[] $statOfficers
  * @property StatOfficerAdd[] $statOfficerAdds
@@ -327,6 +328,14 @@ class PhiscalYear extends ActiveRecord
     public function getStatMapSupports()
     {
         return $this->hasMany(StatMapSupport::className(), ['phiscal_year_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getStatMinistries()
+    {
+        return $this->hasMany(StatMinistry::className(), ['phiscal_year_id' => 'id']);
     }
 
     /**

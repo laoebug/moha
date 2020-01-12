@@ -3,18 +3,20 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "role_has_menu".
  *
- * @property integer $role_id
- * @property integer $menu_id
+ * @property int $role_id
+ * @property int $menu_id
  * @property string $accessible
  *
  * @property Menu $menu
  * @property Role $role
  */
-class RoleHasMenu extends \yii\db\ActiveRecord
+class RoleHasMenu extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -30,9 +32,10 @@ class RoleHasMenu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['role_id', 'menu_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['role_id', 'menu_id'], 'required'],
             [['role_id', 'menu_id'], 'integer'],
             [['accessible'], 'string', 'max' => 1],
+            [['role_id', 'menu_id'], 'unique', 'targetAttribute' => ['role_id', 'menu_id']],
             [['menu_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menu::className(), 'targetAttribute' => ['menu_id' => 'id']],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
@@ -51,7 +54,7 @@ class RoleHasMenu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMenu()
     {
@@ -59,19 +62,10 @@ class RoleHasMenu extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getRole()
     {
         return $this->hasOne(Role::className(), ['id' => 'role_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return RoleHasMenuQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new RoleHasMenuQuery(get_called_class());
     }
 }

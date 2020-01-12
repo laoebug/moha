@@ -3,21 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_govoversea_ministry".
  *
- * @property integer $id
+ * @property int $id
  * @property string $last_update
- * @property integer $saved
- * @property integer $user_id
- * @property integer $phiscal_year_id
+ * @property int $saved
+ * @property int $user_id
+ * @property int $phiscal_year_id
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
  * @property StatGovoverseaMinistryDetail[] $statGovoverseaMinistryDetails
  */
-class StatGovoverseaMinistry extends \yii\db\ActiveRecord
+class StatGovoverseaMinistry extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -56,7 +58,7 @@ class StatGovoverseaMinistry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPhiscalYear()
     {
@@ -64,7 +66,7 @@ class StatGovoverseaMinistry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -72,19 +74,10 @@ class StatGovoverseaMinistry extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovoverseaMinistryDetails()
     {
         return $this->hasMany(StatGovoverseaMinistryDetail::className(), ['stat_govoversea_ministry_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatGovoverseaMinistryQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatGovoverseaMinistryQuery(get_called_class());
     }
 }

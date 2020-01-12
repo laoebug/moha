@@ -3,42 +3,44 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_organisation_upgrade_detail".
  *
- * @property integer $id
- * @property integer $doctor_in_total
- * @property integer $doctor_in_women
- * @property integer $doctor_out_total
- * @property integer $doctor_out_women
- * @property integer $master_in_total
- * @property integer $master_in_women
- * @property integer $master_out_total
- * @property integer $master_out_women
- * @property integer $bachelor_in_total
- * @property integer $bachelor_in_women
- * @property integer $bachelor_out_total
- * @property integer $bachelor_out_women
- * @property integer $high_in_total
- * @property integer $high_in_women
- * @property integer $high_out_total
- * @property integer $high_out_women
- * @property integer $middle_in_total
- * @property integer $middle_in_women
- * @property integer $middle_out_total
- * @property integer $middle_out_women
- * @property integer $begin_in_total
- * @property integer $begin_in_women
- * @property integer $begin_out_total
- * @property integer $begin_out_women
- * @property integer $organisation_id
- * @property integer $stat_officer_organisation_upgrade_id
+ * @property int $id
+ * @property int $doctor_in_total
+ * @property int $doctor_in_women
+ * @property int $doctor_out_total
+ * @property int $doctor_out_women
+ * @property int $master_in_total
+ * @property int $master_in_women
+ * @property int $master_out_total
+ * @property int $master_out_women
+ * @property int $bachelor_in_total
+ * @property int $bachelor_in_women
+ * @property int $bachelor_out_total
+ * @property int $bachelor_out_women
+ * @property int $high_in_total
+ * @property int $high_in_women
+ * @property int $high_out_total
+ * @property int $high_out_women
+ * @property int $middle_in_total
+ * @property int $middle_in_women
+ * @property int $middle_out_total
+ * @property int $middle_out_women
+ * @property int $begin_in_total
+ * @property int $begin_in_women
+ * @property int $begin_out_total
+ * @property int $begin_out_women
+ * @property int $organisation_id
+ * @property int $stat_officer_organisation_upgrade_id
  *
  * @property Organisation $organisation
  * @property StatOfficerOrganisationUpgrade $statOfficerOrganisationUpgrade
  */
-class StatOfficerOrganisationUpgradeDetail extends \yii\db\ActiveRecord
+class StatOfficerOrganisationUpgradeDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -55,7 +57,7 @@ class StatOfficerOrganisationUpgradeDetail extends \yii\db\ActiveRecord
     {
         return [
             [['doctor_in_total', 'doctor_in_women', 'doctor_out_total', 'doctor_out_women', 'master_in_total', 'master_in_women', 'master_out_total', 'master_out_women', 'bachelor_in_total', 'bachelor_in_women', 'bachelor_out_total', 'bachelor_out_women', 'high_in_total', 'high_in_women', 'high_out_total', 'high_out_women', 'middle_in_total', 'middle_in_women', 'middle_out_total', 'middle_out_women', 'begin_in_total', 'begin_in_women', 'begin_out_total', 'begin_out_women', 'organisation_id', 'stat_officer_organisation_upgrade_id'], 'integer'],
-            [['organisation_id', 'stat_officer_organisation_upgrade_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['organisation_id', 'stat_officer_organisation_upgrade_id'], 'required'],
             [['organisation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['organisation_id' => 'id']],
             [['stat_officer_organisation_upgrade_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerOrganisationUpgrade::className(), 'targetAttribute' => ['stat_officer_organisation_upgrade_id' => 'id']],
         ];
@@ -98,7 +100,7 @@ class StatOfficerOrganisationUpgradeDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrganisation()
     {
@@ -106,19 +108,10 @@ class StatOfficerOrganisationUpgradeDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrganisationUpgrade()
     {
         return $this->hasOne(StatOfficerOrganisationUpgrade::className(), ['id' => 'stat_officer_organisation_upgrade_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerOrganisationUpgradeDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerOrganisationUpgradeDetailQuery(get_called_class());
     }
 }

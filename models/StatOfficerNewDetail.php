@@ -3,28 +3,29 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_new_detail".
  *
- * @property integer $id
- * @property integer $stat_officer_new_id
- * @property integer $officer_level_id
- * @property integer $new_total
- * @property integer $ministry_total
- * @property integer $army_total
- * @property integer $soe_total
- * @property integer $quota
- * @property integer $need
- * @property integer $new_women
- * @property integer $ministry_women
- * @property integer $army_women
- * @property integer $soe_women
+ * @property int $id
+ * @property int $stat_officer_new_id
+ * @property int $officer_level_id
+ * @property int $new_total
+ * @property int $ministry_total
+ * @property int $army_total
+ * @property int $soe_total
+ * @property int $quota
+ * @property int $need
+ * @property int $new_women
+ * @property int $ministry_women
+ * @property int $army_women
+ * @property int $soe_women
  *
- * @property OfficerLevel $officerLevel
  * @property StatOfficerNew $statOfficerNew
  */
-class StatOfficerNewDetail extends \yii\db\ActiveRecord
+class StatOfficerNewDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -40,9 +41,8 @@ class StatOfficerNewDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_new_id', 'officer_level_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_new_id', 'officer_level_id'], 'required'],
             [['stat_officer_new_id', 'officer_level_id', 'new_total', 'ministry_total', 'army_total', 'soe_total', 'quota', 'need', 'new_women', 'ministry_women', 'army_women', 'soe_women'], 'integer'],
-            [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
             [['stat_officer_new_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerNew::className(), 'targetAttribute' => ['stat_officer_new_id' => 'id']],
         ];
     }
@@ -70,27 +70,10 @@ class StatOfficerNewDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOfficerLevel()
-    {
-        return $this->hasOne(OfficerLevel::className(), ['id' => 'officer_level_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerNew()
     {
         return $this->hasOne(StatOfficerNew::className(), ['id' => 'stat_officer_new_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerNewDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerNewDetailQuery(get_called_class());
     }
 }

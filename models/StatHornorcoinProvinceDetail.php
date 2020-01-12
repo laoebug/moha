@@ -3,29 +3,31 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_hornorcoin_province_detail".
  *
- * @property integer $id
- * @property integer $hero_personal
- * @property integer $hero_team
- * @property integer $knight_personal
- * @property integer $knight_team
- * @property integer $labor_personal
- * @property integer $labor_team
- * @property integer $dev_personal
- * @property integer $dev_team
+ * @property int $id
+ * @property int $hero_personal
+ * @property int $hero_team
+ * @property int $knight_personal
+ * @property int $knight_team
+ * @property int $labor_personal
+ * @property int $labor_team
+ * @property int $dev_personal
+ * @property int $dev_team
  * @property string $remark
- * @property integer $province_id
- * @property integer $award_id
- * @property integer $stat_hornorcoin_province_id
+ * @property int $province_id
+ * @property int $award_id
+ * @property int $stat_hornorcoin_province_id
  *
  * @property Award $award
  * @property Province $province
  * @property StatHornorcoinProvince $statHornorcoinProvince
  */
-class StatHornorcoinProvinceDetail extends \yii\db\ActiveRecord
+class StatHornorcoinProvinceDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -42,7 +44,7 @@ class StatHornorcoinProvinceDetail extends \yii\db\ActiveRecord
     {
         return [
             [['hero_personal', 'hero_team', 'knight_personal', 'knight_team', 'labor_personal', 'labor_team', 'dev_personal', 'dev_team', 'province_id', 'award_id', 'stat_hornorcoin_province_id'], 'integer'],
-            [['province_id', 'award_id', 'stat_hornorcoin_province_id'],  'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['province_id', 'award_id', 'stat_hornorcoin_province_id'], 'required'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
@@ -73,7 +75,7 @@ class StatHornorcoinProvinceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAward()
     {
@@ -81,7 +83,7 @@ class StatHornorcoinProvinceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -89,19 +91,10 @@ class StatHornorcoinProvinceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHornorcoinProvince()
     {
         return $this->hasOne(StatHornorcoinProvince::className(), ['id' => 'stat_hornorcoin_province_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatHornorcoinProvinceDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatHornorcoinProvinceDetailQuery(get_called_class());
     }
 }

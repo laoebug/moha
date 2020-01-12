@@ -3,16 +3,18 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "attachment".
  *
- * @property integer $menu_id
+ * @property int $menu_id
  * @property string $name
- * @property integer $deleted
- * @property integer $user_id
- * @property integer $id
- * @property integer $phiscal_year_id
+ * @property int $deleted
+ * @property int $user_id
+ * @property int $id
+ * @property int $phiscal_year_id
  * @property string $upload_date
  * @property string $issued_date
  * @property string $issued_no
@@ -25,7 +27,7 @@ use Yii;
  * @property PhiscalYear $phiscalYear
  * @property User $user
  */
-class Attachment extends \yii\db\ActiveRecord
+class Attachment extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -41,7 +43,7 @@ class Attachment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['menu_id', 'name', 'deleted', 'user_id', 'phiscal_year_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['menu_id', 'name', 'deleted', 'user_id', 'phiscal_year_id'], 'required'],
             [['menu_id', 'deleted', 'user_id', 'phiscal_year_id'], 'integer'],
             [['upload_date', 'issued_date'], 'safe'],
             [['data'], 'string'],
@@ -75,7 +77,7 @@ class Attachment extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMenu()
     {
@@ -83,7 +85,7 @@ class Attachment extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getPhiscalYear()
     {
@@ -91,19 +93,10 @@ class Attachment extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return AttachmentQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new AttachmentQuery(get_called_class());
     }
 }

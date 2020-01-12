@@ -3,19 +3,21 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "goverment_unit".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $branch_id
- * @property integer $position
+ * @property int $deleted
+ * @property int $branch_id
+ * @property int $position
  *
  * @property Branch $branch
  */
-class GovermentUnit extends \yii\db\ActiveRecord
+class GovermentUnit extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -31,7 +33,7 @@ class GovermentUnit extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'branch_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name', 'branch_id'], 'required'],
             [['deleted', 'branch_id', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
@@ -54,19 +56,10 @@ class GovermentUnit extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getBranch()
     {
         return $this->hasOne(Branch::className(), ['id' => 'branch_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return GovermentUnitQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new GovermentUnitQuery(get_called_class());
     }
 }

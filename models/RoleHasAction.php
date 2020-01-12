@@ -3,18 +3,20 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "role_has_action".
  *
- * @property integer $role_id
- * @property integer $action_id
+ * @property int $role_id
+ * @property int $action_id
  * @property string $allowed
  *
  * @property Action $action
  * @property Role $role
  */
-class RoleHasAction extends \yii\db\ActiveRecord
+class RoleHasAction extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -30,9 +32,10 @@ class RoleHasAction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['role_id', 'action_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['role_id', 'action_id'], 'required'],
             [['role_id', 'action_id'], 'integer'],
             [['allowed'], 'string', 'max' => 1],
+            [['role_id', 'action_id'], 'unique', 'targetAttribute' => ['role_id', 'action_id']],
             [['action_id'], 'exist', 'skipOnError' => true, 'targetClass' => Action::className(), 'targetAttribute' => ['action_id' => 'id']],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
@@ -51,7 +54,7 @@ class RoleHasAction extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAction()
     {
@@ -59,19 +62,10 @@ class RoleHasAction extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getRole()
     {
         return $this->hasOne(Role::className(), ['id' => 'role_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return RoleHasActionQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new RoleHasActionQuery(get_called_class());
     }
 }

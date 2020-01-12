@@ -3,15 +3,17 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "award".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $user_id
- * @property integer $position
+ * @property int $deleted
+ * @property int $user_id
+ * @property int $position
  *
  * @property User $user
  * @property StatGovcoinMinistryDetail[] $statGovcoinMinistryDetails
@@ -26,7 +28,7 @@ use Yii;
  * @property StatVictoryoverseaMinistryDetail[] $statVictoryoverseaMinistryDetails
  * @property StatVictoryoverseaProvinceDetail[] $statVictoryoverseaProvinceDetails
  */
-class Award extends \yii\db\ActiveRecord
+class Award extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -42,7 +44,7 @@ class Award extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'deleted', 'user_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name', 'deleted', 'user_id'], 'required'],
             [['deleted', 'user_id', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -64,7 +66,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -72,7 +74,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovcoinMinistryDetails()
     {
@@ -80,7 +82,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovcoinProvinceDetails()
     {
@@ -88,7 +90,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovoverseaMinistryDetails()
     {
@@ -96,7 +98,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovoverseaProvinceDetails()
     {
@@ -104,7 +106,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHighcoinMinistryDetails()
     {
@@ -112,7 +114,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHighoverseaMinistryDetails()
     {
@@ -120,7 +122,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatHornorcoinProvinceDetails()
     {
@@ -128,7 +130,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictorycoinMinistryDetails()
     {
@@ -136,7 +138,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictorycoinProvinceDetails()
     {
@@ -144,7 +146,7 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictoryoverseaMinistryDetails()
     {
@@ -152,19 +154,10 @@ class Award extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatVictoryoverseaProvinceDetails()
     {
         return $this->hasMany(StatVictoryoverseaProvinceDetail::className(), ['award_id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return AwardQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new AwardQuery(get_called_class());
     }
 }

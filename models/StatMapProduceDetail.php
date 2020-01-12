@@ -3,19 +3,21 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_map_produce_detail".
  *
- * @property integer $id
- * @property integer $stat_map_produce_id
+ * @property int $id
+ * @property int $stat_map_produce_id
  * @property string $activity
- * @property integer $amount
+ * @property int $amount
  * @property string $remark
  *
  * @property StatMapProduce $statMapProduce
  */
-class StatMapProduceDetail extends \yii\db\ActiveRecord
+class StatMapProduceDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -31,7 +33,7 @@ class StatMapProduceDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_map_produce_id', 'activity'],  'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_map_produce_id', 'activity'], 'required'],
             [['stat_map_produce_id', 'amount'], 'integer'],
             [['activity', 'remark'], 'string', 'max' => 255],
             [['stat_map_produce_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatMapProduce::className(), 'targetAttribute' => ['stat_map_produce_id' => 'id']],
@@ -53,19 +55,10 @@ class StatMapProduceDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatMapProduce()
     {
         return $this->hasOne(StatMapProduce::className(), ['id' => 'stat_map_produce_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatMapProduceDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatMapProduceDetailQuery(get_called_class());
     }
 }

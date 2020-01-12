@@ -3,40 +3,41 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_agelevel_detail".
  *
- * @property integer $id
- * @property integer $stat_officer_agelevel_id
- * @property integer $officer_level_id
- * @property integer $total_18
- * @property integer $women_18
- * @property integer $total_20
- * @property integer $women_20
- * @property integer $total_25
- * @property integer $women_25
- * @property integer $total_30
- * @property integer $women_30
- * @property integer $total_35
- * @property integer $women_35
- * @property integer $total_40
- * @property integer $women_40
- * @property integer $total_45
- * @property integer $women_45
- * @property integer $total_50
- * @property integer $women_50
- * @property integer $total_55
- * @property integer $women_55
- * @property integer $total_60
- * @property integer $women_60
- * @property integer $total_60p
- * @property integer $women_60p
+ * @property int $id
+ * @property int $stat_officer_agelevel_id
+ * @property int $officer_level_id
+ * @property int $total_18
+ * @property int $women_18
+ * @property int $total_20
+ * @property int $women_20
+ * @property int $total_25
+ * @property int $women_25
+ * @property int $total_30
+ * @property int $women_30
+ * @property int $total_35
+ * @property int $women_35
+ * @property int $total_40
+ * @property int $women_40
+ * @property int $total_45
+ * @property int $women_45
+ * @property int $total_50
+ * @property int $women_50
+ * @property int $total_55
+ * @property int $women_55
+ * @property int $total_60
+ * @property int $women_60
+ * @property int $total_60p
+ * @property int $women_60p
  *
- * @property OfficerLevel $officerLevel
  * @property StatOfficerAgelevel $statOfficerAgelevel
  */
-class StatOfficerAgelevelDetail extends \yii\db\ActiveRecord
+class StatOfficerAgelevelDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -52,9 +53,8 @@ class StatOfficerAgelevelDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_agelevel_id', 'officer_level_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_agelevel_id', 'officer_level_id'], 'required'],
             [['stat_officer_agelevel_id', 'officer_level_id', 'total_18', 'women_18', 'total_20', 'women_20', 'total_25', 'women_25', 'total_30', 'women_30', 'total_35', 'women_35', 'total_40', 'women_40', 'total_45', 'women_45', 'total_50', 'women_50', 'total_55', 'women_55', 'total_60', 'women_60', 'total_60p', 'women_60p'], 'integer'],
-            [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
             [['stat_officer_agelevel_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerAgelevel::className(), 'targetAttribute' => ['stat_officer_agelevel_id' => 'id']],
         ];
     }
@@ -94,27 +94,10 @@ class StatOfficerAgelevelDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOfficerLevel()
-    {
-        return $this->hasOne(OfficerLevel::className(), ['id' => 'officer_level_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerAgelevel()
     {
         return $this->hasOne(StatOfficerAgelevel::className(), ['id' => 'stat_officer_agelevel_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerAgelevelDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerAgelevelDetailQuery(get_called_class());
     }
 }

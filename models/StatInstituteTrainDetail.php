@@ -3,24 +3,26 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_institute_train_detail".
  *
- * @property integer $id
- * @property integer $stat_institute_train_id
+ * @property int $id
+ * @property int $stat_institute_train_id
  * @property string $title
- * @property integer $total
- * @property integer $women
+ * @property int $total
+ * @property int $women
  * @property string $start_date
  * @property string $end_date
  * @property string $cooperator
- * @property integer $times
+ * @property int $times
  * @property string $place
  *
  * @property StatInstituteTrain $statInstituteTrain
  */
-class StatInstituteTrainDetail extends \yii\db\ActiveRecord
+class StatInstituteTrainDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -36,7 +38,7 @@ class StatInstituteTrainDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_institute_train_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_institute_train_id'], 'required'],
             [['stat_institute_train_id', 'total', 'women', 'times'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['title', 'cooperator', 'place'], 'string', 'max' => 255],
@@ -64,19 +66,10 @@ class StatInstituteTrainDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatInstituteTrain()
     {
         return $this->hasOne(StatInstituteTrain::className(), ['id' => 'stat_institute_train_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatInstituteTrainDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatInstituteTrainDetailQuery(get_called_class());
     }
 }

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "link".
@@ -11,7 +12,7 @@ use Yii;
  * @property string $name
  * @property string $url
  */
-class Link extends \yii\db\ActiveRecord
+class Link extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -39,17 +40,8 @@ class Link extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => 'ຊື່',
-            'url' => 'ທີ່ຢູ່',
+            'name' => Yii::t('app', 'Name'),
+            'url' => Yii::t('app', 'Url'),
         ];
-    }
-
-    /**
-     * @inheritdoc
-     * @return LinkQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new LinkQuery(get_called_class());
     }
 }

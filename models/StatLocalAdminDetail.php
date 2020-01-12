@@ -9,34 +9,40 @@ use yii\db\ActiveRecord;
 /**
  * This is the model class for table "stat_local_admin_detail".
  *
- * @property integer $id
- * @property integer $stat_local_admin_id
- * @property integer $province_id
- * @property integer $province_head_total
- * @property integer $province_head_women
- * @property integer $province_vice_total
- * @property integer $province_vice_women
- * @property integer $district_head_total
- * @property integer $district_head_women
- * @property integer $district_vice_total
- * @property integer $district_vice_women
- * @property integer $village_head_total
- * @property integer $village_head_women
- * @property integer $village_vice_total
- * @property integer $village_vice_women
- * @property integer $population_total
- * @property integer $population_women
- * @property integer $village
- * @property integer $family_total
- * @property integer $family_poor
- * @property int $capital_head_total
- * @property int $capital_head_women
- * @property int $capital_vice_total
- * @property int $capital_vice_women
+ * @property int $id
+ * @property int $stat_local_admin_id
+ * @property int $province_id
+ * @property int $municipality_head_total
+ * @property int $municipality_head_women
+ * @property int $municipality_vice_total
+ * @property int $municipality_vice_women
+ * @property int $province_head_total
+ * @property int $province_head_women
+ * @property int $province_vice_total
+ * @property int $province_vice_women
  * @property int $city_head_total
  * @property int $city_head_women
  * @property int $city_vice_total
  * @property int $city_vice_women
+ * @property int $district_head_total
+ * @property int $district_head_women
+ * @property int $district_vice_total
+ * @property int $district_vice_women
+ * @property int $village_head_total
+ * @property int $village_head_women
+ * @property int $village_vice_total
+ * @property int $village_vice_women
+ * @property int $village_improved_five_unit
+ * @property int $village_not_improved_five_unit
+ * @property int $population_total
+ * @property int $population_women
+ * @property int $village
+ * @property int $family_total
+ * @property int $family_poor
+ * @property int $capital_head_total
+ * @property int $capital_head_women
+ * @property int $capital_vice_total
+ * @property int $capital_vice_women
  * @property int $village_approved
  * @property int $village_pending
  *
@@ -59,8 +65,8 @@ class StatLocalAdminDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['stat_local_admin_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-//            [['stat_local_admin_id', 'province_id', 'province_head_total', 'province_head_women', 'province_vice_total', 'province_vice_women', 'district_head_total', 'district_head_women', 'district_vice_total', 'district_vice_women', 'village_head_total', 'village_head_women', 'village_vice_total', 'village_vice_women', 'population_total', 'population_women', 'village', 'family_total', 'family_poor'], 'integer'],
+            [['stat_local_admin_id', 'province_id'], 'required'],
+            [['stat_local_admin_id', 'province_id', 'municipality_head_total', 'municipality_head_women', 'municipality_vice_total', 'municipality_vice_women', 'province_head_total', 'province_head_women', 'province_vice_total', 'province_vice_women', 'city_head_total', 'city_head_women', 'city_vice_total', 'city_vice_women', 'district_head_total', 'district_head_women', 'district_vice_total', 'district_vice_women', 'village_head_total', 'village_head_women', 'village_vice_total', 'village_vice_women', 'village_improved_five_unit', 'village_not_improved_five_unit', 'population_total', 'population_women', 'village', 'family_total', 'family_poor', 'capital_head_total', 'capital_head_women', 'capital_vice_total', 'capital_vice_women', 'village_approved', 'village_pending'], 'integer'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_local_admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatLocalAdmin::className(), 'targetAttribute' => ['stat_local_admin_id' => 'id']],
         ];
@@ -75,10 +81,18 @@ class StatLocalAdminDetail extends ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'stat_local_admin_id' => Yii::t('app', 'Stat Local Admin ID'),
             'province_id' => Yii::t('app', 'Province ID'),
+            'municipality_head_total' => Yii::t('app', 'Municipality Head Total'),
+            'municipality_head_women' => Yii::t('app', 'Municipality Head Women'),
+            'municipality_vice_total' => Yii::t('app', 'Municipality Vice Total'),
+            'municipality_vice_women' => Yii::t('app', 'Municipality Vice Women'),
             'province_head_total' => Yii::t('app', 'Province Head Total'),
             'province_head_women' => Yii::t('app', 'Province Head Women'),
             'province_vice_total' => Yii::t('app', 'Province Vice Total'),
             'province_vice_women' => Yii::t('app', 'Province Vice Women'),
+            'city_head_total' => Yii::t('app', 'City Head Total'),
+            'city_head_women' => Yii::t('app', 'City Head Women'),
+            'city_vice_total' => Yii::t('app', 'City Vice Total'),
+            'city_vice_women' => Yii::t('app', 'City Vice Women'),
             'district_head_total' => Yii::t('app', 'District Head Total'),
             'district_head_women' => Yii::t('app', 'District Head Women'),
             'district_vice_total' => Yii::t('app', 'District Vice Total'),
@@ -87,11 +101,19 @@ class StatLocalAdminDetail extends ActiveRecord
             'village_head_women' => Yii::t('app', 'Village Head Women'),
             'village_vice_total' => Yii::t('app', 'Village Vice Total'),
             'village_vice_women' => Yii::t('app', 'Village Vice Women'),
+            'village_improved_five_unit' => Yii::t('app', 'Village Improved Five Unit'),
+            'village_not_improved_five_unit' => Yii::t('app', 'Village Not Improved Five Unit'),
             'population_total' => Yii::t('app', 'Population Total'),
             'population_women' => Yii::t('app', 'Population Women'),
             'village' => Yii::t('app', 'Village'),
             'family_total' => Yii::t('app', 'Family Total'),
             'family_poor' => Yii::t('app', 'Family Poor'),
+            'capital_head_total' => Yii::t('app', 'Capital Head Total'),
+            'capital_head_women' => Yii::t('app', 'Capital Head Women'),
+            'capital_vice_total' => Yii::t('app', 'Capital Vice Total'),
+            'capital_vice_women' => Yii::t('app', 'Capital Vice Women'),
+            'village_approved' => Yii::t('app', 'Village Approved'),
+            'village_pending' => Yii::t('app', 'Village Pending'),
         ];
     }
 
@@ -109,14 +131,5 @@ class StatLocalAdminDetail extends ActiveRecord
     public function getStatLocalAdmin()
     {
         return $this->hasOne(StatLocalAdmin::className(), ['id' => 'stat_local_admin_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatLocalAdminDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatLocalAdminDetailQuery(get_called_class());
     }
 }

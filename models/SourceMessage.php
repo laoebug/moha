@@ -3,17 +3,19 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "source_message".
  *
- * @property integer $id
+ * @property int $id
  * @property string $category
  * @property string $message
  *
  * @property Message[] $messages
  */
-class SourceMessage extends \yii\db\ActiveRecord
+class SourceMessage extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -47,19 +49,10 @@ class SourceMessage extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMessages()
     {
         return $this->hasMany(Message::className(), ['id' => 'id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return SourceMessageQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new SourceMessageQuery(get_called_class());
     }
 }

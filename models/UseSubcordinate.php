@@ -3,17 +3,19 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "use_subcordinate".
  *
- * @property integer $user_id
- * @property integer $subcordinate_user_id
+ * @property int $user_id
+ * @property int $subcordinate_user_id
  *
  * @property User $user
  * @property User $subcordinateUser
  */
-class UseSubcordinate extends \yii\db\ActiveRecord
+class UseSubcordinate extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -29,8 +31,9 @@ class UseSubcordinate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'subcordinate_user_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['user_id', 'subcordinate_user_id'], 'required'],
             [['user_id', 'subcordinate_user_id'], 'integer'],
+            [['user_id', 'subcordinate_user_id'], 'unique', 'targetAttribute' => ['user_id', 'subcordinate_user_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['subcordinate_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['subcordinate_user_id' => 'id']],
         ];
@@ -48,7 +51,7 @@ class UseSubcordinate extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
@@ -56,19 +59,10 @@ class UseSubcordinate extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSubcordinateUser()
     {
         return $this->hasOne(User::className(), ['id' => 'subcordinate_user_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return UseSubcordinateQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new UseSubcordinateQuery(get_called_class());
     }
 }

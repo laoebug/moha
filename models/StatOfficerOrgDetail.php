@@ -3,20 +3,22 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_org_detail".
  *
- * @property integer $id
- * @property integer $total
- * @property integer $women
- * @property integer $stat_officer_org_id
- * @property integer $organisation_id
+ * @property int $id
+ * @property int $total
+ * @property int $women
+ * @property int $stat_officer_org_id
+ * @property int $organisation_id
  *
  * @property Organisation $organisation
  * @property StatOfficerOrg $statOfficerOrg
  */
-class StatOfficerOrgDetail extends \yii\db\ActiveRecord
+class StatOfficerOrgDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +35,7 @@ class StatOfficerOrgDetail extends \yii\db\ActiveRecord
     {
         return [
             [['total', 'women', 'stat_officer_org_id', 'organisation_id'], 'integer'],
-            [['stat_officer_org_id', 'organisation_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_org_id', 'organisation_id'], 'required'],
             [['organisation_id'], 'exist', 'skipOnError' => true, 'targetClass' => Organisation::className(), 'targetAttribute' => ['organisation_id' => 'id']],
             [['stat_officer_org_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerOrg::className(), 'targetAttribute' => ['stat_officer_org_id' => 'id']],
         ];
@@ -54,7 +56,7 @@ class StatOfficerOrgDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getOrganisation()
     {
@@ -62,19 +64,10 @@ class StatOfficerOrgDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerOrg()
     {
         return $this->hasOne(StatOfficerOrg::className(), ['id' => 'stat_officer_org_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerOrgDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerOrgDetailQuery(get_called_class());
     }
 }

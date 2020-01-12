@@ -3,22 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_ethnic_detail".
  *
- * @property integer $id
- * @property integer $stat_officer_ethnic_id
- * @property integer $total
- * @property integer $officer_level_id
- * @property integer $ethnic_id
- * @property integer $women
+ * @property int $id
+ * @property int $stat_officer_ethnic_id
+ * @property int $total
+ * @property int $officer_level_id
+ * @property int $ethnic_id
+ * @property int $women
  *
  * @property Ethnic $ethnic
- * @property OfficerLevel $officerLevel
  * @property StatOfficerEthnic $statOfficerEthnic
  */
-class StatOfficerEthnicDetail extends \yii\db\ActiveRecord
+class StatOfficerEthnicDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -34,10 +35,9 @@ class StatOfficerEthnicDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_ethnic_id', 'officer_level_id', 'ethnic_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_ethnic_id', 'officer_level_id', 'ethnic_id'], 'required'],
             [['stat_officer_ethnic_id', 'total', 'officer_level_id', 'ethnic_id', 'women'], 'integer'],
             [['ethnic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ethnic::className(), 'targetAttribute' => ['ethnic_id' => 'id']],
-            [['officer_level_id'], 'exist', 'skipOnError' => true, 'targetClass' => OfficerLevel::className(), 'targetAttribute' => ['officer_level_id' => 'id']],
             [['stat_officer_ethnic_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerEthnic::className(), 'targetAttribute' => ['stat_officer_ethnic_id' => 'id']],
         ];
     }
@@ -58,7 +58,7 @@ class StatOfficerEthnicDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getEthnic()
     {
@@ -66,27 +66,10 @@ class StatOfficerEthnicDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOfficerLevel()
-    {
-        return $this->hasOne(OfficerLevel::className(), ['id' => 'officer_level_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerEthnic()
     {
         return $this->hasOne(StatOfficerEthnic::className(), ['id' => 'stat_officer_ethnic_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerEthnicDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerEthnicDetailQuery(get_called_class());
     }
 }

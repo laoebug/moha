@@ -3,34 +3,38 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_age_detail".
  *
- * @property integer $id
- * @property integer $stat_officer_age_id
- * @property integer $total_u25
- * @property integer $women_u25
- * @property integer $total_25_30
- * @property integer $women_25_30
- * @property integer $total_31_35
- * @property integer $women_31_35
- * @property integer $total_36_40
- * @property integer $women_36_40
- * @property integer $total_41_45
- * @property integer $women_41_45
- * @property integer $total_46_50
- * @property integer $women_46_50
- * @property integer $total_51_55
- * @property integer $women_51_55
- * @property integer $total_56_60
- * @property integer $women_56_60
- * @property integer $total_61u
- * @property integer $women_61u
+ * @property int $id
+ * @property int $stat_officer_age_id
+ * @property int $total_u25
+ * @property int $women_u25
+ * @property int $total_25_30
+ * @property int $women_25_30
+ * @property int $total_31_35
+ * @property int $women_31_35
+ * @property int $total_36_40
+ * @property int $women_36_40
+ * @property int $total_41_45
+ * @property int $women_41_45
+ * @property int $total_46_50
+ * @property int $women_46_50
+ * @property int $total_51_55
+ * @property int $women_51_55
+ * @property int $total_56_60
+ * @property int $women_56_60
+ * @property int $total_61u
+ * @property int $women_61u
+ * @property int $organisation_group_id
  *
+ * @property OrganisationGroup $organisationGroup
  * @property StatOfficerAge $statOfficerAge
  */
-class StatOfficerAgeDetail extends \yii\db\ActiveRecord
+class StatOfficerAgeDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -46,8 +50,9 @@ class StatOfficerAgeDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_age_id'],  'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['stat_officer_age_id', 'total_u25', 'women_u25', 'total_25_30', 'women_25_30', 'total_31_35', 'women_31_35', 'total_36_40', 'women_36_40', 'total_41_45', 'women_41_45', 'total_46_50', 'women_46_50', 'total_51_55', 'women_51_55', 'total_56_60', 'women_56_60', 'total_61u', 'women_61u'], 'integer'],
+            [['stat_officer_age_id', 'organisation_group_id'], 'required'],
+            [['stat_officer_age_id', 'total_u25', 'women_u25', 'total_25_30', 'women_25_30', 'total_31_35', 'women_31_35', 'total_36_40', 'women_36_40', 'total_41_45', 'women_41_45', 'total_46_50', 'women_46_50', 'total_51_55', 'women_51_55', 'total_56_60', 'women_56_60', 'total_61u', 'women_61u', 'organisation_group_id'], 'integer'],
+            [['organisation_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrganisationGroup::className(), 'targetAttribute' => ['organisation_group_id' => 'id']],
             [['stat_officer_age_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerAge::className(), 'targetAttribute' => ['stat_officer_age_id' => 'id']],
         ];
     }
@@ -78,23 +83,23 @@ class StatOfficerAgeDetail extends \yii\db\ActiveRecord
             'women_56_60' => Yii::t('app', 'Women 56 60'),
             'total_61u' => Yii::t('app', 'Total 61u'),
             'women_61u' => Yii::t('app', 'Women 61u'),
+            'organisation_group_id' => Yii::t('app', 'Organisation Group ID'),
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     */
+    public function getOrganisationGroup()
+    {
+        return $this->hasOne(OrganisationGroup::className(), ['id' => 'organisation_group_id']);
+    }
+
+    /**
+     * @return ActiveQuery
      */
     public function getStatOfficerAge()
     {
         return $this->hasOne(StatOfficerAge::className(), ['id' => 'stat_officer_age_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerAgeDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerAgeDetailQuery(get_called_class());
     }
 }

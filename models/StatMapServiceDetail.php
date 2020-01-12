@@ -3,22 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_map_service_detail".
  *
- * @property integer $id
- * @property integer $stat_map_service_id
+ * @property int $id
+ * @property int $stat_map_service_id
  * @property string $activity
- * @property integer $amount
- * @property integer $km
- * @property integer $point
+ * @property int $amount
+ * @property int $km
+ * @property int $point
  * @property string $remark
- * @property integer $position
  *
  * @property StatMapService $statMapService
  */
-class StatMapServiceDetail extends \yii\db\ActiveRecord
+class StatMapServiceDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -34,9 +35,9 @@ class StatMapServiceDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_map_service_id', 'activity'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
-            [['stat_map_service_id', 'amount', 'km', 'point', 'position'], 'integer'],
-            [['activity', 'remark'], 'string', 'max' => 255],            
+            [['stat_map_service_id', 'activity'], 'required'],
+            [['stat_map_service_id', 'amount', 'km', 'point'], 'integer'],
+            [['activity', 'remark'], 'string', 'max' => 255],
             [['stat_map_service_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatMapService::className(), 'targetAttribute' => ['stat_map_service_id' => 'id']],
         ];
     }
@@ -54,24 +55,14 @@ class StatMapServiceDetail extends \yii\db\ActiveRecord
             'km' => Yii::t('app', 'Km'),
             'point' => Yii::t('app', 'Point'),
             'remark' => Yii::t('app', 'Remark'),
-            'position' => Yii::t('app', 'Position'),
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatMapService()
     {
         return $this->hasOne(StatMapService::className(), ['id' => 'stat_map_service_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatMapServiceDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatMapServiceDetailQuery(get_called_class());
     }
 }

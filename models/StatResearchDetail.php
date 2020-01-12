@@ -3,27 +3,29 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_research_detail".
  *
- * @property integer $id
- * @property integer $stat_research_id
+ * @property int $id
+ * @property int $stat_research_id
  * @property string $title
- * @property integer $total
- * @property integer $women
+ * @property int $total
+ * @property int $women
  * @property string $start_date
  * @property string $end_date
  * @property string $attendance
- * @property integer $times
+ * @property int $times
  * @property string $place
  * @property string $remark
- * @property integer $goverment
- * @property integer $dornor
+ * @property int $goverment
+ * @property int $dornor
  *
  * @property StatResearch $statResearch
  */
-class StatResearchDetail extends \yii\db\ActiveRecord
+class StatResearchDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -39,7 +41,7 @@ class StatResearchDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_research_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_research_id'], 'required'],
             [['stat_research_id', 'total', 'women', 'times', 'goverment', 'dornor'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['title', 'attendance', 'place', 'remark'], 'string', 'max' => 255],
@@ -70,19 +72,10 @@ class StatResearchDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatResearch()
     {
         return $this->hasOne(StatResearch::className(), ['id' => 'stat_research_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatResearchDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatResearchDetailQuery(get_called_class());
     }
 }

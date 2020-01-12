@@ -11,9 +11,9 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property int $stat_ministry_id
- * @property int $position
  * @property string $name
  * @property string $remark
+ * @property int $position
  *
  * @property StatMinistry $statMinistry
  */
@@ -50,6 +50,7 @@ class StatMinistryDetail extends ActiveRecord
             'stat_ministry_id' => Yii::t('app', 'Stat Ministry ID'),
             'name' => Yii::t('app', 'Name'),
             'remark' => Yii::t('app', 'Remark'),
+            'position' => Yii::t('app', 'Position'),
         ];
     }
 

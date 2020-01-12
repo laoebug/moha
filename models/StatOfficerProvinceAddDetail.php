@@ -3,20 +3,22 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_province_add_detail".
  *
- * @property integer $id
- * @property integer $add
- * @property integer $resign
- * @property integer $stat_officer_province_add_id
- * @property integer $province_id
+ * @property int $id
+ * @property int $add
+ * @property int $resign
+ * @property int $stat_officer_province_add_id
+ * @property int $province_id
  *
  * @property Province $province
  * @property StatOfficerProvinceAdd $statOfficerProvinceAdd
  */
-class StatOfficerProvinceAddDetail extends \yii\db\ActiveRecord
+class StatOfficerProvinceAddDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +35,7 @@ class StatOfficerProvinceAddDetail extends \yii\db\ActiveRecord
     {
         return [
             [['add', 'resign', 'stat_officer_province_add_id', 'province_id'], 'integer'],
-            [['stat_officer_province_add_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_officer_province_add_id', 'province_id'], 'required'],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_officer_province_add_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerProvinceAdd::className(), 'targetAttribute' => ['stat_officer_province_add_id' => 'id']],
         ];
@@ -54,7 +56,7 @@ class StatOfficerProvinceAddDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -62,19 +64,10 @@ class StatOfficerProvinceAddDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatOfficerProvinceAdd()
     {
         return $this->hasOne(StatOfficerProvinceAdd::className(), ['id' => 'stat_officer_province_add_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatOfficerProvinceAddDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatOfficerProvinceAddDetailQuery(get_called_class());
     }
 }

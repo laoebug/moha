@@ -3,21 +3,23 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_single_gateway_implementation_detail".
  *
- * @property integer $id
- * @property integer $stat_single_gateway_implementation_id
+ * @property int $id
+ * @property int $stat_single_gateway_implementation_id
  * @property string $start_date
  * @property string $name
  * @property string $remark
- * @property integer $ministry_id
+ * @property int $ministry_id
  *
  * @property Ministry $ministry
  * @property StatSingleGatewayImplementation $statSingleGatewayImplementation
  */
-class StatSingleGatewayImplementationDetail extends \yii\db\ActiveRecord
+class StatSingleGatewayImplementationDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,7 +35,7 @@ class StatSingleGatewayImplementationDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_single_gateway_implementation_id', 'ministry_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_single_gateway_implementation_id', 'ministry_id'], 'required'],
             [['stat_single_gateway_implementation_id', 'ministry_id'], 'integer'],
             [['start_date'], 'safe'],
             [['remark'], 'string'],
@@ -59,7 +61,7 @@ class StatSingleGatewayImplementationDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMinistry()
     {
@@ -67,19 +69,10 @@ class StatSingleGatewayImplementationDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatSingleGatewayImplementation()
     {
         return $this->hasOne(StatSingleGatewayImplementation::className(), ['id' => 'stat_single_gateway_implementation_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatSingleGatewayImplementationDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatSingleGatewayImplementationDetailQuery(get_called_class());
     }
 }

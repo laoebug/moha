@@ -3,16 +3,17 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "goverment_level".
  *
- * @property integer $id
+ * @property int $id
  * @property string $name
- * @property integer $deleted
- * @property integer $position
+ * @property int $deleted
+ * @property int $position
  */
-class GovermentLevel extends \yii\db\ActiveRecord
+class GovermentLevel extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -28,7 +29,7 @@ class GovermentLevel extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['name'], 'required'],
             [['deleted', 'position'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
@@ -46,14 +47,5 @@ class GovermentLevel extends \yii\db\ActiveRecord
             'deleted' => Yii::t('app', 'Deleted'),
             'position' => Yii::t('app', 'Position'),
         ];
-    }
-
-    /**
-     * @inheritdoc
-     * @return GovermentLevelQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new GovermentLevelQuery(get_called_class());
     }
 }

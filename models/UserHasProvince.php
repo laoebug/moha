@@ -3,17 +3,19 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user_has_province".
  *
- * @property integer $user_id
- * @property integer $province_id
+ * @property int $user_id
+ * @property int $province_id
  *
  * @property Province $province
  * @property User $user
  */
-class UserHasProvince extends \yii\db\ActiveRecord
+class UserHasProvince extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -29,8 +31,9 @@ class UserHasProvince extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'province_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['user_id', 'province_id'], 'required'],
             [['user_id', 'province_id'], 'integer'],
+            [['user_id', 'province_id'], 'unique', 'targetAttribute' => ['user_id', 'province_id']],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -48,7 +51,7 @@ class UserHasProvince extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getProvince()
     {
@@ -56,19 +59,10 @@ class UserHasProvince extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return UserHasProvinceQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new UserHasProvinceQuery(get_called_class());
     }
 }

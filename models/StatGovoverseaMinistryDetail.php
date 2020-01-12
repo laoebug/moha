@@ -3,33 +3,35 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_govoversea_ministry_detail".
  *
- * @property integer $id
- * @property integer $stat_govoversea_ministry_id
- * @property integer $ministry_id
- * @property integer $award_id
- * @property integer $labo_personal
- * @property integer $labo_team
- * @property integer $deve_personal
- * @property integer $deve_team
- * @property integer $memo_personal
- * @property integer $memo_team
- * @property integer $amer_personal
- * @property integer $amer_team
- * @property integer $fran_personal
- * @property integer $fran_team
- * @property integer $gove_personal
- * @property integer $gove_team
+ * @property int $id
+ * @property int $stat_govoversea_ministry_id
+ * @property int $ministry_id
+ * @property int $award_id
+ * @property int $labo_personal
+ * @property int $labo_team
+ * @property int $deve_personal
+ * @property int $deve_team
+ * @property int $memo_personal
+ * @property int $memo_team
+ * @property int $amer_personal
+ * @property int $amer_team
+ * @property int $fran_personal
+ * @property int $fran_team
+ * @property int $gove_personal
+ * @property int $gove_team
  * @property string $remark
  *
  * @property Award $award
  * @property Ministry $ministry
  * @property StatGovoverseaMinistry $statGovoverseaMinistry
  */
-class StatGovoverseaMinistryDetail extends \yii\db\ActiveRecord
+class StatGovoverseaMinistryDetail extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -45,7 +47,7 @@ class StatGovoverseaMinistryDetail extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stat_govoversea_ministry_id', 'ministry_id', 'award_id'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['stat_govoversea_ministry_id', 'ministry_id', 'award_id'], 'required'],
             [['stat_govoversea_ministry_id', 'ministry_id', 'award_id', 'labo_personal', 'labo_team', 'deve_personal', 'deve_team', 'memo_personal', 'memo_team', 'amer_personal', 'amer_team', 'fran_personal', 'fran_team', 'gove_personal', 'gove_team'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
@@ -81,7 +83,7 @@ class StatGovoverseaMinistryDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAward()
     {
@@ -89,7 +91,7 @@ class StatGovoverseaMinistryDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getMinistry()
     {
@@ -97,19 +99,10 @@ class StatGovoverseaMinistryDetail extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getStatGovoverseaMinistry()
     {
         return $this->hasOne(StatGovoverseaMinistry::className(), ['id' => 'stat_govoversea_ministry_id']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return StatGovoverseaMinistryDetailQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new StatGovoverseaMinistryDetailQuery(get_called_class());
     }
 }
