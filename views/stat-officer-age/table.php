@@ -6,10 +6,22 @@
  * Time: 14:56
  */
 /* @var $model app\models\StatOfficerAgeDetail */
-
+$titles = [
+    '_u25' => 'ອາຍຸຕໍ່າກວ່າ 25 ປີ',
+    '_25_30' => 'ອາຍຸ 25 ຫາ 30 ປີ',
+    '_31_35' => 'ອາຍຸ 31 ຫາ 35 ປີ',
+    '_36_40' => 'ອາຍຸ 36 ຫາ 40 ປີ',
+    '_41_45' => 'ອາຍຸ 41 ຫາ 45 ປີ',
+    '_46_50' => 'ອາຍຸ 46 ຫາ 50 ປີ',
+    '_51_55' => 'ອາຍຸ 51 ຫາ 55 ປີ',
+    '_56_60' => 'ອາຍຸ 56 ຫາ 60 ປີ',
+    '_61u' => 'ອາຍຸ 61 ປີ ຂຶ້ນໄປ',
+];
 ?>
 <style type="text/css" media="print">
-    @page { size: landscape; }
+    @page {
+        size: landscape;
+    }
 </style>
 <div class="row">
     <div class="col-sm-12" style="overflow-x: scroll">
@@ -21,64 +33,46 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                        <th class="text-center" colspan="18" rowspan="2">ລາຍການ</th>
-                        <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
+                        <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
+                        <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນຕ່າງໆ</th>
+                        <th class="text-center" rowspan="2" colspan="2">ຈຳນວນລັດຖະກອນ ທັງໝົດ</th>
+                        <th class="text-center" colspan="<?= count($titles) * 2 ?>">ເກນອາຍຸ</th>
                     </tr>
                     <tr>
-                        <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Men') ?></th>
+                        <?php foreach ($titles as $title): ?>
+                            <th class="text-center" colspan="2"><?= $title ?></th>
+                        <?php endforeach; ?>
+                    </tr>
+                    <tr>
+                        <th class="text-center">ລ</th>
+                        <th class="text-center">ຍ</th>
+                        <?php foreach ($titles as $title): ?>
+                            <th class="text-center">ລ</th>
+                            <th class="text-center">ຍ</th>
+                        <?php endforeach; ?>
                     </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th rowspan="4">III</th>
-                            <th class="text-center" colspan="18">ຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ</th>
-                            <th class="text-center">
-                                <?php
-                                $total = $model->total_u25 + $model->total_25_30 + $model->total_31_35 + $model->total_36_40 +
-                                    $model->total_41_45 + $model->total_46_50 + $model->total_51_55 + $model->total_56_60 + $model->total_61u;
-                                echo number_format($total);
-                                ?>
-                            </th>
-                            <th class="text-center">
-                                <?php
-                                $women = $model->women_u25 + $model->women_25_30 + $model->women_31_35 + $model->women_36_40 +
-                                    $model->women_41_45 + $model->women_46_50 + $model->women_51_55 + $model->women_56_60 + $model->women_61u;
-                                echo number_format($women);
-                                ?>
-                            </th>
-                            <th class="text-center"><?= number_format($total-$women) ?></th>
-                        </tr>
-                        <tr>
-                            <td class="text-center" colspan="2">ອາຍຸຕໍ່າກວ່າ 25 ປີ</td>
-                            <td class="text-center" colspan="2">ອາຍຸ 25 ຫາ 30 ປີ</td>
-                            <td class="text-center" colspan="2">ອາຍຸ 31 ຫາ 35 ປີ</td>
-                            <td class="text-center" colspan="2">ອາຍຸ 36 ຫາ 40 ປີ</td>
-                            <td class="text-center" colspan="2">ອາຍຸ 41 ຫາ 45 ປີ</td>
-                            <td class="text-center" colspan="2">ອາຍຸ 46 ຫາ 50 ປີ</td>
-                            <td class="text-center" colspan="2">ອາຍຸ 51 ຫາ 55 ປີ</td>
-                            <td class="text-center" colspan="2">ອາຍຸ 56 ຫາ 60 ປີ</td>
-                            <td class="text-center" colspan="2">ອາຍຸ 61 ປີ ຂຶ້ນໄປ</td>
-                            <td colspan="3" rowspan="3"></td>
-                        </tr>
-                        <tr>
-                            <?php for ($i = 0; $i< 18; $i++): ?>
-                            <td class="text-center"><?= Yii::t('app', $i%2==0?'T':'W') ?></td>
-                            <?php endfor; ?>
-                        </tr>
-                        <tr>
-                            <td><?= number_format($model->total_u25 )  ?></td><td><?= number_format($model->women_u25  ) ?></td>
-                            <td><?= number_format($model->total_25_30) ?></td><td><?= number_format($model->women_25_30) ?></td>
-                            <td><?= number_format($model->total_31_35) ?></td><td><?= number_format($model->women_31_35) ?></td>
-                            <td><?= number_format($model->total_36_40) ?></td><td><?= number_format($model->women_36_40) ?></td>
-                            <td><?= number_format($model->total_41_45) ?></td><td><?= number_format($model->women_41_45) ?></td>
-                            <td><?= number_format($model->total_46_50) ?></td><td><?= number_format($model->women_46_50) ?></td>
-                            <td><?= number_format($model->total_51_55) ?></td><td><?= number_format($model->women_51_55) ?></td>
-                            <td><?= number_format($model->total_56_60) ?></td><td><?= number_format($model->women_56_60) ?></td>
-                            <td><?= number_format($model->total_61u ) ?></td><td><?=  number_format($model->women_61u  ) ?></td>
-                        </tr>
+                    <?php
+                    if (isset($models)) :
+                        $sum = ['total' => 0, 'women' => 0];
+                        foreach ($models as $i => $model):
+                            foreach ($titles as $key => $title) {
+                                $sum['total'] += $model['total' . $key];
+                                $sum['women'] += $model['women' . $key];
+                            }
+                            ?>
+                            <tr>
+                                <td class="text-center"><?= $i + 1 ?></td>
+                                <td><?= $model['name'] ?></td>
+                                <td class="text-center"><?= number_format($sum['total']) ?></td>
+                                <td class="text-center"><?= number_format($sum['women']) ?></td>
+                                <?php foreach ($titles as $key => $title): ?>
+                                    <td class="text-center"><?= number_format($model['total' . $key]) ?></td>
+                                    <td class="text-center"><?= number_format($model['women' . $key]) ?></td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; endif; ?>
                     </tbody>
                 </table>
             </div>

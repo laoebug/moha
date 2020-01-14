@@ -76,7 +76,7 @@ class StatOfficerDegreeController extends Controller
 
         $model = StatOfficerDegreeDetail::find()
             ->alias('d')
-            ->join('join', $this->table . ' o', 'o.id = d.' . $this->table . '_id and o.phiscal_year_id=:year and d.' . $this->table . '_id and d.organisation_group_id=:id', [
+            ->join('join', $this->table . ' o', 'o.id = d.' . $this->table . '_id and o.phiscal_year_id=:year and d.organisation_group_id=:id', [
                 ':year' => $year->id,
                 ':id' => $orgGroup
             ])
