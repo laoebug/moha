@@ -5,42 +5,22 @@ namespace app\controllers;
 use app\components\MyHelper;
 use app\models\Attachment;
 use app\models\Menu;
-use app\models\OrganisationGroup;
 use app\models\PhiscalYear;
-use app\models\StatOfficerAge;
-use app\models\StatOfficerAgeDetail;
+use app\models\StatInterco;
+use app\models\StatIntercoDetail;
 use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
 use yii\db\Exception;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 
 /**
- * StatOfficerAgeController implements the CRUD actions for StatOfficerAge model.
+ * StatIntercoController implements the CRUD actions for StatLocalAdmin model.
  */
-class StatOfficerAgeController extends Controller
+class StatIntercoController extends Controller
 {
-    public $table = 'stat_officer_age';
-    public $class = 'StatOfficerAge';
-
     /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Lists all StatOfficerAge models.
+     * Lists all StatInterco models.
      * @return mixed
      */
     public function actionIndex()
@@ -63,40 +43,8 @@ class StatOfficerAgeController extends Controller
         $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
 
-        $orgGroups = OrganisationGroup::find()->asArray()->all();
         return json_encode([
-            'years' => $years,
-            'orgGroups' => $orgGroups
-        ]);
-    }
-
-    public function actionInquiry($year, $orgGroup)
-    {
-        $user = Yii::$app->user->identity;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                return;
-            }
-        }
-
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
-            return;
-        }
-
-        $model = StatOfficerAgeDetail::find()
-            ->alias('d')
-            ->join('join', $this->table . ' o', 'o.id = d.' . $this->table . '_id and o.phiscal_year_id=:year and d.organisation_group_id=:id', [
-                ':year' => $year->id,
-                ':id' => $orgGroup
-            ])
-            ->asArray()->one();
-        return json_encode([
-            'model' => $model
+            'years' => $years
         ]);
     }
 
@@ -118,10 +66,16 @@ class StatOfficerAgeController extends Controller
             return;
         }
 
-        $models = StatOfficerAgeDetail::find()
-            ->alias('d')->select('d.*, g.name')
-            ->join('join', 'stat_officer_age o', 'o.id = d.stat_officer_age_id and o.phiscal_year_id=:year', [':year' => $year->id])
-            ->join('join', 'organisation_group g', 'd.organisation_group_id = g.id')
+        $model = StatInterco::find()->where(['phiscal_year_id' => $year->id])->one();
+        if (!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = StatIntercoDetail::find()->alias('d')
+            ->join('left join', 'stat_interco  m', 'd.stat_interco_id = m.id and m.phiscal_year_id=:year', [
+                ':year' => $year->id
+            ])
             ->asArray()->all();
 
         return json_encode([
@@ -140,44 +94,47 @@ class StatOfficerAgeController extends Controller
                 return;
             }
         }
-        $post = Yii::$app->request->post();
-        if (!isset($post['Model'])) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
-            return;
-        }
+
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
+
         if ($year->status != 'O') {
-            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
+            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allow to input'));
             return;
         }
+
+        $post = Yii::$app->request->post();
+        if (!isset($post)) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Mehotd'));
+            return;
+        }
+
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model = StatOfficerAge::find()->where(['phiscal_year_id' => $year->id])->one();
+            $model = StatInterco::find()
+                ->where(['phiscal_year_id' => $year->id])
+                ->one();
             if (!isset($model)) {
-                $model = new StatOfficerAge();
-                $model->user_id = Yii::$app->user->id;
+                $model = new StatInterco();
                 $model->phiscal_year_id = $year->id;
+                $model->user_id = Yii::$app->user->id;
             }
             $model->last_update = date('Y-m-d H:i:s');
-            $model->saved = 1;
+
             if (!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = StatOfficerAgeDetail::find()->alias('d')
-                ->join('join', $this->table . ' o', 'o.id = d.' . $this->table . '_id and o.phiscal_year_id=:year and organisation_group_id=:id', [
-                    ':year' => $year->id,
-                    ':id' => $post['Model']['organisation_group_id']
-                ])
+            $detail = StatIntercoDetail::find()
+                ->where(['id' => $post['model']['id']])
                 ->one();
-
             if (!isset($detail)) {
-                $detail = new StatOfficerAgeDetail();
-                $detail->stat_officer_age_id = $model->id;
+                $detail = new StatIntercoDetail();
+                $detail->stat_interco_id = $model->id;
             }
-            $detail->attributes = $post['Model'];
+            $detail->name = @$post['model']['name'];
+            $detail->area = @$post['model']['area'];
             if (!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
         } catch (Exception $exception) {
@@ -189,7 +146,6 @@ class StatOfficerAgeController extends Controller
 
     public function actionPrint($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -206,14 +162,20 @@ class StatOfficerAgeController extends Controller
             return;
         }
 
-        $models = StatOfficerAgeDetail::find()
-            ->alias('d')->select('d.*, g.name')
-            ->join('join', 'stat_officer_age o', 'o.id = d.stat_officer_age_id and o.phiscal_year_id=:year', [':year' => $year->id])
-            ->join('join', 'organisation_group g', 'd.organisation_group_id = g.id')
+        $model = StatInterco::find()->where(['phiscal_year_id' => $year->id])->one();
+        if (!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        $models = StatIntercoDetail::find()->alias('d')
+            ->join('left join', 'stat_interco  m', 'd.stat_interco_id = m.id and m.phiscal_year_id=:year', [
+                ':year' => $year->id
+            ])
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
-            'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
+            'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
         ]);
     }
 
@@ -235,15 +197,15 @@ class StatOfficerAgeController extends Controller
             return;
         }
 
-        $models = StatOfficerAgeDetail::find()
-            ->alias('d')->select('d.*, g.name')
-            ->join('join', 'stat_officer_age o', 'o.id = d.stat_officer_age_id and o.phiscal_year_id=:year', [':year' => $year->id])
-            ->join('join', 'organisation_group g', 'd.organisation_group_id = g.id')
+        $models = StatIntercoDetail::find()->alias('d')
+            ->join('left join', 'stat_interco  m', 'd.stat_interco_id = m.id and m.phiscal_year_id=:year', [
+                ':year' => $year->id
+            ])
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Stat Officers By Ages' . $year->year . '.xls',
-            'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
+            'file' => 'Stat Inter Cooperation ' . $year->year . '.xls',
+            'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
         ]);
     }
 
@@ -266,7 +228,7 @@ class StatOfficerAgeController extends Controller
             return;
         }
 
-        $menu = Menu::find()->where(['table_name' => 'stat_officer_age'])->one();
+        $menu = Menu::find()->where(['table_name' => 'stat_local_admin'])->one();
         if (!isset($menu)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
             return;
@@ -317,7 +279,7 @@ class StatOfficerAgeController extends Controller
 
         $files = Attachment::find()->alias('a')
             ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
-                ':table' => 'stat_officer_age'
+                ':table' => 'stat_local_admin'
             ])
             ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
             ->orderBy('upload_date desc')

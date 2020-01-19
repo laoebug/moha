@@ -15,7 +15,32 @@
  * Time: 14:56
  */
 /* @var $model app\models\StatOfficerAgeDetail */
+$sumtotal = ['total' => 0, 'women' => 0];
+$sum = [];
+$sumrow = [];
 
+if (isset($models))
+    foreach ($models as $rowindex => $m) {
+        for ($i = 1; $i < 9; $i++) {
+            $keytotal = "p${i}_total";
+            $keywomen = "p${i}_women";
+
+            $sumtotal['total'] += $m[$keytotal];
+            $sumtotal['women'] += $m[$keywomen];
+
+            if (!isset($sum[$keytotal])) $sum[$keytotal] = 0;
+            $sum[$keytotal] += $m[$keytotal];
+
+            if (!isset($sum[$keywomen])) $sum[$keywomen] = 0;
+            $sum[$keywomen] += $m[$keywomen];
+
+            if (!isset($sumrow[$rowindex]['total'])) $sumrow[$rowindex]['total'] = 0;
+            $sumrow[$rowindex]['total'] += $m[$keytotal];
+
+            if (!isset($sumrow[$rowindex]['women'])) $sumrow[$rowindex]['women'] = 0;
+            $sumrow[$rowindex]['women'] += $m[$keywomen];
+        }
+    }
 ?>
 <style type="text/css" media="print">
     @page {
@@ -26,46 +51,63 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title">ຈຳນວນລັດຖະກອນ ແຍກຕາມຕຳແໜ່ງບໍລິຫານປະເພດຕ່າງໆ (<?= $year->year ?>)</h3>
+                <h3 class="title">ຈຳນວນລັດຖະກອນ ແຍກຕາມຕຳແໜ່ງບໍລິຫານປະເພດຕ່າງໆ (<?= isset($year) ? $year->year : 0 ?>
+                    )</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                        <th class="text-center" rowspan="2" colspan="16"><?= Yii::t('app', 'Description') ?></th>
-                        <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
+                        <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
+                        <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນຕ່າງໆ</th>
+                        <th class="text-center" colspan="2" rowspan="2">ຈຳນວນລັດຖະກອນທັງໝົດ</th>
+                        <th class="text-center" colspan="16"
+                            colspan="16"><?= Yii::t('app', 'Description') ?></th>
                     </tr>
                     <tr>
-                        <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                        <th class="text-center"><?= Yii::t('app', 'Men') ?></th>
+                        <?php for ($i = 1; $i < 9; $i++) : ?>
+                            <td colspan="2" class="text-center">ປະເພດ <?= $i ?></td>
+                        <?php endfor; ?>
+                    </tr>
+                    <tr>
+                        <td class="text-center">ລ</td>
+                        <td class="text-center">ຍ</td>
+                        <?php for ($i = 1; $i < 9; $i++) : ?>
+                            <td class="text-center">ລ</td>
+                            <td ng-repeat-end class="text-center">ຍ</td>
+                        <?php endfor; ?>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th class="text-center" rowspan="4">VIII</th>
-                        <th class="text-center" colspan="16">ຈຳນວນລັດຖະກອນ ແຍກຕາມຕຳແໜ່ງບໍລິຫານປະເພດຕ່າງໆ</th>
-                        <th class="text-center"><?= number_format($model->p1_total + $model->p2_total + $model->p3_total + $model->p4_total + $model->p5_total + $model->p6_total + $model->p7_total + $model->p8_total) ?></th>
-                        <th class="text-center"><?= number_format($model->p1_women + $model->p2_women + $model->p3_women + $model->p4_women + $model->p5_women + $model->p6_women + $model->p7_women + $model->p8_women) ?></th>
-                        <th class="text-center"><?= number_format($model->p1_total + $model->p2_total + $model->p3_total + $model->p4_total + $model->p5_total + $model->p6_total + $model->p7_total + $model->p8_total - ($model->p1_women + $model->p2_women + $model->p3_women + $model->p4_women + $model->p5_women + $model->p6_women + $model->p7_women + $model->p8_women)) ?></th>
-                    </tr>
-                    <tr>
+                        <th colspan="2" class="text-center">ຈຳນວນລັດຖະກອນທັງໝົດ</th>
+                        <th class="text-center"><?= number_format($sumtotal['total']) ?></th>
+                        <th class="text-center"><?= number_format($sumtotal['women']) ?></th>
                         <?php for ($i = 1; $i < 9; $i++): ?>
-                            <td colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') . " $i" ?></td>
+                            <th class="text-center">
+                                <?= number_format($sum["p${i}_total"]) ?>
+                            </th>
+                            <th class="text-center">
+                                <?= number_format($sum["p${i}_women"]) ?>
+                            </th>
                         <?php endfor; ?>
                     </tr>
-                    <tr>
-                        <?php for ($i = 1; $i < 17; $i++): ?>
-                            <td class="text-center"><?= Yii::t('app', $i % 2 == 1 ? 'T' : 'W') ?></td>
-                        <?php endfor; ?>
-                    </tr>
-                    <tr>
-                        <?php for ($i = 1; $i < 9; $i++): ?>
-                            <td class="text-center"><?= number_format($model['p' . $i . '_total']) ?></td>
-                            <td class="text-center"><?= number_format($model['p' . $i . '_women']) ?></td>
-                        <?php endfor; ?>
-                    </tr>
+                    <?php
+                    if (isset($models)) :
+                        foreach ($models as $rowindex => $model): ?>
+                            <tr>
+                                <td><?= $rowindex + 1 ?></td>
+                                <td><?= $model['name'] ?></td>
+                                <td class="text-center"><?= number_format($sumrow[$rowindex]['total']) ?></td>
+                                <td class="text-center"><?= number_format($sumrow[$rowindex]['women']) ?></td>
+                                <?php for ($i = 1; $i < 9; $i++): ?>
+                                    <td class="text-center"><?= number_format($model["p${i}_total"]) ?></td>
+                                    <td class="text-center"><?= number_format($model["p${i}_women"]) ?></td>
+                                <?php endfor; ?>
+                            </tr>
+                        <?php endforeach;
+                    endif;
+                    ?>
                     </tbody>
                 </table>
             </div>

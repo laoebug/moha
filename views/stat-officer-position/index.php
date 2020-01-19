@@ -1,12 +1,10 @@
-<?php $_GET['menu']=1;?>
+<?php $_GET['menu'] = 1; ?>
 <?php
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatOfficerPositionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງລັດຖະກອນ'), 'url' => ['index']];
- $this->title = "ຈຳນວນລັດຖະກອນ ແຍກຕາມຕຳແໜ່ງບໍລິຫານປະເພດຕ່າງໆ";
-// $this->params['breadcrumbs'][] = $this->title;
+$this->title = "ຈຳນວນລັດຖະກອນ ແຍກຕາມຕຳແໜ່ງບໍລິຫານປະເພດຕ່າງໆ";
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="officerPositionController">
@@ -24,32 +22,37 @@
     </div>
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
-            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
+            <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
+                ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
-                <div class="col-sm-12">
+                <div class="col-sm-2">
+                    <select class="form-control" ng-model="model.orgGroup" ng-change="inquiry()"
+                            ng-options="y.name for y in orgGroups"></select>
+                </div>
+                <div class="col-sm-10">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <?php for ($i = 1; $i < 5; $i++): ?>
-                                <th colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') . " $i" ?></th>
-                            <?php endfor; ?>
+                            <td colspan="2" class="text-center" ng-repeat="c in cols" ng-if="$index <= 2">ປະເພດ {{
+                                $index + 1 }}
+                            </td>
                         </tr>
                         <tr>
-                            <?php for ($i = 1; $i < 9; $i++): ?>
-                                <th class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></th>
-                            <?php endfor; ?>
+                            <td class="text-center" ng-repeat-start="c in cols" ng-if="$index <= 2">ລ</td>
+                            <td class="text-center" ng-repeat-end ng-if="$index <= 2">ຍ</td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for ($i = 1; $i < 5; $i++) : ?>
-                                <td style="width: 12.5%"><input type="number" min="0" ng-model="model.p<?= $i ?>_total"
-                                                                class="form-control"></td>
-                                <td style="width: 12.5%"><input type="number" min="0" max="{{model.p<?= $i ?>_total}}"
-                                                                ng-model="model.p<?= $i ?>_women" class="form-control">
-                                </td>
-                            <?php endfor; ?>
+                            <td style="width: 12.5%" ng-repeat-start="c in cols" ng-if="$index <= 2">
+                                <input type="number" min="0" class="form-control"
+                                       ng-model="model[c.col+'_total']">
+                            </td>
+                            <td style="width: 12.5%" ng-repeat-end ng-if="$index <= 2">
+                                <input type="number" min="0" max="{{model[c.col+'_total']}}"
+                                       ng-model="model[c.col+'_women']" class="form-control">
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -59,25 +62,25 @@
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <?php for ($i = 5; $i < 9; $i++): ?>
-                                <th colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') . " $i" ?></th>
-                            <?php endfor; ?>
+                            <td colspan="2" class="text-center" ng-repeat="c in cols" ng-if="$index >= 3">ປະເພດ {{
+                                $index + 1 }}
+                            </td>
                         </tr>
                         <tr>
-                            <?php for ($i = 9; $i < 17; $i++): ?>
-                                <th class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></th>
-                            <?php endfor; ?>
+                            <td class="text-center" ng-repeat-start="c in cols" ng-if="$index >= 3">ລ</td>
+                            <td class="text-center" ng-repeat-end ng-if="$index >= 3">ຍ</td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php for ($i = 5; $i < 9; $i++) : ?>
-                                <td style="width: 12.5%"><input type="number" min="0" ng-model="model.p<?= $i ?>_total"
-                                                                class="form-control"></td>
-                                <td style="width: 12.5%"><input type="number" min="0" max="{{model.p<?= $i ?>_total}}"
-                                                                ng-model="model.p<?= $i ?>_women" class="form-control">
-                                </td>
-                            <?php endfor; ?>
+                            <td style="width: 10%" ng-repeat-start="c in cols" ng-if="$index >= 3">
+                                <input type="number" min="0" class="form-control"
+                                       ng-model="model[c.col+'_total']">
+                            </td>
+                            <td style="width: 10%" ng-repeat-end ng-if="$index >= 3">
+                                <input type="number" min="0" max="{{model[c.col+'_total']}}"
+                                       ng-model="model[c.col+'_women']" class="form-control">
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -91,7 +94,7 @@
             </div>
         </div>
     </div>
-    <div ng-show="model" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
+    <div ng-show="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
         <div class="bs-component card">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
@@ -103,59 +106,53 @@
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?> {{year.year}}</h3>
                             <p>
-                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                            class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i></a>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}">
+                                    <i class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}">
+                                    <i class="fa fa-download fa-2x"></i>
+                                </a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" rowspan="2"
+                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
+                                <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນຕ່າງໆ</th>
+                                <th class="text-center" colspan="2" rowspan="2">ຈຳນວນລັດຖະກອນທັງໝົດ</th>
+                                <th class="text-center" colspan="16"
                                     colspan="16"><?= Yii::t('app', 'Description') ?></th>
-                                <th class="text-center" colspan="3">ຈຳນວນລັດຖະກອນ</th>
                             </tr>
                             <tr>
-                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'Men') ?></th>
+                                <td colspan="2" class="text-center" ng-repeat="c in cols">ປະເພດ {{ $index + 1 }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">ລ</td>
+                                <td class="text-center">ຍ</td>
+                                <td ng-repeat-start="c in cols" class="text-center">ລ</td>
+                                <td ng-repeat-end class="text-center">ຍ</td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <th class="text-center" rowspan="4">VIII</th>
-                                <th class="text-center" colspan="16"><?= $this->title ?></th>
-                                <th class="text-center">{{formatNumber(model.p1_total + model.p2_total + model.p3_total
-                                    + model.p4_total + model.p5_total + model.p6_total + model.p7_total +
-                                    model.p8_total)}}
+                                <th colspan="2" class="text-center">ຈຳນວນລັດຖະກອນທັງໝົດ</th>
+                                <th class="text-center">{{sumtotal(models, '_total') | number | dash}}</th>
+                                <th class="text-center">{{sumtotal(models, '_women') | number | dash}}</th>
+                                <th ng-repeat-start="c in cols" class="text-center">
+                                    {{sums(models, c.col + '_total') | number | dash}}
                                 </th>
-                                <th class="text-center">{{formatNumber(model.p1_women + model.p2_women + model.p3_women
-                                    + model.p4_women + model.p5_women + model.p6_women + model.p7_women +
-                                    model.p8_women)}}
-                                </th>
-                                <th class="text-center">{{formatNumber(model.p1_total + model.p2_total + model.p3_total
-                                    + model.p4_total + model.p5_total + model.p6_total + model.p7_total + model.p8_total
-                                    - (model.p1_women + model.p2_women + model.p3_women + model.p4_women +
-                                    model.p5_women + model.p6_women + model.p7_women + model.p8_women))}}
+                                <th ng-repeat-end class="text-center">
+                                    {{sums(models, c.col + '_women') | number | dash}}
                                 </th>
                             </tr>
-                            <tr>
-                                <?php for ($i = 1; $i < 9; $i++): ?>
-                                    <td colspan="2" class="text-center"><?= Yii::t('app', 'ປະເພດ') . " $i" ?></td>
-                                <?php endfor; ?>
-                            </tr>
-                            <tr>
-                                <?php for ($i = 1; $i < 17; $i++): ?>
-                                    <td class="text-center"><?= Yii::t('app', $i % 2 == 1 ? 'T' : 'W') ?></td>
-                                <?php endfor; ?>
-                            </tr>
-                            <tr>
-                                <?php for ($i = 1; $i < 9; $i++): ?>
-                                    <td class="text-center">{{formatNumber(model.p<?= $i ?>_total)}}</td>
-                                    <td class="text-center">{{formatNumber(model.p<?= $i ?>_women)}}</td>
-                                <?php endfor; ?>
+                            <tr ng-repeat="m in models">
+                                <td>{{$index + 1}}</td>
+                                <td>{{m.name}}</td>
+                                <td class="text-center">{{sum(m, '_total') | number | dash}}</td>
+                                <td class="text-center">{{sum(m, '_women') | number | dash}}</td>
+                                <td ng-repeat-start="c in cols" class="text-center">
+                                    {{m[c.col+'_total'] | number |dash}}
+                                </td>
+                                <td ng-repeat-end class="text-center">{{m[c.col+'_women'] | number | dash}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -169,7 +166,8 @@
                         </div>
                         <div class="col-sm-3">
                             <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
+                                   type="text">
                         </div>
                         <div class="col-sm-3">
                             <label>ອອກໂດຍ</label>
@@ -198,7 +196,8 @@
                                     <tbody>
                                     <tr ng-repeat="f in references">
                                         <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                        </td>
                                         <td class="text-center">{{f.issued_no}}</td>
                                         <td class="text-center">{{f.issued_date | date}}</td>
                                         <td class="text-center">{{f.issued_by}}</td>
@@ -208,7 +207,6 @@
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -225,213 +223,238 @@
 <script type="text/javascript" src="js/datetimepicker.js"></script>
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
-  var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-  app.filter('dash', function() {
-    return function(input) {
-      return input ? input : '-';
-    };
-  });
-  app.controller('officerPositionController', function ($scope, $http, $sce, $timeout) {
-    $scope.url = 'index.php?r=stat-officer-position/';
-    $scope.mode = 'read';
-    $scope.changemode = function () {
-      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
-    };
-    $http.get($scope.url + 'get')
-      .then(function (r) {
-        $scope.years = r.data.years;
-      }, function (r) {
-        $scope.response = r;
-        $timeout(function () {
-          $scope.response = null;
-        }, 15000);
-      });
+    var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
+    app.filter('dash', function () {
+        return function (input) {
+            return input ? input : '-';
+        };
+    });
+    app.controller('officerPositionController', function ($scope, $http, $sce, $timeout) {
+        $scope.url = 'index.php?r=stat-officer-position/';
+        $scope.mode = 'read';
+        $scope.model = {};
+        $scope.models = null;
+        $scope.cols = [
+            {col: 'p1'},
+            {col: 'p2'},
+            {col: 'p3'},
+            {col: 'p4'},
+            {col: 'p5'},
+            {col: 'p6'},
+            {col: 'p7'},
+            {col: 'p8'},
+        ];
+        $scope.changemode = function () {
+            $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
+        };
 
-    $scope.enquiry = function () {
-      $scope.model = null;
-      if ($scope.year)
-        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-          .then(function (r) {
-            $scope.model = r.data.model;
-            if (r.data.model) {
-              $scope.model.p1_total = parseInt($scope.model.p1_total);
-              $scope.model.p2_total = parseInt($scope.model.p2_total);
-              $scope.model.p3_total = parseInt($scope.model.p3_total);
-              $scope.model.p4_total = parseInt($scope.model.p4_total);
-              $scope.model.p5_total = parseInt($scope.model.p5_total);
-              $scope.model.p6_total = parseInt($scope.model.p6_total);
-              $scope.model.p7_total = parseInt($scope.model.p7_total);
-              $scope.model.p8_total = parseInt($scope.model.p8_total);
-
-              $scope.model.p1_women = parseInt($scope.model.p1_women);
-              $scope.model.p2_women = parseInt($scope.model.p2_women);
-              $scope.model.p3_women = parseInt($scope.model.p3_women);
-              $scope.model.p4_women = parseInt($scope.model.p4_women);
-              $scope.model.p5_women = parseInt($scope.model.p5_women);
-              $scope.model.p6_women = parseInt($scope.model.p6_women);
-              $scope.model.p7_women = parseInt($scope.model.p7_women);
-              $scope.model.p8_women = parseInt($scope.model.p8_women);
-            } else {
-              $scope.model.p1_total = null;
-              $scope.model.p2_total = null;
-              $scope.model.p3_total = null;
-              $scope.model.p4_total = null;
-              $scope.model.p5_total = null;
-              $scope.model.p6_total = null;
-              $scope.model.p7_total = null;
-              $scope.model.p8_total = null;
-
-              $scope.model.p1_women = null;
-              $scope.model.p2_women = null;
-              $scope.model.p3_women = null;
-              $scope.model.p4_women = null;
-              $scope.model.p5_women = null;
-              $scope.model.p6_women = null;
-              $scope.model.p7_women = null;
-              $scope.model.p8_women = null;
-            }
-            $scope.getreferences();
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-    };
-
-    $scope.save = function () {
-      if ($scope.year && $scope.model) {
-        $http.post($scope.url + 'save&year=' + $scope.year.id, {
-          'Model': $scope.model,
-          '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function (r) {
-          $scope.response = r;
-          $scope.enquiry();
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        }, function (r) {
-          $scope.response = r;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        });
-      }
-    };
-
-    $scope.formatNumber = function (num, dec) {
-      if (dec === undefined) dec = 2;
-      var r = "" + Math.abs(parseFloat(num).toFixed(dec));
-      var decimals = "";
-      if (r.lastIndexOf(".") != -1) {
-        decimals = "." + r.substring(r.lastIndexOf(".") + 1);
-        decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
-        r = r.substring(0, r.lastIndexOf("."));
-      }
-      for (var i = r.length - 3; i > 0; i -= 3)
-        r = r.substr(0, i) + "," + r.substr(i);
-      return (num < 0 ? "-" : "") + r + decimals;
-    };
-
-
-    $scope.uploadedFile = function (element) {
-      if(!$scope.issued_no) {
-        $scope.files = null;
-        alert('ກະລຸນາປ້ອນເລກທີ');
-        return;
-      }
-      $scope.issued_date = $('#issued_date').val();
-      if(!$scope.issued_date) {
-        $scope.files = null;
-        alert('ກະລຸນາປ້ອນວັນທີ');
-        return;
-      }
-
-      $scope.$apply(function ($scope) {
-        $scope.files = element.files;
-        $http({
-          url: $scope.url + "upload&year=" + $scope.year.id,
-          method: "POST",
-          processData: false,
-          headers: {'Content-Type': undefined},
-          data: {
-            '_csrf': $('meta[name="csrf-token"]').attr("content"),
-            'issued_no': $scope.issued_no,
-            'issued_date': $scope.issued_date,
-            'issued_by': $scope.issued_by
-          },
-          transformRequest: function (data) {
-            var formData = new FormData();
-            var file = $scope.files[0];
-            formData.append("file_upload", file);
-            angular.forEach(data, function (value, key) {
-              formData.append(key, value);
-            });
-            return formData;
-          }
-        }).success(function (data, status, headers, config) {
-          $scope.getreferences();
-          $scope.issued_date = null;
-          $scope.issued_no = null;
-          $scope.issued_by = null;
-          $("input[name='image'], #issued_date").val("");
-          $scope.status = data.status;
-          $scope.formdata = "";
-        }).error(function (data, status, headers, config) {
-          $scope.response = data;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        });
-      });
-    };
-
-    $scope.getreferences = function() {
-      if($scope.year) {
-        $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-          .then(function (r) {
-            if (r.data)
-              $scope.references = r.data.files;
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-      }
-    };
-
-    $scope.deletefile = function(f) {
-      if($scope.year && f) {
-        swal({
-          title: "ໝັ້ນໃຈບໍ່?",
-          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "ແມ່ນ, ລຶບ",
-          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
-          closeOnConfirm: true,
-          closeOnCancel: true
-        }, function (isConfirm) {
-          if (isConfirm) {
-            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-              'id': f.id,
-              '_csrf': $('meta[name="csrf-token"]').attr("content")
-            }).then(function (r) {
-              $scope.response = r;
-              $scope.getreferences();
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
+        $http.get($scope.url + 'get')
+            .then(function (r) {
+                $scope.years = r.data.years;
+                $scope.orgGroups = r.data.orgGroups;
             }, function (r) {
-              $scope.response = r;
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
+                $scope.response = r;
+                $timeout(function () {
+                    $scope.response = null;
+                }, 15000);
             });
-          }
-        });
-      }
-    };
-  });
+
+        $scope.sum = function (model, key) {
+            let total = 0;
+            if (model)
+                $scope.cols.forEach(function (c) {
+                    total += parseInt(model[c.col + key]);
+                });
+            return total;
+        };
+
+        $scope.sums = function (models, key) {
+            let total = 0;
+            if (models)
+                $scope.models.forEach(function (model) {
+                    total += parseInt(model[key]);
+                });
+            return total;
+        };
+
+        $scope.sumtotal = function (models, key) {
+            let total = 0;
+            if (models)
+                $scope.models.forEach(function (model) {
+                    $scope.cols.forEach(function (c) {
+                        total += parseInt(model[c.col + key]);
+                    });
+                });
+            return total;
+        };
+
+        $scope.inquiry = function () {
+            if ($scope.year && $scope.model.orgGroup)
+                $http.get($scope.url + 'inquiry&orgGroup=' + $scope.model.orgGroup.id + '&year=' + $scope.year.id)
+                    .then(function (r) {
+                        $scope.cols.forEach(function (c) {
+                            $scope.model[c.col + '_total'] = r.data.model ? parseInt(r.data.model[c.col + '_total']) : null;
+                            $scope.model[c.col + '_women'] = r.data.model ? parseInt(r.data.model[c.col + '_women']) : null;
+                        });
+                    });
+        };
+
+        $scope.enquiry = function () {
+            if ($scope.year)
+                $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+                    .then(function (r) {
+                        $scope.models = r.data.models;
+                        if (r.data.models) {
+                            r.data.models.forEach(function (m) {
+                                $scope.cols.forEach(function (c) {
+                                    m[c.col + '_total'] = parseInt(m[c.col + '_total']);
+                                    m[c.col + '_women'] = parseInt(m[c.col + '_women']);
+                                });
+                            });
+                        }
+                        $scope.getreferences();
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+        };
+
+        $scope.save = function () {
+            if ($scope.year && $scope.model) {
+                $scope.model.organisation_group_id = $scope.model.orgGroup.id;
+                $http.post($scope.url + 'save&year=' + $scope.year.id, {
+                    'Model': $scope.model,
+                    '_csrf': $('meta[name="csrf-token"]').attr("content")
+                }).then(function (r) {
+                    $scope.response = r;
+                    $scope.enquiry();
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                }, function (r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                });
+            }
+        };
+
+        $scope.formatNumber = function (num, dec) {
+            if (dec === undefined) dec = 2;
+            var r = "" + Math.abs(parseFloat(num).toFixed(dec));
+            var decimals = "";
+            if (r.lastIndexOf(".") != -1) {
+                decimals = "." + r.substring(r.lastIndexOf(".") + 1);
+                decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
+                r = r.substring(0, r.lastIndexOf("."));
+            }
+            for (var i = r.length - 3; i > 0; i -= 3)
+                r = r.substr(0, i) + "," + r.substr(i);
+            return (num < 0 ? "-" : "") + r + decimals;
+        };
+
+
+        $scope.uploadedFile = function (element) {
+            if (!$scope.issued_no) {
+                $scope.files = null;
+                alert('ກະລຸນາປ້ອນເລກທີ');
+                return;
+            }
+            $scope.issued_date = $('#issued_date').val();
+            if (!$scope.issued_date) {
+                $scope.files = null;
+                alert('ກະລຸນາປ້ອນວັນທີ');
+                return;
+            }
+
+            $scope.$apply(function ($scope) {
+                $scope.files = element.files;
+                $http({
+                    url: $scope.url + "upload&year=" + $scope.year.id,
+                    method: "POST",
+                    processData: false,
+                    headers: {'Content-Type': undefined},
+                    data: {
+                        '_csrf': $('meta[name="csrf-token"]').attr("content"),
+                        'issued_no': $scope.issued_no,
+                        'issued_date': $scope.issued_date,
+                        'issued_by': $scope.issued_by
+                    },
+                    transformRequest: function (data) {
+                        var formData = new FormData();
+                        var file = $scope.files[0];
+                        formData.append("file_upload", file);
+                        angular.forEach(data, function (value, key) {
+                            formData.append(key, value);
+                        });
+                        return formData;
+                    }
+                }).success(function (data, status, headers, config) {
+                    $scope.getreferences();
+                    $scope.issued_date = null;
+                    $scope.issued_no = null;
+                    $scope.issued_by = null;
+                    $("input[name='image'], #issued_date").val("");
+                    $scope.status = data.status;
+                    $scope.formdata = "";
+                }).error(function (data, status, headers, config) {
+                    $scope.response = data;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                });
+            });
+        };
+
+        $scope.getreferences = function () {
+            if ($scope.year) {
+                $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
+                    .then(function (r) {
+                        if (r.data)
+                            $scope.references = r.data.files;
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+            }
+        };
+
+        $scope.deletefile = function (f) {
+            if ($scope.year && f) {
+                swal({
+                    title: "ໝັ້ນໃຈບໍ່?",
+                    text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "ແມ່ນ, ລຶບ",
+                    cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+                            'id': f.id,
+                            '_csrf': $('meta[name="csrf-token"]').attr("content")
+                        }).then(function (r) {
+                            $scope.response = r;
+                            $scope.getreferences();
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        }, function (r) {
+                            $scope.response = r;
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                        });
+                    }
+                });
+            }
+        };
+    });
 </script>

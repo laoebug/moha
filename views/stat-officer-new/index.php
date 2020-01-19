@@ -143,7 +143,7 @@ $this->title = "ຈຳນວນລັດຖະກອນເພີ່ມເຂົ�
                                 <td class="text-center">{{m.army_women | number | dash}}</td>
                                 <td class="text-center">{{m.soe_total | number | dash}}</td>
                                 <td class="text-center">{{m.soe_women | number | dash}}</td>
-                                <td class="text-center">{{m.quota | number | dash}}</td>
+                                <!--                                <td class="text-center">{{m.quota | number | dash}}</td>-->
                                 <td class="text-center">{{m.need | number | dash}}</td>
                             </tr>
                             </tbody>
@@ -241,36 +241,36 @@ $this->title = "ຈຳນວນລັດຖະກອນເພີ່ມເຂົ�
     $scope.inquiry = function () {
       if ($scope.year && $scope.model.level)
         $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&level=' + $scope.model.level.id)
-          .then(function (r) {
-            if (r.data.model) {
-              $scope.model.new_total = parseInt(r.data.model.new_total);
-              $scope.model.new_women = parseInt(r.data.model.new_women);
-              $scope.model.ministry_total = parseInt(r.data.model.ministry_total);
-              $scope.model.ministry_women = parseInt(r.data.model.ministry_women);
-              $scope.model.army_total = parseInt(r.data.model.army_total);
-              $scope.model.army_women = parseInt(r.data.model.army_women);
-              $scope.model.soe_total = parseInt(r.data.model.soe_total);
-              $scope.model.soe_women = parseInt(r.data.model.soe_women);
-              $scope.model.quota = parseInt(r.data.model.quota);
-              $scope.model.need = parseInt(r.data.model.need);
-            } else {
-              $scope.model.new_total = null;
-              $scope.model.new_women = null;
-              $scope.model.ministry_total = null;
-              $scope.model.ministry_women = null;
-              $scope.model.army_total = null;
-              $scope.model.army_women = null;
-              $scope.model.soe_total = null;
-              $scope.model.soe_women = null;
-              $scope.model.quota = null;
-              $scope.model.need = null;
-            }
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
+            .then(function (r) {
+                if (r.data.model) {
+                    $scope.model.new_total = parseInt(r.data.model.new_total);
+                    $scope.model.new_women = parseInt(r.data.model.new_women);
+                    $scope.model.ministry_total = parseInt(r.data.model.ministry_total);
+                    $scope.model.ministry_women = parseInt(r.data.model.ministry_women);
+                    $scope.model.army_total = parseInt(r.data.model.army_total);
+                    $scope.model.army_women = parseInt(r.data.model.army_women);
+                    $scope.model.soe_total = parseInt(r.data.model.soe_total);
+                    $scope.model.soe_women = parseInt(r.data.model.soe_women);
+                    // $scope.model.quota = parseInt(r.data.model.quota);
+                    $scope.model.need = parseInt(r.data.model.need);
+                } else {
+                    $scope.model.new_total = null;
+                    $scope.model.new_women = null;
+                    $scope.model.ministry_total = null;
+                    $scope.model.ministry_women = null;
+                    $scope.model.army_total = null;
+                    $scope.model.army_women = null;
+                    $scope.model.soe_total = null;
+                    $scope.model.soe_women = null;
+                    // $scope.model.quota = null;
+                    $scope.model.need = null;
+                }
+            }, function (r) {
+                $scope.response = r;
+                $timeout(function () {
+                    $scope.response = null;
+                }, 15000);
+            });
     };
 
     $scope.enquiry = function () {

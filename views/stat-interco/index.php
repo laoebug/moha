@@ -2,23 +2,11 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\StatOfficerAgeSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = "ຈຳນວນລັດຖະກອນ ແຍກຕາມເກນອາຍຸ";
-$titles = [
-    'ອາຍຸຕໍ່າກວ່າ 25 ປີ',
-    'ອາຍຸ 25 ຫາ 30 ປີ',
-    'ອາຍຸ 31 ຫາ 35 ປີ',
-    'ອາຍຸ 36 ຫາ 40 ປີ',
-    'ອາຍຸ 41 ຫາ 45 ປີ',
-    'ອາຍຸ 46 ຫາ 50 ປີ',
-    'ອາຍຸ 51 ຫາ 55 ປີ',
-    'ອາຍຸ 56 ຫາ 60 ປີ',
-    'ອາຍຸ 61 ປີ ຂຶ້ນໄປ',
-];
+/* @var $model app\models\StatInterco */
+$this->title = "ຕາຕະລາງສັງລວມສະຖິຕິການຮ່ວມມືສາກົນຂອງຂະແໜງການພາຍໃນ ປະຈຳປີ ";
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
-<div ng-app="mohaApp" ng-controller="officerAgeController">
+<div class="row" ng-app="mohaApp" ng-controller="statInterco">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
@@ -32,80 +20,46 @@ $titles = [
         </div>
     </div>
     <div class="col-sm-12">
-        <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
+        <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
             <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
                 ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
-                <div class="col-sm-2">
-                    <select class="form-control" ng-model="model.orgGroup" ng-change="inquiry()"
-                            ng-options="y.name for y in orgGroups"></select>
-                </div>
-                <div class="col-sm-10">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <?php foreach ($titles as $i => $title): if ($i > 3) break; ?>
-                                <td class="text-center" colspan="2"><?= $title ?></td>
-                            <?php endforeach; ?>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <?php foreach ($titles as $i => $title): if ($i > 3) break; ?>
-                                <td class="text-center">ລ</td>
-                                <td class="text-center">ຍ</td>
-                            <?php endforeach; ?>
-                        </tr>
-                        <tr>
-                            <td ng-repeat-start="c in cols" ng-if="$index <= 3">
-                                <input type="number" class="form-control" min="0" ng-model="model['total'+c.col]">
-                            </td>
-                            <td ng-if="$index <= 3" ng-repeat-end>
-                                <input type="number" class="form-control" min="0" max="model['total'+c.col]"
-                                       ng-model="model['women'+c.col]">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
                 <div class="col-sm-12">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <?php foreach ($titles as $i => $title): if ($i < 4) continue; ?>
-                                <td class="text-center" colspan="2"><?= $title ?></td>
-                            <?php endforeach; ?>
+                            <th class="text-center">ຊື່ປະເທດ/ອົງການຈັດຕັ້ງສາກົນ</th>
+                            <th class="text-center">ຂົງເຂດວຽກງານທີ່ສະໜັບສະໜູນ</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <?php foreach ($titles as $i => $title): if ($i < 4) continue; ?>
-                                <td class="text-center">ລ</td>
-                                <td class="text-center">ຍ</td>
-                            <?php endforeach; ?>
-                        </tr>
-                        <tr>
-                            <td ng-repeat-start="c in cols" ng-if="$index > 3">
-                                <input type="number" class="form-control" min="0" ng-model="model['total'+c.col]">
-                            </td>
-                            <td ng-if="$index > 3" ng-repeat-end>
-                                <input type="number" class="form-control" min="0" max="model['total'+c.col]"
-                                       ng-model="model['women'+c.col]">
-                            </td>
+                            <td><input class="form-control" ng-model="model.name"></td>
+                            <td><input class="form-control" ng-model="model.area"></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="col-sm-2" style="margin-top: 1em">
-                    <button type="button" class="btn btn-primary col-sm-12" ng-click="save()">
-                        <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
+                    <button type="button" class="btn btn-primary col-sm-12" ng-click="add()">
+                        <i class="fa fa-plus"></i> ເພີ່ມ
+                    </button>
+                </div>
+                <div class="col-sm-2" style="margin-top: 1em">
+                    <button type="button" class="btn btn-warning col-sm-12" ng-click="update()">
+                        <i class="fa fa-save"></i> ບັນທຶກ
+                    </button>
+                </div>
+                <div class="col-sm-2" style="margin-top: 1em">
+                    <button type="button" class="btn btn-danger col-sm-12" ng-click="remove()">
+                        <i class="fa fa-trash"></i> ລຶບ
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <div ng-show="models" class="col-sm-12">
+    <div ng-show="models" class="col-sm-12" style="margin-top: 2em;overflow-x: scroll">
         <div class="bs-component card">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#table" data-toggle="tab">ຕາຕະລາງ</a></li>
@@ -113,59 +67,30 @@ $titles = [
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active in" id="table">
-                    <div class="card" style="margin-top: 2em;overflow-x: scroll">
+                    <div class="card" style="overflow-x: scroll">
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?> {{year.year}}</h3>
                             <p>
-                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                            class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i></a>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}">
+                                    <i class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}">
+                                    <i class="fa fa-download fa-2x"></i>
+                                </a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນຕ່າງໆ</th>
-                                <th class="text-center" rowspan="2" colspan="2">ຈຳນວນລັດຖະກອນທັງໝົດ</th>
-                                <th class="text-center" colspan="<?= count($titles) * 2 ?>">ເກນອາຍຸ</th>
-                            </tr>
-                            <tr>
-                                <?php foreach ($titles as $title): ?>
-                                    <th class="text-center" colspan="2"><?= $title ?></th>
-                                <?php endforeach; ?>
-                            </tr>
-                            <tr>
-                                <th class="text-center">ລ</th>
-                                <th class="text-center">ຍ</th>
-                                <?php foreach ($titles as $title): ?>
-                                    <th class="text-center">ລ</th>
-                                    <th class="text-center">ຍ</th>
-                                <?php endforeach; ?>
+                                <th style="width: 20px">ລ/ດ</th>
+                                <th class="text-center">ຊື່ປະເທດ/ອົງການຈັດຕັ້ງສາກົນ</th>
+                                <th class="text-center">ຂົງເຂດວຽກງານທີ່ສະໜັບສະໜູນ</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="m in models">
+                            <tr ng-repeat="m in models" ng-click="select(m)">
                                 <td>{{$index + 1}}</td>
                                 <td>{{m.name}}</td>
-                                <td class="text-center">{{sum(m, 'total') | number | dash}}</td>
-                                <td class="text-center">{{sum(m, 'women') | number | dash}}</td>
-                                <td ng-repeat-start="c in cols" class="text-center">
-                                    {{m['total'+c.col] | number | dash}}
-                                </td>
-                                <td ng-repeat-end class="text-center">{{m['women'+c.col] | number | dash}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="text-center">ລວມ</td>
-                                <th class="text-center">{{sumtotal(models, 'total') | number | dash}}</th>
-                                <th class="text-center">{{sumtotal(models, 'women') | number | dash}}</th>
-                                <th ng-repeat-start="c in cols" class="text-center">
-                                    {{sums(models, 'total' + c.col) | number | dash}}
-                                </th>
-                                <th ng-repeat-end class="text-center">
-                                    {{sums(models, 'women' + c.col) | number | dash}}
-                                </th>
+                                <td>{{m.area}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -179,8 +104,7 @@ $titles = [
                         </div>
                         <div class="col-sm-3">
                             <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
-                                   type="text">
+                            <input class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
                         </div>
                         <div class="col-sm-3">
                             <label>ອອກໂດຍ</label>
@@ -220,7 +144,6 @@ $titles = [
                                             </button>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -242,28 +165,15 @@ $titles = [
             return input ? input : '-';
         };
     });
-    app.controller('officerAgeController', function ($scope, $http, $sce, $timeout) {
-        $scope.url = 'index.php?r=stat-officer-age/';
+    app.controller('statInterco', function ($scope, $http, $sce, $timeout) {
+        $scope.url = 'index.php?r=stat-interco/';
         $scope.mode = 'read';
-        $scope.model = {};
-        $scope.cols = [
-            {col: '_u25'},
-            {col: '_25_30'},
-            {col: '_31_35'},
-            {col: '_36_40'},
-            {col: '_41_45'},
-            {col: '_46_50'},
-            {col: '_51_55'},
-            {col: '_56_60'},
-            {col: '_61u'},
-        ];
         $scope.changemode = function () {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
         $http.get($scope.url + 'get')
             .then(function (r) {
                 $scope.years = r.data.years;
-                $scope.orgGroups = r.data.orgGroups;
             }, function (r) {
                 $scope.response = r;
                 $timeout(function () {
@@ -271,74 +181,39 @@ $titles = [
                 }, 15000);
             });
 
-        $scope.sum = function (model, key) {
-            let total = 0;
-            if (model)
-                $scope.cols.forEach(function (c) {
-                    total += parseInt(model[key + c.col]);
-                });
-            return total;
+        $scope.select = function (m) {
+            $scope.model = m;
         };
 
-        $scope.sums = function (models, key) {
-            let total = 0;
-            if (models)
-                $scope.models.forEach(function (model) {
-                    total += parseInt(model[key]);
-                });
-            return total;
-        };
-
-        $scope.sumtotal = function (models, key) {
-            let total = 0;
-            if (models)
-                $scope.models.forEach(function (model) {
-                    $scope.cols.forEach(function (c) {
-                        total += parseInt(model[key + c.col]);
-                    });
-                });
-            return total;
-        };
-
-        $scope.inquiry = function () {
-            if ($scope.year && $scope.model.orgGroup)
-                $http.get($scope.url + 'inquiry&orgGroup=' + $scope.model.orgGroup.id + '&year=' + $scope.year.id)
-                    .then(function (r) {
-                        $scope.cols.forEach(function (c) {
-                            $scope.model['total' + c.col] = r.data.model ? parseInt(r.data.model['total' + c.col]) : null;
-                            $scope.model['women' + c.col] = r.data.model ? parseInt(r.data.model['women' + c.col]) : null;
-                        });
-                    });
-        };
         $scope.enquiry = function () {
+            $scope.model = null;
+            $scope.models = null;
             if ($scope.year)
                 $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
                     .then(function (r) {
                         $scope.models = r.data.models;
-                        if (r.data.models) {
-                            r.data.models.forEach(function (m) {
-                                $scope.cols.forEach(function (c) {
-                                    m['total' + c.col] = parseInt(m['total' + c.col]);
-                                    m['women' + c.col] = parseInt(m['women' + c.col]);
-                                });
-                            });
-                        }
                         $scope.getreferences();
                     }, function (r) {
                         $scope.response = r;
+                        $scope.models = null;
                         $timeout(function () {
                             $scope.response = null;
                         }, 15000);
                     });
         };
 
-        $scope.save = function () {
+        $scope.add = function () {
+            $scope.model.id = null;
+            $scope.update();
+        };
+
+        $scope.update = function () {
             if ($scope.year && $scope.model) {
-                $scope.model.organisation_group_id = $scope.model.orgGroup.id;
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
-                    'Model': $scope.model,
+                    'model': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
                 }).then(function (r) {
+                    $scope.model = null;
                     $scope.response = r;
                     $scope.enquiry();
                     $timeout(function () {
@@ -353,27 +228,13 @@ $titles = [
             }
         };
 
-        $scope.formatNumber = function (num, dec) {
-            if (dec === undefined) dec = 2;
-            var r = "" + Math.abs(parseFloat(num).toFixed(dec));
-            var decimals = "";
-            if (r.lastIndexOf(".") != -1) {
-                decimals = "." + r.substring(r.lastIndexOf(".") + 1);
-                decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
-                r = r.substring(0, r.lastIndexOf("."));
-            }
-            for (var i = r.length - 3; i > 0; i -= 3)
-                r = r.substr(0, i) + "," + r.substr(i);
-            return (num < 0 ? "-" : "") + r + decimals;
-        };
-
         $scope.uploadedFile = function (element) {
             if (!$scope.issued_no) {
                 $scope.files = null;
                 alert('ກະລຸນາປ້ອນເລກທີ');
                 return;
             }
-            $scope.issued_date = $('#issued_date').val();
+            $scope.issued_date = $('.datepicker').val();
             if (!$scope.issued_date) {
                 $scope.files = null;
                 alert('ກະລຸນາປ້ອນວັນທີ');
@@ -407,7 +268,7 @@ $titles = [
                     $scope.issued_date = null;
                     $scope.issued_no = null;
                     $scope.issued_by = null;
-                    $("input[name='image'], #issued_date").val("");
+                    $("input[name='image'], .datepicker").val("");
                     $scope.status = data.status;
                     $scope.formdata = "";
                 }).error(function (data, status, headers, config) {
