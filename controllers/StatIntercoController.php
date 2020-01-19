@@ -144,6 +144,33 @@ class StatIntercoController extends Controller
         }
     }
 
+    public function actionDelete($year)
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
+        $year = PhiscalYear::findOne($year);
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            return;
+        }
+
+        if ($year->status != 'O') {
+            MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allow to input'));
+            return;
+        }
+
+        $post = Yii::$app->request->post();
+        StatIntercoDetail::deleteAll(['id' => $post['model']['id']]);
+    }
+
     public function actionPrint($year)
     {
         $user = Yii::$app->user->identity;
