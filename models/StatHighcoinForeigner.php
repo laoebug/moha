@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  *
  * @property PhiscalYear $phiscalYear
  * @property User $user
+ * @property StatHighcoinForeignerDetail[] $statHighcoinForeignerDetails
  */
 class StatHighcoinForeigner extends ActiveRecord
 {
@@ -68,5 +69,13 @@ class StatHighcoinForeigner extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getStatHighcoinForeignerDetails()
+    {
+        return $this->hasMany(StatHighcoinForeignerDetail::className(), ['stat_highcoin_foreigner_id' => 'id']);
     }
 }

@@ -19,9 +19,11 @@ use yii\db\ActiveRecord;
  * @property string $remark
  * @property int $ministry_id
  * @property int $award_id
+ * @property int $stat_highcoin_foreigner_id
  *
  * @property Award $award
  * @property Ministry $ministry
+ * @property StatHighcoinForeigner $statHighcoinForeigner
  */
 class StatHighcoinForeignerDetail extends ActiveRecord
 {
@@ -39,11 +41,12 @@ class StatHighcoinForeignerDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['national_personal', 'national_group', 'million_personal', 'million_group', 'hornor_personal', 'hornor_group', 'ministry_id', 'award_id'], 'integer'],
-            [['ministry_id', 'award_id'], 'required'],
+            [['national_personal', 'national_group', 'million_personal', 'million_group', 'hornor_personal', 'hornor_group', 'ministry_id', 'award_id', 'stat_highcoin_foreigner_id'], 'integer'],
+            [['ministry_id', 'award_id', 'stat_highcoin_foreigner_id'], 'required'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
+            [['stat_highcoin_foreigner_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatHighcoinForeigner::className(), 'targetAttribute' => ['stat_highcoin_foreigner_id' => 'id']],
         ];
     }
 
@@ -63,6 +66,7 @@ class StatHighcoinForeignerDetail extends ActiveRecord
             'remark' => Yii::t('app', 'Remark'),
             'ministry_id' => Yii::t('app', 'Ministry ID'),
             'award_id' => Yii::t('app', 'Award ID'),
+            'stat_highcoin_foreigner_id' => Yii::t('app', 'Stat Highcoin Foreigner ID'),
         ];
     }
 
@@ -80,5 +84,13 @@ class StatHighcoinForeignerDetail extends ActiveRecord
     public function getMinistry()
     {
         return $this->hasOne(Ministry::className(), ['id' => 'ministry_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getStatHighcoinForeigner()
+    {
+        return $this->hasOne(StatHighcoinForeigner::className(), ['id' => 'stat_highcoin_foreigner_id']);
     }
 }

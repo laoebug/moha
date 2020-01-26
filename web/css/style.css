@@ -1,3 +1,7 @@
+* {
+    font-family: 'Phetsarath OT', 'Saysettha OT', 'Noto Sans';
+}
+
 table.table td {
     vertical-align: middle !important;
 }
