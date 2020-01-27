@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property int $province_id
  *
  * @property User $user
+ * @property Province $province
  * @property RoleHasAction[] $roleHasActions
  * @property Action[] $actions
  * @property RoleHasMenu[] $roleHasMenus
@@ -72,6 +73,14 @@ class Role extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getProvince()
+    {
+        return $this->hasOne(Province::className(), ['id' => 'province_id']);
     }
 
     /**
