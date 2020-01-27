@@ -328,7 +328,7 @@ $titles = [
                 for (var n = 0; n < $scope.models.length; n++)
                     if ($scope.models[n][key])
                         total += parseInt($scope.models[n][key]);
-            return total == 0 ? 0 : total;
+            return total === 0 ? 0 : total;
         };
 
 

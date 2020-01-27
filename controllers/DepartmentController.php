@@ -11,6 +11,7 @@ namespace app\controllers;
 
 use app\models\Menu;
 use app\models\MenuSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -19,7 +20,7 @@ class DepartmentController extends Controller
     public function actionIndex()
     {
         $searchModel = new MenuSearch ();
-        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere([
             'menu_parent_id' => 3
         ]);
@@ -38,7 +39,7 @@ class DepartmentController extends Controller
         $model = Menu::findOne($id);
 
         $searchModel = new MenuSearch ();
-        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere([
             'menu_parent_id' => $id
         ]);
