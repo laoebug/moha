@@ -62,15 +62,16 @@ class StatMapServiceController extends Controller
 
         $models = StatMapServiceDetail::find()->alias('d')
             ->join('join', 'stat_map_service c', 'c.id = d.stat_map_service_id and c.phiscal_year_id=:year', [':year' => $year->id])
-            ->orderBy('position')
+            ->orderBy('c.id')
             ->asArray()->all();
-
+            
         return json_encode([
             'models' => $models,
         ]);
     }
 
     public function actionSave($year) {
+    	
     	$user = Yii::$app->user->identity;
     	$controller_id = Yii::$app->controller->id;
     	$acton_id = Yii::$app->controller->action->id;
@@ -91,20 +92,26 @@ class StatMapServiceController extends Controller
             return;
         }
 
+
         $post = Yii::$app->request->post();
+        
         if(isset($post)) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
+                
                 $model = StatMapService::find()->where(['phiscal_year_id' => $year->id])->one();
+                
                 if(!isset($model)) {
                     $model = new StatMapService();
                     $model->phiscal_year_id = $year->id;
                     $model->user_id = Yii::$app->user->id;
                 }
+
                 $model->last_update = date('Y-m-d H:i:s');
                 $model->saved = 1;
+                
                 if(!$model->save()) throw new Exception(json_encode($model->errors));
-
+                $detail = null;
                 if(isset($post['Model']['id'])) {
                     $detail = StatMapServiceDetail::findOne($post['Model']['id']);
                     if(!isset($detail)) throw new Exception(Yii::t('app','Not Found!'));
@@ -112,10 +119,20 @@ class StatMapServiceController extends Controller
                     $detail = new StatMapServiceDetail();
                     $detail->stat_map_service_id = $model->id;
                 }
-                $detail->attributes = $post['Model'];
-                if(!$detail->save()) throw new Exception(json_encode($detail->errors));
-                $transaction->commit();
+                
+                // $detail->attributes = $post['Model'];
+                
+                $detail->activity=$post['Model']['activity'];
+                $detail->amount=$post['Model']['amount'];
+                $detail->km=$post['Model']['km'];
+                $detail->point=$post['Model']['point'];
+                $detail->remark=$post['Model']['remark'];                                
+                if(!$detail->save(false)) throw new Exception(json_encode($detail->errors));
+                
+                $transaction->commit();               
+                
             } catch (Exception $exception) {
+            	
                 $transaction->rollBack();
                 MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
                 return;
@@ -142,7 +159,7 @@ class StatMapServiceController extends Controller
     }
 
     public function actionPrint($year) {
-    	
+        
     	$user = Yii::$app->user->identity;
     	$controller_id = Yii::$app->controller->id;
     	$acton_id = Yii::$app->controller->action->id;
@@ -155,16 +172,18 @@ class StatMapServiceController extends Controller
     	
     	
         $year = PhiscalYear::findOne($year);
+                        
         if(!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app','Incorrect Phiscal Year'));
             return;
         }
-
+        
         $models = StatMapServiceDetail::find()->alias('d')
             ->join('join', 'stat_map_service c', 'c.id = d.stat_map_service_id and c.phiscal_year_id=:year', [':year' => $year->id])
-            ->orderBy('position')
+            ->orderBy('id')
             ->asArray()->all();
 
+            
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
                 'models' => $models,
@@ -194,7 +213,7 @@ class StatMapServiceController extends Controller
 
         $models = StatMapServiceDetail::find()->alias('d')
             ->join('join', 'stat_map_service c', 'c.id = d.stat_map_service_id and c.phiscal_year_id=:year', [':year' => $year->id])
-            ->orderBy('position')
+            ->orderBy('id')
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [

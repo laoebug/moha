@@ -19,7 +19,7 @@ use yii\web\Controller;
 /**
  * StatEthnicController implements the CRUD actions for StatEthnic model.
  */
-class StatEthnicController extends Controller
+class StatEthnicController extends BaseController
 {
     /**
      * Lists all StatEthnic models.

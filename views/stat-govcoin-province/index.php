@@ -235,342 +235,413 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
         </div>
     </div>
 </div>
+<script type="text/javascript" src="js/sweetalert2.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/moment.js"></script>
 <script type="text/javascript" src="js/datetimepicker.js"></script>
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
-  var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-  app.filter('dash', function () {
-    return function (input) {
-      return input ? input : '-';
-    };
-  });
-  app.controller('statGovcoinProvince', function ($scope, $http, $sce, $timeout) {
-    $scope.url = 'index.php?r=stat-govcoin-province/';
-    $scope.mode = 'read';
-    $scope.changemode = function () {
-      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
-    };
-    $http.get($scope.url + 'get')
-      .then(function (r) {
-        $scope.years = r.data.years;
-        $scope.provinces = r.data.provinces;
-        $scope.awards = r.data.awards;
-      }, function (r) {
-        $scope.response = r;
-        $timeout(function () {
-          $scope.response = null;
-        }, 15000);
-      });
+    var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
+    app.filter('dash', function () {
+        return function (input) {
+            return input ? input : '-';
+        };
+    });
+    app.controller('statGovcoinProvince', function ($scope, $http, $sce, $timeout) {
+        $scope.url = 'index.php?r=stat-govcoin-province/';
+        $scope.mode = 'read';
+        $scope.changemode = function () {
+            $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
+        };
+        $http.get($scope.url + 'get')
+            .then(function (r) {
+                $scope.years = r.data.years;
+                $scope.provinces = r.data.provinces;
+                $scope.awards = r.data.awards;
+            }, function (r) {
+                $scope.response = r;
+                $timeout(function () {
+                    $scope.response = null;
+                }, 15000);
+            });
 
-    $scope.enquiry = function () {
-      $scope.models = null;
-      if ($scope.year)
-        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-          .then(function (r) {
-            $scope.models = r.data.models;
-            $scope.getreferences();
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-    };
+        $scope.enquiry = function () {
+            $scope.models = null;
+            if ($scope.year)
+                $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+                    .then(function (r) {
+                        $scope.models = r.data.models;
+                        $scope.getreferences();
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+        };
 
-    $scope.inquiry = function () {
-      if ($scope.model.province && $scope.model.award) {
-        $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&province=' + $scope.model.province.id + '&award=' + $scope.model.award.id)
-          .then(function (r) {
-            if (r.data.model) {
-              $scope.model.labo_personal = parseInt(r.data.model.labo_personal);
-              $scope.model.labo_team = parseInt(r.data.model.labo_team);
-              $scope.model.deve_personal = parseInt(r.data.model.deve_personal);
-              $scope.model.deve_team = parseInt(r.data.model.deve_team);
-              $scope.model.memo_personal = parseInt(r.data.model.memo_personal);
-              $scope.model.memo_team = parseInt(r.data.model.memo_team);
+        $scope.inquiry = function () {
+            if ($scope.model.province && $scope.model.award) {
+                $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&province=' + $scope.model.province.id + '&award=' + $scope.model.award.id)
+                    .then(function (r) {
+                        if (r.data.model) {
+                            $scope.model.labo_personal = parseInt(r.data.model.labo_personal);
+                            $scope.model.labo_team = parseInt(r.data.model.labo_team);
+                            $scope.model.deve_personal = parseInt(r.data.model.deve_personal);
+                            $scope.model.deve_team = parseInt(r.data.model.deve_team);
+                            $scope.model.memo_personal = parseInt(r.data.model.memo_personal);
+                            $scope.model.memo_team = parseInt(r.data.model.memo_team);
 
-              $scope.model.amer_personal = parseInt(r.data.model.amer_personal);
-              $scope.model.amer_team = parseInt(r.data.model.amer_team);
-              $scope.model.fran_personal = parseInt(r.data.model.fran_personal);
-              $scope.model.fran_team = parseInt(r.data.model.fran_team);
-              $scope.model.gove_personal = parseInt(r.data.model.gove_personal);
-              $scope.model.gove_team = parseInt(r.data.model.gove_team);
+                            $scope.model.amer_personal = parseInt(r.data.model.amer_personal);
+                            $scope.model.amer_team = parseInt(r.data.model.amer_team);
+                            $scope.model.fran_personal = parseInt(r.data.model.fran_personal);
+                            $scope.model.fran_team = parseInt(r.data.model.fran_team);
+                            $scope.model.gove_personal = parseInt(r.data.model.gove_personal);
+                            $scope.model.gove_team = parseInt(r.data.model.gove_team);
 
-              $scope.model.remark = r.data.model.remark;
-            } else {
-              $scope.model.labo_personal = null;
-              $scope.model.labo_team = null;
-              $scope.model.deve_personal = null;
-              $scope.model.deve_team = null;
-              $scope.model.memo_personal = null;
-              $scope.model.memo_team = null;
-              $scope.model.amer_personal = null;
-              $scope.model.amer_team = null;
-              $scope.model.fran_personal = null;
-              $scope.model.fran_team = null;
-              $scope.model.gove_personal = null;
-              $scope.model.gove_team = null;
+                            $scope.model.remark = r.data.model.remark;
+                        } else {
+                            $scope.model.labo_personal = null;
+                            $scope.model.labo_team = null;
+                            $scope.model.deve_personal = null;
+                            $scope.model.deve_team = null;
+                            $scope.model.memo_personal = null;
+                            $scope.model.memo_team = null;
+                            $scope.model.amer_personal = null;
+                            $scope.model.amer_team = null;
+                            $scope.model.fran_personal = null;
+                            $scope.model.fran_team = null;
+                            $scope.model.gove_personal = null;
+                            $scope.model.gove_team = null;
 
-              $scope.model.remark = null;
+                            $scope.model.remark = null;
+                        }
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
             }
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-      }
-    };
+        };
 
-    $scope.select = function (m) {
-      $scope.model = m;
-      $scope.model.labo_personal = parseInt(m.labo_personal);
-      $scope.model.labo_team = parseInt(m.labo_team);
-      $scope.model.deve_personal = parseInt(m.deve_personal);
-      $scope.model.deve_team = parseInt(m.deve_team);
-      $scope.model.memo_personal = parseInt(m.memo_personal);
-      $scope.model.memo_team = parseInt(m.memo_team);
+        $scope.select = function (m) {
+            $scope.model = m;
+            $scope.model.labo_personal = parseInt(m.labo_personal);
+            $scope.model.labo_team = parseInt(m.labo_team);
+            $scope.model.deve_personal = parseInt(m.deve_personal);
+            $scope.model.deve_team = parseInt(m.deve_team);
+            $scope.model.memo_personal = parseInt(m.memo_personal);
+            $scope.model.memo_team = parseInt(m.memo_team);
 
-      $scope.model.amer_personal = parseInt(m.amer_personal);
-      $scope.model.amer_team = parseInt(m.amer_team);
-      $scope.model.fran_personal = parseInt(m.fran_personal);
-      $scope.model.fran_team = parseInt(m.fran_team);
-      $scope.model.gove_personal = parseInt(m.gove_personal);
-      $scope.model.gove_team = parseInt(m.gove_team);
+            $scope.model.amer_personal = parseInt(m.amer_personal);
+            $scope.model.amer_team = parseInt(m.amer_team);
+            $scope.model.fran_personal = parseInt(m.fran_personal);
+            $scope.model.fran_team = parseInt(m.fran_team);
+            $scope.model.gove_personal = parseInt(m.gove_personal);
+            $scope.model.gove_team = parseInt(m.gove_team);
 
-      $scope.model.remark = m.remark;
+            $scope.model.remark = m.remark;
 
-      for (i in $scope.provinces) {
-        var province = $scope.provinces[i];
-        if ($scope.model.province_id === province.id) {
-          $scope.model.province = province;
-          break;
-        }
-      }
+            for (i in $scope.provinces) {
+                var province = $scope.provinces[i];
+                if ($scope.model.province_id === province.id) {
+                    $scope.model.province = province;
+                    break;
+                }
+            }
 
-      for (i in $scope.awards) {
-        var award = $scope.awards[i];
-        if ($scope.model.award_id === award.id) {
-          $scope.model.award = award;
-          break;
-        }
-      }
-    };
+            for (i in $scope.awards) {
+                var award = $scope.awards[i];
+                if ($scope.model.award_id === award.id) {
+                    $scope.model.award = award;
+                    break;
+                }
+            }
+        };
 
-    $scope.delete = function () {
-      if ($scope.model) {
-        swal({
-          title: "ໝັ້ນໃຈບໍ່?",
-          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "ແມ່ນ, ລຶບ",
-          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
-          closeOnConfirm: true,
-          closeOnCancel: true
-        }, function (isConfirm) {
-          if (isConfirm) {
-            $http.post($scope.url + 'delete', {
-              'Model': $scope.model,
-              '_csrf': $('meta[name="csrf-token"]').attr("content")
-            }).then(function (r) {
-              $scope.model = null;
-              $scope.enquiry();
-            }, function (r) {
-              $scope.response = r;
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
+        $scope.delete = function () {
+            if ($scope.model) {
+                swal({
+                    title: "ໝັ້ນໃຈບໍ່?",
+                    text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "ແມ່ນ, ລຶບ",
+                    cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $http.post($scope.url + 'delete', {
+                            'Model': $scope.model,
+                            '_csrf': $('meta[name="csrf-token"]').attr("content")
+                        }).then(function (r) {
+                            $scope.model = null;
+                            $scope.enquiry();
+
+                            if (r.status == 200) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'ການລຶບສໍາເລັດ',
+                                    text: r.status,
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                });
+                            }
+
+                        }, function (r) {
+                            $scope.response = r;
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+
+
+                            Swal.fire({
+                                position: 'top-end',
+                                type: 'error',
+                                title: 'ການລຶບບໍ່ສໍາເລັດ',
+                                text: r.status,
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+
+
+                        });
+                    }
+                });
+            }
+        };
+
+        $scope.save = function () {
+            if ($scope.year && $scope.model) {
+                $http.post($scope.url + 'save&year=' + $scope.year.id, {
+                    'Model': $scope.model,
+                    '_csrf': $('meta[name="csrf-token"]').attr("content")
+                }).then(function (r) {
+                    $scope.model = null;
+                    $scope.response = r;
+                    $scope.enquiry();
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+
+                    if (r.status == 200) {
+                        Swal.fire({
+                            position: 'top-end',
+                            type: 'success',
+                            title: 'ການບັນທຶກສໍາເລັດ',
+                            text: r.status,
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                    }
+
+
+                }, function (r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+
+
+                    Swal.fire({
+                        position: 'top-end',
+                        type: 'error',
+                        title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
+                        text: r.status,
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                });
+            }
+        };
+
+        $scope.sumcolumn = function (key) {
+            var s = 0;
+            if ($scope.models)
+                for (var i = 0; i < $scope.models.length; i++) {
+                    if ($scope.models[i][key])
+                        s += parseInt($scope.models[i][key]);
+                }
+            return s;
+        };
+
+        $scope.sumrow = function (index, key) {
+            var s = 0;
+            var model = $scope.models[index];
+            if (key == 'personal') {
+                if (model.labo_personal) s += parseInt(model.labo_personal);
+                if (model.deve_personal) s += parseInt(model.deve_personal);
+                if (model.memo_personal) s += parseInt(model.memo_personal);
+                if (model.amer_personal) s += parseInt(model.amer_personal);
+                if (model.fran_personal) s += parseInt(model.fran_personal);
+                if (model.gove_personal) s += parseInt(model.gove_personal);
+            }
+
+            if (key == 'team') {
+                if (model.labo_team) s += parseInt(model.labo_team);
+                if (model.deve_team) s += parseInt(model.deve_team);
+                if (model.memo_team) s += parseInt(model.memo_team);
+                if (model.amer_team) s += parseInt(model.amer_team);
+                if (model.fran_team) s += parseInt(model.fran_team);
+                if (model.gove_team) s += parseInt(model.gove_team);
+            }
+
+            return s;
+        };
+
+        $scope.sumtotal = function (key) {
+            var s = 0;
+            if (key == 'personal') {
+                s += $scope.sumcolumn('labo_personal') + $scope.sumcolumn('deve_personal') + $scope.sumcolumn('memo_personal');
+                s += $scope.sumcolumn('amer_personal') + $scope.sumcolumn('fran_personal') + $scope.sumcolumn('gove_personal');
+            }
+
+            if (key == 'team') {
+                s += $scope.sumcolumn('labo_team') + $scope.sumcolumn('deve_team') + $scope.sumcolumn('memo_team');
+                s += $scope.sumcolumn('amer_team') + $scope.sumcolumn('fran_team') + $scope.sumcolumn('gove_team');
+            }
+            return s;
+        };
+
+        $scope.formatNumber = function (num, dec) {
+            if (dec === undefined) dec = 2;
+            var r = "" + Math.abs(parseFloat(num).toFixed(dec));
+            var decimals = "";
+            if (r.lastIndexOf(".") != -1) {
+                decimals = "." + r.substring(r.lastIndexOf(".") + 1);
+                decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
+                r = r.substring(0, r.lastIndexOf("."));
+            }
+            for (var i = r.length - 3; i > 0; i -= 3)
+                r = r.substr(0, i) + "," + r.substr(i);
+            return (num < 0 ? "-" : "") + r + decimals;
+        };
+
+
+        $scope.uploadedFile = function (element) {
+            if (!$scope.issued_no) {
+                $scope.files = null;
+                alert('ກະລຸນາປ້ອນເລກທີ');
+                return;
+            }
+            $scope.issued_date = $('.datepicker').val();
+            if (!$scope.issued_date) {
+                $scope.files = null;
+                alert('ກະລຸນາປ້ອນວັນທີ');
+                return;
+            }
+
+            $scope.$apply(function ($scope) {
+                $scope.files = element.files;
+                $http({
+                    url: $scope.url + "upload&year=" + $scope.year.id,
+                    method: "POST",
+                    processData: false,
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    data: {
+                        '_csrf': $('meta[name="csrf-token"]').attr("content"),
+                        'issued_no': $scope.issued_no,
+                        'issued_date': $scope.issued_date,
+                        'issued_by': $scope.issued_by
+                    },
+                    transformRequest: function (data) {
+                        var formData = new FormData();
+                        var file = $scope.files[0];
+                        formData.append("file_upload", file);
+                        angular.forEach(data, function (value, key) {
+                            formData.append(key, value);
+                        });
+                        return formData;
+                    }
+                }).success(function (data, status, headers, config) {
+                    $scope.getreferences();
+                    $scope.issued_date = null;
+                    $scope.issued_no = null;
+                    $scope.issued_by = null;
+                    $("input[name='image'], .datepicker").val("");
+                    $scope.status = data.status;
+                    $scope.formdata = "";
+                }).error(function (data, status, headers, config) {
+                    $scope.response = data;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                });
             });
-          }
-        });
-      }
-    };
+        };
 
-    $scope.save = function () {
-      if ($scope.year && $scope.model) {
-        $http.post($scope.url + 'save&year=' + $scope.year.id, {
-          'Model': $scope.model,
-          '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function (r) {
-          $scope.model = null;
-          $scope.response = r;
-          $scope.enquiry();
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        }, function (r) {
-          $scope.response = r;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        });
-      }
-    };
+        $scope.getreferences = function () {
+            if ($scope.year) {
+                $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
+                    .then(function (r) {
+                        if (r.data)
+                            $scope.references = r.data.files;
+                    }, function (r) {
+                        $scope.response = r;
+                        $timeout(function () {
+                            $scope.response = null;
+                        }, 15000);
+                    });
+            }
+        };
 
-    $scope.sumcolumn = function (key) {
-      var s = 0;
-      if ($scope.models)
-        for (var i = 0; i < $scope.models.length; i++) {
-          if ($scope.models[i][key])
-            s += parseInt($scope.models[i][key]);
-        }
-      return s;
-    };
-
-    $scope.sumrow = function (index, key) {
-      var s = 0;
-      var model = $scope.models[index];
-      if (key == 'personal') {
-        if (model.labo_personal) s += parseInt(model.labo_personal);
-        if (model.deve_personal) s += parseInt(model.deve_personal);
-        if (model.memo_personal) s += parseInt(model.memo_personal);
-        if (model.amer_personal) s += parseInt(model.amer_personal);
-        if (model.fran_personal) s += parseInt(model.fran_personal);
-        if (model.gove_personal) s += parseInt(model.gove_personal);
-      }
-
-      if (key == 'team') {
-        if (model.labo_team) s += parseInt(model.labo_team);
-        if (model.deve_team) s += parseInt(model.deve_team);
-        if (model.memo_team) s += parseInt(model.memo_team);
-        if (model.amer_team) s += parseInt(model.amer_team);
-        if (model.fran_team) s += parseInt(model.fran_team);
-        if (model.gove_team) s += parseInt(model.gove_team);
-      }
-
-      return s;
-    };
-
-    $scope.sumtotal = function (key) {
-      var s = 0;
-      if (key == 'personal') {
-        s += $scope.sumcolumn('labo_personal') + $scope.sumcolumn('deve_personal') + $scope.sumcolumn('memo_personal');
-        s += $scope.sumcolumn('amer_personal') + $scope.sumcolumn('fran_personal') + $scope.sumcolumn('gove_personal');
-      }
-
-      if (key == 'team') {
-        s += $scope.sumcolumn('labo_team') + $scope.sumcolumn('deve_team') + $scope.sumcolumn('memo_team');
-        s += $scope.sumcolumn('amer_team') + $scope.sumcolumn('fran_team') + $scope.sumcolumn('gove_team');
-      }
-      return s;
-    };
-
-    $scope.formatNumber = function (num, dec) {
-      if (dec === undefined) dec = 2;
-      var r = "" + Math.abs(parseFloat(num).toFixed(dec));
-      var decimals = "";
-      if (r.lastIndexOf(".") != -1) {
-        decimals = "." + r.substring(r.lastIndexOf(".") + 1);
-        decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
-        r = r.substring(0, r.lastIndexOf("."));
-      }
-      for (var i = r.length - 3; i > 0; i -= 3)
-        r = r.substr(0, i) + "," + r.substr(i);
-      return (num < 0 ? "-" : "") + r + decimals;
-    };
+        $scope.deletefile = function (f) {
+            if ($scope.year && f) {
+                swal({
+                    title: "ໝັ້ນໃຈບໍ່?",
+                    text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "ແມ່ນ, ລຶບ",
+                    cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+                            'id': f.id,
+                            '_csrf': $('meta[name="csrf-token"]').attr("content")
+                        }).then(function (r) {
+                            $scope.response = r;
+                            $scope.getreferences();
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
 
 
-    $scope.uploadedFile = function (element) {
-      if (!$scope.issued_no) {
-        $scope.files = null;
-        alert('ກະລຸນາປ້ອນເລກທີ');
-        return;
-      }
-      $scope.issued_date = $('.datepicker').val();
-      if (!$scope.issued_date) {
-        $scope.files = null;
-        alert('ກະລຸນາປ້ອນວັນທີ');
-        return;
-      }
-
-      $scope.$apply(function ($scope) {
-        $scope.files = element.files;
-        $http({
-          url: $scope.url + "upload&year=" + $scope.year.id,
-          method: "POST",
-          processData: false,
-          headers: {'Content-Type': undefined},
-          data: {
-            '_csrf': $('meta[name="csrf-token"]').attr("content"),
-            'issued_no': $scope.issued_no,
-            'issued_date': $scope.issued_date,
-            'issued_by': $scope.issued_by
-          },
-          transformRequest: function (data) {
-            var formData = new FormData();
-            var file = $scope.files[0];
-            formData.append("file_upload", file);
-            angular.forEach(data, function (value, key) {
-              formData.append(key, value);
-            });
-            return formData;
-          }
-        }).success(function (data, status, headers, config) {
-          $scope.getreferences();
-          $scope.issued_date = null;
-          $scope.issued_no = null;
-          $scope.issued_by = null;
-          $("input[name='image'], .datepicker").val("");
-          $scope.status = data.status;
-          $scope.formdata = "";
-        }).error(function (data, status, headers, config) {
-          $scope.response = data;
-          $timeout(function () {
-            $scope.response = null;
-          }, 15000);
-        });
-      });
-    };
-
-    $scope.getreferences = function () {
-      if ($scope.year) {
-        $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-          .then(function (r) {
-            if (r.data)
-              $scope.references = r.data.files;
-          }, function (r) {
-            $scope.response = r;
-            $timeout(function () {
-              $scope.response = null;
-            }, 15000);
-          });
-      }
-    };
-
-    $scope.deletefile = function (f) {
-      if ($scope.year && f) {
-        swal({
-          title: "ໝັ້ນໃຈບໍ່?",
-          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "ແມ່ນ, ລຶບ",
-          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
-          closeOnConfirm: true,
-          closeOnCancel: true
-        }, function (isConfirm) {
-          if (isConfirm) {
-            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-              'id': f.id,
-              '_csrf': $('meta[name="csrf-token"]').attr("content")
-            }).then(function (r) {
-              $scope.response = r;
-              $scope.getreferences();
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
-            }, function (r) {
-              $scope.response = r;
-              $timeout(function () {
-                $scope.response = null;
-              }, 15000);
-            });
-          }
-        });
-      }
-    };
-  });
+                            if (r.status == 200) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'ການລຶບສໍາເລັດ',
+                                    text: r.status,
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                });
+                            }
+                        }, function (r) {
+                            $scope.response = r;
+                            $timeout(function () {
+                                $scope.response = null;
+                            }, 15000);
+                            Swal.fire({
+                                position: 'top-end',
+                                type: 'error',
+                                title: 'ການລຶບບໍ່ສໍາເລັດ',
+                                text: r.status,
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+                        });
+                    }
+                });
+            }
+        };
+    });
 </script>

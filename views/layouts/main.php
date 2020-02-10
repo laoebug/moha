@@ -18,6 +18,7 @@ use yii\widgets\Breadcrumbs;
 
 ?>
 <?php $this->beginPage() ?>
+
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>

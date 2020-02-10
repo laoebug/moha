@@ -20,22 +20,9 @@ use yii\web\Controller;
 /**
  * StatAssociationFoundationController implements the CRUD actions for StatAssociationFoundation model.
  */
-class StatAssociationFoundationController extends Controller
+class StatAssociationFoundationController extends BaseController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+    
 
     /**
      * Lists all StatAssociationFoundation models.
@@ -59,8 +46,11 @@ class StatAssociationFoundationController extends Controller
         }
 
         $user = Yii::$app->user->identity;
+        
         $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
+
+            
         $approverLevels = ApproverLevel::find()
             ->alias('l')
             ->with([
@@ -68,8 +58,9 @@ class StatAssociationFoundationController extends Controller
                     $query->alias('a')
                         ->with([
                             'province' => function (ActiveQuery $query) use ($user) {
+                                
                                 $query = $query->alias('province')
-                                    ->where(['province.deleted' => 0]);
+                                    ->andWhere(['province.deleted' => 0]);
                                 if (!empty ($user->role->province_id)) {
                                     $query = $query->andWhere(['province.id' => $user->role->province_id]);
                                 }
@@ -87,10 +78,14 @@ class StatAssociationFoundationController extends Controller
             ])
             ->where(['l.deleted' => 0])->orderBy('l.position');
 
+            
         if (!empty ($user->role->province_id)) {
             $approverLevels = $approverLevels->andWhere(['code' => 'P']);
         }
+        
         $approverLevels = $approverLevels->asArray()->all();
+        
+        // $approverLevels = ApproverLevel::find()->asArray()->all();
         return json_encode([
             "years" => $years,
             "approverLevels" => $approverLevels,
@@ -116,10 +111,13 @@ class StatAssociationFoundationController extends Controller
         }
 
         $model = StatAssociationFoundation::find()->where(['phiscal_year_id' => $year->id])->one();
+        
         if (!isset($model)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
-            return;
-        }
+            // MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            // return;
+            $models=[];
+        }else{
+        
 
         $models = ApproverLevel::find()
             ->with([
@@ -127,7 +125,7 @@ class StatAssociationFoundationController extends Controller
                     $query->where(['deleted' => 0])
                         ->with([
                             'province' => function (ActiveQuery $query) {
-                                $query->where(['deleted' => 0])
+                                $query->andWhere(['deleted' => 0])
                                     ->orderBy('position');
                             },
                             'ministry' => function (ActiveQuery $query) {
@@ -147,7 +145,10 @@ class StatAssociationFoundationController extends Controller
             ->where(['l.deleted' => 0])
             ->orderBy('l.position, position')
             ->asArray()->all();
-
+        }
+        if(count($models)<=0){
+            $models=[];
+        }        
         return json_encode([
             'models' => $models
         ]);
@@ -253,7 +254,7 @@ class StatAssociationFoundationController extends Controller
                         ->with([
                             'province' => function (ActiveQuery $query) {
                                 $user = Yii::$app->user->identity;
-                                $query = $query->alias('province')->where(['province.deleted' => 0]);
+                                $query = $query->alias('province')->andWhere(['province.deleted' => 0]);
                                 if (!empty ($user->role->province_id)) {
                                     $query = $query->andWhere(['province.id' => $user->role->province_id]);
                                 }
@@ -437,28 +438,6 @@ class StatAssociationFoundationController extends Controller
                 return;
             }
         }
-    }
-
-    public function beforeAction($action)
-    {
-        $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                if (Yii::$app->request->isAjax) {
-                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                    return;
-                } else {
-                    return $this->redirect([
-                        'authentication/notallowed'
-                    ]);
-                }
-            }
-        }
-
-        return parent::beforeAction($action);
     }
 
 }

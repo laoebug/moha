@@ -30,11 +30,13 @@ foreach ($models as $model)
                     <th class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ</th>
                     <th class="text-center" colspan="2"><?= Yii::t('app', 'Born') ?></th>
                     <th class="text-center" colspan="2">ເສຍຊີວິດ</th>
-                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'Married') ?></th>
-                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'Divorced') ?></th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Move-In') ?></th>
+                    <th class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ລາວ</th>
+                    <th class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ຕ່າງປະເທດ</th>
+                    <th class="text-center" rowspan="2">ຢ່າງຮ້າງ ລາວ-ລາວ</th>
+                    <th class="text-center" rowspan="2">ຢ່າງຮ້າງ ລາວ-ຕ່າງປະເທດ</th>
+                    <th class="text-center" colspan="2">ຍ້າຍມາ</th>
                     <th class="text-center" colspan="2">ຍ້າຍອອກໄປ</th>
-                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Real') ?></th>
+                    <th class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ ທີ່ມີໜ້າຕົວຈິງ</th>
                 </tr>
                 <tr>
                     <?php for ($i=0;$i<12;$i++): ?>

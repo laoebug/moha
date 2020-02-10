@@ -16,14 +16,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'province_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'record_status')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'input_id')->textInput() ?>
-
-    <?= $form->field($model, 'input_dt_stamp')->textInput() ?>
-
-    <?= $form->field($model, 'deleted')->textInput() ?>
-
     <?= $form->field($model, 'position')->textInput() ?>
 
     <div class="form-group">

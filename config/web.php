@@ -10,8 +10,11 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'la-LA',
     'sourceLanguage' => 'en-US',
-//     'controllerNamespace' => 'app\controllers',
+    // 'controllerNamespace' => 'app\controllers',
     'components' => [
+        'contorllerAndActionHandle' => [
+            'class' => 'app\components\ContorllerAndActionHandleComponent',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'tFaU8qIgCUkMm0Kajdu7K5a6LyuXHDj8',

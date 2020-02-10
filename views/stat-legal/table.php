@@ -27,26 +27,30 @@
                             <th class="text-center"><?= Yii::t('app', 'Remark')?></th>
                         </tr>
                     </thead>
+                    
                     <tbody>
                     <?php foreach ($models as $t): ?>
+                    <?php if(count($t['statLegalDetails'])>0): ?>
                         <tr>
                             <th class="text-center" colspan="6"><?= $t['name'] ?></th>
                         </tr>
+                        
                         <?php
                         $sum = ['new' => 0, 'improve' => 0];
-                        foreach ($t['legals'] as $index => $legal):
-                            $sum['new'] = $legal['new'];
-                            $sum['improve'] = $legal['improve'];
+                        foreach ($t['statLegalDetails'] as $index => $legalDetail):
+                            $sum['new'] += $legalDetail['new'];
+                            $sum['improve'] += $legalDetail['improve'];
                             ?>
                             <tr>
                                 <td><?=$index+1 ?></td>
-                                <td><?=$legal['name']?></td>
-                                <td class="text-center" style="width: 15%"><?=$legal['new'] == 1?1:''?></td>
-                                <td class="text-center" style="width: 15%"><?=$legal['improve'] == 1?1:''?></td>
-                                <td class="text-center"><?=isset($legal['publish'])?$legal['publish']:'-'?></td>
-                                <td class="text-center"><?=$legal['remark']?></td>
+                                <td><?=$legalDetail['legal_name']?></td>
+                                <td class="text-center" style="width: 15%"><?=$legalDetail['new'] == 1?1:''?></td>
+                                <td class="text-center" style="width: 15%"><?=$legalDetail['improve'] == 1?1:''?></td>
+                                <td class="text-center"><?=isset($legalDetail['publish'])?$legalDetail['publish']:'-'?></td>
+                                <td class="text-center"><?=$legalDetail['remark']?></td>
                             </tr>
                         <?php endforeach; ?>
+                        
                         <tr>
                             <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
                             <th class="text-center"><?=$sum['new']?></th>
@@ -54,7 +58,12 @@
                             <th></th>
                             <th></th>
                         </tr>
+
+                        <?php endif; ?>    
                     <?php endforeach; ?>
+
+                    
+
                     </tbody>
                 </table>
             </div>

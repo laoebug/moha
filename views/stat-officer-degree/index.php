@@ -21,18 +21,17 @@ $titles = [
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="officerDegreeController">
-    <div class="col-sm-12">
-        <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
-        <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()"
-                    ng-options="y.year for y in years"></select>
-        </div>
-        <div class="col-sm-8">
+    <!-- <div class="col-sm-12"> -->
+    <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
+    <div class="col-sm-4">
+        <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+    </div>
+    <!-- <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
                 {{response.statusText}}
             </div>
-        </div>
-    </div>
+        </div> -->
+    <!-- </div> -->
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
             <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>
@@ -46,48 +45,48 @@ $titles = [
                 <div class="col-sm-10">
                     <table class="table table-bordered table-hover">
                         <thead>
-                        <tr>
-                            <?php foreach ($titles as $i => $title): if ($i > 4) break; ?>
+                            <tr>
+                                <?php foreach ($titles as $i => $title): if ($i > 4) break; ?>
                                 <td class="text-center" colspan="2"><?= $title ?></td>
-                            <?php endforeach; ?>
-                        </tr>
+                                <?php endforeach; ?>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <?php foreach ($titles as $i => $title): if ($i > 4) break; ?>
-                                <td class="text-center"><?= Yii::t('app', 'T') ?></td>
+                            <tr>
+                                <?php foreach ($titles as $i => $title): if ($i > 4) break; ?>
+                                    <td class="text-center"><?= Yii::t('app', 'T') ?></td>
                                 <td class="text-center"><?= Yii::t('app', 'W') ?></td>
-                            <?php endforeach; ?>
-                        </tr>
-                        <tr>
-                            <td ng-repeat="c in cols" ng-if="$index < 10">
+                                <?php endforeach; ?>
+                            </tr>
+                            <tr>
+                                <td ng-repeat="c in cols" ng-if="$index < 10">
                                 <input type="number" class="form-control" min="0" ng-model="model[c.col]">
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="col-sm-12">
                     <table class="table table-bordered table-hover">
                         <thead>
-                        <tr>
-                            <?php foreach ($titles as $i => $title): if ($i < 5) continue; ?>
+                            <tr>
+                                <?php foreach ($titles as $i => $title): if ($i < 5) continue; ?>
                                 <td class="text-center" colspan="2"><?= $title ?></td>
-                            <?php endforeach; ?>
-                        </tr>
+                                <?php endforeach; ?>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <?php foreach ($titles as $i => $title): if ($i < 5) continue; ?>
-                                <td class="text-center"><?= Yii::t('app', 'T') ?></td>
+                            <tr>
+                                <?php foreach ($titles as $i => $title): if ($i < 5) continue; ?>
+                                    <td class="text-center"><?= Yii::t('app', 'T') ?></td>
                                 <td class="text-center"><?= Yii::t('app', 'W') ?></td>
-                            <?php endforeach; ?>
-                        </tr>
-                        <tr>
-                            <td ng-repeat="c in cols" ng-if="$index >= 10">
+                                <?php endforeach; ?>
+                            </tr>
+                            <tr>
+                                <td ng-repeat="c in cols" ng-if="$index >= 10">
                                 <input type="number" class="form-control" min="0" ng-model="model[c.col]">
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -111,41 +110,39 @@ $titles = [
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?> {{year.year}}</h3>
                             <p>
-                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                            class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i></a>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th class="text-center" rowspan="3">ລ/ດ</th>
-                                <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນຕ່າງໆ</th>
-                                <th class="text-center" rowspan="2" colspan="2">ຈຳນວນລັດຖະກອນ ທັງໝົດ</th>
-                                <th class="text-center" colspan="16">ຊັ້ນວິຊາສະເພາະ</th>
-                                <th class="text-center" colspan="6">ລັດຖະກອນທີ່ບໍ່ມີຊັ້ນວິຊາສະເພາະ</th>
-                            </tr>
-                            <tr>
-                                <?php foreach ($titles as $title): ?>
+                                    <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນຕ່າງໆ</th>
+                                    <th class="text-center" rowspan="2" colspan="2">ຈຳນວນລັດຖະກອນ ທັງໝົດ</th>
+                                    <th class="text-center" colspan="16">ຊັ້ນວິຊາສະເພາະ</th>
+                                    <th class="text-center" colspan="6">ລັດຖະກອນທີ່ບໍ່ມີຊັ້ນວິຊາສະເພາະ</th>
+                                </tr>
+                                <tr>
+                                    <?php foreach ($titles as $title): ?>
                                     <td class="text-center" colspan="2"><?= $title ?></td>
-                                <?php endforeach; ?>
-                            </tr>
-                            <tr>
-                                <th class="text-center"><?= Yii::t('app', 'T') ?></th>
-                                <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                                <?php foreach ($titles as $title): ?>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr>
                                     <th class="text-center"><?= Yii::t('app', 'T') ?></th>
                                     <th class="text-center"><?= Yii::t('app', 'W') ?></th>
-                                <?php endforeach; ?>
+                                    <?php foreach ($titles as $title): ?>
+                                    <th class="text-center"><?= Yii::t('app', 'T') ?></th>
+                                    <th class="text-center"><?= Yii::t('app', 'W') ?></th>
+                                    <?php endforeach; ?>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-repeat="model in models">
-                                <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center">{{model.name}}</td>
-                                <td class="text-center">{{sum(model, 'total') | number | dash}}</td>
-                                <td class="text-center">{{sum(model, 'women') | number | dash}}</td>
+                                    <td class="text-center">{{$index + 1}}</td>
+                                    <td class="text-center">{{model.name}}</td>
+                                    <td class="text-center">{{sum(model, 'total') | number | dash}}</td>
+                                    <td class="text-center">{{sum(model, 'women') | number | dash}}</td>
                                 <td class="text-center" ng-repeat="c in cols">{{model[c.col] | number | dash}}</td>
                             </tr>
                             </tbody>
@@ -160,8 +157,7 @@ $titles = [
                         </div>
                         <div class="col-sm-3">
                             <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
-                                   type="text">
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
                         </div>
                         <div class="col-sm-3">
                             <label>ອອກໂດຍ</label>
@@ -170,37 +166,36 @@ $titles = [
 
                         <div class="col-sm-3">
                             <label>ເລືອກໄຟລ໌</label>
-                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"
-                                   class="form-control" required>
+                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);" class="form-control" required>
                         </div>
 
                         <div class="col-sm-12" ng-if="references">
                             <div class="card">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">ວັນທີອັບໂຫຼດ</th>
-                                        <th class="text-center">ຊື່</th>
-                                        <th class="text-center">ເລກທີ</th>
-                                        <th class="text-center">ລົງວັນທີ</th>
-                                        <th class="text-center">ອອກໂດຍ</th>
-                                        <th class="text-center">ລຶບ</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">ວັນທີອັບໂຫຼດ</th>
+                                            <th class="text-center">ຊື່</th>
+                                            <th class="text-center">ເລກທີ</th>
+                                            <th class="text-center">ລົງວັນທີ</th>
+                                            <th class="text-center">ອອກໂດຍ</th>
+                                            <th class="text-center">ລຶບ</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="f in references">
-                                        <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
-                                        </td>
-                                        <td class="text-center">{{f.issued_no}}</td>
-                                        <td class="text-center">{{f.issued_date | date}}</td>
-                                        <td class="text-center">{{f.issued_by}}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="f in references">
+                                            <td class="text-center">{{f.upload_date}}</td>
+                                            <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                            </td>
+                                            <td class="text-center">{{f.issued_no}}</td>
+                                            <td class="text-center">{{f.issued_date | date}}</td>
+                                            <td class="text-center">{{f.issued_by}}</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -212,18 +207,19 @@ $titles = [
         </div>
     </div>
 </div>
+<script type="text/javascript" src="js/sweetalert2.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/moment.js"></script>
 <script type="text/javascript" src="js/datetimepicker.js"></script>
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
     var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-    app.filter('dash', function () {
-        return function (input) {
+    app.filter('dash', function() {
+        return function(input) {
             return input ? input : '-';
         };
     });
-    app.controller('officerDegreeController', function ($scope, $http, $sce, $timeout) {
+    app.controller('officerDegreeController', function($scope, $http, $sce, $timeout) {
         $scope.url = 'index.php?r=stat-officer-degree/';
         $scope.mode = 'read';
         $scope.model = {};
@@ -253,18 +249,18 @@ $titles = [
             {col: 'primary_women'},
         ];
 
-        $scope.changemode = function () {
+        $scope.changemode = function() {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
 
         $http.get($scope.url + 'get').then(
-            function (r) {
+            function(r) {
                 $scope.years = r.data.years;
                 $scope.orgGroups = r.data.orgGroups;
 
-            }, function (r) {
+            }, function(r) {
                 $scope.response = r;
-                $timeout(function () {
+                $timeout(function() {
                     $scope.response = null;
                 }, 15000);
             });
@@ -291,16 +287,16 @@ $titles = [
                     });
         };
 
-        $scope.enquiry = function () {
+        $scope.enquiry = function() {
             $scope.models = null;
             if ($scope.year) {
                 $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-                    .then(function (r) {
+                    .then(function(r) {
                         $scope.models = r.data.models;
                         $scope.getreferences();
-                    }, function (r) {
+                    }, function(r) {
                         $scope.response = r;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.response = null;
                         }, 15000);
                     });
@@ -308,29 +304,51 @@ $titles = [
             }
         };
 
-        $scope.save = function () {
+        $scope.save = function() {
             if ($scope.year && $scope.model) {
                 $scope.model.organisation_group_id = $scope.model.orgGroup.id;
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
                     'Model': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function (r) {
+                }).then(function(r) {
                     $scope.response = r;
                     $scope.model = null;
                     $scope.enquiry();
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
-                }, function (r) {
+
+                    if (r.status == 200) {
+                        Swal.fire({
+                            position: 'top-end',
+                            type: 'success',
+                            title: 'ການບັນທຶກສໍາເລັດ',
+                            text: r.status,
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                    }
+
+                }, function(r) {
                     $scope.response = r;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
+
+                    Swal.fire({
+                        position: 'top-end',
+                        type: 'error',
+                        title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
+                        text: r.status,
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
                 });
             }
         };
 
-        $scope.formatNumber = function (num, dec) {
+        $scope.formatNumber = function(num, dec) {
             if (dec === undefined) dec = 2;
             var r = "" + Math.abs(parseFloat(num).toFixed(dec));
             var decimals = "";
@@ -344,7 +362,7 @@ $titles = [
             return (num < 0 ? "-" : "") + r + decimals;
         };
 
-        $scope.uploadedFile = function (element) {
+        $scope.uploadedFile = function(element) {
             if (!$scope.issued_no) {
                 $scope.files = null;
                 alert('ກະລຸນາປ້ອນເລກທີ');
@@ -357,29 +375,31 @@ $titles = [
                 return;
             }
 
-            $scope.$apply(function ($scope) {
+            $scope.$apply(function($scope) {
                 $scope.files = element.files;
                 $http({
                     url: $scope.url + "upload&year=" + $scope.year.id,
                     method: "POST",
                     processData: false,
-                    headers: {'Content-Type': undefined},
+                    headers: {
+                        'Content-Type': undefined
+                    },
                     data: {
                         '_csrf': $('meta[name="csrf-token"]').attr("content"),
                         'issued_no': $scope.issued_no,
                         'issued_date': $scope.issued_date,
                         'issued_by': $scope.issued_by
                     },
-                    transformRequest: function (data) {
+                    transformRequest: function(data) {
                         var formData = new FormData();
                         var file = $scope.files[0];
                         formData.append("file_upload", file);
-                        angular.forEach(data, function (value, key) {
+                        angular.forEach(data, function(value, key) {
                             formData.append(key, value);
                         });
                         return formData;
                     }
-                }).success(function (data, status, headers, config) {
+                }).success(function(data, status, headers, config) {
                     $scope.getreferences();
                     $scope.issued_date = null;
                     $scope.issued_no = null;
@@ -387,31 +407,31 @@ $titles = [
                     $("input[name='image'], #issued_date").val("");
                     $scope.status = data.status;
                     $scope.formdata = "";
-                }).error(function (data, status, headers, config) {
+                }).error(function(data, status, headers, config) {
                     $scope.response = data;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
                 });
             });
         };
 
-        $scope.getreferences = function () {
+        $scope.getreferences = function() {
             if ($scope.year) {
                 $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-                    .then(function (r) {
+                    .then(function(r) {
                         if (r.data)
                             $scope.references = r.data.files;
-                    }, function (r) {
+                    }, function(r) {
                         $scope.response = r;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.response = null;
                         }, 15000);
                     });
             }
         };
 
-        $scope.deletefile = function (f) {
+        $scope.deletefile = function(f) {
             if ($scope.year && f) {
                 swal({
                     title: "ໝັ້ນໃຈບໍ່?",
@@ -422,22 +442,44 @@ $titles = [
                     cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
                     closeOnConfirm: true,
                     closeOnCancel: true
-                }, function (isConfirm) {
+                }, function(isConfirm) {
                     if (isConfirm) {
                         $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
                             'id': f.id,
                             '_csrf': $('meta[name="csrf-token"]').attr("content")
-                        }).then(function (r) {
+                        }).then(function(r) {
                             $scope.response = r;
                             $scope.getreferences();
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
-                        }, function (r) {
+
+                            if (r.status == 200) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'ການລຶບສໍາເລັດ',
+                                    text: r.status,
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                });
+                            }
+
+                        }, function(r) {
                             $scope.response = r;
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
+
+                            Swal.fire({
+                                position: 'top-end',
+                                type: 'error',
+                                title: 'ການລຶບບໍ່ສໍາເລັດ',
+                                text: r.status,
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+
                         });
                     }
                 });

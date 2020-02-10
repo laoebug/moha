@@ -15,9 +15,12 @@ use yii\db\ActiveRecord;
  * @property int $position
  *
  * @property Legal[] $legals
+ * @property StatLegalDetail[] $statLegalDetails
+ *
  */
 class LegalType extends ActiveRecord
 {
+    // public $stat_legal_details=[];
     /**
      * @inheritdoc
      */
@@ -57,5 +60,23 @@ class LegalType extends ActiveRecord
     public function getLegals()
     {
         return $this->hasMany(Legal::className(), ['legal_type_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatLegalDetails()
+    {
+        return $this->hasMany(StatLegalDetail::className(), ['legal_type_id' => 'id']);
+    }
+
+
+    /**
+     * @inheritdoc
+     * @return LegalTypeQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new LegalTypeQuery(get_called_class());
     }
 }

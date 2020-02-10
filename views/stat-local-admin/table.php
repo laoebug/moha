@@ -42,7 +42,7 @@ if (isset($models))
 </style>
 <div class="row">
     <div class="col-sm-12">
-        <div class="card">
+        <div class="card" style="width:120vw;">
             <div class="card-title-w-btn ">
                 <h3 class="title">
                     ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ

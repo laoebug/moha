@@ -49,7 +49,7 @@
                     <tr>
                         <th class="text-center" style="width: 20px"><?= Yii::t('app', 'No.') ?></th>
                         <th class="text-center"><?= Yii::t('app', 'Ministry') ?></th>
-                        <?php foreach (['Office', 'Department', 'Institute', 'Center'] as $item): ?>
+                        <?php foreach (['Office', 'Department', 'Center','Institute'] as $item): ?>
                         <th class="text-center" style="width: 10%"><?= Yii::t('app', $item) ?></th>
                         <?php endforeach; ?>
                         <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
@@ -58,7 +58,7 @@
                     <tbody>
                     <?php
                     $i = 0;
-                    $sum = ['office'=>0,'department'=>0,'insitute'=>0,'center'=>0];
+                    $sum = ['office'=>0,'department'=>0,'center'=>0,'insitute'=>0];
                         foreach ($ministries as $b): ?>
                             <tr>
                                 <td><?= ++$i ?></td>
@@ -68,7 +68,7 @@
                                     foreach ($model->statGovermentUnitDetails as $detail) {
                                         if ($detail->ministry_id == $b->id) {
                                             $isnull = false;
-                                            foreach (['office', 'department', 'insitute', 'center'] as $item) {
+                                            foreach (['office', 'department', 'center', 'insitute'] as $item) {
                                                 $sum[$item] += isset($detail[$item])?$detail[$item]:0;
                                                 echo '<td class="text-center">';
                                                 echo (isset($detail[$item])?$detail[$item]:"");
@@ -87,7 +87,7 @@
                     <tfoot>
                     <tr>
                         <th colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                        <?php foreach (['office', 'department', 'insitute', 'center'] as $level): ?>
+                        <?php foreach (['office', 'department', 'center', 'insitute'] as $level): ?>
                             <th class="text-center"><?=isset($sum[$level])?$sum[$level]:0?></th>
                         <?php endforeach;  ?>
                         <th></th>

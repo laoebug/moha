@@ -61,15 +61,15 @@
                                 if(strpos($key, 'women'))
                                     $t['women'] += $s;
                             }
-                            echo ($t['total']>0)? number_format($t['total']): "";
+                            echo number_format($t['total']);
                             ?>
                         </th>
                         <th class="text-center">
-                            <?= ($t['total']>0)? number_format($t['total']) : "" ?>
+                            <?= number_format($t['total']) ?>
                         </th>
                         </th>
                         <?php foreach ($sum as $s): ?>
-                            <th class="text-center"><?= ($s>0)? $s : "" ?></th>
+                            <th class="text-center"><?= $s ?></th>
                         <?php endforeach; ?>
                     </tr>
                     </thead>
@@ -84,10 +84,10 @@
                                     if(strpos($col, 'total')) $t['total'] += $model[$col];
                                     if(strpos($col, 'women')) $t['women'] += $model[$col];
                                 } ?>
-                            <td class="text-center"><?= ($t['total']>0) ? number_format($t['total']): "" ?></td>
-                            <td class="text-center"><?= ($t['women']>0) ? number_format($t['women']) : "" ?></td>
+                            <td class="text-center"><?= number_format($t['total']) ?></td>
+                            <td class="text-center"><?= number_format($t['women']) ?></td>
                             <?php foreach ($cols as $col): ?>
-                                <td class="text-center"><?= ($model[$col]>0) ? number_format($model[$col]) : "" ?></td>
+                                <td class="text-center"><?= number_format($model[$col]) ?></td>
                             <?php endforeach; ?>
                         </tr>
                     <?php endforeach; ?>

@@ -83,7 +83,8 @@ class Ministry extends ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'remark' => Yii::t('app', 'Remark'),
             'input_dt_stamp' => Yii::t('app', 'Input Dt Stamp'),
-            'equal' => Yii::t('app', 'Equal'),
+            'equal' => Yii::t('app', 'equal ministry'),
+            'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
             'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
         ];
     }

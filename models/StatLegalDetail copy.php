@@ -3,29 +3,28 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_legal_detail".
  *
- * @property int $id
- * @property int $new
+ * @property integer $id
+ * @property integer $new
  * @property string $remark
- * @property int $improve
+ * @property integer $improve
  * @property string $publish
- * @property int $stat_legal_id
- * @property int $legal_id
  * @property string $legal_name
- * @property int $legal_type_id
+ * @property integer $stat_legal_id
+ * @property integer $legal_id
  *
+ * @property Legal $legal
  * @property StatLegal $statLegal
  */
-class StatLegalDetail extends ActiveRecord
+class StatLegalDetail extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
+    public $legal_name;
     public static function tableName()
     {
         return 'stat_legal_detail';
@@ -37,10 +36,11 @@ class StatLegalDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['new', 'improve', 'stat_legal_id', 'legal_id', 'legal_type_id'], 'integer'],
-            [['remark', 'legal_name'], 'string'],
-            [['stat_legal_id'], 'required'],
+            [['new', 'improve', 'stat_legal_id', 'legal_id'], 'integer'],
+            [['remark'], 'string'],
+            [['stat_legal_id', 'legal_id'],  'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
             [['publish'], 'string', 'max' => 255],
+            [['legal_id'], 'exist', 'skipOnError' => true, 'targetClass' => Legal::className(), 'targetAttribute' => ['legal_id' => 'id']],
             [['stat_legal_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatLegal::className(), 'targetAttribute' => ['stat_legal_id' => 'id']],
         ];
     }
@@ -51,22 +51,20 @@ class StatLegalDetail extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'new' => 'New',
-            'remark' => 'Remark',
-            'improve' => 'Improve',
-            'publish' => 'Publish',
-            'stat_legal_id' => 'Stat Legal ID',
-            'legal_id' => 'Legal ID',
-            'legal_name' => 'Legal Name',
-            'legal_type_id' => 'Legal Type ID',
+            'id' => Yii::t('app', 'ID'),
+            'new' => Yii::t('app', 'New'),
+            'remark' => Yii::t('app', 'Remark'),
+            'improve' => Yii::t('app', 'Improve'),
+            'publish' => Yii::t('app', 'Publish'),
+            'stat_legal_id' => Yii::t('app', 'Stat Legal ID'),
+            'legal_id' => Yii::t('app', 'Legal ID'),
             'legal_name' => Yii::t('app', 'Legal Name'),
-            'legal_type_id' => Yii::t('app', 'Legal Type ID'),
+            
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getLegal()
     {
@@ -74,7 +72,7 @@ class StatLegalDetail extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getStatLegal()
     {

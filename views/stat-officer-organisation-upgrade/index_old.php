@@ -202,10 +202,7 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານ ລ
                   </th>
                   </th>
                   <?php foreach ($cols as $col) : ?>
-                    <th class="text-center">
-                      {{ sum('<?= $col ?>')>0 ? formatNumber(sum('<?= $col ?>')) : ' '}}
-                      
-                    </th>
+                    <th class="text-center">{{formatNumber(sum('<?= $col ?>'))}}</th>
                   <?php endforeach; ?>
                 </tr>
               </thead>
@@ -213,23 +210,10 @@ $this->title = "ສະຖິຕິສັງລວມພະນັກງານ ລ
                 <tr ng-repeat="m in models">
                   <td class="text-center">{{$index + 1}}</td>
                   <td>{{m.name}}</td>
-                  <!-- <td class="text-center">{{formatNumber(sumtotal(m)) | number | dash}}</td> -->
-                  <td class="text-center">
-                    <!-- {{formatNumber(sumtotal(m)) | number }} -->
-                    {{sumtotal(m)>0 ? formatNumber(sumtotal(m)) : ' '}}
-                  </td>
-                  <!-- <td class="text-center">{{formatNumber(sumwomen(m)) | number | dash}}</td> -->
-                  <td class="text-center">
-                    <!-- {{formatNumber(sumwomen(m)) | number}} -->
-                    {{sumwomen(m)>0 ? formatNumber(sumwomen(m)) : ' '}}
-                  </td>
+                  <td class="text-center">{{formatNumber(sumtotal(m)) | number | dash}}</td>
+                  <td class="text-center">{{formatNumber(sumwomen(m)) | number | dash}}</td>
                   <?php foreach ($cols as $col) : ?>
-                    <!-- <td class="text-center">{{formatNumber(m.<?= $col ?> )| number | dash}}</td> -->
-                  
-                    <td class="text-center">
-                      <!-- {{formatNumber(m.<?php //echo  $col ; ?> )| number}} -->
-                      {{m.<?= $col ?> >0 ? formatNumber(m.<?= $col ?> ) : ' '}}
-                    </td>
+                    <td class="text-center">{{formatNumber(m.<?= $col ?> )| number | dash}}</td>
                   <?php endforeach; ?>
                 </tr>
               </tbody>

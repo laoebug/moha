@@ -64,15 +64,15 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'firstname', 'lastname', 'tel', 'role_id', 'status'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['username', 'password', 'firstname', 'lastname', 'tel', 'role_id', 'status'], 'required', 'message' => Yii::t('app', 'Please enter a value for') . Yii::t('app', '{attribute}')],
             [['deleted', 'role_id', 'user_id'], 'integer'],
             [['input_dt_stamp'], 'safe'],
             [['username', 'tel'], 'string', 'max' => 50],
             [['password', 'email'], 'string', 'max' => 100],
             [['firstname', 'lastname'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],        	//	
-            [['username'], 'unique','targetAttribute' => ['username'],'message'=> Yii::t('app','{attribute}'). '  "{value}" ' . Yii::t('app','has already been taken.')],        	
-        	//[['username'], 'unique'],        	//
+            [['status'], 'string', 'max' => 1],            //	
+            [['username'], 'unique', 'targetAttribute' => ['username'], 'message' => Yii::t('app', '{attribute}') . '  "{value}" ' . Yii::t('app', 'has already been taken.')],
+            //[['username'], 'unique'],        	//
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             //[['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
@@ -288,5 +288,23 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasOne(Province::className(), ['id' => 'province_id']);
     }
 
-
+    
+    public static function isAllowedRole()
+    {
+        
+        $allowedRole=false;    
+        
+        $sql = "select * from role_has_action rha , action ac, user usr
+        where rha.action_id=ac.id 
+        and usr.role_id= rha.role_id
+        and rha.role_id=:role_id and ac.class_name=:controller_id
+        and ac.method=:action_id and usr.id=:user_id";        
+        $params=[":role_id"=>Yii::$app->user->identity->role_id,":controller_id"=>Yii::$app->controller->id,":action_id"=>Yii::$app->controller->action->id,":user_id"=>Yii::$app->user->identity->id];
+        
+        $roleHasAction = RoleHasAction::findBySql($sql,$params)->one();        
+        if(isset($roleHasAction->action_id)){                        
+            $allowedRole = true;
+        }
+        return $allowedRole;
+    }
 }

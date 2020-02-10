@@ -137,6 +137,7 @@ class NoticeController extends Controller
 //        $this->findModel($id)->delete();
         $notice = $this->findModel($id);
         $notice->deleted = 1;
+        $notice->show = 0;
         if($notice->save())
             Yii::$app->session->setFlash('success', 'ສຳເລັດ');
         else

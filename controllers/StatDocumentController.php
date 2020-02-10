@@ -142,6 +142,7 @@ class StatDocumentController extends Controller
 
     public function actionSave($year)
     {
+        
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
@@ -166,8 +167,9 @@ class StatDocumentController extends Controller
                 $model->last_update = date('Y-m-d H:i:s');
                 if (!$model->save()) throw new Exception(json_encode($model->errors));
 
-                $query = StatDocumentDetail::find()
-                    ->where(['stat_document_id' => $model->id]);
+                $query = StatDocumentDetail::find()->alias('d')
+                ->join('join', 'stat_document s', 's.id = d.stat_document_id and s.phiscal_year_id=:year', [':year' => $year->id]);
+
 
                 if ($post['Model']['section']['code'] == 'm' && isset($post['Model']['ministry']['id']))
                     $query->where([
@@ -207,6 +209,7 @@ class StatDocumentController extends Controller
 
                 $detail->attributes = $post['Model'];
                 if (!$detail->save()) throw new Exception(json_encode($detail->errors));
+
                 $transaction->commit();
             } catch (Exception $exception) {
                 $transaction->rollBack();
@@ -214,7 +217,9 @@ class StatDocumentController extends Controller
                 return;
             }
 
+           
         }
+        return json_encode($year);
     }
 
     public function actionPrint($year)
