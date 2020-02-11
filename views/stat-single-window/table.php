@@ -7,17 +7,21 @@
  */
 
 $sum = ['department' => 0, 'province' => 0, 'district' => 0];
-foreach ($ministries as $m) $sum['department'] += $m['department'];
-foreach ($provinces as $m) {
-    $sum['province'] += $m['province'];
-    $sum['district'] += $m['district'];
-}
+if (isset($ministries))
+    foreach ($ministries as $m) $sum['department'] += $m['department'];
+
+if (isset($provinces))
+    foreach ($provinces as $m) {
+        $sum['province'] += $m['province'];
+        $sum['district'] += $m['district'];
+    }
 ?>
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title">ສະຖິຕິອົງການບໍຫານລັດທີ່ໄດ້ຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ (<?= $year->year ?>
+                <h3 class="title">ສະຖິຕິອົງການບໍຫານລັດທີ່ໄດ້ຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ
+                    (<?= isset($year) ? $year->year : '' ?>
                     )</h3>
             </div>
             <div class="card-body">
