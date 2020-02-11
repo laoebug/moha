@@ -4,11 +4,8 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມພັດທະນາ ແລະ ການບໍລິຫານລັດ'), 'url' => ['index']];
-$this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ';
-// $this->params['breadcrumbs'][] = $this->title;
+$this->title = 'ສະຖິຕິອົງການບໍຫານລັດທີ່ໄດ້ຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ';
 ?>
-
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="singleGatewayController">
     <div class="col-sm-12">
@@ -30,33 +27,48 @@ $this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປ�
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="row">
-                    <div class="col-sm-3">
-                        <label for=""><?= Yii::t('app', 'Ministry') ?></label>
+                    <div class="col-sm-2">
+                        <label for="">ຂັ້ນ</label>
+                        <select ng-change="inquiry()" class="form-control" ng-model="selected.type"
+                                ng-options="m.name for m in levels">
+                        </select>
+                    </div>
+                    <div class="col-sm-2" ng-if="selected.type.id === 'ministry'">
+                        <label for="">ກະຊວງ</label>
                         <select ng-change="inquiry()" class="form-control" ng-model="selected.ministry"
                                 ng-options="m.name for m in ministries">
                         </select>
                     </div>
-                    <div class="col-sm-3">
-                        <label for=""><?= Yii::t('app', 'Start Date') ?></label>
-                        <input class="form-control datepicker" data-ng-model="$parent.selected.start_date" type="text">
+                    <div class="col-sm-2" ng-if="selected.type.id === 'province'">
+                        <label for="">ແຂວງ</label>
+                        <select ng-change="inquiry()" class="form-control" ng-model="selected.province"
+                                ng-options="m.province_name for m in provinces">
+                        </select>
                     </div>
-                    <div class="col-sm-3">
-                        <label for=""><?= Yii::t('app', 'Service Unit Name') ?></label>
+                    <div class="col-sm-2">
+                        <label for="">ຊື່ຈຸດບໍລິການຜ່ານປະຕູດຽວ</label>
                         <input type="text" class="form-control" ng-model="selected.name">
                     </div>
-                    <div class="col-sm-3">
-                        <label for=""><?= Yii::t('app', 'Remark') ?></label>
-                        <input type="text" class="form-control" ng-model="selected.remark">
+                    <div class="col-sm-2">
+                        <label for="">ປີຈັດຕັ້ງປະຕິບັດ</label>
+                        <input class="form-control" ng-model="selected.year" type="text">
+                    </div>
+                    <div class="col-sm-2" ng-if="selected.type.id === 'ministry'">
+                        <label for="">ຂັ້ນກົມ</label>
+                        <input type="number" class="form-control" ng-model="selected.total_department">
+                    </div>
+                    <div class="col-sm-2" ng-if="selected.type.id === 'province'">
+                        <label for="">ຂັ້ນແຂວງ</label>
+                        <input type="number" class="form-control" ng-model="selected.total_province">
+                    </div>
+                    <div class="col-sm-2" ng-if="selected.province.id">
+                        <label for="">ຂັ້ນເມືອງ</label>
+                        <input type="number" class="form-control" ng-model="selected.total_district">
                     </div>
                 </div>
                 <div class="col-sm-2" style="margin-top: 2em">
                     <button type="button" class="btn btn-info col-sm-12" ng-click="save()">
                         <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
-                    </button>
-                </div>
-                <div class="col-sm-2" style="margin-top: 2em">
-                    <button ng-if="selected" type="button" class="btn btn-danger col-sm-12" ng-click="delete()">
-                        <i class="fa fa-trash"></i> <?= Yii::t('app', 'Delete') ?>
                     </button>
                 </div>
             </div>
@@ -75,10 +87,10 @@ $this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປ�
                             <h3 class="title"><?= $this->title ?> ({{year.year}})</h3>
                             <p class="hidden-print">
                                 <a class="btn btn-default" target="_blank"
-                                   href="index.php?r=stat-single-gateway-implementation/print&year={{year.id}}"><i
+                                   href="index.php?r=stat-single-window/print&year={{year.id}}"><i
                                             class="fa fa-print fa-2x"></i></a>
                                 <a class="btn btn-info" target="_blank"
-                                   href="index.php?r=stat-single-gateway-implementation/download&year={{year.id}}"><i
+                                   href="index.php?r=stat-single-window/download&year={{year.id}}"><i
                                             class="fa fa-download fa-2x"></i></a>
                             </p>
                         </div>
@@ -86,20 +98,61 @@ $this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປ�
                             <table class="table table-responsive table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th style="width: 10px"><?= Yii::t('app', 'No.') ?></th>
-                                    <th class="text-center"><?= Yii::t('app', 'Ministry') ?></th>
-                                    <th class="text-center"><?= Yii::t('app', 'Start Date') ?></th>
-                                    <th class="text-center">ຊື່ໜ່ວຍງານ</th>
-                                    <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
+                                    <th colspan="6">ຂັ້ນສູນກາງ ແລະ ຂັ້ນທ້ອງຖິ່ນ</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="6">I. ຂັ້ນສູນກາງ</th>
+                                </tr>
+                                <tr>
+                                    <th style="width: 10px">ລ/ດ</th>
+                                    <th class="text-center">ຊື່ກະຊວງ</th>
+                                    <th class="text-center" colspan="2">ຂັ້ນກົມ</th>
+                                    <th class="text-center">ຊື່ຈຸດບໍລິການຜ່ານປະຕູດຽວ</th>
+                                    <th class="text-center">ປີຈັດຕັ້ງປະຕິບັດ</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr ng-repeat="m in models" style="cursor:pointer;" ng-click="select(m)">
+                                <tbody ng-if="models.ministries">
+                                <tr ng-repeat="m in models.ministries" style="cursor:pointer;">
                                     <td>{{$index + 1}}</td>
                                     <td>{{m.name}}</td>
-                                    <td class="text-center">{{m.start_date | dash}}</td>
+                                    <td class="text-center" colspan="2">{{m.department | dash}}</td>
                                     <td class="text-center">{{m.servicename | dash}}</td>
-                                    <td>{{m.remark}}</td>
+                                    <td class="text-center">{{m.year | dash}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center" colspan="2">ລວມ</th>
+                                    <th colspan="2" class="text-center">{{sum(models.ministries, 'department') | number
+                                        | dash}}
+                                    </th>
+                                </tr>
+                                </tbody>
+
+                                <thead>
+                                <tr>
+                                    <th colspan="6">II. ຂັ້ນທ້ອງຖິ່ນ</th>
+                                </tr>
+                                <tr>
+                                    <th style="width: 10px">ລ/ດ</th>
+                                    <th class="text-center">ຊື່ແຂວງ</th>
+                                    <th class="text-center">ຂັ້ນແຂວງ (ພະແນກ)</th>
+                                    <th class="text-center">ຂັ້ນເມືອງ</th>
+                                    <th class="text-center">ຊື່ຈຸດບໍລິການຜ່ານປະຕູດຽວ</th>
+                                    <th class="text-center">ປີຈັດຕັ້ງປະຕິບັດ</th>
+                                </tr>
+                                </thead>
+                                <tbody ng-if="models.provinces">
+                                <tr ng-repeat="m in models.provinces" style="cursor:pointer;">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{m.province_name}}</td>
+                                    <td class="text-center">{{m.province | number | dash}}</td>
+                                    <td class="text-center">{{m.district | number | dash}}</td>
+                                    <td class="text-center">{{m.servicename | dash}}</td>
+                                    <td class="text-center">{{m.year | dash}}</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center" colspan="2">ລວມ</th>
+                                    <th class="text-center">{{sum(models.provinces, 'province') | number | dash}}</th>
+                                    <th class="text-center">{{sum(models.provinces, 'district') | number | dash}}</th>
                                 </tr>
                                 </tbody>
                             </table>
@@ -125,8 +178,10 @@ $this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປ�
         };
     });
     app.controller('singleGatewayController', function ($scope, $http, $sce, $timeout) {
-        $scope.url = 'index.php?r=stat-single-gateway-implementation/';
+        $scope.url = 'index.php?r=stat-single-window/';
         $scope.mode = 'read';
+        $scope.selected = {type: 'ministry'};
+        $scope.levels = [{id: 'ministry', name: 'ຂັ້ນສູນກາງ'}, {id: 'province', name: 'ຂັ້ນທ້ອງຖິ່ນ'}];
         $scope.changemode = function () {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
@@ -134,12 +189,23 @@ $this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປ�
             .then(function (r) {
                 $scope.years = r.data.years;
                 $scope.ministries = r.data.ministries;
+                $scope.provinces = r.data.provinces;
             }, function (r) {
                 $scope.response = r;
                 $timeout(function () {
                     $scope.response = null;
                 }, 15000);
             });
+        $scope.sum = function (items, key) {
+            var sum = 0;
+            if (items)
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i][key]) {
+                        sum += parseInt(items[i][key]);
+                    }
+                }
+            return sum;
+        };
 
         $scope.enquiry = function () {
             $scope.selected = null;
@@ -157,43 +223,28 @@ $this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປ�
         };
 
         $scope.inquiry = function () {
-            if ($scope.selected.ministry)
-                $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&ministry=' + $scope.selected.ministry.id)
-                    .then(function (r) {
-                        if (r.data.model)
-                            if (r.data.model.start_date)
-                                $(".datepicker").val(r.data.model.start_date);
-                            else
-                                $(".datepicker").val("");
-                        else
-                            $(".datepicker").val("");
-
-                        if (r.data.model) {
-                            $scope.selected.name = r.data.model.name;
-                            $scope.selected.remark = r.data.model.remark;
-                        } else {
-                            $scope.selected.name = null;
-                            $scope.selected.remark = null;
-                            $scope.selected.start_date = null;
-                        }
-                    }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
-        };
-
-        $scope.select = function (m) {
-            $scope.selected = {};
-            for (var i in $scope.ministries) {
-                var ministry = $scope.ministries[i];
-                if (m.id === ministry.id) {
-                    $scope.selected.ministry = ministry;
-                    $scope.inquiry();
-                    break;
-                }
-            }
+            $scope.selected.name = null;
+            $scope.selected.year = null;
+            $scope.selected.total_department = null;
+            $scope.selected.total_province = null;
+            $scope.selected.total_district = null;
+            if ($scope.selected.type.id === 'ministry') $scope.selected.province = null;
+            else $scope.selected.ministry = null;
+            $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&' + $scope.selected.type.id + '=' + $scope.selected[$scope.selected.type.id].id)
+                .then(function (r) {
+                    if (r.data.model) {
+                        $scope.selected.name = r.data.model.name;
+                        $scope.selected.year = r.data.model.year;
+                        $scope.selected.total_department = parseInt(r.data.model.department);
+                        $scope.selected.total_province = parseInt(r.data.model.province);
+                        $scope.selected.total_district = parseInt(r.data.model.district);
+                    }
+                }, function (r) {
+                    $scope.response = r;
+                    $timeout(function () {
+                        $scope.response = null;
+                    }, 15000);
+                });
         };
 
         $scope.save = function () {
@@ -215,22 +266,6 @@ $this->title = 'ສະຖິຕິໜ່ວຍງານຈັດຕັ້ງປ�
                 }, 15000);
             });
         };
-
-        $scope.delete = function () {
-            if ($scope.selected) {
-                $http.post($scope.url + 'delete', {'id': $scope.selected.id})
-                    .then(function (r) {
-                        $scope.selected = null;
-                        $scope.enquiry();
-                    }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
-            }
-        };
-
 
         $scope.uploadedFile = function (element) {
             if (!$scope.issued_no) {

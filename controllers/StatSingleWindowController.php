@@ -47,8 +47,8 @@ class StatSingleWindowController extends Controller
         }
 
         return json_encode([
-            'years' => PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all(),
-            'ministries' => Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all(),
+            'years' => PhiscalYear::find()->where(['deleted' => 0])->orderBy('year')->asArray()->all(),
+            'ministries' => Ministry::find()->where('deleted=0 and  ministry_group_id in (1,2)')->orderBy('position')->asArray()->all(),
             'provinces' => Province::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all(),
         ]);
     }
@@ -76,21 +76,27 @@ class StatSingleWindowController extends Controller
             return;
         }
 
-        $models = Ministry::find()->alias('m')
-            ->select('m.*,`d`.`name` as `servicename`, `d`.`remark`')
-            ->addSelect([
-                'start_date' => 'DATE_FORMAT(`start_date`, "%d-%m-%Y")',
-            ])
+        $ministries = Ministry::find()->alias('m')
+            ->select('m.*,`d`.`name` servicename, d.year, d.province, d.district, d.department')
             ->join('left join', $this->table . '_detail d', 'd.ministry_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
-            ->where('deleted=0 and ministry_group_id in (1,2)')
+            ->where('m.deleted=0 and ministry_group_id in (1,2)')
+            ->orderBy('m.position')->asArray()->all();
+
+
+        $provinces = Province::find()->alias('m')
+            ->select('m.*,`d`.`name` as `servicename`, d.year, d.province, d.district')
+            ->join('left join', $this->table . '_detail d', 'd.deleted=0 and d.province_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
             ->orderBy('m.position')->asArray()->all();
 
         return json_encode([
-            'models' => $models,
+            'models' => [
+                'ministries' => $ministries,
+                'provinces' => $provinces,
+            ]
         ]);
     }
 
-    public function actionInquiry($year, $pid = 0, $mid = 0)
+    public function actionInquiry($year, $province = 0, $ministry = 0)
     {
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
@@ -109,15 +115,16 @@ class StatSingleWindowController extends Controller
             ->alias('d')
             ->join('join', $this->table . ' i', 'd.' . $this->table . '_id=i.id and i.phiscal_year_id=:year', [
                 ':year' => $year->id
-            ])
-            ->where(['d.ministry_id' => $mid, 'd.province_id' => $pid])
-            ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
-            ->join('left join', 'province p', 'p.id = d.province_id and p.deleted=0')
-            ->asArray()->one();
+            ]);
+        if ($ministry > 0) {
+            $model = $model->where(['d.ministry_id' => $ministry])
+                ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0');
+        } else if ($province > 0) {
+            $model = $model->where(['d.province_id' => $province])
+                ->join('left join', 'province p', 'p.id = d.province_id and p.deleted=0');
+        }
 
-        if (isset($model))
-            if (isset($model['start_date']))
-                $model['start_date'] = MyHelper::convertdatefordisplay($model['start_date']);
+        $model = $model->asArray()->one();
 
         return json_encode([
             'model' => $model
@@ -150,31 +157,46 @@ class StatSingleWindowController extends Controller
 
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $model = StatSingleWindow::find()
-                    ->where(['phiscal_year_id' => $year->id])->one();
+                $model = StatSingleWindow::find()->where(['phiscal_year_id' => $year->id])->one();
                 if (!isset($model)) {
                     $model = new StatSingleWindow();
                     $model->user_id = Yii::$app->user->id;
                     $model->phiscal_year_id = $year->id;
                 }
-                $model->last_update = date('Y-m-d H:i:s');
-                $model->saved = 1;
-                if (!$model->save())
-                    throw new ServerErrorHttpException(json_encode($model->errors));
+                $model->last_updated = date('Y-m-d H:i:s');
+                if (!$model->save()) throw new ServerErrorHttpException(json_encode($model->errors));
 
-                $detail = StatSingleWindowDetail::find()
-                    ->where(['ministry_id' => $post['Model']['ministry']['id'], 'stat_single_gateway_implementation_id' => $model->id])
-                    ->one();
+                $detail = StatSingleWindowDetail::find()->where(['stat_single_window_id' => $model->id]);
+                if (isset($post['Model']['ministry']))
+                    $detail = $detail->andWhere([
+                        'ministry_id' => $post['Model']['ministry']['id'],
+                    ]);
+                else if (isset($post['Model']['province']))
+                    $detail = $detail->andWhere([
+                        'province_id' => $post['Model']['province']['id'],
+                    ]);
+
+                $detail = $detail->one();
                 if (!isset($detail)) {
                     $detail = new StatSingleWindowDetail();
-                    $detail->stat_single_gateway_implementation_id = $model->id;
-                    $detail->ministry_id = $post['Model']['ministry']['id'];
+                    $detail->stat_single_window_id = $model->id;
+                    if (isset($post['Model']['ministry']))
+                        $detail->ministry_id = $post['Model']['ministry']['id'];
+                    else if (isset($post['Model']['province']))
+                        $detail->province_id = $post['Model']['province']['id'];
                 }
-                $detail->remark = $post['Model']['remark'];
-                if (isset($post['Model']['start_date']) && $post['Model']['start_date'] != '')
-                    $detail->start_date = date('Y-m-d', strtotime($post['Model']['start_date']));
-                else $detail->start_date = null;
-                $detail->name = $post['Model']['name'];
+
+                if (isset($post['Model']['year']))
+                    $detail->year = $post['Model']['year'];
+                if (isset($post['Model']['name']))
+                    $detail->name = $post['Model']['name'];
+                if (isset($post['Model']['total_department']))
+                    $detail->department = $post['Model']['total_department'];
+                if (isset($post['Model']['total_province']))
+                    $detail->province = $post['Model']['total_province'];
+                if (isset($post['Model']['total_district']))
+                    $detail->district = $post['Model']['total_district'];
+
                 if (!$detail->save())
                     throw new ServerErrorHttpException(json_encode($detail->errors));
 
@@ -198,31 +220,37 @@ class StatSingleWindowController extends Controller
                 return;
             }
         }
-
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
 
-        $model = StatSingleWindowDetail::find()
-            ->with([
-                'statSingleGatewayImplementationDetails' => function (ActiveQuery $query) {
-                    $query->alias('d')
-                        ->join('right join', 'ministry m', 'm.id=d.ministry_id')
-                        ->orderBy('m.position');
-                }
-            ])->where(['phiscal_year_id' => $year->id])->one();
-        return $this->renderPartial('print', ['content' => $this->renderPartial('table', ['model' => $model])]);
-    }
-
-    public function actionDelete()
-    {
-        if (!isset($_POST['id'])) {
-            MyHelper::response(HttpCode::NOT_FOUND, 'ບໍ່ພົບຂໍ້ມູນ');
+        $model = StatSingleWindow::find()->where(['phiscal_year_id' => $year])->one();
+        if (!isset($model)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
-        StatSingleWindowDetail::deleteAll(['id' => $_POST['id']]);
+
+        $ministries = Ministry::find()->alias('m')
+            ->select('m.*,`d`.`name` servicename, d.year, d.province, d.district, d.department')
+            ->join('left join', $this->table . '_detail d', 'd.ministry_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
+            ->where('m.deleted=0 and ministry_group_id in (1,2)')
+            ->orderBy('m.position')->asArray()->all();
+
+
+        $provinces = Province::find()->alias('m')
+            ->select('m.*,`d`.`name` as `servicename`, d.year, d.province, d.district')
+            ->join('left join', $this->table . '_detail d', 'd.deleted=0 and d.province_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
+            ->orderBy('m.position')->asArray()->all();
+
+        return $this->renderPartial('../ministry/print', [
+            'content' => $this->renderPartial('table', [
+                    'ministries' => $ministries,
+                    'provinces' => $provinces,
+                    'year' => $year
+                ]
+            )]);
     }
 
     public function actionDownload($year)

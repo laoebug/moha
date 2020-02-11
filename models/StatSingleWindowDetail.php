@@ -41,7 +41,7 @@ class StatSingleWindowDetail extends ActiveRecord
     {
         return [
             [['province_id', 'ministry_id', 'province', 'district', 'department', 'deleted', 'stat_single_window_id'], 'integer'],
-            [['province', 'district', 'department', 'stat_single_window_id'], 'required'],
+            [['stat_single_window_id'], 'required'],
             [['name', 'year'], 'string', 'max' => 255],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
             [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
