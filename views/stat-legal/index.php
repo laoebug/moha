@@ -10,10 +10,6 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="statLegalController">
-
-  
-
-
   <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
   <div class="col-sm-4">
     <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
@@ -221,16 +217,13 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
         }, 15000);
       });
 
-
-
     $scope.enquiry = function() {
-
       $scope.model = null;
       $scope.models = null;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
         .then(function(r) {
-          
+
           $scope.models = r.data.models;
           $scope.getreferences();
         }, function(r) {
@@ -268,10 +261,10 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
       $scope.model = m;
       $scope.model.legalType = m.legal_type_id;
       if (m.new == 1) {
-        $scope.model.isNewOrImprove = 0; 
+        $scope.model.isNewOrImprove = 0;
       }
       if (m.improve == 1) {
-        $scope.model.isNewOrImprove = 1; 
+        $scope.model.isNewOrImprove = 1;
       }
 
     };
@@ -284,11 +277,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
         $scope.model.new = 0;
         $scope.model.improve = isNewOrImprove;
       }
-
-      
     };
-
-
 
     $scope.save = function() {
       if ($scope.year && $scope.model) {
@@ -297,7 +286,7 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
         $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'StatLegalDetail': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
-        }).then(function(r) {          
+        }).then(function(r) {
           $scope.model = null;
           $scope.response = r;
           $scope.enquiry();

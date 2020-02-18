@@ -1,17 +1,16 @@
 <?php
 
-use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EthnicSearch */
+/* @var $searchModel app\models\AidsTypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'ຈັດການຂໍ້ມູນ ຊົນເຜົ່າ';
+$this->title = 'ຈັດການປະເພດໂຄງການ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
-
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a(Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -22,9 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'name',
-            'position',
             'deleted',
-            Yii::$app->params['action']
+            'position',
+
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>
