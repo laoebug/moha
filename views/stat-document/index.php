@@ -4,23 +4,14 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatDocumentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມສຳເນົາເອກະສານແຫ່ງຊາດ'), 'url' => ['index']];
 $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສານທີ່ມີຄວາມສຳຄັນແຫ່ງຊາດ";
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="statDocument">
-  <!-- <div class="col-sm-12"> -->
   <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
   <div class="col-sm-4">
     <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
   </div>
-  <!-- <div class="col-sm-8">
-            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
-                {{response.statusText}}
-            </div>
-        </div>
-    </div> -->
   <div class="col-sm-12">
     <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
       <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
@@ -51,19 +42,24 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
           <table class="table table-bordered" style="margin-top: 1em">
             <thead>
               <tr>
-                <th class="text-center" rowspan="2">ປີ 1975 ຄືນຫຼັງ</th>
-                <th class="text-center" colspan="2">{{year.year}}</th>
+                <!-- <th class="text-center" rowspan="2">ປີ 1975 ຄືນຫຼັງ</th> -->
+                <th class="text-center" colspan="2">1975 ຄືນ​ຫລັງ</th>
+                <th class="text-center" colspan="2">1975 ເຖິງ​ປະຈຸ​ບັນ</th>
               </tr>
               <tr>
+                <th class="text-center">ຂໍ້ມູນຜ່ານມາ</th>
+                <th class="text-center">ຂໍ້ມູນເພີ່ມໃໝ່</th>
                 <th class="text-center">ຂໍ້ມູນຜ່ານມາ</th>
                 <th class="text-center">ຂໍ້ມູນເພີ່ມໃໝ່</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><input class="form-control" ng-model="model.before" type="number" min="0"></td>
+                <!-- <td><input class="form-control" ng-model="model.before" type="number" min="0"></td> -->
                 <td><input class="form-control" ng-model="model.after" type="number" min="0"></td>
                 <td><input class="form-control" ng-model="model.after_new" type="number" min="0"></td>
+                <td><input class="form-control" ng-model="model.now_before" type="number" min="0"></td>
+                <td><input class="form-control" ng-model="model.now_new" type="number" min="0"></td>
               </tr>
             </tbody>
           </table>
@@ -101,14 +97,18 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
                 <tr>
                   <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
                   <th class="text-center" rowspan="3">ເອກະສານບັນດາກະຊວງ, ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ</th>
-                  <th class="text-center" rowspan="3">ຈຳນວນເອກະສານປະຫວັດສາດ 1975 ຄືນຫຼັງ</th>
                   <th class="text-center" colspan="3">ຈຳນວນເອກະສານປະຫວັດສາດ 1975 ຄືນຫຼັງ</th>
+                  <th class="text-center" colspan="3">ຈໍານວນສໍາ​ນວນເອກະສານປະຫວັດສາດ​ 1975 ເຖິງ​ປະຈຸ​ບັນ</th>
                   <th class="text-center" rowspan="3">ໝາຍເຫດ</th>
                 </tr>
                 <tr>
                   <th class="text-center" colspan="3">ປີ {{year.year}}</th>
+                  <th class="text-center" colspan="3">ປີ {{year.year}}</th>
                 </tr>
                 <tr>
+                  <th class="text-center">ຂໍ້ມູນຜ່ານມາ</th>
+                  <th class="text-center">ຂໍ້ມູນທີ່ເພີ່ມຂຶ້ນໃໝ່</th>
+                  <th class="text-center">ລວມທັງໝົດ</th>
                   <th class="text-center">ຂໍ້ມູນຜ່ານມາ</th>
                   <th class="text-center">ຂໍ້ມູນທີ່ເພີ່ມຂຶ້ນໃໝ່</th>
                   <th class="text-center">ລວມທັງໝົດ</th>
@@ -116,16 +116,19 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
               </thead>
               <tbody ng-repeat="model in models">
                 <tr>
-                  <th colspan="7" class="text-center" style="background-color: #dcd18b">{{model.name}}
+                  <th colspan="9" class="text-center" style="background-color: #dcd18b">{{model.name}}
                   </th>
                 </tr>
                 <tr ng-repeat="m in model.details">
                   <td class="text-center">{{$index + 1}}</td>
                   <td>{{m.name}}</td>
-                  <td class="text-center">{{m.before | number | dash}}</td>
+                  <!-- <td class="text-center">{{m.before | number | dash}}</td> -->
                   <td class="text-center">{{m.after | number | dash}}</td>
                   <td class="text-center">{{m.after_new | number | dash}}</td>
-                  <td class="text-center">{{sumrow(m) | number | dash}}</td>
+                  <td class="text-center">{{m.after*1 + m.after_new*1 | number | dash}}</td>
+                  <td class="text-center">{{m.now_before | number | dash}}</td>
+                  <td class="text-center">{{m.now_new | number | dash}}</td>
+                  <td class="text-center">{{m.now_before*1 + m.now_new*1 | number | dash}}</td>
                   <td>{{m.remark}}</td>
                 </tr>
               </tbody>
@@ -244,6 +247,12 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
         .then(function(r) {
+          r.data.models.forEach(function(d) {
+            d.after = parseInt(d.after);
+            d.after_new = parseInt(d.after_new);
+            d.now_before = parseInt(d.now_before);
+            d.now_new = parseInt(d.now_new);
+          });
           $scope.models = r.data.models;
           $scope.getreferences();
         }, function(r) {
@@ -278,6 +287,8 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
               $scope.model.before = parseInt(r.data.model.before);
               $scope.model.after = parseInt(r.data.model.after);
               $scope.model.after_new = parseInt(r.data.model.after_new);
+              $scope.model.now_before = parseInt(r.data.model.now_before);
+              $scope.model.now_new = parseInt(r.data.model.now_new);
               $scope.model.remark = r.data.model.remark;
             }
           }, function(r) {
@@ -333,28 +344,6 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
         });
       }
     };
-
-    $scope.sumrow = function(m) {
-      var s = 0;
-      if (m.after) s += parseInt(m.after);
-      if (m.after_new) s += parseInt(m.after_new);
-      return s;
-    };
-
-    $scope.formatNumber = function(num, dec) {
-      if (dec === undefined) dec = 2;
-      var r = "" + Math.abs(parseFloat(num).toFixed(dec));
-      var decimals = "";
-      if (r.lastIndexOf(".") != -1) {
-        decimals = "." + r.substring(r.lastIndexOf(".") + 1);
-        decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
-        r = r.substring(0, r.lastIndexOf("."));
-      }
-      for (var i = r.length - 3; i > 0; i -= 3)
-        r = r.substr(0, i) + "," + r.substr(i);
-      return (num < 0 ? "-" : "") + r + decimals;
-    };
-
 
     $scope.uploadedFile = function(element) {
       if (!$scope.issued_no) {

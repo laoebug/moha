@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_document_detail".
@@ -19,6 +17,8 @@ use yii\db\ActiveRecord;
  * @property int $after
  * @property int $after_new
  * @property string $remark
+ * @property int $now_before
+ * @property int $now_new
  *
  * @property Book $book
  * @property Ministry $ministry
@@ -26,7 +26,7 @@ use yii\db\ActiveRecord;
  * @property Province $province
  * @property StatDocument $statDocument
  */
-class StatDocumentDetail extends ActiveRecord
+class StatDocumentDetail extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -42,7 +42,7 @@ class StatDocumentDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['stat_document_id', 'province_id', 'ministry_id', 'organisation_id', 'book_id', 'before', 'after', 'after_new'], 'integer'],
+            [['stat_document_id', 'province_id', 'ministry_id', 'organisation_id', 'book_id', 'before', 'after', 'after_new', 'now_before', 'now_new'], 'integer'],
             [['remark'], 'string', 'max' => 255],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
@@ -68,11 +68,13 @@ class StatDocumentDetail extends ActiveRecord
             'after' => Yii::t('app', 'After'),
             'after_new' => Yii::t('app', 'After New'),
             'remark' => Yii::t('app', 'Remark'),
+            'now_before' => Yii::t('app', 'Now Before'),
+            'now_new' => Yii::t('app', 'Now New'),
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getBook()
     {
@@ -80,7 +82,7 @@ class StatDocumentDetail extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getMinistry()
     {
@@ -88,7 +90,7 @@ class StatDocumentDetail extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getOrganisation()
     {
@@ -96,7 +98,7 @@ class StatDocumentDetail extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getProvince()
     {
@@ -104,7 +106,7 @@ class StatDocumentDetail extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getStatDocument()
     {
