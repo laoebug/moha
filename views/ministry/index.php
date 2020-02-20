@@ -8,52 +8,45 @@
 $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂອງລັດຖະບານ";
 ?>
 <div class="row" ng-app="mohaApp" ng-controller="ministryController">
-  <!-- <div class="col-sm-12">
-    <div class="col-sm-8">
-      <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
-        {{response.statusText}}
-      </div>
-    </div>
-  </div> -->
   <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
   <div class="col-sm-4">
     <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
   </div>
 
   <div class="col-sm-12">
-        <div class="panel panel-primary" style="margin-top: 2em">
-            <div class="panel-heading" ng-click="changemode()">
-                <i class="fa fa-{{mode == 'input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
-            </div>
-            <div class="panel-body {{mode=='input'?'':'hide'}}">
-                <div class="col-sm-6">
-                    <label for="">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</label>
-                    <input type="text" class="form-control" ng-model="ministry.name">
-                </div>
-                <div class="col-sm-2">
-                    <label for="">ລຳດັບ</label>
-                    <input type="number" min="0" class="form-control" ng-model="ministry.position">
-                </div>
-                <div class="col-sm-4">
-                    <label for=""><?= Yii::t('app', 'Remark') ?></label>
-                    <input type="text" class="form-control" ng-model="ministry.remark">
-                </div>
-                <div class="col-sm-2" ng-show="ministry && !ministry.id">
-                    <label for="">&nbsp;</label>
-                    <button type="button" class="btn btn-success col-sm-12" ng-click="save(1)">
-                        <i class="fa fa-plus"></i> ເພີ່ມ
-                    </button>
-                </div>
-                <div class="col-sm-2" ng-show="ministry && ministry.id">
-                    <label for="">&nbsp;</label>
-                    <button type="button" class="btn btn-info col-sm-12" ng-click="save(0)">
-                        <i class="fa fa-save"></i> ແກ້ໄຂ
-                    </button>
-                </div>
-                <div class="col-sm-2" ng-show="ministry && ministry.id">
-                    <label for="">&nbsp;</label>
-                    <button type=" button" class="btn btn-danger col-sm-12" ng-click="delete(0)">
-          <i class="fa fa-trash"></i> ລຶບ
+    <div class="panel panel-primary" style="margin-top: 2em">
+      <div class="panel-heading" ng-click="changemode()">
+        <i class="fa fa-{{mode == 'input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
+      </div>
+      <div class="panel-body {{mode=='input'?'':'hide'}}">
+        <div class="col-sm-6">
+          <label for="">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</label>
+          <input type="text" class="form-control" ng-model="ministry.name">
+        </div>
+        <div class="col-sm-2">
+          <label for="">ລຳດັບ</label>
+          <input type="number" min="0" class="form-control" ng-model="ministry.position">
+        </div>
+        <div class="col-sm-4">
+          <label for=""><?= Yii::t('app', 'Remark') ?></label>
+          <input type="text" class="form-control" ng-model="ministry.remark">
+        </div>
+        <div class="col-sm-2" ng-show="ministry && !ministry.id">
+          <label for="">&nbsp;</label>
+          <button type="button" class="btn btn-success col-sm-12" ng-click="save(1)">
+            <i class="fa fa-plus"></i> ເພີ່ມ
+          </button>
+        </div>
+        <div class="col-sm-2" ng-show="ministry && ministry.id">
+          <label for="">&nbsp;</label>
+          <button type="button" class="btn btn-info col-sm-12" ng-click="save(0)">
+            <i class="fa fa-save"></i> ແກ້ໄຂ
+          </button>
+        </div>
+        <div class="col-sm-2" ng-show="ministry && ministry.id">
+          <label for="">&nbsp;</label>
+          <button type=" button" class="btn btn-danger col-sm-12" ng-click="delete(0)">
+            <i class="fa fa-trash"></i> ລຶບ
           </button>
         </div>
         <div class="col-sm-2" ng-show="ministry && ministry.id" ">
@@ -167,13 +160,14 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
 <script type="text/javascript" src="js/sweetalert2.js"></script>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript">
-    var app = angular.module('mohaApp', []);
-    var url = 'index.php?r=ministry/';
-    app.controller('ministryController', function ($scope, $http, $sce, $timeout) {
-        $scope.mode = 'read';
-        $scope.changemode = function () {
-            $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
-        };$http.get(url + 'get')
+  var app = angular.module('mohaApp', []);
+  var url = 'index.php?r=ministry/';
+  app.controller('ministryController', function($scope, $http, $sce, $timeout) {
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
+    };
+    $http.get(url + 'get')
       .then(function(r) {
         $scope.years = r.data.years;
       }, function(r) {
@@ -182,45 +176,46 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
           $scope.response = null;
         }, 15000);
       });
-        $scope.enquiry = function () {
-            $scope.ministries = null;
-            $scope.url = url;
+    $scope.enquiry = function() {
+      $scope.ministries = null;
+      $scope.url = url;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-                .then(function (r) {
-                    $scope.ministries = r.data.ministries;$scope.getreferences();
-                }, function (r) {
-                    $scope.response = r;
-                    $timeout(function () {
-                        $scope.response = null;
-                    }, 15000);
-                });
-        };
+        .then(function(r) {
+          $scope.ministries = r.data.ministries;
+          $scope.getreferences();
+        }, function(r) {
+          $scope.response = r;
+          $timeout(function() {
+            $scope.response = null;
+          }, 15000);
+        });
+    };
 
-        $scope.enquiry();
+    $scope.enquiry();
 
-        $scope.select = function(m) {
-            $scope.ministry = m;
-            $scope.ministry.position = parseInt(m.position);
-        };
+    $scope.select = function(m) {
+      $scope.ministry = m;
+      $scope.ministry.position = parseInt(m.position);
+    };
 
-        $scope.save = function (create) {
-            if ($scope.year)
+    $scope.save = function(create) {
+      if ($scope.year)
         $scope.ministry.phiscal_year_id = $scope.year.id;
       if ($scope.ministry)
-                if ($scope.ministry.name)
-                    $http.post($scope.url + 'save', {
-                        Ministry: $scope.ministry,
-                        create: create,
-                        '_csrf': $('meta[name="csrf-token"]').attr("content")
-                    }).then(function (r) {
-                        $scope.response = r;
-                        $scope.ministry = null;
-                        $scope.enquiry();
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-          if (r.status == 200) {
+        if ($scope.ministry.name)
+          $http.post($scope.url + 'save', {
+            Ministry: $scope.ministry,
+            create: create,
+            '_csrf': $('meta[name="csrf-token"]').attr("content")
+          }).then(function(r) {
+            $scope.response = r;
+            $scope.ministry = null;
+            $scope.enquiry();
+            $timeout(function() {
+              $scope.response = null;
+            }, 15000);
+            if (r.status == 200) {
               Swal.fire({
                 position: 'top-end',
                 type: 'success',
@@ -229,13 +224,14 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
                 showConfirmButton: false,
                 timer: 3000
               });
-            }          }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
+            }
+          }, function(r) {
+            $scope.response = r;
+            $timeout(function() {
+              $scope.response = null;
+            }, 15000);
 
-        Swal.fire({
+            Swal.fire({
               position: 'top-end',
               type: 'error',
               title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
@@ -346,30 +342,30 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
       }
     };
 
-        $scope.delete = function () {
-            if ($scope.ministry)
-                swal({
-                    title: "ໝັ້ນໃຈບໍ່?",
-                    text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "ແມ່ນ, ລຶບ",
-                    cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
-                    closeOnConfirm: true,
-                    closeOnCancel: true
-                }, function (isConfirm) {
-                    if (isConfirm) {
-                        $http.post(url + 'delete', {
-                            Ministry: $scope.ministry,
-                            '_csrf': $('meta[name="csrf-token"]').attr("content")
-                        }).then(function (r) {
-                            $scope.response = r;
-                            $scope.ministry = null;
-                            $scope.enquiry();
-                            $timeout(function () {
-                                $scope.response = null;
-                            }, 15000);
-            if (r.status == 200) {
+    $scope.delete = function() {
+      if ($scope.ministry)
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function(isConfirm) {
+          if (isConfirm) {
+            $http.post(url + 'delete', {
+              Ministry: $scope.ministry,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function(r) {
+              $scope.response = r;
+              $scope.ministry = null;
+              $scope.enquiry();
+              $timeout(function() {
+                $scope.response = null;
+              }, 15000);
+              if (r.status == 200) {
                 Swal.fire({
                   position: 'top-end',
                   type: 'success',
@@ -437,8 +433,9 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
                   showConfirmButton: false,
                   timer: 3000
                 });
-              }            }, function (r) {
-                            $scope.response = r;
+              }
+            }, function(r) {
+              $scope.response = r;
               Swal.fire({
                 position: 'top-end',
                 type: 'error',
@@ -446,13 +443,14 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
                 text: r.status + " " + r.statusText,
                 showConfirmButton: false,
                 timer: 3000
-              });              $timeout(function () {
-                                $scope.response = null;
-                            }, 15000);
-                        });
-                    }
-                });
-        }
+              });
+              $timeout(function() {
+                $scope.response = null;
+              }, 15000);
+            });
+          }
+        });
+      }
     };
 
 

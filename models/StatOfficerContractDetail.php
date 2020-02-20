@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_contract_detail".
@@ -19,12 +17,12 @@ use yii\db\ActiveRecord;
  * @property int $officer_approve_women
  * @property int $officer_non_total
  * @property int $officer_non_women
- * @property int $organisation_group_id
+ * @property int $ministry_group_id
  *
- * @property OrganisationGroup $organisationGroup
+ * @property MinistryGroup $ministryGroup
  * @property StatOfficerContract $statOfficerContract
  */
-class StatOfficerContractDetail extends ActiveRecord
+class StatOfficerContractDetail extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -40,9 +38,9 @@ class StatOfficerContractDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['stat_officer_contract_id', 'organisation_group_id'], 'required'],
-            [['stat_officer_contract_id', 'admin_approve_total', 'admin_approve_women', 'admin_non_total', 'admin_non_women', 'officer_approve_total', 'officer_approve_women', 'officer_non_total', 'officer_non_women', 'organisation_group_id'], 'integer'],
-            [['organisation_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrganisationGroup::className(), 'targetAttribute' => ['organisation_group_id' => 'id']],
+            [['stat_officer_contract_id', 'ministry_group_id'], 'required'],
+            [['stat_officer_contract_id', 'admin_approve_total', 'admin_approve_women', 'admin_non_total', 'admin_non_women', 'officer_approve_total', 'officer_approve_women', 'officer_non_total', 'officer_non_women', 'ministry_group_id'], 'integer'],
+            [['ministry_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => MinistryGroup::className(), 'targetAttribute' => ['ministry_group_id' => 'id']],
             [['stat_officer_contract_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerContract::className(), 'targetAttribute' => ['stat_officer_contract_id' => 'id']],
         ];
     }
@@ -63,20 +61,20 @@ class StatOfficerContractDetail extends ActiveRecord
             'officer_approve_women' => Yii::t('app', 'Officer Approve Women'),
             'officer_non_total' => Yii::t('app', 'Officer Non Total'),
             'officer_non_women' => Yii::t('app', 'Officer Non Women'),
-            'organisation_group_id' => Yii::t('app', 'Organisation Group ID'),
+            'ministry_group_id' => Yii::t('app', 'Ministry Group ID'),
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
-    public function getOrganisationGroup()
+    public function getMinistryGroup()
     {
-        return $this->hasOne(OrganisationGroup::className(), ['id' => 'organisation_group_id']);
+        return $this->hasOne(MinistryGroup::className(), ['id' => 'ministry_group_id']);
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getStatOfficerContract()
     {
