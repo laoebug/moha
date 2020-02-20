@@ -2,12 +2,11 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
-/* @var $model app\models\SalaryLevel */
+/* @var $model app\models\StudyLevel */
 
-$this->title = 'ເພີ່ມຂໍ້ມູນ ຂັ້ນເງິນເດືອນ';
-$this->params['breadcrumbs'][] = ['label' => 'ຂັ້ນເງິນເດືອນ', 'url' => ['index']];
+$this->title = 'ແກ້ໄຂຂໍ້ມູນ ຊັ້ນວິຊາສະເພາະ';
+$this->params['breadcrumbs'][] = ['label' => 'ຊັ້ນວິຊາສະເພາະ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">

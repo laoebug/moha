@@ -5,15 +5,11 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\SalaryLevel */
 
-$this->title = Yii::t('app', 'Update Salary Level: {nameAttribute}', [
-    'nameAttribute' => $model->name,
-]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Salary Levels'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = 'ແກ້ໄຂຂໍ້ມູນ ຂັ້ນເງິນເດືອນ';
+$this->params['breadcrumbs'][] = ['label' => 'ຂັ້ນເງິນເດືອນ', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'ແກ້ໄຂຂໍ້ມູນ';
 ?>
-<div class="salary-level-update">
-
+<div class="card">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [

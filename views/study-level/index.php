@@ -1,13 +1,13 @@
 <?php
 
-use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\SalaryLevelSearch */
+/* @var $searchModel app\models\StudyLevelSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'ຈັດການຂໍ້ມູນ ຂັ້ນເງິນເດືອນ';
+$this->title = 'ຈັດການຂໍ້ມູນ ຊັ້ນວິຊາສະເພາະ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="card">
@@ -29,12 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'deleted',
-            'last_update',
             'position',
-            //'user_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]);
-    ?>
+    ]); ?>
 </div>

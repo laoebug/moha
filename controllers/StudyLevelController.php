@@ -3,19 +3,19 @@
 namespace app\controllers;
 
 use app\components\MyHelper;
-use app\models\SalaryLevel;
-use app\models\SalaryLevelSearch;
+use Yii;
+use app\models\StudyLevel;
+use app\models\StudyLevelSearch;
 use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
-use Yii;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
- * SalaryLevelController implements the CRUD actions for SalaryLevel model.
+ * StudyLevelController implements the CRUD actions for StudyLevel model.
  */
-class SalaryLevelController extends Controller
+class StudyLevelController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,12 +33,12 @@ class SalaryLevelController extends Controller
     }
 
     /**
-     * Lists all SalaryLevel models.
+     * Lists all StudyLevel models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SalaryLevelSearch();
+        $searchModel = new StudyLevelSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -48,36 +48,16 @@ class SalaryLevelController extends Controller
     }
 
     /**
-     * Finds the SalaryLevel model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return SalaryLevel the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = SalaryLevel::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-    /**
-     * Creates a new SalaryLevel model.
+     * Creates a new StudyLevel model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new SalaryLevel();
+        $model = new StudyLevel();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->last_update = date('Y-m-d H:i:s');
-            $model->user_id = Yii::$app->user->id;
-            $model->deleted = 0;
-            if ($model->save())
-                return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -86,7 +66,7 @@ class SalaryLevelController extends Controller
     }
 
     /**
-     * Updates an existing SalaryLevel model.
+     * Updates an existing StudyLevel model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,11 +76,8 @@ class SalaryLevelController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->last_update = date('Y-m-d H:i:s');
-            $model->user_id = Yii::$app->user->id;
-            if ($model->save())
-                return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -109,7 +86,7 @@ class SalaryLevelController extends Controller
     }
 
     /**
-     * Deletes an existing SalaryLevel model.
+     * Deletes an existing StudyLevel model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -117,8 +94,25 @@ class SalaryLevelController extends Controller
      */
     public function actionDelete($id)
     {
-        SalaryLevel::updateAll(['deleted' => 1], ['id' => $id]);
+        $this->findModel($id)->updateAll(['deleted' => 0], ['id' => $id]);
+
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the StudyLevel model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return StudyLevel the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = StudyLevel::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
     public function beforeAction($action)
