@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatHighoverseaMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ປະເພດຫຼຽນຊັ້ນສູງ ສຳລັບຍ້ອງຍໍຕ່າງປະເທດຂອງບັນດາ ກະຊວງ, ອົງການ";
+$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນຊັ້ນສູງທີ່ໄດ້ມອບໃຫ້ຕ່າງປະເທດຂອງບັນດາກະຊວງ, ອົງການທຽບເທົ່າ ປະຈຳປີ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

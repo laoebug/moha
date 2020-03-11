@@ -4,9 +4,7 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatHornorcoingProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ປະເພດຫຼຽນນາມມະຍົດຕ່າງໆ ສຳລັບການຍ້ອງຍໍພາຍໃນຂອງບັນດາແຂວງ";
-// $this->params['breadcrumbs'][] = $this->title;
+$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນນາມມະຍົດຕ່າງໆ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນ ແລະ ນະຄອນຫຼວງ ປະຈຳປີ";
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="statHornorcoingProvince">
@@ -15,12 +13,6 @@ $this->title = "ປະເພດຫຼຽນນາມມະຍົດຕ່າງ�
   <div class="col-sm-4">
     <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
   </div>
-  <!-- <div class="col-sm-8">
-            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
-                {{response.statusText}}
-            </div>
-        </div>
-    </div> -->
   <div class="col-sm-12">
     <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
       <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i>

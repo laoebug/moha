@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatGovoverseaMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃບຍ້ອງຍໍລັດຖະບານ ສຳລັບຍ້ອງຍໍຕ່າງປະເທດຂອງບັນດາກະຊວງ, ອົງການ";
+$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍລັດຖະບານທີ່ໄດ້ມອບໃຫ້ຕ່າງປະເທດຂອງບັນດາກະຊວງ, ອົງການອ້ອມຂ້າງສູນກາງປະຈຳປີ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

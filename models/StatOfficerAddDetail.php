@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_officer_add_detail".
@@ -17,12 +15,15 @@ use yii\db\ActiveRecord;
  * @property int $soe_total
  * @property int $soe_women
  * @property int $stat_officer_add_id
- * @property int $organisation_group_id
+ * @property int $move_total
+ * @property int $move_women
+ * @property int $need
+ * @property int $ministry_group_id
  *
- * @property OrganisationGroup $organisationGroup
+ * @property MinistryGroup $ministryGroup
  * @property StatOfficerAdd $statOfficerAdd
  */
-class StatOfficerAddDetail extends ActiveRecord
+class StatOfficerAddDetail extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -38,9 +39,9 @@ class StatOfficerAddDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['quota_total', 'quota_women', 'army_total', 'army_women', 'soe_total', 'soe_women', 'stat_officer_add_id', 'organisation_group_id'], 'integer'],
-            [['stat_officer_add_id', 'organisation_group_id'], 'required'],
-            [['organisation_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrganisationGroup::className(), 'targetAttribute' => ['organisation_group_id' => 'id']],
+            [['quota_total', 'quota_women', 'army_total', 'army_women', 'soe_total', 'soe_women', 'stat_officer_add_id', 'move_total', 'move_women', 'need', 'ministry_group_id'], 'integer'],
+            [['stat_officer_add_id', 'ministry_group_id'], 'required'],
+            [['ministry_group_id'], 'exist', 'skipOnError' => true, 'targetClass' => MinistryGroup::className(), 'targetAttribute' => ['ministry_group_id' => 'id']],
             [['stat_officer_add_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatOfficerAdd::className(), 'targetAttribute' => ['stat_officer_add_id' => 'id']],
         ];
     }
@@ -59,20 +60,23 @@ class StatOfficerAddDetail extends ActiveRecord
             'soe_total' => Yii::t('app', 'Soe Total'),
             'soe_women' => Yii::t('app', 'Soe Women'),
             'stat_officer_add_id' => Yii::t('app', 'Stat Officer Add ID'),
-            'organisation_group_id' => Yii::t('app', 'Organisation Group ID'),
+            'move_total' => Yii::t('app', 'Move Total'),
+            'move_women' => Yii::t('app', 'Move Women'),
+            'need' => Yii::t('app', 'Need'),
+            'ministry_group_id' => Yii::t('app', 'Ministry Group ID'),
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
-    public function getOrganisationGroup()
+    public function getMinistryGroup()
     {
-        return $this->hasOne(OrganisationGroup::className(), ['id' => 'organisation_group_id']);
+        return $this->hasOne(MinistryGroup::className(), ['id' => 'ministry_group_id']);
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getStatOfficerAdd()
     {

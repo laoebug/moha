@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatVictorycoinMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ປະເພດຫຼຽນໄຊຕ່າງໆ ສຳລັບການຍ້ອງຍໍພາຍໃນຂອງບັນດາກະຊວງ, ອົງການ";
+$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນໄຊຕ່າງໆ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ ແລະ ອົງການທຽບເທົ່າອ້ອມຂ້າງສູນກາງ ປະຈຳປີ ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

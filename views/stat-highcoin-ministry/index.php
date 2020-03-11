@@ -4,9 +4,7 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatHornorcoingProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ປະເພດຫຼຽນໄຊ ຊັ້ນສູງ ແລະ ຫຼຽນນາມມະຍົດຕ່າງໆ ສຳລັບການຍ້ອງຍໍພາຍໃນຂອງບັນດາກະຊວງ, ອົງການ";
-// $this->params['breadcrumbs'][] = $this->title;
+$this->title = "ຕາຕາລາງປະເພດຫຼຽນໄຊຊັ້ນສູງ ແລະ ຫຼຽນນາມມະຍົດຕ່າງໆທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ, ອົງການ";
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="statHornorcoingProvince">
