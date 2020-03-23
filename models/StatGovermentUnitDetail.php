@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property int $department
+ * * @property int $division
  * @property int $insitute
  * @property int $center
  * @property int $stat_goverment_unit_id
@@ -37,7 +38,7 @@ class StatGovermentUnitDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['department', 'insitute', 'center', 'stat_goverment_unit_id', 'office', 'ministry_id'], 'integer'],
+            [['department', 'division', 'insitute', 'center', 'stat_goverment_unit_id', 'office', 'ministry_id'], 'integer'],
             [['stat_goverment_unit_id', 'ministry_id'], 'required'],
             [['remark'], 'string'],
             [['ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ministry::className(), 'targetAttribute' => ['ministry_id' => 'id']],
@@ -53,6 +54,7 @@ class StatGovermentUnitDetail extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'department' => Yii::t('app', 'Department'),
+            'division' => Yii::t('app', 'Division'),
             'insitute' => Yii::t('app', 'Insitute'),
             'center' => Yii::t('app', 'Center'),
             'stat_goverment_unit_id' => Yii::t('app', 'Stat Goverment Unit ID'),

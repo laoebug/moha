@@ -4,9 +4,7 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\GovermentlevelSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມພັດທະນາ ແລະ ການບໍລິຫານລັດ'), 'url' => ['index']];
 $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການຈັດຕັ້ງ (ກົມ ແລະ ອົງການລັດທຽບເທົ່າກົມ)";
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -16,12 +14,6 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
   <div class="col-sm-4">
     <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
   </div>
-  <!-- <div class="col-sm-8">
-            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
-                {{response.statusText}}
-            </div>
-        </div>
-     -->
 
   <div class="col-sm-12">
     <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
@@ -32,7 +24,7 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
           <label for=""><?= Yii::t('app', 'Group') ?></label>
           <select class="form-control" ng-model="ministrygroup" ng-options="g.name for g in ministrygroups"></select>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-2">
           <label for=""><?= Yii::t('app', 'Ministry') ?></label>
           <select class="form-control" ng-model="ministry" ng-options="b.name for b in ministries" ng-change="inquiry()">
           </select>
@@ -54,6 +46,11 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
         <div class="col-sm-2">
           <label for="">ສະຖາບັນ</label>
           <input type="number" min="0" class="form-control" ng-model="insitute">
+        </div>
+
+        <div class="col-sm-2">
+          <label for="">ພະແນກ</label>
+          <input type="number" min="0" class="form-control" ng-model="division">
         </div>
 
         <div class="col-sm-12">
@@ -185,6 +182,7 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
         .then(function(r) {
           $scope.office = parseInt(r.status == 200 ? r.data.office : "");
           $scope.department = parseInt(r.status == 200 ? r.data.department : "");
+          $scope.division = parseInt(r.status == 200 ? r.data.division : "");
           $scope.insitute = parseInt(r.status == 200 ? r.data.insitute : "");
           $scope.center = parseInt(r.status == 200 ? r.data.center : "");
           $scope.remark = parseInt(r.status == 200 ? r.data.remark : "");
@@ -197,6 +195,7 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
       else {
         $scope.office = "";
         $scope.department = "";
+        $scope.division = "";
         $scope.insitute = "";
         $scope.center = "";
         $scope.remark = "";
@@ -210,6 +209,7 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
           'ministry': $scope.ministry.id,
           'office': $scope.office,
           'department': $scope.department,
+          'division': $scope.division,
           'insitute': $scope.insitute,
           'center': $scope.center,
           'remark': $scope.remark,
@@ -244,8 +244,6 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
             showConfirmButton: false,
             timer: 3000
           });
-
-
         });
       }
     };
@@ -256,20 +254,17 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
         Swal.fire({
           title: 'ອັບໂຫຼດຟາຍ',
           type: 'warning',
-          text: 'ກະລຸນາປ້ອນເລກທີ',
-
+          text: 'ກະລຸນາປ້ອນເລກທີ'
         });
         return;
       }
       $scope.issued_date = $('#issued_date').val();
       if (!$scope.issued_date) {
         $scope.files = null;
-
         Swal.fire({
           title: 'ອັບໂຫຼດຟາຍ',
           type: 'warning',
-          text: 'ກະລຸນາປ້ອນວັນທີ',
-
+          text: 'ກະລຸນາປ້ອນວັນທີ'
         });
         return;
       }
