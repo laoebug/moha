@@ -112,9 +112,10 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th class="text-center" rowspan="2">ຊື່ພາກສ່ວນຕ່າງໆ</th>
-                  <th class="text-center" rowspan="2">ຈຳນວນລັດຖະກອນທັງໝົດ</th>
-                  <th class="text-center" rowspan="2">ຊື່ພາກສ່ວນຕ່າງໆ</th>
+                  <th class="text-center" rowspan="3">ຊື່ພາກສ່ວນຕ່າງໆ</th>
+                  <th class="text-center" colspan="2" rowspan="2">ຈຳນວນລັດຖະກອນທັງໝົດ</th>
+                  <th class="text-center" colspan="14">ຈຳນວນລັດຖະກອນທີ່ອອກໃນຮູບການຕ່າງໆ</th>
+                  <th class="text-center" colspan="4">ຍົກຍ້າຍໄປພາກສ່ວນອື່ນໆ</th>
                 </tr>
                 <tr>
                   <th class="text-center" colspan="2">ບຳນານ</th>
@@ -128,33 +129,58 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
                   <th class="text-center" colspan="2">ຍົກຍ້າຍໄປອົງການ, ກະຊວງ, ແຂວງ, ນະຄອນຫຼວງ</th>
                 </tr>
                 <tr>
-                  <?php for ($i = 0; $i < 9; $i++) : ?>
+                  <?php for ($i = 0; $i < 10; $i++) : ?>
                     <th class="text-center">ລ</th>
                     <th class="text-center">ຍ</th>
                   <?php endfor; ?>
                 </tr>
               </thead>
               <tbody>
+                <tr>
+                  <td>ຈຳນວນລັດຖະກອນທັງໝົດ</td>
+                  <td style="width: 5%" class="text-center">{{sum('total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sum('women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('retire_total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('retire_women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('bumnet_total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('bumnet_women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('die_total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('die_women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('leave_total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('leave_women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('fire_total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('fire_women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('resign_total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('resign_women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('lose_total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('lose_women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('move_soe_total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('move_soe_women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('moveto_ministry_total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumcol('moveto_ministry_women') | number | dash}}</td>
+                </tr>
                 <tr ng-repeat="m in models">
                   <td>{{m.name}}</td>
-                  <td style="width: 5%">{{m.retire_total | number | dash}}</td>
-                  <td style="width: 5%">{{m.retire_women | number | dash}}</td>
-                  <td style="width: 5%">{{m.bumnet_total | number | dash}}</td>
-                  <td style="width: 5%">{{m.bumnet_women | number | dash}}</td>
-                  <td style="width: 5%">{{m.die_total | number | dash}}</td>
-                  <td style="width: 5%">{{m.die_women | number | dash}}</td>
-                  <td style="width: 5%">{{m.leave_total | number | dash}}</td>
-                  <td style="width: 5%">{{m.leave_women | number | dash}}</td>
-                  <td style="width: 5%">{{m.fire_total | number | dash}}</td>
-                  <td style="width: 5%">{{m.fire_women | number | dash}}</td>
-                  <td style="width: 5%">{{m.resign_total | number | dash}}</td>
-                  <td style="width: 5%">{{m.resign_women | number | dash}}</td>
-                  <td style="width: 5%">{{m.lose_total | number | dash}}</td>
-                  <td style="width: 5%">{{m.lose_women | number | dash}}</td>
-                  <td style="width: 5%">{{m.move_soe_total | number | dash}}</td>
-                  <td style="width: 5%">{{m.move_soe_women | number | dash}}</td>
-                  <td style="width: 5%">{{m.moveto_ministry_total | number | dash}}</td>
-                  <td style="width: 5%">{{m.moveto_ministry_women | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumrow(m, 'total') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{sumrow(m, 'women') | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.retire_total | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.retire_women | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.bumnet_total | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.bumnet_women | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.die_total | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.die_women | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.leave_total | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.leave_women | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.fire_total | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.fire_women | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.resign_total | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.resign_women | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.lose_total | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.lose_women | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.move_soe_total | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.move_soe_women | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.moveto_ministry_total | number | dash}}</td>
+                  <td style="width: 5%" class="text-center">{{m.moveto_ministry_women | number | dash}}</td>
                 </tr>
               </tbody>
             </table>
@@ -253,28 +279,28 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
         .then(function(r) {
           $scope.models = r.data.models;
-          $scope.models.forEach(function(model) {
-            model.retire_total = parseInt(model.retire_total);
-            model.bumnet_total = parseInt(model.bumnet_total);
-            model.die_total = parseInt(model.die_total);
-            model.leave_total = parseInt(model.leave_total);
-            model.fire_total = parseInt(model.fire_total);
-            model.resign_total = parseInt(model.resign_total);
-            model.lose_total = parseInt(model.lose_total);
-            model.move_soe_total = parseInt(model.move_soe_total);
-            model.move_soe_total = parseInt(model.move_soe_total);
-            model.moveto_ministry_total = parseInt(model.moveto_ministry_total);
-            model.retire_women = parseInt(model.retire_women);
-            model.bumnet_women = parseInt(model.bumnet_women);
-            model.die_women = parseInt(model.die_women);
-            model.leave_women = parseInt(model.leave_women);
-            model.fire_women = parseInt(model.fire_women);
-            model.resign_women = parseInt(model.resign_women);
-            model.lose_women = parseInt(model.lose_women);
-            model.move_soe_women = parseInt(model.move_soe_women);
-            model.move_soe_women = parseInt(model.move_soe_women);
-            model.moveto_ministry_women = parseInt(model.moveto_ministry_women);
-          });
+          if ($scope.models)
+            $scope.models.forEach(function(model) {
+              model.retire_total = parseInt(model.retire_total);
+              model.bumnet_total = parseInt(model.bumnet_total);
+              model.die_total = parseInt(model.die_total);
+              model.leave_total = parseInt(model.leave_total);
+              model.fire_total = parseInt(model.fire_total);
+              model.resign_total = parseInt(model.resign_total);
+              model.lose_total = parseInt(model.lose_total);
+              model.move_soe_total = parseInt(model.move_soe_total);
+              model.moveto_ministry_total = parseInt(model.moveto_ministry_total);
+              model.retire_women = parseInt(model.retire_women);
+              model.bumnet_women = parseInt(model.bumnet_women);
+              model.die_women = parseInt(model.die_women);
+              model.leave_women = parseInt(model.leave_women);
+              model.fire_women = parseInt(model.fire_women);
+              model.resign_women = parseInt(model.resign_women);
+              model.lose_women = parseInt(model.lose_women);
+              model.move_soe_women = parseInt(model.move_soe_women);
+              model.move_soe_women = parseInt(model.move_soe_women);
+              model.moveto_ministry_women = parseInt(model.moveto_ministry_women);
+            });
           $scope.getreferences();
         }, function(r) {
           $scope.response = r;
@@ -322,8 +348,73 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
         });
     };
 
+    $scope.sum = function(key) {
+      var sum = 0;
+      if ($scope.models)
+        $scope.models.forEach(function(model) {
+          if (key == 'total') {
+            sum += parseInt(model.retire_total);
+            sum += parseInt(model.bumnet_total);
+            sum += parseInt(model.die_total);
+            sum += parseInt(model.leave_total);
+            sum += parseInt(model.fire_total);
+            sum += parseInt(model.resign_total);
+            sum += parseInt(model.lose_total);
+            sum += parseInt(model.move_soe_total);
+            sum += parseInt(model.moveto_ministry_total);
+          } else {
+            sum += parseInt(model.retire_women);
+            sum += parseInt(model.bumnet_women);
+            sum += parseInt(model.die_women);
+            sum += parseInt(model.leave_women);
+            sum += parseInt(model.fire_women);
+            sum += parseInt(model.resign_women);
+            sum += parseInt(model.lose_women);
+            sum += parseInt(model.move_soe_women);
+            sum += parseInt(model.moveto_ministry_women);
+          }
+        })
+      return sum;
+    };
+
+    $scope.sumcol = function(key) {
+      var sum = 0;
+      if ($scope.models)
+        $scope.models.forEach(function(m) {
+          sum += parseInt(m[key]);
+        })
+      return sum;
+    };
+
+    $scope.sumrow = function(model, key) {
+      var sum = 0;
+      if (key == 'total') {
+        sum += parseInt(model.retire_total);
+        sum += parseInt(model.bumnet_total);
+        sum += parseInt(model.die_total);
+        sum += parseInt(model.leave_total);
+        sum += parseInt(model.fire_total);
+        sum += parseInt(model.resign_total);
+        sum += parseInt(model.lose_total);
+        sum += parseInt(model.move_soe_total);
+        sum += parseInt(model.moveto_ministry_total);
+      } else {
+        sum += parseInt(model.retire_women);
+        sum += parseInt(model.bumnet_women);
+        sum += parseInt(model.die_women);
+        sum += parseInt(model.leave_women);
+        sum += parseInt(model.fire_women);
+        sum += parseInt(model.resign_women);
+        sum += parseInt(model.lose_women);
+        sum += parseInt(model.move_soe_women);
+        sum += parseInt(model.moveto_ministry_women);
+      }
+      return sum;
+    };
+
     $scope.save = function() {
       if ($scope.year && $scope.model) {
+        $scope.model.ministry_group_id = $scope.group.id;
         $http.post($scope.url + 'save&year=' + $scope.year.id, {
           'Model': $scope.model,
           '_csrf': $('meta[name="csrf-token"]').attr("content")
@@ -333,7 +424,6 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
           $timeout(function() {
             $scope.response = null;
           }, 15000);
-
 
           if (r.status == 200) {
             Swal.fire({
@@ -353,7 +443,6 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
             $scope.response = null;
           }, 15000);
 
-
           Swal.fire({
             position: 'top-end',
             type: 'error',
@@ -367,21 +456,6 @@ $this->title = "ຈຳນວນລັດຖະກອນທີ່ອອກໃນ�
         });
       }
     };
-
-    $scope.formatNumber = function(num, dec) {
-      if (dec === undefined) dec = 2;
-      var r = "" + Math.abs(parseFloat(num).toFixed(dec));
-      var decimals = "";
-      if (r.lastIndexOf(".") != -1) {
-        decimals = "." + r.substring(r.lastIndexOf(".") + 1);
-        decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
-        r = r.substring(0, r.lastIndexOf("."));
-      }
-      for (var i = r.length - 3; i > 0; i -= 3)
-        r = r.substr(0, i) + "," + r.substr(i);
-      return (num < 0 ? "-" : "") + r + decimals;
-    };
-
 
     $scope.uploadedFile = function(element) {
       if (!$scope.issued_no) {
