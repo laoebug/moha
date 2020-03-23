@@ -10,17 +10,10 @@ $this->title = 'ສະຖິຕິຜູູ້ທີ່ໄດ້ຮັບຕຳ�
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="statOfficerAgeLevel">
-  <!-- <div class="col-sm-12"> -->
   <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
   <div class="col-sm-4">
     <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
   </div>
-  <!-- <div class="col-sm-8">
-            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
-                {{response.statusText}}
-            </div>
-        </div>
-    </div> -->
   <div class="col-sm-12">
     <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
       <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ

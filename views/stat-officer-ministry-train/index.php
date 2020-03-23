@@ -154,355 +154,361 @@ $this->title = "ຕາຕະລາງສັງລວມສະຖິຕິພະ�
             <h3><?= $this->title ?> {{year.year}}</h3>
             <div class="row">
               <div class="col-sm-6">
-                <canvas id="stat" class="chart chart-bar" chart-data="stat.data" chart-labels="stat.labels" chart-series="stat.series" chart-colors="stat.colors" </canvas> </div> </div> <div class="row">
-                  <div class="col-sm-4">
-                    <canvas id="stat" class="chart chart-pie" chart-data="stat.data" chart-labels="stat.labels" chart-series="stat.series" chart-colors="stat.colors" </canvas> </div> </div> </div> </div> <div class="tab-pane fade" id="reference">
-                      <div class="row">
-                        <div class="col-sm-3">
-                          <label>ເລກທີ</label>
-                          <input type="text" ng-model="issued_no" class="form-control">
-                        </div>
-                        <div class="col-sm-3">
-                          <label>ລົງວັນທີ</label>
-                          <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
-                        </div>
-                        <div class="col-sm-3">
-                          <label>ອອກໂດຍ</label>
-                          <input type="text" ng-model="issued_by" class="form-control">
-                        </div>
+                <canvas id="stat" class="chart chart-bar" chart-data="stat.data" chart-labels="stat.labels" chart-series="stat.series" chart-colors="stat.colors"> </canvas> </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <canvas id="stat" class="chart chart-pie" chart-data="stat.data" chart-labels="stat.labels" chart-series="stat.series" chart-colors="stat.colors"> </canvas> </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="reference">
+          <div class="row">
+            <div class="col-sm-3">
+              <label>ເລກທີ</label>
+              <input type="text" ng-model="issued_no" class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label>ລົງວັນທີ</label>
+              <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>ອອກໂດຍ</label>
+              <input type="text" ng-model="issued_by" class="form-control">
+            </div>
 
-                        <div class="col-sm-3">
-                          <label>ເລືອກໄຟລ໌</label>
-                          <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);" class="form-control" required>
-                        </div>
+            <div class="col-sm-3">
+              <label>ເລືອກໄຟລ໌</label>
+              <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);" class="form-control" required>
+            </div>
 
-                        <div class="col-sm-12" ng-if="references">
-                          <div class="card">
-                            <table class="table table-bordered">
-                              <thead>
-                                <tr>
-                                  <th class="text-center">ວັນທີອັບໂຫຼດ</th>
-                                  <th class="text-center">ຊື່</th>
-                                  <th class="text-center">ເລກທີ</th>
-                                  <th class="text-center">ລົງວັນທີ</th>
-                                  <th class="text-center">ອອກໂດຍ</th>
-                                  <th class="text-center">ລຶບ</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr ng-repeat="f in references">
-                                  <td class="text-center">{{f.upload_date}}</td>
-                                  <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
-                                  <td class="text-center">{{f.issued_no}}</td>
-                                  <td class="text-center">{{f.issued_date | date}}</td>
-                                  <td class="text-center">{{f.issued_by}}</td>
-                                  <td class="text-center">
-                                    <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
-                                      <i class="fa fa-trash"></i>
-                                    </button>
-                                  </td>
-                                </tr>
+            <div class="col-sm-12" ng-if="references">
+              <div class="card">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center">ວັນທີອັບໂຫຼດ</th>
+                      <th class="text-center">ຊື່</th>
+                      <th class="text-center">ເລກທີ</th>
+                      <th class="text-center">ລົງວັນທີ</th>
+                      <th class="text-center">ອອກໂດຍ</th>
+                      <th class="text-center">ລຶບ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="f in references">
+                      <td class="text-center">{{f.upload_date}}</td>
+                      <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a></td>
+                      <td class="text-center">{{f.issued_no}}</td>
+                      <td class="text-center">{{f.issued_date | date}}</td>
+                      <td class="text-center">{{f.issued_by}}</td>
+                      <td class="text-center">
+                        <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
 
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                  </div>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
-        <script type="text/javascript" src="js/sweetalert2.js"></script>
-        <script type="text/javascript" src="js/Chart.js"></script>
-        <script type="text/javascript" src="js/angular.js"></script>
-        <script type="text/javascript" src="js/angular-chart.js"></script>
-        <script type="text/javascript" src="js/moment.js"></script>
-        <script type="text/javascript" src="js/datetimepicker.js"></script>
-        <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
-        <script type="text/javascript">
-          var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
-          app.filter('dash', function() {
-            return function(input) {
-              return input ? input : '-';
-            };
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="js/sweetalert2.js"></script>
+<script type="text/javascript" src="js/Chart.js"></script>
+<script type="text/javascript" src="js/angular.js"></script>
+<script type="text/javascript" src="js/angular-chart.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
+<script type="text/javascript" src="js/datetimepicker.js"></script>
+<script type="text/javascript" src="js/datetimepicker.templates.js"></script>
+<script type="text/javascript">
+  var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
+  app.filter('dash', function() {
+    return function(input) {
+      return input ? input : '-';
+    };
+  });
+  app.controller('officerMinistryTrainController', function($scope, $http, $sce, $timeout) {
+    $scope.url = 'index.php?r=stat-officer-ministry-train/';
+    $scope.mode = 'read';
+    $scope.changemode = function() {
+      $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
+    };
+    $http.get($scope.url + 'get')
+      .then(function(r) {
+        $scope.years = r.data.years;
+        $scope.ministries = r.data.ministries;
+      }, function(r) {
+        $scope.response = r;
+        $timeout(function() {
+          $scope.response = null;
+        }, 15000);
+      });
+
+    $scope.enquiry = function() {
+      $scope.models = null;
+      $scope.stat = null;
+      if ($scope.year)
+        $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
+        .then(function(r) {
+          $scope.models = r.data.models;
+          $scope.stat = r.data.stat;
+          $scope.stat.colors = ['#FF0000', '#0000FF', '#00FF00', '#FFFF00'];
+          $scope.getreferences();
+        }, function(r) {
+          $scope.response = r;
+          $timeout(function() {
+            $scope.response = null;
+          }, 15000);
+        });
+    };
+
+    $scope.inquiry = function() {
+      if ($scope.year && $scope.model.ministry)
+        $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&ministry=' + $scope.model.ministry.id)
+        .then(function(r) {
+          if (r.data.model) {
+            $scope.model.tech_in_total = parseInt(r.data.model.tech_in_total);
+            $scope.model.tech_in_women = parseInt(r.data.model.tech_in_women);
+            $scope.model.tech_out_total = parseInt(r.data.model.tech_out_total);
+            $scope.model.tech_out_women = parseInt(r.data.model.tech_out_women);
+            $scope.model.theo_in_total = parseInt(r.data.model.theo_in_total);
+            $scope.model.theo_in_women = parseInt(r.data.model.theo_in_women);
+            $scope.model.theo_out_total = parseInt(r.data.model.theo_out_total);
+            $scope.model.theo_out_women = parseInt(r.data.model.theo_out_women);
+          } else {
+            $scope.model.tech_in_total = null;
+            $scope.model.tech_in_women = null;
+            $scope.model.tech_out_total = null;
+            $scope.model.tech_out_women = null;
+            $scope.model.theo_in_total = null;
+            $scope.model.theo_in_women = null;
+            $scope.model.theo_out_total = null;
+            $scope.model.theo_out_women = null;
+          }
+        }, function(r) {
+          $scope.response = r;
+          $timeout(function() {
+            $scope.response = null;
+          }, 15000);
+        });
+    };
+
+    $scope.save = function() {
+      if ($scope.model)
+        $http.post($scope.url + 'save&year=' + $scope.year.id, {
+          'Model': $scope.model,
+          '_csrf': $('meta[name="csrf-token"]').attr("content")
+        }).then(function(r) {
+          $scope.enquiry();
+          $scope.model = null;
+          $scope.response = r;
+          $timeout(function() {
+            $scope.response = null;
+          }, 15000);
+
+          if (r.status == 200) {
+            Swal.fire({
+              position: 'top-end',
+              type: 'success',
+              title: 'ການບັນທຶກສໍາເລັດ',
+              text: r.status,
+              showConfirmButton: false,
+              timer: 3000
+            });
+          }
+
+
+        }, function(r) {
+          $scope.response = r;
+          $timeout(function() {
+            $scope.response = null;
+          }, 15000);
+
+          Swal.fire({
+            position: 'top-end',
+            type: 'error',
+            title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
+            text: r.status,
+            showConfirmButton: false,
+            timer: 3000
           });
-          app.controller('officerMinistryTrainController', function($scope, $http, $sce, $timeout) {
-            $scope.url = 'index.php?r=stat-officer-ministry-train/';
-            $scope.mode = 'read';
-            $scope.changemode = function() {
-              $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
-            };
-            $http.get($scope.url + 'get')
-              .then(function(r) {
-                $scope.years = r.data.years;
-                $scope.ministries = r.data.ministries;
-              }, function(r) {
-                $scope.response = r;
-                $timeout(function() {
-                  $scope.response = null;
-                }, 15000);
+
+
+        })
+    };
+
+    $scope.sum = function(key) {
+      var total = 0;
+      if ($scope.models)
+        for (var n = 0; n < $scope.models.length; n++)
+          if ($scope.models[n][key])
+            total += parseInt($scope.models[n][key]);
+      return total == 0 ? 0 : total;
+    };
+
+    $scope.sumtotal = function(m) {
+      var s = 0;
+      if (m.tech_in_total) s += parseInt(m.tech_in_total);
+      if (m.tech_out_total) s += parseInt(m.tech_out_total);
+      if (m.theo_in_total) s += parseInt(m.theo_in_total);
+      if (m.theo_out_total) s += parseInt(m.theo_out_total);
+      return s == 0 ? 0 : s;
+    };
+
+    $scope.sumwomen = function(m) {
+      var s = 0;
+      if (m.tech_in_women) s += parseInt(m.tech_in_women);
+      if (m.tech_out_women) s += parseInt(m.tech_out_women);
+      if (m.theo_in_women) s += parseInt(m.theo_in_women);
+      if (m.theo_out_women) s += parseInt(m.theo_out_women);
+      return s == 0 ? 0 : s;
+    };
+
+    $scope.formatNumber = function(num, dec) {
+      if (dec === undefined) dec = 2;
+      var r = "" + Math.abs(parseFloat(num).toFixed(dec));
+      var decimals = "";
+      if (r.lastIndexOf(".") != -1) {
+        decimals = "." + r.substring(r.lastIndexOf(".") + 1);
+        decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
+        r = r.substring(0, r.lastIndexOf("."));
+      }
+      for (var i = r.length - 3; i > 0; i -= 3)
+        r = r.substr(0, i) + "," + r.substr(i);
+      return (num < 0 ? "-" : "") + r + decimals;
+    };
+
+
+    $scope.uploadedFile = function(element) {
+      if (!$scope.issued_no) {
+        $scope.files = null;
+        alert('ກະລຸນາປ້ອນເລກທີ');
+        return;
+      }
+      $scope.issued_date = $('#issued_date').val();
+      if (!$scope.issued_date) {
+        $scope.files = null;
+        alert('ກະລຸນາປ້ອນວັນທີ');
+        return;
+      }
+
+      $scope.$apply(function($scope) {
+        $scope.files = element.files;
+        $http({
+          url: $scope.url + "upload&year=" + $scope.year.id,
+          method: "POST",
+          processData: false,
+          headers: {
+            'Content-Type': undefined
+          },
+          data: {
+            '_csrf': $('meta[name="csrf-token"]').attr("content"),
+            'issued_no': $scope.issued_no,
+            'issued_date': $scope.issued_date,
+            'issued_by': $scope.issued_by
+          },
+          transformRequest: function(data) {
+            var formData = new FormData();
+            var file = $scope.files[0];
+            formData.append("file_upload", file);
+            angular.forEach(data, function(value, key) {
+              formData.append(key, value);
+            });
+            return formData;
+          }
+        }).success(function(data, status, headers, config) {
+          $scope.getreferences();
+          $scope.issued_date = null;
+          $scope.issued_no = null;
+          $scope.issued_by = null;
+          $("input[name='image'], #issued_date").val("");
+          $scope.status = data.status;
+          $scope.formdata = "";
+        }).error(function(data, status, headers, config) {
+          $scope.response = data;
+          $timeout(function() {
+            $scope.response = null;
+          }, 15000);
+        });
+      });
+    };
+
+    $scope.getreferences = function() {
+      if ($scope.year) {
+        $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
+          .then(function(r) {
+            if (r.data)
+              $scope.references = r.data.files;
+          }, function(r) {
+            $scope.response = r;
+            $timeout(function() {
+              $scope.response = null;
+            }, 15000);
+          });
+      }
+    };
+
+    $scope.deletefile = function(f) {
+      if ($scope.year && f) {
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function(isConfirm) {
+          if (isConfirm) {
+            $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
+              'id': f.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function(r) {
+              $scope.response = r;
+              $scope.getreferences();
+              $timeout(function() {
+                $scope.response = null;
+              }, 15000);
+
+              if (r.status == 200) {
+                Swal.fire({
+                  position: 'top-end',
+                  type: 'success',
+                  title: 'ການລຶບສໍາເລັດ',
+                  text: r.status,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              }
+
+
+            }, function(r) {
+              $scope.response = r;
+              $timeout(function() {
+                $scope.response = null;
+              }, 15000);
+
+              Swal.fire({
+                position: 'top-end',
+                type: 'error',
+                title: 'ການລຶບບໍ່ສໍາເລັດ',
+                text: r.status,
+                showConfirmButton: false,
+                timer: 3000
               });
 
-            $scope.enquiry = function() {
-              $scope.models = null;
-              $scope.stat = null;
-              if ($scope.year)
-                $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-                .then(function(r) {
-                  $scope.models = r.data.models;
-                  $scope.stat = r.data.stat;
-                  $scope.stat.colors = ['#FF0000', '#0000FF', '#00FF00', '#FFFF00'];
-                  $scope.getreferences();
-                }, function(r) {
-                  $scope.response = r;
-                  $timeout(function() {
-                    $scope.response = null;
-                  }, 15000);
-                });
-            };
 
-            $scope.inquiry = function() {
-              if ($scope.year && $scope.model.ministry)
-                $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&ministry=' + $scope.model.ministry.id)
-                .then(function(r) {
-                  if (r.data.model) {
-                    $scope.model.tech_in_total = parseInt(r.data.model.tech_in_total);
-                    $scope.model.tech_in_women = parseInt(r.data.model.tech_in_women);
-                    $scope.model.tech_out_total = parseInt(r.data.model.tech_out_total);
-                    $scope.model.tech_out_women = parseInt(r.data.model.tech_out_women);
-                    $scope.model.theo_in_total = parseInt(r.data.model.theo_in_total);
-                    $scope.model.theo_in_women = parseInt(r.data.model.theo_in_women);
-                    $scope.model.theo_out_total = parseInt(r.data.model.theo_out_total);
-                    $scope.model.theo_out_women = parseInt(r.data.model.theo_out_women);
-                  } else {
-                    $scope.model.tech_in_total = null;
-                    $scope.model.tech_in_women = null;
-                    $scope.model.tech_out_total = null;
-                    $scope.model.tech_out_women = null;
-                    $scope.model.theo_in_total = null;
-                    $scope.model.theo_in_women = null;
-                    $scope.model.theo_out_total = null;
-                    $scope.model.theo_out_women = null;
-                  }
-                }, function(r) {
-                  $scope.response = r;
-                  $timeout(function() {
-                    $scope.response = null;
-                  }, 15000);
-                });
-            };
-
-            $scope.save = function() {
-              if ($scope.model)
-                $http.post($scope.url + 'save&year=' + $scope.year.id, {
-                  'Model': $scope.model,
-                  '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function(r) {
-                  $scope.enquiry();
-                  $scope.model = null;
-                  $scope.response = r;
-                  $timeout(function() {
-                    $scope.response = null;
-                  }, 15000);
-
-                  if (r.status == 200) {
-                    Swal.fire({
-                      position: 'top-end',
-                      type: 'success',
-                      title: 'ການບັນທຶກສໍາເລັດ',
-                      text: r.status,
-                      showConfirmButton: false,
-                      timer: 3000
-                    });
-                  }
-
-
-                }, function(r) {
-                  $scope.response = r;
-                  $timeout(function() {
-                    $scope.response = null;
-                  }, 15000);
-
-                  Swal.fire({
-                    position: 'top-end',
-                    type: 'error',
-                    title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
-                    text: r.status,
-                    showConfirmButton: false,
-                    timer: 3000
-                  });
-
-
-                })
-            };
-
-            $scope.sum = function(key) {
-              var total = 0;
-              if ($scope.models)
-                for (var n = 0; n < $scope.models.length; n++)
-                  if ($scope.models[n][key])
-                    total += parseInt($scope.models[n][key]);
-              return total == 0 ? 0 : total;
-            };
-
-            $scope.sumtotal = function(m) {
-              var s = 0;
-              if (m.tech_in_total) s += parseInt(m.tech_in_total);
-              if (m.tech_out_total) s += parseInt(m.tech_out_total);
-              if (m.theo_in_total) s += parseInt(m.theo_in_total);
-              if (m.theo_out_total) s += parseInt(m.theo_out_total);
-              return s == 0 ? 0 : s;
-            };
-
-            $scope.sumwomen = function(m) {
-              var s = 0;
-              if (m.tech_in_women) s += parseInt(m.tech_in_women);
-              if (m.tech_out_women) s += parseInt(m.tech_out_women);
-              if (m.theo_in_women) s += parseInt(m.theo_in_women);
-              if (m.theo_out_women) s += parseInt(m.theo_out_women);
-              return s == 0 ? 0 : s;
-            };
-
-            $scope.formatNumber = function(num, dec) {
-              if (dec === undefined) dec = 2;
-              var r = "" + Math.abs(parseFloat(num).toFixed(dec));
-              var decimals = "";
-              if (r.lastIndexOf(".") != -1) {
-                decimals = "." + r.substring(r.lastIndexOf(".") + 1);
-                decimals = decimals.substring(0, Math.min(dec + 1, decimals.length)); // Take only 2 digits after decimals
-                r = r.substring(0, r.lastIndexOf("."));
-              }
-              for (var i = r.length - 3; i > 0; i -= 3)
-                r = r.substr(0, i) + "," + r.substr(i);
-              return (num < 0 ? "-" : "") + r + decimals;
-            };
-
-
-            $scope.uploadedFile = function(element) {
-              if (!$scope.issued_no) {
-                $scope.files = null;
-                alert('ກະລຸນາປ້ອນເລກທີ');
-                return;
-              }
-              $scope.issued_date = $('#issued_date').val();
-              if (!$scope.issued_date) {
-                $scope.files = null;
-                alert('ກະລຸນາປ້ອນວັນທີ');
-                return;
-              }
-
-              $scope.$apply(function($scope) {
-                $scope.files = element.files;
-                $http({
-                  url: $scope.url + "upload&year=" + $scope.year.id,
-                  method: "POST",
-                  processData: false,
-                  headers: {
-                    'Content-Type': undefined
-                  },
-                  data: {
-                    '_csrf': $('meta[name="csrf-token"]').attr("content"),
-                    'issued_no': $scope.issued_no,
-                    'issued_date': $scope.issued_date,
-                    'issued_by': $scope.issued_by
-                  },
-                  transformRequest: function(data) {
-                    var formData = new FormData();
-                    var file = $scope.files[0];
-                    formData.append("file_upload", file);
-                    angular.forEach(data, function(value, key) {
-                      formData.append(key, value);
-                    });
-                    return formData;
-                  }
-                }).success(function(data, status, headers, config) {
-                  $scope.getreferences();
-                  $scope.issued_date = null;
-                  $scope.issued_no = null;
-                  $scope.issued_by = null;
-                  $("input[name='image'], #issued_date").val("");
-                  $scope.status = data.status;
-                  $scope.formdata = "";
-                }).error(function(data, status, headers, config) {
-                  $scope.response = data;
-                  $timeout(function() {
-                    $scope.response = null;
-                  }, 15000);
-                });
-              });
-            };
-
-            $scope.getreferences = function() {
-              if ($scope.year) {
-                $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-                  .then(function(r) {
-                    if (r.data)
-                      $scope.references = r.data.files;
-                  }, function(r) {
-                    $scope.response = r;
-                    $timeout(function() {
-                      $scope.response = null;
-                    }, 15000);
-                  });
-              }
-            };
-
-            $scope.deletefile = function(f) {
-              if ($scope.year && f) {
-                swal({
-                  title: "ໝັ້ນໃຈບໍ່?",
-                  text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
-                  type: "warning",
-                  showCancelButton: true,
-                  confirmButtonText: "ແມ່ນ, ລຶບ",
-                  cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
-                  closeOnConfirm: true,
-                  closeOnCancel: true
-                }, function(isConfirm) {
-                  if (isConfirm) {
-                    $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
-                      'id': f.id,
-                      '_csrf': $('meta[name="csrf-token"]').attr("content")
-                    }).then(function(r) {
-                      $scope.response = r;
-                      $scope.getreferences();
-                      $timeout(function() {
-                        $scope.response = null;
-                      }, 15000);
-
-                      if (r.status == 200) {
-                        Swal.fire({
-                          position: 'top-end',
-                          type: 'success',
-                          title: 'ການລຶບສໍາເລັດ',
-                          text: r.status,
-                          showConfirmButton: false,
-                          timer: 3000
-                        });
-                      }
-
-
-                    }, function(r) {
-                      $scope.response = r;
-                      $timeout(function() {
-                        $scope.response = null;
-                      }, 15000);
-
-                      Swal.fire({
-                        position: 'top-end',
-                        type: 'error',
-                        title: 'ການລຶບບໍ່ສໍາເລັດ',
-                        text: r.status,
-                        showConfirmButton: false,
-                        timer: 3000
-                      });
-
-
-                    });
-                  }
-                });
-              }
-            };
-          });
-        </script>
+            });
+          }
+        });
+      }
+    };
+  });
+</script>

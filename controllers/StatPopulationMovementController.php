@@ -22,25 +22,7 @@ use yii\web\Controller;
 class StatPopulationMovementController extends BaseController
 {
     public $COLUMNS = [
-        'district'
-        , 'village'
-        , 'population_total'
-        , 'population_women'
-        , 'born_total'
-        , 'born_women'
-        , 'die_total'
-        , 'die_women'
-        , 'married'
-        , 'married_local_foreigner'
-        , 'divorce'
-        , 'married_local_foreigner'
-        , 'divorce_local_foreigner'
-        , 'movein_total'
-        , 'movein_women'
-        , 'moveout_total'
-        , 'moveout_women'
-        , 'real_total'
-        , 'real_women'
+        'district', 'village', 'population_total', 'population_women', 'born_total', 'born_women', 'die_total', 'die_women', 'married', 'married_local_foreigner', 'divorce', 'divorce_local_foreigner', 'movein_total', 'movein_women', 'moveout_total', 'moveout_women', 'real_total', 'real_women'
     ];
 
     /**
@@ -56,11 +38,10 @@ class StatPopulationMovementController extends BaseController
 
     public function actionGet()
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -83,7 +64,7 @@ class StatPopulationMovementController extends BaseController
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -135,7 +116,7 @@ class StatPopulationMovementController extends BaseController
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -168,7 +149,7 @@ class StatPopulationMovementController extends BaseController
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -230,7 +211,7 @@ class StatPopulationMovementController extends BaseController
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -258,7 +239,7 @@ class StatPopulationMovementController extends BaseController
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -400,7 +381,4 @@ class StatPopulationMovementController extends BaseController
             }
         }
     }
-
-
-
 }
