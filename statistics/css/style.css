@@ -1,0 +1,15 @@
+* {
+    font-family: 'Phetsarath OT', 'Saysettha OT', 'Noto Sans';
+}
+
+table.table td {
+    vertical-align: middle !important;
+}
+select {
+    height: 3em !important;
+}
+
+/*.treeview-menu.menu-open*/
+.sidebar-menu .treeview-menu > li > a {
+    overflow-x: scroll !important;
+}
