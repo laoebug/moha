@@ -48,7 +48,7 @@ $titles = [
                             <?php foreach ($titles as $i => $title) : if ($i === 6) break; ?>
                                 <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Total') ?></td>
                                 <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Women') ?></td>
-                            <? endforeach; ?>
+                            <?php endforeach; ?>
                         </tr>
                         <tr>
                             <td class="text-center" ng-repeat-start="c in cols | limitTo: 6">
@@ -73,7 +73,7 @@ $titles = [
                             <?php foreach ($titles as $i => $title) : if ($i >= 7) { ?>
                                     <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Total') ?></td>
                                     <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Women') ?></td>
-                            <? }
+                            <?php }
                             endforeach; ?>
                             <td class="text-center" style="width: 8%">ປັບປຸງແລ້ວ</td>
                             <td class="text-center" style="width: 8%">ຍັງບໍ່ປັບປຸງ</td>
