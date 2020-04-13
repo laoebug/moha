@@ -21,16 +21,10 @@ $titles = [
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="statLocalAdminController">
-
     <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
     <div class="col-sm-4">
         <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
     </div>
-    <!-- <div class="col-sm-8">
-            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
-                {{response.statusText}}
-            </div>
-        </div> -->
 
     <div class="col-sm-12">
         <div class="panel panel-primary" style="margin-top: 2em" ng-show="year != null">
@@ -40,32 +34,28 @@ $titles = [
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-2">
                     <label for=""><?= Yii::t('app', 'Province') ?></label>
-                    <select class="form-control" ng-model="model.province"
-                            ng-options="b.province_name for b in provinces"
-                            ng-change="inquiry()">
+                    <select class="form-control" ng-model="model.province" ng-options="b.province_name for b in provinces" ng-change="inquiry()">
                     </select>
                 </div>
                 <div class="col-sm-10">
                     <table class="table table-bordered">
                         <tr>
-                            <?php foreach ($titles as $i => $title): if ($i === 6) break; ?>
+                            <?php foreach ($titles as $i => $title) : if ($i === 6) break; ?>
                                 <td class="text-center" colspan="2"><?= $title ?></td>
                             <?php endforeach; ?>
                         </tr>
                         <tr>
-                            <?php foreach ($titles as $i => $title): if ($i === 6) break; ?>
+                            <?php foreach ($titles as $i => $title) : if ($i === 6) break; ?>
                                 <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Total') ?></td>
                                 <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Women') ?></td>
-                            <? endforeach; ?>
+                            <?php endforeach; ?>
                         </tr>
                         <tr>
                             <td class="text-center" ng-repeat-start="c in cols | limitTo: 6">
                                 <input min="0" type="number" class="form-control" ng-model="model[c.first]">
                             </td>
                             <td class="text-center" ng-repeat-end>
-                                <input ng-blur="model[c.second]=model[c.first] < model[c.second]?null:model[c.second]"
-                                       min="0" max="{{model[c.first]}}" type="number" class="form-control"
-                                       ng-model="model[c.second]">
+                                <input ng-blur="model[c.second]=model[c.first] < model[c.second]?null:model[c.second]" min="0" max="{{model[c.first]}}" type="number" class="form-control" ng-model="model[c.second]">
                             </td>
                         </tr>
                     </table>
@@ -74,15 +64,17 @@ $titles = [
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <?php foreach ($titles as $i => $title): if ($i >= 6) { ?>
-                                <td class="text-center" colspan="2"><?= $title ?></td>
-                            <?php } endforeach; ?>
+                            <?php foreach ($titles as $i => $title) : if ($i >= 6) { ?>
+                                    <td class="text-center" colspan="2"><?= $title ?></td>
+                            <?php }
+                            endforeach; ?>
                         </tr>
                         <tr>
-                            <?php foreach ($titles as $i => $title): if ($i >= 7) { ?>
-                                <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Total') ?></td>
-                                <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Women') ?></td>
-                            <? } endforeach; ?>
+                            <?php foreach ($titles as $i => $title) : if ($i >= 7) { ?>
+                                    <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Total') ?></td>
+                                    <td class="text-center" style="width: 8%"><?= Yii::t('app', 'Women') ?></td>
+                            <?php }
+                            endforeach; ?>
                             <td class="text-center" style="width: 8%">ປັບປຸງແລ້ວ</td>
                             <td class="text-center" style="width: 8%">ຍັງບໍ່ປັບປຸງ</td>
                         </tr>
@@ -91,9 +83,7 @@ $titles = [
                                 <input min="0" type="number" class="form-control" ng-model="model[c.first]">
                             </td>
                             <td class="text-center" ng-repeat-end>
-                                <input ng-blur="model[c.second]=model[c.first] < model[c.second]?null:model[c.second]"
-                                       min="0" max="{{model[c.first]}}" type="number" class="form-control"
-                                       ng-model="model[c.second]">
+                                <input ng-blur="model[c.second]=model[c.first] < model[c.second]?null:model[c.second]" min="0" max="{{model[c.first]}}" type="number" class="form-control" ng-model="model[c.second]">
                             </td>
                         </tr>
                     </table>
@@ -118,44 +108,42 @@ $titles = [
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?></h3>
                             <p>
-                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                            class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i>
                                 </a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover" ng-show="models">
                             <thead>
-                            <tr>
-                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
-                                <?php foreach ($titles as $title): ?>
-                                    <th class="text-center" colspan="2"><?= $title ?></th>
-                                <?php endforeach; ?>
-                            </tr>
-                            <tr>
-                                <?php for ($i = 0; $i < 10; $i++): ?>
-                                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                                <?php endfor; ?>
-                                <td class="text-center">ປັບປຸງແລ້ວ</td>
-                                <td class="text-center">ຍັງບໍ່ປັບປຸງ</td>
-                            </tr>
-                            <tr>
-                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                                <th class="text-center" ng-repeat-start="c in cols">{{sum(c.first) | number | dash}}
-                                </th>
-                                <th class="text-center" ng-repeat-end>{{sum(c.second) | number | dash}}</th>
-                            </tr>
+                                <tr>
+                                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
+                                    <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
+                                    <?php foreach ($titles as $title) : ?>
+                                        <th class="text-center" colspan="2"><?= $title ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr>
+                                    <?php for ($i = 0; $i < 10; $i++) : ?>
+                                        <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                        <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                    <?php endfor; ?>
+                                    <td class="text-center">ປັບປຸງແລ້ວ</td>
+                                    <td class="text-center">ຍັງບໍ່ປັບປຸງ</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                                    <th class="text-center" ng-repeat-start="c in cols">{{sum(c.first) | number | dash}}
+                                    </th>
+                                    <th class="text-center" ng-repeat-end>{{sum(c.second) | number | dash}}</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="m in models">
-                                <td class="text-center">{{$index + 1}}</td>
-                                <td>{{m.province_name}}</td>
-                                <td class="text-center" ng-repeat-start="c in cols">{{m[c.first] | number | dash}}</td>
-                                <td class="text-center" ng-repeat-end>{{m[c.second] | number | dash}}</td>
-                            </tr>
+                                <tr ng-repeat="m in models">
+                                    <td class="text-center">{{$index + 1}}</td>
+                                    <td>{{m.province_name}}</td>
+                                    <td class="text-center" ng-repeat-start="c in cols">{{m[c.first] | number | dash}}</td>
+                                    <td class="text-center" ng-repeat-end>{{m[c.second] | number | dash}}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -226,94 +214,127 @@ $titles = [
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
     var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-    app.filter('dash', function () {
-        return function (input) {
+    app.filter('dash', function() {
+        return function(input) {
             return input ? input : '-';
         };
     });
-    app.controller('statLocalAdminController', function ($scope, $http, $sce, $timeout) {
+    app.controller('statLocalAdminController', function($scope, $http, $sce, $timeout) {
         $scope.url = 'index.php?r=stat-local-admin/';
         $scope.mode = 'read';
-        $scope.changemode = function () {
+        $scope.changemode = function() {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
-        $scope.cols = [
-            {first: 'capital_head_total', second: 'capital_head_women'},
-            {first: 'capital_vice_total', second: 'capital_vice_women'},
-            {first: 'province_head_total', second: 'province_head_women'},
-            {first: 'province_vice_total', second: 'province_vice_women'},
-            {first: 'city_head_total', second: 'city_head_women'},
-            {first: 'city_vice_total', second: 'city_vice_women'},
-            {first: 'district_head_total', second: 'district_head_women'},
-            {first: 'district_vice_total', second: 'district_vice_women'},
-            {first: 'village_head_total', second: 'village_head_women'},
-            {first: 'village_vice_total', second: 'village_vice_women'},
-            {first: 'village_approved', second: 'village_pending'}
+        $scope.cols = [{
+                first: 'capital_head_total',
+                second: 'capital_head_women'
+            },
+            {
+                first: 'capital_vice_total',
+                second: 'capital_vice_women'
+            },
+            {
+                first: 'province_head_total',
+                second: 'province_head_women'
+            },
+            {
+                first: 'province_vice_total',
+                second: 'province_vice_women'
+            },
+            {
+                first: 'city_head_total',
+                second: 'city_head_women'
+            },
+            {
+                first: 'city_vice_total',
+                second: 'city_vice_women'
+            },
+            {
+                first: 'district_head_total',
+                second: 'district_head_women'
+            },
+            {
+                first: 'district_vice_total',
+                second: 'district_vice_women'
+            },
+            {
+                first: 'village_head_total',
+                second: 'village_head_women'
+            },
+            {
+                first: 'village_vice_total',
+                second: 'village_vice_women'
+            },
+            {
+                first: 'village_approved',
+                second: 'village_pending'
+            }
         ];
         $scope.sum = [];
         $http.get($scope.url + 'get')
-            .then(function (r) {
+            .then(function(r) {
                 $scope.years = r.data.years;
                 $scope.provinces = r.data.provinces;
-            }, function (r) {
+            }, function(r) {
                 $scope.response = r;
-                $timeout(function () {
+                $timeout(function() {
                     $scope.response = null;
                 }, 15000);
             });
 
-        $scope.enquiry = function () {
+        $scope.enquiry = function() {
             $scope.model = null;
             $scope.models = null;
             if ($scope.year)
                 $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-                    .then(function (r) {
-                        $scope.models = r.data.models;
-                        $scope.getreferences();
-                    }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
+                .then(function(r) {
+                    $scope.models = r.data.models;
+                    $scope.getreferences();
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function() {
+                        $scope.response = null;
+                    }, 15000);
+                });
         };
 
-        $scope.inquiry = function () {
+        $scope.inquiry = function() {
             if ($scope.year && $scope.model.province)
                 $http.get($scope.url + 'inquiry&province=' + $scope.model.province.id + '&year=' + $scope.year.id)
-                    .then(function (r) {
-                        if (r.data.model) {
-                            $scope.cols.forEach(function (n) {
-                                $scope.model[n.first] = parseInt(r.data.model[n.first]);
-                                $scope.model[n.second] = parseInt(r.data.model[n.second]);
-                            });
-                        } else {
-                            $scope.cols.forEach(function (n) {
-                                $scope.model[n.first] = null;
-                                $scope.model[n.second] = null;
-                            });
-                        }
-                    }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
+                .then(function(r) {
+                    if (r.data.model) {
+                        $scope.cols.forEach(function(n) {
+                            $scope.model[n.first] = parseInt(r.data.model[n.first]);
+                            $scope.model[n.second] = parseInt(r.data.model[n.second]);
+                        });
+                    } else {
+                        $scope.cols.forEach(function(n) {
+                            $scope.model[n.first] = null;
+                            $scope.model[n.second] = null;
+                        });
+                    }
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function() {
+                        $scope.response = null;
+                    }, 15000);
+                });
         };
 
-        $scope.save = function () {
+        $scope.save = function() {
             if ($scope.year && $scope.model) {
 
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
                     'StatLocalAdminDetail': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function (r) {
+                }).then(function(r) {
                     $scope.model = null;
                     $scope.response = r;
                     $scope.enquiry();
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
-                    }, 15000);if (r.status == 200) {
+                    }, 15000);
+                    if (r.status == 200) {
                         Swal.fire({
                             position: 'top-end',
                             type: 'success',
@@ -323,11 +344,12 @@ $titles = [
                             timer: 3000
                         });
                     }
-                }, function (r) {
+                }, function(r) {
                     $scope.response = r;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
-                    }, 15000);Swal.fire({
+                    }, 15000);
+                    Swal.fire({
                         position: 'top-end',
                         type: 'error',
                         title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
@@ -349,14 +371,15 @@ $titles = [
         };
 
 
-        $scope.uploadedFile = function (element) {
+        $scope.uploadedFile = function(element) {
             if (!$scope.issued_no) {
                 $scope.files = null;
                 Swal.fire({
                     title: 'ອັບໂຫຼດຟາຍ',
                     type: 'warning',
                     text: 'ກະລຸນາປ້ອນເລກທີ',
-        });        return;
+                });
+                return;
             }
             $scope.issued_date = $('#issued_date').val();
             if (!$scope.issued_date) {
@@ -370,43 +393,45 @@ $titles = [
                 return;
             }
 
-            $scope.$apply(function ($scope) {
+            $scope.$apply(function($scope) {
                 $scope.files = element.files;
                 $http({
                     url: $scope.url + "upload&year=" + $scope.year.id,
                     method: "POST",
                     processData: false,
-                    headers: {'Content-Type': undefined
-                    },data: {
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    data: {
                         '_csrf': $('meta[name="csrf-token"]').attr("content"),
                         'issued_no': $scope.issued_no,
                         'issued_date': $scope.issued_date,
                         'issued_by': $scope.issued_by
                     },
-                    transformRequest: function (data) {
+                    transformRequest: function(data) {
                         var formData = new FormData();
                         var file = $scope.files[0];
                         formData.append("file_upload", file);
-                        angular.forEach(data, function (value, key) {
+                        angular.forEach(data, function(value, key) {
                             formData.append(key, value);
                         });
                         return formData;
                     }
                 }).then(
                     function(r) {
-                    $scope.getreferences();
-                    $scope.issued_date = null;
-                    $scope.issued_no = null;
-                    $scope.issued_by = null;
-                    $("input[name='image'], #issued_date").val("");
-                    $scope.status = r.status;
-                    $scope.formdata = "";
-                Swal.fire({
+                        $scope.getreferences();
+                        $scope.issued_date = null;
+                        $scope.issued_no = null;
+                        $scope.issued_by = null;
+                        $("input[name='image'], #issued_date").val("");
+                        $scope.status = r.status;
+                        $scope.formdata = "";
+                        Swal.fire({
                             position: 'top-end',
                             type: 'success',
                             title: 'ອັບໂຫລດຟາຍສໍາເລັດ',
                             text: r.status + " " + r.statusText,
-                    showConfirmButton: false,
+                            showConfirmButton: false,
                             timer: 3000
                         });
                     },
@@ -421,7 +446,7 @@ $titles = [
                             timer: 3000
                         });
                     });
-                });
+            });
 
         };
 
@@ -485,8 +510,6 @@ $titles = [
                                 showConfirmButton: false,
                                 timer: 3000
                             });
-
-
                             $timeout(function() {
                                 $scope.response = null;
                             }, 15000);

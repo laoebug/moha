@@ -12,8 +12,7 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()"
-                    ng-options="y.year for y in years"></select>
+            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
         </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -30,7 +29,7 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <?php foreach ($titles as $title): ?>
+                            <?php foreach ($titles as $title) : ?>
                                 <td class="text-center" style="width: 15%"><?= $title ?></td>
                             <?php endforeach; ?>
                             <td></td>
@@ -40,16 +39,13 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
                                 <input class="form-control" ng-model="model[c.col]">
                             </td>
                             <td>
-                                <button ng-class="model.id ? 'col-sm-4' : 'col-sm-12'" type="button"
-                                        class="btn btn-primary" ng-click="add()">
+                                <button ng-class="model.id ? 'col-sm-4' : 'col-sm-12'" type="button" class="btn btn-primary" ng-click="add()">
                                     <i class="fa fa-plus"></i> ເພີ່ມ
                                 </button>
-                                <button ng-if="model.id" type="button" class="btn btn-info col-sm-4"
-                                        ng-click="update()">
+                                <button ng-if="model.id" type="button" class="btn btn-info col-sm-4" ng-click="update()">
                                     <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
                                 </button>
-                                <button ng-if="model.id" type="button" class="btn btn-danger col-sm-4"
-                                        ng-click="remove()">
+                                <button ng-if="model.id" type="button" class="btn btn-danger col-sm-4" ng-click="remove()">
                                     <i class="fa fa-trash"></i> ລຶບ
                                 </button>
                             </td>
@@ -71,28 +67,26 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?></h3>
                             <p>
-                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                        class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                        class="fa fa-download fa-2x"></i>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i>
                                 </a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover" ng-show="models">
                             <thead>
-                            <tr>
-                                <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
-                                <?php foreach ($titles as $title): ?>
-                                    <th class="text-center"><?= $title ?></th>
-                                <?php endforeach; ?>
-                            </tr>
+                                <tr>
+                                    <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
+                                    <?php foreach ($titles as $title) : ?>
+                                        <th class="text-center"><?= $title ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="m in models" ng-click="select(m)">
-                                <td class="text-center">{{$index + 1}}</td>
-                                <td class="text-center" ng-repeat="c in cols">{{m[c.col]}}</td>
-                                </td>
-                            </tr>
+                                <tr ng-repeat="m in models" ng-click="select(m)">
+                                    <td class="text-center">{{$index + 1}}</td>
+                                    <td class="text-center" ng-repeat="c in cols">{{m[c.col]}}</td>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -105,8 +99,7 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
                         </div>
                         <div class="col-sm-3">
                             <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
-                                   type="text">
+                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
                         </div>
                         <div class="col-sm-3">
                             <label>ອອກໂດຍ</label>
@@ -115,37 +108,36 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
 
                         <div class="col-sm-3">
                             <label>ເລືອກໄຟລ໌</label>
-                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"
-                                   class="form-control" required>
+                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);" class="form-control" required>
                         </div>
 
                         <div class="col-sm-12" ng-if="references">
                             <div class="card">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">ວັນທີອັບໂຫຼດ</th>
-                                        <th class="text-center">ຊື່</th>
-                                        <th class="text-center">ເລກທີ</th>
-                                        <th class="text-center">ລົງວັນທີ</th>
-                                        <th class="text-center">ອອກໂດຍ</th>
-                                        <th class="text-center">ລຶບ</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">ວັນທີອັບໂຫຼດ</th>
+                                            <th class="text-center">ຊື່</th>
+                                            <th class="text-center">ເລກທີ</th>
+                                            <th class="text-center">ລົງວັນທີ</th>
+                                            <th class="text-center">ອອກໂດຍ</th>
+                                            <th class="text-center">ລຶບ</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="f in references">
-                                        <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
-                                        </td>
-                                        <td class="text-center">{{f.issued_no}}</td>
-                                        <td class="text-center">{{f.issued_date | date}}</td>
-                                        <td class="text-center">{{f.issued_by}}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="f in references">
+                                            <td class="text-center">{{f.upload_date}}</td>
+                                            <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                            </td>
+                                            <td class="text-center">{{f.issued_no}}</td>
+                                            <td class="text-center">{{f.issued_date | date}}</td>
+                                            <td class="text-center">{{f.issued_by}}</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -162,84 +154,93 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
     var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-    app.filter('dash', function () {
-        return function (input) {
+    app.filter('dash', function() {
+        return function(input) {
             return input ? input : '-';
         };
     });
-    app.controller('statMapCreateController', function ($scope, $http, $sce, $timeout) {
+    app.controller('statMapCreateController', function($scope, $http, $sce, $timeout) {
         $scope.url = 'index.php?r=stat-map-create/';
         $scope.mode = 'read';
         $scope.model = {};
         $scope.models = null;
-        $scope.changemode = function () {
+        $scope.changemode = function() {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
-        $scope.cols = [
-            {col: 'title'},
-            {col: 'place'},
-            {col: 'ratio'},
-            {col: 'duration'},
-            {col: 'remark'},
+        $scope.cols = [{
+                col: 'title'
+            },
+            {
+                col: 'place'
+            },
+            {
+                col: 'ratio'
+            },
+            {
+                col: 'duration'
+            },
+            {
+                col: 'remark'
+            },
         ];
-        $scope.cols.forEach(function (col) {
+        $scope.cols.forEach(function(col) {
             $scope.model[col.col] = null;
         });
         $http.get($scope.url + 'get')
-            .then(function (r) {
+            .then(function(r) {
                 $scope.years = r.data.years;
-            }, function (r) {
+            }, function(r) {
                 $scope.response = r;
-                $timeout(function () {
+                $timeout(function() {
                     $scope.response = null;
                 }, 15000);
             });
 
-        $scope.select = function (model) {
+        $scope.select = function(model) {
             $scope.model = model;
         };
 
-        $scope.enquiry = function () {
+        $scope.enquiry = function() {
             $scope.models = null;
             if ($scope.year)
                 $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-                    .then(function (r) {
-                        $scope.models = r.data.models;
-                        $scope.getreferences();
-                    }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
+                .then(function(r) {
+                    $scope.models = r.data.models;
+                    $scope.getreferences();
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function() {
+                        $scope.response = null;
+                    }, 15000);
+                });
         };
-        $scope.add = function () {
+        $scope.add = function() {
             $scope.model.id = null;
             $scope.update();
         };
 
-        $scope.update = function () {
+        $scope.update = function() {
             if ($scope.year && $scope.model) {
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
                     'StatMapCreate': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function (r) {
+                }).then(function(r) {
                     $scope.model = null;
                     $scope.response = r;
                     $scope.enquiry();
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
-                }, function (r) {
+                }, function(r) {
                     $scope.response = r;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
                 });
             }
         };
 
-        $scope.remove = function () {
+        $scope.remove = function() {
             if ($scope.model) {
                 swal({
                     title: "ໝັ້ນໃຈບໍ່?",
@@ -250,21 +251,21 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
                     cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
                     closeOnConfirm: true,
                     closeOnCancel: true
-                }, function (isConfirm) {
+                }, function(isConfirm) {
                     if (isConfirm) {
                         $http.post($scope.url + 'delete&id=' + $scope.model.id, {
                             'StatMapCreate': $scope.model,
                             '_csrf': $('meta[name="csrf-token"]').attr("content")
-                        }).then(function (r) {
+                        }).then(function(r) {
                             $scope.model = null;
                             $scope.response = r;
                             $scope.enquiry();
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
-                        }, function (r) {
+                        }, function(r) {
                             $scope.response = r;
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
                         });
@@ -273,7 +274,7 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
             }
         };
 
-        $scope.uploadedFile = function (element) {
+        $scope.uploadedFile = function(element) {
             if (!$scope.issued_no) {
                 $scope.files = null;
                 alert('ກະລຸນາປ້ອນເລກທີ');
@@ -286,29 +287,31 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
                 return;
             }
 
-            $scope.$apply(function ($scope) {
+            $scope.$apply(function($scope) {
                 $scope.files = element.files;
                 $http({
                     url: $scope.url + "upload&year=" + $scope.year.id,
                     method: "POST",
                     processData: false,
-                    headers: {'Content-Type': undefined},
+                    headers: {
+                        'Content-Type': undefined
+                    },
                     data: {
                         '_csrf': $('meta[name="csrf-token"]').attr("content"),
                         'issued_no': $scope.issued_no,
                         'issued_date': $scope.issued_date,
                         'issued_by': $scope.issued_by
                     },
-                    transformRequest: function (data) {
+                    transformRequest: function(data) {
                         var formData = new FormData();
                         var file = $scope.files[0];
                         formData.append("file_upload", file);
-                        angular.forEach(data, function (value, key) {
+                        angular.forEach(data, function(value, key) {
                             formData.append(key, value);
                         });
                         return formData;
                     }
-                }).success(function (data, status, headers, config) {
+                }).success(function(data, status, headers, config) {
                     $scope.getreferences();
                     $scope.issued_date = null;
                     $scope.issued_no = null;
@@ -316,31 +319,31 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
                     $("input[name='image'], #issued_date").val("");
                     $scope.status = data.status;
                     $scope.formdata = "";
-                }).error(function (data, status, headers, config) {
+                }).error(function(data, status, headers, config) {
                     $scope.response = data;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
                 });
             });
         };
 
-        $scope.getreferences = function () {
+        $scope.getreferences = function() {
             if ($scope.year) {
                 $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-                    .then(function (r) {
+                    .then(function(r) {
                         if (r.data)
                             $scope.references = r.data.files;
-                    }, function (r) {
+                    }, function(r) {
                         $scope.response = r;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.response = null;
                         }, 15000);
                     });
             }
         };
 
-        $scope.deletefile = function (f) {
+        $scope.deletefile = function(f) {
             if ($scope.year && f) {
                 swal({
                     title: "ໝັ້ນໃຈບໍ່?",
@@ -351,20 +354,20 @@ $titles = ['ເນື້ອໃນສ້າງແຜນທີ່', 'ຂົງເ�
                     cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
                     closeOnConfirm: true,
                     closeOnCancel: true
-                }, function (isConfirm) {
+                }, function(isConfirm) {
                     if (isConfirm) {
                         $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
                             'id': f.id,
                             '_csrf': $('meta[name="csrf-token"]').attr("content")
-                        }).then(function (r) {
+                        }).then(function(r) {
                             $scope.response = r;
                             $scope.getreferences();
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
-                        }, function (r) {
+                        }, function(r) {
                             $scope.response = r;
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
                         });

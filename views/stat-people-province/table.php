@@ -19,7 +19,7 @@ foreach ($models as $model)
 <div class="row">
     <div ng-show="models" class="col-sm-12 card" style="margin-top: 2em;overflow-x: scroll">
         <div class="card-title-w-btn ">
-            <h3>ການສົມທຽບສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງ</h3>
+            <h3>ຈຳນວນພົນລະເມືອງທັງໝົດທົ່ວປະເທດ</h3>
         </div>
         <table class="table table-bordered table-hover">
             <thead>
