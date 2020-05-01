@@ -5,7 +5,8 @@ use yii\db\Migration;
 class m180202_175508_transl_a_menu extends Migration
 {
 
-	public function safeUp() {
+	public function safeUp()
+	{
 		$sql = "
             set foreign_key_checks=0;
 			TRUNCATE TABLE  `moha`.`menu`;
@@ -308,7 +309,7 @@ VALUES
 	(204, 'app', 'Ethnics'),
 	(205, 'app', 'Create Ethnic'),
 	(206, 'app', 'Ethnic'),
-	(207, 'app', 'Inccorect Request Method'),
+	(207, 'app', 'Incorrect Request Method'),
 	(208, 'app', 'Religion & Other Believes'),
 	(209, 'app', 'Statistics of Religions & Other Believes'),
 	(210, 'app', 'Others'),
@@ -748,7 +749,7 @@ VALUES
 	(734, 'app', 'ປະເພດຫຼຽນກາຕ່າງໆ ແລະ ໃບຍ້ອງຍໍລັດຖະບານ ສຳລັບຍ້ອງຍໍຕ່າງປະເທດຂອງບັນດາກະຊວງ, ອົງການ'),
 	(735, 'app', 'ປະເພດຫຼຽນກາສຳລັບຍ້ອງຍໍພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນຫຼວງ'),
 	(736, 'app', 'ຕາຕະລາງສັງລວມຈຳນວນລັດຖະກອນແຍກຕາມຊັ້ນ-ຂັ້ນເງິນເດືອນ ແຕ່ຊັ້ນ I ເຖິງ ຊັ້ນ V'),
-	(737, 'app', 'Inccorect Phiscal Year'),
+	(737, 'app', 'Incorrect Phiscal Year'),
 	(738, 'app', 'Womwn'),
 	(739, 'app', 'ພະ'),
 	(740, 'app', 'ຈົວ'),
@@ -801,7 +802,7 @@ VALUES
 	(789, 'app', 'Selecct All'),
 	(790, 'app', 'Stat Odas'),
 	(804, 'app', 'Clear'),
-	(805, 'app', 'Inccorect Request'),
+	(805, 'app', 'Incorrect Request'),
 	(806, 'app', 'Data Not Found'),
 	(807, 'app', 'Is Province'),
 	(808, 'app', 'Is Province Role'),
@@ -1595,9 +1596,10 @@ VALUES
 				
 	        set foreign_key_checks=1;
             ";
-		$this->execute ( $sql );
+		$this->execute($sql);
 	}
-	public function safeDown() {
+	public function safeDown()
+	{
 		$sql = "
             set foreign_key_checks=0;
    			TRUNCATE TABLE  `moha`.`menu`;
@@ -1605,6 +1607,6 @@ VALUES
 			TRUNCATE TABLE  `moha`.`source_message`;			
             set foreign_key_checks=1;
             ";
-		$this->execute ( $sql );
+		$this->execute($sql);
 	}
 }

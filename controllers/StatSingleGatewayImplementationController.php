@@ -65,7 +65,7 @@ class StatSingleGatewayImplementationController extends BaseController
         }
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -100,8 +100,8 @@ class StatSingleGatewayImplementationController extends BaseController
             ];
 
             $models = Ministry::findBySql($sql, $params)->asArray()->all();
-        }else{
-            $models=[];
+        } else {
+            $models = [];
         }
         return json_encode([
             'models' => $models,
@@ -121,7 +121,7 @@ class StatSingleGatewayImplementationController extends BaseController
         }
 
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) throw new HttpException(Yii::t('app', 'Incorrect Phiscal Year'));
 
         $model = StatSingleGatewayImplementationDetail::find()
             ->alias('d')
@@ -158,7 +158,7 @@ class StatSingleGatewayImplementationController extends BaseController
         if (isset($post)) {
             $year = PhiscalYear::findOne($year);
             if (!isset($year)) {
-                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
                 return;
             }
             if ($year->status != 'O') {
@@ -219,7 +219,7 @@ class StatSingleGatewayImplementationController extends BaseController
 
     //     $year = PhiscalYear::findOne($year);
     //     if (!isset($year)) {
-    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
     //         return;
     //     }
 
@@ -248,11 +248,11 @@ class StatSingleGatewayImplementationController extends BaseController
         }
         $year = PhiscalYear::findOne($year);
 
-        //if (!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+        //if (!isset($year)) throw new HttpException(Yii::t('app', 'Incorrect Phiscal Year'));
 
         $model = StatSingleGatewayImplementation::find()->where(['phiscal_year_id' => $year])->one();
 
-        $models=[];
+        $models = [];
         if (isset($model)) {
             $params = [];
             $sql = " select m.*,d.name as  servicename,  d.remark,DATE_FORMAT(d.start_date, '%d-%m-%Y') as start_date   from (select mi.* from ministry mi ";
@@ -267,12 +267,12 @@ class StatSingleGatewayImplementationController extends BaseController
             ];
 
             $models = Ministry::findBySql($sql, $params)->all();
-        }else{
+        } else {
 
-            $models=[];
+            $models = [];
         }
 
-        return $this->renderPartial('print', ['content' => $this->renderPartial('table', ['models' => $models,'model'=>$model])]);
+        return $this->renderPartial('print', ['content' => $this->renderPartial('table', ['models' => $models, 'model' => $model])]);
     }
 
     public function actionDelete()
@@ -298,11 +298,11 @@ class StatSingleGatewayImplementationController extends BaseController
         }
         $year = PhiscalYear::findOne($year);
 
-        //if (!isset($year)) throw new HttpException(Yii::t('app', 'Inccorect Phiscal Year'));
+        //if (!isset($year)) throw new HttpException(Yii::t('app', 'Incorrect Phiscal Year'));
 
         $model = StatSingleGatewayImplementation::find()->where(['phiscal_year_id' => $year])->one();
 
-        $models=[];
+        $models = [];
         if (isset($model)) {
             $params = [];
             $sql = " select m.*,d.name as  servicename,  d.remark,DATE_FORMAT(d.start_date, '%d-%m-%Y') as start_date   from (select mi.* from ministry mi ";
@@ -317,14 +317,14 @@ class StatSingleGatewayImplementationController extends BaseController
             ];
 
             $models = Ministry::findBySql($sql, $params)->all();
-        }else{
+        } else {
 
-            $models=[];
+            $models = [];
         }
 
         return $this->renderPartial('excel', [
             'file' => 'Single Gateway Implementation ' . $year->year . '.xls',
-            'content' => $this->renderPartial('table', ['models' => $models,'model' => $model])
+            'content' => $this->renderPartial('table', ['models' => $models, 'model' => $model])
         ]);
     }
 
@@ -344,7 +344,7 @@ class StatSingleGatewayImplementationController extends BaseController
 
     //     $year = PhiscalYear::findOne($year);
     //     if (!isset($year)) {
-    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
     //         return;
     //     }
 
@@ -481,6 +481,4 @@ class StatSingleGatewayImplementationController extends BaseController
             }
         }
     }
-
-
 }

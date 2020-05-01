@@ -65,7 +65,7 @@ class StatOfficerResignController extends Controller
         }
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -93,7 +93,7 @@ class StatOfficerResignController extends Controller
         }
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -121,12 +121,12 @@ class StatOfficerResignController extends Controller
 
         $post = Yii::$app->request->post();
         if (!isset($post['Model'])) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Incorrect Request Method'));
             return;
         }
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
         if ($year->status != 'O') {
@@ -180,7 +180,7 @@ class StatOfficerResignController extends Controller
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -208,7 +208,7 @@ class StatOfficerResignController extends Controller
         }
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 

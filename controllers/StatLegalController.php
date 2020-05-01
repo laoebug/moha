@@ -21,7 +21,7 @@ use yii\web\Controller;
  */
 class StatLegalController extends BaseController
 {
-   
+
     /**
      * Lists all StatLegal models.
      * @return mixed
@@ -76,7 +76,7 @@ class StatLegalController extends BaseController
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -122,14 +122,14 @@ class StatLegalController extends BaseController
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatLegal::find()->where(['phiscal_year_id' => $year->id])->one();
         $models = [];
         if (!isset($model)) {
-            
+
             $models = [];
         } else {
 
@@ -141,8 +141,8 @@ class StatLegalController extends BaseController
                             ->select('d.*')
                             ->alias('d')
                             ->join('join', 'legal_type lt', 'd.legal_type_id = lt.id')
-                            ->join('join', 'stat_legal sl','sl.id = d.stat_legal_id')
-                            ->join('join', 'phiscal_year phy','phy.id = sl.phiscal_year_id and sl.phiscal_year_id=:phiscal_year_id',[':phiscal_year_id'=>$year->id])
+                            ->join('join', 'stat_legal sl', 'sl.id = d.stat_legal_id')
+                            ->join('join', 'phiscal_year phy', 'phy.id = sl.phiscal_year_id and sl.phiscal_year_id=:phiscal_year_id', [':phiscal_year_id' => $year->id])
                             ->orderBy('d.id DESC');
                     }
 
@@ -150,7 +150,7 @@ class StatLegalController extends BaseController
                 ->where(['deleted' => 0])
                 ->orderBy('position')->asArray()->all();
         }
-         
+
         return json_encode([
             'models' => $models
         ]);
@@ -172,7 +172,7 @@ class StatLegalController extends BaseController
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -201,23 +201,23 @@ class StatLegalController extends BaseController
         }
 
         $post = Yii::$app->request->post();
-       
+
 
         if (!isset($post['StatLegalDetail'])) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Incorrect Request Method'));
             return;
         }
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
         if ($year->status != 'O') {
             MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allowed to input'));
             return;
         }
-       
-        
+
+
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model = StatLegal::find()->where(['phiscal_year_id' => $year->id])->one();
@@ -229,22 +229,22 @@ class StatLegalController extends BaseController
             $model->last_update = date('Y-m-d H:i:s');
             $model->saved = 1;
             if (!$model->save()) throw new Exception(json_encode($model->errors));
-            
+
             // $detail = StatLegalDetail::find()->alias('d')
             //     ->join('join', 'stat_legal l', 'd.stat_legal_id=l.id and l.phiscal_year_id=:year', [':year' => $year->id])
             //     ->where(['legal_name' => $post['StatLegalDetail']['legal_name']])
             //     ->one();
-            $detail = new StatLegalDetail();        
-            if (isset($post['StatLegalDetail']['id'])) {                                            
+            $detail = new StatLegalDetail();
+            if (isset($post['StatLegalDetail']['id'])) {
                 $detail = StatLegalDetail::find()->where('id = :id', [':id' => $post['StatLegalDetail']['id']])->one();
-            }                    
-            
-            
-            $detail->legal_name = $post['StatLegalDetail']['legal_name'];            
-            $detail->stat_legal_id = $model->id;           
+            }
+
+
+            $detail->legal_name = $post['StatLegalDetail']['legal_name'];
+            $detail->stat_legal_id = $model->id;
             $detail->legal_type_id = $post['StatLegalDetail']['legalType'];
-            
-            $detail->load($post);            
+
+            $detail->load($post);
             if (!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
         } catch (Exception $exception) {
@@ -252,7 +252,6 @@ class StatLegalController extends BaseController
             MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
             return;
         }
-        
     }
 
 
@@ -274,12 +273,12 @@ class StatLegalController extends BaseController
 
     //         $post = Yii::$app->request->post();
     //         if(!isset($post['StatLegalDetail'])) {
-    //             MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+    //             MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Incorrect Request Method'));
     //             return;
     //         }
     //         $year = PhiscalYear::findOne($year);
     //         if(!isset($year)) {
-    //             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+    //             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
     //             return;
     //         }
     //         if($year->status != 'O') {
@@ -326,7 +325,7 @@ class StatLegalController extends BaseController
     {
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -351,21 +350,21 @@ class StatLegalController extends BaseController
         //     ->orderBy('position')->asArray()->all();
 
         $models = LegalType::find()
-                ->alias('t')
-                ->with([
-                    'statLegalDetails' => function (ActiveQuery $query) use ($year, $model) {
-                        $query->where('stat_legal_id=:stat_legal_id', [':stat_legal_id' => $model->id])
-                            ->select('d.*')
-                            ->alias('d')
-                            ->join('join', 'legal_type lt', 'd.legal_type_id = lt.id')
-                            ->join('join', 'stat_legal sl','sl.id = d.stat_legal_id')
-                            ->join('join', 'phiscal_year phy','phy.id = sl.phiscal_year_id and sl.phiscal_year_id=:phiscal_year_id',[':phiscal_year_id'=>$year->id])
-                            ->orderBy('d.id DESC');
-                    }
+            ->alias('t')
+            ->with([
+                'statLegalDetails' => function (ActiveQuery $query) use ($year, $model) {
+                    $query->where('stat_legal_id=:stat_legal_id', [':stat_legal_id' => $model->id])
+                        ->select('d.*')
+                        ->alias('d')
+                        ->join('join', 'legal_type lt', 'd.legal_type_id = lt.id')
+                        ->join('join', 'stat_legal sl', 'sl.id = d.stat_legal_id')
+                        ->join('join', 'phiscal_year phy', 'phy.id = sl.phiscal_year_id and sl.phiscal_year_id=:phiscal_year_id', [':phiscal_year_id' => $year->id])
+                        ->orderBy('d.id DESC');
+                }
 
-                ])
-                ->where(['deleted' => 0])
-                ->orderBy('position')->asArray()->all();
+            ])
+            ->where(['deleted' => 0])
+            ->orderBy('position')->asArray()->all();
 
 
         return $this->renderPartial('../ministry/print', [
@@ -377,7 +376,7 @@ class StatLegalController extends BaseController
     {
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -402,23 +401,23 @@ class StatLegalController extends BaseController
         //     ->orderBy('position')->asArray()->all();
 
         $models = LegalType::find()
-                ->alias('t')
-                ->with([
-                    'statLegalDetails' => function (ActiveQuery $query) use ($year, $model) {
-                        $query->where('stat_legal_id=:stat_legal_id', [':stat_legal_id' => $model->id])
-                            ->select('d.*')
-                            ->alias('d')
-                            ->join('join', 'legal_type lt', 'd.legal_type_id = lt.id')
-                            ->join('join', 'stat_legal sl','sl.id = d.stat_legal_id')
-                            ->join('join', 'phiscal_year phy','phy.id = sl.phiscal_year_id and sl.phiscal_year_id=:phiscal_year_id',[':phiscal_year_id'=>$year->id])
-                            ->orderBy('d.id DESC');
-                    }
+            ->alias('t')
+            ->with([
+                'statLegalDetails' => function (ActiveQuery $query) use ($year, $model) {
+                    $query->where('stat_legal_id=:stat_legal_id', [':stat_legal_id' => $model->id])
+                        ->select('d.*')
+                        ->alias('d')
+                        ->join('join', 'legal_type lt', 'd.legal_type_id = lt.id')
+                        ->join('join', 'stat_legal sl', 'sl.id = d.stat_legal_id')
+                        ->join('join', 'phiscal_year phy', 'phy.id = sl.phiscal_year_id and sl.phiscal_year_id=:phiscal_year_id', [':phiscal_year_id' => $year->id])
+                        ->orderBy('d.id DESC');
+                }
 
-                ])
-                ->where(['deleted' => 0])
-                ->orderBy('position')->asArray()->all();
-         
-        
+            ])
+            ->where(['deleted' => 0])
+            ->orderBy('position')->asArray()->all();
+
+
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Statistic of Internal Legal ' . $year->year . '.xls',
@@ -546,5 +545,4 @@ class StatLegalController extends BaseController
             }
         }
     }
-
 }

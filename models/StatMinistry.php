@@ -3,23 +3,22 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_ministry".
  *
  * @property int $id
  * @property string $last_update
- * @property int $phiscal_year_id
  * @property int $user_id
  * @property int $deleted
+ * @property int $from_year
+ * @property int $to_year
+ * @property string $batch
  *
- * @property PhiscalYear $phiscalYear
  * @property User $user
  * @property StatMinistryDetail[] $statMinistryDetails
  */
-class StatMinistry extends ActiveRecord
+class StatMinistry extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -36,9 +35,9 @@ class StatMinistry extends ActiveRecord
     {
         return [
             [['last_update'], 'safe'],
-            [['phiscal_year_id', 'user_id'], 'required'],
-            [['phiscal_year_id', 'user_id', 'deleted'], 'integer'],
-            [['phiscal_year_id'], 'exist', 'skipOnError' => true, 'targetClass' => PhiscalYear::className(), 'targetAttribute' => ['phiscal_year_id' => 'id']],
+            [['user_id'], 'required'],
+            [['user_id', 'deleted', 'from_year', 'to_year'], 'integer'],
+            [['batch'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -51,22 +50,16 @@ class StatMinistry extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'last_update' => Yii::t('app', 'Last Update'),
-            'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
             'user_id' => Yii::t('app', 'User ID'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'from_year' => Yii::t('app', 'From Year'),
+            'to_year' => Yii::t('app', 'To Year'),
+            'batch' => Yii::t('app', 'Batch'),
         ];
     }
 
     /**
-     * @return ActiveQuery
-     */
-    public function getPhiscalYear()
-    {
-        return $this->hasOne(PhiscalYear::className(), ['id' => 'phiscal_year_id']);
-    }
-
-    /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getUser()
     {
@@ -74,7 +67,7 @@ class StatMinistry extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getStatMinistryDetails()
     {

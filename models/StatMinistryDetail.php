@@ -3,21 +3,20 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_ministry_detail".
  *
  * @property int $id
- * @property int $stat_ministry_id
  * @property string $name
  * @property string $remark
  * @property int $position
+ * @property string $batch
+ * @property int $stat_ministry_id
  *
  * @property StatMinistry $statMinistry
  */
-class StatMinistryDetail extends ActiveRecord
+class StatMinistryDetail extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,9 +32,9 @@ class StatMinistryDetail extends ActiveRecord
     public function rules()
     {
         return [
+            [['position', 'stat_ministry_id'], 'integer'],
             [['stat_ministry_id'], 'required'],
-            [['stat_ministry_id', 'position'], 'integer'],
-            [['name', 'remark'], 'string', 'max' => 255],
+            [['name', 'remark', 'batch'], 'string', 'max' => 255],
             [['stat_ministry_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatMinistry::className(), 'targetAttribute' => ['stat_ministry_id' => 'id']],
         ];
     }
@@ -47,15 +46,16 @@ class StatMinistryDetail extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'stat_ministry_id' => Yii::t('app', 'Stat Ministry ID'),
             'name' => Yii::t('app', 'Name'),
             'remark' => Yii::t('app', 'Remark'),
             'position' => Yii::t('app', 'Position'),
+            'batch' => Yii::t('app', 'Batch'),
+            'stat_ministry_id' => Yii::t('app', 'Stat Ministry ID'),
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getStatMinistry()
     {

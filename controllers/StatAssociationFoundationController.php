@@ -22,7 +22,7 @@ use yii\web\Controller;
  */
 class StatAssociationFoundationController extends BaseController
 {
-    
+
 
     /**
      * Lists all StatAssociationFoundation models.
@@ -38,7 +38,7 @@ class StatAssociationFoundationController extends BaseController
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -46,11 +46,11 @@ class StatAssociationFoundationController extends BaseController
         }
 
         $user = Yii::$app->user->identity;
-        
+
         $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
 
-            
+
         $approverLevels = ApproverLevel::find()
             ->alias('l')
             ->with([
@@ -58,10 +58,10 @@ class StatAssociationFoundationController extends BaseController
                     $query->alias('a')
                         ->with([
                             'province' => function (ActiveQuery $query) use ($user) {
-                                
+
                                 $query = $query->alias('province')
                                     ->andWhere(['province.deleted' => 0]);
-                                if (!empty ($user->role->province_id)) {
+                                if (!empty($user->role->province_id)) {
                                     $query = $query->andWhere(['province.id' => $user->role->province_id]);
                                 }
                                 $query->orderBy('province.position');
@@ -71,20 +71,20 @@ class StatAssociationFoundationController extends BaseController
                             }
                         ])
                         ->where(['a.deleted' => 0]);
-                    if (!empty ($user->role->province_id)) {
+                    if (!empty($user->role->province_id)) {
                         $query->andWhere(['province_id' => $user->role->province_id]);
                     }
                 }
             ])
             ->where(['l.deleted' => 0])->orderBy('l.position');
 
-            
-        if (!empty ($user->role->province_id)) {
+
+        if (!empty($user->role->province_id)) {
             $approverLevels = $approverLevels->andWhere(['code' => 'P']);
         }
-        
+
         $approverLevels = $approverLevels->asArray()->all();
-        
+
         // $approverLevels = ApproverLevel::find()->asArray()->all();
         return json_encode([
             "years" => $years,
@@ -97,7 +97,7 @@ class StatAssociationFoundationController extends BaseController
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -106,49 +106,49 @@ class StatAssociationFoundationController extends BaseController
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatAssociationFoundation::find()->where(['phiscal_year_id' => $year->id])->one();
-        
+
         if (!isset($model)) {
             // MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             // return;
-            $models=[];
-        }else{
-        
+            $models = [];
+        } else {
 
-        $models = ApproverLevel::find()
-            ->with([
-                'approvers' => function (ActiveQuery $query) use ($year, $model) {
-                    $query->where(['deleted' => 0])
-                        ->with([
-                            'province' => function (ActiveQuery $query) {
-                                $query->andWhere(['deleted' => 0])
-                                    ->orderBy('position');
-                            },
-                            'ministry' => function (ActiveQuery $query) {
-                                $query->orderBy('position');
-                            }
-                        ])
-                        ->alias('a')
-                        ->select('a.*, d.*')
-                        ->join('join', 'stat_association_foundation_detail d', 'a.id = d.approver_id and d.stat_association_foundation_id=:id', [':id' => $model->id]);
 
-                    $user = Yii::$app->user->identity;
-                    if (!empty ($user->role->province_id)) {
-                        $query->andWhere(['d.approver_id' => $user->role->province_id]);
+            $models = ApproverLevel::find()
+                ->with([
+                    'approvers' => function (ActiveQuery $query) use ($year, $model) {
+                        $query->where(['deleted' => 0])
+                            ->with([
+                                'province' => function (ActiveQuery $query) {
+                                    $query->andWhere(['deleted' => 0])
+                                        ->orderBy('position');
+                                },
+                                'ministry' => function (ActiveQuery $query) {
+                                    $query->orderBy('position');
+                                }
+                            ])
+                            ->alias('a')
+                            ->select('a.*, d.*')
+                            ->join('join', 'stat_association_foundation_detail d', 'a.id = d.approver_id and d.stat_association_foundation_id=:id', [':id' => $model->id]);
+
+                        $user = Yii::$app->user->identity;
+                        if (!empty($user->role->province_id)) {
+                            $query->andWhere(['d.approver_id' => $user->role->province_id]);
+                        }
                     }
-                }
-            ])->alias('l')
-            ->where(['l.deleted' => 0])
-            ->orderBy('l.position, position')
-            ->asArray()->all();
+                ])->alias('l')
+                ->where(['l.deleted' => 0])
+                ->orderBy('l.position, position')
+                ->asArray()->all();
         }
-        if(count($models)<=0){
-            $models=[];
-        }        
+        if (count($models) <= 0) {
+            $models = [];
+        }
         return json_encode([
             'models' => $models
         ]);
@@ -158,7 +158,7 @@ class StatAssociationFoundationController extends BaseController
     {
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -177,7 +177,7 @@ class StatAssociationFoundationController extends BaseController
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -186,13 +186,13 @@ class StatAssociationFoundationController extends BaseController
 
         $post = Yii::$app->request->post();
         if (!isset($post)) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Incorrect Request Method'));
             return;
         }
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -237,7 +237,7 @@ class StatAssociationFoundationController extends BaseController
     {
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -255,7 +255,7 @@ class StatAssociationFoundationController extends BaseController
                             'province' => function (ActiveQuery $query) {
                                 $user = Yii::$app->user->identity;
                                 $query = $query->alias('province')->andWhere(['province.deleted' => 0]);
-                                if (!empty ($user->role->province_id)) {
+                                if (!empty($user->role->province_id)) {
                                     $query = $query->andWhere(['province.id' => $user->role->province_id]);
                                 }
                                 $query->orderBy('province.position');
@@ -282,7 +282,7 @@ class StatAssociationFoundationController extends BaseController
     {
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -439,5 +439,4 @@ class StatAssociationFoundationController extends BaseController
             }
         }
     }
-
 }

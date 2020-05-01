@@ -36,7 +36,7 @@ class StatOfficerOrganisationAddController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -58,7 +58,7 @@ class StatOfficerOrganisationAddController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -66,15 +66,15 @@ class StatOfficerOrganisationAddController extends Controller
         }
 
         $year = PhiscalYear::findOne($year);
-        if (!isset ($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatOfficerOrganisationAdd::find()->where([
             'phiscal_year_id' => $year->id
         ])->one();
-        if (!isset ($model)) {
+        if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
@@ -110,7 +110,7 @@ class StatOfficerOrganisationAddController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -118,18 +118,18 @@ class StatOfficerOrganisationAddController extends Controller
         }
 
         $year = PhiscalYear::findOne($year);
-        if (!isset ($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatOfficerOrganisationAddDetail::find()
             ->alias('d')
             ->join('join', 'stat_officer_organisation_add o', 'o.id = d.stat_officer_organisation_add_id and o.phiscal_year_id=:year', [
-            ':year' => $year->id
-        ])->where([
-            'organisation_id' => $organisation
-        ])->asArray()->one();
+                ':year' => $year->id
+            ])->where([
+                'organisation_id' => $organisation
+            ])->asArray()->one();
 
         return json_encode([
             'model' => $model
@@ -141,7 +141,7 @@ class StatOfficerOrganisationAddController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -149,13 +149,13 @@ class StatOfficerOrganisationAddController extends Controller
         }
 
         $post = Yii::$app->request->post();
-        if (!isset ($post ['Model'])) {
-            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Method'));
+        if (!isset($post['Model'])) {
+            MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Incorrect Request Method'));
             return;
         }
         $year = PhiscalYear::findOne($year);
-        if (!isset ($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
         if ($year->status != 'O') {
@@ -168,30 +168,30 @@ class StatOfficerOrganisationAddController extends Controller
             $model = StatOfficerOrganisationAdd::find()->where([
                 'phiscal_year_id' => $year->id
             ])->one();
-            if (!isset ($model)) {
-                $model = new StatOfficerOrganisationAdd ();
+            if (!isset($model)) {
+                $model = new StatOfficerOrganisationAdd();
                 $model->user_id = Yii::$app->user->id;
                 $model->phiscal_year_id = $year->id;
             }
             $model->last_update = date('Y-m-d H:i:s');
             $model->saved = 1;
             if (!$model->save())
-                throw new Exception (json_encode($model->errors));
+                throw new Exception(json_encode($model->errors));
 
             $detail = StatOfficerOrganisationAddDetail::find()->alias('d')->join('join', 'stat_officer_organisation_add o', 'o.id = d.stat_officer_organisation_add_id and o.phiscal_year_id=:year', [
                 ':year' => $year->id
             ])->where([
-                'organisation_id' => $post ['Model'] ['organisation'] ['id']
+                'organisation_id' => $post['Model']['organisation']['id']
             ])->one();
 
-            if (!isset ($detail)) {
-                $detail = new StatOfficerOrganisationAddDetail ();
+            if (!isset($detail)) {
+                $detail = new StatOfficerOrganisationAddDetail();
                 $detail->stat_officer_organisation_add_id = $model->id;
-                $detail->organisation_id = $post ['Model'] ['organisation'] ['id'];
+                $detail->organisation_id = $post['Model']['organisation']['id'];
             }
-            $detail->attributes = $post ['Model'];
+            $detail->attributes = $post['Model'];
             if (!$detail->save())
-                throw new Exception (json_encode($detail->errors));
+                throw new Exception(json_encode($detail->errors));
             $transaction->commit();
         } catch (Exception $exception) {
             $transaction->rollBack();
@@ -206,7 +206,7 @@ class StatOfficerOrganisationAddController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -214,15 +214,15 @@ class StatOfficerOrganisationAddController extends Controller
         }
 
         $year = PhiscalYear::findOne($year);
-        if (!isset ($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatOfficerOrganisationAdd::find()->where([
             'phiscal_year_id' => $year->id
         ])->one();
-        if (!isset ($model)) {
+        if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
@@ -247,7 +247,7 @@ class StatOfficerOrganisationAddController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -255,15 +255,15 @@ class StatOfficerOrganisationAddController extends Controller
         }
 
         $year = PhiscalYear::findOne($year);
-        if (!isset ($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatOfficerOrganisationAdd::find()->where([
             'phiscal_year_id' => $year->id
         ])->one();
-        if (!isset ($model)) {
+        if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
@@ -409,7 +409,7 @@ class StatOfficerOrganisationAddController extends Controller
         $this->enableCsrfValidation = true;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 if (Yii::$app->request->isAjax) {
                     MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);

@@ -18,23 +18,7 @@ use yii\web\Controller;
 class StatPopulationMovementChartController extends Controller
 {
     public $COLUMNS = [
-        'population_total'
-        ,'population_women'
-        ,'province'
-        ,'district'
-        ,'village'
-        ,'born_total'
-        ,'born_women'
-        ,'die_total'
-        ,'die_women'
-        ,'married'
-        ,'divorce'
-        ,'movein_total'
-        ,'movein_women'
-        ,'moveout_total'
-        ,'moveout_women'
-        ,'real_total'
-        ,'real_women'
+        'population_total', 'population_women', 'province', 'district', 'village', 'born_total', 'born_women', 'die_total', 'die_women', 'married', 'divorce', 'movein_total', 'movein_women', 'moveout_total', 'moveout_women', 'real_total', 'real_women'
     ];
 
     /**
@@ -48,18 +32,19 @@ class StatPopulationMovementChartController extends Controller
         ]);
     }
 
-    public function actionGet() {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionGet()
+    {
+
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $years = PhiscalYear::find()->orderBy('year')
             ->where(['deleted' => 0])->asArray()->all();
 
@@ -68,20 +53,21 @@ class StatPopulationMovementChartController extends Controller
         ]);
     }
 
-    public function actionEnquiry($year) {
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionEnquiry($year)
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $year = PhiscalYear::findOne($year);
-        if(!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -90,17 +76,18 @@ class StatPopulationMovementChartController extends Controller
         ]);
     }
 
-    public function actionInquiry() {
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionInquiry()
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $years = PhiscalYear::find()->select('id, year, status')->orderBy('year')->asArray()->all();
         $year = implode(',', ArrayHelper::getColumn($years, 'id'));
         $models = $this->getModels();
@@ -119,16 +106,17 @@ class StatPopulationMovementChartController extends Controller
         );
     }
 
-    public function actionPrint() {
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
+    public function actionPrint()
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', [
@@ -138,17 +126,18 @@ class StatPopulationMovementChartController extends Controller
         ]);
     }
 
-    public function actionDownload() {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
+    public function actionDownload()
+    {
+
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Populcation Movement.xls',
@@ -157,44 +146,45 @@ class StatPopulationMovementChartController extends Controller
                 'models' => $this->getModels(),
             ])
         ]);
-    	
-//        $year = PhiscalYear::findOne($year);
-//        if(!isset($year)) {
-//            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-//            return;
-//        }
-//
-//        return $this->renderPartial('../ministry/excel', [
-//            'file' => 'Stat Local Administration '. $year->year .'.xls',
-//            'content' => $this->renderPartial('table', [
-//                'year' => $year,
-//                'cols' => $this->COLUMNS,
-//                'models' => $this->getModels($year)
-//            ])
-//        ]);
+
+        //        $year = PhiscalYear::findOne($year);
+        //        if(!isset($year)) {
+        //            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+        //            return;
+        //        }
+        //
+        //        return $this->renderPartial('../ministry/excel', [
+        //            'file' => 'Stat Local Administration '. $year->year .'.xls',
+        //            'content' => $this->renderPartial('table', [
+        //                'year' => $year,
+        //                'cols' => $this->COLUMNS,
+        //                'models' => $this->getModels($year)
+        //            ])
+        //        ]);
     }
 
-    public function getModels($year = "") { //1,2,3,
+    public function getModels($year = "")
+    { //1,2,3,
         $query = PhiscalYear::find()->orderBy('year')
             ->alias('y')
             ->select('y.year');
         foreach ($this->COLUMNS as $col)
-            if($col == 'province')
+            if ($col == 'province')
                 $query->addSelect("count(d.province_id) as $col");
             else
                 $query->addSelect("sum(d.$col) as $col");
 
-         $query->join('left join', 'stat_population_movement p', 'y.id = p.phiscal_year_id')
+        $query->join('left join', 'stat_population_movement p', 'y.id = p.phiscal_year_id')
             ->join('join', 'stat_population_movement_detail d', 'p.id=d.stat_population_movement_id');
 
-        if($year != "")
+        if ($year != "")
             $query->andWhere('y.id in (:year)', [":year" => $year]);
 
         $models = $query
             ->groupBy('y.id')
-             ->orderBy('y.year')
-             ->asArray()->all();
-         return $models;
+            ->orderBy('y.year')
+            ->asArray()->all();
+        return $models;
     }
 
 
@@ -317,25 +307,25 @@ class StatPopulationMovementChartController extends Controller
             }
         }
     }
-    public function beforeAction($action) {
-    	$user = Yii::$app->user->identity;
-    	$this->enableCsrfValidation = true;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			if (Yii::$app->request->isAjax) {
-    				MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    				return;
-    			} else {
-    				return $this->redirect ( [
-    						'authentication/notallowed'
-    				] );
-    			}
-    		}
-    	}
-    
-    	return parent::beforeAction ( $action );
+    public function beforeAction($action)
+    {
+        $user = Yii::$app->user->identity;
+        $this->enableCsrfValidation = true;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                if (Yii::$app->request->isAjax) {
+                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                    return;
+                } else {
+                    return $this->redirect([
+                        'authentication/notallowed'
+                    ]);
+                }
+            }
+        }
+
+        return parent::beforeAction($action);
     }
-    
 }
