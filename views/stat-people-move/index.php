@@ -3,10 +3,9 @@
 
 /* @var $this yii\web\View */
 $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງທົ່ວປະເທດ ປະຈຳປີ";
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
-<div class="row" ng-app="mohaApp" ng-controller="statPopulationMovementController">
+<div class="row" ng-app="mohaApp" ng-controller="statPeopleMoveController">
 
     <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
     <div class="col-sm-4">
@@ -18,118 +17,116 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                 ປ້ອນຂໍ້ມູນ
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
-                <div class="col-sm-9">
-                    <table class="table table-bordered">
+                <div class="col-sm-12">
+                    <table class="table table-bordered" style="width: 100%">
                         <tr>
+                            <td class="text-center" rowspan="2">ແຂວງ</td>
                             <td class="text-center" rowspan="2">ຈຳນວນເມືອງ</td>
                             <td class="text-center" rowspan="2">ຈຳນວນບ້ານ</td>
-                            <td class="text-center" colspan="2">ຈຳນວນ ພົນລະເມືອງ</td>
-                        </tr>
-                        <tr>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                            <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Women') ?></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center" style="width: 12%"><input ng-model="model.district" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 12%"><input ng-model="model.village"
-                                                                              min="{{model.village}}" type="number"
-                                                                              class="form-control"></td>
-                            <td class="text-center" style="width: 18%"><input ng-model="model.population_total" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 18%"><input ng-model="model.population_women"
-                                                                              max="{{model.population_total}}"
-                                                                              type="number" class="form-control"></td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="col-sm-12">
-                    <table class="table table-bordered">
-                        <tr>
+                            <td class="text-center" rowspan="2">ຈຳນວນຄອບຄົວ</td>
+                            <td class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ ຍົກມາ</td>
                             <td class="text-center" colspan="2">ຈຳນວນເກີດ</td>
-                            <td class="text-center" colspan="2">ຈຳນວນເສຍຊີວິດ</td>
-
+                            <td class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ລາວ</td>
+                            <td class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ຕ່າງປະເທດ</td>
+                            <td class="text-center" rowspan="2">ຢ່າຮ້າງ ລາວ-ລາວ</td>
+                            <td class="text-center" rowspan="2">ຢ່າຮ້າງ ລາວ-ຕ່າງປະເທດ</td>
                         </tr>
                         <tr>
                             <?php for ($i = 0; $i < 2; $i++) : ?>
-                                <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                                <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Women') ?></td>
+                                <td class="text-center">ລ</td>
+                                <td class="text-center">ຍ</td>
                             <?php endfor; ?>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 15%"><input ng-model="model.born_total" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 15%"><input ng-model="model.born_women"
-                                                                              max="{{model.born_total}}" type="number"
-                                                                              class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.die_total" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.die_women"
-                                                                              max="{{model.die_total}}" type="number"
-                                                                              class="form-control"></td>
-
+                            <td>
+                                <select class="form-control" ng-model="model.province" ng-change="inquiry()" ng-options="y.province_name for y in provinces"></select>
+                            </td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.total_district" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.total_village" min="{{model.total_district}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.total_family" min="{{model.total_village}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.movein_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.movein_women" max="{{model.movein_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.born_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.born_women" max="{{model.born_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.wedding_laolao" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.wedding_laofor" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.divorce_laolao" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 8%"><input ng-model="model.divorce_laofor" type="number" class="form-control"></td>
                         </tr>
                     </table>
                 </div>
-
-                <!----Start -->
-
                 <div class="col-sm-12">
                     <table class="table table-bordered">
                         <tr>
-                            <td class="text-center">ແຕ່ງດອງ ລາວ-ລາວ</td>
-                            <td class="text-center">ແຕ່ງດອງ ລາວ-ຕ່າງປະເທດ</td>
-                            <td class="text-center">ຢ່າຮ້າງ ລາວ-ລາວ</td>
-                            <td class="text-center">ຢ່າຮ້າງ ລາວ-ຕ່າງປະເທດ</td>
-                        </tr>
-
-                        <tr>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.married" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.married_local_foreigner"
-                                                                              min="0" type="number"
-                                                                              class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.divorce" type="number"
-                                                                              class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.divorce_local_foreigner"
-                                                                              type="number" class="form-control"></td>
-                        </tr>
-                    </table>
-                </div>
-
-
-                <!--End -->
-
-                <div class="col-sm-12">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td class="text-center" colspan="2">ຍ້າຍມາ</td>
-                            <td class="text-center" colspan="2">ຍ້າຍອອກໄປ</td>
-                            <td class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ ທີ່ມີໜ້າຕົວຈິງ</td>
+                            <td class="text-center" colspan="4">ການຈົດທະບຽນສັນຊາດລາວ</td>
+                            <td class="text-center" colspan="4">ການປ່ຽນຊື່ ຫຼື ນາມສະກຸນ</td>
+                            <td class="text-center" colspan="6">ການຍົກຍ້າຍມາ</td>
                         </tr>
                         <tr>
-                            <?php for ($i = 0; $i < 3; $i++) : ?>
-                                <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Total') ?></td>
-                                <td class="text-center" style="width: 12.5%"><?= Yii::t('app', 'Women') ?></td>
+                            <td class="text-center" colspan="2">ການໄດ້ສັນຊາດລາວ</td>
+                            <td class="text-center" colspan="2">ການປະສັນຊາດລາວ</td>
+                            <td class="text-center" colspan="2">ຊື່</td>
+                            <td class="text-center" colspan="2">ນາມສະກຸນ</td>
+                            <th class="text-center" colspan="2">ບ້ານ-ບ້ານ</th>
+                            <th class="text-center" colspan="2">ເມືອງ-ເມືອງ</th>
+                            <th class="text-center" colspan="2">ແຂວງ-ແຂວງ</th>
+                        </tr>
+                        <tr>
+                            <?php for ($i = 0; $i < 7; $i++) : ?>
+                                <td class="text-center">ລ</td>
+                                <td class="text-center">ຍ</td>
                             <?php endfor; ?>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.movein_total" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.movein_women"
-                                                                              max="{{model.movein_total}}" type="number"
-                                                                              class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.moveout_total" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.moveout_women"
-                                                                              max="{{model.moveout_total}}"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.real_total" min="0"
-                                                                              type="number" class="form-control"></td>
-                            <td class="text-center" style="width: 10%"><input ng-model="model.real_women"
-                                                                              max="{{model.real_total}}" type="number"
-                                                                              class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.sign_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.sign_women" max="{{model.sign_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.resign_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.resign_women" max="{{model.resign_total}}" type="number" class="form-control"></td>
+
+                            <td class="text-center" style="width: 2%"><input ng-model="model.changename_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.changename_women" max="{{model.changename_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.changesurname_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.changesurname_women" max="{{model.changesurname_total}}" type="number" class="form-control"></td>
+
+                            <td class="text-center" style="width: 2%"><input ng-model="model.movein_village_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.movein_village_women" max="{{model.movein_village_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.movein_district_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.movein_district_women" max="{{model.movein_district_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.movein_province_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.movein_province_women" max="{{model.movein_province_women}}" type="number" class="form-control"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td class="text-center" colspan="6">ການຍົກຍ້າຍໄປ</td>
+                            <th class="text-center" colspan="2" rowspan="2">ຈຳນວນ ເສຍຊີວິດ</th>
+                            <th class="text-center" colspan="2" rowspan="2">ຈຳນວນພົນລະເມືອງ ຕົວຈິງ</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" colspan="2">ບ້ານ-ບ້ານ</th>
+                            <th class="text-center" colspan="2">ເມືອງ-ເມືອງ</th>
+                            <th class="text-center" colspan="2">ແຂວງ-ແຂວງ</th>
+                        </tr>
+                        <tr>
+                            <?php for ($i = 0; $i < 5; $i++) : ?>
+                                <td class="text-center">ລ</td>
+                                <td class="text-center">ຍ</td>
+                            <?php endfor; ?>
+                        </tr>
+                        <tr>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.moveout_village_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.moveout_village_women" max="{{model.moveout_village_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.moveout_district_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.moveout_district_women" max="{{model.moveout_district_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.moveout_province_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.moveout_province_women" max="{{model.moveout_province_total}}" type="number" class="form-control"></td>
+
+                            <td class="text-center" style="width: 2%"><input ng-model="model.die_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.die_women" max="{{model.die_total}}" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.real_total" min="0" type="number" class="form-control"></td>
+                            <td class="text-center" style="width: 2%"><input ng-model="model.real_women" max="{{model.real_total}}" type="number" class="form-control"></td>
                         </tr>
                     </table>
                 </div>
@@ -154,110 +151,124 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?></h3>
                             <p>
-                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                            class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i></a>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th class="text-center" rowspan="3">ປະຈຳປິ</th>
-                                <th class="text-center" colspan="3">ຈຳນວນ</th>
-                                <th class="text-center" colspan="2">ຈຳນວນ ພົນລະເມືອງ ຍົກມາ</th>
-                                <th class="text-center" colspan="2">ຈຳນວນເກີດ</th>
-                                <th class="text-center" colspan="2">ແຕ່ງດອງ</th>
-                                <th class="text-center" colspan="2">ຢ່າຮ້າງ</th>
-                                <th class="text-center" colspan="2">ການຈົດທະບຽນ ສັນຊາດລາວ</th>
-                                <th class="text-center" colspan="2">ການປ່ຽນຊື່ ຫຼື ນາມສະກຸນ</th>
-                                <th class="text-center" colspan="3">ການຍົກຍ້າຍມາ</th>
-                                <th class="text-center" colspan="3">ການຍົກຍ້າຍໄປ</th>
-                                <th class="text-center" colspan="2">ຈຳນວນ ເສຍຊີວິດ</th>
-                                <th class="text-center" colspan="2">ຈຳນວນ ພົນລະເມືອງ ຕົວຈິງ</th>
-                            </tr>
-                            <tr ng-repeat="c in cols">
-                                <th>{{c.code}}</th>
-                            </tr>
-                            <tr>
-                                <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                                <?php foreach ($columns as $c) : ?>
-                                    <th class="text-center">{{sum('<?= $c ?>') | number | dash}}</th>
-                                <?php endforeach; ?>
-                            </tr>
+                                <tr>
+                                    <th class="text-center" rowspan="3">ລຳດັບ</th>
+                                    <th class="text-center" rowspan="3">ແຂວງ</th>
+                                    <th class="text-center" colspan="3" rowspan="2">ຈຳນວນ</th>
+                                    <th class="text-center" colspan="2" rowspan="2">ຈຳນວນ ພົນລະເມືອງ ຍົກມາ</th>
+                                    <th class="text-center" colspan="2" rowspan="2">ຈຳນວນເກີດ</th>
+                                    <th class="text-center" rowspan="3">ແຕ່ງດອງ ລາວ-ລາວ</th>
+                                    <th class="text-center" rowspan="3">ແຕ່ງດອງ ລາວ-ຕ່າງປະເທດ</th>
+                                    <th class="text-center" rowspan="3">ຢ່າຮ້າງ ລາວ-ລາວ</th>
+                                    <th class="text-center" rowspan="3">ຢ່າຮ້າງ ລາວ-ຕ່າງປະເທດ</th>
+                                    <th class="text-center" colspan="4">ການຈົດທະບຽນ ສັນຊາດລາວ</th>
+                                    <th class="text-center" colspan="4">ການປ່ຽນຊື່ ຫຼື ນາມສະກຸນ</th>
+                                    <th class="text-center" colspan="6">ການຍົກຍ້າຍມາ</th>
+                                    <th class="text-center" colspan="6">ການຍົກຍ້າຍໄປ</th>
+                                    <th class="text-center" colspan="2" rowspan="2">ຈຳນວນ ເສຍຊີວິດ</th>
+                                    <th class="text-center" colspan="2" rowspan="2">ຈຳນວນ ພົນລະເມືອງ ຕົວຈິງ</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center" colspan="2">ການໄດ້ສັນຊາດລາວ</th>
+                                    <th class="text-center" colspan="2">ການປະສັນຊາດລາວ</th>
+                                    <th class="text-center" colspan="2">ຊື່</th>
+                                    <th class="text-center" colspan="2">ນາມສະກຸນ</th>
+                                    <th class="text-center" colspan="2">ບ້ານ-ບ້ານ</th>
+                                    <th class="text-center" colspan="2">ເມືອງ-ເມືອງ</th>
+                                    <th class="text-center" colspan="2">ແຂວງ-ແຂວງ</th>
+                                    <th class="text-center" colspan="2">ບ້ານ-ບ້ານ</th>
+                                    <th class="text-center" colspan="2">ເມືອງ-ເມືອງ</th>
+                                    <th class="text-center" colspan="2">ແຂວງ-ແຂວງ</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">ເມືອງ</th>
+                                    <th class="text-center">ບ້ານ</th>
+                                    <th class="text-center">ຄອບຄົວ</th>
+                                    <?php for ($i = 0; $i < 14; $i++) : ?>
+                                        <th class="text-center">ລ</th>
+                                        <th class="text-center">ຍ</th>
+                                    <?php endfor; ?>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="m in models">
-                                <td class="text-center">{{$index + 1}}</td>
-                                <td>{{m.province_name}}</td>
-                                <?php foreach ($columns as $c) : ?>
-                                    <td class="text-center">{{m.<?= $c ?> | number | dash}}</td>
-                                <?php endforeach; ?>
-                            </tr>
+                                <tr ng-repeat="m in models">
+                                    <td class="text-center">{{$index + 1}}</td>
+                                    <td>{{m.province_name}}</td>
+                                    <?php foreach ($columns as $c) : ?>
+                                        <td class="text-center">{{m.<?= $c ?> | number | dash}}</td>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr>
+                                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                                    <?php foreach ($columns as $c) : ?>
+                                        <th class="text-center">{{sum('<?= $c ?>') | number | dash}}</th>
+                                    <?php endforeach; ?>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="chart">
                     <h3>ເສັ້ນສະແດງສົມທຽບການເພີ່ມຂຶ້ນ-ຫຼຸດລົງ ຂອງພົນລະເມືອງ</h3>
-                    <canvas id="stat" class="chart chart-bar" chart-data="stat.data" chart-labels="stat.labels"
-                            chart-series="stat.series" chart-colors="stat.colors"
-                    </canvas> </div>
-                <div class="tab-pane fade" id="reference">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label>ເລກທີ</label>
-                            <input type="text" ng-model="issued_no" class="form-control">
-                        </div>
-                        <div class="col-sm-3">
-                            <label>ລົງວັນທີ</label>
-                            <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date"
-                                   type="text">
-                        </div>
-                        <div class="col-sm-3">
-                            <label>ອອກໂດຍ</label>
-                            <input type="text" ng-model="issued_by" class="form-control">
-                        </div>
+                    <canvas id="stat" class="chart chart-bar" chart-data="stat.data" chart-labels="stat.labels" chart-series="stat.series" chart-colors="stat.colors" </canvas> </div> <div class="tab-pane fade" id="reference">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>ເລກທີ</label>
+                                <input type="text" ng-model="issued_no" class="form-control">
+                            </div>
+                            <div class="col-sm-3">
+                                <label>ລົງວັນທີ</label>
+                                <input id="issued_date" class="form-control datepicker" data-ng-model="$parent.issued_date" type="text">
+                            </div>
+                            <div class="col-sm-3">
+                                <label>ອອກໂດຍ</label>
+                                <input type="text" ng-model="issued_by" class="form-control">
+                            </div>
 
-                        <div class="col-sm-3">
-                            <label>ເລືອກໄຟລ໌</label>
-                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"
-                                   class="form-control" required>
-                        </div>
+                            <div class="col-sm-3">
+                                <label>ເລືອກໄຟລ໌</label>
+                                <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);" class="form-control" required>
+                            </div>
 
-                        <div class="col-sm-12" ng-if="references">
-                            <div class="card">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-center">ວັນທີອັບໂຫຼດ</th>
-                                        <th class="text-center">ຊື່</th>
-                                        <th class="text-center">ເລກທີ</th>
-                                        <th class="text-center">ລົງວັນທີ</th>
-                                        <th class="text-center">ອອກໂດຍ</th>
-                                        <th class="text-center">ລຶບ</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="f in references">
-                                        <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
-                                        </td>
-                                        <td class="text-center">{{f.issued_no}}</td>
-                                        <td class="text-center">{{f.issued_date | date}}</td>
-                                        <td class="text-center">{{f.issued_by}}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                            <div class="col-sm-12" ng-if="references">
+                                <div class="card">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">ວັນທີອັບໂຫຼດ</th>
+                                                <th class="text-center">ຊື່</th>
+                                                <th class="text-center">ເລກທີ</th>
+                                                <th class="text-center">ລົງວັນທີ</th>
+                                                <th class="text-center">ອອກໂດຍ</th>
+                                                <th class="text-center">ລຶບ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="f in references">
+                                                <td class="text-center">{{f.upload_date}}</td>
+                                                <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                                </td>
+                                                <td class="text-center">{{f.issued_no}}</td>
+                                                <td class="text-center">{{f.issued_date | date}}</td>
+                                                <td class="text-center">{{f.issued_by}}</td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -272,141 +283,187 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
     var app = angular.module('mohaApp', ['chart.js', 'ui.bootstrap.datetimepicker']);
-    app.filter('dash', function () {
-        return function (input) {
+    app.filter('dash', function() {
+        return function(input) {
             return input ? input : '-';
         };
     });
-    app.controller('statPopulationMovementController', function ($scope, $http, $sce, $timeout) {
+    app.controller('statPeopleMoveController', function($scope, $http, $sce, $timeout) {
         $scope.url = 'index.php?r=stat-people-move/';
         $scope.mode = 'read';
-        $scope.cols = [
-            {code: 'total_village',}
-            {code: 'total_famliy',}
-            {code: 'total_district',}
-            {code: 'movein_total',},
-            {code: 'movein_women',},
-            {code: 'born_total',},
-            {code: 'born_women',},
-            {code: 'wedding_laolao',},
-            {code: 'wedding_laofor',},
-            {code: 'divorce_laolao',},
-            {code: 'divorce_laofor',},
-            {code: 'sign_total',},
-            {code: 'sign_women',},
-            {code: 'resign_total',},
-            {code: 'resign_women',},
-            {code: 'movein_village_total',},
-            {code: 'movein_village_women',},
-            {code: 'movein_district_total',},
-            {code: 'movein_district_women',},
-            {code: 'movein_province_total',},
-            {code: 'movein_province_women',},
-            {code: 'moveout_village_total',},
-            {code: 'moveout_village_women',},
-            {code: 'moveout_district_total',},
-            {code: 'moveout_district_women',},
-            {code: 'moveout_province_total',},
-            {code: 'moveout_province_women',},
-            {code: 'die_total',},
-            {code: 'die_women',},
-            {code: 'real_total',},
-            {code: 'real_women',},
+        $scope.cols = [{
+                code: 'total_village',
+            },
+            {
+                code: 'total_family',
+            },
+            {
+                code: 'total_district',
+            },
+            {
+                code: 'movein_total',
+            },
+            {
+                code: 'movein_women',
+            },
+            {
+                code: 'born_total',
+            },
+            {
+                code: 'born_women',
+            },
+            {
+                code: 'wedding_laolao',
+            },
+            {
+                code: 'wedding_laofor',
+            },
+            {
+                code: 'divorce_laolao',
+            },
+            {
+                code: 'divorce_laofor',
+            },
+            {
+                code: 'sign_total',
+            },
+            {
+                code: 'sign_women',
+            },
+            {
+                code: 'resign_total',
+            },
+            {
+                code: 'resign_women',
+            },
+
+            {
+                code: 'changename_total',
+            },
+            {
+                code: 'changename_women',
+            },
+            {
+                code: 'changesurname_total',
+            },
+            {
+                code: 'changesurname_women',
+            },
+
+            {
+                code: 'movein_village_total',
+            },
+            {
+                code: 'movein_village_women',
+            },
+            {
+                code: 'movein_district_total',
+            },
+            {
+                code: 'movein_district_women',
+            },
+            {
+                code: 'movein_province_total',
+            },
+            {
+                code: 'movein_province_women',
+            },
+            {
+                code: 'moveout_village_total',
+            },
+            {
+                code: 'moveout_village_women',
+            },
+            {
+                code: 'moveout_district_total',
+            },
+            {
+                code: 'moveout_district_women',
+            },
+            {
+                code: 'moveout_province_total',
+            },
+            {
+                code: 'moveout_province_women',
+            },
+            {
+                code: 'die_total',
+            },
+            {
+                code: 'die_women',
+            },
+            {
+                code: 'real_total',
+            },
+            {
+                code: 'real_women',
+            },
         ];
-        $scope.changemode = function () {
+        $scope.provinces = [];
+        $scope.changemode = function() {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
         $http.get($scope.url + 'get')
-            .then(function (r) {
+            .then(function(r) {
                 $scope.years = r.data.years;
                 $scope.provinces = r.data.provinces;
-            }, function (r) {
+            }, function(r) {
                 $scope.response = r;
-                $timeout(function () {
+                $timeout(function() {
                     $scope.response = null;
                 }, 15000);
             });
 
-        $scope.enquiry = function () {
+        $scope.enquiry = function() {
             $scope.model = null;
             $scope.models = null;
             $scope.stat = null;
             if ($scope.year)
                 $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-                    .then(function (r) {
-                        $scope.models = r.data.models;
-                        $scope.stat = r.data.stat;
-                        $scope.stat.colors = ['#FF0000', '#0000FF'];
-                        $scope.getreferences();
-                    }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
+                .then(function(r) {
+                    $scope.models = r.data.models;
+                    $scope.stat = r.data.stat;
+                    $scope.stat.colors = ['#FF0000', '#0000FF'];
+                    $scope.getreferences();
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function() {
+                        $scope.response = null;
+                    }, 15000);
+                });
         };
 
-        $scope.inquiry = function () {
+        $scope.inquiry = function() {
             if ($scope.year && $scope.model.province)
                 $http.get($scope.url + 'inquiry&province=' + $scope.model.province.id + '&year=' + $scope.year.id)
-                    .then(function (r) {
-                        if (r.data.model) {
-                            $scope.model.married_local_foreigner = parseInt(r.data.model.married_local_foreigner);
-                            $scope.model.divorce_local_foreigner = parseInt(r.data.model.divorce_local_foreigner);
-                            $scope.model.district = parseInt(r.data.model.district);
-                            $scope.model.village = parseInt(r.data.model.village);
-                            $scope.model.population_total = parseInt(r.data.model.population_total);
-                            $scope.model.population_women = parseInt(r.data.model.population_women);
-                            $scope.model.born_total = parseInt(r.data.model.born_total);
-                            $scope.model.born_women = parseInt(r.data.model.born_women);
-                            $scope.model.die_total = parseInt(r.data.model.die_total);
-                            $scope.model.die_women = parseInt(r.data.model.die_women);
-                            $scope.model.married = parseInt(r.data.model.married);
-                            $scope.model.divorce = parseInt(r.data.model.divorce);
-                            $scope.model.movein_total = parseInt(r.data.model.movein_total);
-                            $scope.model.movein_women = parseInt(r.data.model.movein_women);
-                            $scope.model.moveout_total = parseInt(r.data.model.moveout_total);
-                            $scope.model.moveout_women = parseInt(r.data.model.moveout_women);
-                            $scope.model.real_total = parseInt(r.data.model.real_total);
-                            $scope.model.real_women = parseInt(r.data.model.real_women);
-                        } else {
-                            $scope.model.married_local_foreigner = null;
-                            $scope.model.divorce_local_foreigner = null;
-                            $scope.model.district = null;
-                            $scope.model.village = null;
-                            $scope.model.population_total = null;
-                            $scope.model.population_women = null;
-                            $scope.model.born_total = null;
-                            $scope.model.born_women = null;
-                            $scope.model.die_total = null;
-                            $scope.model.die_women = null;
-                            $scope.model.married = null;
-                            $scope.model.divorce = null;
-                            $scope.model.movein_total = null;
-                            $scope.model.movein_women = null;
-                            $scope.model.moveout_total = null;
-                            $scope.model.moveout_women = null;
-                            $scope.model.real_total = null;
-                            $scope.model.real_women = null;
-                        }
-                    }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
+                .then(function(r) {
+                    if (r.data.model) {
+                        $scope.cols.forEach(function(c) {
+                            $scope.model[c.code] = parseInt(r.data.model[c.code]);
+                        });
+                    } else {
+                        $scope.cols.forEach(function(c) {
+                            $scope.model[c.code] = null;
+                        });
+                    }
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function() {
+                        $scope.response = null;
+                    }, 15000);
+                });
         };
 
-        $scope.save = function () {
+        $scope.save = function() {
             if ($scope.year && $scope.model) {
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
-                    'StatPopulationMovementDetail': $scope.model,
+                    'Model': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function (r) {
+                }).then(function(r) {
                     $scope.model = null;
                     $scope.response = r;
                     $scope.enquiry();
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
 
@@ -422,9 +479,9 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                     }
 
 
-                }, function (r) {
+                }, function(r) {
                     $scope.response = r;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
 
@@ -443,7 +500,7 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
             }
         };
 
-        $scope.sum = function (key) {
+        $scope.sum = function(key) {
             var total = 0;
             if ($scope.models)
                 for (var n = 0; n < $scope.models.length; n++)
@@ -452,7 +509,7 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
             return total == 0 ? 0 : total;
         };
 
-        $scope.uploadedFile = function (element) {
+        $scope.uploadedFile = function(element) {
             if (!$scope.issued_no) {
                 $scope.files = null;
                 alert('ກະລຸນາປ້ອນເລກທີ');
@@ -464,7 +521,7 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                 alert('ກະລຸນາປ້ອນວັນທີ');
                 return;
             }
-            $scope.$apply(function ($scope) {
+            $scope.$apply(function($scope) {
                 $scope.files = element.files;
                 $http({
                     url: $scope.url + "upload&year=" + $scope.year.id,
@@ -479,17 +536,17 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                         'issued_date': $scope.issued_date,
                         'issued_by': $scope.issued_by
                     },
-                    transformRequest: function (data) {
+                    transformRequest: function(data) {
                         var formData = new FormData();
                         var file = $scope.files[0];
                         formData.append("file_upload", file);
-                        angular.forEach(data, function (value, key) {
+                        angular.forEach(data, function(value, key) {
                             formData.append(key, value);
                         });
                         return formData;
                     }
                 }).then(
-                    function (r) {
+                    function(r) {
                         $scope.getreferences();
                         $scope.issued_date = null;
                         $scope.issued_no = null;
@@ -506,7 +563,7 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                             timer: 3000
                         });
                     },
-                    function (r) {
+                    function(r) {
                         $scope.response = r;
                         Swal.fire({
                             position: 'top-end',
@@ -523,22 +580,22 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
         };
 
 
-        $scope.getreferences = function () {
+        $scope.getreferences = function() {
             if ($scope.year) {
                 $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-                    .then(function (r) {
+                    .then(function(r) {
                         if (r.data)
                             $scope.references = r.data.files;
-                    }, function (r) {
+                    }, function(r) {
                         $scope.response = r;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.response = null;
                         }, 15000);
                     });
             }
         };
 
-        $scope.deletefile = function (f) {
+        $scope.deletefile = function(f) {
             if ($scope.year && f) {
                 swal({
                     title: "ໝັ້ນໃຈບໍ່?",
@@ -549,15 +606,15 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                     cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
                     closeOnConfirm: true,
                     closeOnCancel: true
-                }, function (isConfirm) {
+                }, function(isConfirm) {
                     if (isConfirm) {
                         $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
                             'id': f.id,
                             '_csrf': $('meta[name="csrf-token"]').attr("content")
-                        }).then(function (r) {
+                        }).then(function(r) {
                             $scope.response = r;
                             $scope.getreferences();
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
 
@@ -571,11 +628,9 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
                                     timer: 3000
                                 });
                             }
-
-
-                        }, function (r) {
+                        }, function(r) {
                             $scope.response = r;
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
 

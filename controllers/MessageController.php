@@ -18,25 +18,25 @@ use yii\web\NotFoundHttpException;
  */
 class MessageController extends Controller
 {
-   
-    public function beforeAction($action) {
-    	$user = Yii::$app->user->identity;
-    	$this->enableCsrfValidation = false;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			
-    				return $this->redirect ( [
-    						'authentication/notallowed'
-    				] );
-    		
-    		}
-    	}
-    
-    	return parent::beforeAction ( $action );
+
+    public function beforeAction($action)
+    {
+        $user = Yii::$app->user->identity;
+        $this->enableCsrfValidation = false;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+
+                return $this->redirect([
+                    'authentication/notallowed'
+                ]);
+            }
+        }
+
+        return parent::beforeAction($action);
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -68,17 +68,17 @@ class MessageController extends Controller
      */
     public function actionCreate()
     {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $model = new Message();
         $post = Yii::$app->request->post();
         if (!$model->load($post))
@@ -89,12 +89,12 @@ class MessageController extends Controller
             $sourceMessage = new SourceMessage();
             $sourceMessage->message = $post["Message"]["message"];
             $sourceMessage->category = 'app';
-            if(!$sourceMessage->save())
+            if (!$sourceMessage->save())
                 throw new Exception(json_encode($sourceMessage->errors));
 
             $model->id = $sourceMessage->id;
             $model->language = "la-LA";
-            if(!$model->save())
+            if (!$model->save())
                 return json_encode(["error" => $model->errors]);
 
             $model->id = "$model->id";
@@ -116,48 +116,50 @@ class MessageController extends Controller
      * @param string $language
      * @return mixed
      */
-    public function actionUpdate($id, $language = "la-LA") {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionUpdate($id, $language = "la-LA")
+    {
+
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $model = $this->findModel($id, $language);
         $post = Yii::$app->request->post();
         if (!$model->load($post))
             return json_encode(['error' => print_r($post, true)]);
 
-        if(!$model->save())
+        if (!$model->save())
             return json_encode(['error' => $model->errors]);
 
         return json_encode(["model" => $model->attributes]);
-
     }
 
-    public function actionGetall() {
-    	
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+    public function actionGetall()
+    {
+
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         return json_encode(
             Message::find()
                 ->select("s.id, s.message, translation")
                 ->join("join", "source_message s", "s.id = message.id")
-            ->asArray()
-            ->all());
+                ->asArray()
+                ->all()
+        );
     }
 
     /**
@@ -169,24 +171,24 @@ class MessageController extends Controller
      */
     public function actionDelete()
     {
-    	$user = Yii::$app->user->identity;
-    	$controller_id = Yii::$app->controller->id;
-    	$acton_id = Yii::$app->controller->action->id;
-    	if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    		if (! AuthenticationService::isAccessibleAction ( $controller_id, $acton_id )) {
-    			MyHelper::response ( HttpCode::UNAUTHORIZED, Yii::t ( 'app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication' ) . " with ID:  " . $controller_id . "/ " . $acton_id );
-    			return;
-    		}
-    	}
-    	
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
         $post = Yii::$app->request->post();
-        if(isset($post)) {
-            if(!$this->findModel($post['id'], 'la-LA')->delete())
-                return json_encode(["error" => Yii::t('app','Cannot Delete')]);
+        if (isset($post)) {
+            if (!$this->findModel($post['id'], 'la-LA')->delete())
+                return json_encode(["error" => Yii::t('app', 'Cannot Delete')]);
             else
                 return json_encode(["message" => "OK"]);
         } else
-            return json_encode(["error" => Yii::t('app','Incorrect Requested')]);
+            return json_encode(["error" => Yii::t('app', 'Incorrect Requested')]);
     }
 
     /**
@@ -205,6 +207,4 @@ class MessageController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
-    
 }

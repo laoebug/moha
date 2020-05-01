@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_people_move_detail".
@@ -40,10 +38,19 @@ use yii\db\ActiveRecord;
  * @property int $real_total
  * @property int $real_women
  * @property int $deleted
+ * @property int $total_village
+ * @property int $total_family
+ * @property int $total_district
+ * @property int $changename_total
+ * @property int $changename_women
+ * @property int $changesurname_total
+ * @property int $changesurname_women
+ * @property int $province_id
  *
+ * @property Province $province
  * @property StatPeopleMove $statPeopleMove
  */
-class StatPeopleMoveDetail extends ActiveRecord
+class StatPeopleMoveDetail extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -59,8 +66,9 @@ class StatPeopleMoveDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['stat_people_move_id'], 'required'],
-            [['stat_people_move_id', 'movein_total', 'movein_women', 'born_total', 'born_women', 'wedding_laolao', 'wedding_laofor', 'divorce_laolao', 'divorce_laofor', 'sign_total', 'sign_women', 'resign_total', 'resign_women', 'movein_village_total', 'movein_village_women', 'movein_district_total', 'movein_district_women', 'movein_province_total', 'movein_province_women', 'moveout_village_total', 'moveout_village_women', 'moveout_district_total', 'moveout_district_women', 'moveout_province_total', 'moveout_province_women', 'die_total', 'die_women', 'real_total', 'real_women', 'deleted'], 'integer'],
+            [['stat_people_move_id', 'province_id'], 'required'],
+            [['stat_people_move_id', 'movein_total', 'movein_women', 'born_total', 'born_women', 'wedding_laolao', 'wedding_laofor', 'divorce_laolao', 'divorce_laofor', 'sign_total', 'sign_women', 'resign_total', 'resign_women', 'movein_village_total', 'movein_village_women', 'movein_district_total', 'movein_district_women', 'movein_province_total', 'movein_province_women', 'moveout_village_total', 'moveout_village_women', 'moveout_district_total', 'moveout_district_women', 'moveout_province_total', 'moveout_province_women', 'die_total', 'die_women', 'real_total', 'real_women', 'deleted', 'total_village', 'total_family', 'total_district', 'changename_total', 'changename_women', 'changesurname_total', 'changesurname_women', 'province_id'], 'integer'],
+            [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
             [['stat_people_move_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatPeopleMove::className(), 'targetAttribute' => ['stat_people_move_id' => 'id']],
         ];
     }
@@ -102,11 +110,27 @@ class StatPeopleMoveDetail extends ActiveRecord
             'real_total' => Yii::t('app', 'Real Total'),
             'real_women' => Yii::t('app', 'Real Women'),
             'deleted' => Yii::t('app', 'Deleted'),
+            'total_village' => Yii::t('app', 'Total Village'),
+            'total_family' => Yii::t('app', 'Total family'),
+            'total_district' => Yii::t('app', 'Total District'),
+            'changename_total' => Yii::t('app', 'Changename Total'),
+            'changename_women' => Yii::t('app', 'Changename Women'),
+            'changesurname_total' => Yii::t('app', 'Changesurname Total'),
+            'changesurname_women' => Yii::t('app', 'Changesurname Women'),
+            'province_id' => Yii::t('app', 'Province ID'),
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProvince()
+    {
+        return $this->hasOne(Province::className(), ['id' => 'province_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
      */
     public function getStatPeopleMove()
     {

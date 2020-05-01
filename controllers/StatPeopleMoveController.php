@@ -7,21 +7,24 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\PhiscalYear;
 use app\models\Province;
-use app\models\StatPopulationMovement;
-use app\models\StatPopulationMovementDetail;
+use app\models\StatPeopleMove;
+use app\models\StatPeopleMoveDetail;
 use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
-use yii\base\Controller;
+use yii\web\Controller;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 
 /**
- * StatPopulationMovementController implements the CRUD actions for StatPopulationMovement model.
+ * StatPeopleMoveController implements the CRUD actions for StatPeopleMove model.
  */
 class StatPeopleMoveController extends Controller
 {
     public $COLUMNS = [
+        'total_district',
+        'total_village',
+        'total_family',
         'movein_total',
         'movein_women',
         'born_total',
@@ -34,6 +37,10 @@ class StatPeopleMoveController extends Controller
         'sign_women',
         'resign_total',
         'resign_women',
+        'changename_total',
+        'changename_women',
+        'changesurname_total',
+        'changesurname_women',
         'movein_village_total',
         'movein_village_women',
         'movein_district_total',
@@ -53,13 +60,11 @@ class StatPeopleMoveController extends Controller
     ];
 
     /**
-     * Lists all StatPopulationMovement models.
+     * Lists all StatPeopleMove models.
      * @return mixed
      */
     public function actionIndex()
     {
-        echo 'ok';
-        exit;
         return $this->render('index', [
             'columns' => $this->COLUMNS
         ]);
@@ -82,6 +87,7 @@ class StatPeopleMoveController extends Controller
 
         return json_encode([
             'years' => $years,
+            'provinces' => Province::find()->where('deleted=0')->orderBy('position')->asArray()->all()
         ]);
     }
 
@@ -109,10 +115,12 @@ class StatPeopleMoveController extends Controller
             'models' => $models,
             'stat' => [
                 'labels' => ArrayHelper::getColumn($years, 'year'),
-                'series' => [Yii::t('app', 'Total'), Yii::t('app', 'Women')],
+                'series' => ['ແຕ່ງດອງ ລາວ-ລາວ', 'ແຕ່ງດອງລາວ-ຕ່າງປະເທດ', 'ຢ່າຮ້າງ ລາວ-ລາວ', 'ຢ່າຮ້າງລາວ-ຕ່າງປະເທດ'],
                 'data' => [
-                    isset($models) ? ArrayHelper::getColumn($models, 'population_total') : [],
-                    isset($models) ? ArrayHelper::getColumn($models, 'population_women') : []
+                    isset($models) ? ArrayHelper::getColumn($models, 'wedding_laolao') : [],
+                    isset($models) ? ArrayHelper::getColumn($models, 'wedding_laofor') : [],
+                    isset($models) ? ArrayHelper::getColumn($models, 'divorce_laolao') : [],
+                    isset($models) ? ArrayHelper::getColumn($models, 'divorce_laofor') : [],
                 ]
             ],
         ]);
@@ -120,7 +128,7 @@ class StatPeopleMoveController extends Controller
 
     private function getModels($year)
     {
-        $model = StatPopulationMovement::find()
+        $model = StatPeopleMove::find()
             ->where(['phiscal_year_id' => $year])->one();
         if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
@@ -129,7 +137,7 @@ class StatPeopleMoveController extends Controller
         $models = Province::find()
             ->alias('province')
             ->select('province.*, d.*')
-            ->join('left join', 'stat_population_movement_detail d', 'd.province_id = province.id and d.stat_population_movement_id=:id', [':id' => $model->id]);
+            ->join('left join', 'stat_people_move_detail d', 'd.province_id = province.id and d.stat_people_move_id=:id', [':id' => $model->id]);
         $user = Yii::$app->user->identity;
         if (isset($user->role->province_id)) {
             $models = $models->andWhere(['province.id' => $user->role->province_id]);
@@ -154,9 +162,9 @@ class StatPeopleMoveController extends Controller
             return;
         }
 
-        $model = StatPopulationMovementDetail::find()
+        $model = StatPeopleMoveDetail::find()
             ->alias('d')
-            ->join('join', 'stat_population_movement l', 'l.id = d.stat_population_movement_id and l.phiscal_year_id=:year', [':year' => $year->id])
+            ->join('join', 'stat_people_move l', 'l.id = d.stat_people_move_id and l.phiscal_year_id=:year', [':year' => $year->id])
             ->where(['d.province_id' => $province]);
         $user = Yii::$app->user->identity;
         if (isset($user->role->province_id)) {
@@ -200,28 +208,30 @@ class StatPeopleMoveController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model = StatPopulationMovement::find()
+            $model = StatPeopleMove::find()
                 ->where(['phiscal_year_id' => $year->id])
                 ->one();
             if (!isset($model)) {
-                $model = new StatPopulationMovement();
+                $model = new StatPeopleMove();
                 $model->phiscal_year_id = $year->id;
                 $model->user_id = Yii::$app->user->id;
             }
-            $model->saved = 1;
+            $model->deleted = 0;
             $model->last_update = date('Y-m-d H:i:s');
-            if (!$model->save()) throw new Exception(json_encode($model->errors));
 
-            $detail = StatPopulationMovementDetail::find()
-                ->where(['stat_population_movement_id' => $model->id, 'province_id' => $post['StatPopulationMovementDetail']['province']['id']])
+            if (!$model->save()) {
+                throw new Exception($model->errors);
+            }
+            $detail = StatPeopleMoveDetail::find()
+                ->where(['stat_people_move_id' => $model->id, 'province_id' => $post['Model']['province']['id']])
                 ->one();
             if (!isset($detail)) {
-                $detail = new StatPopulationMovementDetail();
-                $detail->province_id = $post['StatPopulationMovementDetail']['province']['id'];
-                $detail->stat_population_movement_id = $model->id;
+                $detail = new StatPeopleMoveDetail();
+                $detail->province_id = $post['Model']['province']['id'];
+                $detail->stat_people_move_id = $model->id;
             }
             foreach ($this->COLUMNS as $col)
-                $detail->$col = isset($post['StatPopulationMovementDetail'][$col]) ? $post['StatPopulationMovementDetail'][$col] : null;
+                $detail->$col = isset($post['Model'][$col]) ? $post['Model'][$col] : null;
 
             if (!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
@@ -279,7 +289,7 @@ class StatPeopleMoveController extends Controller
         }
 
         return $this->renderPartial('../ministry/excel', [
-            'file' => 'Stat Local Administration ' . $year->year . '.xls',
+            'file' => 'PeopleMove' . $year->year . '.xls',
             'content' => $this->renderPartial('table', [
                 'year' => $year,
                 'cols' => $this->COLUMNS,
@@ -307,7 +317,7 @@ class StatPeopleMoveController extends Controller
             return;
         }
 
-        $menu = Menu::find()->where(['table_name' => 'stat_population_movement'])->one();
+        $menu = Menu::find()->where(['table_name' => 'stat_people_move'])->one();
         if (!isset($menu)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Data Not Found'));
             return;
@@ -358,7 +368,7 @@ class StatPeopleMoveController extends Controller
 
         $files = Attachment::find()->alias('a')
             ->join('join', 'menu m', 'm.id = a.menu_id and m.table_name=:table', [
-                ':table' => 'stat_population_movement'
+                ':table' => 'stat_people_move'
             ])
             ->where(['a.deleted' => 0, 'a.phiscal_year_id' => $year->id])
             ->orderBy('upload_date desc')
@@ -406,5 +416,27 @@ class StatPeopleMoveController extends Controller
                 return;
             }
         }
+    }
+
+    public function beforeAction($action)
+    {
+        $user = Yii::$app->user->identity;
+        $this->enableCsrfValidation = true;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                if (Yii::$app->request->isAjax) {
+                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                    return;
+                } else {
+                    return $this->redirect([
+                        'authentication/notallowed'
+                    ]);
+                }
+            }
+        }
+
+        return parent::beforeAction($action);
     }
 }
