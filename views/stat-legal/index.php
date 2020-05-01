@@ -29,9 +29,6 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
         <div class="row">
           <div class="col-sm-4">
             <label for="">ຂັ້ນອະນຸມັດ</label>
-            <!-- <select class="form-control" ng-model="model.legalType" ng-options="b.name for b in legalTypes">                      
-                    </select> -->
-
             <select class="form-control" ng-model="model.legalType">
               <option data-ng-repeat="b in legalTypes" value="{{b.id}}">{{b.name}}</option>
             </select>
@@ -40,10 +37,6 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
           <div class="col-sm-4">
             <label for="">ຊື່ນິຕິກຳ</label>
             <input type="text" class="form-control" ng-model="model.legal_name">
-            <!-- <select class="form-control" ng-model="model.legal"
-                            ng-options="b.name for b in model.legalType.legals"
-                            ng-change="inquiry()">
-                    </select> -->
           </div>
           <div class="col-sm-2">
             <label for="">&nbsp;</label>
@@ -118,8 +111,12 @@ $this->title = "ສະຖິຕິບັນດານິຕິກຳ ຂະແໜ
                 <tr ng-repeat="l in t.statLegalDetails" ng-click="select(l)" style="cursor:pointer;">
                   <td class="text-center">{{$index + 1}}</td>
                   <td>{{l.legal_name}}</td>
-                  <td class="text-center">{{l.new == '1' ? '1':''}}</td>
-                  <td class="text-center">{{l.improve == '1' ? '1':''}}</td>
+                  <td class="text-center">
+                    <div ng-if="l.new == '1'">&#10004;</div>
+                  </td>
+                  <td class="text-center">
+                    <div ng-if="l.improve == '1'">&#10004;</div>
+                  </td>
                   <td class="text-center">{{l.publish ? l.publish : '-'}}</td>
                   <td>{{l.remark}}</td>
                 </tr>
