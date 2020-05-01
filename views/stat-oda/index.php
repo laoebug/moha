@@ -55,9 +55,9 @@ $this->title = "ຕາຕາລາງບັນດາໂຄງການຊ່ວ�
                 </td>
                 <td><input type="number" class="form-control" ng-model="model.amount">
                 </td>
-                <td><input style="margin: 0 auto" type="checkbox" ng-checked="model.free == 1" class="form-control" ng-model="model.free">
+                <td class="text-center"><input style="margin: 0 auto" type="checkbox" ng-checked="model.free == 1" class="form-control" ng-model="model.free">
                 </td>
-                <td><input type="checkbox" class="form-control" ng-checked="model.loan == 1" ng-model="model.loan">
+                <td class="text-center"><input type="checkbox" class="form-control" ng-checked="model.loan == 1" ng-model="model.loan">
                 </td>
                 <td><input type="text" class="form-control" ng-model="model.organisation">
                 </td>
@@ -125,8 +125,12 @@ $this->title = "ຕາຕາລາງບັນດາໂຄງການຊ່ວ�
                   <td class="text-center">{{m.code}}</td>
                   <td class="text-center">{{m.start_year}} - {{m.end_year}}</td>
                   <td class="text-right">{{m.amount | number | dash}}</td>
-                  <td class="text-center">{{m.free ? 'P' : ''}}</td>
-                  <td class="text-center">{{m.loan ? 'P' : ''}}</td>
+                  <td class="text-center">
+                    <div ng-if="l.free">&#10004;</div>
+                  </td>
+                  <td class="text-center">
+                    <div ng-if="l.loan">&#10004;</div>
+                  </td>
                   <td class="text-center">{{m.organisation}}</td>
                   <td class="text-right">{{m.receive | number | dash}}</td>
                 </tr>

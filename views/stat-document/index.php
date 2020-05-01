@@ -25,6 +25,10 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
           <label><?= Yii::t('app', 'Ministry') ?></label>
           <select class="form-control" ng-model="model.ministry" ng-change="inquiry()" ng-options="m.name for m in ministries"></select>
         </div>
+        <div class="col-sm-3" ng-if="model.section.code=='e'">
+          <label>ອົງການ​ທຽບ​ເທົ່າ​ກະຊວງ</label>
+          <select class="form-control" ng-model="model.ministry" ng-change="inquiry()" ng-options="m.name for m in equals"></select>
+        </div>
         <div class="col-sm-3" ng-if="model.section.code=='o'">
           <label>ອົງການຈັດຕັ້ງ</label>
           <select class="form-control" ng-model="model.organisation" ng-change="inquiry()" ng-options="m.name for m in organisations"></select>
@@ -55,11 +59,10 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
             </thead>
             <tbody>
               <tr>
-                <!-- <td><input class="form-control" ng-model="model.before" type="number" min="0"></td> -->
-                <td><input class="form-control" ng-model="model.after" type="number" min="0"></td>
-                <td><input class="form-control" ng-model="model.after_new" type="number" min="0"></td>
-                <td><input class="form-control" ng-model="model.now_before" type="number" min="0"></td>
-                <td><input class="form-control" ng-model="model.now_new" type="number" min="0"></td>
+                <td><input class="form-control" ng-model="model.after" type="number"></td>
+                <td><input class="form-control" ng-model="model.after_new" type="number"></td>
+                <td><input class="form-control" ng-model="model.now_before" type="number"></td>
+                <td><input class="form-control" ng-model="model.now_new" type="number"></td>
               </tr>
             </tbody>
           </table>
@@ -212,7 +215,11 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
     };
     $scope.sections = [{
         'code': 'm',
-        'name': 'ກະຊວງ ອົງການທຽນເທົ່າ'
+        'name': 'ກະຊວງ'
+      },
+      {
+        'code': 'e',
+        'name': 'ອົງການທຽນເທົ່າ'
       },
       {
         'code': 'o',
@@ -232,6 +239,7 @@ $this->title = "ສະຖິຕິການທ້ອນໂຮມເອກະສ�
         $scope.years = r.data.years;
         $scope.provinces = r.data.provinces;
         $scope.ministries = r.data.ministries;
+        $scope.equals = r.data.equals;
         $scope.organisations = r.data.organisations;
         $scope.books = r.data.books;
       }, function(r) {

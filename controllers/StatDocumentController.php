@@ -44,8 +44,17 @@ class StatDocumentController extends Controller
             }
         }
 
-        $years = PhiscalYear::find()->orderBy('year')->where(['deleted' => 0])->asArray()->all();
-        $ministries = Ministry::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
+        $years = PhiscalYear::find()
+            ->where(['deleted' => 0])
+            ->orderBy('year')
+            ->asArray()->all();
+        $ministries = Ministry::find()
+            ->where(['deleted' => 0, 'ministry_group_id' => 1])
+            ->orderBy('position')
+            ->asArray()->all();
+        $equals = Ministry::find()->where(['deleted' => 0, 'ministry_group_id' => 2])
+            ->orderBy('position')
+            ->asArray()->all();
         $provinces = Province::find()->asArray()->all();
         $organisations = Organisation::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
         $books = Book::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all();
@@ -53,6 +62,7 @@ class StatDocumentController extends Controller
             'years' => $years,
             'books' => $books,
             'ministries' => $ministries,
+            'equals' => $equals,
             'provinces' => $provinces,
             'organisations' => $organisations,
         ]);
@@ -77,9 +87,15 @@ class StatDocumentController extends Controller
         }
 
         $ministries = StatDocumentDetail::find()->alias('d')->select('d.*')->addSelect(['name' => 'm.name'])
-            ->where('ministry_id is not null')
             ->join('join', 'stat_document s', 's.id = d.stat_document_id and s.phiscal_year_id=:year', [':year' => $year->id])->where('ministry_id is not null')
             ->join('join', 'ministry m', 'm.id = d.ministry_id')
+            ->where('ministry_id is not null and m.ministry_group_id =1 and m.deleted=0')
+            ->orderBy('m.position')->asArray()->all();
+
+        $equals = StatDocumentDetail::find()->alias('d')->select('d.*')->addSelect(['name' => 'm.name'])
+            ->join('join', 'stat_document s', 's.id = d.stat_document_id and s.phiscal_year_id=:year', [':year' => $year->id])->where('ministry_id is not null')
+            ->join('join', 'ministry m', 'm.id = d.ministry_id')
+            ->where('ministry_id is not null and m.ministry_group_id=2 and m.deleted=0')
             ->orderBy('m.position')->asArray()->all();
 
         $organisations = StatDocumentDetail::find()->alias('d')->select('d.*')->addSelect(['name' => 'm.name'])
@@ -100,7 +116,8 @@ class StatDocumentController extends Controller
         return json_encode(
             [
                 'models' => [
-                    ['name' => 'ກະຊວງ ແລະ ອົງການທຽບເທົ່າ', 'details' => $ministries,],
+                    ['name' => 'ບັນດາກະຊວງ', 'details' => $ministries,],
+                    ['name' => 'ອົງການທຽບເທົ່າ', 'details' => $equals,],
                     ['name' => 'ອົງການ ແລະ ພາກສ່ວນຕ່າງໆ', 'details' => $organisations,],
                     ['name' => 'ແຂວງ', 'details' => $provinces,],
                     ['name' => 'ເອກະສານປະເພດປຶ້ມ', 'details' => $books,],
