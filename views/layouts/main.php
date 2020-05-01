@@ -219,7 +219,7 @@ use yii\widgets\Breadcrumbs;
 	    </div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
     	<p style="padding-top: 5px;color: #ffffff;margin-bottom: 2px;" class="text-center">
-        ກົມແຜນການ ແລະ ການຮ່ວມມື, ສະຫງວນລິຂະສິດ &copy; <?= date('Y') ?>
+        ກົມແຜນການ ແລະ ການຮ່ວມມື, ສະຫງວນລິຂະສິດ &copy; <?php echo "2018"; ?>
         </p>
    		</div>
     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
