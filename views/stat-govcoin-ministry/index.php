@@ -6,20 +6,12 @@
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
 $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ, ອົງການອ້ອມຂ້າງສູນກາງ";
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div ng-app="mohaApp" ng-controller="statGovcoinMinistry">
-  <!-- <div class="col-sm-12"> -->
   <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
   <div class="col-sm-4">
     <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
   </div>
-  <!-- <div class="col-sm-8">
-            <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
-                {{response.statusText}}
-            </div>
-        </div>
-    </div> -->
   <div class="col-sm-12">
     <div class="panel panel-primary" style="margin-top: 2em" ng-show="year">
       <div class="panel-heading" ng-click="changemode()"><i class="fa fa-{{mode=='input'?'minus':'plus'}}"></i> ປ້ອນຂໍ້ມູນ
@@ -46,7 +38,7 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
                 <?php endforeach; ?>
               </tr>
               <tr>
-                <?php for ($i = 0; $i < 12; $i++) : ?>
+                <?php for ($i = 0; $i < 14; $i++) : ?>
                   <th class="text-center"><?= $i % 2 == 0 ? 'ບຸກຄົນ' : 'ກົມກອງ' ?></th>
                 <?php endfor; ?>
               </tr>
@@ -63,6 +55,8 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
                 <td><input type="number" class="form-control" ng-model="model.amer_team" min="0"></td>
                 <td><input type="number" class="form-control" ng-model="model.fran_personal" min="0"></td>
                 <td><input type="number" class="form-control" ng-model="model.fran_team" min="0"></td>
+                <td><input type="number" class="form-control" ng-model="model.remember_personal" min="0"></td>
+                <td><input type="number" class="form-control" ng-model="model.remember_team" min="0"></td>
                 <td><input type="number" class="form-control" ng-model="model.gove_personal" min="0"></td>
                 <td><input type="number" class="form-control" ng-model="model.gove_team" min="0"></td>
               </tr>
@@ -105,6 +99,7 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
                   <th class="text-center" rowspan="3">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</th>
                   <th class="text-center" rowspan="3">ຍ້ອງຍໍຜົນງານ</th>
                   <th class="text-center" colspan="10">ປະເພດຫຼຽນກາ</th>
+                  <th class="text-center" colspan="2" rowspan="2">ໃບປະເທດຊາດຈາລຶກບຸນຄຸນ</th>
                   <th class="text-center" colspan="2" rowspan="2">ໃບຍ້ອງຍໍລັດຖະບານ</th>
                   <th class="text-center" colspan="2" rowspan="2">ລວມ</th>
                   <th class="text-center" rowspan="3">ໝາຍເຫດ</th>
@@ -130,38 +125,38 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
                   <td class="text-center">{{sumcolumn('memo_personal') | number | dash }}</td>
                   <td class="text-center">{{sumcolumn('memo_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('amer_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('amer_team') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('fran_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('fran_team') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('remember_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('remember_team') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('gove_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('gove_team') | number | dash }}</td>
+                  <td class="text-center">{{sumcolumn('amer_personal') | number | dash }}</td>
+                  <td class="text-center">{{sumcolumn('amer_team') | number | dash }}</td>
+                  <td class="text-center">{{sumcolumn('fran_personal') | number | dash }}</td>
+                  <td class="text-center">{{sumcolumn('fran_team') | number | dash }}</td>
+                  <td class="text-center">{{sumcolumn('remember_personal') | number | dash }}</td>
+                  <td class="text-center">{{sumcolumn('remember_team') | number | dash }}</td>
+                  <td class="text-center">{{sumcolumn('gove_personal') | number | dash }}</td>
+                  <td class="text-center">{{sumcolumn('gove_team') | number | dash }}</td>
 
                   <td class="text-center">{{sumtotal('personal') | number | dash }}</td>
                   <td class="text-center">{{sumtotal('team') | number | dash }}</td>
 
-                                <td class="text-center"></td>
-                            </tr>
-                            <tr ng-repeat="model in models" style="cursor: pointer" ng-click="select(model)">
-                                <td class="text-center">{{$index + 1}}</td>
-                                <td>{{model.ministry.name ? model.ministry.name : model.ministry}}</td>
-                                <td>{{model.award.name ? model.award.name : model.award}}</td>
-                                <td class="text-center">{{model.labo_personal| number | dash }}</td>
-                                <td class="text-center">{{model.labo_team | number | dash }}</td>
-                                <td class="text-center">{{model.deve_personal| number | dash }}</td>
-                                <td class="text-center">{{model.deve_team | number | dash }}</td>
-                                <td class="text-center">{{model.memo_personal| number | dash }}</td>
-                                <td class="text-center">{{model.memo_team | number | dash }}</td>
-                                <td class="text-center">{{model.amer_personal| number | dash }}</td>
-                                <td class="text-center">{{model.amer_team | number | dash }}</td>
-                                <td class="text-center">{{model.fran_personal| number | dash }}</td>
-                                <td class="text-center">{{model.fran_team | number | dash }}</td>
-                                <td class="text-center">{{model.remember_personal| number | dash }}</td>
-                                <td class="text-center">{{model.remember_team | number | dash }}</td>
-                                <td class="text-center">{{model.gove_personal| number | dash }}</td>
-                                <td class="text-center">{{model.gove_team | number | dash }}</td>
+                  <td class="text-center"></td>
+                </tr>
+                <tr ng-repeat="model in models" style="cursor: pointer" ng-click="select(model)">
+                  <td class="text-center">{{$index + 1}}</td>
+                  <td>{{model.ministry.name ? model.ministry.name : model.ministry}}</td>
+                  <td>{{model.award.name ? model.award.name : model.award}}</td>
+                  <td class="text-center">{{model.labo_personal| number | dash }}</td>
+                  <td class="text-center">{{model.labo_team | number | dash }}</td>
+                  <td class="text-center">{{model.deve_personal| number | dash }}</td>
+                  <td class="text-center">{{model.deve_team | number | dash }}</td>
+                  <td class="text-center">{{model.memo_personal| number | dash }}</td>
+                  <td class="text-center">{{model.memo_team | number | dash }}</td>
+                  <td class="text-center">{{model.amer_personal| number | dash }}</td>
+                  <td class="text-center">{{model.amer_team | number | dash }}</td>
+                  <td class="text-center">{{model.fran_personal| number | dash }}</td>
+                  <td class="text-center">{{model.fran_team | number | dash }}</td>
+                  <td class="text-center">{{model.remember_personal| number | dash }}</td>
+                  <td class="text-center">{{model.remember_team | number | dash }}</td>
+                  <td class="text-center">{{model.gove_personal| number | dash }}</td>
+                  <td class="text-center">{{model.gove_team | number | dash }}</td>
 
                   <td class="text-center">{{sumrow($index, 'personal') | number | dash }}</td>
                   <td class="text-center">{{sumrow($index, 'team') | number | dash }}</td>

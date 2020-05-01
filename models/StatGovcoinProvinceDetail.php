@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_govcoin_province_detail".
@@ -26,12 +24,14 @@ use yii\db\ActiveRecord;
  * @property int $award_id
  * @property int $province_id
  * @property int $stat_govcoin_province_id
+ * @property int $remember_personal
+ * @property int $remember_team
  *
  * @property Award $award
  * @property Province $province
  * @property StatGovcoinProvince $statGovcoinProvince
  */
-class StatGovcoinProvinceDetail extends ActiveRecord
+class StatGovcoinProvinceDetail extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -47,7 +47,7 @@ class StatGovcoinProvinceDetail extends ActiveRecord
     public function rules()
     {
         return [
-            [['labo_personal', 'labo_team', 'deve_personal', 'deve_team', 'memo_personal', 'memo_team', 'amer_personal', 'amer_team', 'fran_personal', 'fran_team', 'gove_personal', 'gove_team', 'award_id', 'province_id', 'stat_govcoin_province_id'], 'integer'],
+            [['labo_personal', 'labo_team', 'deve_personal', 'deve_team', 'memo_personal', 'memo_team', 'amer_personal', 'amer_team', 'fran_personal', 'fran_team', 'gove_personal', 'gove_team', 'award_id', 'province_id', 'stat_govcoin_province_id', 'remember_personal', 'remember_team'], 'integer'],
             [['award_id', 'province_id', 'stat_govcoin_province_id'], 'required'],
             [['remark'], 'string', 'max' => 255],
             [['award_id'], 'exist', 'skipOnError' => true, 'targetClass' => Award::className(), 'targetAttribute' => ['award_id' => 'id']],
@@ -79,11 +79,13 @@ class StatGovcoinProvinceDetail extends ActiveRecord
             'award_id' => Yii::t('app', 'Award ID'),
             'province_id' => Yii::t('app', 'Province ID'),
             'stat_govcoin_province_id' => Yii::t('app', 'Stat Govcoin Province ID'),
+            'remember_personal' => Yii::t('app', 'Remember Personal'),
+            'remember_team' => Yii::t('app', 'Remember Team'),
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getAward()
     {
@@ -91,7 +93,7 @@ class StatGovcoinProvinceDetail extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getProvince()
     {
@@ -99,7 +101,7 @@ class StatGovcoinProvinceDetail extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getStatGovcoinProvince()
     {

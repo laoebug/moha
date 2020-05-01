@@ -4,17 +4,14 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatGovcoinProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-// $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
 $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽນໄຊ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນ ແລະ ນະຄອນຫຼວງ ປະຈຳປີ";
-// $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="statGovcoinProvince">
     <div class="col-sm-12">
         <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
         <div class="col-sm-4">
-            <select class="form-control" ng-model="year" ng-change="enquiry()"
-                    ng-options="y.year for y in years"></select>
+            <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
         </div>
         <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -30,13 +27,11 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-3">
                     <label><?= Yii::t('app', 'Province') ?></label>
-                    <select class="form-control" ng-model="model.province" ng-change="inquiry()"
-                            ng-options="m.province_name for m in provinces"></select>
+                    <select class="form-control" ng-model="model.province" ng-change="inquiry()" ng-options="m.province_name for m in provinces"></select>
                 </div>
                 <div class="col-sm-3">
                     <label><?= Yii::t('app', 'Award') ?></label>
-                    <select class="form-control" ng-model="model.award" ng-change="inquiry()"
-                            ng-options="a.name for a in awards"></select>
+                    <select class="form-control" ng-model="model.award" ng-change="inquiry()" ng-options="a.name for a in awards"></select>
                 </div>
                 <div class="col-sm-6">
                     <label><?= Yii::t('app', 'Remark') ?></label>
@@ -45,32 +40,34 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                 <div class="col-sm-12" style="margin-top: 1em">
                     <table class="table table-bordered">
                         <thead>
-                        <tr>
-                            <?php foreach ($labels as $label): ?>
-                                <th class="text-center" colspan="2"><?= $label ?></th>
-                            <?php endforeach; ?>
-                        </tr>
-                        <tr>
-                            <?php for ($i = 0; $i < 12; $i++): ?>
-                                <th class="text-center"><?= $i % 2 == 0 ? 'ບຸກຄົນ' : 'ກົມກອງ' ?></th>
-                            <?php endfor; ?>
-                        </tr>
+                            <tr>
+                                <?php foreach ($labels as $label) : ?>
+                                    <th class="text-center" colspan="2"><?= $label ?></th>
+                                <?php endforeach; ?>
+                            </tr>
+                            <tr>
+                                <?php for ($i = 0; $i < 14; $i++) : ?>
+                                    <th class="text-center"><?= $i % 2 == 0 ? 'ບຸກຄົນ' : 'ກົມກອງ' ?></th>
+                                <?php endfor; ?>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><input type="number" class="form-control" ng-model="model.labo_personal" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.labo_team" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.deve_personal" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.deve_team" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.memo_personal" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.memo_team" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.amer_personal" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.amer_team" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.fran_personal" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.fran_team" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.gove_personal" min="0"></td>
-                            <td><input type="number" class="form-control" ng-model="model.gove_team" min="0"></td>
-                        </tr>
+                            <tr>
+                                <td><input type="number" class="form-control" ng-model="model.labo_personal" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.labo_team" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.deve_personal" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.deve_team" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.memo_personal" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.memo_team" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.amer_personal" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.amer_team" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.fran_personal" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.fran_team" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.remember_personal" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.remember_team" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.gove_personal" min="0"></td>
+                                <td><input type="number" class="form-control" ng-model="model.gove_team" min="0"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -99,79 +96,82 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                         <div class="card-title-w-btn ">
                             <h3><?= $this->title ?> {{year.year}}</h3>
                             <p>
-                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i
-                                            class="fa fa-print fa-2x"></i></a>
-                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i
-                                            class="fa fa-download fa-2x"></i></a>
+                                <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
+                                <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
                             </p>
                         </div>
                         <table class="table table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
-                                <th class="text-center" rowspan="3">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</th>
-                                <th class="text-center" rowspan="3">ຍ້ອງຍໍຜົນງານ</th>
-                                <th class="text-center" colspan="10">ປະເພດຫຼຽນກາ</th>
-                                <th class="text-center" colspan="2" rowspan="2">ໃບຍ້ອງຍໍລັດຖະບານ</th>
-                                <th class="text-center" colspan="2" rowspan="2">ລວມ</th>
-                                <th class="text-center" rowspan="3">ໝາຍເຫດ</th>
-                            </tr>
-                            <tr>
-                                <?php foreach ($labels as $i => $label): if ($i == 5) break; ?>
-                                    <th class="text-center" colspan="2"><?= $label ?></th>
-                                <?php endforeach; ?>
-                            </tr>
-                            <tr>
-                                <?php for ($i = 0; $i < count($labels) * 2 + 2; $i++): ?>
-                                    <th class="text-center"><?= $i % 2 == 0 ? 'ບຸກຄົນ' : 'ກົມກອງ' ?></th>
-                                <?php endfor; ?>
-                            </tr>
+                                <tr>
+                                    <th class="text-center" rowspan="3"><?= Yii::t('app', 'No.') ?></th>
+                                    <th class="text-center" rowspan="3">ຊື່ກະຊວງ ແລະ ອົງການທຽບເທົ່າ</th>
+                                    <th class="text-center" rowspan="3">ຍ້ອງຍໍຜົນງານ</th>
+                                    <th class="text-center" colspan="10">ປະເພດຫຼຽນກາ</th>
+                                    <th class="text-center" colspan="2" rowspan="2">ໃບປະເທດຊາດຈາລຶກບຸນຄຸນ</th>
+                                    <th class="text-center" colspan="2" rowspan="2">ໃບຍ້ອງຍໍລັດຖະບານ</th>
+                                    <th class="text-center" colspan="2" rowspan="2">ລວມ</th>
+                                    <th class="text-center" rowspan="3">ໝາຍເຫດ</th>
+                                </tr>
+                                <tr>
+                                    <?php foreach ($labels as $i => $label) : if ($i == 5) break; ?>
+                                        <th class="text-center" colspan="2"><?= $label ?></th>
+                                    <?php endforeach; ?>
+                                </tr>
+                                <tr>
+                                    <?php for ($i = 0; $i < count($labels) * 2 + 2; $i++) : ?>
+                                        <th class="text-center"><?= $i % 2 == 0 ? 'ບຸກຄົນ' : 'ກົມກອງ' ?></th>
+                                    <?php endfor; ?>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th class="text-center" colspan="3">ລວມ</th>
-                                <td class="text-center">{{sumcolumn('labo_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('labo_team') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('deve_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('deve_team') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('memo_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('memo_team') | number | dash }}</td>
+                                <tr>
+                                    <th class="text-center" colspan="3">ລວມ</th>
+                                    <td class="text-center">{{sumcolumn('labo_personal') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('labo_team') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('deve_personal') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('deve_team') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('memo_personal') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('memo_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumcolumn('amer_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('amer_team') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('fran_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('fran_team') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('gove_personal') | number | dash }}</td>
-                                <td class="text-center">{{sumcolumn('gove_team') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('amer_personal') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('amer_team') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('fran_personal') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('fran_team') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('remember_personal') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('remember_team') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('gove_personal') | number | dash }}</td>
+                                    <td class="text-center">{{sumcolumn('gove_team') | number | dash }}</td>
 
-                                <td class="text-center">{{sumtotal('personal') | number | dash }}</td>
-                                <td class="text-center">{{sumtotal('team') | number | dash }}</td>
+                                    <td class="text-center">{{sumtotal('personal') | number | dash }}</td>
+                                    <td class="text-center">{{sumtotal('team') | number | dash }}</td>
 
-                                <td class="text-center"></td>
-                            </tr>
-                            <tr ng-repeat="model in models" style="cursor: pointer" ng-click="select(model)">
-                                <td class="text-center">{{$index + 1}}</td>
-                                <td>{{model.province.province_name ? model.province.province_name : model.province}}
-                                </td>
-                                <td>{{model.award.name ? model.award.name : model.award}}</td>
-                                <td class="text-center">{{model.labo_personal| number | dash }}</td>
-                                <td class="text-center">{{model.labo_team | number | dash }}</td>
-                                <td class="text-center">{{model.deve_personal| number | dash }}</td>
-                                <td class="text-center">{{model.deve_team | number | dash }}</td>
-                                <td class="text-center">{{model.memo_personal| number | dash }}</td>
-                                <td class="text-center">{{model.memo_team | number | dash }}</td>
-                                <td class="text-center">{{model.amer_personal| number | dash }}</td>
-                                <td class="text-center">{{model.amer_team | number | dash }}</td>
-                                <td class="text-center">{{model.fran_personal| number | dash }}</td>
-                                <td class="text-center">{{model.fran_team | number | dash }}</td>
-                                <td class="text-center">{{model.gove_personal| number | dash }}</td>
-                                <td class="text-center">{{model.gove_team | number | dash }}</td>
+                                    <td class="text-center"></td>
+                                </tr>
+                                <tr ng-repeat="model in models" style="cursor: pointer" ng-click="select(model)">
+                                    <td class="text-center">{{$index + 1}}</td>
+                                    <td>{{model.province.province_name ? model.province.province_name : model.province}}
+                                    </td>
+                                    <td>{{model.award.name ? model.award.name : model.award}}</td>
+                                    <td class="text-center">{{model.labo_personal| number | dash }}</td>
+                                    <td class="text-center">{{model.labo_team | number | dash }}</td>
+                                    <td class="text-center">{{model.deve_personal| number | dash }}</td>
+                                    <td class="text-center">{{model.deve_team | number | dash }}</td>
+                                    <td class="text-center">{{model.memo_personal| number | dash }}</td>
+                                    <td class="text-center">{{model.memo_team | number | dash }}</td>
+                                    <td class="text-center">{{model.amer_personal| number | dash }}</td>
+                                    <td class="text-center">{{model.amer_team | number | dash }}</td>
+                                    <td class="text-center">{{model.fran_personal| number | dash }}</td>
+                                    <td class="text-center">{{model.fran_team | number | dash }}</td>
+                                    <td class="text-center">{{model.remember_personal| number | dash }}</td>
+                                    <td class="text-center">{{model.remember_team | number | dash }}</td>
+                                    <td class="text-center">{{model.gove_personal| number | dash }}</td>
+                                    <td class="text-center">{{model.gove_team | number | dash }}</td>
 
-                                <td class="text-center">{{sumrow($index, 'personal') | number | dash }}</td>
-                                <td class="text-center">{{sumrow($index, 'team') | number | dash }}</td>
+                                    <td class="text-center">{{sumrow($index, 'personal') | number | dash }}</td>
+                                    <td class="text-center">{{sumrow($index, 'team') | number | dash }}</td>
 
-                                <td>{{model.remark}}</td>
-                            </tr>
+                                    <td>{{model.remark}}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -193,37 +193,36 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
 
                         <div class="col-sm-3">
                             <label>ເລືອກໄຟລ໌</label>
-                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);"
-                                   class="form-control" required>
+                            <input type="file" name="image" onchange="angular.element(this).scope().uploadedFile(this);" class="form-control" required>
                         </div>
 
                         <div class="col-sm-12" ng-if="references">
                             <div class="card">
                                 <table class="table table-bordered">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center">ວັນທີອັບໂຫຼດ</th>
-                                        <th class="text-center">ຊື່</th>
-                                        <th class="text-center">ເລກທີ</th>
-                                        <th class="text-center">ລົງວັນທີ</th>
-                                        <th class="text-center">ອອກໂດຍ</th>
-                                        <th class="text-center">ລຶບ</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center">ວັນທີອັບໂຫຼດ</th>
+                                            <th class="text-center">ຊື່</th>
+                                            <th class="text-center">ເລກທີ</th>
+                                            <th class="text-center">ລົງວັນທີ</th>
+                                            <th class="text-center">ອອກໂດຍ</th>
+                                            <th class="text-center">ລຶບ</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="f in references">
-                                        <td class="text-center">{{f.upload_date}}</td>
-                                        <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
-                                        </td>
-                                        <td class="text-center">{{f.issued_no}}</td>
-                                        <td class="text-center">{{f.issued_date | date}}</td>
-                                        <td class="text-center">{{f.issued_by}}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        <tr ng-repeat="f in references">
+                                            <td class="text-center">{{f.upload_date}}</td>
+                                            <td class="text-center"><a href="upload/{{f.dir}}/{{f.name}}" target="_blank">{{f.original_name}}</a>
+                                            </td>
+                                            <td class="text-center">{{f.issued_no}}</td>
+                                            <td class="text-center">{{f.issued_date | date}}</td>
+                                            <td class="text-center">{{f.issued_by}}</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger" type="button" ng-click="deletefile(f)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -242,48 +241,48 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
 <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
 <script type="text/javascript">
     var app = angular.module('mohaApp', ['ui.bootstrap.datetimepicker']);
-    app.filter('dash', function () {
-        return function (input) {
+    app.filter('dash', function() {
+        return function(input) {
             return input ? input : '-';
         };
     });
-    app.controller('statGovcoinProvince', function ($scope, $http, $sce, $timeout) {
+    app.controller('statGovcoinProvince', function($scope, $http, $sce, $timeout) {
         $scope.url = 'index.php?r=stat-govcoin-province/';
         $scope.mode = 'read';
-        $scope.changemode = function () {
+        $scope.changemode = function() {
             $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
         };
         $http.get($scope.url + 'get')
-            .then(function (r) {
+            .then(function(r) {
                 $scope.years = r.data.years;
                 $scope.provinces = r.data.provinces;
                 $scope.awards = r.data.awards;
-            }, function (r) {
+            }, function(r) {
                 $scope.response = r;
-                $timeout(function () {
+                $timeout(function() {
                     $scope.response = null;
                 }, 15000);
             });
 
-        $scope.enquiry = function () {
+        $scope.enquiry = function() {
             $scope.models = null;
             if ($scope.year)
                 $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-                    .then(function (r) {
-                        $scope.models = r.data.models;
-                        $scope.getreferences();
-                    }, function (r) {
-                        $scope.response = r;
-                        $timeout(function () {
-                            $scope.response = null;
-                        }, 15000);
-                    });
+                .then(function(r) {
+                    $scope.models = r.data.models;
+                    $scope.getreferences();
+                }, function(r) {
+                    $scope.response = r;
+                    $timeout(function() {
+                        $scope.response = null;
+                    }, 15000);
+                });
         };
 
-        $scope.inquiry = function () {
+        $scope.inquiry = function() {
             if ($scope.model.province && $scope.model.award) {
                 $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&province=' + $scope.model.province.id + '&award=' + $scope.model.award.id)
-                    .then(function (r) {
+                    .then(function(r) {
                         if (r.data.model) {
                             $scope.model.labo_personal = parseInt(r.data.model.labo_personal);
                             $scope.model.labo_team = parseInt(r.data.model.labo_team);
@@ -296,6 +295,8 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                             $scope.model.amer_team = parseInt(r.data.model.amer_team);
                             $scope.model.fran_personal = parseInt(r.data.model.fran_personal);
                             $scope.model.fran_team = parseInt(r.data.model.fran_team);
+                            $scope.model.remember_personal = parseInt(r.data.model.remember_personal);
+                            $scope.model.remember_team = parseInt(r.data.model.remember_team);
                             $scope.model.gove_personal = parseInt(r.data.model.gove_personal);
                             $scope.model.gove_team = parseInt(r.data.model.gove_team);
 
@@ -311,21 +312,22 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                             $scope.model.amer_team = null;
                             $scope.model.fran_personal = null;
                             $scope.model.fran_team = null;
+                            $scope.model.remember_personal = null;
+                            $scope.model.remember_team = null;
                             $scope.model.gove_personal = null;
                             $scope.model.gove_team = null;
-
                             $scope.model.remark = null;
                         }
-                    }, function (r) {
+                    }, function(r) {
                         $scope.response = r;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.response = null;
                         }, 15000);
                     });
             }
         };
 
-        $scope.select = function (m) {
+        $scope.select = function(m) {
             $scope.model = m;
             $scope.model.labo_personal = parseInt(m.labo_personal);
             $scope.model.labo_team = parseInt(m.labo_team);
@@ -338,6 +340,8 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
             $scope.model.amer_team = parseInt(m.amer_team);
             $scope.model.fran_personal = parseInt(m.fran_personal);
             $scope.model.fran_team = parseInt(m.fran_team);
+            $scope.model.remember_personal = parseInt(m.remember_personal);
+            $scope.model.remember_team = parseInt(m.remember_team);
             $scope.model.gove_personal = parseInt(m.gove_personal);
             $scope.model.gove_team = parseInt(m.gove_team);
 
@@ -360,7 +364,7 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
             }
         };
 
-        $scope.delete = function () {
+        $scope.delete = function() {
             if ($scope.model) {
                 swal({
                     title: "ໝັ້ນໃຈບໍ່?",
@@ -371,12 +375,12 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                     cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
                     closeOnConfirm: true,
                     closeOnCancel: true
-                }, function (isConfirm) {
+                }, function(isConfirm) {
                     if (isConfirm) {
                         $http.post($scope.url + 'delete', {
                             'Model': $scope.model,
                             '_csrf': $('meta[name="csrf-token"]').attr("content")
-                        }).then(function (r) {
+                        }).then(function(r) {
                             $scope.model = null;
                             $scope.enquiry();
 
@@ -391,9 +395,9 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                                 });
                             }
 
-                        }, function (r) {
+                        }, function(r) {
                             $scope.response = r;
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
 
@@ -414,16 +418,16 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
             }
         };
 
-        $scope.save = function () {
+        $scope.save = function() {
             if ($scope.year && $scope.model) {
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
                     'Model': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
-                }).then(function (r) {
+                }).then(function(r) {
                     $scope.model = null;
                     $scope.response = r;
                     $scope.enquiry();
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
 
@@ -439,9 +443,9 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                     }
 
 
-                }, function (r) {
+                }, function(r) {
                     $scope.response = r;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
 
@@ -459,7 +463,7 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
             }
         };
 
-        $scope.sumcolumn = function (key) {
+        $scope.sumcolumn = function(key) {
             var s = 0;
             if ($scope.models)
                 for (var i = 0; i < $scope.models.length; i++) {
@@ -469,7 +473,7 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
             return s;
         };
 
-        $scope.sumrow = function (index, key) {
+        $scope.sumrow = function(index, key) {
             var s = 0;
             var model = $scope.models[index];
             if (key == 'personal') {
@@ -478,6 +482,7 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                 if (model.memo_personal) s += parseInt(model.memo_personal);
                 if (model.amer_personal) s += parseInt(model.amer_personal);
                 if (model.fran_personal) s += parseInt(model.fran_personal);
+                if (model.remember_personal) s += parseInt(model.remember_personal);
                 if (model.gove_personal) s += parseInt(model.gove_personal);
             }
 
@@ -488,26 +493,29 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                 if (model.amer_team) s += parseInt(model.amer_team);
                 if (model.fran_team) s += parseInt(model.fran_team);
                 if (model.gove_team) s += parseInt(model.gove_team);
+                if (model.remember_team) s += parseInt(model.remember_team);
             }
 
             return s;
         };
 
-        $scope.sumtotal = function (key) {
+        $scope.sumtotal = function(key) {
             var s = 0;
             if (key == 'personal') {
                 s += $scope.sumcolumn('labo_personal') + $scope.sumcolumn('deve_personal') + $scope.sumcolumn('memo_personal');
                 s += $scope.sumcolumn('amer_personal') + $scope.sumcolumn('fran_personal') + $scope.sumcolumn('gove_personal');
+                s += $scope.sumcolumn('remember_personal');
             }
 
             if (key == 'team') {
                 s += $scope.sumcolumn('labo_team') + $scope.sumcolumn('deve_team') + $scope.sumcolumn('memo_team');
                 s += $scope.sumcolumn('amer_team') + $scope.sumcolumn('fran_team') + $scope.sumcolumn('gove_team');
+                s += $scope.sumcolumn('remember_team');
             }
             return s;
         };
 
-        $scope.formatNumber = function (num, dec) {
+        $scope.formatNumber = function(num, dec) {
             if (dec === undefined) dec = 2;
             var r = "" + Math.abs(parseFloat(num).toFixed(dec));
             var decimals = "";
@@ -522,7 +530,7 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
         };
 
 
-        $scope.uploadedFile = function (element) {
+        $scope.uploadedFile = function(element) {
             if (!$scope.issued_no) {
                 $scope.files = null;
                 alert('ກະລຸນາປ້ອນເລກທີ');
@@ -535,7 +543,7 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                 return;
             }
 
-            $scope.$apply(function ($scope) {
+            $scope.$apply(function($scope) {
                 $scope.files = element.files;
                 $http({
                     url: $scope.url + "upload&year=" + $scope.year.id,
@@ -550,16 +558,16 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                         'issued_date': $scope.issued_date,
                         'issued_by': $scope.issued_by
                     },
-                    transformRequest: function (data) {
+                    transformRequest: function(data) {
                         var formData = new FormData();
                         var file = $scope.files[0];
                         formData.append("file_upload", file);
-                        angular.forEach(data, function (value, key) {
+                        angular.forEach(data, function(value, key) {
                             formData.append(key, value);
                         });
                         return formData;
                     }
-                }).success(function (data, status, headers, config) {
+                }).success(function(data, status, headers, config) {
                     $scope.getreferences();
                     $scope.issued_date = null;
                     $scope.issued_no = null;
@@ -567,31 +575,31 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                     $("input[name='image'], .datepicker").val("");
                     $scope.status = data.status;
                     $scope.formdata = "";
-                }).error(function (data, status, headers, config) {
+                }).error(function(data, status, headers, config) {
                     $scope.response = data;
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.response = null;
                     }, 15000);
                 });
             });
         };
 
-        $scope.getreferences = function () {
+        $scope.getreferences = function() {
             if ($scope.year) {
                 $http.get($scope.url + 'getreferences&year=' + $scope.year.id)
-                    .then(function (r) {
+                    .then(function(r) {
                         if (r.data)
                             $scope.references = r.data.files;
-                    }, function (r) {
+                    }, function(r) {
                         $scope.response = r;
-                        $timeout(function () {
+                        $timeout(function() {
                             $scope.response = null;
                         }, 15000);
                     });
             }
         };
 
-        $scope.deletefile = function (f) {
+        $scope.deletefile = function(f) {
             if ($scope.year && f) {
                 swal({
                     title: "ໝັ້ນໃຈບໍ່?",
@@ -602,15 +610,15 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                     cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
                     closeOnConfirm: true,
                     closeOnCancel: true
-                }, function (isConfirm) {
+                }, function(isConfirm) {
                     if (isConfirm) {
                         $http.post($scope.url + 'deletefile&year=' + $scope.year.id, {
                             'id': f.id,
                             '_csrf': $('meta[name="csrf-token"]').attr("content")
-                        }).then(function (r) {
+                        }).then(function(r) {
                             $scope.response = r;
                             $scope.getreferences();
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
 
@@ -625,9 +633,9 @@ $this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽ�
                                     timer: 3000
                                 });
                             }
-                        }, function (r) {
+                        }, function(r) {
                             $scope.response = r;
-                            $timeout(function () {
+                            $timeout(function() {
                                 $scope.response = null;
                             }, 15000);
                             Swal.fire({
