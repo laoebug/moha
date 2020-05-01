@@ -50,8 +50,8 @@
                         <tr>
                             <th class="text-center" style="width: 20px"><?= Yii::t('app', 'No.') ?></th>
                             <th class="text-center"><?= Yii::t('app', 'Ministry') ?></th>
-                            <?php foreach (['Office', 'Department', 'Center', 'Institute', 'Division'] as $item) : ?>
-                                <th class="text-center" style="width: 10%"><?= Yii::t('app', $item) ?></th>
+                            <?php foreach (['ຫ້ອງການ', 'ກົມ', 'ສູນ', 'ສະຖາບັນ', 'ພະແນກ'] as $item) : ?>
+                                <th class="text-center" style="width: 10%"><?= $item ?></th>
                             <?php endforeach; ?>
                             <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
                         </tr>

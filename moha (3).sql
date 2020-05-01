@@ -1787,7 +1787,7 @@ INSERT INTO `message` (`id`, `language`, `translation`) VALUES
 (101, 'la-LA', ''),
 (102, 'la-LA', 'ກົມ'),
 (103, 'la-LA', 'ສະຖາບັນ'),
-(105, 'la-LA', 'ສະຖານບັນ'),
+(105, 'la-LA', 'ສະຖາບັນ'),
 (106, 'la-LA', ''),
 (107, 'la-LA', ''),
 (108, 'la-LA', ''),

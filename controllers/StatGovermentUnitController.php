@@ -19,7 +19,7 @@ use yii\web\Controller;
 /**
  * StatGovermentUnitController implements the CRUD actions for StatGovermentUnit model.
  */
-class StatGovermentUnitController extends BaseController
+class StatGovermentUnitController extends Controller
 {
     /**
      * Lists all StatGovermentUnit models.

@@ -938,7 +938,7 @@ INSERT INTO `moha`.`message` (`id`, `language`, `translation`)
 			(102, 'la-LA', 'ກົມ'),
 			(103, 'la-LA', 'ສະຖາບັນ'),
 			(104, 'la-LA', 'ສູນ'),
-			(105, 'la-LA', 'ສະຖານບັນ'),
+			(105, 'la-LA', 'ສະຖາບັນ'),
 			(106, 'la-LA', ''),
 			(107, 'la-LA', ''),
 			(108, 'la-LA', ''),

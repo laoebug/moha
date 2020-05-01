@@ -15,6 +15,7 @@ use Codeception\Util\HttpCode;
 use Exception;
 use Yii;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\ServerErrorHttpException;
 
 /**
