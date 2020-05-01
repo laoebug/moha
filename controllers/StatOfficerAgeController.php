@@ -13,30 +13,36 @@ use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
 use yii\db\Exception;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 
 /**
  * StatOfficerAgeController implements the CRUD actions for StatOfficerAge model.
  */
-class StatOfficerAgeController extends BaseController
+class StatOfficerAgeController extends Controller
 {
     public $table = 'stat_officer_age';
     public $class = 'StatOfficerAge';
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+    public function beforeAction($action)
     {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
+        $user = Yii::$app->user->identity;
+        $this->enableCsrfValidation = true;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                if (Yii::$app->request->isAjax) {
+                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                    return;
+                } else {
+                    return $this->redirect([
+                        'authentication/notallowed'
+                    ]);
+                }
+            }
+        }
+
+        return parent::beforeAction($action);
     }
 
     /**
