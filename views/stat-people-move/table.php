@@ -24,44 +24,55 @@ foreach ($models as $model)
         </div>
         <table class="table table-bordered table-hover">
             <thead>
-            <tr>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'District') ?></th>
-                <th class="text-center" rowspan="2"><?= Yii::t('app', 'Village') ?></th>
-                <th class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ</th>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Born') ?></th>
-                <th class="text-center" colspan="2">ເສຍຊີວິດ</th>
-                <th class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ລາວ</th>
-                <th class="text-center" rowspan="2">ແຕ່ງດອງ ລາວ-ຕ່າງປະເທດ</th>
-                <th class="text-center" rowspan="2">ຢ່າງຮ້າງ ລາວ-ລາວ</th>
-                <th class="text-center" rowspan="2">ຢ່າງຮ້າງ ລາວ-ຕ່າງປະເທດ</th>
-                <th class="text-center" colspan="2">ຍ້າຍມາ</th>
-                <th class="text-center" colspan="2">ຍ້າຍອອກໄປ</th>
-                <th class="text-center" colspan="2">ຈຳນວນພົນລະເມືອງ ທີ່ມີໜ້າຕົວຈິງ</th>
-            </tr>
-            <tr>
-                <?php for ($i = 0; $i < 12; $i++): ?>
-                    <th class="text-center"><?= Yii::t('app', $i % 2 == 0 ? 'T' : 'W') ?></th>
-                <?php endfor; ?>
-            </tr>
-            <tr>
-                <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                <?php foreach ($cols as $col): ?>
-                    <th class="text-center"><?= number_format($sum[$col]) ?></th>
-                <?php endforeach; ?>
-            </tr>
+                <tr>
+                    <th class="text-center" rowspan="3">ລຳດັບ</th>
+                    <th class="text-center" rowspan="3">ແຂວງ</th>
+                    <th class="text-center" colspan="3" rowspan="2">ຈຳນວນ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ຈຳນວນ ພົນລະເມືອງ ຍົກມາ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ຈຳນວນເກີດ</th>
+                    <th class="text-center" rowspan="3">ແຕ່ງດອງ ລາວ-ລາວ</th>
+                    <th class="text-center" rowspan="3">ແຕ່ງດອງ ລາວ-ຕ່າງປະເທດ</th>
+                    <th class="text-center" rowspan="3">ຢ່າຮ້າງ ລາວ-ລາວ</th>
+                    <th class="text-center" rowspan="3">ຢ່າຮ້າງ ລາວ-ຕ່າງປະເທດ</th>
+                    <th class="text-center" colspan="4">ການຈົດທະບຽນ ສັນຊາດລາວ</th>
+                    <th class="text-center" colspan="4">ການປ່ຽນຊື່ ຫຼື ນາມສະກຸນ</th>
+                    <th class="text-center" colspan="6">ການຍົກຍ້າຍມາ</th>
+                    <th class="text-center" colspan="6">ການຍົກຍ້າຍໄປ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ຈຳນວນ ເສຍຊີວິດ</th>
+                    <th class="text-center" colspan="2" rowspan="2">ຈຳນວນ ພົນລະເມືອງ ຕົວຈິງ</th>
+                </tr>
+                <tr>
+                    <th class="text-center" colspan="2">ການໄດ້ສັນຊາດລາວ</th>
+                    <th class="text-center" colspan="2">ການປະສັນຊາດລາວ</th>
+                    <th class="text-center" colspan="2">ຊື່</th>
+                    <th class="text-center" colspan="2">ນາມສະກຸນ</th>
+                    <th class="text-center" colspan="2">ບ້ານ-ບ້ານ</th>
+                    <th class="text-center" colspan="2">ເມືອງ-ເມືອງ</th>
+                    <th class="text-center" colspan="2">ແຂວງ-ແຂວງ</th>
+                    <th class="text-center" colspan="2">ບ້ານ-ບ້ານ</th>
+                    <th class="text-center" colspan="2">ເມືອງ-ເມືອງ</th>
+                    <th class="text-center" colspan="2">ແຂວງ-ແຂວງ</th>
+                </tr>
+                <tr>
+                    <th class="text-center">ເມືອງ</th>
+                    <th class="text-center">ບ້ານ</th>
+                    <th class="text-center">ຄອບຄົວ</th>
+                    <?php for ($i = 0; $i < 14; $i++) : ?>
+                        <th class="text-center">ລ</th>
+                        <th class="text-center">ຍ</th>
+                    <?php endfor; ?>
+                </tr>
             </thead>
             <tbody>
-            <?php foreach ($models as $index => $model): ?>
-                <tr>
-                    <td class="text-center"><?= $index + 1 ?></td>
-                    <td><?= $model['province_name'] ?></td>
-                    <?php foreach ($cols as $col): ?>
-                        <td class="text-center"><?= number_format($model[$col]) ?></td>
-                    <?php endforeach; ?>
-                </tr>
-            <?php endforeach; ?>
+                <?php foreach ($models as $n => $model) : ?>
+                    <tr>
+                        <td><?= $n + 1 ?></td>
+                        <td><?= $model['province_name'] ?></td>
+                        <?php foreach ($cols as $col) : ?>
+                            <td class="text-center"><?= number_format($model[$col]) ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>

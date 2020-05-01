@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2020 at 03:43 PM
--- Server version: 10.4.11-MariaDB
+-- Generation Time: Apr 30, 2020 at 04:33 PM
+-- Server version: 5.7.28-log
 -- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -34,7 +34,7 @@ CREATE TABLE `accociation` (
   `approved_date` datetime NOT NULL,
   `province_id` int(11) DEFAULT NULL,
   `approved_by_moha` int(11) DEFAULT NULL,
-  `remark` text DEFAULT NULL,
+  `remark` text,
   `position` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -48,10 +48,10 @@ CREATE TABLE `action` (
   `id` int(11) NOT NULL,
   `class_name` varchar(255) NOT NULL,
   `method` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `controller_id` int(11) DEFAULT 0,
-  `description` text DEFAULT NULL,
-  `parent_id` int(11) DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `controller_id` int(11) DEFAULT '0',
+  `description` text,
+  `parent_id` int(11) DEFAULT '0',
   `position` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -827,12 +827,34 @@ INSERT INTO `action` (`id`, `class_name`, `method`, `deleted`, `controller_id`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `aids_type`
+--
+
+CREATE TABLE `aids_type` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `deleted` int(11) DEFAULT NULL,
+  `position` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `aids_type`
+--
+
+INSERT INTO `aids_type` (`id`, `name`, `deleted`, `position`) VALUES
+(1, 'ເງິນກູ້ຢືມ', 0, '1'),
+(2, 'ຊ່ວຍເຫຼືອລ້າ', 0, '2'),
+(3, 'ທຶນສົມທົບຂອງລັດຖະບານ', 0, '3');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `approver`
 --
 
 CREATE TABLE `approver` (
   `id` int(11) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `ministry_id` int(11) DEFAULT NULL,
   `province_id` int(11) DEFAULT NULL,
   `approver_level_id` int(11) NOT NULL
@@ -872,8 +894,8 @@ INSERT INTO `approver` (`id`, `deleted`, `ministry_id`, `province_id`, `approver
 CREATE TABLE `approver_level` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `position` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `position` int(11) NOT NULL DEFAULT '0',
   `code` varchar(1) NOT NULL DEFAULT 'M' COMMENT 'M:Ministry\nP:Province'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -902,7 +924,7 @@ CREATE TABLE `attachment` (
   `issued_date` datetime DEFAULT NULL,
   `issued_no` varchar(255) DEFAULT NULL,
   `issued_by` varchar(255) DEFAULT NULL,
-  `data` blob DEFAULT NULL,
+  `data` blob,
   `dir` varchar(255) DEFAULT NULL,
   `original_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -981,7 +1003,7 @@ CREATE TABLE `award` (
   `name` varchar(255) NOT NULL,
   `deleted` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `position` int(11) DEFAULT 0
+  `position` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1032,11 +1054,11 @@ CREATE TABLE `branch` (
   `id` int(11) NOT NULL,
   `code` varchar(10) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
-  `address` text DEFAULT NULL,
+  `address` text,
   `tel` varchar(255) DEFAULT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `position` int(11) NOT NULL DEFAULT 0,
-  `remark` text DEFAULT NULL,
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `remark` text,
   `user_id` int(11) NOT NULL,
   `last_update` datetime DEFAULT NULL,
   `ministry_id` int(11) NOT NULL
@@ -1068,22 +1090,22 @@ INSERT INTO `branch` (`id`, `code`, `name`, `address`, `tel`, `deleted`, `positi
 --
 
 CREATE TABLE `content` (
-  `code` varchar(20) CHARACTER SET latin1 NOT NULL,
-  `value` text DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `code` varchar(20) NOT NULL,
+  `value` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `content`
 --
 
 INSERT INTO `content` (`code`, `value`) VALUES
+('ADDRESS', 'ເຂດສຳນັກງານນາຍົກລັດຖະມົນຕີ, ບ້ານ ສີສະຫວາດ, ເມືອງ ຈັນທະບູລີ ນະຄອນຫຼວງວຽງຈັນ, ຕູ້ ປ.ນ 6376'),
 ('EMAIL', 'info@moha.gov.la'),
 ('LAT', '17.972369'),
 ('LON', '102.617242'),
 ('MAPZOOM', '15'),
 ('TELEPHONE', '021 212454'),
-('WEBSITE', 'www.moha.gov.la\r\n'),
-('ADDRESS', 'ເຂດສຳນັກງານນາຍົກລັດຖະມົນຕີ, ບ້ານ ສີສະຫວາດ, ເມືອງ ຈັນທະບູລີ ນະຄອນຫຼວງວຽງຈັນ, ຕູ້ ປ.ນ 6376');
+('WEBSITE', 'www.moha.gov.la\r\n');
 
 -- --------------------------------------------------------
 
@@ -1094,8 +1116,8 @@ INSERT INTO `content` (`code`, `value`) VALUES
 CREATE TABLE `controller` (
   `id` int(11) NOT NULL,
   `code` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `description` text DEFAULT NULL
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1111,8 +1133,8 @@ CREATE TABLE `district` (
   `province_id` int(11) NOT NULL,
   `record_status` varchar(1) DEFAULT NULL,
   `input_id` int(11) DEFAULT NULL,
-  `input_dt_stamp` datetime DEFAULT current_timestamp(),
-  `deleted` int(11) NOT NULL DEFAULT 0
+  `input_dt_stamp` datetime DEFAULT NULL,
+  `deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1279,8 +1301,8 @@ INSERT INTO `district` (`id`, `district_code`, `district_name`, `province_id`, `
 CREATE TABLE `ethnic` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `position` int(11) NOT NULL DEFAULT 0,
-  `deleted` int(11) NOT NULL DEFAULT 0
+  `position` int(11) NOT NULL DEFAULT '0',
+  `deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1351,7 +1373,7 @@ CREATE TABLE `foundation` (
   `approved_date` datetime NOT NULL,
   `province_id` int(11) DEFAULT NULL,
   `approved_by_moha` int(11) DEFAULT NULL,
-  `remark` text DEFAULT NULL
+  `remark` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1363,8 +1385,8 @@ CREATE TABLE `foundation` (
 CREATE TABLE `goverment_level` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `position` int(11) NOT NULL DEFAULT 0
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `position` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1390,9 +1412,9 @@ INSERT INTO `goverment_level` (`id`, `name`, `deleted`, `position`) VALUES
 CREATE TABLE `goverment_unit` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `branch_id` int(11) NOT NULL,
-  `position` int(11) NOT NULL DEFAULT 0
+  `position` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1404,9 +1426,9 @@ CREATE TABLE `goverment_unit` (
 CREATE TABLE `legal` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `legal_type_id` int(11) NOT NULL,
-  `position` int(11) DEFAULT 0
+  `position` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1491,8 +1513,8 @@ CREATE TABLE `legal_status` (
 CREATE TABLE `legal_type` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `position` int(11) NOT NULL DEFAULT 0
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `position` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1519,19 +1541,19 @@ CREATE TABLE `link` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `url` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `link`
 --
 
 INSERT INTO `link` (`id`, `name`, `url`) VALUES
-(8, 'ສະພາແຫ່ງຊາດ', 'http://www.na.gov.la'),
-(4, 'ລັດຖະບານແຫ່ງ ສປປ ລາວ', 'http://www.laogov.gov.la'),
-(5, 'ກະຊວງພາຍໃນ', 'http://www.moha.gov.la/'),
-(6, 'ກະຊວງຍຸຕິທຳ', 'http://www.moj.gov.la/'),
-(7, 'ສູນສະຖິຕິແຫ່ງຊາດ', 'https://www.lsb.gov.la'),
-(9, 'ທະນາຄານແຫ່ງ ສປປ ລາວ', 'http://www.bol.gov.la');
+(1, 'ລັດຖະບານແຫ່ງ ສປປ ລາວ', 'http://www.laogov.gov.la'),
+(2, 'ກະຊວງພາຍໃນ', 'http://www.moha.gov.la/'),
+(3, 'ກະຊວງຍຸຕິທໍາ', 'http://www.moj.gov.la/'),
+(4, 'ສູນສະຖິຕິແຫ່ງຊາດ', 'https://www.lsb.gov.la'),
+(5, 'ສະພາແຫ່ງຊາດ', 'http://www.na.gov.la'),
+(6, 'ທະນາຄານ ແຫ່ງ ສປປ ລາວ', 'http://www.bol.gov.la');
 
 -- --------------------------------------------------------
 
@@ -1545,14 +1567,14 @@ CREATE TABLE `menu` (
   `url` varchar(255) DEFAULT NULL,
   `icon` varchar(45) DEFAULT NULL,
   `description` varchar(1024) DEFAULT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `menugroup_id` int(11) DEFAULT NULL,
   `menu_parent_id` int(11) DEFAULT NULL,
   `input_id` int(11) DEFAULT NULL,
-  `input_dt_stamp` datetime DEFAULT current_timestamp(),
+  `input_dt_stamp` datetime DEFAULT NULL,
   `position` int(11) DEFAULT NULL,
   `table_name` varchar(255) DEFAULT NULL,
-  `has_province` int(11) DEFAULT 0
+  `has_province` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1673,9 +1695,9 @@ INSERT INTO `menu` (`id`, `name`, `url`, `icon`, `description`, `deleted`, `menu
 CREATE TABLE `menugroup` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `input_id` int(11) DEFAULT NULL,
-  `input_dt_stamp` datetime DEFAULT current_timestamp()
+  `input_dt_stamp` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1695,7 +1717,7 @@ INSERT INTO `menugroup` (`id`, `name`, `deleted`, `input_id`, `input_dt_stamp`) 
 CREATE TABLE `message` (
   `id` int(11) NOT NULL,
   `language` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
-  `translation` text COLLATE utf8_unicode_ci DEFAULT NULL
+  `translation` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -2484,7 +2506,8 @@ INSERT INTO `message` (`id`, `language`, `translation`) VALUES
 (1912, 'la-LA', ''),
 (1913, 'la-LA', ''),
 (1914, 'la-LA', ''),
-(1915, 'la-LA', '');
+(1915, 'la-LA', ''),
+(1916, 'la-LA', '');
 
 -- --------------------------------------------------------
 
@@ -2528,15 +2551,15 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 CREATE TABLE `ministry` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `code` varchar(5) DEFAULT NULL,
   `last_update` datetime NOT NULL,
   `ministry_group_id` int(11) DEFAULT NULL,
-  `position` int(11) NOT NULL DEFAULT 0,
+  `position` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) DEFAULT NULL,
-  `remark` text DEFAULT NULL,
-  `input_dt_stamp` datetime DEFAULT current_timestamp(),
-  `equal` int(11) DEFAULT 0 COMMENT 'equal ministry',
+  `remark` text,
+  `input_dt_stamp` datetime DEFAULT NULL,
+  `equal` int(11) DEFAULT '0' COMMENT 'equal ministry',
   `phiscal_year_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2546,7 +2569,7 @@ CREATE TABLE `ministry` (
 
 INSERT INTO `ministry` (`id`, `name`, `deleted`, `code`, `last_update`, `ministry_group_id`, `position`, `user_id`, `remark`, `input_dt_stamp`, `equal`, `phiscal_year_id`) VALUES
 (1, 'ກະຊວງ ກະສິກຳ ແລະ ປ່າໄມ້', 0, '1', '2019-10-25 11:27:22', 1, 5, 1, NULL, '2017-09-06 19:58:52', 0, 2),
-(2, 'ກະຊວງ ການເງິນ', 0, '2', '2020-03-26 07:43:04', 1, 1, 1, '', '2017-09-06 19:58:52', 0, 2),
+(2, 'ກະຊວງ ການເງິນ', 0, '2', '2020-04-13 05:54:11', 1, 1, 1, '', '2017-09-06 19:58:52', 0, 2),
 (3, 'ກະຊວງ ການຕ່າງປະເທດ', 0, '3', '2018-02-22 15:30:49', 1, 15, 1, NULL, '2017-09-06 19:58:52', 0, 2),
 (4, 'ສະພາແຫ່ງຊາດ', 1, '4', '2017-09-06 19:58:52', 2, 0, NULL, NULL, '2017-09-06 19:58:52', 0, 2),
 (5, 'ສານປະຊາຊົນສູງສຸດ', 1, '5', '2017-09-06 19:58:52', 2, 0, NULL, NULL, '2017-09-06 19:58:52', 0, 2),
@@ -2616,9 +2639,9 @@ INSERT INTO `ministry` (`id`, `name`, `deleted`, `code`, `last_update`, `ministr
 CREATE TABLE `ministry_group` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `position` int(11) NOT NULL DEFAULT 0,
-  `input_dt_stamp` datetime DEFAULT current_timestamp(),
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `input_dt_stamp` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2644,13 +2667,13 @@ CREATE TABLE `notice` (
   `id` int(11) NOT NULL,
   `created_date` datetime NOT NULL,
   `title` varchar(255) NOT NULL,
-  `content` text DEFAULT NULL,
+  `content` text,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
-  `show` int(11) NOT NULL DEFAULT 1,
+  `show` int(11) NOT NULL DEFAULT '1',
   `user_id` int(11) NOT NULL,
-  `position` int(11) DEFAULT 0,
-  `deleted` int(11) NOT NULL DEFAULT 0
+  `position` int(11) DEFAULT '0',
+  `deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2685,11 +2708,11 @@ INSERT INTO `notice` (`id`, `created_date`, `title`, `content`, `start_date`, `e
 CREATE TABLE `officer_level` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `last_update` datetime NOT NULL,
   `position` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
-  `is_province` int(11) DEFAULT 0
+  `is_province` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2710,8 +2733,8 @@ INSERT INTO `officer_level` (`id`, `name`, `deleted`, `last_update`, `position`,
 CREATE TABLE `organisation` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `position` int(11) NOT NULL DEFAULT 0
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `position` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2750,8 +2773,8 @@ INSERT INTO `organisation` (`id`, `name`, `deleted`, `position`) VALUES
 CREATE TABLE `organisation_group` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `position` int(11) DEFAULT 0
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `position` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2765,7 +2788,7 @@ CREATE TABLE `phiscal_year` (
   `year` varchar(255) NOT NULL,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `status` varchar(1) DEFAULT NULL COMMENT 'o:openning\nc:closed'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2791,7 +2814,7 @@ INSERT INTO `phiscal_year` (`id`, `year`, `start_date`, `end_date`, `deleted`, `
 CREATE TABLE `project` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `position` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -2818,9 +2841,9 @@ CREATE TABLE `province` (
   `province_name` varchar(255) NOT NULL,
   `record_status` varchar(1) DEFAULT NULL,
   `input_id` int(11) DEFAULT NULL,
-  `input_dt_stamp` datetime DEFAULT current_timestamp(),
-  `deleted` int(11) NOT NULL DEFAULT 0,
-  `position` int(11) NOT NULL DEFAULT 0
+  `input_dt_stamp` datetime DEFAULT NULL,
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `position` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -2856,9 +2879,9 @@ INSERT INTO `province` (`id`, `province_code`, `province_name`, `record_status`,
 CREATE TABLE `role` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) DEFAULT NULL,
-  `input_dt_stamp` datetime DEFAULT current_timestamp(),
+  `input_dt_stamp` datetime DEFAULT NULL,
   `is_province` int(11) DEFAULT NULL,
   `province_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -12205,7 +12228,7 @@ INSERT INTO `role_has_menu` (`role_id`, `menu_id`, `accessible`) VALUES
 CREATE TABLE `salary_level` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `last_update` datetime NOT NULL,
   `position` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL
@@ -12231,7 +12254,7 @@ INSERT INTO `salary_level` (`id`, `name`, `deleted`, `last_update`, `position`, 
 CREATE TABLE `source_message` (
   `id` int(11) NOT NULL,
   `category` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `message` text COLLATE utf8_unicode_ci DEFAULT NULL
+  `message` text COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -13034,7 +13057,8 @@ INSERT INTO `source_message` (`id`, `category`, `message`) VALUES
 (1912, 'app', 'ຈັດລຽງລໍາດັບ'),
 (1913, 'app', 'Created Date'),
 (1914, 'app', 'Content'),
-(1915, 'app', 'Show');
+(1915, 'app', 'Show'),
+(1916, 'app', 'Division');
 
 -- --------------------------------------------------------
 
@@ -13083,6 +13107,39 @@ CREATE TABLE `stat_aids` (
   `last_update` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `stat_aids`
+--
+
+INSERT INTO `stat_aids` (`id`, `deleted`, `phiscal_year_id`, `user_id`, `last_update`) VALUES
+(1, NULL, 12, 1, '2020-03-26 16:04:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stat_aids_detail`
+--
+
+CREATE TABLE `stat_aids_detail` (
+  `id` int(11) NOT NULL,
+  `deleted` int(11) DEFAULT NULL,
+  `stat_aids_id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `contract` varchar(255) DEFAULT NULL,
+  `start` varchar(255) DEFAULT NULL,
+  `finish` varchar(255) DEFAULT NULL,
+  `amount` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `aids_type_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stat_aids_detail`
+--
+
+INSERT INTO `stat_aids_detail` (`id`, `deleted`, `stat_aids_id`, `name`, `contract`, `start`, `finish`, `amount`, `remark`, `aids_type_id`) VALUES
+(1, NULL, 1, 'test', '1', '11', '22', '344444', 'sdfghsdf', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -13094,7 +13151,7 @@ CREATE TABLE `stat_association_foundation` (
   `last_update` datetime NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `phiscal_year_id` int(11) NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0
+  `saved` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -13117,7 +13174,7 @@ CREATE TABLE `stat_association_foundation_detail` (
   `id` int(11) NOT NULL,
   `association` int(11) DEFAULT NULL,
   `foundation` int(11) DEFAULT NULL,
-  `remark` text DEFAULT NULL,
+  `remark` text,
   `stat_association_foundation_id` int(11) NOT NULL,
   `approver_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -13232,7 +13289,7 @@ INSERT INTO `stat_contract_detail` (`id`, `stat_contract_id`, `officer_level_id`
 CREATE TABLE `stat_copy` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `phiscal_year_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -13244,7 +13301,8 @@ CREATE TABLE `stat_copy` (
 INSERT INTO `stat_copy` (`id`, `last_update`, `saved`, `phiscal_year_id`, `user_id`) VALUES
 (1, '2018-02-22 16:03:20', 1, 1, 1),
 (2, '2018-05-14 05:15:35', 1, 12, 1),
-(3, '2019-08-01 04:36:50', 1, 2, 6);
+(3, '2019-08-01 04:36:50', 1, 2, 6),
+(4, '2020-04-30 06:15:04', 1, 4, 6);
 
 -- --------------------------------------------------------
 
@@ -13277,7 +13335,9 @@ INSERT INTO `stat_copy_detail` (`id`, `stat_copy_id`, `activity`, `start_year`, 
 (11, 2, 'ວຽກງານບໍລິການຂໍ້ມູນເອກະສານ (ສະໜອງເອກະສານ)', 2015, 2016, '829 ສະບັບ; 2,560 ໃບ ແລະ ປຶ້ມມີຈໍານວນ 137 ຫົວ', NULL),
 (12, 2, 'ວຽກງານການສະແດງເອກະສານ ແລະ ຮູບພາບ', 2015, 2016, 'ຮູບພາບ 65 ແຜ່ນ; ເອກະສານ 13 ສະບັບ; ປຶ້ມ 50 ຫົວ', NULL),
 (13, 2, 'ກວດກາຄືນໃນການຂືຶ້ນບັນຊີຮູບພາບ ແລະ ຂອງທີ່ລະນຶກ', 2015, 2016, 'ຂອງທີ່ລະນຶກ 22 ອັນ; ຂອງຂວັນ 14 ອັນ; ຮູບພາບ 30 ໃບ', NULL),
-(14, 3, 'ໄຈແຍກ-ສ້າງສຳນວນເອກະສານ', 2018, 2018, 'ສ້າງດຳລັດ', NULL);
+(14, 3, 'ໄຈແຍກ-ສ້າງສຳນວນເອກະສານ', 2018, 2018, 'ສ້າງດຳລັດ', NULL),
+(15, 4, 'ໄຈ້ແຍກ-ສ້າງສໍານວນເອກະສານ ແລະ ຂຽນໜ້າປົກ', 2019, 2019, '542 ສໍານວນ', NULL),
+(16, 4, 'ຈັດລຽງເອກະສານຕາມເລກທີ, ວັນທີ, ເດືອນ, ປີ ແລະ ກໍານົດຄຸນຄ່າເອກະສານ', 2019, 2019, '2091 ສໍານວນ, 9761 ສະບັບ', NULL);
 
 -- --------------------------------------------------------
 
@@ -13287,7 +13347,7 @@ INSERT INTO `stat_copy_detail` (`id`, `stat_copy_id`, `activity`, `start_year`, 
 
 CREATE TABLE `stat_course` (
   `id` int(11) NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `last_update` datetime NOT NULL,
   `user_id` int(11) NOT NULL,
   `phiscal_year_id` int(11) NOT NULL
@@ -13380,7 +13440,8 @@ INSERT INTO `stat_document` (`id`, `last_update`, `saved`, `user_id`, `phiscal_y
 (2, '2019-06-06 07:56:14', 1, 1, 1),
 (3, '2018-05-16 05:11:35', 1, 12, 12),
 (4, '2018-10-15 10:30:26', 1, 1, 3),
-(7, '2019-08-01 05:19:53', 1, 6, 2);
+(7, '2019-08-01 05:19:53', 1, 6, 2),
+(8, '2020-04-23 09:35:32', 1, 6, 4);
 
 -- --------------------------------------------------------
 
@@ -13498,7 +13559,15 @@ INSERT INTO `stat_document_detail` (`id`, `stat_document_id`, `province_id`, `mi
 (88, 7, NULL, 53, NULL, NULL, NULL, 78, 0, NULL, NULL, NULL),
 (89, 7, 2, NULL, NULL, NULL, NULL, 16, 1, NULL, NULL, NULL),
 (90, 7, 3, NULL, NULL, NULL, NULL, 12, 1, NULL, NULL, NULL),
-(91, 7, 4, NULL, NULL, NULL, NULL, 18, 0, NULL, NULL, NULL);
+(91, 7, 4, NULL, NULL, NULL, NULL, 18, 0, NULL, NULL, NULL),
+(92, 8, NULL, 1, NULL, NULL, NULL, 0, 0, NULL, 287, 2),
+(93, 8, NULL, 2, NULL, NULL, NULL, 8, 0, NULL, 161, 1),
+(94, 8, NULL, 41, NULL, NULL, NULL, 45, 0, NULL, 7160, 0),
+(95, 8, NULL, NULL, 1, NULL, NULL, 56, 0, NULL, 72, 67),
+(96, 8, 1, NULL, NULL, NULL, NULL, 16, NULL, NULL, 324, 22),
+(97, 8, 14, NULL, NULL, NULL, NULL, 12, NULL, NULL, 27, 0),
+(98, 8, NULL, NULL, NULL, 2, NULL, 0, 0, NULL, 2000, 34),
+(99, 8, NULL, NULL, NULL, 1, NULL, 5000, 0, NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -14999,7 +15068,7 @@ CREATE TABLE `stat_goverment_unit` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `phiscal_year_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -15011,7 +15080,8 @@ INSERT INTO `stat_goverment_unit` (`id`, `user_id`, `last_update`, `saved`, `phi
 (2, 1, '2018-03-15 05:58:38', 1, 1),
 (4, 37, '2018-05-27 06:33:21', 1, 12),
 (5, 7, '2018-10-12 09:54:51', 1, 3),
-(6, 7, '2019-05-20 10:04:31', 1, 2);
+(6, 7, '2019-05-20 10:04:31', 1, 2),
+(7, 42, '2020-04-20 09:07:28', 1, 4);
 
 -- --------------------------------------------------------
 
@@ -15025,7 +15095,7 @@ CREATE TABLE `stat_goverment_unit_detail` (
   `insitute` int(11) DEFAULT NULL,
   `center` int(11) DEFAULT NULL,
   `stat_goverment_unit_id` int(11) NOT NULL,
-  `remark` text DEFAULT NULL,
+  `remark` text,
   `office` int(11) DEFAULT NULL,
   `ministry_id` int(11) NOT NULL,
   `division` int(11) DEFAULT NULL
@@ -15125,7 +15195,8 @@ INSERT INTO `stat_goverment_unit_detail` (`id`, `department`, `insitute`, `cente
 (88, NULL, NULL, NULL, 6, 'ບໍ່ມີຂໍ້ມູນ', NULL, 53, NULL),
 (89, 8, NULL, NULL, 6, NULL, 0, 41, NULL),
 (90, 21, 0, 0, 6, NULL, 0, 42, NULL),
-(91, 12, 0, 0, 6, NULL, 0, 87, NULL);
+(91, 12, 0, 0, 6, NULL, 0, 87, NULL),
+(92, 12, 1, 1, 7, NULL, 1, 6, NULL);
 
 -- --------------------------------------------------------
 
@@ -15356,7 +15427,7 @@ INSERT INTO `stat_highcoin_ministry_detail` (`id`, `gold_personal`, `gold_team`,
 CREATE TABLE `stat_highoversea_ministry` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `phiscal_year_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -15415,7 +15486,7 @@ CREATE TABLE `stat_hornorcoin_province` (
   `user_id` int(11) NOT NULL,
   `phiscal_year_id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0
+  `saved` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -15473,7 +15544,7 @@ INSERT INTO `stat_hornorcoin_province_detail` (`id`, `hero_personal`, `hero_team
 CREATE TABLE `stat_institute_meeting` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL,
   `phiscal_year_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -15581,6 +15652,13 @@ CREATE TABLE `stat_interco` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `stat_interco`
+--
+
+INSERT INTO `stat_interco` (`id`, `last_update`, `phiscal_year_id`, `user_id`) VALUES
+(1, '2020-03-26 16:07:28', 12, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -15593,6 +15671,13 @@ CREATE TABLE `stat_interco_detail` (
   `area` varchar(255) DEFAULT NULL,
   `stat_interco_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stat_interco_detail`
+--
+
+INSERT INTO `stat_interco_detail` (`id`, `name`, `area`, `stat_interco_id`) VALUES
+(1, 'sdcadf', 'fasdf', 1);
 
 -- --------------------------------------------------------
 
@@ -15630,7 +15715,7 @@ CREATE TABLE `stat_investment_detail` (
   `implement` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `project_id` int(11) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0
+  `deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -15660,7 +15745,7 @@ CREATE TABLE `stat_legal` (
   `last_update` datetime NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `phiscal_year_id` int(11) NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0
+  `saved` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -15672,7 +15757,7 @@ INSERT INTO `stat_legal` (`id`, `last_update`, `user_id`, `phiscal_year_id`, `sa
 (21, '2018-05-14 04:52:35', 9, 12, 1),
 (22, '2018-10-16 07:06:59', 7, 3, 1),
 (24, '2019-05-20 10:24:41', 7, 2, 1),
-(25, '2019-10-28 08:18:54', 17, 4, 1),
+(25, '2020-04-20 12:47:49', 17, 4, 1),
 (26, '2019-10-28 08:23:22', 17, 11, 1);
 
 -- --------------------------------------------------------
@@ -15684,12 +15769,12 @@ INSERT INTO `stat_legal` (`id`, `last_update`, `user_id`, `phiscal_year_id`, `sa
 CREATE TABLE `stat_legal_detail` (
   `id` int(11) NOT NULL,
   `new` int(11) DEFAULT NULL,
-  `remark` text DEFAULT NULL,
+  `remark` text,
   `improve` int(11) DEFAULT NULL,
   `publish` varchar(255) DEFAULT NULL,
   `stat_legal_id` int(11) NOT NULL,
   `legal_id` int(11) NOT NULL,
-  `legal_name` text DEFAULT NULL,
+  `legal_name` text,
   `legal_type_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -15760,7 +15845,7 @@ INSERT INTO `stat_legal_detail` (`id`, `new`, `remark`, `improve`, `publish`, `s
 (60, 0, NULL, 0, 'ສະບັບເລກທີ 294/ລບ, ລົງວັນທີ 04 ກັນຍາ 2017', 24, 8, 'ດຳລັດວ່າດ້ວຍການຝຶກອົບຮົມ ແລະ ພັດທະນາ ລັດຖະກອນແຫ່ງ ສປປ ລາວ', 1),
 (61, 1, 'no 123/re', 0, 'not yet', 25, 50, 'ແຈ້ງການ ກ່ຽວກັບການກຳນົດກົງຈັກການຈັດຕັ້ງເຂົ້າໃນກົດໝາຍ ຫຼື ດຳລັດ', 8),
 (62, 1, 'ເດ', 0, '25565', 25, 2, 'ກົດໝາຍວ່າດ້ວຍພະນັກງານລັດຖະກອນ', 2),
-(63, 1, NULL, 0, '2019', 25, 41, 'ດຳລັດວ່າດ້ວຍວັນພັກ', 1),
+(63, 0, NULL, 1, '2019', 25, 41, 'ດຳລັດວ່າດ້ວຍວັນພັກຂອງລັດຖະກອນ', 1),
 (64, 1, NULL, 0, '250', 26, 1, 'ກົດໝາຍວ່າດ້ວຍການປົກຄອງທ້ອງຖິ່ນ', 2);
 
 -- --------------------------------------------------------
@@ -15959,7 +16044,7 @@ CREATE TABLE `stat_map_print` (
 CREATE TABLE `stat_map_produce` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `phiscal_year_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -15972,7 +16057,8 @@ INSERT INTO `stat_map_produce` (`id`, `last_update`, `saved`, `phiscal_year_id`,
 (1, '2017-09-16 20:58:17', 1, 1, 1),
 (2, '2018-05-14 05:46:24', 1, 12, 11),
 (3, '2019-11-19 08:49:45', 1, 2, 6),
-(4, '2019-08-05 06:12:24', 1, 3, 1);
+(4, '2019-08-05 06:12:24', 1, 3, 1),
+(5, '2020-04-30 06:19:12', 1, 4, 6);
 
 -- --------------------------------------------------------
 
@@ -16002,7 +16088,10 @@ INSERT INTO `stat_map_produce_detail` (`id`, `stat_map_produce_id`, `activity`, 
 (8, 3, '1/50.000', 80000, '24 ກຸມພາ2017'),
 (9, 4, 'ແຜນທີ່ 1\\50000', 80000, NULL),
 (10, 3, 'ແຜນ​ທີ່​ປົກ​ຄອງ', 3000, '5/4/2017'),
-(11, 3, 'ແຜນທີ່ປົກຄອງ', 3000, '5/4/2017');
+(11, 3, 'ແຜນທີ່ປົກຄອງ', 3000, '5/4/2017'),
+(12, 5, 'ຕົກແຕ່ງແຕ້ມ ແລະ ພິມແຜນທີ່ 1:100000 ເຂດຊາຍແດນລາວ-ກໍາປູເຈ້ຍ ນໍ້າເບີ D -48-57, D -48-58, D-48-70', 8000, NULL),
+(15, 5, 'ຕົກແຕ່ງແຕ້ມ ແລະ ພິມແຜນທີ່1:100000 ເຂດຊາຍແດນ ລາວ-ກໍາປູເຈ້ຍ D-48-XVII', 2700, NULL),
+(16, 5, 'ຕົວຢ່າງ', 1000, NULL);
 
 -- --------------------------------------------------------
 
@@ -16025,7 +16114,8 @@ CREATE TABLE `stat_map_service` (
 INSERT INTO `stat_map_service` (`id`, `last_update`, `saved`, `user_id`, `phiscal_year_id`) VALUES
 (1, '2019-10-16 10:49:14', 1, 1, 1),
 (2, '2018-05-22 07:40:35', 1, 11, 12),
-(8, '2019-10-21 05:49:50', 1, 1, 2);
+(8, '2019-10-21 05:49:50', 1, 1, 2),
+(15, '2020-04-30 06:18:10', 1, 17, 4);
 
 -- --------------------------------------------------------
 
@@ -16088,7 +16178,8 @@ INSERT INTO `stat_map_service_detail` (`id`, `stat_map_service_id`, `activity`, 
 (47, 8, 'TEST', 23, 32, 23, 'SDFDSFDSFDSFDSSADASDSAD'),
 (48, 8, 'TEST', 444444, 4444444, 44444, 'SADSADSADSADSAD'),
 (49, 8, 'TEST', 22, 0, 0, 'SADSADSADSA'),
-(50, 8, 'Test 21.10.2019', 23, 123, 544, 'ລອງ');
+(50, 8, 'Test 21.10.2019', 23, 123, 544, 'ລອງ'),
+(51, 15, 'ຕົວຢ່າງ', 1000, 54, 5, '');
 
 -- --------------------------------------------------------
 
@@ -16122,7 +16213,7 @@ CREATE TABLE `stat_ministry` (
   `last_update` datetime DEFAULT NULL,
   `phiscal_year_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0
+  `deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -16160,7 +16251,8 @@ CREATE TABLE `stat_oda` (
 INSERT INTO `stat_oda` (`id`, `last_update`, `saved`, `user_id`, `phiscal_year_id`) VALUES
 (3, '2018-03-05 17:51:08', 1, 1, 1),
 (4, '2019-10-28 09:57:59', 1, 7, 3),
-(5, '2019-10-22 05:50:10', 1, 7, 2);
+(5, '2019-10-22 05:50:10', 1, 7, 2),
+(9, '2020-04-20 09:35:38', 1, 42, 4);
 
 -- --------------------------------------------------------
 
@@ -16180,7 +16272,7 @@ CREATE TABLE `stat_oda_detail` (
   `loan` int(11) DEFAULT NULL,
   `organisation` varchar(255) DEFAULT NULL,
   `receive` int(11) DEFAULT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0
+  `deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -16206,7 +16298,10 @@ INSERT INTO `stat_oda_detail` (`id`, `stat_oda_id`, `code`, `name`, `start_year`
 (16, 5, '1234', 'a', 2019, 2020, 10000000, 1, NULL, 'adb', 50000000, 1),
 (17, 5, '999', 'ທົດລອງ', 2020, 2021, 52000000, 1, NULL, 'ທລ', 35000000, 0),
 (18, 4, '0202', 'ໂຄງການ', 2019, 2020, 152565, 1, NULL, 'ີືີີun', 2155, 1),
-(19, 4, '0202', 'ໂຄງການ', 2019, 2020, 152565, 1, NULL, 'ີືີີun', 2155, 1);
+(19, 4, '0202', 'ໂຄງການ', 2019, 2020, 152565, 1, NULL, 'ີືີີun', 2155, 1),
+(20, 9, '0006.5', 'GPAR', 2016, 2021, 6050000, 1, NULL, 'UNDP', 145000000, 0),
+(21, 9, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 1),
+(22, 9, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -16217,7 +16312,7 @@ INSERT INTO `stat_oda_detail` (`id`, `stat_oda_id`, `code`, `name`, `start_year`
 CREATE TABLE `stat_officer` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `phiscal_year_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -16228,7 +16323,8 @@ CREATE TABLE `stat_officer` (
 
 INSERT INTO `stat_officer` (`id`, `last_update`, `saved`, `phiscal_year_id`, `user_id`) VALUES
 (1, '2018-02-09 07:17:02', 1, 1, 1),
-(2, '2018-05-14 04:02:02', 1, 12, 2);
+(2, '2018-05-14 04:02:02', 1, 12, 2),
+(3, '2020-04-24 04:03:30', 1, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -16556,7 +16652,8 @@ CREATE TABLE `stat_officer_detail` (
 
 INSERT INTO `stat_officer_detail` (`id`, `stat_officer_id`, `center_total`, `province_total`, `district_total`, `center_women`, `province_women`, `district_women`) VALUES
 (1, 1, 30469, 34227, 117777, 12836, 14171, 55839),
-(2, 2, 28975, 33635, 115216, 12040, 13822, 53800);
+(2, 2, 28975, 33635, 115216, 12040, 13822, 53800),
+(3, 3, 26619, 157542, 120489, 11655, 73090, 57527);
 
 -- --------------------------------------------------------
 
@@ -16567,7 +16664,7 @@ INSERT INTO `stat_officer_detail` (`id`, `stat_officer_id`, `center_total`, `pro
 CREATE TABLE `stat_officer_ethnic` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL,
   `phiscal_year_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -17373,7 +17470,7 @@ INSERT INTO `stat_officer_organisation_train_detail` (`id`, `tech_in_total`, `te
 CREATE TABLE `stat_officer_organisation_upgrade` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL,
   `phiscal_year_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -18037,6 +18134,60 @@ INSERT INTO `stat_officer_salary` (`id`, `last_update`, `saved`, `phiscal_year_i
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `stat_officer_salary6`
+--
+
+CREATE TABLE `stat_officer_salary6` (
+  `id` int(11) NOT NULL,
+  `deleted` int(11) NOT NULL,
+  `last_update` datetime NOT NULL,
+  `phiscal_year_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stat_officer_salary6`
+--
+
+INSERT INTO `stat_officer_salary6` (`id`, `deleted`, `last_update`, `phiscal_year_id`, `user_id`) VALUES
+(1, 0, '2020-03-26 16:01:40', 12, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stat_officer_salary6_detail`
+--
+
+CREATE TABLE `stat_officer_salary6_detail` (
+  `id` int(11) NOT NULL,
+  `deleted` int(11) DEFAULT NULL,
+  `step1` int(11) DEFAULT NULL,
+  `step2` int(11) DEFAULT NULL,
+  `step3` int(11) DEFAULT NULL,
+  `step4` int(11) DEFAULT NULL,
+  `step5` int(11) DEFAULT NULL,
+  `step6` int(11) DEFAULT NULL,
+  `stat_officer_salary6_id` int(11) NOT NULL,
+  `ministry_id` int(11) NOT NULL,
+  `study_level_id` int(11) NOT NULL,
+  `step1_women` int(11) DEFAULT NULL,
+  `step2_women` int(11) DEFAULT NULL,
+  `step3_women` int(11) DEFAULT NULL,
+  `step4_women` int(11) DEFAULT NULL,
+  `step5_women` int(11) DEFAULT NULL,
+  `step6_women` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stat_officer_salary6_detail`
+--
+
+INSERT INTO `stat_officer_salary6_detail` (`id`, `deleted`, `step1`, `step2`, `step3`, `step4`, `step5`, `step6`, `stat_officer_salary6_id`, `ministry_id`, `study_level_id`, `step1_women`, `step2_women`, `step3_women`, `step4_women`, `step5_women`, `step6_women`) VALUES
+(1, NULL, 99, 77, 55, 33, 11, 9, 1, 36, 1, 88, 66, 44, 22, 10, 8);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stat_officer_salary_detail`
 --
 
@@ -18110,7 +18261,7 @@ INSERT INTO `stat_officer_salary_detail` (`id`, `stat_officer_salary_id`, `level
 CREATE TABLE `stat_officer_technical` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL,
   `phiscal_year_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -18224,11 +18375,52 @@ CREATE TABLE `stat_people_move_detail` (
   `die_women` int(11) DEFAULT NULL,
   `real_total` int(11) DEFAULT NULL,
   `real_women` int(11) DEFAULT NULL,
-  `deleted` int(11) DEFAULT 0,
+  `deleted` int(11) DEFAULT '0',
   `total_village` int(11) DEFAULT NULL,
   `total_family` int(11) DEFAULT NULL,
   `total_district` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stat_people_province`
+--
+
+CREATE TABLE `stat_people_province` (
+  `id` int(11) NOT NULL,
+  `last_update` datetime NOT NULL,
+  `deleted` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL,
+  `phiscal_year_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stat_people_province`
+--
+
+INSERT INTO `stat_people_province` (`id`, `last_update`, `deleted`, `user_id`, `phiscal_year_id`) VALUES
+(1, '2020-03-26 15:55:38', 0, 1, 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stat_people_province_detail`
+--
+
+CREATE TABLE `stat_people_province_detail` (
+  `id` int(11) NOT NULL,
+  `people` int(11) NOT NULL,
+  `province_id` int(11) NOT NULL,
+  `stat_people_province_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stat_people_province_detail`
+--
+
+INSERT INTO `stat_people_province_detail` (`id`, `people`, `province_id`, `stat_people_province_id`) VALUES
+(1, 33, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -18253,7 +18445,7 @@ INSERT INTO `stat_population_movement` (`id`, `last_update`, `saved`, `phiscal_y
 (7, '2018-06-13 09:36:38', 1, 12, 14),
 (8, '2018-06-21 11:35:49', 1, 9, 21),
 (9, '2019-07-03 09:12:32', 1, 2, 29),
-(10, '2019-11-11 04:24:59', 1, 3, 1),
+(10, '2020-04-24 03:58:27', 1, 3, 1),
 (11, '2020-02-27 02:46:34', 1, 4, 18);
 
 -- --------------------------------------------------------
@@ -18352,7 +18544,7 @@ INSERT INTO `stat_population_movement_detail` (`id`, `district`, `village`, `pop
 (77, 5, 93, 88494, 43512, 2196, 1172, 255, 103, NULL, NULL, 241, 32, 676, 367, 301, 185, NULL, NULL, 18, 9),
 (78, 8, 579, 410522, 207206, 2610, 1361, 686, 298, NULL, NULL, 728, 155, 1344, 607, 1094, 519, NULL, NULL, 14, 9),
 (79, 7, 522, 185864, 91697, 883, 425, 286, 111, NULL, NULL, 143, 27, 98, 23, 209, 69, NULL, NULL, 2, 9),
-(80, 9, 481, 826807, 409961, 7403, 3708, 1816, 782, NULL, NULL, 1874, 502, 4351, 2147, 2220, 1096, 831663, 411726, 1, 10),
+(80, 9, 481, 826807, 409961, 7403, 3708, 1816, 782, 115, 9, 1874, 502, 4351, 2147, 2220, 1096, 831663, 411726, 1, 10),
 (81, 7, 516, 187838, 92660, 394, 163, 1076, 457, NULL, NULL, 492, 38, 1, 0, 5, 5, 187338, 92100, 2, 10),
 (82, 5, 367, 184092, 91159, 2087, 1157, 445, 200, NULL, NULL, 668, 137, 1651, 853, 1053, 511, 186332, 92458, 3, 10),
 (83, 7, 472, 316848, 158311, 4025, 2132, 918, 407, NULL, NULL, 1427, 206, 2580, 1222, 1582, 792, 320953, 160466, 4, 10),
@@ -18433,13 +18625,44 @@ INSERT INTO `stat_position_detail` (`id`, `position1_total`, `position1_women`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `stat_register_people`
+--
+
+CREATE TABLE `stat_register_people` (
+  `id` int(11) NOT NULL,
+  `deleted` int(11) NOT NULL,
+  `last_update` datetime NOT NULL,
+  `phiscal_year_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stat_register_people_detail`
+--
+
+CREATE TABLE `stat_register_people_detail` (
+  `id` int(11) NOT NULL,
+  `born` int(11) DEFAULT NULL,
+  `die` int(11) DEFAULT NULL,
+  `married_laolao` int(11) DEFAULT NULL,
+  `divorce_laolao` int(11) DEFAULT NULL,
+  `movein` int(11) DEFAULT NULL,
+  `moveout` int(11) DEFAULT NULL,
+  `stat_register_people_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `stat_religion`
 --
 
 CREATE TABLE `stat_religion` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `phiscal_year_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -18478,7 +18701,7 @@ CREATE TABLE `stat_religion_detail` (
   `idslam_women` int(11) DEFAULT NULL,
   `other_total` int(11) DEFAULT NULL,
   `other_women` int(11) DEFAULT NULL,
-  `remark` text DEFAULT NULL,
+  `remark` text,
   `stat_religion_id` int(11) NOT NULL,
   `province_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -18606,7 +18829,7 @@ CREATE TABLE `stat_religion_place_detail` (
   `bahai_not` int(11) DEFAULT NULL,
   `idslam_total` int(11) DEFAULT NULL,
   `idslam_not` int(11) DEFAULT NULL,
-  `remark` text DEFAULT NULL,
+  `remark` text,
   `stat_religion_place_id` int(11) NOT NULL,
   `province_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -18734,7 +18957,7 @@ CREATE TABLE `stat_religion_teacher_detail` (
   `idslam_total` int(11) DEFAULT NULL,
   `idslam_women` int(11) DEFAULT NULL,
   `province_id` int(11) NOT NULL,
-  `remark` text DEFAULT NULL,
+  `remark` text,
   `christ_novice_total` int(11) DEFAULT NULL,
   `christ_novice_women` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -18932,7 +19155,7 @@ CREATE TABLE `stat_single_gateway_implementation` (
   `user_id` int(11) NOT NULL,
   `phiscal_year_id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0
+  `saved` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -18954,7 +19177,7 @@ CREATE TABLE `stat_single_gateway_implementation_detail` (
   `stat_single_gateway_implementation_id` int(11) NOT NULL,
   `start_date` datetime DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `remark` text DEFAULT NULL,
+  `remark` text,
   `ministry_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -19007,8 +19230,15 @@ CREATE TABLE `stat_single_window` (
   `last_updated` datetime NOT NULL,
   `user_id` int(11) NOT NULL,
   `phiscal_year_id` int(11) NOT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0
+  `deleted` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stat_single_window`
+--
+
+INSERT INTO `stat_single_window` (`id`, `last_updated`, `user_id`, `phiscal_year_id`, `deleted`) VALUES
+(1, '2020-03-26 16:05:54', 1, 12, 0);
 
 -- --------------------------------------------------------
 
@@ -19025,9 +19255,16 @@ CREATE TABLE `stat_single_window_detail` (
   `province` int(11) DEFAULT NULL,
   `district` int(11) DEFAULT NULL,
   `department` int(11) DEFAULT NULL,
-  `deleted` int(11) DEFAULT 0,
+  `deleted` int(11) DEFAULT '0',
   `stat_single_window_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stat_single_window_detail`
+--
+
+INSERT INTO `stat_single_window_detail` (`id`, `province_id`, `ministry_id`, `name`, `year`, `province`, `district`, `department`, `deleted`, `stat_single_window_id`) VALUES
+(1, NULL, 2, 'sdf', 'sdf', NULL, NULL, 234, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -19201,7 +19438,7 @@ INSERT INTO `stat_victorycoin_province_detail` (`id`, `stat_victorycoin_province
 CREATE TABLE `stat_victoryoversea_ministry` (
   `id` int(11) NOT NULL,
   `last_update` datetime NOT NULL,
-  `saved` int(11) NOT NULL DEFAULT 0,
+  `saved` int(11) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL,
   `phiscal_year_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -19339,6 +19576,31 @@ INSERT INTO `stat_victoryoversea_province_detail` (`id`, `stat_victoryoversea_pr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `study_level`
+--
+
+CREATE TABLE `study_level` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `deleted` int(11) DEFAULT '0',
+  `position` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `study_level`
+--
+
+INSERT INTO `study_level` (`id`, `name`, `deleted`, `position`) VALUES
+(1, 'ຊັ້ນຕົ້ນ', 0, '1'),
+(2, 'ຊັ້ນກາງ', 0, '2'),
+(3, 'ຊັ້ນສູງ ຫຼື ທຽບເທົ່າ', 0, '3'),
+(4, 'ປະລິນຍາຕີ', 0, '4'),
+(5, 'ປະລິນຍາໂທ', 0, '5'),
+(6, 'ປະລິນຍາເອກ', 0, '6');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -19351,10 +19613,10 @@ CREATE TABLE `user` (
   `status` varchar(1) NOT NULL DEFAULT 'A',
   `tel` varchar(50) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `deleted` int(11) NOT NULL DEFAULT 0,
+  `deleted` int(11) NOT NULL DEFAULT '0',
   `role_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `input_dt_stamp` datetime DEFAULT current_timestamp()
+  `input_dt_stamp` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -19403,7 +19665,7 @@ INSERT INTO `user` (`id`, `username`, `password`, `firstname`, `lastname`, `stat
 (39, 'INS', '123', 'ກົມກວດກາ', 'ກະຊວງພາຍໃນ', 'A', '021', '', 0, 32, 1, '2018-05-14 11:20:23'),
 (40, 'CBN', '123', 'ຫ້ອງການ', 'ກະຊວງພາຍໃນ', 'A', '021', '', 0, 31, 1, '2018-05-14 11:30:52'),
 (41, 'khansith', '13579', 'khansith', 'Luangxay', 'A', '020 55535362', 'khansith@hotmail.com', 0, 1, 37, '2020-02-03 09:33:01'),
-(42, 'Chanthachone', '1234567', 'ຈັນທະຈອນ', 'ສິມມາລາວົງ', 'A', '02055957587', '', 0, 1, 1, '2020-03-16 10:53:52');
+(42, 'Chanthachone', '074787chan', 'ຈັນທະຈອນ', 'ສິມມາລາວົງ', 'A', '02055957587', 'simmalavong.chan@hotmail.com', 0, 1, 7, '2020-03-16 10:53:52');
 
 -- --------------------------------------------------------
 
@@ -19421,26 +19683,26 @@ CREATE TABLE `user_has_branch` (
 --
 
 INSERT INTO `user_has_branch` (`user_id`, `branch_id`) VALUES
-(1, 12),
 (2, 1),
 (2, 2),
 (2, 3),
+(20, 3),
 (2, 4),
+(20, 4),
 (2, 5),
+(20, 5),
 (2, 6),
+(20, 6),
 (2, 7),
 (2, 8),
 (2, 9),
 (2, 10),
 (2, 11),
+(1, 12),
 (2, 12),
+(4, 12),
 (2, 13),
 (3, 13),
-(4, 12),
-(20, 3),
-(20, 4),
-(20, 5),
-(20, 6),
 (20, 13);
 
 -- --------------------------------------------------------
@@ -19460,60 +19722,60 @@ CREATE TABLE `user_has_province` (
 
 INSERT INTO `user_has_province` (`user_id`, `province_id`) VALUES
 (2, 1),
-(2, 2),
-(2, 3),
-(2, 4),
-(2, 5),
-(2, 6),
-(2, 7),
-(2, 8),
-(2, 9),
-(2, 10),
-(2, 11),
-(2, 12),
-(2, 13),
-(2, 14),
-(2, 15),
-(2, 16),
-(2, 17),
-(2, 18),
 (3, 1),
-(3, 2),
-(3, 3),
-(3, 4),
-(3, 5),
-(3, 6),
-(3, 7),
-(3, 8),
-(3, 9),
-(3, 10),
-(3, 11),
-(3, 12),
-(3, 13),
-(3, 14),
-(3, 15),
-(3, 16),
-(3, 17),
-(3, 18),
 (4, 1),
+(2, 2),
+(3, 2),
 (4, 2),
+(2, 3),
+(3, 3),
 (4, 3),
+(2, 4),
+(3, 4),
 (4, 4),
+(2, 5),
+(3, 5),
 (4, 5),
+(20, 5),
+(2, 6),
+(3, 6),
 (4, 6),
+(2, 7),
+(3, 7),
 (4, 7),
+(2, 8),
+(3, 8),
 (4, 8),
+(2, 9),
+(3, 9),
 (4, 9),
+(2, 10),
+(3, 10),
 (4, 10),
+(2, 11),
+(3, 11),
 (4, 11),
+(2, 12),
+(3, 12),
 (4, 12),
+(2, 13),
+(3, 13),
 (4, 13),
+(2, 14),
+(3, 14),
 (4, 14),
+(2, 15),
+(3, 15),
 (4, 15),
+(2, 16),
+(3, 16),
 (4, 16),
+(2, 17),
+(3, 17),
 (4, 17),
-(4, 18),
-(20, 5);
+(2, 18),
+(3, 18),
+(4, 18);
 
 -- --------------------------------------------------------
 
@@ -19585,6 +19847,12 @@ ALTER TABLE `action`
   ADD PRIMARY KEY (`id`,`class_name`,`method`);
 
 --
+-- Indexes for table `aids_type`
+--
+ALTER TABLE `aids_type`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `approver`
 --
 ALTER TABLE `approver`
@@ -19629,13 +19897,6 @@ ALTER TABLE `branch`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_branch_user1_idx` (`user_id`),
   ADD KEY `fk_branch_ministry1_idx` (`ministry_id`);
-
---
--- Indexes for table `content`
---
-ALTER TABLE `content`
-  ADD PRIMARY KEY (`code`),
-  ADD UNIQUE KEY `content_code_uindex` (`code`);
 
 --
 -- Indexes for table `controller`
@@ -19706,8 +19967,7 @@ ALTER TABLE `legal_type`
 -- Indexes for table `link`
 --
 ALTER TABLE `link`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `link_id_uindex` (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `menu`
@@ -19859,6 +20119,14 @@ ALTER TABLE `stat_aids`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_stat_aids_phiscal_year1_idx` (`phiscal_year_id`),
   ADD KEY `fk_stat_aids_user1_idx` (`user_id`);
+
+--
+-- Indexes for table `stat_aids_detail`
+--
+ALTER TABLE `stat_aids_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_stat_aids_detail_stat_aids1_idx` (`stat_aids_id`),
+  ADD KEY `fk_stat_aids_detail_aids_type1_idx` (`aids_type_id`);
 
 --
 -- Indexes for table `stat_association_foundation`
@@ -20679,6 +20947,23 @@ ALTER TABLE `stat_officer_salary`
   ADD KEY `fk_stat_officer_salary_user1_idx` (`user_id`);
 
 --
+-- Indexes for table `stat_officer_salary6`
+--
+ALTER TABLE `stat_officer_salary6`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_stat_officer_salary6_phiscal_year1_idx` (`phiscal_year_id`),
+  ADD KEY `fk_stat_officer_salary6_user1_idx` (`user_id`);
+
+--
+-- Indexes for table `stat_officer_salary6_detail`
+--
+ALTER TABLE `stat_officer_salary6_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_stat_officer_salary6_detail_stat_officer_salary61_idx` (`stat_officer_salary6_id`),
+  ADD KEY `fk_stat_officer_salary6_detail_ministry1_idx` (`ministry_id`),
+  ADD KEY `fk_stat_officer_salary6_detail_study_level1_idx` (`study_level_id`);
+
+--
 -- Indexes for table `stat_officer_salary_detail`
 --
 ALTER TABLE `stat_officer_salary_detail`
@@ -20719,6 +21004,22 @@ ALTER TABLE `stat_people_move_detail`
   ADD KEY `fk_stat_people_move_detail_stat_people_move1_idx` (`stat_people_move_id`);
 
 --
+-- Indexes for table `stat_people_province`
+--
+ALTER TABLE `stat_people_province`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_stat_people_province_user1_idx` (`user_id`),
+  ADD KEY `fk_stat_people_province_phiscal_year1_idx` (`phiscal_year_id`);
+
+--
+-- Indexes for table `stat_people_province_detail`
+--
+ALTER TABLE `stat_people_province_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_stat_people_province_detail_province1_idx` (`province_id`),
+  ADD KEY `fk_stat_people_province_detail_stat_people_province1_idx` (`stat_people_province_id`);
+
+--
 -- Indexes for table `stat_population_movement`
 --
 ALTER TABLE `stat_population_movement`
@@ -20749,6 +21050,21 @@ ALTER TABLE `stat_position_detail`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_stat_position_detail_officer_level1_idx` (`officer_level_id`),
   ADD KEY `fk_stat_position_detail_stat_position1_idx` (`stat_position_id`);
+
+--
+-- Indexes for table `stat_register_people`
+--
+ALTER TABLE `stat_register_people`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_stat_register_people_phiscal_year1_idx` (`phiscal_year_id`),
+  ADD KEY `fk_stat_register_people_user1_idx` (`user_id`);
+
+--
+-- Indexes for table `stat_register_people_detail`
+--
+ALTER TABLE `stat_register_people_detail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_stat_register_people_detail_stat_register_people1_idx` (`stat_register_people_id`);
 
 --
 -- Indexes for table `stat_religion`
@@ -20931,6 +21247,12 @@ ALTER TABLE `stat_victoryoversea_province_detail`
   ADD KEY `fk_stat_victoryoversea_province_detail_award1_idx` (`award_id`);
 
 --
+-- Indexes for table `study_level`
+--
+ALTER TABLE `study_level`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -20992,6 +21314,12 @@ ALTER TABLE `accociation`
 --
 ALTER TABLE `action`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=775;
+
+--
+-- AUTO_INCREMENT for table `aids_type`
+--
+ALTER TABLE `aids_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `approver`
@@ -21081,7 +21409,7 @@ ALTER TABLE `legal_type`
 -- AUTO_INCREMENT for table `link`
 --
 ALTER TABLE `link`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `menu`
@@ -21165,7 +21493,7 @@ ALTER TABLE `salary_level`
 -- AUTO_INCREMENT for table `source_message`
 --
 ALTER TABLE `source_message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1916;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1917;
 
 --
 -- AUTO_INCREMENT for table `stat_3create`
@@ -21183,7 +21511,13 @@ ALTER TABLE `stat_3create_detail`
 -- AUTO_INCREMENT for table `stat_aids`
 --
 ALTER TABLE `stat_aids`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `stat_aids_detail`
+--
+ALTER TABLE `stat_aids_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `stat_association_foundation`
@@ -21213,13 +21547,13 @@ ALTER TABLE `stat_contract_detail`
 -- AUTO_INCREMENT for table `stat_copy`
 --
 ALTER TABLE `stat_copy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stat_copy_detail`
 --
 ALTER TABLE `stat_copy_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `stat_course`
@@ -21237,13 +21571,13 @@ ALTER TABLE `stat_course_detail`
 -- AUTO_INCREMENT for table `stat_document`
 --
 ALTER TABLE `stat_document`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `stat_document_detail`
 --
 ALTER TABLE `stat_document_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `stat_ethnic`
@@ -21297,13 +21631,13 @@ ALTER TABLE `stat_govcoin_province_detail`
 -- AUTO_INCREMENT for table `stat_goverment_unit`
 --
 ALTER TABLE `stat_goverment_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `stat_goverment_unit_detail`
 --
 ALTER TABLE `stat_goverment_unit_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `stat_govoversea_ministry`
@@ -21405,13 +21739,13 @@ ALTER TABLE `stat_institute_train_detail`
 -- AUTO_INCREMENT for table `stat_interco`
 --
 ALTER TABLE `stat_interco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `stat_interco_detail`
 --
 ALTER TABLE `stat_interco_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `stat_investment`
@@ -21465,25 +21799,25 @@ ALTER TABLE `stat_map_print`
 -- AUTO_INCREMENT for table `stat_map_produce`
 --
 ALTER TABLE `stat_map_produce`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `stat_map_produce_detail`
 --
 ALTER TABLE `stat_map_produce_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `stat_map_service`
 --
 ALTER TABLE `stat_map_service`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `stat_map_service_detail`
 --
 ALTER TABLE `stat_map_service_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `stat_map_support`
@@ -21507,19 +21841,19 @@ ALTER TABLE `stat_ministry_detail`
 -- AUTO_INCREMENT for table `stat_oda`
 --
 ALTER TABLE `stat_oda`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `stat_oda_detail`
 --
 ALTER TABLE `stat_oda_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `stat_officer`
 --
 ALTER TABLE `stat_officer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `stat_officer_add`
@@ -21585,7 +21919,7 @@ ALTER TABLE `stat_officer_degree_detail`
 -- AUTO_INCREMENT for table `stat_officer_detail`
 --
 ALTER TABLE `stat_officer_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `stat_officer_ethnic`
@@ -21798,6 +22132,18 @@ ALTER TABLE `stat_officer_salary`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `stat_officer_salary6`
+--
+ALTER TABLE `stat_officer_salary6`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `stat_officer_salary6_detail`
+--
+ALTER TABLE `stat_officer_salary6_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `stat_officer_salary_detail`
 --
 ALTER TABLE `stat_officer_salary_detail`
@@ -21828,6 +22174,18 @@ ALTER TABLE `stat_people_move_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `stat_people_province`
+--
+ALTER TABLE `stat_people_province`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `stat_people_province_detail`
+--
+ALTER TABLE `stat_people_province_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `stat_population_movement`
 --
 ALTER TABLE `stat_population_movement`
@@ -21850,6 +22208,18 @@ ALTER TABLE `stat_position`
 --
 ALTER TABLE `stat_position_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `stat_register_people`
+--
+ALTER TABLE `stat_register_people`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `stat_register_people_detail`
+--
+ALTER TABLE `stat_register_people_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `stat_religion`
@@ -21927,13 +22297,13 @@ ALTER TABLE `stat_single_gateway_implementation_detail`
 -- AUTO_INCREMENT for table `stat_single_window`
 --
 ALTER TABLE `stat_single_window`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `stat_single_window_detail`
 --
 ALTER TABLE `stat_single_window_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `stat_victorycoin_ministry`
@@ -21984,1117 +22354,16 @@ ALTER TABLE `stat_victoryoversea_province_detail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `study_level`
+--
+ALTER TABLE `study_level`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `accociation`
---
-ALTER TABLE `accociation`
-  ADD CONSTRAINT `fk_accociation_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `approver`
---
-ALTER TABLE `approver`
-  ADD CONSTRAINT `fk_approver_approver_level1` FOREIGN KEY (`approver_level_id`) REFERENCES `approver_level` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_approver_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_approver_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `attachment`
---
-ALTER TABLE `attachment`
-  ADD CONSTRAINT `fk_attachment_menu1` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_attachment_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_attachment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `award`
---
-ALTER TABLE `award`
-  ADD CONSTRAINT `fk_award_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `book`
---
-ALTER TABLE `book`
-  ADD CONSTRAINT `fk_book_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `branch`
---
-ALTER TABLE `branch`
-  ADD CONSTRAINT `fk_branch_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_branch_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `district`
---
-ALTER TABLE `district`
-  ADD CONSTRAINT `fk_district_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_district_user` FOREIGN KEY (`input_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `foundation`
---
-ALTER TABLE `foundation`
-  ADD CONSTRAINT `fk_foundation_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `goverment_unit`
---
-ALTER TABLE `goverment_unit`
-  ADD CONSTRAINT `fk_goverment_unit_branch1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `legal`
---
-ALTER TABLE `legal`
-  ADD CONSTRAINT `fk_legal_legal_type1` FOREIGN KEY (`legal_type_id`) REFERENCES `legal_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `menu`
---
-ALTER TABLE `menu`
-  ADD CONSTRAINT `fk_menu_menu1` FOREIGN KEY (`menu_parent_id`) REFERENCES `menu` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_menu_menugroup1` FOREIGN KEY (`menugroup_id`) REFERENCES `menugroup` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_menu_user_id` FOREIGN KEY (`input_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `menugroup`
---
-ALTER TABLE `menugroup`
-  ADD CONSTRAINT `fk_menugroup_user_id` FOREIGN KEY (`input_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `message`
---
-ALTER TABLE `message`
-  ADD CONSTRAINT `fk_message_source_message` FOREIGN KEY (`id`) REFERENCES `source_message` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `ministry`
---
-ALTER TABLE `ministry`
-  ADD CONSTRAINT `fk_ministry_ministry_group1` FOREIGN KEY (`ministry_group_id`) REFERENCES `ministry_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_ministry_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `notice`
---
-ALTER TABLE `notice`
-  ADD CONSTRAINT `fk_notice_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `officer_level`
---
-ALTER TABLE `officer_level`
-  ADD CONSTRAINT `fk_officer_level_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `role`
---
-ALTER TABLE `role`
-  ADD CONSTRAINT `fk_role_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `role_has_action`
---
-ALTER TABLE `role_has_action`
-  ADD CONSTRAINT `fk_role_has_action_action1` FOREIGN KEY (`action_id`) REFERENCES `action` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_role_has_action_role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `role_has_menu`
---
-ALTER TABLE `role_has_menu`
-  ADD CONSTRAINT `fk_role_has_menu_menu1` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_role_has_menu_role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `salary_level`
---
-ALTER TABLE `salary_level`
-  ADD CONSTRAINT `fk_salary_level_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_3create_detail`
---
-ALTER TABLE `stat_3create_detail`
-  ADD CONSTRAINT `fk_stat_3create_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_aids`
---
-ALTER TABLE `stat_aids`
-  ADD CONSTRAINT `fk_stat_aids_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_aids_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_association_foundation`
---
-ALTER TABLE `stat_association_foundation`
-  ADD CONSTRAINT `fk_stat_association_foundation_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_association_foundation_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_association_foundation_detail`
---
-ALTER TABLE `stat_association_foundation_detail`
-  ADD CONSTRAINT `fk_stat_association_foundation_detail_approver1` FOREIGN KEY (`approver_id`) REFERENCES `approver` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_association_foundation_detail_stat_association_founda1` FOREIGN KEY (`stat_association_foundation_id`) REFERENCES `stat_association_foundation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_contract`
---
-ALTER TABLE `stat_contract`
-  ADD CONSTRAINT `fk_stat_contract_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_contract_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_contract_detail`
---
-ALTER TABLE `stat_contract_detail`
-  ADD CONSTRAINT `fk_stat_contract_detail_stat_contract1` FOREIGN KEY (`stat_contract_id`) REFERENCES `stat_contract` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_copy`
---
-ALTER TABLE `stat_copy`
-  ADD CONSTRAINT `fk_stat_copy_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_copy_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_copy_detail`
---
-ALTER TABLE `stat_copy_detail`
-  ADD CONSTRAINT `fk_stat_copy_detail_stat_copy1` FOREIGN KEY (`stat_copy_id`) REFERENCES `stat_copy` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_course`
---
-ALTER TABLE `stat_course`
-  ADD CONSTRAINT `fk_stat_course_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_course_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_course_detail`
---
-ALTER TABLE `stat_course_detail`
-  ADD CONSTRAINT `fk_stat_course_detail_stat_course1` FOREIGN KEY (`stat_course_id`) REFERENCES `stat_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_document`
---
-ALTER TABLE `stat_document`
-  ADD CONSTRAINT `fk_stat_document_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_document_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_document_detail`
---
-ALTER TABLE `stat_document_detail`
-  ADD CONSTRAINT `fk_stat_document_detail_book1` FOREIGN KEY (`book_id`) REFERENCES `book` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_document_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_document_detail_organisation1` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_document_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_document_detail_stat_document1` FOREIGN KEY (`stat_document_id`) REFERENCES `stat_document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_ethnic`
---
-ALTER TABLE `stat_ethnic`
-  ADD CONSTRAINT `fk_stat_ethnic_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_ethnic_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_ethnic_detail`
---
-ALTER TABLE `stat_ethnic_detail`
-  ADD CONSTRAINT `fk_stat_ethnic_detail_ethnic1` FOREIGN KEY (`ethnic_id`) REFERENCES `ethnic` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_ethnic_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_ethnic_detail_stat_ethnic1` FOREIGN KEY (`stat_ethnic_id`) REFERENCES `stat_ethnic` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_explore`
---
-ALTER TABLE `stat_explore`
-  ADD CONSTRAINT `fk_stat_explore_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_explore_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_explore_detail`
---
-ALTER TABLE `stat_explore_detail`
-  ADD CONSTRAINT `fk_stat_explore_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_explore_detail_stat_explore1` FOREIGN KEY (`stat_explore_id`) REFERENCES `stat_explore` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_govcoin_ministry`
---
-ALTER TABLE `stat_govcoin_ministry`
-  ADD CONSTRAINT `fk_stat_govcoin_ministry_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govcoin_ministry_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_govcoin_ministry_detail`
---
-ALTER TABLE `stat_govcoin_ministry_detail`
-  ADD CONSTRAINT `fk_stat_govcoin_ministry_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govcoin_ministry_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govcoin_ministry_detail_stat_govcoin_ministry1` FOREIGN KEY (`stat_govcoin_ministry_id`) REFERENCES `stat_govcoin_ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_govcoin_province`
---
-ALTER TABLE `stat_govcoin_province`
-  ADD CONSTRAINT `fk_stat_govcoin_province_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govcoin_province_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_govcoin_province_detail`
---
-ALTER TABLE `stat_govcoin_province_detail`
-  ADD CONSTRAINT `fk_stat_govcoin_province_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govcoin_province_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govcoin_province_detail_stat_govcoin_province1` FOREIGN KEY (`stat_govcoin_province_id`) REFERENCES `stat_govcoin_province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_goverment_unit`
---
-ALTER TABLE `stat_goverment_unit`
-  ADD CONSTRAINT `fk_stat_goverment_unit_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_statistic1_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_goverment_unit_detail`
---
-ALTER TABLE `stat_goverment_unit_detail`
-  ADD CONSTRAINT `fk_stat_goverment_unit_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_goverment_unit_detail_stat_goverment_unit1` FOREIGN KEY (`stat_goverment_unit_id`) REFERENCES `stat_goverment_unit` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_govoversea_ministry`
---
-ALTER TABLE `stat_govoversea_ministry`
-  ADD CONSTRAINT `fk_stat_govoversea_ministry_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govoversea_ministry_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_govoversea_ministry_detail`
---
-ALTER TABLE `stat_govoversea_ministry_detail`
-  ADD CONSTRAINT `fk_stat_govoversea_ministry_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govoversea_ministry_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govoversea_ministry_detail_stat_govoversea_ministry1` FOREIGN KEY (`stat_govoversea_ministry_id`) REFERENCES `stat_govoversea_ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_govoversea_province`
---
-ALTER TABLE `stat_govoversea_province`
-  ADD CONSTRAINT `fk_stat_govoversea_province_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govoversea_province_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_govoversea_province_detail`
---
-ALTER TABLE `stat_govoversea_province_detail`
-  ADD CONSTRAINT `fk_stat_govoversea_province_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govoversea_province_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_govoversea_province_detail_stat_govoversea_province1` FOREIGN KEY (`stat_govoversea_province_id`) REFERENCES `stat_govoversea_province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_highcoin_foreigner`
---
-ALTER TABLE `stat_highcoin_foreigner`
-  ADD CONSTRAINT `fk_stat_highcoin_foreigner_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_highcoin_foreigner_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_highcoin_foreigner_detail`
---
-ALTER TABLE `stat_highcoin_foreigner_detail`
-  ADD CONSTRAINT `fk_stat_highcoin_foreigner_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_highcoin_foreigner_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_highcoin_foreigner_detail_stat_highcoin_foreigner1` FOREIGN KEY (`stat_highcoin_foreigner_id`) REFERENCES `stat_highcoin_foreigner` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_highcoin_ministry`
---
-ALTER TABLE `stat_highcoin_ministry`
-  ADD CONSTRAINT `fk_stat_highcoin_ministry_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_highcoin_ministry_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_highcoin_ministry_detail`
---
-ALTER TABLE `stat_highcoin_ministry_detail`
-  ADD CONSTRAINT `fk_stat_highcoin_ministry_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_highcoin_ministry_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_highcoin_ministry_detail_stat_highcoin_ministry1` FOREIGN KEY (`stat_highcoin_ministry_id`) REFERENCES `stat_highcoin_ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_highoversea_ministry`
---
-ALTER TABLE `stat_highoversea_ministry`
-  ADD CONSTRAINT `fk_stat_highoversea_ministry_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_highoversea_ministry_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_highoversea_ministry_detail`
---
-ALTER TABLE `stat_highoversea_ministry_detail`
-  ADD CONSTRAINT `fk_stat_highoversea_ministry_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_highoversea_ministry_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_highoversea_ministry_detail_stat_highoversea_ministry1` FOREIGN KEY (`stat_highoversea_ministry_id`) REFERENCES `stat_highoversea_ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_hornorcoin_province`
---
-ALTER TABLE `stat_hornorcoin_province`
-  ADD CONSTRAINT `fk_stat_hornorcoin_province_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_hornorcoin_province_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_hornorcoin_province_detail`
---
-ALTER TABLE `stat_hornorcoin_province_detail`
-  ADD CONSTRAINT `fk_stat_hornorcoin_province_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_hornorcoin_province_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_hornorcoin_province_detail_stat_hornorcoin_province1` FOREIGN KEY (`stat_hornorcoin_province_id`) REFERENCES `stat_hornorcoin_province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_institute_meeting`
---
-ALTER TABLE `stat_institute_meeting`
-  ADD CONSTRAINT `fk_stat_institute_meeting_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_institute_meeting_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_institute_meeting_detail`
---
-ALTER TABLE `stat_institute_meeting_detail`
-  ADD CONSTRAINT `fk_stat_institute_meeting_detail_stat_institute_meeting1` FOREIGN KEY (`stat_institute_meeting_id`) REFERENCES `stat_institute_meeting` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_institute_train`
---
-ALTER TABLE `stat_institute_train`
-  ADD CONSTRAINT `fk_stat_institute_train_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_institute_train_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_institute_train_detail`
---
-ALTER TABLE `stat_institute_train_detail`
-  ADD CONSTRAINT `fk_stat_institute_train_detail_stat_institute_train1` FOREIGN KEY (`stat_institute_train_id`) REFERENCES `stat_institute_train` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_interco`
---
-ALTER TABLE `stat_interco`
-  ADD CONSTRAINT `fk_stat_interco_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_interco_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_interco_detail`
---
-ALTER TABLE `stat_interco_detail`
-  ADD CONSTRAINT `fk_stat_interco_detail_stat_interco1` FOREIGN KEY (`stat_interco_id`) REFERENCES `stat_interco` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_investment`
---
-ALTER TABLE `stat_investment`
-  ADD CONSTRAINT `fk_stat_investment_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_investment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_investment_detail`
---
-ALTER TABLE `stat_investment_detail`
-  ADD CONSTRAINT `fk_stat_investment_detail_project1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_investment_detail_stat_investment1` FOREIGN KEY (`stat_investment_id`) REFERENCES `stat_investment` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_legal`
---
-ALTER TABLE `stat_legal`
-  ADD CONSTRAINT `fk_stat_legal_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_legal_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_legal_detail`
---
-ALTER TABLE `stat_legal_detail`
-  ADD CONSTRAINT `fk_stat_legal_detail_legal1` FOREIGN KEY (`legal_id`) REFERENCES `legal` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_legal_detail_stat_legal1` FOREIGN KEY (`stat_legal_id`) REFERENCES `stat_legal` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_local_admin`
---
-ALTER TABLE `stat_local_admin`
-  ADD CONSTRAINT `fk_stat_local_admin_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_local_admin_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_local_admin_detail`
---
-ALTER TABLE `stat_local_admin_detail`
-  ADD CONSTRAINT `fk_stat_local_admin_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_local_admin_detail_stat_local_admin1` FOREIGN KEY (`stat_local_admin_id`) REFERENCES `stat_local_admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_map_create`
---
-ALTER TABLE `stat_map_create`
-  ADD CONSTRAINT `fk_stat_map_create_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_map_create_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_map_print`
---
-ALTER TABLE `stat_map_print`
-  ADD CONSTRAINT `fk_stat_map_print_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_map_print_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_map_produce`
---
-ALTER TABLE `stat_map_produce`
-  ADD CONSTRAINT `fk_stat_map_produce_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_map_produce_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_map_produce_detail`
---
-ALTER TABLE `stat_map_produce_detail`
-  ADD CONSTRAINT `fk_stat_map_produce_detail_stat_map_produce1` FOREIGN KEY (`stat_map_produce_id`) REFERENCES `stat_map_produce` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_map_service`
---
-ALTER TABLE `stat_map_service`
-  ADD CONSTRAINT `fk_stat_map_service_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_map_service_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_map_service_detail`
---
-ALTER TABLE `stat_map_service_detail`
-  ADD CONSTRAINT `fk_stat_map_service_detail_stat_map_service1` FOREIGN KEY (`stat_map_service_id`) REFERENCES `stat_map_service` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_map_support`
---
-ALTER TABLE `stat_map_support`
-  ADD CONSTRAINT `fk_stat_map_service_user2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_map_support_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_ministry`
---
-ALTER TABLE `stat_ministry`
-  ADD CONSTRAINT `fk_stat_ministry_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_ministry_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_ministry_detail`
---
-ALTER TABLE `stat_ministry_detail`
-  ADD CONSTRAINT `fk_stat_ministry_detail_stat_ministry1` FOREIGN KEY (`stat_ministry_id`) REFERENCES `stat_ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_oda`
---
-ALTER TABLE `stat_oda`
-  ADD CONSTRAINT `fk_stat_oda_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_oda_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_oda_detail`
---
-ALTER TABLE `stat_oda_detail`
-  ADD CONSTRAINT `fk_stat_oda_detail_stat_oda1` FOREIGN KEY (`stat_oda_id`) REFERENCES `stat_oda` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer`
---
-ALTER TABLE `stat_officer`
-  ADD CONSTRAINT `fk_stat_officer_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_add`
---
-ALTER TABLE `stat_officer_add`
-  ADD CONSTRAINT `fk_stat_officer_add_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_add_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_add_detail`
---
-ALTER TABLE `stat_officer_add_detail`
-  ADD CONSTRAINT `fk_stat_officer_add_detail_stat_officer_add1` FOREIGN KEY (`stat_officer_add_id`) REFERENCES `stat_officer_add` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_age`
---
-ALTER TABLE `stat_officer_age`
-  ADD CONSTRAINT `fk_stat_officer_age_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_age_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_agelevel`
---
-ALTER TABLE `stat_officer_agelevel`
-  ADD CONSTRAINT `fk_stat_officer_agelevel_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_agelevel_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_agelevel_detail`
---
-ALTER TABLE `stat_officer_agelevel_detail`
-  ADD CONSTRAINT `fk_stat_officer_agelevel_detail_stat_officer_agelevel1` FOREIGN KEY (`stat_officer_agelevel_id`) REFERENCES `stat_officer_agelevel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_age_detail`
---
-ALTER TABLE `stat_officer_age_detail`
-  ADD CONSTRAINT `fk_stat_officer_age_detail_organisation_group1` FOREIGN KEY (`organisation_group_id`) REFERENCES `organisation_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_table1_stat_officer_age1` FOREIGN KEY (`stat_officer_age_id`) REFERENCES `stat_officer_age` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_contract`
---
-ALTER TABLE `stat_officer_contract`
-  ADD CONSTRAINT `fk_stat_officer_contract_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_contract_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_contract_detail`
---
-ALTER TABLE `stat_officer_contract_detail`
-  ADD CONSTRAINT `fk_stat_officer_contract_detail_stat_officer_contract1` FOREIGN KEY (`stat_officer_contract_id`) REFERENCES `stat_officer_contract` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_degree`
---
-ALTER TABLE `stat_officer_degree`
-  ADD CONSTRAINT `fk_stat_offcer_degree_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_offcer_degree_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_degree_detail`
---
-ALTER TABLE `stat_officer_degree_detail`
-  ADD CONSTRAINT `fk_stat_officer_degree_detail_organisation_group1` FOREIGN KEY (`organisation_group_id`) REFERENCES `organisation_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_degree_detail_stat_officer_degree1` FOREIGN KEY (`stat_officer_degree_id`) REFERENCES `stat_officer_degree` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_detail`
---
-ALTER TABLE `stat_officer_detail`
-  ADD CONSTRAINT `fk_stat_officer_detail_stat_officer1` FOREIGN KEY (`stat_officer_id`) REFERENCES `stat_officer` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ethnic`
---
-ALTER TABLE `stat_officer_ethnic`
-  ADD CONSTRAINT `fk_stat_officer_ethnic_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ethnic_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ethnic_detail`
---
-ALTER TABLE `stat_officer_ethnic_detail`
-  ADD CONSTRAINT `fk_stat_officer_ethnic_detail_ethnic1` FOREIGN KEY (`ethnic_id`) REFERENCES `ethnic` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ethnic_detail_stat_officer_ethnic1` FOREIGN KEY (`stat_officer_ethnic_id`) REFERENCES `stat_officer_ethnic` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ministry`
---
-ALTER TABLE `stat_officer_ministry`
-  ADD CONSTRAINT `fk_stat_officer_ministry_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ministry_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ministry_add`
---
-ALTER TABLE `stat_officer_ministry_add`
-  ADD CONSTRAINT `fk_stat_officer_ministry_add_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ministry_add_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ministry_add_detail`
---
-ALTER TABLE `stat_officer_ministry_add_detail`
-  ADD CONSTRAINT `fk_stat_officer_ministry_add_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ministry_add_detail_stat_officer_ministry_add1` FOREIGN KEY (`stat_officer_ministry_add_id`) REFERENCES `stat_officer_ministry_add` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ministry_detail`
---
-ALTER TABLE `stat_officer_ministry_detail`
-  ADD CONSTRAINT `fk_stat_officer_ministry_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ministry_detail_stat_officer_ministry1` FOREIGN KEY (`stat_officer_ministry_id`) REFERENCES `stat_officer_ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ministry_train`
---
-ALTER TABLE `stat_officer_ministry_train`
-  ADD CONSTRAINT `fk_stat_officer_ministry_train_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ministry_train_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ministry_train_detail`
---
-ALTER TABLE `stat_officer_ministry_train_detail`
-  ADD CONSTRAINT `fk_stat_officer_ministry_train_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ministry_train_detail_stat_officer_ministry_t1` FOREIGN KEY (`stat_officer_ministry_train_id`) REFERENCES `stat_officer_ministry_train` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ministry_upgrade`
---
-ALTER TABLE `stat_officer_ministry_upgrade`
-  ADD CONSTRAINT `fk_stat_officer_ministry_upgrade_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ministry_upgrade_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_ministry_upgrade_detail`
---
-ALTER TABLE `stat_officer_ministry_upgrade_detail`
-  ADD CONSTRAINT `fk_stat_officer_ministry_upgrade_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_ministry_upgrade_detail_stat_officer_ministry1` FOREIGN KEY (`stat_officer_ministry_upgrade_id`) REFERENCES `stat_officer_ministry_upgrade` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_need`
---
-ALTER TABLE `stat_officer_need`
-  ADD CONSTRAINT `fk_stat_officer_need_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_need_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_need_detail`
---
-ALTER TABLE `stat_officer_need_detail`
-  ADD CONSTRAINT `fk_stat_officer_need_detail_stat_officer_need1` FOREIGN KEY (`stat_officer_need_id`) REFERENCES `stat_officer_need` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_new`
---
-ALTER TABLE `stat_officer_new`
-  ADD CONSTRAINT `fk_stat_officer_new_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_new_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_new_detail`
---
-ALTER TABLE `stat_officer_new_detail`
-  ADD CONSTRAINT `fk_stat_officer_new_detail_stat_officer_new1` FOREIGN KEY (`stat_officer_new_id`) REFERENCES `stat_officer_new` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_org`
---
-ALTER TABLE `stat_officer_org`
-  ADD CONSTRAINT `fk_stat_officer_org_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_org_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_organisation_add`
---
-ALTER TABLE `stat_officer_organisation_add`
-  ADD CONSTRAINT `fk_stat_officer_organisation_add_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_organisation_add_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_organisation_add_detail`
---
-ALTER TABLE `stat_officer_organisation_add_detail`
-  ADD CONSTRAINT `fk_stat_officer_organisation_add_detail_organisation1` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_organisation_add_detail_stat_officer_organisa1` FOREIGN KEY (`stat_officer_organisation_add_id`) REFERENCES `stat_officer_organisation_add` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_organisation_train`
---
-ALTER TABLE `stat_officer_organisation_train`
-  ADD CONSTRAINT `fk_stat_officer_organisation_train_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_organisation_train_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_organisation_train_detail`
---
-ALTER TABLE `stat_officer_organisation_train_detail`
-  ADD CONSTRAINT `fk_stat_officer_organisation_train_detail_organisation1` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_organisation_train_detail_stat_officer_organi1` FOREIGN KEY (`stat_officer_organisation_train_id`) REFERENCES `stat_officer_organisation_train` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_organisation_upgrade`
---
-ALTER TABLE `stat_officer_organisation_upgrade`
-  ADD CONSTRAINT `fk_stat_officer_organisation_upgrade_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_organisation_upgrade_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_organisation_upgrade_detail`
---
-ALTER TABLE `stat_officer_organisation_upgrade_detail`
-  ADD CONSTRAINT `fk_stat_officer_organisation_upgrade_detail_organisation1` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_organisation_upgrade_detail_stat_officer_orga1` FOREIGN KEY (`stat_officer_organisation_upgrade_id`) REFERENCES `stat_officer_organisation_upgrade` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_org_detail`
---
-ALTER TABLE `stat_officer_org_detail`
-  ADD CONSTRAINT `fk_stat_officer_org_detail_organisation1` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_org_detail_stat_officer_org1` FOREIGN KEY (`stat_officer_org_id`) REFERENCES `stat_officer_org` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_position`
---
-ALTER TABLE `stat_officer_position`
-  ADD CONSTRAINT `fk_stat_officer_position_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_position_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_position_detail`
---
-ALTER TABLE `stat_officer_position_detail`
-  ADD CONSTRAINT `fk_stat_officer_position_detail_organisation_group1` FOREIGN KEY (`organisation_group_id`) REFERENCES `organisation_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_position_detail_stat_officer_position1` FOREIGN KEY (`stat_officer_position_id`) REFERENCES `stat_officer_position` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_province`
---
-ALTER TABLE `stat_officer_province`
-  ADD CONSTRAINT `fk_stat_officer_province_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_province_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_province_add`
---
-ALTER TABLE `stat_officer_province_add`
-  ADD CONSTRAINT `fk_stat_officer_province_add_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_province_add_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_province_add_detail`
---
-ALTER TABLE `stat_officer_province_add_detail`
-  ADD CONSTRAINT `fk_stat_officer_province_add_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_province_add_detail_stat_officer_province_add1` FOREIGN KEY (`stat_officer_province_add_id`) REFERENCES `stat_officer_province_add` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_province_detail`
---
-ALTER TABLE `stat_officer_province_detail`
-  ADD CONSTRAINT `fk_stat_officer_province_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_province_detail_stat_officer_province1` FOREIGN KEY (`stat_officer_province_id`) REFERENCES `stat_officer_province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_province_train`
---
-ALTER TABLE `stat_officer_province_train`
-  ADD CONSTRAINT `fk_stat_officer_province_train_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_province_train_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_province_train_detail`
---
-ALTER TABLE `stat_officer_province_train_detail`
-  ADD CONSTRAINT `fk_stat_officer_province_train_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_province_train_detail_stat_officer_province_t1` FOREIGN KEY (`stat_officer_province_train_id`) REFERENCES `stat_officer_province_train` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_province_upgrade`
---
-ALTER TABLE `stat_officer_province_upgrade`
-  ADD CONSTRAINT `fk_stat_officer_province_upgrade_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_province_upgrade_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_province_upgrade_detail`
---
-ALTER TABLE `stat_officer_province_upgrade_detail`
-  ADD CONSTRAINT `fk_stat_officer_province_upgrade_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_province_upgrade_detail_stat_officer_province1` FOREIGN KEY (`stat_officer_province_upgrade_id`) REFERENCES `stat_officer_province_upgrade` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_resign`
---
-ALTER TABLE `stat_officer_resign`
-  ADD CONSTRAINT `fk_stat_officer_resign_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_resign_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_resign_detail`
---
-ALTER TABLE `stat_officer_resign_detail`
-  ADD CONSTRAINT `fk_stat_officer_resign_detail_stat_officer_resign1` FOREIGN KEY (`stat_officer_resign_id`) REFERENCES `stat_officer_resign` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_salary`
---
-ALTER TABLE `stat_officer_salary`
-  ADD CONSTRAINT `fk_stat_officer_salary_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_salary_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_salary_detail`
---
-ALTER TABLE `stat_officer_salary_detail`
-  ADD CONSTRAINT `fk_stat_officer_salary_detail_salary_level1` FOREIGN KEY (`salary_level_id`) REFERENCES `salary_level` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_salary_detail_stat_officer_salary1` FOREIGN KEY (`stat_officer_salary_id`) REFERENCES `stat_officer_salary` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_technical`
---
-ALTER TABLE `stat_officer_technical`
-  ADD CONSTRAINT `fk_stat_officer_technical_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_officer_technical_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_officer_technical_detail`
---
-ALTER TABLE `stat_officer_technical_detail`
-  ADD CONSTRAINT `fk_stat_officer_technical_detail_stat_officer_technical1` FOREIGN KEY (`stat_officer_technical_id`) REFERENCES `stat_officer_technical` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_people_move`
---
-ALTER TABLE `stat_people_move`
-  ADD CONSTRAINT `fk_stat_people_move_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_people_move_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_people_move_detail`
---
-ALTER TABLE `stat_people_move_detail`
-  ADD CONSTRAINT `fk_stat_people_move_detail_stat_people_move1` FOREIGN KEY (`stat_people_move_id`) REFERENCES `stat_people_move` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_population_movement`
---
-ALTER TABLE `stat_population_movement`
-  ADD CONSTRAINT `fk_stat_population_movement_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_population_movement_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_population_movement_detail`
---
-ALTER TABLE `stat_population_movement_detail`
-  ADD CONSTRAINT `fk_stat_population_movement_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_population_movement_detail_stat_population_movement1` FOREIGN KEY (`stat_population_movement_id`) REFERENCES `stat_population_movement` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_position`
---
-ALTER TABLE `stat_position`
-  ADD CONSTRAINT `fk_stat_position_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_position_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_position_detail`
---
-ALTER TABLE `stat_position_detail`
-  ADD CONSTRAINT `fk_stat_position_detail_stat_position1` FOREIGN KEY (`stat_position_id`) REFERENCES `stat_position` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_religion`
---
-ALTER TABLE `stat_religion`
-  ADD CONSTRAINT `fk_stat_religion_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_religion_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_religion_detail`
---
-ALTER TABLE `stat_religion_detail`
-  ADD CONSTRAINT `fk_stat_religion_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_religion_detail_stat_religion1` FOREIGN KEY (`stat_religion_id`) REFERENCES `stat_religion` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_religion_place`
---
-ALTER TABLE `stat_religion_place`
-  ADD CONSTRAINT `fk_stat_religion_place_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_religion_place_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_religion_place_detail`
---
-ALTER TABLE `stat_religion_place_detail`
-  ADD CONSTRAINT `fk_stat_religion_place_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_religion_place_stat_religion_place1` FOREIGN KEY (`stat_religion_place_id`) REFERENCES `stat_religion_place` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_religion_teacher`
---
-ALTER TABLE `stat_religion_teacher`
-  ADD CONSTRAINT `fk_stat_religion_teacher_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_religion_teacher_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_religion_teacher_detail`
---
-ALTER TABLE `stat_religion_teacher_detail`
-  ADD CONSTRAINT `fk_stat_religion_teacher_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_religion_teacher_detail_stat_religion_teacher1` FOREIGN KEY (`stat_religion_teacher_id`) REFERENCES `stat_religion_teacher` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_research`
---
-ALTER TABLE `stat_research`
-  ADD CONSTRAINT `fk_stat_research_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_research_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_research_detail`
---
-ALTER TABLE `stat_research_detail`
-  ADD CONSTRAINT `fk_stat_research_detail_stat_research1` FOREIGN KEY (`stat_research_id`) REFERENCES `stat_research` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_resign`
---
-ALTER TABLE `stat_resign`
-  ADD CONSTRAINT `fk_stat_resign_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_resign_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_resign_detail`
---
-ALTER TABLE `stat_resign_detail`
-  ADD CONSTRAINT `fk_stat_resign_detail_stat_resign1` FOREIGN KEY (`stat_resign_id`) REFERENCES `stat_resign` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_single_gateway_implementation`
---
-ALTER TABLE `stat_single_gateway_implementation`
-  ADD CONSTRAINT `fk_stat_single_gateway_implementation_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_single_gateway_implementation_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_single_gateway_implementation_detail`
---
-ALTER TABLE `stat_single_gateway_implementation_detail`
-  ADD CONSTRAINT `fk_stat_single_gateway_implementation_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_single_gateway_implementation_detail_stat_single_gate1` FOREIGN KEY (`stat_single_gateway_implementation_id`) REFERENCES `stat_single_gateway_implementation` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_single_window`
---
-ALTER TABLE `stat_single_window`
-  ADD CONSTRAINT `fk_stat_single_window_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_single_window_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_single_window_detail`
---
-ALTER TABLE `stat_single_window_detail`
-  ADD CONSTRAINT `fk_stat_single_window_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_single_window_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_single_window_detail_stat_single_window1` FOREIGN KEY (`stat_single_window_id`) REFERENCES `stat_single_window` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_victorycoin_ministry`
---
-ALTER TABLE `stat_victorycoin_ministry`
-  ADD CONSTRAINT `fk_stat_victorycoin_ministry_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victorycoin_ministry_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_victorycoin_ministry_detail`
---
-ALTER TABLE `stat_victorycoin_ministry_detail`
-  ADD CONSTRAINT `fk_stat_victorycoin_ministry_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victorycoin_ministry_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victorycoin_ministry_detail_stat_victorycoin_ministry1` FOREIGN KEY (`stat_victorycoin_ministry_id`) REFERENCES `stat_victorycoin_ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_victorycoin_province`
---
-ALTER TABLE `stat_victorycoin_province`
-  ADD CONSTRAINT `fk_stat_victorycoin_province_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victorycoin_province_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_victorycoin_province_detail`
---
-ALTER TABLE `stat_victorycoin_province_detail`
-  ADD CONSTRAINT `fk_stat_victorycoin_province_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victorycoin_province_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victorycoin_province_detail_stat_victorycoin_province1` FOREIGN KEY (`stat_victorycoin_province_id`) REFERENCES `stat_victorycoin_province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_victoryoversea_ministry`
---
-ALTER TABLE `stat_victoryoversea_ministry`
-  ADD CONSTRAINT `fk_stat_victoryoversea_ministry_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victoryoversea_ministry_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_victoryoversea_ministry_detail`
---
-ALTER TABLE `stat_victoryoversea_ministry_detail`
-  ADD CONSTRAINT `fk_stat_victoryoversea_ministry_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victoryoversea_ministry_detail_ministry1` FOREIGN KEY (`ministry_id`) REFERENCES `ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victoryoversea_ministry_detail_stat_victoryoversea_mi1` FOREIGN KEY (`stat_victoryoversea_ministry_id`) REFERENCES `stat_victoryoversea_ministry` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_victoryoversea_province`
---
-ALTER TABLE `stat_victoryoversea_province`
-  ADD CONSTRAINT `fk_stat_victoryoversea_province_phiscal_year1` FOREIGN KEY (`phiscal_year_id`) REFERENCES `phiscal_year` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victoryoversea_province_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `stat_victoryoversea_province_detail`
---
-ALTER TABLE `stat_victoryoversea_province_detail`
-  ADD CONSTRAINT `fk_stat_victoryoversea_province_detail_award1` FOREIGN KEY (`award_id`) REFERENCES `award` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victoryoversea_province_detail_province1` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_stat_victoryoversea_province_detail_stat_victoryoversea_pr1` FOREIGN KEY (`stat_victoryoversea_province_id`) REFERENCES `stat_victoryoversea_province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `user`
---
-ALTER TABLE `user`
-  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_user_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `user_has_branch`
---
-ALTER TABLE `user_has_branch`
-  ADD CONSTRAINT `fk_user_has_branch_branch1` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `user_has_province`
---
-ALTER TABLE `user_has_province`
-  ADD CONSTRAINT `fk_user_has_province_idx` FOREIGN KEY (`province_id`) REFERENCES `province` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_user_has_user_idx` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `user_has_role`
---
-ALTER TABLE `user_has_role`
-  ADD CONSTRAINT `fk_user_has_role_role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `use_subcordinate`
---
-ALTER TABLE `use_subcordinate`
-  ADD CONSTRAINT `fk_user_has_user_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_user_has_user_user2` FOREIGN KEY (`subcordinate_user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

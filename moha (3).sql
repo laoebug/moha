@@ -18226,7 +18226,7 @@ CREATE TABLE `stat_people_move_detail` (
   `real_women` int(11) DEFAULT NULL,
   `deleted` int(11) DEFAULT 0,
   `total_village` int(11) DEFAULT NULL,
-  `total_famliy` int(11) DEFAULT NULL,
+  `total_family` int(11) DEFAULT NULL,
   `total_district` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

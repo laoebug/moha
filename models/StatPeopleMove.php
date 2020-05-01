@@ -49,11 +49,11 @@ class StatPeopleMove extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'last_update' => Yii::t('app', 'Last Update'),
-            'deleted' => Yii::t('app', 'Deleted'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'phiscal_year_id' => Yii::t('app', 'Phiscal Year ID'),
+            'id' => 'ID',
+            'last_update' => 'Last Update',
+            'deleted' => 'Deleted',
+            'user_id' => 'User ID',
+            'phiscal_year_id' => 'Phiscal Year ID',
         ];
     }
 
