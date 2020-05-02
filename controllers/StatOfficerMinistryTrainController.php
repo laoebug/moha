@@ -115,7 +115,7 @@ class StatOfficerMinistryTrainController extends Controller
             'models' => $models,
             'stat' => [
                 'labels' => [
-                    'ວິຊາສະເພາະ ພາຍໃນ', 'ວິຊາສະເພາະ ຕາງປະເທດ', 'ທິດສະດີ ພາຍໃນ', 'ທິດສະດີ ຕາງປະເທດ'
+                    'ວິຊາສະເພາະ ພາຍໃນ', 'ວິຊາສະເພາະ ຕ່າງປະເທດ', 'ທິດສະດີ ພາຍໃນ', 'ທິດສະດີ ຕ່າງປະເທດ'
                 ],
                 'data' => $data
             ],

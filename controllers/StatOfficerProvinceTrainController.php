@@ -110,7 +110,7 @@ class StatOfficerProvinceTrainController extends Controller
             'models' => $models,
             'stat' => [
                 'labels' => [
-                    'ວິຊາສະເພາະ ພາຍໃນ', 'ວິຊາສະເພາະ ຕາງປະເທດ', 'ທິດສະດີ ພາຍໃນ', 'ທິດສະດີ ຕາງປະເທດ'
+                    'ວິຊາສະເພາະ ພາຍໃນ', 'ວິຊາສະເພາະ ຕ່າງປະເທດ', 'ທິດສະດີ ພາຍໃນ', 'ທິດສະດີ ຕ່າງປະເທດ'
                 ],
                 'series' => "ສະຖິຕິພະນັກງານລັດຖະກອນຂັ້ນອົງການທຽບເທົ່າ ທີ່ໄປຝຶກອົບຮັມຢູ່ພາຍໃນ ແລະ ຕ່າງປະເທດ",
                 'data' => $data
@@ -120,7 +120,6 @@ class StatOfficerProvinceTrainController extends Controller
 
     public function actionInquiry($year, $province)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -149,7 +148,6 @@ class StatOfficerProvinceTrainController extends Controller
 
     public function actionSave($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;

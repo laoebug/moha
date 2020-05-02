@@ -113,16 +113,106 @@ class StatPeopleMoveController extends Controller
         $years = PhiscalYear::find()->select('id, year, status')->orderBy('year')->asArray()->all();
         return json_encode([
             'models' => $models,
-            'stat' => [
-                'labels' => ArrayHelper::getColumn($years, 'year'),
-                'series' => ['ແຕ່ງດອງ ລາວ-ລາວ', 'ແຕ່ງດອງລາວ-ຕ່າງປະເທດ', 'ຢ່າຮ້າງ ລາວ-ລາວ', 'ຢ່າຮ້າງລາວ-ຕ່າງປະເທດ'],
-                'data' => [
-                    isset($models) ? ArrayHelper::getColumn($models, 'wedding_laolao') : [],
-                    isset($models) ? ArrayHelper::getColumn($models, 'wedding_laofor') : [],
-                    isset($models) ? ArrayHelper::getColumn($models, 'divorce_laolao') : [],
-                    isset($models) ? ArrayHelper::getColumn($models, 'divorce_laofor') : [],
-                ]
-            ],
+            'stats' => [
+                'wedding' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ແຕ່ງດອງ ລາວ-ລາວ', 'ແຕ່ງດອງລາວ-ຕ່າງປະເທດ'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'wedding_laolao') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'wedding_laofor') : [],
+                    ]
+                ],
+                'divorce' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ຢ່າຮ້າງ ລາວ-ລາວ', 'ຢ່າຮ້າງລາວ-ຕ່າງປະເທດ'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'divorce_laolao') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'divorce_laofor') : [],
+                    ]
+                ],
+                'movein' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ຈຳນວນ ພົນລະເມືອງ ຍົກມາ (ລວມ)', 'ຈຳນວນ ພົນລະເມືອງ ຍົກມາ (ຍິງ)'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'movein_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'movein_women') : [],
+                    ]
+                ],
+                'born' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ຈຳນວນເກີດ (ລວມ)', 'ຈຳນວນເກີດ (ຍິງ)'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'born_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'born_women') : [],
+                    ]
+                ],
+                'sign' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ການໄດ້ສັນຊາດລາວ (ລວມ)', 'ການໄດ້ສັນຊາດລາວ (ຍິງ)'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'sign_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'sign_women') : [],
+                    ]
+                ],
+                'resign' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ການປະສັນຊາດລາວ (ລວມ)', 'ການປະສັນຊາດລາວ (ຍິງ)'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'resign_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'resign_women') : [],
+                    ]
+                ],
+                'changename' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ການປ່ຽນຊື່ (ລວມ)', 'ການປ່ຽນຊື່ (ຍິງ)'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'changename_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'changename_women') : []
+                    ]
+                ],
+                'changesurname' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ການປ່ຽນ ນາມສະກຸນ (ລວມ)', 'ການປ່ຽນ ນາມສະກຸນ (ຍິງ)'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'changesurname_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'changesurname_women') : [],
+                    ]
+                ],
+                'movein' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ການຍົກຍ້າຍມາ ບ້ານ-ບ້ານ', 'ການຍົກຍ້າຍມາ ເມືອງ-ເມືອງ', 'ການຍົກຍ້າຍມາ ແຂວງ-ແຂວງ'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'movein_village_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'movein_district_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'movein_province_total') : [],
+                    ]
+                ],
+                'moveout' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ການຍົກຍ້າຍໄປ ບ້ານ-ບ້ານ', 'ການຍົກຍ້າຍໄປ ເມືອງ-ເມືອງ', 'ການຍົກຍ້າຍໄປ ແຂວງ-ແຂວງ'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'moveout_village') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'moveout_district') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'moveout_province') : [],
+                    ]
+                ],
+                'die' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ຈຳນວນ ເສຍຊີວິດ (ລວມ)', 'ຈຳນວນ ເສຍຊີວິດ (ຍິງ)'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'die_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'die_women') : [],
+                    ]
+                ],
+                'real' => [
+                    'labels' => ArrayHelper::getColumn($years, 'year'),
+                    'series' => ['ຈຳນວນ ພົນລະເມືອງ ຕົວຈິງ (ລວມ)', 'ຈຳນວນ ພົນລະເມືອງ ຕົວຈິງ (ຍິງ)'],
+                    'data' => [
+                        isset($models) ? ArrayHelper::getColumn($models, 'real_total') : [],
+                        isset($models) ? ArrayHelper::getColumn($models, 'real_women') : []
+                    ]
+                ],
+            ]
         ]);
     }
 
