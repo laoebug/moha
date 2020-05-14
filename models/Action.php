@@ -3,29 +3,29 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "action".
  *
- * @property int $id
+ * @property integer $id
  * @property string $class_name
  * @property string $method
- * @property int $deleted
- * @property int $controller_id
+ * @property integer $deleted
+ * @property integer $controller_id
  * @property string $description
- * @property int $parent_id
- * @property int $position
+ * @property integer $parent_id
  *
  * @property RoleHasAction[] $roleHasActions
  * @property Role[] $roles
  */
-class Action extends ActiveRecord
+class Action extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
+	public $role_id;
+	public $action_id;
+	public $allowed;
     public static function tableName()
     {
         return 'action';
@@ -37,8 +37,8 @@ class Action extends ActiveRecord
     public function rules()
     {
         return [
-            [['class_name', 'method'], 'required'],
-            [['deleted', 'controller_id', 'parent_id', 'position'], 'integer'],
+            [['class_name', 'method'], 'required','message'=>Yii::t('app','Please enter a value for') .Yii::t('app','{attribute}')],
+            [['deleted', 'controller_id', 'parent_id'], 'integer'],
             [['description'], 'string'],
             [['class_name', 'method'], 'string', 'max' => 255],
         ];
@@ -57,12 +57,11 @@ class Action extends ActiveRecord
             'controller_id' => Yii::t('app', 'Controller ID'),
             'description' => Yii::t('app', 'Description'),
             'parent_id' => Yii::t('app', 'Parent ID'),
-            'position' => Yii::t('app', 'Position'),
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getRoleHasActions()
     {
@@ -70,7 +69,7 @@ class Action extends ActiveRecord
     }
 
     /**
-     * @return ActiveQuery
+     * @return \yii\db\ActiveQuery
      */
     public function getRoles()
     {
