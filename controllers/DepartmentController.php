@@ -41,7 +41,8 @@ class DepartmentController extends Controller
         $searchModel = new MenuSearch ();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere([
-            'menu_parent_id' => $id
+            'menu_parent_id' => $id,
+            'deleted' => 0
         ]);
         return $this->render('view', [
             'model' => $model,

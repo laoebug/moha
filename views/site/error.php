@@ -17,6 +17,7 @@ $this->title = $name;
     </h1>
     <div class="alert alert-danger">
         <?= Html::encode($this->title) ?>
+        <?php print_r($exception->getMessage()) ?>
     </div>
     <p>
         <a href="javascript:window.history.back();" class="btn btn-default">

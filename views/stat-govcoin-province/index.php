@@ -4,7 +4,7 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatGovcoinProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽນໄຊ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນ ແລະ ນະຄອນຫຼວງ ປະຈຳປີ";
+$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍລັດຖະບານທີ່ໄດ້ມອບໃຫ້ຍ້ອງຍໍພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນຫຼວງ ປະຈຳປີ";
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div ng-app="mohaApp" ng-controller="statGovcoinProvince">

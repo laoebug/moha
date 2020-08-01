@@ -13,8 +13,9 @@
 </style>
 <div class="row">
     <div class="col-sm-12">
-        <h3 class="title">ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ,
-            ອົງການອ້ອມຂ້າງສູນກາງ <?= $year->year ?></h3>
+        <h3 class="title">
+        ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ, ອົງການອ້ອມຂ້າງສູນກາງ ປະຈໍາປີ
+        <?= $year->year ?></h3>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>

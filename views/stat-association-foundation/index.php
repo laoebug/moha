@@ -27,12 +27,12 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
         ປ້ອນຂໍ້ມູນ
       </div>
       <div class="panel-body {{mode=='input'?'':'hidden'}}">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <label for=""><?= Yii::t('app', 'Approver Level') ?></label>
           <select class="form-control" ng-model="model.approverLevel" ng-options="b.name for b in approverLevels"></select>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <div class="col-sm-12">
             <label for="">ຜູ້ອະນຸມັດ</label>
             <select class="form-control" ng-model="model.approver" ng-show="model.approverLevel.code == 'M'" ng-options="a.ministry.name for a in model.approverLevel.approvers" ng-change="inquiry()">
@@ -49,6 +49,16 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
           <label for=""><?= Yii::t('app', 'Foundation') ?></label>
           <input type="number" min="0" class="form-control" ng-model="model.foundation">
         </div>
+
+
+        
+          <div class="col-sm-2">
+            <label for="">ວ.ດ.ປ/ປະກາດໃຊ້</label>
+            <input type="text" class="form-control" ng-model="model.date_notice_use">
+          </div>
+        
+
+
         <div class="col-sm-12">
           <label for=""><?= Yii::t('app', 'Remark') ?></label>
           <input type="text" class="form-control" ng-model="model.remark">
@@ -82,8 +92,10 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
                 <tr>
                   <th class="text-center"><?= Yii::t('app', 'No.') ?></th>
                   <th class="text-center"><?= Yii::t('app', 'Ministry') . "/" . Yii::t('app', 'Province') ?></th>
+                  <th class="text-center" style="width: 10%"><?= Yii::t('app', 'ວ.ດ.ປ/ປະກາດໃຊ້') ?></th>
                   <th class="text-center" style="width: 10%"><?= Yii::t('app', 'Association') ?></th>
                   <th class="text-center" style="width: 10%"><?= Yii::t('app', 'Foundations') ?></th>
+                  
                   <th class="text-center"><?= Yii::t('app', 'Remark') ?></th>
                 </tr>
               </thead>
@@ -94,14 +106,17 @@ $this->title = Yii::t('app', 'Statistics of Associations/Foundations');
                 <tr ng-repeat="a in l.approvers">
                   <td class="text-center">{{$index + 1}}</td>
                   <td>{{l.code == 'M' ? a.ministry.name:a.province.province_name}}</td>
+                  <td class="text-center">{{a.date_notice_use}}</td>
                   <td class="text-center">{{a.association | number | dash}}</td>
                   <td class="text-center">{{a.foundation | number | dash}}</td>
+                  
                   <td>{{a.remark}}</td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
-                  <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                  <th class="text-center" colspan="3"><?= Yii::t('app', 'Total') ?></th>
+                  
                   <th class="text-center">{{sum('association')}}</th>
                   <th class="text-center">{{sum('foundation')}}</th>
                   <th></th>

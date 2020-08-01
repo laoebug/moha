@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-title-w-btn ">
                 <h3 class="title">
-                    ສະຖິຕິໂຄງການລົງທຶນຂອງລັດ
+                    ສະຖິຕິໂຄງການລົງທຶນຂອງລັດປະຈຳປີ 
                     (<?= $year->year ?>)</h3>
             </div>
             <div class="card-body">

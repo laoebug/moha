@@ -25,11 +25,11 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
       </div>
       <div class="panel-body {{mode=='input'?'':'hidden'}}">
         <div class="col-sm-3">
-          <label><?= Yii::t('app', 'Ministry') ?></label>
+          <label>ກະຊວງ</label>
           <select class="form-control" ng-model="model.ministry" ng-change="inquiry()" ng-options="m.name for m in ministries"></select>
         </div>
         <div class="col-sm-3">
-          <label><?= Yii::t('app', 'Award') ?></label>
+          <label>ຍ້ອງຍໍຜົນງານ</label>
           <select class="form-control" ng-model="model.award" ng-change="inquiry()" ng-options="a.name for a in awards"></select>
         </div>
         <div class="col-sm-12" style="margin-top: 1em">
@@ -377,6 +377,7 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
     };
 
     $scope.inquiry = function() {
+      
       if ($scope.model.ministry && $scope.model.award) {
         $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&ministry=' + $scope.model.ministry.id + '&award=' + $scope.model.award.id)
           .then(function(r) {

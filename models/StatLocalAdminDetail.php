@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_local_admin_detail".
@@ -45,11 +43,8 @@ use yii\db\ActiveRecord;
  * @property int $capital_vice_women
  * @property int $village_approved
  * @property int $village_pending
- *
- * @property Province $province
- * @property StatLocalAdmin $statLocalAdmin
  */
-class StatLocalAdminDetail extends ActiveRecord
+class StatLocalAdminDetail extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -67,8 +62,6 @@ class StatLocalAdminDetail extends ActiveRecord
         return [
             [['stat_local_admin_id', 'province_id'], 'required'],
             [['stat_local_admin_id', 'province_id', 'municipality_head_total', 'municipality_head_women', 'municipality_vice_total', 'municipality_vice_women', 'province_head_total', 'province_head_women', 'province_vice_total', 'province_vice_women', 'city_head_total', 'city_head_women', 'city_vice_total', 'city_vice_women', 'district_head_total', 'district_head_women', 'district_vice_total', 'district_vice_women', 'village_head_total', 'village_head_women', 'village_vice_total', 'village_vice_women', 'village_improved_five_unit', 'village_not_improved_five_unit', 'population_total', 'population_women', 'village', 'family_total', 'family_poor', 'capital_head_total', 'capital_head_women', 'capital_vice_total', 'capital_vice_women', 'village_approved', 'village_pending'], 'integer'],
-            [['province_id'], 'exist', 'skipOnError' => true, 'targetClass' => Province::className(), 'targetAttribute' => ['province_id' => 'id']],
-            [['stat_local_admin_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatLocalAdmin::className(), 'targetAttribute' => ['stat_local_admin_id' => 'id']],
         ];
     }
 
@@ -118,6 +111,15 @@ class StatLocalAdminDetail extends ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     * @return StatAssociationFoundationDetailQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new StatAssociationFoundationDetailQuery(get_called_class());
+    }
+
+     /**
      * @return ActiveQuery
      */
     public function getProvince()

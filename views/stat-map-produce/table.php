@@ -11,7 +11,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title">ສະຖິຕິຜະລິດແຜນທີ່ (<?= isset($year) ? $year->year : '' ?>)</h3>
+                <h3 class="title">ສະຖິຕິຜະລິດແຜນທີ່ປະຈຳປີ (<?= isset($year) ? $year->year : '' ?>)</h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">

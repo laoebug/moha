@@ -51,6 +51,7 @@ class StatVictorycoinMinistryController extends Controller
         ]);
     }
 
+    // public function actionGet($year)
     public function actionGet()
     {
         $user = Yii::$app->user->identity;
@@ -78,6 +79,7 @@ class StatVictorycoinMinistryController extends Controller
 
     public function actionEnquiry($year)
     {
+        
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -103,15 +105,18 @@ class StatVictorycoinMinistryController extends Controller
             ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0')
             ->join('join', 'award a', 'a.id=d.award_id')
             ->orderBy('m.position')
-            ->asArray()->all();
+            ->asArray()->all();            
+            $ministries = Ministry::getMistryByYear($year);
 
         return json_encode([
-            'models' => $models
+            'models' => $models,
+            'ministries' => $ministries
         ]);
     }
 
     public function actionInquiry($year, $ministry, $award)
     {
+     
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -134,8 +139,9 @@ class StatVictorycoinMinistryController extends Controller
                 'award_id' => $award,
                 'ministry_id' => $ministry,
             ])->asArray()->one();
-
+            
         return json_encode(['model' => $model]);
+        
     }
 
     public function actionSave($year)

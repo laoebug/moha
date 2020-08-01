@@ -182,6 +182,7 @@ $this->title = "ສະຖິຕິໂຄງປະກອບກົງຈັກຂ�
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
         .then(function(r) {
+          
           $scope.ministries = r.data.ministries;
           $scope.getreferences();
         }, function(r) {

@@ -3,9 +3,9 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[StatAssociationFoundationDetail]].
+ * This is the ActiveQuery class for [[StatLocalAdminDetail]].
  *
- * @see StatAssociationFoundationDetail
+ * @see StatLocalAdminDetail
  */
 class StatAssociationFoundationDetailQuery extends \yii\db\ActiveQuery
 {
@@ -16,7 +16,7 @@ class StatAssociationFoundationDetailQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return StatAssociationFoundationDetail[]|array
+     * @return StatLocalAdminDetail[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class StatAssociationFoundationDetailQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return StatAssociationFoundationDetail|array|null
+     * @return StatLocalAdminDetail|array|null
      */
     public function one($db = null)
     {

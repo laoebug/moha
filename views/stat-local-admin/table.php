@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: adsavin
@@ -45,45 +46,56 @@ if (isset($models))
         <div class="card" style="width:120vw;">
             <div class="card-title-w-btn ">
                 <h3 class="title">
-                    ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ
-                    (<?= @$year->year ?>)</h3>
+                    ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນປະຈໍາປີ
+                    <?= $year->year ?></h3>
             </div>
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead>
-                    <tr>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
-                        <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
-                        <?php foreach ($titles as $title): ?>
-                            <th class="text-center" colspan="2"><?= $title ?></th>
-                        <?php endforeach; ?>
-                    </tr>
-                    <tr>
-                        <?php for ($i = 0; $i < count($titles) - 1; $i++): ?>
-                            <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                            <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                        <?php endfor; ?>
-                        <td class="text-center" style="width: 8%">ປັບປຸງແລ້ວ</td>
-                        <td class="text-center" style="width: 8%">ຍັງບໍ່ປັບປຸງ</td>
-                    </tr>
-                    <tr>
-                        <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                        <?php foreach ($cols as $col): ?>
-                            <th class="text-center"><?= number_format($sum[$col]) ?></th>
-                        <?php endforeach; ?>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($models as $index => $model): ?>
                         <tr>
-                            <td class="text-center"><?= $index + 1 ?></td>
-                            <td><?= $model['province_name'] ?></td>
-                            <?php foreach ($cols as $col): ?>
-                                <td class="text-center"><?= number_format($model[$col]) ?></td>
+                            <th class="text-center" rowspan="2"><?= Yii::t('app', 'No.') ?></th>
+                            <th class="text-center" rowspan="2"><?= Yii::t('app', 'Province') ?></th>
+                            <?php foreach ($titles as $title) : ?>
+                                <th class="text-center" colspan="2"><?= $title ?></th>
                             <?php endforeach; ?>
                         </tr>
-                    <?php endforeach; ?>
+                        
+
+                    </thead>
+                    <tbody>
+                        <?php foreach ($models as $index => $model) : ?>
+                            <tr>
+                                <td class="text-center"><?= $index + 1 ?></td>
+                                <td><?= $model['province_name'] ?></td>
+                                <?php foreach ($cols as $col) : ?>
+                                    <td class="text-center"><?= number_format($model[$col]) ?></td>
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
+
+                    <footer>
+
+                        <tr>
+                            <th class="text-center" colspan="2" rowspan="2" style="vertical-align: middle;"><?= Yii::t('app', 'Total') ?></th>
+                            <?php foreach ($cols as $col) : ?>
+                                <th class="text-center"><?= number_format($sum[$col]) ?></th>
+                            <?php endforeach; ?>
+                        </tr>
+
+
+                        <tr>
+                            <?php for ($i = 0; $i < count($titles) - 1; $i++) : ?>
+                                <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                            <?php endfor; ?>
+                            <td class="text-center" style="width: 8%">ປັບປຸງແລ້ວ</td>
+                            <td class="text-center" style="width: 8%">ຍັງບໍ່ປັບປຸງ</td>
+                        </tr>
+
+
+                    </footer>
+
                 </table>
             </div>
         </div>

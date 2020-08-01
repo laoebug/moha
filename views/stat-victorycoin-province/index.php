@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatVictorycoinProvinceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນໄຊຕ່າງໆທີ່ໄດ້ມອບໃຫ້ຕ່າງປະເທດຂອງບັນດາແຂວງ, ນະຄອນ ແລະ ນະຄອນຫຼວງ ປະຈຳປີ";
+$this->title = "ຕາຕະລາງສະຖີຕິປະເພດຫຼຽນໄຊ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນຫຼວງ ປະຈຳປີ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

@@ -14,7 +14,8 @@
 </style>
 <div class="row">
     <div class="col-sm-12">
-        <h3 class="title">ຕາຕະລາງສະຖີຕິປະເພດຫຼຽນໄຊ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນ ແລະ ນະຄອນຫຼວງ
+        <h3 class="title">
+        ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍລັດຖະບານທີ່ໄດ້ມອບໃຫ້ຍ້ອງຍໍພາຍໃນຂອງບັນດາແຂວງ, ນະຄອນຫຼວງ
             ປະຈຳປີ <?= $year->year ?></h3>
         <table class="table table-bordered table-hover">
             <thead>

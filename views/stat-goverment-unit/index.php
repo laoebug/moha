@@ -25,7 +25,7 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
           <select class="form-control" ng-model="ministrygroup" ng-options="g.name for g in ministrygroups"></select>
         </div>
         <div class="col-sm-2">
-          <label for=""><?= Yii::t('app', 'Ministry') ?></label>
+          <label for="">ພາກສ່ວນຕ່າງໆ</label>
           <select class="form-control" ng-model="ministry" ng-options="b.name for b in ministries" ng-change="inquiry()">
           </select>
         </div>
@@ -54,14 +54,34 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
         </div>
 
         <div class="col-sm-12">
-          <label for=""><?= Yii::t('app', 'Remark') ?></label>
-          <input type="text" class="form-control" ng-model="remark">
+          <label for="">ໝາຍເຫດ</label>
+          <input type="text" class="form-control"  ng-model="remark" >
         </div>
-        <div class="col-sm-2 col-sm-offset-5" style="margin-top: 1em">
-          <button type="button" class="btn btn-primary col-sm-12" ng-click="save()">
-            <i class="fa fa-save"></i> <?= Yii::t('app', 'Save') ?>
+
+        <div class="col-sm-2" style="margin-top: 1em"  ng-show="!id">
+          <button type="button" class="btn btn-primary col-sm-12" ng-click="save(1)">
+            <i class="fa fa-save"></i> ບັນທຶກ
           </button>
         </div>
+
+        
+        <div class="col-sm-2" style="margin-top: 1em" ng-show="id"> 
+
+          <button type="button" class="btn btn-info col-sm-12" ng-click="save(0)">
+            <i class="fa fa-save"></i> ແກ້ໄຂ
+          </button>
+        </div>
+
+        <div class="col-sm-2" style="margin-top: 1em">
+
+          <button type=" button" class="btn btn-danger col-sm-12" ng-click="delete(0)">
+            <i class="fa fa-trash"></i> ລຶບ
+          </button>
+        </div>
+
+
+
+
       </div>
     </div>
   </div>
@@ -74,7 +94,66 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade active in" id="table">
           <div class="row">
-            <div class="col-sm-12" style="margin-top: 2em" ng-bind-html="result"></div>
+            <!-- <div class="col-sm-12" style="margin-top: 2em" ng-bind-html="result"></div> -->
+
+
+            <!-- Start -->
+            <div class="col-sm-12" style="margin-top: 2em">
+
+
+              <div class="card">
+                <div class="card-title-w-btn ">
+                  <h3 class="title">ສະຖິຕິບັນດາຫົວໜ່ວຍການຈັດຕັ້ງ (ກົມ ແລະ ອົງການລັດທຽບເທົ່າກົມ) {{year.year}}</h3>
+                  <p class="hidden-print">
+                    <a class="btn btn-default" target="_blank" href="index.php?r=stat-goverment-unit/print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
+                    <a class="btn btn-info" target="_blank" href="index.php?r=stat-goverment-unit/download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>
+                  </p>
+                </div>
+                <div class="card-body">
+                  <table class="table table-responsive table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th class="text-center" style="width: 20px"><?= Yii::t('app', 'No.') ?></th>
+                        <th class="text-center">ພາກສ່ວນຕ່າງໆ</th>
+                        <?php foreach (['ຫ້ອງການ', 'ກົມ', 'ສູນ', 'ສະຖາບັນ', 'ພະແນກ'] as $item) : ?>
+                          <th class="text-center" style="width: 10%"><?= $item ?></th>
+                        <?php endforeach; ?>
+                        <th class="text-center">ໝາຍເຫດ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr ng-repeat="model in models | orderBy:model.position:false" ng-click="select(ministry)" style="cursor:pointer;">
+                        <td class="text-center">{{$index+1}}</td>
+                        <td class="text-left">{{model.name}}</td>
+                        <td class="text-center">{{model.office}}</td>
+                        <td class="text-center">{{model.department}}</td>
+                        <td class="text-center">{{model.center}}</td>
+                        <td class="text-center">{{model.insitute}}</td>
+                        <td class="text-center">{{model.division}}</td>
+                        <td class="text-center">{{model.remark}}</td>
+                      </tr>
+
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="2">ລວມ</td>
+                        <td class="text-center"><strong>{{sum('office')}}</strong></td>
+                        <td class="text-center"><strong>{{sum('department')}}</strong></td>
+                        <td class="text-center"><strong>{{sum('center')}}</strong></td>
+                        <td class="text-center"><strong>{{sum('insitute')}}</strong></td>
+                        <td class="text-center"><strong>{{sum('division')}}</strong></td>
+                        <td class="text-center">&nbsp;</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
+
+            </div>
+            <!-- End -->
+
           </div>
         </div>
         <div class="tab-pane fade" id="reference">
@@ -161,12 +240,28 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
         }, 15000);
       });
 
+    $scope.sum = function(key) {
+      var total = 0;
+      if ($scope.models) {        
+        for (var n = 0; n < $scope.models.length; n++) {
+          if ($scope.models[n][key]) {
+            total += parseInt($scope.models[n][key]);
+          }
+        }
+      }
+      return total == 0 ? 0 : total;
+    };
+
+
     $scope.enquiry = function() {
       $scope.result = null;
+      $scope.ministries = null;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-        .then(function(r) {
-          $scope.result = $sce.trustAsHtml(r.data);
+        .then(function(r) {          
+          $scope.ministries = r.data.ministries;
+          $scope.models = r.data.models;
+          console.log(r);
           $scope.getreferences();
         }, function(r) {
           $scope.response = r;
@@ -175,17 +270,29 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
           }, 15000);
         });
     };
-
+    $scope.clear = function(){
+      $scope.ministry.id=null;
+      $scope.office = "";
+      $scope.department = "";
+      $scope.division = "";
+      $scope.insitute = "";
+      $scope.center = "";
+      $scope.remark = "";
+    }
+    
     $scope.inquiry = function() {
       if ($scope.ministry)
         $http.get($scope.url + 'inquiry&ministry=' + $scope.ministry.id + '&year=' + $scope.year.id)
         .then(function(r) {
+               
           $scope.office = parseInt(r.status == 200 ? r.data.office : "");
           $scope.department = parseInt(r.status == 200 ? r.data.department : "");
           $scope.division = parseInt(r.status == 200 ? r.data.division : "");
           $scope.insitute = parseInt(r.status == 200 ? r.data.insitute : "");
           $scope.center = parseInt(r.status == 200 ? r.data.center : "");
-          $scope.remark = parseInt(r.status == 200 ? r.data.remark : "");
+          $scope.remark = r.status == 200 ? r.data.remark : "";
+          $scope.id = r.data.id;
+          
         }, function(r) {
           $scope.response = r;
           $timeout(function() {
@@ -201,10 +308,17 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
         $scope.remark = "";
       }
     };
-
-    $scope.save = function() {
+    
+    $scope.reload = function() {
+      $scope.enquiry();
+      $scope.inquiry();
+      $scope.clear();
+    }
+    $scope.save = function(saveOrUpdate) {        
       if ($scope.year && $scope.ministry) {
+        
         $http.post($scope.url + 'save', {
+          'saveOrUpdate':saveOrUpdate,
           'year': $scope.year.id,
           'ministry': $scope.ministry.id,
           'office': $scope.office,
@@ -216,7 +330,8 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
           '_csrf': $('meta[name="csrf-token"]').attr("content")
         }).then(function(r) {
           $scope.response = r;
-          if (r.data) $scope.result = $sce.trustAsHtml(r.data);
+          
+          $scope.reload();
           $timeout(function() {
             $scope.response = null;
           }, 15000);
@@ -225,11 +340,13 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
             position: 'top-end',
             type: 'success',
             title: 'ການບັນທຶກສໍາເລັດ',
-            text: r.status + " " + r.statusText,
+            text: r.status + " " + r.statusText,            
             showConfirmButton: false,
             timer: 3000
           });
+          $scope.reload();
 
+          
         }, function(r) {
           $scope.response = r;
           $timeout(function() {
@@ -341,6 +458,66 @@ $this->title = "ສະຖິຕິບັນດາຫົວໜ່ວຍການ�
           });
       }
     };
+
+
+    $scope.delete = function() {
+      var url = 'index.php?r=stat-goverment-unit/';
+      
+      if ($scope.id)
+        swal({
+          title: "ໝັ້ນໃຈບໍ່?",
+          text: "ເມື່ອລຶບແລ້ວຈະບໍ່ສາມາດເອົາຄືນມາໄດ້",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "ແມ່ນ, ລຶບ",
+          cancelButtonText: "ບໍ່, ບໍ່ລຶບ",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, function(isConfirm) {
+          if (isConfirm) {            
+            $http.post(url + 'delete', {
+              'id': $scope.id,
+              '_csrf': $('meta[name="csrf-token"]').attr("content")
+            }).then(function(r) {
+              $timeout(function() {
+                $scope.response = null;
+              }, 15000);
+              if (r.status == 200) {
+                $scope.reload();
+                Swal.fire({
+                  position: 'top-end',
+                  type: 'success',
+                  title: 'ການລຶບສໍາເລັດ',
+                  text: r.status + " " + r.statusText,
+                  showConfirmButton: false,
+                  timer: 3000
+                });
+              }
+              
+            }, function(r) {
+              $scope.response = r;
+              $timeout(function() {
+                $scope.response = null;
+              }, 15000);
+
+
+              Swal.fire({
+                position: 'top-end',
+                type: 'error',
+                title: 'ການບັນທຶກບໍ່ສໍາເລັດ',
+                text: r.status + '  ' + r.statusText,
+                showConfirmButton: false,
+                timer: 3000
+              });
+
+
+            });
+          }
+        });
+    };
+
+
+
 
     $scope.deletefile = function(f) {
       if ($scope.year && f) {

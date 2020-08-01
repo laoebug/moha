@@ -4,7 +4,7 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StatLocalAdminSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນ";
+$this->title = "ສະຖິຕິການປົກຄອງທ້ອງຖິ່ນປະຈໍາປີ";
 $titles = [
     'ເຈົ້າຄອງ ນະຄອນຫຼວງ',
     'ຮອງເຈົ້າຄອງ ນະຄອນຫຼວງ',
@@ -106,7 +106,7 @@ $titles = [
                 <div class="tab-pane fade active in" id="table">
                     <div class="card" style="overflow-x: scroll">
                         <div class="card-title-w-btn ">
-                            <h3><?= $this->title ?></h3>
+                            <h3><?= $this->title . 'ປະຈໍາປີ'; ?> {{year.year}}</h3>
                             <p>
                                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i>
@@ -122,20 +122,8 @@ $titles = [
                                         <th class="text-center" colspan="2"><?= $title ?></th>
                                     <?php endforeach; ?>
                                 </tr>
-                                <tr>
-                                    <?php for ($i = 0; $i < 10; $i++) : ?>
-                                        <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                                        <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                                    <?php endfor; ?>
-                                    <td class="text-center">ປັບປຸງແລ້ວ</td>
-                                    <td class="text-center">ຍັງບໍ່ປັບປຸງ</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                                    <th class="text-center" ng-repeat-start="c in cols">{{sum(c.first) | number | dash}}
-                                    </th>
-                                    <th class="text-center" ng-repeat-end>{{sum(c.second) | number | dash}}</th>
-                                </tr>
+
+
                             </thead>
                             <tbody>
                                 <tr ng-repeat="m in models">
@@ -145,6 +133,29 @@ $titles = [
                                     <td class="text-center" ng-repeat-end>{{m[c.second] | number | dash}}</td>
                                 </tr>
                             </tbody>
+                            <footer>
+
+
+                                <tr>
+                                    <th class="text-center" colspan="2" rowspan="2" style="vertical-align: middle;"><?= Yii::t('app', 'Total') ?></th>
+                                    <th class="text-center" ng-repeat-start="c in cols">{{sum(c.first) | number | dash}}
+                                    </th>
+                                    <th class="text-center" ng-repeat-end>{{sum(c.second) | number | dash}}</th>
+                                </tr>
+
+
+                                <tr>
+                                
+                                    <?php for ($i = 0; $i < 10; $i++) : ?>                                        
+                                        <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
+                                        <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
+                                    <?php endfor; ?>
+                                    <td class="text-center">ປັບປຸງແລ້ວ</td>
+                                    <td class="text-center">ຍັງບໍ່ປັບປຸງ</td>
+                                </tr>
+
+
+                            </footer>
                         </table>
                     </div>
                 </div>
@@ -323,11 +334,12 @@ $titles = [
 
         $scope.save = function() {
             if ($scope.year && $scope.model) {
-
+                
                 $http.post($scope.url + 'save&year=' + $scope.year.id, {
                     'StatLocalAdminDetail': $scope.model,
                     '_csrf': $('meta[name="csrf-token"]').attr("content")
                 }).then(function(r) {
+                    
                     $scope.model = null;
                     $scope.response = r;
                     $scope.enquiry();

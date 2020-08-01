@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatMapServiceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຜນທີ່ແຫ່ງຊາດ'), 'url' => ['index']];
-$this->title = "ສະຖິຕິການບໍລິການແຜນທີ່ມາດຕາສ່ວນ";
+$this->title = "ສະຖິຕິການບໍລິການແຜນທີ່ມາດຕາສ່ວນປະຈຳປີ ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -28,7 +28,7 @@ $this->title = "ສະຖິຕິການບໍລິການແຜນທີ�
             </div>
             <div class="panel-body {{mode=='input'?'':'hidden'}}">
                 <div class="col-sm-6">
-                    <label>ກິດຈະກຳ</label>
+                    <label>ເນື້ອໃນ</label>
                     <input class="form-control" ng-model="model.activity" type="text">
                 </div>
                 <div class="col-sm-2">

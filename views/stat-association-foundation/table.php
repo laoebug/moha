@@ -21,6 +21,8 @@
                         <tr>
                             <th class="text-center"><?= Yii::t('app', 'No.')?></th>
                             <th class="text-center">ກະຊວງ, ແຂວງ ຜູ້ອະນຸມັດ</th>
+                            <th class="text-center">ວ.ດ.ປ/ປະກາດໃຊ້</th>
+                            
                             <th class="text-center">ຈຳນວນສະມາຄົມ</th>
                             <th class="text-center">ຈຳນວນມູນນິທິ</th>
                             <th class="text-center"><?= Yii::t('app', 'Remark')?></th>
@@ -41,6 +43,7 @@
                             <tr>
                                 <td class="text-center"><?=$index+1 ?></td>
                                 <td><?=$t['code']=='M'?$a['ministry']['name']:$a['province']['province_name']?></td>
+                                <td class="text-center" style="width: 15%">&nbsp;<?=$a['date_notice_use']?></td>
                                 <td class="text-center" style="width: 15%"><?=$a['association']?></td>
                                 <td class="text-center" style="width: 15%"><?=$a['foundation']?></td>
                                 <td><?=$a['remark']?></td>
@@ -50,7 +53,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
+                            <th class="text-center" colspan="3"><?= Yii::t('app', 'Total') ?></th>
                             <th class="text-center"><?=$sum['association']?></th>
                             <th class="text-center"><?=$sum['foundation']?></th>
                             <th></th>

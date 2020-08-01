@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatGovoverseaMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍລັດຖະບານທີ່ໄດ້ມອບໃຫ້ຕ່າງປະເທດຂອງບັນດາກະຊວງ, ອົງການອ້ອມຂ້າງສູນກາງປະຈຳປີ";
+$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍລັດຖະບານທີ່ໄດ້ມອບໃຫ້ຕ່າງປະເທດຂອງບັນດາກະຊວງ, ອົງການອ້ອມຂ້າງສູນກາງ ປະຈຳປີ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -28,15 +28,15 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
       </div>
       <div class="panel-body {{mode=='input'?'':'hidden'}}">
         <div class="col-sm-3">
-          <label><?= Yii::t('app', 'Ministry') ?></label>
+          <label>ພາກສ່ວນຕ່າງໆ</label>
           <select class="form-control" ng-model="model.ministry" ng-change="inquiry()" ng-options="m.name for m in ministries"></select>
         </div>
         <div class="col-sm-3">
-          <label><?= Yii::t('app', 'Award') ?></label>
+          <label>ຍ້ອງຍໍຜົນງານ</label>
           <select class="form-control" ng-model="model.award" ng-change="inquiry()" ng-options="a.name for a in awards"></select>
         </div>
         <div class="col-sm-6">
-          <label><?= Yii::t('app', 'Remark') ?></label>
+          <label>ໝາຍເຫດ</label>
           <input type="text" class="form-control" ng-model="model.remark">
         </div>
         <div class="col-sm-12" style="margin-top: 1em">
@@ -262,7 +262,7 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
       $scope.models = null;
       if ($scope.year)
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-        .then(function(r) {
+        .then(function(r) {          
           $scope.models = r.data.models;
           $scope.getreferences();
         }, function(r) {

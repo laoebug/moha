@@ -27,6 +27,7 @@ class StatGovermentUnitDetail extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public $name;
     public static function tableName()
     {
         return 'stat_goverment_unit_detail';

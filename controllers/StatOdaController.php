@@ -95,6 +95,8 @@ class StatOdaController extends Controller
                 $detail->stat_oda_id = $model->id;
             }
             $detail->attributes = $post['Model'];
+            $detail->free = $detail->free == true ? 1 : 0;
+            $detail->loan = $detail->loan == true ? 1 : 0;
             if (!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
         } catch (Exception $exception) {

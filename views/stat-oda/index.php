@@ -126,10 +126,10 @@ $this->title = "ຕາຕາລາງບັນດາໂຄງການຊ່ວ�
                   <td class="text-center">{{m.start_year}} - {{m.end_year}}</td>
                   <td class="text-right">{{m.amount | number | dash}}</td>
                   <td class="text-center">
-                    <div ng-if="l.free">&#10004;</div>
+                    <div ng-if="m.free == 1">&#10004;</div>
                   </td>
                   <td class="text-center">
-                    <div ng-if="l.loan">&#10004;</div>
+                    <div ng-if="m.loan == 1">&#10004;</div>
                   </td>
                   <td class="text-center">{{m.organisation}}</td>
                   <td class="text-right">{{m.receive | number | dash}}</td>

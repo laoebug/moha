@@ -4,7 +4,6 @@ $this->title = "ຕາຕາລາງບັນດາໂຄງການຊ່ວ�
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\Stat3createSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = "ສັງລວມຈໍານວນບ້ານເປົ້າໝາຍ 3 ສ້າງໃນການສ້າງເປັນບ້ານພັດທະນາ";
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="statAidsController">

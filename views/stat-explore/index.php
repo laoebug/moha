@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatExploreSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຜນທີ່ແຫ່ງຊາດ'), 'url' => ['index']];
-$this->title = "ການເຄື່ອນໄຫວວຽກງານການສຳຫຼວດ";
+$this->title = "ການເຄື່ອນໄຫວວຽກງານການສຳຫຼວດປະຈຳປີ ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>

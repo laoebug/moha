@@ -11,6 +11,7 @@ $titles = [
     'ເປົ້າໝາຍສ້າງບ້ານໃຫຍ່ເປັນຕົວເມືອງໃນຊົນນະບົດ' => ['ຈ/ນ ບ້ານ/ກຸ່ມບ້ານ'],
 ];
 ?>
+
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="stat3CreateController">
     <div class="col-sm-12">
@@ -51,8 +52,8 @@ $titles = [
                                     <td class="text-center" style="width: 10%">
                                         <?= $t ?>
                                     </td>
-                                <? endforeach; ?>
-                            <? endforeach; ?>
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
                         </tr>
                         <tr>
                             <td class="text-center" ng-repeat-start="c in cols">

@@ -20,7 +20,7 @@ if (isset($provinces))
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title">ສະຖິຕິອົງການບໍຫານລັດທີ່ໄດ້ຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ
+                <h3 class="title">ສະຖິຕິອົງການບໍຫານລັດທີ່ໄດ້ຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ ປະຈຳປີ
                     (<?= isset($year) ? $year->year : '' ?>
                     )</h3>
             </div>

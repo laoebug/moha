@@ -57,41 +57,46 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php $total_office=0; ?>
+                        <?php $total_department=0; ?>
+                        <?php $total_center=0; ?>
+                        <?php $total_institute=0; ?>
+                        <?php $total_division=0; ?>
                         <?php
                         $i = 0;
                         $sum = ['office' => 0, 'department' => 0, 'center' => 0, 'insitute' => 0, 'division' => 0];
-                        foreach ($ministries as $b) : ?>
-                            <tr>
+                        
+                        foreach ($ministries as $model) : ?>
+                            <tr>                                                        
                                 <td><?= ++$i ?></td>
-                                <td><?= $b->name ?></td>
-                                <?php
-                                $isnull = true;
-                                foreach ($model->statGovermentUnitDetails as $detail) {
-                                    if ($detail->ministry_id == $b->id) {
-                                        $isnull = false;
-                                        foreach (['office', 'department', 'center', 'insitute', 'division'] as $item) {
-                                            $sum[$item] += isset($detail[$item]) ? $detail[$item] : 0;
-                                            echo '<td class="text-center">';
-                                            echo (isset($detail[$item]) ? $detail[$item] : "");
-                                            echo '</td>';
-                                        }
-                                        echo '<td>' . (isset($detail['remark']) ? $detail['remark'] : '') . '</td>';
-                                        break;
-                                    }
-                                }
-                                if ($isnull) echo "<td></td><td></td><td></td><td></td><td></td>"
-                                ?>
-                                </td>
+                                <td><?= $model->name; ?></td>
+                                <td class="text-center"><?= $model->office; ?></td>
+                                <td class="text-center"><?= $model->department; ?></td>
+                                <td class="text-center"><?= $model->center; ?></td>
+                                <td class="text-center"><?= $model->insitute; ?></td>
+                                <td class="text-center"><?= $model->division; ?></td>
+                                <td class="text-center"><?= $model->remark; ?></td>
+
+                                
+                                <?php $total_office = $total_office + $model->office; ?>                                                            
+                                <?php $total_department = $total_department + $model->department; ?>                                                            
+                                <?php $total_center = $total_center + $model->center; ?>                                                            
+                                <?php $total_institute = $total_institute + $model->insitute; ?>                                                            
+                                <?php $total_division = $total_division + $model->division; ?>
+                                
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                            <?php foreach (['office', 'department', 'center', 'insitute', 'division'] as $level) : ?>
-                                <th class="text-center"><?= isset($sum[$level]) ? $sum[$level] : 0 ?></th>
-                            <?php endforeach;  ?>
-                            <th></th>
+                            
+                            <th class="text-center"><?php echo $total_office; ?></th>
+                            <th class="text-center"><?php echo $total_department; ?></th>
+                            <th class="text-center"><?php echo $total_center; ?></th>
+                            <th class="text-center"><?php echo $total_institute; ?></th>
+                            <th class="text-center"><?php echo $total_division; ?></th>
+                            <th class="text-center"></th>
                         </tr>
                     </tfoot>
                 </table>

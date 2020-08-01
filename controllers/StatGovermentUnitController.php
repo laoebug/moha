@@ -34,7 +34,7 @@ class StatGovermentUnitController extends Controller
         return $this->render('index');
     }
 
-    private function enquiry($year, $showstatus = true)
+    private function enquiry($year, $showstatus = false)
     {
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
@@ -42,10 +42,56 @@ class StatGovermentUnitController extends Controller
             return;
         }
 
-        $ministries = Ministry::find()
-            ->where('deleted=0 and ministry_group_id in (1,2)')
-            ->orderBy('position')->all();
+        $ministries = Ministry::getMistryByYear($year);
 
+        $sql = "select m.position, m.name, m.ministry_group_id, o1.* from (select sugd.*,sgu.user_id,sgu.saved,sgu.last_update, sgu.phiscal_year_id from stat_goverment_unit_detail sugd
+            , stat_goverment_unit sgu
+            where sugd.stat_goverment_unit_id = sgu.id
+            and sgu.phiscal_year_id=:phiscal_year_id) o1, ministry m
+            where o1.ministry_id=m.id and m.deleted=:deleted and m.ministry_group_id in (1,2) order by m.position ASC ";
+
+        $params = [":phiscal_year_id" => $year->id, ":deleted" => 0];
+
+        $models =  StatGovermentUnitDetail::findBySql($sql, $params)->asArray()->all();
+
+
+        if (!isset($models)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+            return;
+        }
+
+        return json_encode([
+            'showstatus' => $showstatus,
+            'ministries' => $ministries,
+            'models' => $models,
+            'year' => $year,
+            'count'=>$ministries                    
+        ]);
+    }
+
+
+
+    private function enquiryPrintDownload($year, $showstatus = true)
+    {
+        $year = PhiscalYear::findOne($year);
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
+
+        
+       // $ministries = Ministry::getMistryList($year);
+        
+       $sql = "select m.position, m.name, m.ministry_group_id, o1.* from (select sugd.*,sgu.user_id,sgu.saved,sgu.last_update, sgu.phiscal_year_id from stat_goverment_unit_detail sugd
+       , stat_goverment_unit sgu
+       where sugd.stat_goverment_unit_id = sgu.id
+       and sgu.phiscal_year_id=:phiscal_year_id) o1, ministry m
+       where o1.ministry_id=m.id and m.deleted=:deleted and m.ministry_group_id in (1,2) order by m.position ASC ";
+
+   $params = [":phiscal_year_id" => $year->id, ":deleted" => 0];
+
+   $models =  StatGovermentUnitDetail::findBySql($sql, $params)->all();
+        
         $model = StatGovermentUnit::find()
             ->with([
                 'statGovermentUnitDetails' => function (ActiveQuery $query) {
@@ -59,18 +105,22 @@ class StatGovermentUnitController extends Controller
             ->where(['phiscal_year_id' => $year->id])
             ->one();
 
-        if (!isset($model)) {
+            // $model->statGovermentUnitDetails = StatGovermentUnitDetail::findBySql($sql, $params)->all();
+
+        if (!isset($models)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
 
         return $this->renderPartial('table', [
             'showstatus' => $showstatus,
-            'ministries' => $ministries,
+            'ministries' => $models,
             'model' => $model,
             'year' => $year,
         ]);
     }
+    
+
 
     public function actionGet()
     {
@@ -115,11 +165,21 @@ class StatGovermentUnitController extends Controller
             }
         }
 
-        $detail = StatGovermentUnitDetail::find()
-            ->with(['statGovermentUnit' => function (ActiveQuery $query) use ($year) {
-                $query->where(['phiscal_year_id' => $year]);
-            }])
-            ->where(['ministry_id' => $ministry])->asArray()->one();
+        $sql = " 
+        select m.position, m.name, m.ministry_group_id, o1.* from (select sugd.*,sgu.user_id,sgu.saved,sgu.last_update, sgu.phiscal_year_id from stat_goverment_unit_detail sugd
+            , stat_goverment_unit sgu
+            where sugd.stat_goverment_unit_id = sgu.id
+            and sgu.phiscal_year_id=:phiscal_year_id) o1, ministry m
+            where o1.ministry_id=m.id and m.deleted=:deleted and m.ministry_group_id in (1,2) 
+            and o1.ministry_id=:ministry_id and o1.phiscal_year_id=:phiscal_year_id;
+
+        ";
+
+        $params = [":phiscal_year_id" => $year,":ministry_id"=>$ministry, ":deleted" => 0];
+       
+        $detail = StatGovermentUnitDetail::findBySql($sql, $params)->asArray()->one();
+
+
         return json_encode($detail);
     }
 
@@ -167,25 +227,56 @@ class StatGovermentUnitController extends Controller
             $detail = StatGovermentUnitDetail::find()
                 ->where(['stat_goverment_unit_id' => $model->id, 'ministry_id' => $post['ministry']])->one();
             if (!isset($detail)) {
+                if($post['saveOrUpdate']){                
                 $detail = new StatGovermentUnitDetail();
                 $detail->ministry_id = $post['ministry'];
                 $detail->stat_goverment_unit_id = $model->id;
+                }
             }
             $detail->office = $post['office'];
             $detail->department = $post['department'];
             $detail->division = $post['division'];
             $detail->insitute = $post['insitute'];
             $detail->center = $post['center'];
-            $detail->remark = $post['remark'];
+            if(isset($post['remark'])){
+                $detail->remark = $post['remark'];
+            }else{
+                $detail->remark=null;
+            }
+            
             if (!$detail->save()) throw new Exception(json_encode($detail->errors));
 
             $transaction->commit();
-            return $this->enquiry($year);
+            
+
         } catch (Exception $exception) {
             $transaction->rollBack();
             MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
         }
     }
+
+    public function actionDelete()
+    {
+        $user = Yii::$app->user->identity;
+        $controller_id = Yii::$app->controller->id;
+        $acton_id = Yii::$app->controller->action->id;
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
+            }
+        }
+
+        $post = Yii::$app->request->post();
+        if (isset($post)) {        
+            $model = StatGovermentUnitDetail::findOne($post['id']);
+            $model->delete();
+            return json_encode($model->delete());
+            
+        }
+    }
+    
+
 
     public function actionPrint($year)
     {
@@ -196,7 +287,7 @@ class StatGovermentUnitController extends Controller
         }
 
         return $this->renderPartial('print', [
-            'content' => $this->enquiry($year->id, false)
+            'content' => $this->enquiryPrintDownload($year->id, false)
         ]);
     }
 
@@ -210,7 +301,7 @@ class StatGovermentUnitController extends Controller
 
         return $this->renderPartial('excel', [
             'file' => 'stat_goverment_unit_' . $year->year . '.xls',
-            'content' => $this->enquiry($year->id, false)
+            'content' => $this->enquiryPrintDownload($year->id, false)
         ]);
     }
 
@@ -334,4 +425,8 @@ class StatGovermentUnitController extends Controller
             }
         }
     }
+
+
+
+    
 }

@@ -20,18 +20,14 @@ class ProvinceQuery extends \yii\db\ActiveQuery
     public function init()
     {
         parent::init();
+        $this->alias('p');
         $user = Yii::$app->user->identity;
         if (!empty ($user->role->province_id)) {
             $this->andWhere([
-                'province.id' => $user->role->province_id,
-                'province.deleted' => 0
-            ]);
-        } else {
-            $this->where('province.deleted = :deleted ', [
-                ':deleted' => 0
+                'id' => $user->role->province_id
             ]);
         }
-        $this->orderBy('position');
+        $this->orderBy('p.position');
     }
 
     /**

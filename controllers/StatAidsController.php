@@ -143,11 +143,11 @@ class StatAidsController extends Controller
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            $model = StatAids::find()->where(['phiscal_year_id' => $year->id])->one();
-            if (!isset($model)) {
+            //$model = StatAids::find()->where(['phiscal_year_id' => $year->id])->one();
+            //if (!isset($model)) {
                 $model = new StatAids();
                 $model->phiscal_year_id = $year->id;
-            }
+            //}
             $model->user_id = Yii::$app->user->id;
             $model->last_update = date('Y-m-d H:i:s');
             if (!$model->save()) throw new Exception(json_encode($model->errors));

@@ -4,7 +4,7 @@
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = 'ສະຖິຕິອົງການບໍຫານລັດທີ່ໄດ້ຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ';
+$this->title = 'ສະຖິຕິອົງການບໍຫານລັດທີ່ໄດ້ຈັດຕັ້ງປະຕິບັດກົນໄກການບໍລິການຜ່ານປະຕູດຽວ ປະຈຳປີ';
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
 <div class="row" ng-app="mohaApp" ng-controller="singleGatewayController">
@@ -84,7 +84,7 @@ $this->title = 'ສະຖິຕິອົງການບໍຫານລັດທ�
                 <div class="tab-pane fade active in" id="table">
                     <div class="card">
                         <div class="card-title-w-btn ">
-                            <h3 class="title"><?= $this->title ?> ({{year.year}})</h3>
+                            <h3 class="title"><?= $this->title ?> {{year.year}}</h3>
                             <p class="hidden-print">
                                 <a class="btn btn-default" target="_blank"
                                    href="index.php?r=stat-single-window/print&year={{year.id}}"><i

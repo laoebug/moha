@@ -46,54 +46,72 @@ class StatSingleWindowController extends Controller
             }
         }
 
+        $years = PhiscalYear::find()->where(['deleted' => 0])->orderBy('year')->asArray()->all();
+        $ministries = Ministry::find()->where('deleted=0 and  ministry_group_id in (1,2)')->orderBy('position')->asArray()->all();
+        try {
+            $provinces = Province::find()
+                ->where('deleted=0')
+                ->orderBy('position')
+                ->asArray()
+                ->all();
+        } catch(Exception $ex) {
+            print_r($ex->getMessage());
+            exit;
+        }
         return json_encode([
-            'years' => PhiscalYear::find()->where(['deleted' => 0])->orderBy('year')->asArray()->all(),
-            'ministries' => Ministry::find()->where('deleted=0 and  ministry_group_id in (1,2)')->orderBy('position')->asArray()->all(),
-            'provinces' => Province::find()->where(['deleted' => 0])->orderBy('position')->asArray()->all(),
+            'years' => $years,
+            'ministries' => $ministries,
+            'provinces' => $provinces,
         ]);
     }
 
     public function actionEnquiry($year)
     {
-        $user = Yii::$app->user->identity;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+        try {
+            $user = Yii::$app->user->identity;
+            $controller_id = Yii::$app->controller->id;
+            $acton_id = Yii::$app->controller->action->id;
+            if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
+                if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                    return;
+                }
+            }
+            $year = PhiscalYear::findOne($year);
+            if (!isset($year)) {
+                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
                 return;
             }
+
+            $model = StatSingleWindow::find()->where(['phiscal_year_id' => $year])->one();
+            if (!isset($model)) {
+                MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+                return;
+            }
+
+            $ministries = Ministry::find()->alias('m')
+                ->select('m.*,`d`.`name` servicename, d.year, d.province, d.district, d.department')
+                ->join('left join', $this->table . '_detail d', 'd.ministry_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
+                ->where('m.deleted=0 and ministry_group_id in (1,2)')
+                ->orderBy('m.position')->asArray()->all();
+            
+            $provinces = Province::find()->alias('m')
+                ->select('m.*,`d`.`name` as `servicename`, d.year, d.province, d.district')
+                ->join('left join', $this->table . '_detail d', 'd.deleted=0 and d.province_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
+                ->orderBy('m.position')
+                ->asArray()
+                ->all();
+            
+            return json_encode([
+                'models' => [
+                    'ministries' => $ministries,
+                    'provinces' => $provinces,
+                ]
+            ]);
+        } catch(Exception  $e) {
+            print_r($e->getMessage());
+            exit;
         }
-        $year = PhiscalYear::findOne($year);
-        if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
-            return;
-        }
-
-        $model = StatSingleWindow::find()->where(['phiscal_year_id' => $year])->one();
-        if (!isset($model)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
-            return;
-        }
-
-        $ministries = Ministry::find()->alias('m')
-            ->select('m.*,`d`.`name` servicename, d.year, d.province, d.district, d.department')
-            ->join('left join', $this->table . '_detail d', 'd.ministry_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
-            ->where('m.deleted=0 and ministry_group_id in (1,2)')
-            ->orderBy('m.position')->asArray()->all();
-
-
-        $provinces = Province::find()->alias('m')
-            ->select('m.*,`d`.`name` as `servicename`, d.year, d.province, d.district')
-            ->join('left join', $this->table . '_detail d', 'd.deleted=0 and d.province_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
-            ->orderBy('m.position')->asArray()->all();
-
-        return json_encode([
-            'models' => [
-                'ministries' => $ministries,
-                'provinces' => $provinces,
-            ]
-        ]);
     }
 
     public function actionInquiry($year, $province = 0, $ministry = 0)

@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatVictorycoinMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນໄຊຕ່າງໆ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ ແລະ ອົງການທຽບເທົ່າອ້ອມຂ້າງສູນກາງ ປະຈຳປີ ";
+$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນໄຊຕ່າງໆ ທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ ແລະ ອົງການລັດທຽບເທົ່າອ້ອມຂ້າງສູນກາງ ປະຈຳປີ ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -13,7 +13,7 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
   <!-- <div class="col-sm-12"> -->
   <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>
   <div class="col-sm-4">
-    <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years"></select>
+    <select class="form-control" ng-model="year" ng-change="enquiry()" ng-options="y.year for y in years" value="{{y.year}}"></select>
   </div>
   <!-- <div class="col-sm-8">
             <div ng-show="response" class="alert alert-{{response.status == 200? 'success':'danger'}}">
@@ -28,15 +28,15 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
       </div>
       <div class="panel-body {{mode=='input'?'':'hidden'}}">
         <div class="col-sm-3">
-          <label><?= Yii::t('app', 'Ministry') ?></label>
+          <label>ພາກສ່ວນຕ່າງໆ</label>
           <select class="form-control" ng-model="model.ministry" ng-change="inquiry()" ng-options="m.name for m in ministries"></select>
         </div>
         <div class="col-sm-3">
-          <label><?= Yii::t('app', 'Award') ?></label>
+          <label>ຍ້ອງຍໍຜົນງານ</label>
           <select class="form-control" ng-model="model.award" ng-change="inquiry()" ng-options="a.name for a in awards"></select>
         </div>
         <div class="col-sm-6">
-          <label><?= Yii::t('app', 'Remark') ?></label>
+          <label>ໝາຍເຫດ</label>
           <input type="text" class="form-control" ng-model="model.remark">
         </div>
         <div class="col-sm-12" style="margin-top: 1em">
@@ -323,14 +323,20 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
       return input ? input : '-';
     };
   });
+  
   app.controller('statVictorycoinMinistry', function($scope, $http, $sce, $timeout) {
     $scope.url = 'index.php?r=stat-victorycoin-ministry/';
     $scope.mode = 'read';
     $scope.changemode = function() {
       $scope.mode = $scope.mode == 'read' ? 'input' : 'read';
     };
+    
+        
+     
     $http.get($scope.url + 'get')
+    
       .then(function(r) {
+       console.log(r);
         $scope.years = r.data.years;
         $scope.ministries = r.data.ministries;
         $scope.awards = r.data.awards;
@@ -340,13 +346,16 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
           $scope.response = null;
         }, 15000);
       });
-
-    $scope.enquiry = function() {
+    
+    
+    $scope.enquiry = function() {      
       $scope.models = null;
-      if ($scope.year)
+      if ($scope.year){
+         
         $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
-        .then(function(r) {
+        .then(function(r) {            
           $scope.models = r.data.models;
+          $scope.ministries = r.data.ministries
           $scope.getreferences();
         }, function(r) {
           $scope.response = r;
@@ -354,12 +363,16 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
             $scope.response = null;
           }, 15000);
         });
+      }
     };
 
     $scope.inquiry = function() {
+      
       if ($scope.model.ministry && $scope.model.award) {
+        
         $http.get($scope.url + 'inquiry&year=' + $scope.year.id + '&ministry=' + $scope.model.ministry.id + '&award=' + $scope.model.award.id)
           .then(function(r) {
+           
             if (r.data.model) {
               $scope.model.free1_personal = parseInt(r.data.model.free1_personal);
               $scope.model.free1_team = parseInt(r.data.model.free1_team);
@@ -422,7 +435,7 @@ $this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽ�
               $scope.model.remark = null;
             }
           }, function(r) {
-            $scope.response = r;
+            $scope.response = r;            
             $timeout(function() {
               $scope.response = null;
             }, 15000);

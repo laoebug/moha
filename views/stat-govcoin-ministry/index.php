@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatGovcoinMinistrySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມແຂ່ງຂັນ ແລະ ຍ້ອງຍໍ'), 'url' => ['index']];
-$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ, ອົງການອ້ອມຂ້າງສູນກາງ";
+$this->title = "ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນກາ ແລະ ໃບຍ້ອງຍໍທີ່ໄດ້ມອບໃຫ້ພາຍໃນຂອງບັນດາກະຊວງ, ອົງການອ້ອມຂ້າງສູນກາງ ປະຈໍາປີ";
 ?>
 <div ng-app="mohaApp" ng-controller="statGovcoinMinistry">
   <label class="col-sm-12"><?= Yii::t('app', 'Phiscal Year') ?></label>

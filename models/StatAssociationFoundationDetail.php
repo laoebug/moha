@@ -3,8 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "stat_association_foundation_detail".
@@ -15,11 +13,9 @@ use yii\db\ActiveRecord;
  * @property string $remark
  * @property int $stat_association_foundation_id
  * @property int $approver_id
- *
- * @property Approver $approver
- * @property StatAssociationFoundation $statAssociationFoundation
+ * @property string $date_notice_use
  */
-class StatAssociationFoundationDetail extends ActiveRecord
+class StatAssociationFoundationDetail extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -38,8 +34,7 @@ class StatAssociationFoundationDetail extends ActiveRecord
             [['association', 'foundation', 'stat_association_foundation_id', 'approver_id'], 'integer'],
             [['remark'], 'string'],
             [['stat_association_foundation_id', 'approver_id'], 'required'],
-            [['approver_id'], 'exist', 'skipOnError' => true, 'targetClass' => Approver::className(), 'targetAttribute' => ['approver_id' => 'id']],
-            [['stat_association_foundation_id'], 'exist', 'skipOnError' => true, 'targetClass' => StatAssociationFoundation::className(), 'targetAttribute' => ['stat_association_foundation_id' => 'id']],
+            [['date_notice_use'], 'string', 'max' => 45],
         ];
     }
 
@@ -55,22 +50,22 @@ class StatAssociationFoundationDetail extends ActiveRecord
             'remark' => Yii::t('app', 'Remark'),
             'stat_association_foundation_id' => Yii::t('app', 'Stat Association Foundation ID'),
             'approver_id' => Yii::t('app', 'Approver ID'),
+            'date_notice_use' => Yii::t('app', 'Date Notice Use'),
         ];
     }
 
     /**
-     * @return ActiveQuery
+     * @inheritdoc
+     * @return StatAssociationFoundationDetailQuery the active query used by this AR class.
      */
+    public static function find()
+    {
+        return new StatAssociationFoundationDetailQuery(get_called_class());
+    }
+
     public function getApprover()
     {
         return $this->hasOne(Approver::className(), ['id' => 'approver_id']);
     }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getStatAssociationFoundation()
-    {
-        return $this->hasOne(StatAssociationFoundation::className(), ['id' => 'stat_association_foundation_id']);
-    }
+    
 }

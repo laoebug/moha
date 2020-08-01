@@ -15,7 +15,7 @@
 </style>
 <div class="row">
     <div class="col-sm-12">
-        <h3 class="title">ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນໄຊຕ່າງໆທີ່ໄດ້ມອບໃຫ້ຕ່າງປະເທດຂອງບັນດາກະຊວງ, ອົງການອ້ອມຂ້າງສູນກາງ ປະຈຳປີ (<?= $year->year ?>)</h3>
+        <h3 class="title">ຕາຕະລາງສະຖິຕິປະເພດຫຼຽນໄຊຕ່າງໆທີ່ໄດ້ມອບໃຫ້ຕ່າງປະເທດຂອງບັນດາແຂວງ, ນະຄອນຫຼວງ ປະຈຳປີ (<?= $year->year ?>)</h3>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
