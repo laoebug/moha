@@ -18,30 +18,10 @@ use yii\web\Controller;
 /**
  * StatReligionController implements the CRUD actions for StatReligion model.
  */
-class StatReligionController extends Controller
+class StatReligionController extends BaseController
 {
 
-    public function beforeAction($action)
-    {
-        $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                if (Yii::$app->request->isAjax) {
-                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                    return;
-                } else {
-                    return $this->redirect([
-                        'authentication/notallowed'
-                    ]);
-                }
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
+  
 
     /**
      * Lists all StatReligion models.
@@ -86,21 +66,28 @@ class StatReligionController extends Controller
                 return;
             }
         }
+        
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
-
+        
         $model = StatReligion::find()->where(['phiscal_year_id' => $year->id])->one();
         if (!isset($model)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
+        
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id and d.stat_religion_id=:id', [':id' => $model->id]);
+            // ->asArray()->all();
 
-        $models = Province::find()->alias('province')->select('province.*, d.*')
-            ->join('left join', 'stat_religion_detail d', 'd.province_id = province.id and d.stat_religion_id=:id', [':id' => $model->id])
-            ->asArray()->all();
+            $models = $models->orderBy('p.position');
+            $models = $models->asArray()->all();
+            // $models = Province::find()->alias('province')->select('province.*, d.*')
+            // ->join('left join', 'stat_religion_detail d', 'd.province_id = province.id and d.stat_religion_id=:id', [':id' => $model->id])
+            // ->asArray()->all();
 
         $stat = StatReligionDetail::find()
             ->select([
@@ -126,6 +113,7 @@ class StatReligionController extends Controller
                     number_format($stat['other'] * $percent, 2)
                 ];
             }
+
         return json_encode([
             'models' => $models,
             'stat' => [
@@ -270,12 +258,12 @@ class StatReligionController extends Controller
             return;
         }
 
-        $models = Province::find()->alias('province')->select('province.*, d.*')
-            ->join('left join', 'stat_religion_detail d', 'd.province_id = province.id and d.stat_religion_id=:id', [':id' => $model->id])
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_detail d', 'd.province_id = p.id and d.stat_religion_id=:id', [':id' => $model->id])
             ->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
-            'content' => $this->renderPartial('table', ['models' => $models])
+            'content' => $this->renderPartial('table', ['models' => $models,'year'=>$year])
         ]);
     }
 

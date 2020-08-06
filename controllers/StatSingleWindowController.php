@@ -11,6 +11,7 @@ use app\models\Province;
 use app\models\StatSingleWindow;
 use app\models\StatSingleWindowDetail;
 use app\services\AuthenticationService;
+use Codeception\Lib\ParamsLoader;
 use Codeception\Util\HttpCode;
 use Exception;
 use Yii;
@@ -21,7 +22,7 @@ use yii\web\ServerErrorHttpException;
 /**
  * StatSingleWindowController implements the CRUD actions for StatSingleWindow model.
  */
-class StatSingleWindowController extends Controller
+class StatSingleWindowController extends BaseController
 {
     public $table = 'stat_single_window';
 
@@ -54,7 +55,7 @@ class StatSingleWindowController extends Controller
                 ->orderBy('position')
                 ->asArray()
                 ->all();
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             print_r($ex->getMessage());
             exit;
         }
@@ -94,28 +95,30 @@ class StatSingleWindowController extends Controller
                 ->join('left join', $this->table . '_detail d', 'd.ministry_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
                 ->where('m.deleted=0 and ministry_group_id in (1,2)')
                 ->orderBy('m.position')->asArray()->all();
-            
+
             $provinces = Province::find()->alias('m')
                 ->select('m.*,`d`.`name` as `servicename`, d.year, d.province, d.district')
                 ->join('left join', $this->table . '_detail d', 'd.deleted=0 and d.province_id = m.id and d.' . $this->table . '_id=:id', [':id' => $model->id])
                 ->orderBy('m.position')
                 ->asArray()
                 ->all();
-            
+
             return json_encode([
                 'models' => [
                     'ministries' => $ministries,
                     'provinces' => $provinces,
                 ]
             ]);
-        } catch(Exception  $e) {
+        } catch (Exception  $e) {
             print_r($e->getMessage());
             exit;
         }
     }
 
-    public function actionInquiry($year, $province = 0, $ministry = 0)
+    
+    public function actionInquiry($year, $level, $ministry_or_province_id)
     {
+
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
@@ -127,21 +130,23 @@ class StatSingleWindowController extends Controller
         }
 
         $year = PhiscalYear::findOne($year);
-        if (!isset($year)) throw HttpException(Yii::t('app', 'Incorrect Phiscal Year'));
-
+        if (!isset($year)) {
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
+            return;
+        }
         $model = StatSingleWindowDetail::find()
             ->alias('d')
             ->join('join', $this->table . ' i', 'd.' . $this->table . '_id=i.id and i.phiscal_year_id=:year', [
                 ':year' => $year->id
             ]);
-        if ($ministry > 0) {
-            $model = $model->where(['d.ministry_id' => $ministry])
+        if ($level == 'ministry') {
+            $model = $model->where(['d.ministry_id' => $ministry_or_province_id])
                 ->join('left join', 'ministry m', 'm.id = d.ministry_id and m.deleted=0');
-        } else if ($province > 0) {
-            $model = $model->where(['d.province_id' => $province])
+        }
+        if ($level == 'province') {
+            $model = $model->where(['d.province_id' => $ministry_or_province_id])
                 ->join('left join', 'province p', 'p.id = d.province_id and p.deleted=0');
         }
-
         $model = $model->asArray()->one();
 
         return json_encode([
@@ -440,25 +445,24 @@ class StatSingleWindowController extends Controller
         }
     }
 
-    public function beforeAction($action)
+    public function actionDelete()
     {
         $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
         if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                if (Yii::$app->request->isAjax) {
-                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                    return;
-                } else {
-                    return $this->redirect([
-                        'authentication/notallowed'
-                    ]);
-                }
+                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+                return;
             }
         }
 
-        return parent::beforeAction($action);
+        $post = Yii::$app->request->post();
+        if (isset($post)) {        
+            $model = StatSingleWindowDetail::findOne($post['id']);
+            $model->delete();
+            return json_encode($model->delete());
+            
+        }
     }
 }

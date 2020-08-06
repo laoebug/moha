@@ -291,6 +291,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function isAllowedRole()
     {
+             
         $allowedRole = false;
 
         $sql = "select * from role_has_action rha , action ac, user usr
@@ -298,12 +299,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         and usr.role_id= rha.role_id
         and rha.role_id=:role_id and ac.class_name=:controller_id
         and ac.method=:action_id and usr.id=:user_id";
+        
         $params = [":role_id" => Yii::$app->user->identity->role_id, ":controller_id" => Yii::$app->controller->id, ":action_id" => Yii::$app->controller->action->id, ":user_id" => Yii::$app->user->identity->id];
 
         $roleHasAction = RoleHasAction::findBySql($sql, $params)->one();
         if (isset($roleHasAction->action_id)) {
             $allowedRole = true;
         }
+        
         return $allowedRole;
     }
 }

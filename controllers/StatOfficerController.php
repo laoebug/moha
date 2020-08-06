@@ -17,7 +17,7 @@ use yii\web\Controller;
 /**
  * StatOfficerController implements the CRUD actions for StatOfficer model.
  */
-class StatOfficerController extends Controller
+class StatOfficerController extends BaseController
 {
     /**
      * Lists all StatOfficer models.
@@ -319,20 +319,5 @@ class StatOfficerController extends Controller
         }
     }
 
-    public function beforeAction($action)
-    {
-        $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
-        $controller_id = Yii::$app->controller->id;
-        $action_id = Yii::$app->controller->action->id;
-        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $action_id)) {
-                return $this->redirect([
-                    'authentication/notallowed'
-                ]);
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
+    
 }

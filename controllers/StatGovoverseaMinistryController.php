@@ -19,7 +19,7 @@ use yii\web\Controller;
 /**
  * StatGovoverseaMinistryController implements the CRUD actions for StatGovoverseaMinistry model.
  */
-class StatGovoverseaMinistryController extends Controller
+class StatGovoverseaMinistryController extends BaseController
 {
     public $columns = [
         'labo_personal', 'labo_team',

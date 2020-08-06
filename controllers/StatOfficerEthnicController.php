@@ -19,7 +19,7 @@ use yii\web\Controller;
 /**
  * StatOfficerEthnicController implements the CRUD actions for StatOfficerEthnic model.
  */
-class StatOfficerEthnicController extends Controller
+class StatOfficerEthnicController extends BaseController
 {
 
     /**
@@ -378,25 +378,5 @@ class StatOfficerEthnicController extends Controller
         }
     }
 
-    public function beforeAction($action)
-    {
-        $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                if (Yii::$app->request->isAjax) {
-                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                    return;
-                } else {
-                    return $this->redirect([
-                        'authentication/notallowed'
-                    ]);
-                }
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
+    
 }

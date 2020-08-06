@@ -38,7 +38,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title">ສະຖິຕິບັນດາຫົວໜ່ວຍການຈັດຕັ້ງ (ກົມ ແລະ ອົງການລັດທຽບເທົ່າກົມ) (<?= $year->year ?>)</h3>
+                <h3 class="title">ສະຖິຕິບັນດາຫົວໜ່ວຍການຈັດຕັ້ງ (ກົມ ແລະ ອົງການລັດທຽບເທົ່າກົມ) <?= $year->year ?> </h3>
                 <p class="hidden-print">
                     <a class="btn btn-default" target="_blank" href="index.php?r=stat-goverment-unit/print&year=<?= $year->id ?>"><i class="fa fa-print fa-2x"></i></a>
                     <a class="btn btn-info" target="_blank" href="index.php?r=stat-goverment-unit/download&year=<?= $year->id ?>"><i class="fa fa-download fa-2x"></i></a>

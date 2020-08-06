@@ -4,7 +4,7 @@
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມວຽກງານຊົນເຜົ່າ ແລະ ສາສະໜາ'), 'url' => ['index']];
-$this->title = "ສະຖິຕິຊົນເຜົ່າໃນທົ່ວປະເທດ";
+$this->title = "ສະຖິຕິຊົນເຜົ່າໃນຂອບເຂດທົ່ວປະເທດ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -150,7 +150,7 @@ $this->title = "ສະຖິຕິຊົນເຜົ່າໃນທົ່ວປ�
         }, 15000);
       });
 
-    $scope.enquiry = function() {
+    $scope.enquiry = function() {      
       $scope.model = null;
       $scope.result = null;
       if ($scope.year)

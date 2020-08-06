@@ -26,7 +26,7 @@ function createActionTreeView($array, $currentParent, $currLevel = 0, $prevLevel
 				$checked = "checked";
 			}
 			
-			echo '<li>' . ' <input class="action" type="checkbox" value="' . $action ['id'] . '"   ' . $checked . ' name="actionList[]" id="actionList[]"/> '. '   '. $action ["name"];
+			echo '<li>' . ' <input class="action" type="checkbox" value="' . $action ['id'] . '"   ' . $checked . ' name="actionList[]" id="actionList[]"/> '. '   '. $action ["name"] ."ID:" .$action ['id'];;
 			
 			if ($currLevel > $prevLevel) {
 				$prevLevel = $currLevel;

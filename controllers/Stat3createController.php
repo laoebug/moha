@@ -18,7 +18,7 @@ use yii\web\Controller;
 /**
  * Stat3createController implements the CRUD actions for Stat3create model.
  */
-class Stat3createController extends Controller
+class Stat3createController extends BaseController
 {
     /**
      * Lists all Stat3create models.
@@ -204,7 +204,7 @@ class Stat3createController extends Controller
                 return;
             }
         }
-
+        
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
@@ -216,13 +216,15 @@ class Stat3createController extends Controller
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
-
+        
         $models = Province::find()
-            ->alias('province')
-            ->select('province.*, d.*')
-            ->join('left join', 'stat_3create_detail d', 'd.province_id = province.id and d.stat_3create_id=:id', [':id' => $model->id])
+            ->alias('p')
+            ->select('p.*, d.*')            
+            ->join('left join', 'stat_3create_detail d', 'd.province_id = p.id and d.stat_3create_id=:id', [':id' => $model->id])
             ->asArray()->all();
 
+
+            
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
         ]);
@@ -253,10 +255,12 @@ class Stat3createController extends Controller
         }
 
         $models = Province::find()
-            ->alias('province')
-            ->select('province.*, d.*')
-            ->join('left join', 'stat_3create_detail d', 'd.province_id = province.id and d.stat_3create_id=:id', [':id' => $model->id])
-            ->asArray()->all();
+        ->alias('p')
+        ->select('p.*, d.*')            
+        ->join('left join', 'stat_3create_detail d', 'd.province_id = p.id and d.stat_3create_id=:id', [':id' => $model->id])
+        ->asArray()->all();
+
+
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat 3 Create ' . $year->year . '.xls',
@@ -384,25 +388,5 @@ class Stat3createController extends Controller
         }
     }
 
-    public function beforeAction($action)
-    {
-        $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                if (Yii::$app->request->isAjax) {
-                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                    return;
-                } else {
-                    return $this->redirect([
-                        'authentication/notallowed'
-                    ]);
-                }
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
+    
 }

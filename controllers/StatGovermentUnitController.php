@@ -19,7 +19,7 @@ use yii\web\Controller;
 /**
  * StatGovermentUnitController implements the CRUD actions for StatGovermentUnit model.
  */
-class StatGovermentUnitController extends Controller
+class StatGovermentUnitController extends BaseController
 {
     /**
      * Lists all StatGovermentUnit models.
@@ -78,9 +78,7 @@ class StatGovermentUnitController extends Controller
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
-
-        
-       // $ministries = Ministry::getMistryList($year);
+               
         
        $sql = "select m.position, m.name, m.ministry_group_id, o1.* from (select sugd.*,sgu.user_id,sgu.saved,sgu.last_update, sgu.phiscal_year_id from stat_goverment_unit_detail sugd
        , stat_goverment_unit sgu
@@ -104,8 +102,6 @@ class StatGovermentUnitController extends Controller
             ])
             ->where(['phiscal_year_id' => $year->id])
             ->one();
-
-            // $model->statGovermentUnitDetails = StatGovermentUnitDetail::findBySql($sql, $params)->all();
 
         if (!isset($models)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));

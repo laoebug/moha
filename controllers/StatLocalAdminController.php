@@ -18,7 +18,7 @@ use yii\web\Controller;
 /**
  * StatLocalAdminController implements the CRUD actions for StatLocalAdmin model.
  */
-class StatLocalAdminController extends Controller
+class StatLocalAdminController extends BaseController
 {
     /**
      * Lists all StatLocalAdmin models.
@@ -35,7 +35,7 @@ class StatLocalAdminController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -46,23 +46,78 @@ class StatLocalAdminController extends Controller
             ->where(['deleted' => 0])->asArray()->all();
 
         $provinces = Province::find()
-            ->where(['deleted' => 0])
-            ->orderBy('province_code')
-            ->asArray()->all();
+            ->where(['deleted' => 0]);
 
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $provinces = $provinces->andWhere(['id' => $user->role->province_id]);
+        }
+        $provinces = $provinces->orderBy('province_code')
+        ->asArray()->all();
         return json_encode([
             'years' => $years,
             'provinces' => $provinces
         ]);
     }
 
+
+    // public function actionEnquiry($year)
+    // {
+
+    //     $user = Yii::$app->user->identity;
+    //     $controller_id = Yii::$app->controller->id;
+    //     $acton_id = Yii::$app->controller->action->id;
+    //     if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+    //         if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
+    //             MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
+    //             return;
+    //         }
+    //     }
+
+    //     $year = PhiscalYear::findOne($year);
+    //     if (!isset($year)) {
+    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+    //         return;
+    //     }
+
+    //     $model = StatLocalAdmin::find()->where(['phiscal_year_id' => $year->id])->one();
+    //     if (!isset($model)) {
+    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
+    //         return;
+    //     }
+
+    //     $models = Province::find()
+    //         ->alias('province')
+    //         ->select('province.*, d.*')
+    //         ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id]);
+    //         // ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+    //         // $user = Yii::$app->user->identity;
+    //         // if (isset($user->role->province_id)) {
+    //         //     $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+    //         // }
+    //         $user = Yii::$app->user->identity;
+    //         if (isset($user->role->province_id)) {
+    //             $models = $models->Where(['d.province_id' => $user->role->province_id]);
+    //         }
+
+    //     if (isset($user->role->province_id)) {
+    //         $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+    //     }
+    //     $models = $models->orderBy('province.position')
+    //         ->asArray()->all();
+
+    //     return json_encode([
+    //         'models' => $models
+    //     ]);
+    // }
+
+
     public function actionEnquiry($year)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -71,7 +126,7 @@ class StatLocalAdminController extends Controller
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
@@ -84,21 +139,26 @@ class StatLocalAdminController extends Controller
         $models = Province::find()
             ->alias('province')
             ->select('province.*, d.*')
-            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
+            ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id]);
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->where(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->orderBy('province.position')
+            ->asArray()->all();
 
         return json_encode([
             'models' => $models
         ]);
     }
 
+
     public function actionInquiry($year, $province)
     {
-
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -107,15 +167,19 @@ class StatLocalAdminController extends Controller
 
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
-            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
+            MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
 
         $model = StatLocalAdminDetail::find()
             ->alias('d')
             ->join('join', 'stat_local_admin l', 'l.id = d.stat_local_admin_id and l.phiscal_year_id=:year', [':year' => $year->id])
-            ->where(['province_id' => $province])
-            ->asArray()->one();
+            ->where(['province_id' => $province]);
+        $user = Yii::$app->user->identity;
+        if (!empty($user->role->province_id)) {
+            $model->andWhere(['d.province_id' => $user->role->province_id]);
+        }
+        $model = $model->asArray()->one();
 
         return json_encode([
             'model' => $model
@@ -124,23 +188,23 @@ class StatLocalAdminController extends Controller
 
     public function actionSave($year)
     {
-        
+
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
             }
         }
-        
+
         $year = PhiscalYear::findOne($year);
         if (!isset($year)) {
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
             return;
         }
-        
+
         if ($year->status != 'O') {
             MyHelper::response(HttpCode::METHOD_NOT_ALLOWED, Yii::t('app', 'The Year is not allow to input'));
             return;
@@ -151,8 +215,8 @@ class StatLocalAdminController extends Controller
             MyHelper::response(HttpCode::BAD_REQUEST, Yii::t('app', 'Inccorect Request Mehotd'));
             return;
         }
-        
-       
+
+
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $model = StatLocalAdmin::find()
@@ -175,24 +239,24 @@ class StatLocalAdminController extends Controller
                 $detail->province_id = $post['StatLocalAdminDetail']['province']['id'];
                 $detail->stat_local_admin_id = $model->id;
             }
-            
-            
+
+
             $detail->capital_head_total = $post['StatLocalAdminDetail']['capital_head_total'];
             $detail->capital_head_women = $post['StatLocalAdminDetail']['capital_head_women'];
-            
+
             $detail->capital_vice_total = $post['StatLocalAdminDetail']['capital_vice_total'];
             $detail->capital_vice_women = $post['StatLocalAdminDetail']['capital_vice_women'];
 
             $detail->province_head_total = $post['StatLocalAdminDetail']['province_head_total'];
             $detail->province_head_women = $post['StatLocalAdminDetail']['province_head_women'];
-            
+
 
             $detail->city_head_total = $post['StatLocalAdminDetail']['city_head_total'];
             $detail->city_head_women = $post['StatLocalAdminDetail']['city_head_women'];
-            
+
             $detail->city_vice_total = $post['StatLocalAdminDetail']['city_vice_total'];
             $detail->city_vice_women = $post['StatLocalAdminDetail']['city_vice_women'];
-            
+
             $detail->district_vice_total = $post['StatLocalAdminDetail']['district_vice_total'];
             $detail->district_vice_women = $post['StatLocalAdminDetail']['district_vice_women'];
 
@@ -207,18 +271,18 @@ class StatLocalAdminController extends Controller
 
             $detail->village_head_total = $post['StatLocalAdminDetail']['village_head_total'];
             $detail->village_head_women = $post['StatLocalAdminDetail']['village_head_women'];
-            
+
             $detail->district_head_total = $post['StatLocalAdminDetail']['district_head_total'];
             $detail->district_head_women = $post['StatLocalAdminDetail']['district_head_women'];
 
             $detail->province_vice_total = $post['StatLocalAdminDetail']['province_vice_total'];
             $detail->province_vice_women = $post['StatLocalAdminDetail']['province_vice_women'];
-            
-            
-            
+
+
+
             $detail->village_vice_total = $post['StatLocalAdminDetail']['village_vice_total'];
             $detail->village_vice_women = $post['StatLocalAdminDetail']['village_vice_women'];
-           
+
             if (!$detail->save()) throw new Exception(json_encode($detail->errors));
             $transaction->commit();
         } catch (Exception $exception) {
@@ -226,8 +290,6 @@ class StatLocalAdminController extends Controller
             MyHelper::response(HttpCode::INTERNAL_SERVER_ERROR, $exception->getMessage());
             return;
         }
-        
-
     }
 
     public function actionPrint($year)
@@ -236,7 +298,7 @@ class StatLocalAdminController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -271,7 +333,7 @@ class StatLocalAdminController extends Controller
         $user = Yii::$app->user->identity;
         $controller_id = Yii::$app->controller->id;
         $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
+        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
             if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
                 MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
                 return;
@@ -421,27 +483,4 @@ class StatLocalAdminController extends Controller
             }
         }
     }
-
-    public function beforeAction($action)
-    {
-        $user = Yii::$app->user->identity;
-        $this->enableCsrfValidation = true;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                if (Yii::$app->request->isAjax) {
-                    MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                    return;
-                } else {
-                    return $this->redirect([
-                        'authentication/notallowed'
-                    ]);
-                }
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
-
 }
