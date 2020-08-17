@@ -14,6 +14,7 @@ use Codeception\Util\HttpCode;
 use Yii;
 use yii\base\Exception;
 use yii\web\Controller;
+use app\models\ProvinceAndYearService;
 
 /**
  * StatReligionPlaceController implements the CRUD actions for StatReligionPlace model.
@@ -41,15 +42,8 @@ class StatReligionPlaceController extends BaseController
             }
         }
 
-        $years = PhiscalYear::find()->orderBy('year')
-            ->where(['deleted' => 0])->asArray()->all();
 
-        $provinces = Province::find()->asArray()->all();
-
-        return json_encode([
-            'years' => $years,
-            'provinces' => $provinces
-        ]);
+        return ProvinceAndYearService::getProvincesAndYears();
     }
 
     public function actionEnquiry($year)
@@ -76,9 +70,18 @@ class StatReligionPlaceController extends BaseController
             return;
         }
 
-        $models = Province::find()->alias('province')->select('province.*, d.*')
-            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = province.id and d.stat_religion_place_id=:id', [':id' => $model->id])
-            ->asArray()->all();
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id and d.stat_religion_place_id=:id', [':id' => $model->id]);
+
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->where(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->orderBy([
+            'p.position' => SORT_ASC
+        ])->asArray()->all();
+
+
 
         $stat = StatReligionPlaceDetail::find()
             ->select([
@@ -90,7 +93,7 @@ class StatReligionPlaceController extends BaseController
             ])->alias('d')
             ->join('join', 'stat_religion_place r', 'r.id = d.stat_religion_place_id and r.phiscal_year_id=:year', [':year' => $year->id]);
 
-        $user = Yii::$app->user->identity;
+
         if (isset($user->role->province_id)) {
             $stat = $stat->andWhere(['d.province_id' => $user->role->province_id]);
         }
@@ -266,9 +269,17 @@ class StatReligionPlaceController extends BaseController
             return;
         }
 
-        $models = Province::find()->alias('province')->select('province.*, d.*')
-            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = province.id and d.stat_religion_place_id=:id', [':id' => $model->id])
-            ->asArray()->all();
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id and d.stat_religion_place_id=:id', [':id' => $model->id]);
+
+
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->where(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->orderBy([
+            'p.position' => SORT_ASC
+        ])->asArray()->all();
 
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', ['models' => $models, "year" => $year])
@@ -429,6 +440,4 @@ class StatReligionPlaceController extends BaseController
             }
         }
     }
-
-    
 }

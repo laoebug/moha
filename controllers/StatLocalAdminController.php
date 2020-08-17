@@ -9,6 +9,8 @@ use app\models\PhiscalYear;
 use app\models\Province;
 use app\models\StatLocalAdmin;
 use app\models\StatLocalAdminDetail;
+use app\models\ProvinceAndYearService;
+
 use app\services\AuthenticationService;
 use Codeception\Util\HttpCode;
 use Yii;
@@ -30,86 +32,11 @@ class StatLocalAdminController extends BaseController
     }
 
     public function actionGet()
-    {
-
-        $user = Yii::$app->user->identity;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                return;
-            }
-        }
-
-        $years = PhiscalYear::find()->orderBy('year')
-            ->where(['deleted' => 0])->asArray()->all();
-
-        $provinces = Province::find()
-            ->where(['deleted' => 0]);
-
-        $user = Yii::$app->user->identity;
-        if (isset($user->role->province_id)) {
-            $provinces = $provinces->andWhere(['id' => $user->role->province_id]);
-        }
-        $provinces = $provinces->orderBy('province_code')
-        ->asArray()->all();
-        return json_encode([
-            'years' => $years,
-            'provinces' => $provinces
-        ]);
+    {        
+        return ProvinceAndYearService::getProvincesAndYears();
     }
 
 
-    // public function actionEnquiry($year)
-    // {
-
-    //     $user = Yii::$app->user->identity;
-    //     $controller_id = Yii::$app->controller->id;
-    //     $acton_id = Yii::$app->controller->action->id;
-    //     if ($user->role ["name"] != Yii::$app->params ['DEFAULT_ADMIN_ROLE']) {
-    //         if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-    //             MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-    //             return;
-    //         }
-    //     }
-
-    //     $year = PhiscalYear::findOne($year);
-    //     if (!isset($year)) {
-    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Inccorect Phiscal Year'));
-    //         return;
-    //     }
-
-    //     $model = StatLocalAdmin::find()->where(['phiscal_year_id' => $year->id])->one();
-    //     if (!isset($model)) {
-    //         MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
-    //         return;
-    //     }
-
-    //     $models = Province::find()
-    //         ->alias('province')
-    //         ->select('province.*, d.*')
-    //         ->join('left join', 'stat_local_admin_detail d', 'd.province_id = province.id and d.stat_local_admin_id=:id', [':id' => $model->id]);
-    //         // ->where(['province.deleted' => 0])->orderBy('province.province_code')->asArray()->all();
-    //         // $user = Yii::$app->user->identity;
-    //         // if (isset($user->role->province_id)) {
-    //         //     $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
-    //         // }
-    //         $user = Yii::$app->user->identity;
-    //         if (isset($user->role->province_id)) {
-    //             $models = $models->Where(['d.province_id' => $user->role->province_id]);
-    //         }
-
-    //     if (isset($user->role->province_id)) {
-    //         $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
-    //     }
-    //     $models = $models->orderBy('province.position')
-    //         ->asArray()->all();
-
-    //     return json_encode([
-    //         'models' => $models
-    //     ]);
-    // }
 
 
     public function actionEnquiry($year)
@@ -321,8 +248,14 @@ class StatLocalAdminController extends BaseController
             ->alias('p')
             ->select('p.*, d.*')
             ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
-
+            ->where(['p.deleted' => 0]);            
+            $user = Yii::$app->user->identity;
+            if (isset($user->role->province_id)) {
+                $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+            }
+            $models = $models->orderBy('p.province_code')->asArray()->all();
+            
+            
         return $this->renderPartial('../ministry/print', [
             'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])
         ]);
@@ -356,8 +289,14 @@ class StatLocalAdminController extends BaseController
             ->alias('p')
             ->select('p.*, d.*')
             ->join('left join', 'stat_local_admin_detail d', 'd.province_id = p.id and d.stat_local_admin_id=:id', [':id' => $model->id])
-            ->where(['p.deleted' => 0])->orderBy('p.province_code')->asArray()->all();
+            ->where(['p.deleted' => 0]);
 
+            $user = Yii::$app->user->identity;
+            if (isset($user->role->province_id)) {
+                $models = $models->andWhere(['d.province_id' => $user->role->province_id]);
+            }
+            $models = $models->orderBy('p.province_code')->asArray()->all();
+            
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Local Administration ' . $year->year . '.xls',
             'content' => $this->renderPartial('table', ['year' => $year, 'models' => $models])

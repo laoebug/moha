@@ -7,6 +7,7 @@ use app\models\Attachment;
 use app\models\Menu;
 use app\models\PhiscalYear;
 use app\models\Province;
+use app\models\StatReligionDetail;
 use app\models\StatReligionTeacher;
 use app\models\StatReligionTeacherDetail;
 use app\services\AuthenticationService;
@@ -14,6 +15,7 @@ use Codeception\Util\HttpCode;
 use Yii;
 use yii\db\Exception;
 use yii\web\Controller;
+use app\models\ProvinceAndYearService;
 
 /**
  * StatReligionTeacherController implements the CRUD actions for StatReligionTeacher model.
@@ -21,7 +23,7 @@ use yii\web\Controller;
 class StatReligionTeacherController extends BaseController
 {
 
-    
+
     /**
      * Lists all StatReligionTeacher models.
      * @return mixed
@@ -33,26 +35,10 @@ class StatReligionTeacherController extends BaseController
 
     public function actionGet()
     {
-        $user = Yii::$app->user->identity;
-        $controller_id = Yii::$app->controller->id;
-        $acton_id = Yii::$app->controller->action->id;
-        if ($user->role["name"] != Yii::$app->params['DEFAULT_ADMIN_ROLE']) {
-            if (!AuthenticationService::isAccessibleAction($controller_id, $acton_id)) {
-                MyHelper::response(HttpCode::UNAUTHORIZED, Yii::t('app', 'HTTP Error 401- You are not authorized to access this operaton due to invalid authentication') . " with ID:  " . $controller_id . "/ " . $acton_id);
-                return;
-            }
-        }
-
-        $years = PhiscalYear::find()->orderBy('year')
-            ->where(['deleted' => 0])->asArray()->all();
-
-        $provinces = Province::find()->asArray()->all();
-
-        return json_encode([
-            'years' => $years,
-            'provinces' => $provinces
-        ]);
+        return ProvinceAndYearService::getProvincesAndYears();
     }
+
+    
 
     public function actionEnquiry($year)
     {
@@ -77,10 +63,9 @@ class StatReligionTeacherController extends BaseController
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'No Data'));
             return;
         }
+      
 
-        $models = Province::find()->alias('p')->select('p.*, d.*')
-            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id and d.stat_religion_teacher_id=:id', [':id' => $model->id])
-            ->asArray()->all();
+        $models = $this->getData($model->id);
 
         $stat = StatReligionTeacherDetail::find()
             ->select([
@@ -252,12 +237,12 @@ class StatReligionTeacherController extends BaseController
             return;
         }
 
-        $models = Province::find()->alias('province')->select('province.*, d.*')
-            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = province.id and d.stat_religion_teacher_id=:id', [':id' => $model->id])
-            ->asArray()->all();
+        $models = $this->getData($model->id);
+
+
 
         return $this->renderPartial('../ministry/print', [
-            'content' => $this->renderPartial('table', ['models' => $models])
+            'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
         ]);
     }
 
@@ -285,13 +270,11 @@ class StatReligionTeacherController extends BaseController
             return;
         }
 
-        $models = Province::find()->alias('province')->select('province.*, d.*')
-            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = province.id and d.stat_religion_teacher_id=:id', [':id' => $model->id])
-            ->asArray()->all();
+        $models = $this->getData($model->id);
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Local Administration ' . $year->year . '.xls',
-            'content' => $this->renderPartial('table', ['models' => $models])
+            'content' => $this->renderPartial('table', ['models' => $models, 'year' => $year])
         ]);
     }
 
@@ -413,5 +396,20 @@ class StatReligionTeacherController extends BaseController
                 return;
             }
         }
+    }
+    private function getData($id){
+     
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_teacher_detail d', 'd.province_id = p.id and d.stat_religion_teacher_id=:id', [':id' => $id]);
+
+        // Start If Provincial User     
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->where(['d.province_id' => $user->role->province_id]);
+        }
+        // End If Provincial User     
+        $models = $models->asArray()->all();
+        return $models;
+
     }
 }

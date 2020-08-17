@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatReligionTeacherSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມວຽກງານຊົນເຜົ່າ ແລະ ສາສະໜາ'), 'url' => ['index']];
-$this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສາສະໜາ ໃນທົ່ວປະເທດ";
+$this->title = "ສະຖິຕິ ພະສົງ, ສາມະເນນ, ຄູສອນ ແລະ ຄະນະຮັບຜິດຊອບ ການຈັດຕັ້ງສາສະໜາ  ປະຈຳປີ ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -189,7 +189,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
 
 
                   <th class="text-center" colspan="2" rowspan="3" style="vertical-align: middle;">ສາສະໜາບາຮາຍ</th>
-                  <th class="text-center" colspan="2" rowspan="3" style="vertical-align: middle;">ສາສະໜາອິດສະລາມ</th> 
+                  <th class="text-center" colspan="2" rowspan="3" style="vertical-align: middle;">ສາສະໜາອິດສະລາມ</th>
 
                 </tr>
                 <tr>
@@ -215,7 +215,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
 
 
                 <tr>
-                  
+
                   <?php for ($i = 0; $i < 6; $i++) : ?>
                     <th class="text-center" style="vertical-align: middle;">ລວມ</th>
                     <th class="text-center" style="vertical-align: middle;">ຍິງ</th>
@@ -231,81 +231,23 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                   <th style="width: 10%" class="text-center">{{sum('buddhis_dad') | number | dash}}</th>
                   <th style="width: 10%" class="text-center">{{sum('buddhis_mom') | number | dash}}</th>
                   <th style="width: 10%" class="text-center">{{sum('buddhis_boy') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_news_women') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_sat_total') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_sat_women') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_cato_women') | number | dash}}</th>
+
                   <th style="width: 10%" class="text-center">{{sum('christ_novice_total') | number |
                                     dash}}
                   </th>
                   <th style="width: 10%" class="text-center">{{sum('christ_novice_women') | number |
                                     dash}}
-                  </th>
-                  <th style="width: 10%" class="text-center">{{sum('bahai_total') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('bahai_women') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('idslam_total') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('idslam_women') | number | dash}}</th>
-
-                </tr>
 
 
-              </thead>
-            </table>
+                  <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number | dash}}</th>
+                  <th style="width: 10%" class="text-center">{{sum('christ_cato_women') | number | dash}}</th>
 
 
-            
-            <table class="table table-bordered table-hover" ng-show="models">
-              <thead>
-                <tr>
-                  <th class="text-center" rowspan="4">ລ/ດ</th>
-
-                  <th class="text-center" rowspan="4">ແຂວງ</th>
-                  <th class="text-center" colspan="5">ສາສະໜາພຸດ</th>
-                  <th class="text-center" colspan="8">ສາສະໜາເຍຊູຄຣິດ</th>
-                  <th class="text-center" colspan="2" rowspan="3">ສາສະໜາບາຮາຍ</th>
-                  <th class="text-center" colspan="2" rowspan="3">ສາສະໜາອິດສະລາມ</th>
-
-                </tr>
-                <tr>
-                  <th class="text-center" rowspan="3">ພະ</th>
-                  <th class="text-center" rowspan="3">ຈົວ</th>
-                  <th class="text-center" rowspan="3">ພໍ່ຂາວ</th>
-                  <th class="text-center" rowspan="3">ແມ່ຂາວ</th>
-                  <th class="text-center" rowspan="3">ສັງກະລີ</th>
-                  <th class="text-center" colspan="2" rowspan="2">ຂ່າວປະເສີດ</th>
-                  <th class="text-center" colspan="2" rowspan="2">ຄະນະວັນເສົາ</th>
-                  <th class="text-center" colspan="4">ກາໂຕລິກ</th>
-                </tr>
-                <tr>
-                  <th class="text-center" colspan="2">ຄູຄໍາສອນ</th>
-                  <th class="text-center" colspan="2">ນັກບວດ</th>
-                </tr>
-                <tr>
-                  <?php for ($i = 0; $i < 6; $i++) : ?>
-                    <th class="text-center"><?= Yii::t('app', 'Total') ?></th>
-                    <th class="text-center"><?= Yii::t('app', 'Women') ?></th>
-                  <?php endfor; ?>
-                </tr>
-                <tr>
-                  <th style="width: 10%" class="text-center" colspan="2"><?= Yii::t('app', 'Total') ?></th>
-                  <th style="width: 10%" class="text-center">{{sum('buddhis_monk') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('buddhis_novice') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('buddhis_dad') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('buddhis_mom') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('buddhis_boy') | number | dash}}</th>
                   <th style="width: 10%" class="text-center">{{sum('christ_news_total') | number | dash}}</th>
                   <th style="width: 10%" class="text-center">{{sum('christ_news_women') | number | dash}}</th>
                   <th style="width: 10%" class="text-center">{{sum('christ_sat_total') | number | dash}}</th>
                   <th style="width: 10%" class="text-center">{{sum('christ_sat_women') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_cato_total') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_cato_women') | number | dash}}</th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_novice_total') | number |
-                                    dash}}
-                  </th>
-                  <th style="width: 10%" class="text-center">{{sum('christ_novice_women') | number |
-                                    dash}}
+
                   </th>
                   <th style="width: 10%" class="text-center">{{sum('bahai_total') | number | dash}}</th>
                   <th style="width: 10%" class="text-center">{{sum('bahai_women') | number | dash}}</th>
@@ -315,7 +257,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="m in models">
+              <tr ng-repeat="m in models">
                   <td class="text-center">{{$index + 1}}</td>
                   <td>{{m.province_name}}</td>
                   <td class="text-center">{{m.buddhis_monk | number | dash}}</td>
@@ -323,14 +265,19 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                   <td class="text-center">{{m.buddhis_dad | number | dash}}</td>
                   <td class="text-center">{{m.buddhis_mom | number | dash}}</td>
                   <td class="text-center">{{m.buddhis_boy | number | dash}}</td>
+                  
+                  <td class="text-center">{{m.christ_novice_total | number | dash}}</td>
+                  <td class="text-center">{{m.christ_novice_women | number | dash}}</td>
+
+                  <td class="text-center">{{m.christ_cato_total | number | dash}}</td>
+                  <td class="text-center">{{m.christ_cato_women | number | dash}}</td>
+                  
+
                   <td class="text-center">{{m.christ_news_total | number | dash}}</td>
                   <td class="text-center">{{m.christ_news_women | number | dash}}</td>
                   <td class="text-center">{{m.christ_sat_total | number | dash}}</td>
                   <td class="text-center">{{m.christ_sat_women | number | dash}}</td>
-                  <td class="text-center">{{m.christ_cato_total | number | dash}}</td>
-                  <td class="text-center">{{m.christ_cato_women | number | dash}}</td>
-                  <td class="text-center">{{m.christ_novice_total | number | dash}}</td>
-                  <td class="text-center">{{m.christ_novice_women | number | dash}}</td>
+                  
                   <td class="text-center">{{m.bahai_total | number | dash}}</td>
                   <td class="text-center">{{m.bahai_women | number | dash}}</td>
                   <td class="text-center">{{m.idslam_total | number | dash}}</td>
@@ -339,6 +286,10 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
                 </tr>
               </tbody>
             </table>
+
+
+
+            
           </div>
         </div>
         <div class="tab-pane fade" id="chart">
@@ -442,6 +393,7 @@ $this->title = "ສະຖິຕິພະສົງ ແລະ ຄູສອນສ�
             if ($scope.year)
               $http.get($scope.url + 'enquiry&year=' + $scope.year.id)
               .then(function(r) {
+                
                 $scope.models = r.data.models;
 
                 $scope.stat = r.data.stat;
