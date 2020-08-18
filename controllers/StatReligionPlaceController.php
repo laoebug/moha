@@ -311,9 +311,18 @@ class StatReligionPlaceController extends BaseController
             return;
         }
 
-        $models = Province::find()->alias('province')->select('province.*, d.*')
-            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = province.id and d.stat_religion_place_id=:id', [':id' => $model->id])
-            ->asArray()->all();
+        
+        $models = Province::find()->alias('p')->select('p.*, d.*')
+            ->join('left join', 'stat_religion_place_detail d', 'd.province_id = p.id and d.stat_religion_place_id=:id', [':id' => $model->id]);
+
+
+        $user = Yii::$app->user->identity;
+        if (isset($user->role->province_id)) {
+            $models = $models->where(['d.province_id' => $user->role->province_id]);
+        }
+        $models = $models->orderBy([
+            'p.position' => SORT_ASC
+        ])->asArray()->all();
 
         return $this->renderPartial('../ministry/excel', [
             'file' => 'Stat Local Administration ' . $year->year . '.xls',
