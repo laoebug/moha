@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatPopulationMovementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຄຸ້ມຄອງພົນລະເມືອງ'), 'url' => ['index']];
-$this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີງຂອງພົນລະເມືອງທົ່ວປະເທດ ປະຈຳປີ";
+$this->title = "ຕາຕະລາງສັງລວມສະຖິຕິພົນລະເມືອງທົ່ວປະເທດ ປະຈຳປີ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -141,7 +141,7 @@ $this->title = "ການເກັບກຳສະຖິຕິເໜັງຕີ�
         <div class="tab-pane fade active in" id="table">
           <div class="card" style="overflow-x: scroll">
             <div class="card-title-w-btn ">
-              <h3><?= $this->title ?></h3>
+              <h3><?= $this->title ?> {{year.year}}</h3>
               <p>
                 <a class="btn btn-default" target="_blank" href="{{url}}print&year={{year.id}}"><i class="fa fa-print fa-2x"></i></a>
                 <a class="btn btn-info" target="_blank" href="{{url}}download&year={{year.id}}"><i class="fa fa-download fa-2x"></i></a>

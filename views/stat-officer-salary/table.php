@@ -13,7 +13,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-title-w-btn ">
-                <h3 class="title">ຕາຕະລາງສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມຊັ້ນ-ຂັ້ນເງິນເດືອນ (ແຕ່ຊັ້ນ I ເຖິງຊັ້ນ V) (<?= $year->year ?>)</h3>
+                <h3 class="title">ຕາຕະລາງສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມຊັ້ນ-ຂັ້ນເງິນເດືອນ (ແຕ່ຊັ້ນ I ເຖິງຊັ້ນ V) ປະຈໍາປີ <?= $year->year ?></h3>
             </div>
             <div class="card-body">
                 <?php foreach ($models as $model) : ?>
@@ -38,7 +38,28 @@
                                 <th class="text-center"><?= $i % 2 == 0 ? 'ລ' : 'ຍ' ?></th>
                             <?php endfor; ?>
                         </tr>
-                        <tr>
+                        
+                        </thead>
+                        <tbody>
+                        <?php foreach ($model as $mo): ?>
+                            <tr>
+                                <td colspan="2"><?= $mo['name'] ?></td>
+                                <?php
+                                $row = ['total' => 0, 'women' => 0];
+                                foreach ($mo as $k => $m) {
+                                    if (strpos($k, 'total')) $row['total'] += $m;
+                                    else if (strpos($k, 'women')) $row['women'] += $m;
+                                }
+                                ?>
+                                <td class="text-center"><?= number_format($row['total']) ?></td>
+                                <td class="text-center"><?= number_format($row['women']) ?></td>
+                                <?php for ($i = 1; $i < 16; $i++): ?>
+                                    <td class="text-center"><?= ($mo['level' . $i . '_total']) ?></td>
+                                    <td class="text-center"><?= ($mo['level' . $i . '_women']) ?></td>
+                                <?php endfor; ?>
+                            </tr>
+
+                            <tr>
                             <th class="text-center" colspan="2">1. ກະຊວງພາຍໃນ ລວມທັງໝົດ</th>
                             <?php
                             $sum = [];
@@ -66,25 +87,7 @@
                                 <th class="text-center"><?= number_format($s) ?></th>
                             <?php endforeach; ?>
                         </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($model as $mo): ?>
-                            <tr>
-                                <td colspan="2"><?= $mo['name'] ?></td>
-                                <?php
-                                $row = ['total' => 0, 'women' => 0];
-                                foreach ($mo as $k => $m) {
-                                    if (strpos($k, 'total')) $row['total'] += $m;
-                                    else if (strpos($k, 'women')) $row['women'] += $m;
-                                }
-                                ?>
-                                <td class="text-center"><?= number_format($row['total']) ?></td>
-                                <td class="text-center"><?= number_format($row['women']) ?></td>
-                                <?php for ($i = 1; $i < 16; $i++): ?>
-                                    <td class="text-center"><?= ($mo['level' . $i . '_total']) ?></td>
-                                    <td class="text-center"><?= ($mo['level' . $i . '_women']) ?></td>
-                                <?php endfor; ?>
-                            </tr>
+                        
                         <?php endforeach; ?>
                         </tbody>
                     </table>

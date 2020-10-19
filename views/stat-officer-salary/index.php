@@ -5,7 +5,7 @@
 /* @var $searchModel app\models\StatOfficerSalarySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 // $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'ກົມຈັດຕັ້ງ ແລະ ພະນັກງານ'), 'url' => ['index']];
-$this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມຊັ້ນ-ຂັ້ນເງິນເດືອນ (ແຕ່ຊັ້ນ I ເຖິງຊັ້ນ V)";
+$this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດຖະກອນ ແຍກຕາມຊັ້ນ-ຂັ້ນເງິນເດືອນ (ແຕ່ຊັ້ນ I ເຖິງຊັ້ນ V) ປະຈໍາປີ ";
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style rel="stylesheet" href="css/angular-datepicker.css"></style>
@@ -151,6 +151,19 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
                       <th class="text-center"><?= $i % 2 == 1 ? 'ລ' : 'ຍ' ?></th>
                     <?php endfor; ?>
                   </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr ng-repeat="m in model">
+                    <td colspan="2">{{m.name}}</td>
+                    <td class="text-center">{{sumrow(m, 'total') | number | dash}}</td>
+                    <td class="text-center">{{sumrow(m, 'women') | number | dash}}</td>
+                    <?php for ($i = 1; $i < 16; $i++) : ?>
+                      <td class="text-center">{{m.level<?= $i ?>_total | number | dash}}</td>
+                      <td class="text-center">{{m.level<?= $i ?>_women | number | dash}}</td>
+                    <?php endfor; ?>
+                  </tr>
+
                   <tr>
                     <th class="text-center" colspan="2">1. ກະຊວງພາຍໃນ ລວມທັງໝົດ</th>
                     <th class="text-center">{{sumtotal(model, 'total') | number | dash}}</th>
@@ -164,17 +177,7 @@ $this->title = "ຕາຕະລາງສັງລວມຈຳນວນລັດ�
                       </th>
                     <?php endfor; ?>
                   </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="m in model">
-                    <td colspan="2">{{m.name}}</td>
-                    <td class="text-center">{{sumrow(m, 'total') | number | dash}}</td>
-                    <td class="text-center">{{sumrow(m, 'women') | number | dash}}</td>
-                    <?php for ($i = 1; $i < 16; $i++) : ?>
-                      <td class="text-center">{{m.level<?= $i ?>_total | number | dash}}</td>
-                      <td class="text-center">{{m.level<?= $i ?>_women | number | dash}}</td>
-                    <?php endfor; ?>
-                  </tr>
+                  
                 </tbody>
               </table>
             </div>

@@ -79,7 +79,7 @@ class StatPopulationMovementController extends BaseController
             MyHelper::response(HttpCode::NOT_FOUND, Yii::t('app', 'Incorrect Phiscal Year'));
             return;
         }
-
+        
         $models = $this->getModels($year);
         $years = PhiscalYear::find()->select('id, year, status')->orderBy('year')->asArray()->all();
         return json_encode([
@@ -104,14 +104,14 @@ class StatPopulationMovementController extends BaseController
             return;
         }
         $models = Province::find()
-            ->alias('province')
-            ->select('province.*, d.*')
-            ->join('left join', 'stat_population_movement_detail d', 'd.province_id = province.id and d.stat_population_movement_id=:id', [':id' => $model->id]);
+            ->alias('p')
+            ->select('p.*, d.*')
+            ->join('left join', 'stat_population_movement_detail d', 'd.province_id = p.id and d.stat_population_movement_id=:id', [':id' => $model->id]);
         $user = Yii::$app->user->identity;
         if (isset($user->role->province_id)) {
-            $models = $models->andWhere(['province.id' => $user->role->province_id]);
+            $models = $models->where(['p.id' => $user->role->province_id]);
         }
-        return $models->orderBy('province.position')->asArray()->all();
+        return $models->orderBy('p.position')->asArray()->all();
     }
 
     public function actionInquiry($year, $province)
